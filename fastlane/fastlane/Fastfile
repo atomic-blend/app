@@ -1,0 +1,94 @@
+# This file contains the fastlane.tools configuration
+# You can find the documentation at https://docs.fastlane.tools
+#
+# For a list of all available actions, check out
+#
+#     https://docs.fastlane.tools/actions
+#
+# For a list of all available plugins, check out
+#
+#     https://docs.fastlane.tools/plugins/available-plugins
+#
+
+# Uncomment the line if you want fastlane to automatically update itself
+# update_fastlane
+
+default_platform(:ios)
+
+platform :ios do
+  desc "Description of what the lane does"
+
+  lane :test do
+      Dir.chdir("../..") do
+        sh("fvm flutter test")
+      end
+  end
+
+  lane :build_beta do
+    Dir.chdir("..") do
+        sh('fvm flutter build ipa --flavor prod --release -t lib/main_prod.dart')
+    end
+  end
+
+  lane :upload_beta do
+     upload_to_testflight(
+     api_key_path: "/Users/brandonguigo/appstore_connect_api_key.json",
+     app_identifier: "fr.lifeos.app",
+     ipa: "../build/ios/ipa/LifeOS.ipa",
+     distribute_external: true,
+     notify_external_testers: true,
+     submit_beta_review: true,
+     groups: ['beta']
+       )
+  end
+
+  lane :test_and_beta do
+    test
+    # add actions here: https://docs.fastlane.tools/actions
+    build_beta
+    upload_beta
+  end
+  lane :beta do
+    build_beta
+    upload_beta
+  end
+end
+
+platform :android do
+    lane :test do
+          Dir.chdir("../..") do
+            sh("fvm flutter test")
+          end
+    end
+
+    lane :build_beta do
+        Dir.chdir("..") do
+            sh('fvm flutter build appbundle --flavor prod --release -t lib/main_prod.dart')
+            Dir.chdir("..") do
+              sh('zip -r build/app/outputs/bundle/prodRelease/native-debug-symbols.zip build/app/intermediates/merged_native_libs/prodRelease/mergeProdReleaseNativeLibs/out/lib/*')
+            end
+        end
+      end
+
+    lane :upload_beta do
+        upload_to_play_store(
+            package_name: "fr.lifeos.app",
+            track: "alpha",
+            json_key: "/Users/brandonguigo/playstore_key.json",
+            aab: "../build/app/outputs/bundle/prodRelease/app-prod-release.aab",
+            # mapping_paths: ["../build/app/outputs/bundle/prodRelease/native-debug-symbols.zip"]
+            )
+    end
+
+    lane :test_and_beta do
+        test
+        # add actions here: https://docs.fastlane.tools/actions
+        build_beta
+        upload_beta
+    end
+
+    lane :beta do
+        build_beta
+        upload_beta
+    end
+end

@@ -1,0 +1,21 @@
+flavors:
+  dev:
+    app:
+      name: "LifeOS - Dev"
+
+    android:
+      applicationId: "fr.lifeos.app-dev"
+    ios:
+      bundleId: "fr.lifeos.app-dev"
+    macos:
+      bundleId: "fr.lifeos.app-dev"
+  prod:
+    app:
+      name: "LifeOS"
+
+    android:
+      applicationId: "fr.lifeos.app"
+    ios:
+      bundleId: "fr.lifeos.app"
+    macos:
+      bundleId: "fr.lifeos.app"

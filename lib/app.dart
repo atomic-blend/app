@@ -1,0 +1,57 @@
+import 'package:app/i18n/strings.g.dart';
+import 'package:app/main.dart';
+import 'package:app/pages/app_wrapper.dart';
+import 'package:flex_color_scheme/flex_color_scheme.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+
+import 'flavors.dart';
+
+class App extends StatelessWidget {
+  const App({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      theme: FlexThemeData.light(scheme: FlexScheme.greys),
+      // The Mandy red, dark theme.
+      darkTheme: FlexThemeData.dark(scheme: FlexScheme.greys),
+      // Use dark or light theme based on system setting.
+      themeMode: ThemeMode.system,
+      locale: TranslationProvider.of(context).flutterLocale, // use provider
+      supportedLocales: AppLocaleUtils.supportedLocales,
+      localizationsDelegates: const [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      debugShowCheckedModeBanner: env!.debugShowCheckedModeBanner,
+      title: F.title,
+      home: _flavorBanner(
+        child: const Scaffold(body: AppWrapper()),
+        show: kDebugMode,
+      ),
+    );
+  }
+
+  Widget _flavorBanner({
+    required Widget child,
+    bool show = true,
+  }) =>
+      show
+          ? Banner(
+              location: BannerLocation.topStart,
+              message: F.name,
+              color: Colors.green.withValues(alpha: 0.6),
+              textStyle: const TextStyle(
+                  fontWeight: FontWeight.w700,
+                  fontSize: 12.0,
+                  letterSpacing: 1.0),
+              textDirection: TextDirection.ltr,
+              child: child,
+            )
+          : Container(
+              child: child,
+            );
+}

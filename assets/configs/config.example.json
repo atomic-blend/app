@@ -1,0 +1,10 @@
+{
+  "env": "beta",
+  "debug": false,
+  "debugShowCheckedModeBanner": false,
+  "debugShowMaterialGrid": false,
+  "debugApiClient": true,
+  "restApiUrl": "URL",
+  "appleRevenueCatApiKey": "API_KEY",
+  "googleRevenueCatApiKey": "API_KEY"
+}
