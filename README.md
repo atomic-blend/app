@@ -58,7 +58,7 @@ To get started, check out our **[CONTRIBUTING.md](./CONTRIBUTING.md)** file.
 ## 🔗 Links
 - 🔥 **Website**: [atomicblend.io](https://atomicblend.io) *(Coming Soon!)*  
 - 📜 **Docs**: [atomicblend.io/docs](https://atomicblend.io/docs) *(Coming Soon!)*  
-- 🐙 **GitHub**: [github.com/yourusername/atomic-blend](https://github.com/atomic-blend/backend)  
+- 🐙 **GitHub**: [github.com/atomic-blend/backend](https://github.com/atomic-blend/backend)  
 - 💬 **Community**: [Discord](https://discord.gg/atomicblend) *(Coming Soon!)*  
 
 ## 📜 License
