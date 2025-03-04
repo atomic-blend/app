@@ -59,8 +59,7 @@ To get started, check out our **[CONTRIBUTING.md](./CONTRIBUTING.md)** file.
 - 🔥 **Website**: [atomicblend.io](https://atomicblend.io) *(Coming Soon!)*  
 - 📜 **Docs**: [atomicblend.io/docs](https://atomicblend.io/docs) *(Coming Soon!)*  
 - 🐙 **GitHub**: [github.com/atomic-blend/backend](https://github.com/atomic-blend/backend)  
-- 💬 **Community**: [Discord](https://discord.gg/atomicblend) *(Coming Soon!)*  
-
+- 💬 **Community**: [Discord](https://discord.gg/uVK5Ekqne8)
 ## 📜 License
 Atomic Blend is licensed under the AGPL v3 License – ensuring freedom and openness while requiring modifications to be shared with the community.
 
