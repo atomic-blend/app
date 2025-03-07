@@ -3,7 +3,6 @@ import 'package:app/services/user.service.dart';
 import 'package:app/utils/api_client.dart';
 
 class TasksService {
-
   TasksService();
 
   Future<List<TaskEntity>> getAllTasks() async {
@@ -20,6 +19,7 @@ class TasksService {
   }
 
   Future<bool> createTask(TaskEntity task) async {
+    print("encryptionService: $encryptionService");
     final encryptedTask =
         await task.encrypt(encryptionService: encryptionService!);
     final result = await globalApiClient.post('/tasks', data: encryptedTask);

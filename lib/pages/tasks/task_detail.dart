@@ -23,7 +23,7 @@ class _TaskDetailState extends State<TaskDetail> {
   @override
   void initState() {
     _titleController.text = widget.task.title;
-    _dueDate = widget.task.start_date;
+    _dueDate = widget.task.startDate;
     super.initState();
   }
 
@@ -60,7 +60,7 @@ class _TaskDetailState extends State<TaskDetail> {
                             firstDate: DateTime(2000),
                             lastDate: DateTime(2100),
                           ));
-                  widget.task.start_date = _dueDate;
+                  widget.task.startDate = _dueDate;
                   if (!context.mounted) return;
                   context.read<TasksBloc>().add(EditTask(widget.task));
                 },

@@ -26,8 +26,10 @@ mixin _$TaskEntity {
   set title(String value) => throw _privateConstructorUsedError;
   String? get description => throw _privateConstructorUsedError;
   set description(String? value) => throw _privateConstructorUsedError;
-  DateTime? get start_date => throw _privateConstructorUsedError;
-  set start_date(DateTime? value) => throw _privateConstructorUsedError;
+  DateTime? get startDate => throw _privateConstructorUsedError;
+  set startDate(DateTime? value) => throw _privateConstructorUsedError;
+  DateTime? get endDate => throw _privateConstructorUsedError;
+  set endDate(DateTime? value) => throw _privateConstructorUsedError;
   DateTime? get createdAt => throw _privateConstructorUsedError;
   set createdAt(DateTime? value) => throw _privateConstructorUsedError;
   DateTime? get updatedAt => throw _privateConstructorUsedError;
@@ -55,7 +57,8 @@ abstract class $TaskEntityCopyWith<$Res> {
       {String? id,
       String title,
       String? description,
-      DateTime? start_date,
+      DateTime? startDate,
+      DateTime? endDate,
       DateTime? createdAt,
       DateTime? updatedAt,
       bool? completed});
@@ -79,7 +82,8 @@ class _$TaskEntityCopyWithImpl<$Res, $Val extends TaskEntity>
     Object? id = freezed,
     Object? title = null,
     Object? description = freezed,
-    Object? start_date = freezed,
+    Object? startDate = freezed,
+    Object? endDate = freezed,
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
     Object? completed = freezed,
@@ -97,9 +101,13 @@ class _$TaskEntityCopyWithImpl<$Res, $Val extends TaskEntity>
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
               as String?,
-      start_date: freezed == start_date
-          ? _value.start_date
-          : start_date // ignore: cast_nullable_to_non_nullable
+      startDate: freezed == startDate
+          ? _value.startDate
+          : startDate // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      endDate: freezed == endDate
+          ? _value.endDate
+          : endDate // ignore: cast_nullable_to_non_nullable
               as DateTime?,
       createdAt: freezed == createdAt
           ? _value.createdAt
@@ -129,7 +137,8 @@ abstract class _$$TaskEntityImplCopyWith<$Res>
       {String? id,
       String title,
       String? description,
-      DateTime? start_date,
+      DateTime? startDate,
+      DateTime? endDate,
       DateTime? createdAt,
       DateTime? updatedAt,
       bool? completed});
@@ -151,7 +160,8 @@ class __$$TaskEntityImplCopyWithImpl<$Res>
     Object? id = freezed,
     Object? title = null,
     Object? description = freezed,
-    Object? start_date = freezed,
+    Object? startDate = freezed,
+    Object? endDate = freezed,
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
     Object? completed = freezed,
@@ -169,9 +179,13 @@ class __$$TaskEntityImplCopyWithImpl<$Res>
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
               as String?,
-      start_date: freezed == start_date
-          ? _value.start_date
-          : start_date // ignore: cast_nullable_to_non_nullable
+      startDate: freezed == startDate
+          ? _value.startDate
+          : startDate // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      endDate: freezed == endDate
+          ? _value.endDate
+          : endDate // ignore: cast_nullable_to_non_nullable
               as DateTime?,
       createdAt: freezed == createdAt
           ? _value.createdAt
@@ -196,7 +210,8 @@ class _$TaskEntityImpl extends _TaskEntity {
       {this.id,
       required this.title,
       this.description,
-      this.start_date,
+      this.startDate,
+      this.endDate,
       this.createdAt,
       this.updatedAt,
       this.completed})
@@ -212,7 +227,9 @@ class _$TaskEntityImpl extends _TaskEntity {
   @override
   String? description;
   @override
-  DateTime? start_date;
+  DateTime? startDate;
+  @override
+  DateTime? endDate;
   @override
   DateTime? createdAt;
   @override
@@ -241,7 +258,8 @@ abstract class _TaskEntity extends TaskEntity {
       {String? id,
       required String title,
       String? description,
-      DateTime? start_date,
+      DateTime? startDate,
+      DateTime? endDate,
       DateTime? createdAt,
       DateTime? updatedAt,
       bool? completed}) = _$TaskEntityImpl;
@@ -260,8 +278,11 @@ abstract class _TaskEntity extends TaskEntity {
   String? get description;
   set description(String? value);
   @override
-  DateTime? get start_date;
-  set start_date(DateTime? value);
+  DateTime? get startDate;
+  set startDate(DateTime? value);
+  @override
+  DateTime? get endDate;
+  set endDate(DateTime? value);
   @override
   DateTime? get createdAt;
   set createdAt(DateTime? value);

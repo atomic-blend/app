@@ -11,7 +11,8 @@ class TaskEntity with _$TaskEntity {
     String? id,
     required String title,
     String? description,
-    DateTime? start_date,
+    DateTime? startDate,
+    DateTime? endDate,
     DateTime? createdAt,
     DateTime? updatedAt,
     bool? completed,
@@ -31,7 +32,7 @@ class TaskEntity with _$TaskEntity {
 
   @override
   String toString() {
-    return 'TaskEntity { id: $id, title: $title, description: $description, start_date: $start_date, created_at: $createdAt, updated_at: $updatedAt, completed: $completed }';
+    return 'TaskEntity { id: $id, title: $title, description: $description, start_date: $startDate, created_at: $createdAt, updated_at: $updatedAt, completed: $completed }';
   }
 
   Future<Map<String, dynamic>> encrypt(
