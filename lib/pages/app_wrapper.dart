@@ -22,7 +22,7 @@ class _AppWrapperState extends State<AppWrapper> {
 
   @override
   void didChangeDependencies() {
-    context.read<AuthBloc>().add(const RefreshUser());
+    // context.read<AuthBloc>().add(const RefreshUser());
     super.didChangeDependencies();
   }
 

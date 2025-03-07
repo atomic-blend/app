@@ -10,7 +10,6 @@ import 'package:dio/dio.dart';
 EncryptionService? encryptionService;
 
 class UserService {
-  final ApiClient _apiClient = ApiClient().init();
 
   UserService();
 
@@ -19,8 +18,8 @@ class UserService {
   }
 
   Future<UserEntity> createUser(UserEntity user) async {
-    _apiClient.setIdToken(user.accessToken!);
-    final result = await _apiClient.post('/user/setup', data: user);
+    globalApiClient.setIdToken(user.accessToken!);
+    final result = await globalApiClient.post('/user/setup', data: user);
     if (result.statusCode == 201) {
       user.id = result.data['_id'];
       user.roles = result.data['roles'].map<UserRoleEntity>((role) {
@@ -37,8 +36,8 @@ class UserService {
 
   Future<UserEntity?> getUser(UserEntity user) async {
     try {
-      _apiClient.setIdToken(user.accessToken!);
-      var result = await _apiClient.get('/users/profile');
+      globalApiClient.setIdToken(user.accessToken!);
+      var result = await globalApiClient.get('/users/profile');
       if (result.statusCode == 200) {
         await prefs?.setString('user', json.encode(user.toJson()));
         return user;
@@ -67,7 +66,7 @@ class UserService {
   }
 
   Future<bool> deleteUser() async {
-    var result = await _apiClient.delete('/user/delete');
+    var result = await globalApiClient.delete('/user/delete');
     if (result.statusCode == 200) {
       logOut();
       return true;
@@ -77,21 +76,44 @@ class UserService {
   }
 
   Future<UserEntity?> login(String email, String password) async {
-    final result = await _apiClient.post('/auth/login', data: {
+    final result = await globalApiClient.post('/auth/login', data: {
       'email': email,
       'password': password,
     });
     if (result.statusCode == 200) {
       final userData = result.data['user'];
+      userData['accessToken'] = result.data['accessToken'];
+      userData['refreshToken'] = result.data['refreshToken'];
       final user = UserEntity.fromJson(userData);
       prefs?.setString('user', json.encode(user.toJson()));
 
-      //TODO: derive and persist key from password
+      globalApiClient.setIdToken(user.accessToken!);
+      
+      // derive and persist key from password
       encryptionService ??= EncryptionService(userSalt: user.keySalt);
       await encryptionService?.deriveAndPersistKey(password);
       return user;
     } else {
       throw Exception('login_failed');
     }
+  }
+
+  static Future<String?> refreshToken(UserEntity user) async {
+    final refreshToken = user.refreshToken;
+    final  apiClient = Dio();
+    apiClient.options = BaseOptions(
+      baseUrl: env!.restApiUrl,
+      headers: {
+        'Authorization': 'Bearer $refreshToken',
+      },
+    );
+    final result = await apiClient.post('/auth/refresh');
+
+    final accessToken = result.data['accessToken'];
+    user.accessToken = accessToken;
+    user.refreshToken = result.data['refreshToken'];
+    prefs?.setString('user', json.encode(user.toJson()));
+
+    return accessToken;
   }
 }

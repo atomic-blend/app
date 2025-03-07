@@ -1,9 +1,12 @@
 import 'dart:convert';
 
+import 'package:app/entities/user/user.entity.dart';
 import 'package:app/main.dart';
-import 'package:app/services/firebase.service.dart';
+import 'package:app/services/user.service.dart';
 import 'package:dio/dio.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
+
+final globalApiClient = ApiClient().init();
 
 class ApiClient {
   Dio _dio = Dio();
@@ -45,12 +48,12 @@ class ApiClient {
         onError: (error, handler) async {
           try {
             if (error.response?.statusCode == 401) {
-              final newToken = await FirebaseService.refreshToken();
               final userDataRaw = prefs?.getString('user');
               final userData = json.decode(userDataRaw!);
-              userData!['idToken'] = newToken;
-              await prefs?.setString('user', json.encode(userData));
+              final user = UserEntity.fromJson(userData);
+              final newToken = await UserService.refreshToken(user);
               idToken = newToken;
+              setIdToken(newToken!);
               final opts = Options(
                 extra: error.requestOptions.extra,
                 method: error.requestOptions.method,
