@@ -1,9 +1,11 @@
+import 'package:app/blocs/auth/auth.bloc.dart';
 import 'package:app/components/buttons/primary_button.dart';
 import 'package:app/components/forms/app_text_form_field.dart';
 import 'package:app/i18n/strings.g.dart';
 import 'package:app/utils/constants.dart';
 import 'package:app/utils/shortcuts.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 
 class Register extends StatefulWidget {
@@ -80,7 +82,11 @@ class _RegisterState extends State<Register> {
                 onPressed: () async {
                   if (_emailController.text.isNotEmpty &&
                       _passwordController.text.isNotEmpty) {
-                        //TODO: fix this
+                    //
+                    context.read<AuthBloc>().add(RegisterEvent(
+                          email: _emailController.text,
+                          password: _passwordController.text,
+                        ));
                     // await FirebaseService.register(context,
                     //     _emailController.text, _passwordController.text);
                     if (!context.mounted) return;

@@ -98,6 +98,29 @@ class UserService {
     }
   }
 
+  Future<UserEntity?> register(String email, String password) async {
+    final result = await globalApiClient.post('/auth/register', data: {
+      'email': email,
+      'password': password,
+    });
+    if (result.statusCode == 201) {
+      final userData = result.data['user'];
+      userData['accessToken'] = result.data['accessToken'];
+      userData['refreshToken'] = result.data['refreshToken'];
+      final user = UserEntity.fromJson(userData);
+      prefs?.setString('user', json.encode(user.toJson()));
+
+      globalApiClient.setIdToken(user.accessToken!);
+      
+      // derive and persist key from password
+      encryptionService ??= EncryptionService(userSalt: user.keySalt);
+      await encryptionService?.deriveAndPersistKey(password);
+      return user;
+    } else {
+      throw Exception('registration_failed');
+    }
+  }
+
   static Future<String?> refreshToken(UserEntity user) async {
     final refreshToken = user.refreshToken;
     final  apiClient = Dio();

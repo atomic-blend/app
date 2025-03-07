@@ -12,7 +12,7 @@ class AuthBloc extends HydratedBloc<AuthEvent, AuthState> {
   AuthBloc() : super(const LoggedOut()) {
     on<LoginEvent>(_onLogIn);
     on<Logout>(_onLogOut);
-    on<Register>(_onRegister);
+    on<RegisterEvent>(_onRegister);
     on<RefreshUser>(_onRefreshUser);
     on<DeleteUser>(_onDeleteUser);
   }
@@ -42,10 +42,13 @@ class AuthBloc extends HydratedBloc<AuthEvent, AuthState> {
     emit(LoggedIn(updatedUser!));
   }
 
-  void _onRegister(Register event, Emitter<AuthState> emit) async {
+  void _onRegister(RegisterEvent event, Emitter<AuthState> emit) async {
     emit(const Loading());
-    final user = event.user;
-    final updatedUser = await _userService.createUser(user);
+    final updatedUser = await _userService.register(event.email, event.password);
+    if (updatedUser == null) {
+      emit(const LoggedOut());
+      return;
+    }
     emit(LoggedIn(updatedUser));
   }
 
