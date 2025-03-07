@@ -16,8 +16,14 @@ _$UserEntityImpl _$$UserEntityImplFromJson(Map<String, dynamic> json) =>
       firstname: json['firstname'] as String?,
       lastname: json['lastname'] as String?,
       refreshToken: json['refreshToken'] as String?,
-      salt: json['salt'] as String?,
-      idToken: json['idToken'] as String?,
+      keySalt: json['keySalt'] as String,
+      accessToken: json['accessToken'] as String?,
+      createdAt: json['createdAt'] == null
+          ? null
+          : DateTime.parse(json['createdAt'] as String),
+      updatedAt: json['updatedAt'] == null
+          ? null
+          : DateTime.parse(json['updatedAt'] as String),
     );
 
 Map<String, dynamic> _$$UserEntityImplToJson(_$UserEntityImpl instance) =>
@@ -30,6 +36,8 @@ Map<String, dynamic> _$$UserEntityImplToJson(_$UserEntityImpl instance) =>
       'firstname': instance.firstname,
       'lastname': instance.lastname,
       'refreshToken': instance.refreshToken,
-      'salt': instance.salt,
-      'idToken': instance.idToken,
+      'keySalt': instance.keySalt,
+      'accessToken': instance.accessToken,
+      'createdAt': instance.createdAt?.toIso8601String(),
+      'updatedAt': instance.updatedAt?.toIso8601String(),
     };

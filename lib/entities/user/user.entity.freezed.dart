@@ -36,10 +36,14 @@ mixin _$UserEntity {
   set lastname(String? value) => throw _privateConstructorUsedError;
   String? get refreshToken => throw _privateConstructorUsedError;
   set refreshToken(String? value) => throw _privateConstructorUsedError;
-  String? get salt => throw _privateConstructorUsedError;
-  set salt(String? value) => throw _privateConstructorUsedError;
-  String? get idToken => throw _privateConstructorUsedError;
-  set idToken(String? value) => throw _privateConstructorUsedError;
+  String get keySalt => throw _privateConstructorUsedError;
+  set keySalt(String value) => throw _privateConstructorUsedError;
+  String? get accessToken => throw _privateConstructorUsedError;
+  set accessToken(String? value) => throw _privateConstructorUsedError;
+  DateTime? get createdAt => throw _privateConstructorUsedError;
+  set createdAt(DateTime? value) => throw _privateConstructorUsedError;
+  DateTime? get updatedAt => throw _privateConstructorUsedError;
+  set updatedAt(DateTime? value) => throw _privateConstructorUsedError;
 
   /// Serializes this UserEntity to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -66,8 +70,10 @@ abstract class $UserEntityCopyWith<$Res> {
       String? firstname,
       String? lastname,
       String? refreshToken,
-      String? salt,
-      String? idToken});
+      String keySalt,
+      String? accessToken,
+      DateTime? createdAt,
+      DateTime? updatedAt});
 }
 
 /// @nodoc
@@ -93,8 +99,10 @@ class _$UserEntityCopyWithImpl<$Res, $Val extends UserEntity>
     Object? firstname = freezed,
     Object? lastname = freezed,
     Object? refreshToken = freezed,
-    Object? salt = freezed,
-    Object? idToken = freezed,
+    Object? keySalt = null,
+    Object? accessToken = freezed,
+    Object? createdAt = freezed,
+    Object? updatedAt = freezed,
   }) {
     return _then(_value.copyWith(
       id: freezed == id
@@ -129,14 +137,22 @@ class _$UserEntityCopyWithImpl<$Res, $Val extends UserEntity>
           ? _value.refreshToken
           : refreshToken // ignore: cast_nullable_to_non_nullable
               as String?,
-      salt: freezed == salt
-          ? _value.salt
-          : salt // ignore: cast_nullable_to_non_nullable
+      keySalt: null == keySalt
+          ? _value.keySalt
+          : keySalt // ignore: cast_nullable_to_non_nullable
+              as String,
+      accessToken: freezed == accessToken
+          ? _value.accessToken
+          : accessToken // ignore: cast_nullable_to_non_nullable
               as String?,
-      idToken: freezed == idToken
-          ? _value.idToken
-          : idToken // ignore: cast_nullable_to_non_nullable
-              as String?,
+      createdAt: freezed == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      updatedAt: freezed == updatedAt
+          ? _value.updatedAt
+          : updatedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
     ) as $Val);
   }
 }
@@ -158,8 +174,10 @@ abstract class _$$UserEntityImplCopyWith<$Res>
       String? firstname,
       String? lastname,
       String? refreshToken,
-      String? salt,
-      String? idToken});
+      String keySalt,
+      String? accessToken,
+      DateTime? createdAt,
+      DateTime? updatedAt});
 }
 
 /// @nodoc
@@ -183,8 +201,10 @@ class __$$UserEntityImplCopyWithImpl<$Res>
     Object? firstname = freezed,
     Object? lastname = freezed,
     Object? refreshToken = freezed,
-    Object? salt = freezed,
-    Object? idToken = freezed,
+    Object? keySalt = null,
+    Object? accessToken = freezed,
+    Object? createdAt = freezed,
+    Object? updatedAt = freezed,
   }) {
     return _then(_$UserEntityImpl(
       id: freezed == id
@@ -219,14 +239,22 @@ class __$$UserEntityImplCopyWithImpl<$Res>
           ? _value.refreshToken
           : refreshToken // ignore: cast_nullable_to_non_nullable
               as String?,
-      salt: freezed == salt
-          ? _value.salt
-          : salt // ignore: cast_nullable_to_non_nullable
+      keySalt: null == keySalt
+          ? _value.keySalt
+          : keySalt // ignore: cast_nullable_to_non_nullable
+              as String,
+      accessToken: freezed == accessToken
+          ? _value.accessToken
+          : accessToken // ignore: cast_nullable_to_non_nullable
               as String?,
-      idToken: freezed == idToken
-          ? _value.idToken
-          : idToken // ignore: cast_nullable_to_non_nullable
-              as String?,
+      createdAt: freezed == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      updatedAt: freezed == updatedAt
+          ? _value.updatedAt
+          : updatedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
     ));
   }
 }
@@ -243,8 +271,10 @@ class _$UserEntityImpl extends _UserEntity {
       this.firstname,
       this.lastname,
       this.refreshToken,
-      this.salt,
-      this.idToken})
+      required this.keySalt,
+      this.accessToken,
+      this.createdAt,
+      this.updatedAt})
       : super._();
 
   factory _$UserEntityImpl.fromJson(Map<String, dynamic> json) =>
@@ -267,9 +297,13 @@ class _$UserEntityImpl extends _UserEntity {
   @override
   String? refreshToken;
   @override
-  String? salt;
+  String keySalt;
   @override
-  String? idToken;
+  String? accessToken;
+  @override
+  DateTime? createdAt;
+  @override
+  DateTime? updatedAt;
 
   /// Create a copy of UserEntity
   /// with the given fields replaced by the non-null parameter values.
@@ -297,8 +331,10 @@ abstract class _UserEntity extends UserEntity {
       String? firstname,
       String? lastname,
       String? refreshToken,
-      String? salt,
-      String? idToken}) = _$UserEntityImpl;
+      required String keySalt,
+      String? accessToken,
+      DateTime? createdAt,
+      DateTime? updatedAt}) = _$UserEntityImpl;
   _UserEntity._() : super._();
 
   factory _UserEntity.fromJson(Map<String, dynamic> json) =
@@ -329,11 +365,17 @@ abstract class _UserEntity extends UserEntity {
   String? get refreshToken;
   set refreshToken(String? value);
   @override
-  String? get salt;
-  set salt(String? value);
+  String get keySalt;
+  set keySalt(String value);
   @override
-  String? get idToken;
-  set idToken(String? value);
+  String? get accessToken;
+  set accessToken(String? value);
+  @override
+  DateTime? get createdAt;
+  set createdAt(DateTime? value);
+  @override
+  DateTime? get updatedAt;
+  set updatedAt(DateTime? value);
 
   /// Create a copy of UserEntity
   /// with the given fields replaced by the non-null parameter values.

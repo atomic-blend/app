@@ -16,13 +16,15 @@ class UserEntity with _$UserEntity {
     String? firstname,
     String? lastname,
     String? refreshToken,
-    String? salt,
-    String? idToken,
+    required String keySalt,
+    String? accessToken,
+    DateTime? createdAt,
+    DateTime? updatedAt,
   }) = _UserEntity;
 
   @override
   String toString() {
-    return 'UserEntity { id: $id, roles: $roles, firebase_id: $firebase_id, email: $email, name: $firstname, lastname: $lastname, purchases: $purchases }';
+    return 'UserEntity { id: $id, roles: $roles, firebase_id: $firebase_id, email: $email, name: $firstname, lastname: $lastname, purchases: $purchases, createdAt: $createdAt, updatedAt: $updatedAt }';
   }
 
   String? displayName() {

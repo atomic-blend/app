@@ -19,7 +19,7 @@ class UserService {
   }
 
   Future<UserEntity> createUser(UserEntity user) async {
-    _apiClient.setIdToken(user.idToken!);
+    _apiClient.setIdToken(user.accessToken!);
     final result = await _apiClient.post('/user/setup', data: user);
     if (result.statusCode == 201) {
       user.id = result.data['_id'];
@@ -37,17 +37,9 @@ class UserService {
 
   Future<UserEntity?> getUser(UserEntity user) async {
     try {
-      _apiClient.setIdToken(user.idToken!);
-      var result = await _apiClient.get('/user');
+      _apiClient.setIdToken(user.accessToken!);
+      var result = await _apiClient.get('/users/profile');
       if (result.statusCode == 200) {
-        user.id = result.data['_id'];
-        user.roles = result.data['roles'].map<UserRoleEntity>((role) {
-          role['id'] = role['_id'];
-          return UserRoleEntity.fromJson(role);
-        }).toList() as List<UserRoleEntity>;
-        user.salt = result.data['salt'];
-        encryptionService ??= EncryptionService(userSalt: result.data["salt"]);
-        await encryptionService?.deriveAndPersistKey(user.idToken!);
         await prefs?.setString('user', json.encode(user.toJson()));
         return user;
       }
@@ -81,6 +73,25 @@ class UserService {
       return true;
     } else {
       return false;
+    }
+  }
+
+  Future<UserEntity?> login(String email, String password) async {
+    final result = await _apiClient.post('/auth/login', data: {
+      'email': email,
+      'password': password,
+    });
+    if (result.statusCode == 200) {
+      final userData = result.data['user'];
+      final user = UserEntity.fromJson(userData);
+      prefs?.setString('user', json.encode(user.toJson()));
+
+      //TODO: derive and persist key from password
+      encryptionService ??= EncryptionService(userSalt: user.keySalt);
+      await encryptionService?.deriveAndPersistKey(password);
+      return user;
+    } else {
+      throw Exception('login_failed');
     }
   }
 }

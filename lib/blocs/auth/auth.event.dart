@@ -4,9 +4,10 @@ sealed class AuthEvent {
   const AuthEvent();
 }
 
-final class Login extends AuthEvent {
-  final UserEntity user;
-  const Login(this.user);
+final class LoginEvent extends AuthEvent {
+  final String email;
+  final String password;
+  const LoginEvent({ required this.email, required this.password });
 }
 
 final class Register extends AuthEvent {
