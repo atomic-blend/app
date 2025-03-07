@@ -7,12 +7,13 @@ sealed class AuthEvent {
 final class LoginEvent extends AuthEvent {
   final String email;
   final String password;
-  const LoginEvent({ required this.email, required this.password });
+  const LoginEvent({required this.email, required this.password});
 }
 
-final class Register extends AuthEvent {
-  final UserEntity user;
-  const Register(this.user);
+final class RegisterEvent extends AuthEvent {
+  final String email;
+  final String password;
+  const RegisterEvent({ required this.email, required this.password });
 }
 
 final class Logout extends AuthEvent {

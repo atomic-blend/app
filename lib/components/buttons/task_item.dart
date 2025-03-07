@@ -59,10 +59,10 @@ class TaskItem extends StatelessWidget {
                 ],
               ),
               const Spacer(),
-              if (task.start_date != null)
+              if (task.startDate != null)
                 Padding(
                   padding: EdgeInsets.only(right: $constants.insets.md),
-                  child: Text(Jiffy.parseFromDateTime(task.start_date!).MMMd),
+                  child: Text(Jiffy.parseFromDateTime(task.startDate!).MMMd),
                 ),
             ],
           ),

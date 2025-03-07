@@ -114,7 +114,7 @@ class _AddTaskModalState extends State<AddTaskModal> {
                       }
                       final task = TaskEntity(
                           title: _titleController.text,
-                          start_date: _dueDate,
+                          startDate: _dueDate,
                           completed: false);
                       if (_descriptionController.text.isNotEmpty) {
                         task.description = _descriptionController.text;

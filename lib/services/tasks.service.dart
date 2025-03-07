@@ -3,12 +3,10 @@ import 'package:app/services/user.service.dart';
 import 'package:app/utils/api_client.dart';
 
 class TasksService {
-  final ApiClient _apiClient = ApiClient().init();
-
   TasksService();
 
   Future<List<TaskEntity>> getAllTasks() async {
-    final result = await _apiClient.get('/tasks');
+    final result = await globalApiClient.get('/tasks');
     if (result.statusCode == 200) {
       final List<TaskEntity> tasks = [];
       for (var i = 0; i < (result.data as List).length; i++) {
@@ -21,9 +19,10 @@ class TasksService {
   }
 
   Future<bool> createTask(TaskEntity task) async {
+    print("encryptionService: $encryptionService");
     final encryptedTask =
         await task.encrypt(encryptionService: encryptionService!);
-    final result = await _apiClient.post('/tasks', data: encryptedTask);
+    final result = await globalApiClient.post('/tasks', data: encryptedTask);
     if (result.statusCode == 201) {
       return true;
     } else {
@@ -36,7 +35,7 @@ class TasksService {
         await task.encrypt(encryptionService: encryptionService!);
 
     final result =
-        await _apiClient.put('/tasks/${task.id}', data: encryptedTask);
+        await globalApiClient.put('/tasks/${task.id}', data: encryptedTask);
     if (result.statusCode == 200) {
       return true;
     } else {
@@ -45,7 +44,7 @@ class TasksService {
   }
 
   Future<bool> deleteTask(TaskEntity task) async {
-    final result = await _apiClient.delete('/tasks/${task.id}');
+    final result = await globalApiClient.delete('/tasks/${task.id}');
     if (result.statusCode == 204) {
       return true;
     } else {
