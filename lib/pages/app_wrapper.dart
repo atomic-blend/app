@@ -1,7 +1,7 @@
 import 'package:app/blocs/app/app.bloc.dart';
 import 'package:app/blocs/auth/auth.bloc.dart';
 import 'package:app/components/app/bottom_navigation.dart';
-import 'package:app/pages/auth/not_logged_in.dart';
+import 'package:app/components/widgets/not_logged_in.dart';
 import 'package:app/utils/constants.dart';
 import 'package:app/utils/shortcuts.dart';
 import 'package:flutter/material.dart';
@@ -46,7 +46,6 @@ class _AppWrapperState extends State<AppWrapper> {
         if (state is Loading) {
           body = const Center(child: CircularProgressIndicator());
         }
-        if (state is LoggedOut) return const NotLoggedIn();
         return Scaffold(
             floatingActionButton: state.user != null
                 ? floattingActionsButtons.elementAt(appState.pageIndex)
@@ -54,7 +53,9 @@ class _AppWrapperState extends State<AppWrapper> {
             floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
             backgroundColor: getTheme(context).surface,
             appBar: appbars.elementAt(appState.pageIndex),
-            body: body,
+            body: state.runtimeType == LoggedOut
+                ? const Center(child: NotLoggedInWidget())
+                : body,
             bottomNavigationBar: BottomNavigation(
               destinations: navItems,
               currentPageIndex: appState.pageIndex,
