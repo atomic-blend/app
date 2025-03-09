@@ -27,9 +27,7 @@ class NotLoggedInWidget extends StatelessWidget {
           'assets/images/secure_login.svg',
           width: getSize(context).width * 0.8,
         ),
-        SizedBox(
-          height: $constants.insets.lg,
-        ),
+        const Spacer(),
         PrimaryButton(
           width: getSize(context).width * 0.9,
           text: context.t.auth.not_logged_in.get_started_now,
@@ -39,6 +37,9 @@ class NotLoggedInWidget extends StatelessWidget {
                 builder: (context) => const LoginOrRegister(),
                 isScrollControlled: true);
           },
+        ),
+        SizedBox(
+          height: $constants.insets.lg,
         ),
       ],
     );
