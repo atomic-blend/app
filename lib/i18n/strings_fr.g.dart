@@ -34,11 +34,22 @@ class TranslationsFr implements Translations {
 
 	// Translations
 	@override String get app_name => 'LifeOS';
+	@override late final _TranslationsNavigationFr navigation = _TranslationsNavigationFr._(_root);
 	@override late final _TranslationsAuthFr auth = _TranslationsAuthFr._(_root);
 	@override late final _TranslationsSettingsFr settings = _TranslationsSettingsFr._(_root);
 	@override late final _TranslationsHomeFr home = _TranslationsHomeFr._(_root);
 	@override late final _TranslationsTasksFr tasks = _TranslationsTasksFr._(_root);
 	@override late final _TranslationsMoreFr more = _TranslationsMoreFr._(_root);
+}
+
+// Path: navigation
+class _TranslationsNavigationFr implements TranslationsNavigationEn {
+	_TranslationsNavigationFr._(this._root);
+
+	final TranslationsFr _root; // ignore: unused_field
+
+	// Translations
+	@override String get back => 'Retour';
 }
 
 // Path: auth
@@ -200,6 +211,7 @@ extension on TranslationsFr {
 	dynamic _flatMapFunction(String path) {
 		switch (path) {
 			case 'app_name': return 'LifeOS';
+			case 'navigation.back': return 'Retour';
 			case 'auth.not_logged_in.welcome': return 'Bienvenue dans LifeOS';
 			case 'auth.not_logged_in.description': return 'LifeOS est une application de gestion de la vie personnelle qui vous aide à organiser votre vie, à atteindre vos objectifs et à améliorer votre bien-être.';
 			case 'auth.not_logged_in.e2ee': return 'Nous utilisons le chiffrement de bout en bout pour protéger vos données personnelles. Vos données sont sécurisées et accessibles uniquement par vous.';
