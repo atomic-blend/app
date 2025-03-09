@@ -37,7 +37,7 @@ class Translations implements BaseTranslations<AppLocale, Translations> {
 	late final Translations _root = this; // ignore: unused_field
 
 	// Translations
-	String get app_name => 'LifeOS';
+	String get app_name => 'Atomic Blend';
 	late final TranslationsNavigationEn navigation = TranslationsNavigationEn._(_root);
 	late final TranslationsAuthEn auth = TranslationsAuthEn._(_root);
 	late final TranslationsSettingsEn settings = TranslationsSettingsEn._(_root);
@@ -122,7 +122,7 @@ class TranslationsAuthNotLoggedInEn {
 	final Translations _root; // ignore: unused_field
 
 	// Translations
-	String get welcome => 'Welcome to LifeOS';
+	String get welcome => 'Welcome to Atomic Blend';
 	String get description => 'LifeOS is a personal life management application that helps you organize your life, achieve your goals, and improve your well-being.';
 	String get e2ee => 'We use end-to-end encryption to protect your personal data. Your data is secure and accessible only by you.';
 	String get get_started_now => 'Get started now';
@@ -214,9 +214,9 @@ class TranslationsTasksAddTaskModalEn {
 extension on Translations {
 	dynamic _flatMapFunction(String path) {
 		switch (path) {
-			case 'app_name': return 'LifeOS';
+			case 'app_name': return 'Atomic Blend';
 			case 'navigation.back': return 'Back';
-			case 'auth.not_logged_in.welcome': return 'Welcome to LifeOS';
+			case 'auth.not_logged_in.welcome': return 'Welcome to Atomic Blend';
 			case 'auth.not_logged_in.description': return 'LifeOS is a personal life management application that helps you organize your life, achieve your goals, and improve your well-being.';
 			case 'auth.not_logged_in.e2ee': return 'We use end-to-end encryption to protect your personal data. Your data is secure and accessible only by you.';
 			case 'auth.not_logged_in.get_started_now': return 'Get started now';

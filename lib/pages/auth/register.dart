@@ -93,7 +93,7 @@ class _RegisterState extends State<Register> {
               obscureText: true,
             ),
           ),
-          Spacer(),
+          const Spacer(),
           PrimaryButton(
             width: getSize(context).width * 0.9,
             text: context.t.auth.register.register,

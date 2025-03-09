@@ -33,13 +33,13 @@ android {
     productFlavors {
         dev {
             dimension "flavor-type"
-            applicationId "fr.lifeos.app-dev"
-            resValue "string", "app_name", "LifeOS - Dev"
+            applicationId "fr.atomic-blend.app-dev"
+            resValue "string", "app_name", "Atomic Blend - Dev"
         }
         prod {
             dimension "flavor-type"
-            applicationId "fr.lifeos.app"
-            resValue "string", "app_name", "LifeOS"
+            applicationId "fr.atomic-blend.app"
+            resValue "string", "app_name", "Atomic Blend"
         }
     }
 

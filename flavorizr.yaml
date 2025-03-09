@@ -1,21 +1,21 @@
 flavors:
   dev:
     app:
-      name: "LifeOS - Dev"
+      name: "Atomic Blend - Dev"
 
     android:
-      applicationId: "fr.lifeos.app-dev"
+      applicationId: "fr.atomic-blend.app-dev"
     ios:
-      bundleId: "fr.lifeos.app-dev"
+      bundleId: "fr.atomic-blend.app-dev"
     macos:
-      bundleId: "fr.lifeos.app-dev"
+      bundleId: "fr.atomic-blend.app-dev"
   prod:
     app:
-      name: "LifeOS"
+      name: "Atomic Blend"
 
     android:
-      applicationId: "fr.lifeos.app"
+      applicationId: "fr.atomic-blend.app"
     ios:
-      bundleId: "fr.lifeos.app"
+      bundleId: "fr.atomic-blend.app"
     macos:
-      bundleId: "fr.lifeos.app"
+      bundleId: "fr.atomic-blend.app"

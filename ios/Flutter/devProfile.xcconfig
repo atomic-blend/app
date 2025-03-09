@@ -3,5 +3,5 @@
 
 FLUTTER_TARGET=lib/main_dev.dart
 ASSET_PREFIX=dev
-BUNDLE_NAME=LifeOS - Dev
-BUNDLE_DISPLAY_NAME=LifeOS - Dev
+BUNDLE_NAME=Atomic Blend - Dev
+BUNDLE_DISPLAY_NAME=Atomic Blend - Dev

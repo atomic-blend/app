@@ -33,7 +33,7 @@ class TranslationsFr implements Translations {
 	late final TranslationsFr _root = this; // ignore: unused_field
 
 	// Translations
-	@override String get app_name => 'LifeOS';
+	@override String get app_name => 'Atomic Blend';
 	@override late final _TranslationsNavigationFr navigation = _TranslationsNavigationFr._(_root);
 	@override late final _TranslationsAuthFr auth = _TranslationsAuthFr._(_root);
 	@override late final _TranslationsSettingsFr settings = _TranslationsSettingsFr._(_root);
@@ -118,7 +118,7 @@ class _TranslationsAuthNotLoggedInFr implements TranslationsAuthNotLoggedInEn {
 	final TranslationsFr _root; // ignore: unused_field
 
 	// Translations
-	@override String get welcome => 'Bienvenue dans LifeOS';
+	@override String get welcome => 'Bienvenue dans Atomic Blend';
 	@override String get description => 'LifeOS est une application de gestion de la vie personnelle qui vous aide à organiser votre vie, à atteindre vos objectifs et à améliorer votre bien-être.';
 	@override String get e2ee => 'Nous utilisons le chiffrement de bout en bout pour protéger vos données personnelles. Vos données sont sécurisées et accessibles uniquement par vous.';
 	@override String get get_started_now => 'Commencez maintenant';
@@ -210,9 +210,9 @@ class _TranslationsTasksAddTaskModalFr implements TranslationsTasksAddTaskModalE
 extension on TranslationsFr {
 	dynamic _flatMapFunction(String path) {
 		switch (path) {
-			case 'app_name': return 'LifeOS';
+			case 'app_name': return 'Atomic Blend';
 			case 'navigation.back': return 'Retour';
-			case 'auth.not_logged_in.welcome': return 'Bienvenue dans LifeOS';
+			case 'auth.not_logged_in.welcome': return 'Bienvenue dans Atomic Blend';
 			case 'auth.not_logged_in.description': return 'LifeOS est une application de gestion de la vie personnelle qui vous aide à organiser votre vie, à atteindre vos objectifs et à améliorer votre bien-être.';
 			case 'auth.not_logged_in.e2ee': return 'Nous utilisons le chiffrement de bout en bout pour protéger vos données personnelles. Vos données sont sécurisées et accessibles uniquement par vous.';
 			case 'auth.not_logged_in.get_started_now': return 'Commencez maintenant';

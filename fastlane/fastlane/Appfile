@@ -1,4 +1,4 @@
-app_identifier("fr.lifeos.app") # The bundle identifier of your app
+app_identifier("fr.atomic-blend.app") # The bundle identifier of your app
 apple_id("pro@brandonguigo.com") # Your Apple Developer Portal username
 json_key_file("/Users/brandonguigo/playstore_key.json")
 
