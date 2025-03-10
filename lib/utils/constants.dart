@@ -1,3 +1,4 @@
+import 'package:app/blocs/auth/auth.bloc.dart';
 import 'package:app/components/buttons/sync_status_button.dart';
 import 'package:app/i18n/strings.g.dart';
 import 'package:app/main.dart';
@@ -6,6 +7,7 @@ import 'package:app/pages/tasks/add_task_modal.dart';
 import 'package:app/pages/tasks/tasks.dart';
 import 'package:app/utils/shortcuts.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:icons_plus/icons_plus.dart';
 
 final $constants = Constants();
@@ -107,10 +109,15 @@ class Navigation {
               ],
             ),
             actions: [
-              Padding(
-                padding: EdgeInsets.only(right: $constants.insets.sm),
-                child: const SyncStatusButton(),
-              )
+              BlocBuilder<AuthBloc, AuthState>(builder: (context, authState) {
+                if (authState is LoggedIn) {
+                  return Padding(
+                    padding: EdgeInsets.only(right: $constants.insets.sm),
+                    child: const SyncStatusButton(),
+                  );
+                }
+                return Container();
+              })
             ]),
       ];
 
