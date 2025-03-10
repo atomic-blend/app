@@ -16,6 +16,7 @@ class EditSelfHostedUrlModal extends StatefulWidget {
 
 class _EditSelfHostedUrlModalState extends State<EditSelfHostedUrlModal> {
   final _selfHostedUrlController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
@@ -29,48 +30,68 @@ class _EditSelfHostedUrlModalState extends State<EditSelfHostedUrlModal> {
       backgroundColor: getTheme(context).surface,
       child: Padding(
         padding: EdgeInsets.all($constants.insets.md),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text(
-              context.t.settings.app_settings.selfHostedUrl.title,
-              style: getTextTheme(context).titleMedium!.copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
-            ),
-            SizedBox(height: $constants.insets.xs),
-            Text(context.t.settings.app_settings.selfHostedUrl.description),
-            SizedBox(height: $constants.insets.sm),
-            AppTextFormField(
-              controller: _selfHostedUrlController,
-              hintText:
-                  context.t.settings.app_settings.selfHostedUrl.placeholder,
-            ),
-            SizedBox(height: $constants.insets.md),
-            Row(
-              children: [
-                Expanded(
-                    child: PrimaryButton(
-                        border: Border.all(color: getTheme(context).primary),
-                        textColor: getTheme(context).primary,
-                        backgroundColor: getTheme(context).surface,
-                        text: context.t.actions.cancel,
-                        onPressed: () {
-                          Navigator.pop(context);
-                        })),
-                SizedBox(width: $constants.insets.sm),
-                Expanded(
-                    child: PrimaryButton(
-                        text: context.t.actions.save,
-                        onPressed: () async{
-                          bool result = await ApiClient.setSelfHostedRestApiUrl(_selfHostedUrlController.text);
-                          if(result){
+        child: Form(
+          key: _formKey,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                context.t.settings.app_settings.selfHostedUrl.title,
+                style: getTextTheme(context).titleMedium!.copyWith(
+                      fontWeight: FontWeight.bold,
+                    ),
+              ),
+              SizedBox(height: $constants.insets.xs),
+              Text(context.t.settings.app_settings.selfHostedUrl.description),
+              SizedBox(height: $constants.insets.sm),
+              AppTextFormField(
+                controller: _selfHostedUrlController,
+                hintText:
+                    context.t.settings.app_settings.selfHostedUrl.placeholder,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return null;
+                  }
+                  if (!Uri.parse(value).isAbsolute) {
+                    return context.t.validation.invalid_url;
+                  }
+                  return null;
+                },
+                onDelete: () {
+                  _selfHostedUrlController.clear();
+                },
+              ),
+              SizedBox(height: $constants.insets.md),
+              Row(
+                children: [
+                  Expanded(
+                      child: PrimaryButton(
+                          border: Border.all(color: getTheme(context).primary),
+                          textColor: getTheme(context).primary,
+                          backgroundColor: getTheme(context).surface,
+                          text: context.t.actions.cancel,
+                          onPressed: () {
                             Navigator.pop(context);
-                          }
-                        })),
-              ],
-            ),
-          ],
+                          })),
+                  SizedBox(width: $constants.insets.sm),
+                  Expanded(
+                      child: PrimaryButton(
+                          text: context.t.actions.save,
+                          onPressed: () async {
+                            if (!_formKey.currentState!.validate()) {
+                              return;
+                            }
+                            bool result =
+                                await ApiClient.setSelfHostedRestApiUrl(
+                                    _selfHostedUrlController.text);
+                            if (result) {
+                              Navigator.pop(context);
+                            }
+                          })),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );

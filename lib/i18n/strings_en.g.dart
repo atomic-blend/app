@@ -45,6 +45,7 @@ class Translations implements BaseTranslations<AppLocale, Translations> {
 	late final TranslationsTasksEn tasks = TranslationsTasksEn._(_root);
 	late final TranslationsMoreEn more = TranslationsMoreEn._(_root);
 	late final TranslationsActionsEn actions = TranslationsActionsEn._(_root);
+	late final TranslationsValidationEn validation = TranslationsValidationEn._(_root);
 }
 
 // Path: navigation
@@ -126,6 +127,17 @@ class TranslationsActionsEn {
 	// Translations
 	String get save => 'Save';
 	String get cancel => 'Cancel';
+}
+
+// Path: validation
+class TranslationsValidationEn {
+	TranslationsValidationEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	String get required => 'Required';
+	String get invalid_url => 'invalid URL';
 }
 
 // Path: auth.not_logged_in
@@ -308,6 +320,8 @@ extension on Translations {
 			case 'more.title': return 'More';
 			case 'actions.save': return 'Save';
 			case 'actions.cancel': return 'Cancel';
+			case 'validation.required': return 'Required';
+			case 'validation.invalid_url': return 'invalid URL';
 			default: return null;
 		}
 	}

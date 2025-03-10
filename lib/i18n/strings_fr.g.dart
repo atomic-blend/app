@@ -41,6 +41,7 @@ class TranslationsFr implements Translations {
 	@override late final _TranslationsTasksFr tasks = _TranslationsTasksFr._(_root);
 	@override late final _TranslationsMoreFr more = _TranslationsMoreFr._(_root);
 	@override late final _TranslationsActionsFr actions = _TranslationsActionsFr._(_root);
+	@override late final _TranslationsValidationFr validation = _TranslationsValidationFr._(_root);
 }
 
 // Path: navigation
@@ -122,6 +123,17 @@ class _TranslationsActionsFr implements TranslationsActionsEn {
 	// Translations
 	@override String get save => 'Enregistrer';
 	@override String get cancel => 'Annuler';
+}
+
+// Path: validation
+class _TranslationsValidationFr implements TranslationsValidationEn {
+	_TranslationsValidationFr._(this._root);
+
+	final TranslationsFr _root; // ignore: unused_field
+
+	// Translations
+	@override String get required => 'Ce champ est obligatoire';
+	@override String get invalid_url => 'URL invalide';
 }
 
 // Path: auth.not_logged_in
@@ -304,6 +316,8 @@ extension on TranslationsFr {
 			case 'more.title': return 'Plus';
 			case 'actions.save': return 'Enregistrer';
 			case 'actions.cancel': return 'Annuler';
+			case 'validation.required': return 'Ce champ est obligatoire';
+			case 'validation.invalid_url': return 'URL invalide';
 			default: return null;
 		}
 	}
