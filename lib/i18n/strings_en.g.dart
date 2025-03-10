@@ -44,6 +44,7 @@ class Translations implements BaseTranslations<AppLocale, Translations> {
 	late final TranslationsHomeEn home = TranslationsHomeEn._(_root);
 	late final TranslationsTasksEn tasks = TranslationsTasksEn._(_root);
 	late final TranslationsMoreEn more = TranslationsMoreEn._(_root);
+	late final TranslationsActionsEn actions = TranslationsActionsEn._(_root);
 }
 
 // Path: navigation
@@ -114,6 +115,17 @@ class TranslationsMoreEn {
 
 	// Translations
 	String get title => 'More';
+}
+
+// Path: actions
+class TranslationsActionsEn {
+	TranslationsActionsEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	String get save => 'Save';
+	String get cancel => 'Cancel';
 }
 
 // Path: auth.not_logged_in
@@ -229,6 +241,8 @@ class TranslationsSettingsAppSettingsSelfHostedUrlEn {
 
 	// Translations
 	String get title => 'Self-Hosted URL';
+	String get description => 'If you are using a self-hosted instance of Atomic Blend, you can enter the URL here.';
+	String get placeholder => 'Enter the URL of your self-hosted instance';
 	String get not_set => 'Not set';
 }
 
@@ -271,6 +285,8 @@ extension on Translations {
 			case 'settings.title': return 'Settings';
 			case 'settings.app_settings.title': return 'App Settings';
 			case 'settings.app_settings.selfHostedUrl.title': return 'Self-Hosted URL';
+			case 'settings.app_settings.selfHostedUrl.description': return 'If you are using a self-hosted instance of Atomic Blend, you can enter the URL here.';
+			case 'settings.app_settings.selfHostedUrl.placeholder': return 'Enter the URL of your self-hosted instance';
 			case 'settings.app_settings.selfHostedUrl.not_set': return 'Not set';
 			case 'settings.logout': return 'Logout';
 			case 'home.title': return 'Home';
@@ -290,6 +306,8 @@ extension on Translations {
 			case 'tasks.add_task_modal.title_required': return 'Title required';
 			case 'tasks.add_task_modal.title_required_description': return 'Please enter a title for your task';
 			case 'more.title': return 'More';
+			case 'actions.save': return 'Save';
+			case 'actions.cancel': return 'Cancel';
 			default: return null;
 		}
 	}

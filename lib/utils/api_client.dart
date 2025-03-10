@@ -39,7 +39,7 @@ class ApiClient {
     _dio.interceptors.add(
       InterceptorsWrapper(
         onRequest: (options, handler) {
-          if (selfHostedRestApiUrl != null) {
+          if (selfHostedRestApiUrl != null && selfHostedRestApiUrl != '') {
             options.baseUrl = selfHostedRestApiUrl!;
           } else {
             options.baseUrl = env!.restApiUrl;
@@ -106,9 +106,9 @@ class ApiClient {
     _dio.options.headers['Authorization'] = 'Bearer $idToken';
   }
 
-  setSelfHostedRestApiUrl(String url) {
-    selfHostedRestApiUrl = url;
-    prefs?.setString('self_hosted_rest_api_url', url);
+  static Future<bool> setSelfHostedRestApiUrl(String url) async {
+    bool? result = await prefs?.setString('self_hosted_rest_api_url', url);
+    return result ?? false;
   }
 
   get(String path,

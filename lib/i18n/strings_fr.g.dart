@@ -40,6 +40,7 @@ class TranslationsFr implements Translations {
 	@override late final _TranslationsHomeFr home = _TranslationsHomeFr._(_root);
 	@override late final _TranslationsTasksFr tasks = _TranslationsTasksFr._(_root);
 	@override late final _TranslationsMoreFr more = _TranslationsMoreFr._(_root);
+	@override late final _TranslationsActionsFr actions = _TranslationsActionsFr._(_root);
 }
 
 // Path: navigation
@@ -110,6 +111,17 @@ class _TranslationsMoreFr implements TranslationsMoreEn {
 
 	// Translations
 	@override String get title => 'Plus';
+}
+
+// Path: actions
+class _TranslationsActionsFr implements TranslationsActionsEn {
+	_TranslationsActionsFr._(this._root);
+
+	final TranslationsFr _root; // ignore: unused_field
+
+	// Translations
+	@override String get save => 'Enregistrer';
+	@override String get cancel => 'Annuler';
 }
 
 // Path: auth.not_logged_in
@@ -225,6 +237,8 @@ class _TranslationsSettingsAppSettingsSelfHostedUrlFr implements TranslationsSet
 
 	// Translations
 	@override String get title => 'URL auto-hébergée';
+	@override String get description => 'Si vous utilisez une instance auto-hébergée d\'Atomic Blend, vous pouvez saisir l\'URL ici.';
+	@override String get placeholder => 'Entrez l\'URL de votre instance auto-hébergée';
 	@override String get not_set => 'Non défini';
 }
 
@@ -267,6 +281,8 @@ extension on TranslationsFr {
 			case 'settings.title': return 'Paramètres';
 			case 'settings.app_settings.title': return 'Paramètres de l\'application';
 			case 'settings.app_settings.selfHostedUrl.title': return 'URL auto-hébergée';
+			case 'settings.app_settings.selfHostedUrl.description': return 'Si vous utilisez une instance auto-hébergée d\'Atomic Blend, vous pouvez saisir l\'URL ici.';
+			case 'settings.app_settings.selfHostedUrl.placeholder': return 'Entrez l\'URL de votre instance auto-hébergée';
 			case 'settings.app_settings.selfHostedUrl.not_set': return 'Non défini';
 			case 'settings.logout': return 'Déconnexion';
 			case 'home.title': return 'Accueil';
@@ -286,6 +302,8 @@ extension on TranslationsFr {
 			case 'tasks.add_task_modal.title_required': return 'Titre requis';
 			case 'tasks.add_task_modal.title_required_description': return 'Veuillez saisir un titre pour votre tâche';
 			case 'more.title': return 'Plus';
+			case 'actions.save': return 'Enregistrer';
+			case 'actions.cancel': return 'Annuler';
 			default: return null;
 		}
 	}
