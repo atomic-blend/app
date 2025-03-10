@@ -7,6 +7,7 @@ class IconTextButton extends StatelessWidget {
   final Color? iconColor;
   final Color? textColor;
   final String text;
+  final String? data;
   final VoidCallback? onTap;
 
   const IconTextButton({
@@ -16,6 +17,7 @@ class IconTextButton extends StatelessWidget {
     required this.text,
     this.textColor,
     this.onTap,
+    this.data,
   });
 
   @override
@@ -24,16 +26,20 @@ class IconTextButton extends StatelessWidget {
       onTap: onTap,
       child: Row(
         children: [
-          Icon(
-            icon,
-            size: 24,
-            color: iconColor,
-          ),
-          SizedBox(width: $constants.insets.lg),
+          if (icon != null) ...[
+            Icon(
+              icon,
+              size: 24,
+              color: iconColor,
+            ),
+            SizedBox(width: $constants.insets.sm),
+          ],
           Text(text,
               style: getTextTheme(context)
                   .titleMedium!
                   .copyWith(color: textColor)),
+          const Spacer(),
+          if (data != null) Text(data!),
         ],
       ),
     );

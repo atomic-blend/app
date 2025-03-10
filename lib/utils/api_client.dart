@@ -10,6 +10,7 @@ final globalApiClient = ApiClient().init();
 
 class ApiClient {
   Dio _dio = Dio();
+  String? selfHostedRestApiUrl;
   String? refreshToken;
   String? idToken;
 
@@ -17,7 +18,7 @@ class ApiClient {
   ApiClient.test(this._dio);
 
   init() {
-    readTokenFromCache();
+    readFromCache();
     _dio.interceptors.add(PrettyDioLogger(
         requestHeader: true,
         requestBody: true,
@@ -38,7 +39,11 @@ class ApiClient {
     _dio.interceptors.add(
       InterceptorsWrapper(
         onRequest: (options, handler) {
-          options.baseUrl = env!.restApiUrl;
+          if (selfHostedRestApiUrl != null) {
+            options.baseUrl = selfHostedRestApiUrl!;
+          } else {
+            options.baseUrl = env!.restApiUrl;
+          }
           options.headers['content-Type'] = 'application/json';
           if (idToken != null) {
             options.headers['Authorization'] = 'Bearer $idToken';
@@ -53,7 +58,7 @@ class ApiClient {
               final user = UserEntity.fromJson(userData);
               final newToken = await UserService.refreshToken(user);
               idToken = newToken;
-              setIdToken(newToken!);
+              setDioAuthHeader(newToken!);
               final opts = Options(
                 extra: error.requestOptions.extra,
                 method: error.requestOptions.method,
@@ -87,8 +92,9 @@ class ApiClient {
     return this;
   }
 
-  readTokenFromCache() async {
+  readFromCache() async {
     final userDataRaw = prefs?.getString('user');
+    selfHostedRestApiUrl = prefs?.getString('self_hosted_rest_api_url');
     if (userDataRaw != null) {
       final userData = json.decode(userDataRaw);
       idToken = userData?['idToken'];
@@ -96,29 +102,34 @@ class ApiClient {
     }
   }
 
-  setIdToken(String idToken) {
+  setDioAuthHeader(String idToken) {
     _dio.options.headers['Authorization'] = 'Bearer $idToken';
+  }
+
+  setSelfHostedRestApiUrl(String url) {
+    selfHostedRestApiUrl = url;
+    prefs?.setString('self_hosted_rest_api_url', url);
   }
 
   get(String path,
       {Options? options, Map<String, dynamic>? queryParameters}) async {
-    await readTokenFromCache();
+    await readFromCache();
     return await _dio.get(path,
         options: options, queryParameters: queryParameters);
   }
 
   post(String path, {data}) async {
-    await readTokenFromCache();
+    await readFromCache();
     return await _dio.post(path, data: data);
   }
 
   put(String path, {data}) async {
-    await readTokenFromCache();
+    await readFromCache();
     return await _dio.put(path, data: data);
   }
 
   delete(String path) async {
-    await readTokenFromCache();
+    await readFromCache();
     return await _dio.delete(path);
   }
 }

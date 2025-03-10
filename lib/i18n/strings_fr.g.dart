@@ -73,6 +73,7 @@ class _TranslationsSettingsFr implements TranslationsSettingsEn {
 
 	// Translations
 	@override String get title => 'Paramètres';
+	@override late final _TranslationsSettingsAppSettingsFr app_settings = _TranslationsSettingsAppSettingsFr._(_root);
 	@override String get logout => 'Déconnexion';
 }
 
@@ -176,6 +177,17 @@ class _TranslationsAuthRegisterFr implements TranslationsAuthRegisterEn {
 	@override String get password_hint => 'Entrez votre mot de passe';
 }
 
+// Path: settings.app_settings
+class _TranslationsSettingsAppSettingsFr implements TranslationsSettingsAppSettingsEn {
+	_TranslationsSettingsAppSettingsFr._(this._root);
+
+	final TranslationsFr _root; // ignore: unused_field
+
+	// Translations
+	@override String get title => 'Paramètres de l\'application';
+	@override late final _TranslationsSettingsAppSettingsSelfHostedUrlFr selfHostedUrl = _TranslationsSettingsAppSettingsSelfHostedUrlFr._(_root);
+}
+
 // Path: tasks.due_dates
 class _TranslationsTasksDueDatesFr implements TranslationsTasksDueDatesEn {
 	_TranslationsTasksDueDatesFr._(this._root);
@@ -203,6 +215,17 @@ class _TranslationsTasksAddTaskModalFr implements TranslationsTasksAddTaskModalE
 	@override String get erase => 'Effacer';
 	@override String get title_required => 'Titre requis';
 	@override String get title_required_description => 'Veuillez saisir un titre pour votre tâche';
+}
+
+// Path: settings.app_settings.selfHostedUrl
+class _TranslationsSettingsAppSettingsSelfHostedUrlFr implements TranslationsSettingsAppSettingsSelfHostedUrlEn {
+	_TranslationsSettingsAppSettingsSelfHostedUrlFr._(this._root);
+
+	final TranslationsFr _root; // ignore: unused_field
+
+	// Translations
+	@override String get title => 'URL auto-hébergée';
+	@override String get not_set => 'Non défini';
 }
 
 /// Flat map(s) containing all translations.
@@ -242,6 +265,9 @@ extension on TranslationsFr {
 			case 'auth.register.email_hint': return 'Entrez votre adresse e-mail';
 			case 'auth.register.password_hint': return 'Entrez votre mot de passe';
 			case 'settings.title': return 'Paramètres';
+			case 'settings.app_settings.title': return 'Paramètres de l\'application';
+			case 'settings.app_settings.selfHostedUrl.title': return 'URL auto-hébergée';
+			case 'settings.app_settings.selfHostedUrl.not_set': return 'Non défini';
 			case 'settings.logout': return 'Déconnexion';
 			case 'home.title': return 'Accueil';
 			case 'home.whats_for_today': return 'Quoi de prévu pour aujourd\'hui ?';
