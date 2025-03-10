@@ -44,6 +44,8 @@ class Translations implements BaseTranslations<AppLocale, Translations> {
 	late final TranslationsHomeEn home = TranslationsHomeEn._(_root);
 	late final TranslationsTasksEn tasks = TranslationsTasksEn._(_root);
 	late final TranslationsMoreEn more = TranslationsMoreEn._(_root);
+	late final TranslationsActionsEn actions = TranslationsActionsEn._(_root);
+	late final TranslationsValidationEn validation = TranslationsValidationEn._(_root);
 }
 
 // Path: navigation
@@ -77,6 +79,7 @@ class TranslationsSettingsEn {
 
 	// Translations
 	String get title => 'Settings';
+	late final TranslationsSettingsAppSettingsEn app_settings = TranslationsSettingsAppSettingsEn._(_root);
 	String get logout => 'Logout';
 }
 
@@ -113,6 +116,28 @@ class TranslationsMoreEn {
 
 	// Translations
 	String get title => 'More';
+}
+
+// Path: actions
+class TranslationsActionsEn {
+	TranslationsActionsEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	String get save => 'Save';
+	String get cancel => 'Cancel';
+}
+
+// Path: validation
+class TranslationsValidationEn {
+	TranslationsValidationEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	String get required => 'Required';
+	String get invalid_url => 'invalid URL';
 }
 
 // Path: auth.not_logged_in
@@ -180,6 +205,17 @@ class TranslationsAuthRegisterEn {
 	String get password_hint => 'Enter your password';
 }
 
+// Path: settings.app_settings
+class TranslationsSettingsAppSettingsEn {
+	TranslationsSettingsAppSettingsEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	String get title => 'App Settings';
+	late final TranslationsSettingsAppSettingsSelfHostedUrlEn selfHostedUrl = TranslationsSettingsAppSettingsSelfHostedUrlEn._(_root);
+}
+
 // Path: tasks.due_dates
 class TranslationsTasksDueDatesEn {
 	TranslationsTasksDueDatesEn._(this._root);
@@ -207,6 +243,19 @@ class TranslationsTasksAddTaskModalEn {
 	String get erase => 'Erase';
 	String get title_required => 'Title required';
 	String get title_required_description => 'Please enter a title for your task';
+}
+
+// Path: settings.app_settings.selfHostedUrl
+class TranslationsSettingsAppSettingsSelfHostedUrlEn {
+	TranslationsSettingsAppSettingsSelfHostedUrlEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	String get title => 'Self-Hosted URL';
+	String get description => 'If you are using a self-hosted instance of Atomic Blend, you can enter the URL here.';
+	String get placeholder => 'Enter the URL of your self-hosted instance';
+	String get not_set => 'Not set';
 }
 
 /// Flat map(s) containing all translations.
@@ -246,6 +295,11 @@ extension on Translations {
 			case 'auth.register.email_hint': return 'Enter your email address';
 			case 'auth.register.password_hint': return 'Enter your password';
 			case 'settings.title': return 'Settings';
+			case 'settings.app_settings.title': return 'App Settings';
+			case 'settings.app_settings.selfHostedUrl.title': return 'Self-Hosted URL';
+			case 'settings.app_settings.selfHostedUrl.description': return 'If you are using a self-hosted instance of Atomic Blend, you can enter the URL here.';
+			case 'settings.app_settings.selfHostedUrl.placeholder': return 'Enter the URL of your self-hosted instance';
+			case 'settings.app_settings.selfHostedUrl.not_set': return 'Not set';
 			case 'settings.logout': return 'Logout';
 			case 'home.title': return 'Home';
 			case 'home.whats_for_today': return 'What\'s for today?';
@@ -264,6 +318,10 @@ extension on Translations {
 			case 'tasks.add_task_modal.title_required': return 'Title required';
 			case 'tasks.add_task_modal.title_required_description': return 'Please enter a title for your task';
 			case 'more.title': return 'More';
+			case 'actions.save': return 'Save';
+			case 'actions.cancel': return 'Cancel';
+			case 'validation.required': return 'Required';
+			case 'validation.invalid_url': return 'invalid URL';
 			default: return null;
 		}
 	}

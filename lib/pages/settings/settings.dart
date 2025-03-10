@@ -1,9 +1,12 @@
+import 'package:app/blocs/auth/auth.bloc.dart';
 import 'package:app/components/buttons/icon_text_button.dart';
 import 'package:app/i18n/strings.g.dart';
+import 'package:app/pages/settings/screens/app_settings.dart';
 import 'package:app/services/firebase.service.dart';
 import 'package:app/utils/constants.dart';
 import 'package:app/utils/shortcuts.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:icons_plus/icons_plus.dart';
 
 class Settings extends StatelessWidget {
@@ -13,29 +16,48 @@ class Settings extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(context.t.settings.title,
-            style: getTextTheme(context).headlineSmall!.copyWith(
-                  fontWeight: FontWeight.bold,
-                )),
-      ),
-      body: Padding(
-        padding: EdgeInsets.symmetric(
-            horizontal: $constants.insets.sm, vertical: $constants.insets.xs),
-        child: Column(
+        title: Row(
+          mainAxisSize: MainAxisSize.min,
+          spacing: $constants.insets.xs,
           children: [
-            IconTextButton(
-              text: context.t.settings.logout,
-              icon: LineAwesome.sign_out_alt_solid,
-              iconColor: Colors.red,
-              textColor: Colors.red,
-              onTap: () {
-                FirebaseService.logout(context);
-                Navigator.pop(context);
-              },
-            )
+            const Icon(LineAwesome.cog_solid),
+            Text(context.t.settings.title,
+                style: getTextTheme(context).bodyLarge!.copyWith(
+                      fontWeight: FontWeight.bold,
+                    )),
           ],
         ),
       ),
+      body: BlocBuilder<AuthBloc, AuthState>(builder: (contex, authState) {
+        return Padding(
+          padding: EdgeInsets.symmetric(
+              horizontal: $constants.insets.sm, vertical: $constants.insets.xs),
+          child: Column(
+            children: [
+              IconTextButton(
+                text: context.t.settings.app_settings.title,
+                icon: LineAwesome.mobile_solid,
+                onTap: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                    return const AppSettings();
+                  }));
+                },
+              ),
+              if (authState is LoggedIn)
+                IconTextButton(
+                  text: context.t.settings.logout,
+                  icon: LineAwesome.sign_out_alt_solid,
+                  iconColor: Colors.red,
+                  textColor: Colors.red,
+                  onTap: () {
+                    FirebaseService.logout(context);
+                    Navigator.pop(context);
+                  },
+                ),
+            ],
+          ),
+        );
+      }),
     );
   }
 }

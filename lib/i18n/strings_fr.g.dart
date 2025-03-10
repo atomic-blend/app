@@ -40,6 +40,8 @@ class TranslationsFr implements Translations {
 	@override late final _TranslationsHomeFr home = _TranslationsHomeFr._(_root);
 	@override late final _TranslationsTasksFr tasks = _TranslationsTasksFr._(_root);
 	@override late final _TranslationsMoreFr more = _TranslationsMoreFr._(_root);
+	@override late final _TranslationsActionsFr actions = _TranslationsActionsFr._(_root);
+	@override late final _TranslationsValidationFr validation = _TranslationsValidationFr._(_root);
 }
 
 // Path: navigation
@@ -73,6 +75,7 @@ class _TranslationsSettingsFr implements TranslationsSettingsEn {
 
 	// Translations
 	@override String get title => 'Paramètres';
+	@override late final _TranslationsSettingsAppSettingsFr app_settings = _TranslationsSettingsAppSettingsFr._(_root);
 	@override String get logout => 'Déconnexion';
 }
 
@@ -109,6 +112,28 @@ class _TranslationsMoreFr implements TranslationsMoreEn {
 
 	// Translations
 	@override String get title => 'Plus';
+}
+
+// Path: actions
+class _TranslationsActionsFr implements TranslationsActionsEn {
+	_TranslationsActionsFr._(this._root);
+
+	final TranslationsFr _root; // ignore: unused_field
+
+	// Translations
+	@override String get save => 'Enregistrer';
+	@override String get cancel => 'Annuler';
+}
+
+// Path: validation
+class _TranslationsValidationFr implements TranslationsValidationEn {
+	_TranslationsValidationFr._(this._root);
+
+	final TranslationsFr _root; // ignore: unused_field
+
+	// Translations
+	@override String get required => 'Ce champ est obligatoire';
+	@override String get invalid_url => 'URL invalide';
 }
 
 // Path: auth.not_logged_in
@@ -176,6 +201,17 @@ class _TranslationsAuthRegisterFr implements TranslationsAuthRegisterEn {
 	@override String get password_hint => 'Entrez votre mot de passe';
 }
 
+// Path: settings.app_settings
+class _TranslationsSettingsAppSettingsFr implements TranslationsSettingsAppSettingsEn {
+	_TranslationsSettingsAppSettingsFr._(this._root);
+
+	final TranslationsFr _root; // ignore: unused_field
+
+	// Translations
+	@override String get title => 'Paramètres de l\'application';
+	@override late final _TranslationsSettingsAppSettingsSelfHostedUrlFr selfHostedUrl = _TranslationsSettingsAppSettingsSelfHostedUrlFr._(_root);
+}
+
 // Path: tasks.due_dates
 class _TranslationsTasksDueDatesFr implements TranslationsTasksDueDatesEn {
 	_TranslationsTasksDueDatesFr._(this._root);
@@ -203,6 +239,19 @@ class _TranslationsTasksAddTaskModalFr implements TranslationsTasksAddTaskModalE
 	@override String get erase => 'Effacer';
 	@override String get title_required => 'Titre requis';
 	@override String get title_required_description => 'Veuillez saisir un titre pour votre tâche';
+}
+
+// Path: settings.app_settings.selfHostedUrl
+class _TranslationsSettingsAppSettingsSelfHostedUrlFr implements TranslationsSettingsAppSettingsSelfHostedUrlEn {
+	_TranslationsSettingsAppSettingsSelfHostedUrlFr._(this._root);
+
+	final TranslationsFr _root; // ignore: unused_field
+
+	// Translations
+	@override String get title => 'URL auto-hébergée';
+	@override String get description => 'Si vous utilisez une instance auto-hébergée d\'Atomic Blend, vous pouvez saisir l\'URL ici.';
+	@override String get placeholder => 'Entrez l\'URL de votre instance auto-hébergée';
+	@override String get not_set => 'Non défini';
 }
 
 /// Flat map(s) containing all translations.
@@ -242,6 +291,11 @@ extension on TranslationsFr {
 			case 'auth.register.email_hint': return 'Entrez votre adresse e-mail';
 			case 'auth.register.password_hint': return 'Entrez votre mot de passe';
 			case 'settings.title': return 'Paramètres';
+			case 'settings.app_settings.title': return 'Paramètres de l\'application';
+			case 'settings.app_settings.selfHostedUrl.title': return 'URL auto-hébergée';
+			case 'settings.app_settings.selfHostedUrl.description': return 'Si vous utilisez une instance auto-hébergée d\'Atomic Blend, vous pouvez saisir l\'URL ici.';
+			case 'settings.app_settings.selfHostedUrl.placeholder': return 'Entrez l\'URL de votre instance auto-hébergée';
+			case 'settings.app_settings.selfHostedUrl.not_set': return 'Non défini';
 			case 'settings.logout': return 'Déconnexion';
 			case 'home.title': return 'Accueil';
 			case 'home.whats_for_today': return 'Quoi de prévu pour aujourd\'hui ?';
@@ -260,6 +314,10 @@ extension on TranslationsFr {
 			case 'tasks.add_task_modal.title_required': return 'Titre requis';
 			case 'tasks.add_task_modal.title_required_description': return 'Veuillez saisir un titre pour votre tâche';
 			case 'more.title': return 'Plus';
+			case 'actions.save': return 'Enregistrer';
+			case 'actions.cancel': return 'Annuler';
+			case 'validation.required': return 'Ce champ est obligatoire';
+			case 'validation.invalid_url': return 'URL invalide';
 			default: return null;
 		}
 	}

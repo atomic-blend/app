@@ -53,7 +53,8 @@ class _AppWrapperState extends State<AppWrapper> {
             floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
             backgroundColor: getTheme(context).surface,
             appBar: appbars.elementAt(appState.pageIndex),
-            body: state.runtimeType == LoggedOut
+            body: state.runtimeType == LoggedOut &&
+                    appState.pageIndex != screens.length - 1
                 ? const Center(child: NotLoggedInWidget())
                 : body,
             bottomNavigationBar: BottomNavigation(
