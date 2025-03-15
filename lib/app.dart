@@ -1,6 +1,7 @@
 import 'package:app/i18n/strings.g.dart';
 import 'package:app/main.dart';
 import 'package:app/pages/app_wrapper.dart';
+import 'package:app/utils/app_theme.dart';
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -14,9 +15,9 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: FlexThemeData.light(scheme: FlexScheme.greys),
+      theme: AppTheme.light,
       // The Mandy red, dark theme.
-      darkTheme: FlexThemeData.dark(scheme: FlexScheme.greys),
+      darkTheme: AppTheme.dark,
       // Use dark or light theme based on system setting.
       themeMode: ThemeMode.system,
       locale: TranslationProvider.of(context).flutterLocale, // use provider
