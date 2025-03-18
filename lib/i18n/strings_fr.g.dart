@@ -185,14 +185,12 @@ class _TranslationsAuthLoginFr implements TranslationsAuthLoginEn {
 
 	// Translations
 	@override String get title => '👋 Bon retour parmis nous !';
-	@override String get description => 'Utilisez votre adresse e-mail et votre mot de passe pour vous reconnecter et accéder à vos données';
+	@override String get description => 'Utilisez votre adresse e-mail et votre mot de passe pour vous reconnecter et accéder à vos données.';
 	@override String get email => 'Adresse e-mail';
-	@override String get password => 'Mot de passe';
 	@override String get forgot_password => 'Mot de passe oublié';
 	@override String get login => 'Se connecter';
 	@override String get no_account => 'Pas de compte ?';
 	@override String get email_hint => 'Entrez votre adresse e-mail';
-	@override String get password_hint => 'Entrez votre mot de passe';
 }
 
 // Path: auth.register
@@ -202,15 +200,15 @@ class _TranslationsAuthRegisterFr implements TranslationsAuthRegisterEn {
 	final TranslationsFr _root; // ignore: unused_field
 
 	// Translations
-	@override String get title => 'Inscrivez-vous sur LifeOS';
-	@override String get description => 'Créez un compte LifeOS pour commencer dès maintenant une vie plus tranquille.';
-	@override String get email => 'Adresse e-mail';
-	@override String get password => 'Mot de passe';
+	@override String get email => 'Quelle est votre adresse e-mail ?';
+	@override String get email_description => 'Votre e-mail est utilisé uniquement a des fins de connexion et de récupération de mot de passe.';
+	@override String get we_never_sell => 'Nous ne vendrons jamais vos données à des tiers.';
+	@override String get email_hint => 'email@example.com';
+	@override String get password => 'Choisissez un mot de passe';
+	@override String get password_hint => 'SuperSecure123!';
 	@override String get forgot_password => 'Mot de passe oublié';
 	@override String get register => 'S\'inscrire';
 	@override String get no_account => 'Pas de compte ?';
-	@override String get email_hint => 'Entrez votre adresse e-mail';
-	@override String get password_hint => 'Entrez votre mot de passe';
 }
 
 // Path: settings.app_settings
@@ -295,23 +293,21 @@ extension on TranslationsFr {
 			case 'auth.login_or_register.register': return 'S\'inscrire';
 			case 'auth.login_or_register.or': return 'ou';
 			case 'auth.login.title': return '👋 Bon retour parmis nous !';
-			case 'auth.login.description': return 'Utilisez votre adresse e-mail et votre mot de passe pour vous reconnecter et accéder à vos données';
+			case 'auth.login.description': return 'Utilisez votre adresse e-mail et votre mot de passe pour vous reconnecter et accéder à vos données.';
 			case 'auth.login.email': return 'Adresse e-mail';
-			case 'auth.login.password': return 'Mot de passe';
 			case 'auth.login.forgot_password': return 'Mot de passe oublié';
 			case 'auth.login.login': return 'Se connecter';
 			case 'auth.login.no_account': return 'Pas de compte ?';
 			case 'auth.login.email_hint': return 'Entrez votre adresse e-mail';
-			case 'auth.login.password_hint': return 'Entrez votre mot de passe';
-			case 'auth.register.title': return 'Inscrivez-vous sur LifeOS';
-			case 'auth.register.description': return 'Créez un compte LifeOS pour commencer dès maintenant une vie plus tranquille.';
-			case 'auth.register.email': return 'Adresse e-mail';
-			case 'auth.register.password': return 'Mot de passe';
+			case 'auth.register.email': return 'Quelle est votre adresse e-mail ?';
+			case 'auth.register.email_description': return 'Votre e-mail est utilisé uniquement a des fins de connexion et de récupération de mot de passe.';
+			case 'auth.register.we_never_sell': return 'Nous ne vendrons jamais vos données à des tiers.';
+			case 'auth.register.email_hint': return 'email@example.com';
+			case 'auth.register.password': return 'Choisissez un mot de passe';
+			case 'auth.register.password_hint': return 'SuperSecure123!';
 			case 'auth.register.forgot_password': return 'Mot de passe oublié';
 			case 'auth.register.register': return 'S\'inscrire';
 			case 'auth.register.no_account': return 'Pas de compte ?';
-			case 'auth.register.email_hint': return 'Entrez votre adresse e-mail';
-			case 'auth.register.password_hint': return 'Entrez votre mot de passe';
 			case 'settings.title': return 'Paramètres';
 			case 'settings.app_settings.title': return 'Paramètres de l\'application';
 			case 'settings.app_settings.selfHostedUrl.title': return 'URL auto-hébergée';

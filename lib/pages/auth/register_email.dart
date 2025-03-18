@@ -1,4 +1,5 @@
 import 'package:app/blocs/auth/auth.bloc.dart';
+import 'package:app/components/buttons/primary_button_round.dart';
 import 'package:app/components/buttons/primary_button_square.dart';
 import 'package:app/components/forms/app_text_form_field.dart';
 import 'package:app/i18n/strings.g.dart';
@@ -8,24 +9,26 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:icons_plus/icons_plus.dart';
 
-class Login extends StatefulWidget {
-  const Login({super.key, this.cancelCallback});
+class RegisterEmail extends StatefulWidget {
+  const RegisterEmail({super.key, this.cancelCallback, required this.nextStepCallback});
   final VoidCallback? cancelCallback;
+  final Function(String) nextStepCallback;
 
   @override
-  State<Login> createState() => _LoginState();
+  State<RegisterEmail> createState() => _RegisterEmailState();
 }
 
-class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
+class _RegisterEmailState extends State<RegisterEmail>
+    with SingleTickerProviderStateMixin {
   late AnimationController _animationController;
   final _animationDuration = const Duration(milliseconds: 250);
   final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
 
   @override
-  void initState() {
+  initState() {
     _animationController = AnimationController(
       vsync: this,
     );
@@ -33,7 +36,7 @@ class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
   }
 
   @override
-  void dispose() {
+  dispose() {
     _animationController.dispose();
     super.dispose();
   }
@@ -82,7 +85,7 @@ class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
                         ),
                         AutoSizeText(
                           maxLines: 1,
-                          context.t.auth.login.title,
+                          context.t.auth.register.email,
                           style: getTextTheme(context).displaySmall!.copyWith(
                                 fontWeight: FontWeight.bold,
                               ),
@@ -93,7 +96,36 @@ class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
                         SizedBox(
                           width: getSize(context).width * 0.9,
                           child: Text(
-                            context.t.auth.login.description,
+                            context.t.auth.register.email_description,
+                          ),
+                        ),
+                        SizedBox(
+                          width: getSize(context).width * 0.9,
+                          child: Text(
+                            context.t.auth.register.we_never_sell,
+                            style: getTextTheme(context).bodyMedium!.copyWith(
+                                  fontWeight: FontWeight.bold,
+                                ),
+                          ),
+                        ),
+                        SizedBox(
+                          height: $constants.insets.xs,
+                        ),
+                        Animate(
+                          controller: _animationController,
+                          effects: [
+                            FadeEffect(
+                              duration: _animationDuration,
+                              delay: const Duration(milliseconds: 300),
+                            )
+                          ],
+                          onPlay: (controller) => controller.forward(),
+                          child: SizedBox(
+                            width: getSize(context).width * 0.9,
+                            child: AppTextFormField(
+                              controller: _emailController,
+                              hintText: context.t.auth.login.email,
+                            ),
                           ),
                         ),
                       ],
@@ -102,39 +134,6 @@ class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
                 ),
                 SizedBox(
                   height: $constants.insets.sm,
-                ),
-                Animate(
-                  controller: _animationController,
-                  effects: [
-                    FadeEffect(
-                      duration: _animationDuration,
-                      delay: const Duration(milliseconds: 300),
-                    )
-                  ],
-                  onPlay: (controller) => controller.forward(),
-                  child: Column(
-                    children: [
-                      SizedBox(
-                        width: getSize(context).width * 0.9,
-                        child: AppTextFormField(
-                          controller: _emailController,
-                          hintText: context.t.auth.login.email,
-                          keyboardType: TextInputType.emailAddress,
-                        ),
-                      ),
-                      SizedBox(
-                        height: $constants.insets.xs,
-                      ),
-                      SizedBox(
-                        width: getSize(context).width * 0.9,
-                        child: AppTextFormField(
-                          controller: _passwordController,
-                          hintText: context.t.auth.register.password_hint,
-                          obscureText: true,
-                        ),
-                      ),
-                    ],
-                  ),
                 ),
                 const Spacer(),
                 const Divider(),
@@ -156,22 +155,18 @@ class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
                       children: [
                         const Spacer(),
                         PrimaryButtonSquare(
-                          text: context.t.auth.login.login,
+                          text: context.t.actions.next,
                           backgroundColor: getTheme(context).primary,
                           onPressed: () async {
+                            if (_emailController.text.isEmpty) {
+                              return;
+                            }
                             _animationController.reverseDuration =
                                 const Duration(
                               milliseconds: 500,
                             );
                             await _animationController.reverse(from: 1.0);
-                            if (_emailController.text.isNotEmpty &&
-                                _passwordController.text.isNotEmpty) {
-                              if (!context.mounted) return;
-                              context.read<AuthBloc>().add(LoginEvent(
-                                    email: _emailController.text,
-                                    password: _passwordController.text,
-                                  ));
-                            }
+                            widget.nextStepCallback(_emailController.text);
                           },
                         )
                       ],

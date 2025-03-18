@@ -58,7 +58,7 @@ class ApiClient {
               final user = UserEntity.fromJson(userData);
               final newToken = await UserService.refreshToken(user);
               idToken = newToken;
-              setDioAuthHeader(newToken!);
+              setIdToken(newToken!);
               final opts = Options(
                 extra: error.requestOptions.extra,
                 method: error.requestOptions.method,
@@ -102,7 +102,7 @@ class ApiClient {
     }
   }
 
-  setDioAuthHeader(String idToken) {
+  setIdToken(String idToken) {
     _dio.options.headers['Authorization'] = 'Bearer $idToken';
   }
 

@@ -189,14 +189,12 @@ class TranslationsAuthLoginEn {
 
 	// Translations
 	String get title => '👋 Welcome back!';
-	String get description => 'Use you email and password to log back in and access your data';
+	String get description => 'Use you email and password to log back in and access your data.';
 	String get email => 'Email';
-	String get password => 'Password';
 	String get forgot_password => 'Forgot password';
 	String get login => 'Log in';
 	String get no_account => 'No account?';
 	String get email_hint => 'Enter your email address';
-	String get password_hint => 'Enter your password';
 }
 
 // Path: auth.register
@@ -206,15 +204,15 @@ class TranslationsAuthRegisterEn {
 	final Translations _root; // ignore: unused_field
 
 	// Translations
-	String get title => 'Sign up for LifeOS';
-	String get description => 'Create a LifeOS account to start a more peaceful life now.';
-	String get email => 'Email';
-	String get password => 'Password';
+	String get email => 'What’s your email ?';
+	String get email_description => 'Your email is used only for login and password recovery purposes.';
+	String get we_never_sell => 'We will never sell your data to third parties.';
+	String get email_hint => 'email@example.com';
+	String get password => 'Choose a password';
+	String get password_hint => 'SuperSecure123!';
 	String get forgot_password => 'Forgot password';
 	String get register => 'Register';
 	String get no_account => 'No account?';
-	String get email_hint => 'Enter your email address';
-	String get password_hint => 'Enter your password';
 }
 
 // Path: settings.app_settings
@@ -299,23 +297,21 @@ extension on Translations {
 			case 'auth.login_or_register.register': return 'Register';
 			case 'auth.login_or_register.or': return 'or';
 			case 'auth.login.title': return '👋 Welcome back!';
-			case 'auth.login.description': return 'Use you email and password to log back in and access your data';
+			case 'auth.login.description': return 'Use you email and password to log back in and access your data.';
 			case 'auth.login.email': return 'Email';
-			case 'auth.login.password': return 'Password';
 			case 'auth.login.forgot_password': return 'Forgot password';
 			case 'auth.login.login': return 'Log in';
 			case 'auth.login.no_account': return 'No account?';
 			case 'auth.login.email_hint': return 'Enter your email address';
-			case 'auth.login.password_hint': return 'Enter your password';
-			case 'auth.register.title': return 'Sign up for LifeOS';
-			case 'auth.register.description': return 'Create a LifeOS account to start a more peaceful life now.';
-			case 'auth.register.email': return 'Email';
-			case 'auth.register.password': return 'Password';
+			case 'auth.register.email': return 'What’s your email ?';
+			case 'auth.register.email_description': return 'Your email is used only for login and password recovery purposes.';
+			case 'auth.register.we_never_sell': return 'We will never sell your data to third parties.';
+			case 'auth.register.email_hint': return 'email@example.com';
+			case 'auth.register.password': return 'Choose a password';
+			case 'auth.register.password_hint': return 'SuperSecure123!';
 			case 'auth.register.forgot_password': return 'Forgot password';
 			case 'auth.register.register': return 'Register';
 			case 'auth.register.no_account': return 'No account?';
-			case 'auth.register.email_hint': return 'Enter your email address';
-			case 'auth.register.password_hint': return 'Enter your password';
 			case 'settings.title': return 'Settings';
 			case 'settings.app_settings.title': return 'App Settings';
 			case 'settings.app_settings.selfHostedUrl.title': return 'Self-Hosted URL';
