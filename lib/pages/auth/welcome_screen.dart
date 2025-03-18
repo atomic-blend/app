@@ -1,6 +1,5 @@
 import 'package:app/components/buttons/primary_button_square.dart';
 import 'package:app/i18n/strings.g.dart';
-import 'package:app/pages/auth/login_or_register.dart';
 import 'package:app/utils/constants.dart';
 import 'package:app/utils/shortcuts.dart';
 import 'package:auto_size_text/auto_size_text.dart';
@@ -19,14 +18,20 @@ class WelcomeScreen extends StatefulWidget {
 class _WelcomeScreenState extends State<WelcomeScreen>
     with SingleTickerProviderStateMixin {
   late AnimationController _animationController;
+  final _animationDuration = const Duration(milliseconds: 250);
 
   @override
   void initState() {
-    // TODO: implement initState
     _animationController = AnimationController(
       vsync: this,
     );
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
   }
 
   @override
@@ -45,10 +50,10 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                   height: $constants.insets.lg,
                 ),
                 Animate(
-                  effects: const [
+                  effects: [
                     FadeEffect(
-                      duration: Duration(milliseconds: 1000),
-                      delay: Duration(milliseconds: 0),
+                      duration: _animationDuration,
+                      delay: const Duration(milliseconds: 0),
                     ),
                   ],
                   onPlay: (controller) => controller.forward(),
@@ -62,10 +67,10 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                 ),
                 Animate(
                   controller: _animationController,
-                  effects: const [
+                  effects: [
                     FadeEffect(
-                      duration: Duration(milliseconds: 1000),
-                      delay: Duration(milliseconds: 500),
+                      duration: _animationDuration,
+                      delay: const Duration(milliseconds: 0),
                     )
                   ],
                   onPlay: (controller) => controller.forward(),
@@ -83,10 +88,10 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                 ),
                 Animate(
                   controller: _animationController,
-                  effects: const [
+                  effects: [
                     FadeEffect(
-                      duration: Duration(milliseconds: 1000),
-                      delay: Duration(milliseconds: 1000),
+                      duration: _animationDuration,
+                      delay: const Duration(milliseconds: 300),
                     )
                   ],
                   onPlay: (controller) => controller.forward(),
@@ -121,10 +126,10 @@ class _WelcomeScreenState extends State<WelcomeScreen>
           const Divider(),
           Animate(
             controller: _animationController,
-            effects: const [
+            effects: [
               FadeEffect(
-                duration: Duration(milliseconds: 1000),
-                delay: Duration(milliseconds: 1500),
+                duration: _animationDuration,
+                delay: const Duration(milliseconds: 500),
               )
             ],
             onPlay: (controller) => controller.forward(),

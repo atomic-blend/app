@@ -23,99 +23,103 @@ class _RegisterState extends State<Register> {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Column(
-        children: [
-          SizedBox(
-            height: getSize(context).height * 0.1,
-            child: Row(
+    return Container(
+      width: double.infinity,
+      height: getSize(context).height * 0.92,
+      child: Center(
+        child: Column(
+          children: [
+            SizedBox(
+              height: getSize(context).height * 0.1,
+              child: Row(
+                children: [
+                  SizedBox(
+                    width: $constants.insets.sm,
+                  ),
+                  GestureDetector(
+                      onTap: widget.cancelCallback,
+                      child: const Icon(LineAwesome.arrow_left_solid)),
+                  SizedBox(
+                    width: $constants.insets.xxs,
+                  ),
+                  Text(
+                    context.t.navigation.back,
+                    style: getTextTheme(context).bodyMedium!.copyWith(
+                          fontWeight: FontWeight.bold,
+                        ),
+                  )
+                ],
+              ),
+            ),
+            SvgPicture.asset(
+              'assets/images/sign_up.svg',
+              width: getSize(context).width * 0.7,
+            ),
+            SizedBox(
+              height: $constants.insets.lg,
+            ),
+            Column(
+              mainAxisSize: MainAxisSize.min,
               children: [
-                SizedBox(
-                  width: $constants.insets.sm,
-                ),
-                GestureDetector(
-                    onTap: widget.cancelCallback,
-                    child: const Icon(LineAwesome.arrow_left_solid)),
-                SizedBox(
-                  width: $constants.insets.xxs,
-                ),
                 Text(
-                  context.t.navigation.back,
-                  style: getTextTheme(context).bodyMedium!.copyWith(
+                  context.t.auth.register.title,
+                  style: getTextTheme(context).headlineSmall!.copyWith(
                         fontWeight: FontWeight.bold,
                       ),
-                )
+                ),
+                SizedBox(
+                  width: getSize(context).width * 0.9,
+                  child: Text(
+                    context.t.auth.register.description,
+                  ),
+                ),
               ],
             ),
-          ),
-          SvgPicture.asset(
-            'assets/images/sign_up.svg',
-            width: getSize(context).width * 0.7,
-          ),
-          SizedBox(
-            height: $constants.insets.lg,
-          ),
-          Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(
-                context.t.auth.register.title,
-                style: getTextTheme(context).headlineSmall!.copyWith(
-                      fontWeight: FontWeight.bold,
-                    ),
-              ),
-              SizedBox(
-                width: getSize(context).width * 0.9,
-                child: Text(
-                  context.t.auth.register.description,
-                ),
-              ),
-            ],
-          ),
-          SizedBox(
-            height: $constants.insets.xxl,
-          ),
-          SizedBox(
-            width: getSize(context).width * 0.9,
-            child: AppTextFormField(
-              controller: _emailController,
-              hintText: context.t.auth.register.email,
+            SizedBox(
+              height: $constants.insets.xxl,
             ),
-          ),
-          SizedBox(
-            height: $constants.insets.xs,
-          ),
-          SizedBox(
-            width: getSize(context).width * 0.9,
-            child: AppTextFormField(
-              controller: _passwordController,
-              hintText: context.t.auth.register.password,
-              obscureText: true,
+            SizedBox(
+              width: getSize(context).width * 0.9,
+              child: AppTextFormField(
+                controller: _emailController,
+                hintText: context.t.auth.register.email,
+              ),
             ),
-          ),
-          const Spacer(),
-          PrimaryButtonRound(
-            width: getSize(context).width * 0.9,
-            text: context.t.auth.register.register,
-            onPressed: () async {
-              if (_emailController.text.isNotEmpty &&
-                  _passwordController.text.isNotEmpty) {
-                //
-                context.read<AuthBloc>().add(RegisterEvent(
-                      email: _emailController.text,
-                      password: _passwordController.text,
-                    ));
-                // await FirebaseService.register(context,
-                //     _emailController.text, _passwordController.text);
-                if (!context.mounted) return;
-                Navigator.pop(context);
-              }
-            },
-          ),
-          SizedBox(
-            height: $constants.insets.lg,
-          ),
-        ],
+            SizedBox(
+              height: $constants.insets.xs,
+            ),
+            SizedBox(
+              width: getSize(context).width * 0.9,
+              child: AppTextFormField(
+                controller: _passwordController,
+                hintText: context.t.auth.register.password,
+                obscureText: true,
+              ),
+            ),
+            const Spacer(),
+            PrimaryButtonRound(
+              width: getSize(context).width * 0.9,
+              text: context.t.auth.register.register,
+              onPressed: () async {
+                if (_emailController.text.isNotEmpty &&
+                    _passwordController.text.isNotEmpty) {
+                  //
+                  context.read<AuthBloc>().add(RegisterEvent(
+                        email: _emailController.text,
+                        password: _passwordController.text,
+                      ));
+                  // await FirebaseService.register(context,
+                  //     _emailController.text, _passwordController.text);
+                  if (!context.mounted) return;
+                  Navigator.pop(context);
+                }
+              },
+            ),
+            SizedBox(
+              height: $constants.insets.lg,
+            ),
+          ],
+        ),
       ),
     );
   }

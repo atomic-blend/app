@@ -1,4 +1,6 @@
+import 'package:app/pages/auth/login.dart';
 import 'package:app/pages/auth/login_or_register.dart';
+import 'package:app/pages/auth/register.dart';
 import 'package:app/pages/auth/welcome_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -21,6 +23,24 @@ class _LoginOrRegisterModalState extends State<LoginOrRegisterModal> {
       case 1:
         return LoginOrRegister(
           backStepCallback: () => setState(() => _step = 0),
+          loginCallback: () => setState(() => _step = 2),
+          registerCallback: () => setState(() => _step = 3),
+        );
+      case 2:
+        return Login(
+          cancelCallback: () {
+            setState(() {
+              _step = 1;
+            });
+          },
+        );
+      case 3: // Register
+        return Register(
+          cancelCallback: () {
+            setState(() {
+              _step = 1;
+            });
+          },
         );
     }
     return Container();

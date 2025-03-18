@@ -1,30 +1,58 @@
 import 'package:app/components/buttons/primary_button_round.dart';
 import 'package:app/i18n/strings.g.dart';
-import 'package:app/pages/auth/login.dart';
-import 'package:app/pages/auth/register.dart';
 import 'package:app/utils/constants.dart';
 import 'package:app/utils/shortcuts.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:icons_plus/icons_plus.dart';
 import 'package:lottie/lottie.dart';
 
 class LoginOrRegister extends StatefulWidget {
-  final VoidCallback? nextStepCallback;
+  final VoidCallback? loginCallback;
+  final VoidCallback? registerCallback;
   final VoidCallback? backStepCallback;
-  const LoginOrRegister({super.key, this.nextStepCallback, this.backStepCallback});
+  const LoginOrRegister(
+      {super.key,
+      this.loginCallback,
+      this.backStepCallback,
+      this.registerCallback});
 
   @override
   State<LoginOrRegister> createState() => _LoginOrRegisterState();
 }
 
-class _LoginOrRegisterState extends State<LoginOrRegister> {
+class _LoginOrRegisterState extends State<LoginOrRegister>
+    with TickerProviderStateMixin {
+  late AnimationController _animationController;
+  late AnimationController _lottieController;
+  final _animationDuration = const Duration(milliseconds: 300);
+
+  @override
+  void initState() {
+    _animationController = AnimationController(
+      vsync: this,
+    );
+    _lottieController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 3000),
+      lowerBound: 0.2,
+    );
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _animationController.dispose();
+    _lottieController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        Container(
+        SizedBox(
             width: double.infinity,
             height: getSize(context).height * 0.92,
             child: Column(
@@ -38,71 +66,125 @@ class _LoginOrRegisterState extends State<LoginOrRegister> {
                       SizedBox(
                         height: getSize(context).height * 0.08,
                       ),
-                      Transform.scale(
-                        scale: 1.3,
-                        child: Lottie.asset(
-                          'assets/animations/login.json',
-                          width: getSize(context).width * 0.5,
+                      Animate(
+                        controller: _animationController,
+                        effects: [
+                          FadeEffect(
+                            duration: _animationDuration,
+                            delay: const Duration(milliseconds: 0),
+                          ),
+                        ],
+                        onPlay: (controller) => controller.forward(),
+                        child: Transform.scale(
+                          scale: 1.3,
+                          child: Lottie.asset(
+                            controller: _lottieController,
+                            onLoaded: (p0) => _lottieController.loop(),
+                            'assets/animations/login.json',
+                            width: getSize(context).width * 0.5,
+                          ),
                         ),
                       ),
-                      AutoSizeText(
-                        maxLines: 1,
-                        context.t.auth.not_logged_in.time_to_set_things_up,
-                        textAlign: TextAlign.center,
-                        style: getTextTheme(context)
-                            .displaySmall!
-                            .copyWith(fontWeight: FontWeight.bold),
+                      Animate(
+                        controller: _animationController,
+                        effects: [
+                          FadeEffect(
+                            duration: _animationDuration,
+                            delay: const Duration(milliseconds: 0),
+                          ),
+                        ],
+                        onPlay: (controller) => controller.forward(),
+                        child: AutoSizeText(
+                          maxLines: 1,
+                          context.t.auth.not_logged_in.time_to_set_things_up,
+                          textAlign: TextAlign.center,
+                          style: getTextTheme(context)
+                              .displaySmall!
+                              .copyWith(fontWeight: FontWeight.bold),
+                        ),
                       ),
                       SizedBox(
                         height: $constants.insets.md,
                       ),
-                      Text.rich(
-                        textAlign: TextAlign.center,
-                        TextSpan(
-                            text: context.t.auth.not_logged_in.set_up_start,
-                            style: getTextTheme(context).bodyMedium,
-                            children: [
-                              TextSpan(
+                      Animate(
+                        controller: _animationController,
+                        onPlay: (controller) => controller.forward(),
+                        effects: [
+                          FadeEffect(
+                            duration: _animationDuration,
+                            delay: const Duration(milliseconds: 300),
+                          ),
+                        ],
+                        child: Text.rich(
+                          textAlign: TextAlign.center,
+                          TextSpan(
+                              text: context.t.auth.not_logged_in.set_up_start,
+                              style: getTextTheme(context).bodyMedium,
+                              children: [
+                                TextSpan(
+                                    text:
+                                        " ${context.t.auth.not_logged_in.e2e_app}",
+                                    style: const TextStyle(
+                                        fontWeight: FontWeight.bold)),
+                                TextSpan(
+                                    text:
+                                        " ${context.t.auth.not_logged_in.set_up_middle}"),
+                                TextSpan(
                                   text:
-                                      " ${context.t.auth.not_logged_in.e2e_app}",
-                                  style: const TextStyle(
-                                      fontWeight: FontWeight.bold)),
-                              TextSpan(
-                                  text:
-                                      " ${context.t.auth.not_logged_in.set_up_middle}"),
-                              TextSpan(
-                                text:
-                                    " ${context.t.auth.not_logged_in.set_up_end}",
-                              ),
-                              TextSpan(
-                                  text:
-                                      " ${context.t.auth.not_logged_in.set_up_end_bold}",
-                                  style: const TextStyle(
-                                      fontWeight: FontWeight.bold)),
-                            ]),
+                                      " ${context.t.auth.not_logged_in.set_up_end}",
+                                ),
+                                TextSpan(
+                                    text:
+                                        " ${context.t.auth.not_logged_in.set_up_end_bold}",
+                                    style: const TextStyle(
+                                        fontWeight: FontWeight.bold)),
+                              ]),
+                        ),
                       )
                     ],
                   ),
                 ),
                 const Spacer(),
-                Padding(
-                  padding:
-                      EdgeInsets.symmetric(horizontal: $constants.insets.md),
-                  child: Column(
-                    children: [
-                      PrimaryButtonRound(
-                        text: context.t.auth.login_or_register.login,
-                        textColor: getTheme(context).primary,
-                        backgroundColor: getTheme(context).primaryContainer,
-                        border: Border.all(
-                            color: getTheme(context).primary, width: 2),
-                      ),
-                      SizedBox(height: $constants.insets.xs),
-                      PrimaryButtonRound(
-                        text: context.t.auth.login_or_register.register,
-                        fontWeight: FontWeight.w800,
-                      )
-                    ],
+                Animate(
+                  controller: _animationController,
+                  effects: [
+                    FadeEffect(
+                      duration: _animationDuration,
+                      delay: const Duration(milliseconds: 500),
+                    ),
+                  ],
+                  onPlay: (controller) => controller.forward(),
+                  child: Padding(
+                    padding:
+                        EdgeInsets.symmetric(horizontal: $constants.insets.md),
+                    child: Column(
+                      children: [
+                        PrimaryButtonRound(
+                          text: context.t.auth.login_or_register.login,
+                          textColor: getTheme(context).primary,
+                          backgroundColor: getTheme(context).primaryContainer,
+                          border: Border.all(
+                              color: getTheme(context).primary, width: 2),
+                          onPressed: () {
+                            _animationController.reverseDuration =
+                                const Duration(milliseconds: 500);
+                            _animationController.reverse();
+                            widget.loginCallback?.call();
+                          },
+                        ),
+                        SizedBox(height: $constants.insets.xs),
+                        PrimaryButtonRound(
+                          text: context.t.auth.login_or_register.register,
+                          fontWeight: FontWeight.w800,
+                          onPressed: () {
+                            _animationController.reverseDuration =
+                                const Duration(milliseconds: 500);
+                            _animationController.reverse();
+                            widget.registerCallback?.call();
+                          },
+                        )
+                      ],
+                    ),
                   ),
                 ),
                 SizedBox(

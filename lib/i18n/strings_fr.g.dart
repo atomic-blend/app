@@ -184,8 +184,8 @@ class _TranslationsAuthLoginFr implements TranslationsAuthLoginEn {
 	final TranslationsFr _root; // ignore: unused_field
 
 	// Translations
-	@override String get title => 'Connectez-vous à LifeOS';
-	@override String get description => 'Connectez-vous à votre compte LifeOS pour accéder à votre contenu.';
+	@override String get title => '👋 Bon retour parmis nous !';
+	@override String get description => 'Utilisez votre adresse e-mail et votre mot de passe pour vous reconnecter et accéder à vos données';
 	@override String get email => 'Adresse e-mail';
 	@override String get password => 'Mot de passe';
 	@override String get forgot_password => 'Mot de passe oublié';
@@ -294,8 +294,8 @@ extension on TranslationsFr {
 			case 'auth.login_or_register.login': return 'Se connecter';
 			case 'auth.login_or_register.register': return 'S\'inscrire';
 			case 'auth.login_or_register.or': return 'ou';
-			case 'auth.login.title': return 'Connectez-vous à LifeOS';
-			case 'auth.login.description': return 'Connectez-vous à votre compte LifeOS pour accéder à votre contenu.';
+			case 'auth.login.title': return '👋 Bon retour parmis nous !';
+			case 'auth.login.description': return 'Utilisez votre adresse e-mail et votre mot de passe pour vous reconnecter et accéder à vos données';
 			case 'auth.login.email': return 'Adresse e-mail';
 			case 'auth.login.password': return 'Mot de passe';
 			case 'auth.login.forgot_password': return 'Mot de passe oublié';

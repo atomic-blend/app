@@ -2,7 +2,6 @@ import 'package:app/blocs/app/app.bloc.dart';
 import 'package:app/blocs/auth/auth.bloc.dart';
 import 'package:app/components/app/bottom_navigation.dart';
 import 'package:app/pages/auth/login_or_register_modal.dart';
-import 'package:app/pages/auth/welcome_screen.dart';
 import 'package:app/utils/constants.dart';
 import 'package:app/utils/shortcuts.dart';
 import 'package:flutter/material.dart';

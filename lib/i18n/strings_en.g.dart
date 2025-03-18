@@ -188,8 +188,8 @@ class TranslationsAuthLoginEn {
 	final Translations _root; // ignore: unused_field
 
 	// Translations
-	String get title => 'Log in to LifeOS';
-	String get description => 'Log in to your LifeOS account to access your content.';
+	String get title => '👋 Welcome back!';
+	String get description => 'Use you email and password to log back in and access your data';
 	String get email => 'Email';
 	String get password => 'Password';
 	String get forgot_password => 'Forgot password';
@@ -298,8 +298,8 @@ extension on Translations {
 			case 'auth.login_or_register.login': return 'Log in';
 			case 'auth.login_or_register.register': return 'Register';
 			case 'auth.login_or_register.or': return 'or';
-			case 'auth.login.title': return 'Log in to LifeOS';
-			case 'auth.login.description': return 'Log in to your LifeOS account to access your content.';
+			case 'auth.login.title': return '👋 Welcome back!';
+			case 'auth.login.description': return 'Use you email and password to log back in and access your data';
 			case 'auth.login.email': return 'Email';
 			case 'auth.login.password': return 'Password';
 			case 'auth.login.forgot_password': return 'Forgot password';
