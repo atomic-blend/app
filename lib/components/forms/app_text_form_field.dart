@@ -92,7 +92,7 @@ class _AppTextFormFieldState extends State<AppTextFormField> {
             ),
           Stack(
             children: [
-              Container(
+              SizedBox(
                 height: widget.height,
                 child: TextFormField(
                   validator: widget.validator,
