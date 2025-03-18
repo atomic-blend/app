@@ -15,6 +15,7 @@ class AppWrapper extends StatefulWidget {
 }
 
 class _AppWrapperState extends State<AppWrapper> {
+  bool _isLoginModalVisible = false;
   @override
   void initState() {
     super.initState();
@@ -46,6 +47,19 @@ class _AppWrapperState extends State<AppWrapper> {
         if (state is Loading) {
           body = const Center(child: CircularProgressIndicator());
         }
+        if (state is LoggedOut && !_isLoginModalVisible) {
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            showModalBottomSheet(
+              isDismissible: false,
+              isScrollControlled: true,
+              context: context,
+              builder: (context) => const NotLoggedInWidget(),
+            );
+            setState(() {
+              _isLoginModalVisible = true;
+            });
+          });
+        }
         return Scaffold(
             floatingActionButton: state.user != null
                 ? floattingActionsButtons.elementAt(appState.pageIndex)
@@ -53,10 +67,7 @@ class _AppWrapperState extends State<AppWrapper> {
             floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
             backgroundColor: getTheme(context).surface,
             appBar: appbars.elementAt(appState.pageIndex),
-            body: state.runtimeType == LoggedOut &&
-                    appState.pageIndex != screens.length - 1
-                ? const Center(child: NotLoggedInWidget())
-                : body,
+            body: body,
             bottomNavigationBar: BottomNavigation(
               destinations: navItems,
               currentPageIndex: appState.pageIndex,

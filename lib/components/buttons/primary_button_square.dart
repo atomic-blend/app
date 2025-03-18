@@ -2,8 +2,8 @@ import 'package:app/utils/constants.dart';
 import 'package:app/utils/shortcuts.dart';
 import 'package:flutter/material.dart';
 
-class PrimaryButton extends StatelessWidget {
-  const PrimaryButton(
+class PrimaryButtonSquare extends StatelessWidget {
+  const PrimaryButtonSquare(
       {super.key,
       this.onPressed,
       this.emoji,
@@ -32,7 +32,6 @@ class PrimaryButton extends StatelessWidget {
         Container(
           decoration: BoxDecoration(
             border: border,
-            borderRadius: BorderRadius.circular($constants.corners.md),
           ),
           height: height ?? 50,
           width: width,
@@ -41,6 +40,12 @@ class PrimaryButton extends StatelessWidget {
             style: ButtonStyle(
               backgroundColor: WidgetStatePropertyAll(
                   backgroundColor ?? getTheme(context).primary),
+              shape: WidgetStateProperty.all<RoundedRectangleBorder>(
+                RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(
+                      $constants.corners.md), // This makes it completely square
+                ),
+              ),
             ),
             child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
               if (emoji != null) ...[

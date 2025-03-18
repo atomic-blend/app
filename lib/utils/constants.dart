@@ -23,13 +23,15 @@ class Constants {
 
 @immutable
 class Corners {
-  late final double xxs = 4;
-  late final double xs = 8;
-  late final double sm = 16;
-  late final double md = 24;
-  late final double lg = 32;
-  late final double xl = 48;
-  late final double xxl = 64;
+  late final double none = 0;
+  late final double xxs = 2;
+  late final double xs = 4;
+  late final double sm = 8;
+  late final double md = 12;
+  late final double lg = 16;
+  late final double xl = 28;
+  late final double xxl = 36;
+  late final double full = 1000;
 }
 
 @immutable

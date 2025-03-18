@@ -1,5 +1,5 @@
 import 'package:app/blocs/auth/auth.bloc.dart';
-import 'package:app/components/buttons/primary_button.dart';
+import 'package:app/components/buttons/primary_button_round.dart';
 import 'package:app/components/forms/app_text_form_field.dart';
 import 'package:app/i18n/strings.g.dart';
 import 'package:app/utils/constants.dart';
@@ -103,7 +103,7 @@ class _LoginState extends State<Login> {
                 ),
               ),
               const Spacer(),
-              PrimaryButton(
+              PrimaryButtonRound(
                 width: getSize(context).width * 0.9,
                 text: context.t.auth.login.login,
                 onPressed: () async {

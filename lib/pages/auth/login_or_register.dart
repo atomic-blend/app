@@ -1,4 +1,4 @@
-import 'package:app/components/buttons/primary_button.dart';
+import 'package:app/components/buttons/primary_button_round.dart';
 import 'package:app/i18n/strings.g.dart';
 import 'package:app/pages/auth/login.dart';
 import 'package:app/pages/auth/register.dart';
@@ -82,7 +82,7 @@ class _LoginOrRegisterState extends State<LoginOrRegister> {
                                 },
                                 child: Text(
                                     context.t.auth.login_or_register.login)),
-                            PrimaryButton(
+                            PrimaryButtonRound(
                               width: getSize(context).width * 0.9,
                               text: context.t.auth.login_or_register.register,
                               onPressed: () {

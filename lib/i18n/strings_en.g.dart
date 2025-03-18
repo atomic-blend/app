@@ -127,6 +127,7 @@ class TranslationsActionsEn {
 	// Translations
 	String get save => 'Save';
 	String get cancel => 'Cancel';
+	String get next => 'Next';
 }
 
 // Path: validation
@@ -148,6 +149,11 @@ class TranslationsAuthNotLoggedInEn {
 
 	// Translations
 	String get welcome => 'Welcome to Atomic Blend';
+	String get description_start => 'Atomic Blend is the first';
+	String get e2e_app => 'end-to-end encrypted app';
+	String get description_middle => 'that combines all the tools you need to manage both work and personal life in one place.\n\nFrom task management to note-taking, document writing, time tracking, movie tracking, food tracking, everything stays';
+	String get description_middle_bold => 'secure and seamless.';
+	String get description_end => 'No more juggling multiple apps—Atomic Blend brings it all together with privacy at its core, so you can focus on what truly matters.';
 	String get description => 'LifeOS is a personal life management application that helps you organize your life, achieve your goals, and improve your well-being.';
 	String get e2ee => 'We use end-to-end encryption to protect your personal data. Your data is secure and accessible only by you.';
 	String get get_started_now => 'Get started now';
@@ -266,6 +272,11 @@ extension on Translations {
 			case 'app_name': return 'Atomic Blend';
 			case 'navigation.back': return 'Back';
 			case 'auth.not_logged_in.welcome': return 'Welcome to Atomic Blend';
+			case 'auth.not_logged_in.description_start': return 'Atomic Blend is the first';
+			case 'auth.not_logged_in.e2e_app': return 'end-to-end encrypted app';
+			case 'auth.not_logged_in.description_middle': return 'that combines all the tools you need to manage both work and personal life in one place.\n\nFrom task management to note-taking, document writing, time tracking, movie tracking, food tracking, everything stays';
+			case 'auth.not_logged_in.description_middle_bold': return 'secure and seamless.';
+			case 'auth.not_logged_in.description_end': return 'No more juggling multiple apps—Atomic Blend brings it all together with privacy at its core, so you can focus on what truly matters.';
 			case 'auth.not_logged_in.description': return 'LifeOS is a personal life management application that helps you organize your life, achieve your goals, and improve your well-being.';
 			case 'auth.not_logged_in.e2ee': return 'We use end-to-end encryption to protect your personal data. Your data is secure and accessible only by you.';
 			case 'auth.not_logged_in.get_started_now': return 'Get started now';
@@ -320,6 +331,7 @@ extension on Translations {
 			case 'more.title': return 'More';
 			case 'actions.save': return 'Save';
 			case 'actions.cancel': return 'Cancel';
+			case 'actions.next': return 'Next';
 			case 'validation.required': return 'Required';
 			case 'validation.invalid_url': return 'invalid URL';
 			default: return null;

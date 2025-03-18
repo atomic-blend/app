@@ -123,6 +123,7 @@ class _TranslationsActionsFr implements TranslationsActionsEn {
 	// Translations
 	@override String get save => 'Enregistrer';
 	@override String get cancel => 'Annuler';
+	@override String get next => 'Suivant';
 }
 
 // Path: validation
@@ -143,7 +144,12 @@ class _TranslationsAuthNotLoggedInFr implements TranslationsAuthNotLoggedInEn {
 	final TranslationsFr _root; // ignore: unused_field
 
 	// Translations
-	@override String get welcome => 'Bienvenue dans Atomic Blend';
+	@override String get welcome => 'Bienvenue sur Atomic Blend';
+	@override String get description_start => 'Atomic Blend est la première';
+	@override String get e2e_app => 'application chiffrée de bout en bout';
+	@override String get description_middle => 'qui regroupe tous les outils dont vous avez besoin pour gérer à la fois votre travail et votre vie personnelle en un seul endroit.\n\nDe la gestion des tâches à la prise de notes, en passant par la rédaction de documents, le suivi du temps, le suivi des films, le suivi de l\'alimentation, tout reste';
+	@override String get description_middle_bold => 'sécurisé et fluide.';
+	@override String get description_end => 'Fini de jongler entre plusieurs applications—Atomic Blend rassemble tout avec la confidentialité au cœur de son fonctionnement, pour que vous puissiez vous concentrer sur l’essentiel.';
 	@override String get description => 'LifeOS est une application de gestion de la vie personnelle qui vous aide à organiser votre vie, à atteindre vos objectifs et à améliorer votre bien-être.';
 	@override String get e2ee => 'Nous utilisons le chiffrement de bout en bout pour protéger vos données personnelles. Vos données sont sécurisées et accessibles uniquement par vous.';
 	@override String get get_started_now => 'Commencez maintenant';
@@ -261,7 +267,12 @@ extension on TranslationsFr {
 		switch (path) {
 			case 'app_name': return 'Atomic Blend';
 			case 'navigation.back': return 'Retour';
-			case 'auth.not_logged_in.welcome': return 'Bienvenue dans Atomic Blend';
+			case 'auth.not_logged_in.welcome': return 'Bienvenue sur Atomic Blend';
+			case 'auth.not_logged_in.description_start': return 'Atomic Blend est la première';
+			case 'auth.not_logged_in.e2e_app': return 'application chiffrée de bout en bout';
+			case 'auth.not_logged_in.description_middle': return 'qui regroupe tous les outils dont vous avez besoin pour gérer à la fois votre travail et votre vie personnelle en un seul endroit.\n\nDe la gestion des tâches à la prise de notes, en passant par la rédaction de documents, le suivi du temps, le suivi des films, le suivi de l\'alimentation, tout reste';
+			case 'auth.not_logged_in.description_middle_bold': return 'sécurisé et fluide.';
+			case 'auth.not_logged_in.description_end': return 'Fini de jongler entre plusieurs applications—Atomic Blend rassemble tout avec la confidentialité au cœur de son fonctionnement, pour que vous puissiez vous concentrer sur l’essentiel.';
 			case 'auth.not_logged_in.description': return 'LifeOS est une application de gestion de la vie personnelle qui vous aide à organiser votre vie, à atteindre vos objectifs et à améliorer votre bien-être.';
 			case 'auth.not_logged_in.e2ee': return 'Nous utilisons le chiffrement de bout en bout pour protéger vos données personnelles. Vos données sont sécurisées et accessibles uniquement par vous.';
 			case 'auth.not_logged_in.get_started_now': return 'Commencez maintenant';
@@ -316,6 +327,7 @@ extension on TranslationsFr {
 			case 'more.title': return 'Plus';
 			case 'actions.save': return 'Enregistrer';
 			case 'actions.cancel': return 'Annuler';
+			case 'actions.next': return 'Suivant';
 			case 'validation.required': return 'Ce champ est obligatoire';
 			case 'validation.invalid_url': return 'URL invalide';
 			default: return null;
