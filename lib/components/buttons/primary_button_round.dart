@@ -13,10 +13,11 @@ class PrimaryButtonRound extends StatelessWidget {
       this.textColor,
       this.border,
       this.height,
-      this.width});
+      this.width, this.fontWeight});
 
   final VoidCallback? onPressed;
   final String? emoji;
+  final FontWeight? fontWeight;
   final Widget? trailing;
   final String text;
   final Color? backgroundColor;
@@ -32,7 +33,7 @@ class PrimaryButtonRound extends StatelessWidget {
         Container(
           decoration: BoxDecoration(
             border: border,
-            borderRadius: BorderRadius.circular($constants.corners.md),
+            borderRadius: BorderRadius.circular($constants.corners.full),
           ),
           height: height ?? 50,
           width: width,
@@ -57,7 +58,7 @@ class PrimaryButtonRound extends StatelessWidget {
                   text,
                   style: getTextTheme(context).bodyMedium!.copyWith(
                         color: textColor ?? Colors.white,
-                        fontWeight: FontWeight.bold,
+                        fontWeight: fontWeight,
                         fontSize: 16,
                       ),
                 ),

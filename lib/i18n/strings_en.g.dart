@@ -155,6 +155,10 @@ class TranslationsAuthNotLoggedInEn {
 	String get description_middle_bold => 'secure and seamless.';
 	String get description_end => 'No more juggling multiple apps—Atomic Blend brings it all together with privacy at its core, so you can focus on what truly matters.';
 	String get time_to_set_things_up => 'Time to set things up!';
+	String get set_up_start => 'To use Atomic Blend and sync your data across devices, you can choose between the cloud version or a self-hosted setup.\n\nEither way, your data is';
+	String get set_up_middle => 'end-to-end encrypted';
+	String get set_up_end => ', ensuring that only you have access to your encryption key —';
+	String get set_up_end_bold => 'not us, not anyone else.';
 	String get description => 'LifeOS is a personal life management application that helps you organize your life, achieve your goals, and improve your well-being.';
 	String get e2ee => 'We use end-to-end encryption to protect your personal data. Your data is secure and accessible only by you.';
 	String get get_started_now => 'Get started now';
@@ -279,6 +283,10 @@ extension on Translations {
 			case 'auth.not_logged_in.description_middle_bold': return 'secure and seamless.';
 			case 'auth.not_logged_in.description_end': return 'No more juggling multiple apps—Atomic Blend brings it all together with privacy at its core, so you can focus on what truly matters.';
 			case 'auth.not_logged_in.time_to_set_things_up': return 'Time to set things up!';
+			case 'auth.not_logged_in.set_up_start': return 'To use Atomic Blend and sync your data across devices, you can choose between the cloud version or a self-hosted setup.\n\nEither way, your data is';
+			case 'auth.not_logged_in.set_up_middle': return 'end-to-end encrypted';
+			case 'auth.not_logged_in.set_up_end': return ', ensuring that only you have access to your encryption key —';
+			case 'auth.not_logged_in.set_up_end_bold': return 'not us, not anyone else.';
 			case 'auth.not_logged_in.description': return 'LifeOS is a personal life management application that helps you organize your life, achieve your goals, and improve your well-being.';
 			case 'auth.not_logged_in.e2ee': return 'We use end-to-end encryption to protect your personal data. Your data is secure and accessible only by you.';
 			case 'auth.not_logged_in.get_started_now': return 'Get started now';

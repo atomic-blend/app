@@ -47,8 +47,57 @@ class _LoginOrRegisterState extends State<LoginOrRegister> {
                         .displaySmall!
                         .copyWith(fontWeight: FontWeight.bold),
                   ),
+                  SizedBox(
+                    height: $constants.insets.md,
+                  ),
+                  Text.rich(
+                    textAlign: TextAlign.center,
+                    TextSpan(
+                        text: context.t.auth.not_logged_in.set_up_start,
+                        style: getTextTheme(context).bodyMedium,
+                        children: [
+                          TextSpan(
+                              text: " ${context.t.auth.not_logged_in.e2e_app}",
+                              style:
+                                  const TextStyle(fontWeight: FontWeight.bold)),
+                          TextSpan(
+                              text:
+                                  " ${context.t.auth.not_logged_in.set_up_middle}"),
+                          TextSpan(
+                            text: " ${context.t.auth.not_logged_in.set_up_end}",
+                          ),
+                          TextSpan(
+                              text:
+                                  " ${context.t.auth.not_logged_in.set_up_end_bold}",
+                              style:
+                                  const TextStyle(fontWeight: FontWeight.bold)),
+                        ]),
+                  )
                 ],
               ),
+            ),
+            const Spacer(),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: $constants.insets.md),
+              child: Column(
+                children: [
+                  PrimaryButtonRound(
+                    text: context.t.auth.login_or_register.login,
+                    textColor: getTheme(context).primary,
+                    backgroundColor: getTheme(context).primaryContainer,
+                    border:
+                        Border.all(color: getTheme(context).primary, width: 2),
+                  ),
+                  SizedBox(height: $constants.insets.xs),
+                  PrimaryButtonRound(
+                    text: context.t.auth.login_or_register.register,
+                    fontWeight: FontWeight.w800,
+                  )
+                ],
+              ),
+            ),
+            SizedBox(
+              height: getSize(context).height * 0.08,
             )
           ],
         ));

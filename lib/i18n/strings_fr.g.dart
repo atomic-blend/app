@@ -151,6 +151,10 @@ class _TranslationsAuthNotLoggedInFr implements TranslationsAuthNotLoggedInEn {
 	@override String get description_middle_bold => 'sécurisé et fluide.';
 	@override String get description_end => 'Fini de jongler entre plusieurs applications—Atomic Blend rassemble tout avec la confidentialité au cœur de son fonctionnement, pour que vous puissiez vous concentrer sur l’essentiel.';
 	@override String get time_to_set_things_up => 'À vous de jouer !';
+	@override String get set_up_start => 'Pour utiliser Atomic Blend et synchroniser vos données sur tous vos appareils, vous pouvez choisir entre la version cloud ou une installation auto-hébergée.\n\nDans les deux cas, vos données sont';
+	@override String get set_up_middle => 'chiffrées de bout en bout';
+	@override String get set_up_end => ', garantissant que vous seul avez accès à votre clé de chiffrement —';
+	@override String get set_up_end_bold => 'ni nous, ni personne d\'autre.';
 	@override String get description => 'LifeOS est une application de gestion de la vie personnelle qui vous aide à organiser votre vie, à atteindre vos objectifs et à améliorer votre bien-être.';
 	@override String get e2ee => 'Nous utilisons le chiffrement de bout en bout pour protéger vos données personnelles. Vos données sont sécurisées et accessibles uniquement par vous.';
 	@override String get get_started_now => 'Commencez maintenant';
@@ -275,6 +279,10 @@ extension on TranslationsFr {
 			case 'auth.not_logged_in.description_middle_bold': return 'sécurisé et fluide.';
 			case 'auth.not_logged_in.description_end': return 'Fini de jongler entre plusieurs applications—Atomic Blend rassemble tout avec la confidentialité au cœur de son fonctionnement, pour que vous puissiez vous concentrer sur l’essentiel.';
 			case 'auth.not_logged_in.time_to_set_things_up': return 'À vous de jouer !';
+			case 'auth.not_logged_in.set_up_start': return 'Pour utiliser Atomic Blend et synchroniser vos données sur tous vos appareils, vous pouvez choisir entre la version cloud ou une installation auto-hébergée.\n\nDans les deux cas, vos données sont';
+			case 'auth.not_logged_in.set_up_middle': return 'chiffrées de bout en bout';
+			case 'auth.not_logged_in.set_up_end': return ', garantissant que vous seul avez accès à votre clé de chiffrement —';
+			case 'auth.not_logged_in.set_up_end_bold': return 'ni nous, ni personne d\'autre.';
 			case 'auth.not_logged_in.description': return 'LifeOS est une application de gestion de la vie personnelle qui vous aide à organiser votre vie, à atteindre vos objectifs et à améliorer votre bien-être.';
 			case 'auth.not_logged_in.e2ee': return 'Nous utilisons le chiffrement de bout en bout pour protéger vos données personnelles. Vos données sont sécurisées et accessibles uniquement par vous.';
 			case 'auth.not_logged_in.get_started_now': return 'Commencez maintenant';
