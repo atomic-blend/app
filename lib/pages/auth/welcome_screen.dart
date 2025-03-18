@@ -7,12 +7,13 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
-class NotLoggedInWidget extends StatelessWidget {
-  const NotLoggedInWidget({super.key});
+class WelcomeScreen extends StatelessWidget {
+  final VoidCallback? nextStepCallback;
+  const WelcomeScreen({super.key, this.nextStepCallback});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: double.infinity,
       height: getSize(context).height * 0.92,
       child: Column(
@@ -77,14 +78,16 @@ class NotLoggedInWidget extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                TextButton(
-                  onPressed: () {},
-                  child: Text(context.t.actions.cancel,
-                      style: getTextTheme(context).titleSmall!),
-                ),
+                // TextButton(
+                //   onPressed: () {},
+                //   child: Text(context.t.actions.cancel,
+                //       style: getTextTheme(context).titleSmall!),
+                // ),
+                Spacer(),
                 PrimaryButtonSquare(
                   text: context.t.actions.next,
                   backgroundColor: getTheme(context).primary,
+                  onPressed: nextStepCallback,
                 )
               ],
             ),

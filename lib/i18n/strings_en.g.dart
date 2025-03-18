@@ -154,6 +154,7 @@ class TranslationsAuthNotLoggedInEn {
 	String get description_middle => 'that combines all the tools you need to manage both work and personal life in one place.\n\nFrom task management to note-taking, document writing, time tracking, movie tracking, food tracking, everything stays';
 	String get description_middle_bold => 'secure and seamless.';
 	String get description_end => 'No more juggling multiple apps—Atomic Blend brings it all together with privacy at its core, so you can focus on what truly matters.';
+	String get time_to_set_things_up => 'Time to set things up!';
 	String get description => 'LifeOS is a personal life management application that helps you organize your life, achieve your goals, and improve your well-being.';
 	String get e2ee => 'We use end-to-end encryption to protect your personal data. Your data is secure and accessible only by you.';
 	String get get_started_now => 'Get started now';
@@ -277,6 +278,7 @@ extension on Translations {
 			case 'auth.not_logged_in.description_middle': return 'that combines all the tools you need to manage both work and personal life in one place.\n\nFrom task management to note-taking, document writing, time tracking, movie tracking, food tracking, everything stays';
 			case 'auth.not_logged_in.description_middle_bold': return 'secure and seamless.';
 			case 'auth.not_logged_in.description_end': return 'No more juggling multiple apps—Atomic Blend brings it all together with privacy at its core, so you can focus on what truly matters.';
+			case 'auth.not_logged_in.time_to_set_things_up': return 'Time to set things up!';
 			case 'auth.not_logged_in.description': return 'LifeOS is a personal life management application that helps you organize your life, achieve your goals, and improve your well-being.';
 			case 'auth.not_logged_in.e2ee': return 'We use end-to-end encryption to protect your personal data. Your data is secure and accessible only by you.';
 			case 'auth.not_logged_in.get_started_now': return 'Get started now';
