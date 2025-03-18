@@ -19,7 +19,8 @@ class _LoginOrRegisterModalState extends State<LoginOrRegisterModal> {
           nextStepCallback: () => setState(() => _step = 1),
         );
       case 1:
-        return const LoginOrRegister(
+        return LoginOrRegister(
+          backStepCallback: () => setState(() => _step = 0),
         );
     }
     return Container();

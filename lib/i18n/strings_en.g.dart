@@ -128,6 +128,7 @@ class TranslationsActionsEn {
 	String get save => 'Save';
 	String get cancel => 'Cancel';
 	String get next => 'Next';
+	String get back => 'Back';
 }
 
 // Path: validation
@@ -342,6 +343,7 @@ extension on Translations {
 			case 'actions.save': return 'Save';
 			case 'actions.cancel': return 'Cancel';
 			case 'actions.next': return 'Next';
+			case 'actions.back': return 'Back';
 			case 'validation.required': return 'Required';
 			case 'validation.invalid_url': return 'invalid URL';
 			default: return null;

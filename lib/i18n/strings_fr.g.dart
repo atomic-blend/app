@@ -124,6 +124,7 @@ class _TranslationsActionsFr implements TranslationsActionsEn {
 	@override String get save => 'Enregistrer';
 	@override String get cancel => 'Annuler';
 	@override String get next => 'Suivant';
+	@override String get back => 'Retour';
 }
 
 // Path: validation
@@ -338,6 +339,7 @@ extension on TranslationsFr {
 			case 'actions.save': return 'Enregistrer';
 			case 'actions.cancel': return 'Annuler';
 			case 'actions.next': return 'Suivant';
+			case 'actions.back': return 'Retour';
 			case 'validation.required': return 'Ce champ est obligatoire';
 			case 'validation.invalid_url': return 'URL invalide';
 			default: return null;
