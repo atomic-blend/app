@@ -16,9 +16,7 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: AppTheme.light,
-      // The Mandy red, dark theme.
       darkTheme: AppTheme.dark,
-      // Use dark or light theme based on system setting.
       themeMode: ThemeMode.system,
       locale: TranslationProvider.of(context).flutterLocale, // use provider
       supportedLocales: AppLocaleUtils.supportedLocales,
