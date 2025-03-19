@@ -1,8 +1,8 @@
-import 'package:app/pages/auth/login.dart';
-import 'package:app/pages/auth/login_or_register.dart';
-import 'package:app/pages/auth/register_email.dart';
-import 'package:app/pages/auth/register_password.dart';
-import 'package:app/pages/auth/welcome_screen.dart';
+import 'package:app/pages/auth/screens/login.dart';
+import 'package:app/pages/auth/screens/login_or_register.dart';
+import 'package:app/pages/auth/screens/register_email.dart';
+import 'package:app/pages/auth/screens/register_password.dart';
+import 'package:app/pages/auth/screens/welcome_screen.dart';
 import 'package:flutter/material.dart';
 
 class LoginOrRegisterModal extends StatefulWidget {

@@ -1,6 +1,6 @@
 import 'package:app/blocs/tasks/tasks.bloc.dart';
 import 'package:app/entities/tasks/tasks.entity.dart';
-import 'package:app/pages/tasks/task_detail.dart';
+import 'package:app/pages/today/task_detail.dart';
 import 'package:app/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

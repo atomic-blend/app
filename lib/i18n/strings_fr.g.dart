@@ -37,9 +37,12 @@ class TranslationsFr implements Translations {
 	@override late final _TranslationsNavigationFr navigation = _TranslationsNavigationFr._(_root);
 	@override late final _TranslationsAuthFr auth = _TranslationsAuthFr._(_root);
 	@override late final _TranslationsSettingsFr settings = _TranslationsSettingsFr._(_root);
-	@override late final _TranslationsHomeFr home = _TranslationsHomeFr._(_root);
+	@override late final _TranslationsTodayFr today = _TranslationsTodayFr._(_root);
+	@override late final _TranslationsCalendarFr calendar = _TranslationsCalendarFr._(_root);
+	@override late final _TranslationsHabitsFr habits = _TranslationsHabitsFr._(_root);
 	@override late final _TranslationsTasksFr tasks = _TranslationsTasksFr._(_root);
 	@override late final _TranslationsMoreFr more = _TranslationsMoreFr._(_root);
+	@override late final _TranslationsTimesFr times = _TranslationsTimesFr._(_root);
 	@override late final _TranslationsActionsFr actions = _TranslationsActionsFr._(_root);
 	@override late final _TranslationsValidationFr validation = _TranslationsValidationFr._(_root);
 }
@@ -79,15 +82,34 @@ class _TranslationsSettingsFr implements TranslationsSettingsEn {
 	@override String get logout => 'Déconnexion';
 }
 
-// Path: home
-class _TranslationsHomeFr implements TranslationsHomeEn {
-	_TranslationsHomeFr._(this._root);
+// Path: today
+class _TranslationsTodayFr implements TranslationsTodayEn {
+	_TranslationsTodayFr._(this._root);
 
 	final TranslationsFr _root; // ignore: unused_field
 
 	// Translations
-	@override String get title => 'Accueil';
-	@override String get whats_for_today => 'Quoi de prévu pour aujourd\'hui ?';
+	@override String get title => 'Aujourd\'hui';
+}
+
+// Path: calendar
+class _TranslationsCalendarFr implements TranslationsCalendarEn {
+	_TranslationsCalendarFr._(this._root);
+
+	final TranslationsFr _root; // ignore: unused_field
+
+	// Translations
+	@override String get title => 'Calendrier';
+}
+
+// Path: habits
+class _TranslationsHabitsFr implements TranslationsHabitsEn {
+	_TranslationsHabitsFr._(this._root);
+
+	final TranslationsFr _root; // ignore: unused_field
+
+	// Translations
+	@override String get title => 'Habitudes';
 }
 
 // Path: tasks
@@ -112,6 +134,25 @@ class _TranslationsMoreFr implements TranslationsMoreEn {
 
 	// Translations
 	@override String get title => 'Plus';
+}
+
+// Path: times
+class _TranslationsTimesFr implements TranslationsTimesEn {
+	_TranslationsTimesFr._(this._root);
+
+	final TranslationsFr _root; // ignore: unused_field
+
+	// Translations
+	@override String get today => 'Aujourd\'hui';
+	@override String get tomorrow => 'Demain';
+	@override String get yesterday => 'Hier';
+	@override String get this_week => 'Cette semaine';
+	@override String get last_week => 'La semaine dernière';
+	@override String get this_month => 'Ce mois-ci';
+	@override String get last_month => 'Le mois dernier';
+	@override String get this_year => 'Cette année';
+	@override String get last_year => 'L\'année dernière';
+	@override String get all_time => 'Tout le temps';
 }
 
 // Path: actions
@@ -315,8 +356,9 @@ extension on TranslationsFr {
 			case 'settings.app_settings.selfHostedUrl.placeholder': return 'Entrez l\'URL de votre instance auto-hébergée';
 			case 'settings.app_settings.selfHostedUrl.not_set': return 'Non défini';
 			case 'settings.logout': return 'Déconnexion';
-			case 'home.title': return 'Accueil';
-			case 'home.whats_for_today': return 'Quoi de prévu pour aujourd\'hui ?';
+			case 'today.title': return 'Aujourd\'hui';
+			case 'calendar.title': return 'Calendrier';
+			case 'habits.title': return 'Habitudes';
 			case 'tasks.title': return 'Mes tâches';
 			case 'tasks.no_tasks_for_now': return 'Pas de tâches pour le moment';
 			case 'tasks.task_details': return 'Détail de la tâche';
@@ -332,6 +374,16 @@ extension on TranslationsFr {
 			case 'tasks.add_task_modal.title_required': return 'Titre requis';
 			case 'tasks.add_task_modal.title_required_description': return 'Veuillez saisir un titre pour votre tâche';
 			case 'more.title': return 'Plus';
+			case 'times.today': return 'Aujourd\'hui';
+			case 'times.tomorrow': return 'Demain';
+			case 'times.yesterday': return 'Hier';
+			case 'times.this_week': return 'Cette semaine';
+			case 'times.last_week': return 'La semaine dernière';
+			case 'times.this_month': return 'Ce mois-ci';
+			case 'times.last_month': return 'Le mois dernier';
+			case 'times.this_year': return 'Cette année';
+			case 'times.last_year': return 'L\'année dernière';
+			case 'times.all_time': return 'Tout le temps';
 			case 'actions.save': return 'Enregistrer';
 			case 'actions.cancel': return 'Annuler';
 			case 'actions.next': return 'Suivant';

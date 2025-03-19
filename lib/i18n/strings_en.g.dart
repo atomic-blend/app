@@ -41,9 +41,12 @@ class Translations implements BaseTranslations<AppLocale, Translations> {
 	late final TranslationsNavigationEn navigation = TranslationsNavigationEn._(_root);
 	late final TranslationsAuthEn auth = TranslationsAuthEn._(_root);
 	late final TranslationsSettingsEn settings = TranslationsSettingsEn._(_root);
-	late final TranslationsHomeEn home = TranslationsHomeEn._(_root);
+	late final TranslationsTodayEn today = TranslationsTodayEn._(_root);
+	late final TranslationsCalendarEn calendar = TranslationsCalendarEn._(_root);
+	late final TranslationsHabitsEn habits = TranslationsHabitsEn._(_root);
 	late final TranslationsTasksEn tasks = TranslationsTasksEn._(_root);
 	late final TranslationsMoreEn more = TranslationsMoreEn._(_root);
+	late final TranslationsTimesEn times = TranslationsTimesEn._(_root);
 	late final TranslationsActionsEn actions = TranslationsActionsEn._(_root);
 	late final TranslationsValidationEn validation = TranslationsValidationEn._(_root);
 }
@@ -83,15 +86,34 @@ class TranslationsSettingsEn {
 	String get logout => 'Logout';
 }
 
-// Path: home
-class TranslationsHomeEn {
-	TranslationsHomeEn._(this._root);
+// Path: today
+class TranslationsTodayEn {
+	TranslationsTodayEn._(this._root);
 
 	final Translations _root; // ignore: unused_field
 
 	// Translations
-	String get title => 'Home';
-	String get whats_for_today => 'What\'s for today?';
+	String get title => 'Today';
+}
+
+// Path: calendar
+class TranslationsCalendarEn {
+	TranslationsCalendarEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	String get title => 'Calendar';
+}
+
+// Path: habits
+class TranslationsHabitsEn {
+	TranslationsHabitsEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	String get title => 'Habits';
 }
 
 // Path: tasks
@@ -116,6 +138,25 @@ class TranslationsMoreEn {
 
 	// Translations
 	String get title => 'More';
+}
+
+// Path: times
+class TranslationsTimesEn {
+	TranslationsTimesEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	String get today => 'Today';
+	String get tomorrow => 'Tomorrow';
+	String get yesterday => 'Yesterday';
+	String get this_week => 'This week';
+	String get last_week => 'Last week';
+	String get this_month => 'This month';
+	String get last_month => 'Last month';
+	String get this_year => 'This year';
+	String get last_year => 'Last year';
+	String get all_time => 'All time';
 }
 
 // Path: actions
@@ -319,8 +360,9 @@ extension on Translations {
 			case 'settings.app_settings.selfHostedUrl.placeholder': return 'Enter the URL of your self-hosted instance';
 			case 'settings.app_settings.selfHostedUrl.not_set': return 'Not set';
 			case 'settings.logout': return 'Logout';
-			case 'home.title': return 'Home';
-			case 'home.whats_for_today': return 'What\'s for today?';
+			case 'today.title': return 'Today';
+			case 'calendar.title': return 'Calendar';
+			case 'habits.title': return 'Habits';
 			case 'tasks.title': return 'My Tasks';
 			case 'tasks.no_tasks_for_now': return 'No tasks for now';
 			case 'tasks.task_details': return 'Task Details';
@@ -336,6 +378,16 @@ extension on Translations {
 			case 'tasks.add_task_modal.title_required': return 'Title required';
 			case 'tasks.add_task_modal.title_required_description': return 'Please enter a title for your task';
 			case 'more.title': return 'More';
+			case 'times.today': return 'Today';
+			case 'times.tomorrow': return 'Tomorrow';
+			case 'times.yesterday': return 'Yesterday';
+			case 'times.this_week': return 'This week';
+			case 'times.last_week': return 'Last week';
+			case 'times.this_month': return 'This month';
+			case 'times.last_month': return 'Last month';
+			case 'times.this_year': return 'This year';
+			case 'times.last_year': return 'Last year';
+			case 'times.all_time': return 'All time';
 			case 'actions.save': return 'Save';
 			case 'actions.cancel': return 'Cancel';
 			case 'actions.next': return 'Next';

@@ -1,11 +1,14 @@
 import 'package:app/blocs/auth/auth.bloc.dart';
-import 'package:app/components/buttons/sync_status_button.dart';
+import 'package:app/components/buttons/account_avatar_with_sync_status.dart';
 import 'package:app/i18n/strings.g.dart';
 import 'package:app/main.dart';
+import 'package:app/pages/calendar/calendar.dart';
+import 'package:app/pages/habits/habits.dart';
 import 'package:app/pages/more_apps/more_apps.dart';
-import 'package:app/pages/tasks/add_task_modal.dart';
-import 'package:app/pages/tasks/tasks.dart';
+import 'package:app/pages/today/add_task_modal.dart';
+import 'package:app/pages/today/today.dart';
 import 'package:app/utils/shortcuts.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:icons_plus/icons_plus.dart';
@@ -80,13 +83,14 @@ class Ads {
 @immutable
 class Navigation {
   /// Appbar configuration.
-  List<AppBar?> appbars(BuildContext context) => [
+  List<AppBar?> appbars(BuildContext context, {Widget? leading}) => [
         AppBar(
           title: Row(
+            mainAxisSize: MainAxisSize.min,
             children: [
               Text(
-                context.t.tasks.title,
-                style: getTextTheme(context).titleLarge!.copyWith(
+                context.t.today.title,
+                style: getTextTheme(context).headlineMedium!.copyWith(
                       fontWeight: FontWeight.bold,
                     ),
               )
@@ -95,16 +99,17 @@ class Navigation {
           actions: [
             Padding(
               padding: EdgeInsets.only(right: $constants.insets.sm),
-              child: const SyncStatusButton(),
+              child: const AccountAvatarWithSyncStatus(),
             )
           ],
         ),
         AppBar(
             title: Row(
+              mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
-                  context.t.more.title,
-                  style: getTextTheme(context).titleLarge!.copyWith(
+                  context.t.calendar.title,
+                  style: getTextTheme(context).headlineMedium!.copyWith(
                         fontWeight: FontWeight.bold,
                       ),
                 )
@@ -115,7 +120,53 @@ class Navigation {
                 if (authState is LoggedIn) {
                   return Padding(
                     padding: EdgeInsets.only(right: $constants.insets.sm),
-                    child: const SyncStatusButton(),
+                    child: const AccountAvatarWithSyncStatus(),
+                  );
+                }
+                return Container();
+              })
+            ]),
+        AppBar(
+            title: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  context.t.habits.title,
+                  style: getTextTheme(context).headlineMedium!.copyWith(
+                        fontWeight: FontWeight.bold,
+                      ),
+                )
+              ],
+            ),
+            actions: [
+              BlocBuilder<AuthBloc, AuthState>(builder: (context, authState) {
+                if (authState is LoggedIn) {
+                  return Padding(
+                    padding: EdgeInsets.only(right: $constants.insets.sm),
+                    child: const AccountAvatarWithSyncStatus(),
+                  );
+                }
+                return Container();
+              })
+            ]),
+        AppBar(
+            title: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  context.t.more.title,
+                  style: getTextTheme(context).headlineMedium!.copyWith(
+                        fontWeight: FontWeight.bold,
+                      ),
+                )
+              ],
+            ),
+            actions: [
+              BlocBuilder<AuthBloc, AuthState>(builder: (context, authState) {
+                if (authState is LoggedIn) {
+                  return Padding(
+                    padding: EdgeInsets.only(right: $constants.insets.sm),
+                    child: const AccountAvatarWithSyncStatus(),
                   );
                 }
                 return Container();
@@ -126,6 +177,8 @@ class Navigation {
   /// Bottom navigation configuration.
   List<Widget> bottomNavigationScreens() => [
         const Tasks(),
+        const Calendar(),
+        const Habits(),
         const MoreApps(),
       ];
 
@@ -144,25 +197,43 @@ class Navigation {
           backgroundColor: getTheme(context).surfaceContainerHighest,
           child: const Icon(LineAwesome.plus_solid),
         ),
+        null,
+        null,
         null
       ];
 
   List<NavigationDestination> bottomNavigationItems(BuildContext context) => [
-        const NavigationDestination(
-          key: Key("tasks"),
-          icon: Icon(
-            LineAwesome.check_circle,
+        NavigationDestination(
+          key: const Key("today"),
+          icon: const Icon(
+            LineAwesome.home_solid,
             size: 25,
           ),
-          label: "tasks",
+          label: context.t.today.title,
         ),
-        const NavigationDestination(
-          key: Key("more"),
-          icon: Icon(
-            LineAwesome.ellipsis_h_solid,
+        NavigationDestination(
+          key: const Key("calendar"),
+          icon: const Icon(
+            LineAwesome.calendar,
             size: 25,
           ),
-          label: "more",
+          label: context.t.calendar.title,
+        ),
+        NavigationDestination(
+          key: const Key("habits"),
+          icon: const Icon(
+            LineAwesome.bolt_solid,
+            size: 25,
+          ),
+          label: context.t.habits.title,
+        ),
+        NavigationDestination(
+          key: const Key("more"),
+          icon: const Icon(
+            CupertinoIcons.ellipsis_circle_fill,
+            size: 25,
+          ),
+          label: context.t.more.title,
         ),
       ];
 }
