@@ -1,9 +1,9 @@
 import 'package:app/i18n/strings.g.dart';
 import 'package:app/utils/constants.dart';
 import 'package:app/utils/shortcuts.dart';
+import 'package:calendar_date_picker2/calendar_date_picker2.dart';
 import 'package:flutter/material.dart';
 import 'package:jiffy/jiffy.dart';
-import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 import 'package:app/utils/exntensions/date_time_extension.dart';
 
 class DueDatePickerModal extends StatefulWidget {
@@ -68,30 +68,24 @@ class _DueDatePickerModalState extends State<DueDatePickerModal> {
               ),
             ],
           ),
-          SfDateRangePicker(
-            headerStyle: DateRangePickerHeaderStyle(
-              backgroundColor: Colors.transparent,
-              textStyle: getTextTheme(context).bodyMedium!.copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
-              textAlign: TextAlign.center,
+          CalendarDatePicker2(
+            config: CalendarDatePicker2Config(
+              calendarType: CalendarDatePicker2Type.single,
+              firstDate: widget.firstDate ??
+                  Jiffy.parseFromDateTime(DateTime.now())
+                      .subtract(years: 100)
+                      .dateTime,
+              lastDate: widget.lastDate ??
+                  Jiffy.parseFromDateTime(DateTime.now())
+                      .add(years: 100)
+                      .dateTime,
             ),
-            backgroundColor: Colors.transparent,
-            onSelectionChanged: (DateRangePickerSelectionChangedArgs args) {
+            value: [_dueDate],
+            onValueChanged: (value) {
               setState(() {
-                _dueDate = (args.value as DateTime).midnight();
+                _dueDate = value.first.midnight();
               });
             },
-            selectionMode: DateRangePickerSelectionMode.single,
-            initialSelectedDate: _dueDate,
-            minDate: widget.firstDate ??
-                Jiffy.parseFromDateTime(DateTime.now())
-                    .subtract(years: 100)
-                    .dateTime,
-            maxDate: widget.lastDate ??
-                Jiffy.parseFromDateTime(DateTime.now())
-                    .add(years: 100)
-                    .dateTime,
           ),
           const Spacer(),
           TextButton(
