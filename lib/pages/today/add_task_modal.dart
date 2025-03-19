@@ -8,6 +8,7 @@ import 'package:app/utils/constants.dart';
 import 'package:app/utils/exntensions/date_time_extension.dart';
 import 'package:app/utils/shortcuts.dart';
 import 'package:app/utils/toast_helper.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:icons_plus/icons_plus.dart';
@@ -30,7 +31,7 @@ class _AddTaskModalState extends State<AddTaskModal> {
       return Container(
         width: double.infinity,
         height: MediaQuery.of(context).viewInsets.bottom +
-            getSize(context).height * 0.115,
+            getSize(context).height * 0.12,
         decoration: BoxDecoration(
           color: Theme.of(context).scaffoldBackgroundColor,
           borderRadius: BorderRadius.only(
@@ -64,45 +65,56 @@ class _AddTaskModalState extends State<AddTaskModal> {
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      GestureDetector(
-                          onTap: () async {
-                            await showModalBottomSheet(
-                                context: context,
-                                isScrollControlled: true,
-                                builder: (context) => DueDatePickerModal(
-                                      onDateChanged: (date) {
-                                        setState(() {
-                                          _dueDate = date;
-                                        });
-                                      },
-                                      firstDate: DateTime(2000),
-                                      lastDate: DateTime(2100),
-                                    ));
-                          },
-                          child: Row(
-                            children: [
-                              Icon(LineAwesome.calendar,
-                                  color: _dueDate != null
-                                      ? Colors.blueAccent
-                                      : null),
-                              if (_dueDate != null)
-                                Padding(
-                                  padding: EdgeInsets.only(
-                                      left: $constants.insets.xxs),
-                                  child: Text(
-                                    _dueDate!.formatDueDate(context),
-                                    style: getTextTheme(context)
-                                        .bodySmall!
-                                        .copyWith(
-                                          fontWeight: FontWeight.bold,
-                                          color: _dueDate != null
-                                              ? Colors.blueAccent
-                                              : null,
-                                        ),
+                      Container(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: $constants.insets.xs + 4, vertical: 2),
+                        decoration: BoxDecoration(
+                          color: _dueDate != null
+                              ? getTheme(context).primaryContainer
+                              : null,
+                          borderRadius:
+                              BorderRadius.circular($constants.corners.full),
+                        ),
+                        child: GestureDetector(
+                            onTap: () async {
+                              await showModalBottomSheet(
+                                  context: context,
+                                  isScrollControlled: true,
+                                  builder: (context) => DueDatePickerModal(
+                                        onDateChanged: (date) {
+                                          setState(() {
+                                            _dueDate = date;
+                                          });
+                                        },
+                                        firstDate: DateTime(2000),
+                                        lastDate: DateTime(2100),
+                                      ));
+                            },
+                            child: Row(
+                              children: [
+                                Icon(CupertinoIcons.calendar,
+                                    color: _dueDate != null
+                                        ? getTheme(context).primary
+                                        : null),
+                                if (_dueDate != null)
+                                  Padding(
+                                    padding: EdgeInsets.only(
+                                        left: $constants.insets.xxs),
+                                    child: Text(
+                                      _dueDate!.formatDueDate(context),
+                                      style: getTextTheme(context)
+                                          .bodySmall!
+                                          .copyWith(
+                                            fontWeight: FontWeight.bold,
+                                            color: _dueDate != null
+                                                ? getTheme(context).primary
+                                                : null,
+                                          ),
+                                    ),
                                   ),
-                                ),
-                            ],
-                          )),
+                              ],
+                            )),
+                      ),
                     ],
                   ),
                   GestureDetector(
@@ -128,8 +140,9 @@ class _AddTaskModalState extends State<AddTaskModal> {
                             .add(AddTask(task, authState.user!));
                         Navigator.of(context).pop();
                       },
-                      child: const Icon(
-                        BoxIcons.bxs_up_arrow_circle,
+                      child: Icon(
+                        CupertinoIcons.arrow_up_circle_fill,
+                        color: getTheme(context).primary,
                       ))
                 ],
               ),

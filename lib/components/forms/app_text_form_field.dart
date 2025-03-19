@@ -119,7 +119,8 @@ class _AppTextFormFieldState extends State<AppTextFormField> {
                     fillColor: widget.backgroundColor,
                     hintText: widget.hintText,
                     hintStyle: getTextTheme(context).bodyMedium!.copyWith(
-                        color: widget.textColor ?? getTheme(context).primary),
+                          color: widget.textColor ?? null,
+                        ),
                     isDense: true,
                     border: OutlineInputBorder(
                       borderSide: BorderSide.none,

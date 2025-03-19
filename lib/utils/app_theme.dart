@@ -22,7 +22,7 @@ abstract final class AppTheme {
     colors: const FlexSchemeColor(
       // Custom colors
       primary: Color(0xFF004881),
-      primaryContainer: Color(0xFFF9F9F9),
+      primaryContainer: Color(0xFFE8F3FF),
       primaryLightRef: Color(0xFF004881),
       secondary: Color(0xFF673AB7),
       secondaryContainer: Color(0xFFF5EFFF),
@@ -58,11 +58,20 @@ abstract final class AppTheme {
       headlineSmall: TextStyle(
           fontFamily: 'SpaceGrotesk', fontSize: 16, color: Colors.black),
       titleLarge: TextStyle(
-          fontFamily: 'SpaceGrotesk', fontSize: 33.9, color: Colors.black, fontWeight: FontWeight.w300),
+          fontFamily: 'SpaceGrotesk',
+          fontSize: 33.9,
+          color: Colors.black,
+          fontWeight: FontWeight.w300),
       titleMedium: TextStyle(
-          fontFamily: 'SpaceGrotesk', fontSize: 24, color: Colors.black, fontWeight: FontWeight.w300),
+          fontFamily: 'SpaceGrotesk',
+          fontSize: 24,
+          color: Colors.black,
+          fontWeight: FontWeight.w300),
       titleSmall: TextStyle(
-          fontFamily: 'SpaceGrotesk', fontSize: 17, color: Colors.black, fontWeight: FontWeight.w300),
+          fontFamily: 'SpaceGrotesk',
+          fontSize: 17,
+          color: Colors.black,
+          fontWeight: FontWeight.w300),
       bodyLarge:
           TextStyle(fontFamily: 'Nunito', fontSize: 17, color: Colors.black),
       bodyMedium:
@@ -110,11 +119,20 @@ abstract final class AppTheme {
       headlineSmall: TextStyle(
           fontFamily: 'SpaceGrotesk', fontSize: 16, color: Colors.white),
       titleLarge: TextStyle(
-          fontFamily: 'SpaceGrotesk', fontSize: 33.9, color: Colors.white, fontWeight: FontWeight.w300),
+          fontFamily: 'SpaceGrotesk',
+          fontSize: 33.9,
+          color: Colors.white,
+          fontWeight: FontWeight.w300),
       titleMedium: TextStyle(
-          fontFamily: 'SpaceGrotesk', fontSize: 24, color: Colors.white, fontWeight: FontWeight.w300),
+          fontFamily: 'SpaceGrotesk',
+          fontSize: 24,
+          color: Colors.white,
+          fontWeight: FontWeight.w300),
       titleSmall: TextStyle(
-          fontFamily: 'SpaceGrotesk', fontSize: 17, color: Colors.white, fontWeight: FontWeight.w300),
+          fontFamily: 'SpaceGrotesk',
+          fontSize: 17,
+          color: Colors.white,
+          fontWeight: FontWeight.w300),
       bodyLarge:
           TextStyle(fontFamily: 'Nunito', fontSize: 17, color: Colors.white),
       bodyMedium:
