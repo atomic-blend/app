@@ -108,7 +108,10 @@ class _TasksState extends State<Tasks> {
     final List<TaskItem> widgets = [];
     for (final task in tasks) {
       if (task.startDate != null &&
-          task.startDate!.isThisWeek(includeToday: false)) {
+          task.startDate!.isThisWeek(
+            includeToday: false,
+            includeTomorrow: false,
+          )) {
         widgets.add(TaskItem(task: task));
       }
     }

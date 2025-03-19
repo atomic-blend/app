@@ -35,8 +35,12 @@ extension DateTimeExtension on DateTime {
     return DateTime.utc(year, month, day);
   }
 
-  bool isThisWeek({bool includeToday = false}) {
+  bool isThisWeek({bool includeToday = true, includeTomorrow = true}) {
     if (!includeToday && isToday()) {
+      return false;
+    }
+
+    if (!includeTomorrow && isTomorrow()) {
       return false;
     }
 
