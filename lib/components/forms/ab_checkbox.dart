@@ -1,6 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:icons_plus/icons_plus.dart';
 
 class ABCheckbox extends StatelessWidget {
   final bool? value;
@@ -22,12 +20,5 @@ class ABCheckbox extends StatelessWidget {
         }
       },
     );
-    return Checkbox(
-        value: value ?? false,
-        onChanged: (newValue) {
-          if (onChanged != null) {
-            onChanged!(newValue);
-          }
-        });
   }
 }

@@ -4,7 +4,6 @@ import 'package:app/pages/settings/settings.dart';
 import 'package:app/utils/constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:icons_plus/icons_plus.dart';
 
 class MoreApps extends StatefulWidget {
   const MoreApps({super.key});

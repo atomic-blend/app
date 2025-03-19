@@ -20,11 +20,9 @@ class TasksService {
   }
 
   Future<bool> createTask(UserEntity user, TaskEntity task) async {
-    print(encryptionService);
     if (encryptionService == null) {
       await UserService.refreshToken(user);
     }
-    print(encryptionService);
     final encryptedTask =
         await task.encrypt(encryptionService: encryptionService!);
     final result = await globalApiClient.post('/tasks', data: encryptedTask);

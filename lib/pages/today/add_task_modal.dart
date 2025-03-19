@@ -11,7 +11,6 @@ import 'package:app/utils/toast_helper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:icons_plus/icons_plus.dart';
 
 class AddTaskModal extends StatefulWidget {
   const AddTaskModal({super.key});

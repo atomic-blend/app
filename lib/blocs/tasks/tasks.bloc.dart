@@ -52,7 +52,6 @@ class TasksBloc extends HydratedBloc<TasksEvent, TasksState> {
       await _tasksService.createTask(event.user, event.task,);
       add(const LoadTasks());
     } catch (e) {
-      print(e);
       emit(TaskLoadingError(prevState.tasks ?? [], e.toString()));
       add(const LoadTasks());
     }
