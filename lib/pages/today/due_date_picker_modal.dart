@@ -4,6 +4,7 @@ import 'package:app/utils/shortcuts.dart';
 import 'package:flutter/material.dart';
 import 'package:jiffy/jiffy.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
+import 'package:app/utils/exntensions/date_time_extension.dart';
 
 class DueDatePickerModal extends StatefulWidget {
   final Function(DateTime?) onDateChanged;
@@ -79,7 +80,7 @@ class _DueDatePickerModalState extends State<DueDatePickerModal> {
             backgroundColor: Colors.transparent,
             onSelectionChanged: (DateRangePickerSelectionChangedArgs args) {
               setState(() {
-                _dueDate = args.value;
+                _dueDate = (args.value as DateTime).midnight();
               });
             },
             selectionMode: DateRangePickerSelectionMode.single,

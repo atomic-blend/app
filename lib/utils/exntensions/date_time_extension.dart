@@ -25,6 +25,16 @@ extension DateTimeExtension on DateTime {
         day == tomorrow.day;
   }
 
+  bool isDayDate() {
+    // check if a date is at midnight
+    return hour == 0 && minute == 0 && second == 0;
+  }
+
+  DateTime midnight() {
+    // return date at midnight
+    return DateTime.utc(year, month, day);
+  }
+
   bool isThisWeek({bool includeToday = false}) {
     if (!includeToday && isToday()) {
       return false;
