@@ -1,3 +1,4 @@
+import 'package:app/pages/under_construction/under_construction.dart';
 import 'package:flutter/cupertino.dart';
 
 class Habits extends StatefulWidget {
@@ -10,6 +11,6 @@ class Habits extends StatefulWidget {
 class _HabitsState extends State<Habits> {
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return UnderConstruction();
   }
 }

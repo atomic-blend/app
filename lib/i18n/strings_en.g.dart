@@ -45,6 +45,7 @@ class Translations implements BaseTranslations<AppLocale, Translations> {
 	late final TranslationsCalendarEn calendar = TranslationsCalendarEn._(_root);
 	late final TranslationsHabitsEn habits = TranslationsHabitsEn._(_root);
 	late final TranslationsTasksEn tasks = TranslationsTasksEn._(_root);
+	late final TranslationsUnderConstructionEn under_construction = TranslationsUnderConstructionEn._(_root);
 	late final TranslationsMoreEn more = TranslationsMoreEn._(_root);
 	late final TranslationsTimesEn times = TranslationsTimesEn._(_root);
 	late final TranslationsActionsEn actions = TranslationsActionsEn._(_root);
@@ -131,6 +132,17 @@ class TranslationsTasksEn {
 	String get task_details => 'Task Details';
 	late final TranslationsTasksDueDatesEn due_dates = TranslationsTasksDueDatesEn._(_root);
 	late final TranslationsTasksAddTaskModalEn add_task_modal = TranslationsTasksAddTaskModalEn._(_root);
+}
+
+// Path: under_construction
+class TranslationsUnderConstructionEn {
+	TranslationsUnderConstructionEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	String get title => 'We\'re working on it!';
+	String get description => 'This feature is not yet available, but we\'re working hard to bring it to you soon.\n\nStay tuned!';
 }
 
 // Path: more
@@ -383,6 +395,8 @@ extension on Translations {
 			case 'tasks.add_task_modal.erase': return 'Erase';
 			case 'tasks.add_task_modal.title_required': return 'Title required';
 			case 'tasks.add_task_modal.title_required_description': return 'Please enter a title for your task';
+			case 'under_construction.title': return 'We\'re working on it!';
+			case 'under_construction.description': return 'This feature is not yet available, but we\'re working hard to bring it to you soon.\n\nStay tuned!';
 			case 'more.title': return 'More';
 			case 'times.today': return 'Today';
 			case 'times.tomorrow': return 'Tomorrow';

@@ -1,3 +1,4 @@
+import 'package:app/pages/under_construction/under_construction.dart';
 import 'package:flutter/cupertino.dart';
 
 class Calendar extends StatefulWidget {
@@ -10,6 +11,6 @@ class Calendar extends StatefulWidget {
 class _CalendarState extends State<Calendar> {
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return UnderConstruction();
   }
 }

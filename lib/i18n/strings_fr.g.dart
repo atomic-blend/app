@@ -41,6 +41,7 @@ class TranslationsFr implements Translations {
 	@override late final _TranslationsCalendarFr calendar = _TranslationsCalendarFr._(_root);
 	@override late final _TranslationsHabitsFr habits = _TranslationsHabitsFr._(_root);
 	@override late final _TranslationsTasksFr tasks = _TranslationsTasksFr._(_root);
+	@override late final _TranslationsUnderConstructionFr under_construction = _TranslationsUnderConstructionFr._(_root);
 	@override late final _TranslationsMoreFr more = _TranslationsMoreFr._(_root);
 	@override late final _TranslationsTimesFr times = _TranslationsTimesFr._(_root);
 	@override late final _TranslationsActionsFr actions = _TranslationsActionsFr._(_root);
@@ -127,6 +128,17 @@ class _TranslationsTasksFr implements TranslationsTasksEn {
 	@override String get task_details => 'Détail de la tâche';
 	@override late final _TranslationsTasksDueDatesFr due_dates = _TranslationsTasksDueDatesFr._(_root);
 	@override late final _TranslationsTasksAddTaskModalFr add_task_modal = _TranslationsTasksAddTaskModalFr._(_root);
+}
+
+// Path: under_construction
+class _TranslationsUnderConstructionFr implements TranslationsUnderConstructionEn {
+	_TranslationsUnderConstructionFr._(this._root);
+
+	final TranslationsFr _root; // ignore: unused_field
+
+	// Translations
+	@override String get title => 'On travaille dessus !';
+	@override String get description => 'Cette fonctionnalité est en cours de développement.\n\nRevenez bientôt pour découvrir les dernières mises à jour !';
 }
 
 // Path: more
@@ -379,6 +391,8 @@ extension on TranslationsFr {
 			case 'tasks.add_task_modal.erase': return 'Effacer';
 			case 'tasks.add_task_modal.title_required': return 'Titre requis';
 			case 'tasks.add_task_modal.title_required_description': return 'Veuillez saisir un titre pour votre tâche';
+			case 'under_construction.title': return 'On travaille dessus !';
+			case 'under_construction.description': return 'Cette fonctionnalité est en cours de développement.\n\nRevenez bientôt pour découvrir les dernières mises à jour !';
 			case 'more.title': return 'Plus';
 			case 'times.today': return 'Aujourd\'hui';
 			case 'times.tomorrow': return 'Demain';

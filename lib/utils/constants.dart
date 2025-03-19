@@ -91,7 +91,7 @@ class Navigation {
             children: [
               Text(
                 context.t.today.title,
-                style: getTextTheme(context).headlineMedium!.copyWith(
+                style: getTextTheme(context).headlineSmall!.copyWith(
                       fontWeight: FontWeight.bold,
                     ),
               )
@@ -110,7 +110,7 @@ class Navigation {
               children: [
                 Text(
                   context.t.calendar.title,
-                  style: getTextTheme(context).headlineMedium!.copyWith(
+                  style: getTextTheme(context).headlineSmall!.copyWith(
                         fontWeight: FontWeight.bold,
                       ),
                 )
@@ -134,7 +134,7 @@ class Navigation {
               children: [
                 Text(
                   context.t.habits.title,
-                  style: getTextTheme(context).headlineMedium!.copyWith(
+                  style: getTextTheme(context).headlineSmall!.copyWith(
                         fontWeight: FontWeight.bold,
                       ),
                 )
@@ -157,7 +157,7 @@ class Navigation {
               children: [
                 Text(
                   context.t.more.title,
-                  style: getTextTheme(context).headlineMedium!.copyWith(
+                  style: getTextTheme(context).headlineSmall!.copyWith(
                         fontWeight: FontWeight.bold,
                       ),
                 )

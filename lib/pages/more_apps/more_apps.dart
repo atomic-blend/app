@@ -2,6 +2,7 @@ import 'package:app/components/buttons/icon_text_button.dart';
 import 'package:app/i18n/strings.g.dart';
 import 'package:app/pages/settings/settings.dart';
 import 'package:app/utils/constants.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:icons_plus/icons_plus.dart';
 
@@ -22,10 +23,11 @@ class _MoreAppsState extends State<MoreApps> {
           children: [
             IconTextButton(
               text: context.t.settings.title,
-              icon: LineAwesome.cog_solid,
+              icon: CupertinoIcons.gear,
+              iconSize: 20,
               onTap: () {
-                Navigator.of(context)
-                    .push(MaterialPageRoute(builder: (context) => const Settings()));
+                Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => const Settings()));
               },
             ),
           ],

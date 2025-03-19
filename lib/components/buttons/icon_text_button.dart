@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 class IconTextButton extends StatelessWidget {
   final IconData? icon;
   final Color? iconColor;
+  final double? iconSize;
   final Color? textColor;
   final String text;
   final String? data;
@@ -18,6 +19,7 @@ class IconTextButton extends StatelessWidget {
     this.textColor,
     this.onTap,
     this.data,
+    this.iconSize,
   });
 
   @override
@@ -29,15 +31,14 @@ class IconTextButton extends StatelessWidget {
           if (icon != null) ...[
             Icon(
               icon,
-              size: 24,
+              size: iconSize ?? 24,
               color: iconColor,
             ),
             SizedBox(width: $constants.insets.sm),
           ],
           Text(text,
-              style: getTextTheme(context)
-                  .titleMedium!
-                  .copyWith(color: textColor)),
+              style:
+                  getTextTheme(context).bodyMedium!.copyWith(color: textColor)),
           const Spacer(),
           if (data != null) Text(data!),
         ],
