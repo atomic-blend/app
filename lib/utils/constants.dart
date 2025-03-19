@@ -232,8 +232,14 @@ class Navigation {
           label: context.t.calendar.title,
         ),
         BottomNavigationItem(
-          icon: const Icon(LineAwesome.plus_solid),
-          cupertinoIcon: const Icon(CupertinoIcons.plus),
+          icon: Icon(
+            LineAwesome.plus_solid,
+            color: getTheme(context).primary,
+          ),
+          cupertinoIcon: Icon(
+            CupertinoIcons.plus_circle_fill,
+            color: getTheme(context).secondary,
+          ),
           label: "Add",
           onTap: (index) {
             print("pressed");

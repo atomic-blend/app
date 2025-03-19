@@ -24,7 +24,7 @@ abstract final class AppTheme {
       primary: Color(0xFF004881),
       primaryContainer: Color(0xFFF9F9F9),
       primaryLightRef: Color(0xFF004881),
-      secondary: Color(0xFF4C9BBA),
+      secondary: Color(0xFF673AB7),
       secondaryContainer: Color(0xFFF5EFFF),
       secondaryLightRef: Color(0xFF4C9BBA),
       tertiary: Color(0xFF006875),
