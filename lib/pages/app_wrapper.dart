@@ -2,6 +2,8 @@ import 'package:app/blocs/app/app.bloc.dart';
 import 'package:app/blocs/auth/auth.bloc.dart';
 import 'package:app/components/app/bottom_navigation.dart';
 import 'package:app/pages/auth/login_or_register_modal.dart';
+import 'package:app/services/encryption.service.dart';
+import 'package:app/services/user.service.dart';
 import 'package:app/utils/constants.dart';
 import 'package:app/utils/shortcuts.dart';
 import 'package:flutter/material.dart';
@@ -37,6 +39,8 @@ class _AppWrapperState extends State<AppWrapper> {
       //   });
       // }
       return BlocBuilder<AuthBloc, AuthState>(builder: (context, state) {
+        encryptionService ??= EncryptionService(userSalt: state.user!.keySalt);
+        encryptionService!.hydrateKey();
         var navItems = $constants.navigation.bottomNavigationItems(context);
         var screens = $constants.navigation.bottomNavigationScreens();
         var floattingActionsButtons =

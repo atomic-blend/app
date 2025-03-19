@@ -13,7 +13,7 @@ class AccountAvatarWithSyncStatus extends StatelessWidget {
     return BlocBuilder<AuthBloc, AuthState>(builder: (context, authState) {
       return BlocBuilder<TasksBloc, TasksState>(builder: (context, taskState) {
         return GestureDetector(
-          onLongPress: () {
+          onDoubleTap: () {
             SyncService.sync(context);
           },
           child: SizedBox(

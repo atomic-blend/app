@@ -1,4 +1,5 @@
 import 'package:app/entities/tasks/tasks.entity.dart';
+import 'package:app/entities/user/user.entity.dart';
 import 'package:app/services/tasks.service.dart';
 import 'package:equatable/equatable.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
@@ -36,7 +37,7 @@ class TasksBloc extends HydratedBloc<TasksEvent, TasksState> {
   void _onLoadTasks(LoadTasks event, Emitter<TasksState> emit) async {
     final prevState = state;
     emit(TasksLoading(prevState.tasks ?? []));
-      final tasks = await _tasksService.getAllTasks();
+    final tasks = await _tasksService.getAllTasks();
     try {
       emit(TasksLoaded(tasks));
     } catch (e) {
@@ -48,9 +49,10 @@ class TasksBloc extends HydratedBloc<TasksEvent, TasksState> {
     final prevState = state;
     emit(TasksLoading(prevState.tasks ?? []));
     try {
-      await _tasksService.createTask(event.task);
+      await _tasksService.createTask(event.user, event.task,);
       add(const LoadTasks());
     } catch (e) {
+      print(e);
       emit(TaskLoadingError(prevState.tasks ?? [], e.toString()));
       add(const LoadTasks());
     }

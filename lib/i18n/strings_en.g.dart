@@ -94,6 +94,9 @@ class TranslationsTodayEn {
 
 	// Translations
 	String get title => 'Today';
+	String get nothing_to_do => 'Nothing to do for now, enjoy your day!';
+	String get day_off => 'You have nothing planned for tomorrow, enjoy your day!';
+	String get week_off => 'You have nothing planned for this week, try and take the time to do the stuff left behind!';
 }
 
 // Path: calendar
@@ -361,6 +364,9 @@ extension on Translations {
 			case 'settings.app_settings.selfHostedUrl.not_set': return 'Not set';
 			case 'settings.logout': return 'Logout';
 			case 'today.title': return 'Today';
+			case 'today.nothing_to_do': return 'Nothing to do for now, enjoy your day!';
+			case 'today.day_off': return 'You have nothing planned for tomorrow, enjoy your day!';
+			case 'today.week_off': return 'You have nothing planned for this week, try and take the time to do the stuff left behind!';
 			case 'calendar.title': return 'Calendar';
 			case 'habits.title': return 'Habits';
 			case 'tasks.title': return 'My Tasks';

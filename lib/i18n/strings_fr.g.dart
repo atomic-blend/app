@@ -90,6 +90,9 @@ class _TranslationsTodayFr implements TranslationsTodayEn {
 
 	// Translations
 	@override String get title => 'Aujourd\'hui';
+	@override String get nothing_to_do => 'Rien à faire pour le moment, vous pouvez vous détendre !';
+	@override String get day_off => 'Vous n\'avez rien de prévu pour demain, profitez-en !';
+	@override String get week_off => 'Vous n\'avez rien de prévu pour cette semaine, essayez de prendre le temps de faire les choses laissées de côté !';
 }
 
 // Path: calendar
@@ -357,6 +360,9 @@ extension on TranslationsFr {
 			case 'settings.app_settings.selfHostedUrl.not_set': return 'Non défini';
 			case 'settings.logout': return 'Déconnexion';
 			case 'today.title': return 'Aujourd\'hui';
+			case 'today.nothing_to_do': return 'Rien à faire pour le moment, vous pouvez vous détendre !';
+			case 'today.day_off': return 'Vous n\'avez rien de prévu pour demain, profitez-en !';
+			case 'today.week_off': return 'Vous n\'avez rien de prévu pour cette semaine, essayez de prendre le temps de faire les choses laissées de côté !';
 			case 'calendar.title': return 'Calendrier';
 			case 'habits.title': return 'Habitudes';
 			case 'tasks.title': return 'Mes tâches';

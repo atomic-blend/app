@@ -136,6 +136,7 @@ class UserService {
     user.accessToken = accessToken;
     user.refreshToken = result.data['refreshToken'];
     prefs?.setString('user', json.encode(user.toJson()));
+    globalApiClient.setIdToken(accessToken);
 
     return accessToken;
   }

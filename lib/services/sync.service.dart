@@ -8,7 +8,6 @@ class SyncService {
     if (context.read<AuthBloc>().state is! LoggedIn) return;
     
     // Sync data
-    // context.read<AuthBloc>().add(const RefreshUser());
     context.read<TasksBloc>().add(const LoadTasks());
   }
 }

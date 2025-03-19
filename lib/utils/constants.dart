@@ -186,20 +186,21 @@ class Navigation {
       ];
 
   List<Widget?> floatingActionButtons(BuildContext context) => [
-        FloatingActionButton(
-          onPressed: () {
-            showModalBottomSheet(
-                isScrollControlled: true,
-                context: context,
-                builder: (context) => const AddTaskModal());
-          },
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular($constants.corners.xxl),
-          ),
-          elevation: 1,
-          backgroundColor: getTheme(context).surfaceContainerHighest,
-          child: const Icon(LineAwesome.plus_solid),
-        ),
+        // FloatingActionButton(
+        //   onPressed: () {
+        //     showModalBottomSheet(
+        //         isScrollControlled: true,
+        //         context: context,
+        //         builder: (context) => const AddTaskModal());
+        //   },
+        //   shape: RoundedRectangleBorder(
+        //     borderRadius: BorderRadius.circular($constants.corners.xxl),
+        //   ),
+        //   elevation: 1,
+        //   backgroundColor: getTheme(context).surfaceContainerHighest,
+        //   child: const Icon(LineAwesome.plus_solid),
+        // ),
+        null,
         null,
         null,
         null,
@@ -242,7 +243,10 @@ class Navigation {
           ),
           label: "Add",
           onTap: (index) {
-            print("pressed");
+            showModalBottomSheet(
+                isScrollControlled: true,
+                context: context,
+                builder: (context) => const AddTaskModal());
           },
         ),
         BottomNavigationItem(

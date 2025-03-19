@@ -9,8 +9,9 @@ final class LoadTasks extends TasksEvent {
 }
 
 final class AddTask extends TasksEvent {
-  const AddTask(this.task);
+  const AddTask(this.task, this.user);
   final TaskEntity task;
+  final UserEntity user;
 }
 
 final class EditTask extends TasksEvent {
