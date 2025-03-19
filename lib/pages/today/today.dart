@@ -28,6 +28,8 @@ class _TasksState extends State<Tasks> {
     return SafeArea(
       child: BlocBuilder<TasksBloc, TasksState>(builder: (context, taskState) {
         final todayTasks = _todayTasks(taskState.tasks!);
+        final tomorrowTasks = _tomorrowTasks(taskState.tasks!);
+        final thisWeekTasks = _thisWeekTasks(taskState.tasks!);
         return Padding(
           padding: EdgeInsets.symmetric(horizontal: $constants.insets.sm),
           child: Column(
@@ -45,6 +47,7 @@ class _TasksState extends State<Tasks> {
                   context.t.today.nothing_to_do,
                   style: getTextTheme(context).labelSmall!,
                 )),
+              if (todayTasks.isNotEmpty) ...todayTasks,
               SizedBox(height: $constants.insets.xxs),
               Text(
                 context.t.times.tomorrow,
@@ -52,12 +55,14 @@ class _TasksState extends State<Tasks> {
                       fontWeight: FontWeight.bold,
                     ),
               ),
-              Center(
-                child: Text(
-                  context.t.today.day_off,
-                  style: getTextTheme(context).labelSmall!,
+              if (tomorrowTasks.isEmpty)
+                Center(
+                  child: Text(
+                    context.t.today.day_off,
+                    style: getTextTheme(context).labelSmall!,
+                  ),
                 ),
-              ),
+              if (tomorrowTasks.isNotEmpty) ...tomorrowTasks,
               SizedBox(height: $constants.insets.xxs),
               Text(
                 context.t.times.this_week,
@@ -65,20 +70,13 @@ class _TasksState extends State<Tasks> {
                       fontWeight: FontWeight.bold,
                     ),
               ),
-              if (taskState.tasks != null && taskState.tasks!.isNotEmpty)
-                ...taskState.tasks!.map((task) {
-                  return TaskItem(task: task);
-                }),
-              if (taskState is TasksLoaded &&
-                  taskState.tasks != null &&
-                  taskState.tasks!.isEmpty)
+              if (thisWeekTasks.isEmpty)
                 Center(
-                  child: Text(
-                    context.t.today.week_off,
-                    textAlign: TextAlign.center,
-                    style: getTextTheme(context).labelSmall!,
-                  ),
-                ),
+                    child: Text(
+                  context.t.today.nothing_to_do,
+                  style: getTextTheme(context).labelSmall!,
+                )),
+              if (thisWeekTasks.isNotEmpty) ...thisWeekTasks,
             ],
           ),
         );
@@ -90,6 +88,27 @@ class _TasksState extends State<Tasks> {
     final List<TaskItem> widgets = [];
     for (final task in tasks) {
       if (task.startDate != null && task.startDate!.isToday()) {
+        widgets.add(TaskItem(task: task));
+      }
+    }
+    return widgets;
+  }
+
+  List<TaskItem> _tomorrowTasks(List<TaskEntity> tasks) {
+    final List<TaskItem> widgets = [];
+    for (final task in tasks) {
+      if (task.startDate != null && task.startDate!.isTomorrow()) {
+        widgets.add(TaskItem(task: task));
+      }
+    }
+    return widgets;
+  }
+
+  List<TaskItem> _thisWeekTasks(List<TaskEntity> tasks) {
+    final List<TaskItem> widgets = [];
+    for (final task in tasks) {
+      if (task.startDate != null &&
+          task.startDate!.isThisWeek(includeToday: false)) {
         widgets.add(TaskItem(task: task));
       }
     }

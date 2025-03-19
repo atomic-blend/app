@@ -24,4 +24,23 @@ extension DateTimeExtension on DateTime {
         month == tomorrow.month &&
         day == tomorrow.day;
   }
+
+  bool isThisWeek({bool includeToday = false}) {
+    if (!includeToday && isToday()) {
+      return false;
+    }
+
+    final now = DateTime.now();
+    final today = DateTime(now.year, now.month, now.day);
+
+    // Calculate days until the end of week (Sunday)
+    final daysUntilEndOfWeek = (7 - now.weekday) % 7;
+
+    // If today is Sunday, we need to add 7 to get next Sunday
+    final daysToAdd = daysUntilEndOfWeek == 0 ? 7 : daysUntilEndOfWeek;
+
+    final endOfWeek = today.add(Duration(days: daysToAdd));
+
+    return isAfter(today) && isBefore(endOfWeek.add(const Duration(days: 1)));
+  }
 }
