@@ -127,7 +127,7 @@ class Navigation {
                 return Container();
               })
             ]),
-            null,
+        null,
         AppBar(
             title: Row(
               mainAxisSize: MainAxisSize.min,
@@ -213,6 +213,10 @@ class Navigation {
             LineAwesome.home_solid,
             size: 25,
           ),
+          cupertinoIcon: const Icon(
+            CupertinoIcons.house_fill,
+            size: 25,
+          ),
           label: context.t.today.title,
         ),
         BottomNavigationItem(
@@ -221,10 +225,15 @@ class Navigation {
             LineAwesome.calendar,
             size: 25,
           ),
+          cupertinoIcon: const Icon(
+            CupertinoIcons.calendar,
+            size: 25,
+          ),
           label: context.t.calendar.title,
         ),
         BottomNavigationItem(
           icon: const Icon(LineAwesome.plus_solid),
+          cupertinoIcon: const Icon(CupertinoIcons.plus),
           label: "Add",
           onTap: (index) {
             print("pressed");
@@ -236,11 +245,19 @@ class Navigation {
             LineAwesome.bolt_solid,
             size: 25,
           ),
+          cupertinoIcon: const Icon(
+            CupertinoIcons.bolt_fill,
+            size: 25,
+          ),
           label: context.t.habits.title,
         ),
         BottomNavigationItem(
           key: const Key("more"),
           icon: const Icon(
+            CupertinoIcons.ellipsis_circle_fill,
+            size: 25,
+          ),
+          cupertinoIcon: const Icon(
             CupertinoIcons.ellipsis_circle_fill,
             size: 25,
           ),

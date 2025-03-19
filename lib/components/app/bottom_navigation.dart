@@ -1,6 +1,9 @@
+import 'dart:io';
+
 import 'package:app/blocs/app/app.bloc.dart';
 import 'package:app/utils/shortcuts.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 /// A customizable bottom navigation item for use with [BottomNavigation].
@@ -11,6 +14,7 @@ class BottomNavigationItem extends StatelessWidget {
   const BottomNavigationItem({
     super.key,
     required this.icon,
+    required this.cupertinoIcon,
     required this.label,
     this.selectedIcon,
     this.onTap,
@@ -20,6 +24,9 @@ class BottomNavigationItem extends StatelessWidget {
 
   /// The icon displayed by the destination.
   final Widget icon;
+
+  /// The Cupertino icon displayed by the destination.
+  final Widget cupertinoIcon;
 
   /// The optional icon to display when this destination is selected.
   final Widget? selectedIcon;
@@ -40,8 +47,12 @@ class BottomNavigationItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Use the appropriate icon based on platform
+    final Widget platformIcon =
+        Platform.isIOS || Platform.isMacOS ? cupertinoIcon : icon;
+
     return NavigationDestination(
-      icon: icon,
+      icon: platformIcon,
       selectedIcon: selectedIcon,
       label: label,
       tooltip: tooltip,
@@ -64,7 +75,45 @@ class BottomNavigation extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Create a modified destinations list with Add button in the middle
+    // Check platform and return appropriate navigation bar
+    if (Platform.isIOS || Platform.isMacOS) {
+      // Convert destinations to BottomNavigationBarItems for Cupertino
+      final cupertinoItems = destinations.map((dest) {
+        if (dest is BottomNavigationItem) {
+          return BottomNavigationBarItem(
+            icon: dest.cupertinoIcon,
+            activeIcon: dest.selectedIcon ?? dest.cupertinoIcon,
+            label: dest.label,
+          );
+        }
+        // Fallback for other widget types
+        return const BottomNavigationBarItem(
+          icon: Icon(CupertinoIcons.circle),
+          label: '',
+        );
+      }).toList();
+
+      return CupertinoTabBar(
+        currentIndex: currentPageIndex,
+        onTap: (index) {
+          // Check if the tapped item has its own onTap handler
+          if (destinations.length > index &&
+              destinations[index] is BottomNavigationItem &&
+              (destinations[index] as BottomNavigationItem).onTap != null) {
+            (destinations[index] as BottomNavigationItem).onTap!(index);
+          }
+          // Otherwise use the default handler
+          else if (onTap != null) {
+            onTap!(index);
+          } else {
+            context.read<AppCubit>().changePageIndex(index: index);
+          }
+        },
+        items: cupertinoItems,
+      );
+    }
+
+    // For other platforms, use the Material NavigationBar
     return NavigationBar(
       height: 60,
       indicatorColor: getTheme(context).primaryContainer,
