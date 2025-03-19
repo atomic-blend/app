@@ -1,4 +1,5 @@
 import 'package:app/blocs/auth/auth.bloc.dart';
+import 'package:app/components/app/bottom_navigation.dart';
 import 'package:app/components/buttons/account_avatar_with_sync_status.dart';
 import 'package:app/i18n/strings.g.dart';
 import 'package:app/main.dart';
@@ -126,6 +127,7 @@ class Navigation {
                 return Container();
               })
             ]),
+            null,
         AppBar(
             title: Row(
               mainAxisSize: MainAxisSize.min,
@@ -175,9 +177,10 @@ class Navigation {
       ];
 
   /// Bottom navigation configuration.
-  List<Widget> bottomNavigationScreens() => [
+  List<Widget?> bottomNavigationScreens() => [
         const Tasks(),
         const Calendar(),
+        null,
         const Habits(),
         const MoreApps(),
       ];
@@ -199,11 +202,12 @@ class Navigation {
         ),
         null,
         null,
+        null,
         null
       ];
 
-  List<NavigationDestination> bottomNavigationItems(BuildContext context) => [
-        NavigationDestination(
+  List<Widget> bottomNavigationItems(BuildContext context) => [
+        BottomNavigationItem(
           key: const Key("today"),
           icon: const Icon(
             LineAwesome.home_solid,
@@ -211,7 +215,7 @@ class Navigation {
           ),
           label: context.t.today.title,
         ),
-        NavigationDestination(
+        BottomNavigationItem(
           key: const Key("calendar"),
           icon: const Icon(
             LineAwesome.calendar,
@@ -219,7 +223,14 @@ class Navigation {
           ),
           label: context.t.calendar.title,
         ),
-        NavigationDestination(
+        BottomNavigationItem(
+          icon: const Icon(LineAwesome.plus_solid),
+          label: "Add",
+          onTap: (index) {
+            print("pressed");
+          },
+        ),
+        BottomNavigationItem(
           key: const Key("habits"),
           icon: const Icon(
             LineAwesome.bolt_solid,
@@ -227,7 +238,7 @@ class Navigation {
           ),
           label: context.t.habits.title,
         ),
-        NavigationDestination(
+        BottomNavigationItem(
           key: const Key("more"),
           icon: const Icon(
             CupertinoIcons.ellipsis_circle_fill,

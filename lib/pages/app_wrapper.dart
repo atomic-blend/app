@@ -41,7 +41,7 @@ class _AppWrapperState extends State<AppWrapper> {
         var screens = $constants.navigation.bottomNavigationScreens();
         var floattingActionsButtons =
             $constants.navigation.floatingActionButtons(context);
-        late Widget body;
+        late Widget? body;
         var appbars = $constants.navigation.appbars(context);
         body = screens.elementAt(appState.pageIndex);
         if (state is Loading) {
