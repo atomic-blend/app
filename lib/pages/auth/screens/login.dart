@@ -41,8 +41,12 @@ class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return BlocListener<AuthBloc, AuthState>(
-      listener: (BuildContext context, AuthState state) {
+      listener: (BuildContext context, AuthState state) async {
         if (state is LoggedIn) {
+          _animationController.reverseDuration = const Duration(
+            milliseconds: 500,
+          );
+          await _animationController.reverse(from: 1.0);
           if (!context.mounted) return;
           Navigator.pop(context);
         }
@@ -159,11 +163,6 @@ class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
                           text: context.t.auth.login.login,
                           backgroundColor: getTheme(context).primary,
                           onPressed: () async {
-                            _animationController.reverseDuration =
-                                const Duration(
-                              milliseconds: 500,
-                            );
-                            await _animationController.reverse(from: 1.0);
                             if (_emailController.text.isNotEmpty &&
                                 _passwordController.text.isNotEmpty) {
                               if (!context.mounted) return;

@@ -111,6 +111,15 @@ class ApiClient {
     return result ?? false;
   }
 
+  static String? getSelfHostedRestApiUrl() {
+    String? selfHostedRestApiUrl = prefs?.getString('self_hosted_rest_api_url');
+    if (selfHostedRestApiUrl == null || selfHostedRestApiUrl.isEmpty) {
+      return null;
+    } else {
+      return selfHostedRestApiUrl;
+    }
+  }
+
   get(String path,
       {Options? options, Map<String, dynamic>? queryParameters}) async {
     await readFromCache();

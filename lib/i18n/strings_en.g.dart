@@ -235,6 +235,7 @@ class TranslationsAuthLoginOrRegisterEn {
 	String get login => 'Log in';
 	String get register => 'Register';
 	String get or => 'or';
+	String get connecting_to => 'Connecting to: ';
 }
 
 // Path: auth.login
@@ -320,7 +321,7 @@ class TranslationsSettingsAppSettingsSelfHostedUrlEn {
 	// Translations
 	String get title => 'Self-Hosted URL';
 	String get description => 'If you are using a self-hosted instance of Atomic Blend, you can enter the URL here.';
-	String get placeholder => 'Enter the URL of your self-hosted instance';
+	String get placeholder => 'Enter the URL of your instance';
 	String get not_set => 'Not set';
 }
 
@@ -352,6 +353,7 @@ extension on Translations {
 			case 'auth.login_or_register.login': return 'Log in';
 			case 'auth.login_or_register.register': return 'Register';
 			case 'auth.login_or_register.or': return 'or';
+			case 'auth.login_or_register.connecting_to': return 'Connecting to: ';
 			case 'auth.login.title': return '👋 Welcome back!';
 			case 'auth.login.description': return 'Use you email and password to log back in and access your data.';
 			case 'auth.login.email': return 'Email';
@@ -372,7 +374,7 @@ extension on Translations {
 			case 'settings.app_settings.title': return 'App Settings';
 			case 'settings.app_settings.selfHostedUrl.title': return 'Self-Hosted URL';
 			case 'settings.app_settings.selfHostedUrl.description': return 'If you are using a self-hosted instance of Atomic Blend, you can enter the URL here.';
-			case 'settings.app_settings.selfHostedUrl.placeholder': return 'Enter the URL of your self-hosted instance';
+			case 'settings.app_settings.selfHostedUrl.placeholder': return 'Enter the URL of your instance';
 			case 'settings.app_settings.selfHostedUrl.not_set': return 'Not set';
 			case 'settings.logout': return 'Logout';
 			case 'today.title': return 'Today';

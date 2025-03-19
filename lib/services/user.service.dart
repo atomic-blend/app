@@ -10,7 +10,6 @@ import 'package:dio/dio.dart';
 EncryptionService? encryptionService;
 
 class UserService {
-
   UserService();
 
   Future<void> logOut() async {
@@ -88,11 +87,14 @@ class UserService {
       prefs?.setString('user', json.encode(user.toJson()));
 
       globalApiClient.setIdToken(user.accessToken!);
-      
+
       // derive and persist key from password
       encryptionService ??= EncryptionService(userSalt: user.keySalt);
       await encryptionService?.deriveAndPersistKey(password);
       return user;
+    } else if (result.statusCode == 401) {
+      print("wrong_email_password");
+      throw Exception("wrong_email_password");
     } else {
       throw Exception('login_failed');
     }
@@ -111,7 +113,7 @@ class UserService {
       prefs?.setString('user', json.encode(user.toJson()));
 
       globalApiClient.setIdToken(user.accessToken!);
-      
+
       // derive and persist key from password
       encryptionService ??= EncryptionService(userSalt: user.keySalt);
       await encryptionService?.deriveAndPersistKey(password);
@@ -123,7 +125,7 @@ class UserService {
 
   static Future<String?> refreshToken(UserEntity user) async {
     final refreshToken = user.refreshToken;
-    final  apiClient = Dio();
+    final apiClient = Dio();
     apiClient.options = BaseOptions(
       baseUrl: env!.restApiUrl,
       headers: {

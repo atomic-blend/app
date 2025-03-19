@@ -39,8 +39,11 @@ class _AppWrapperState extends State<AppWrapper> {
       //   });
       // }
       return BlocBuilder<AuthBloc, AuthState>(builder: (context, state) {
-        encryptionService ??= EncryptionService(userSalt: state.user!.keySalt);
-        encryptionService!.hydrateKey();
+        if (state is LoggedIn) {
+          encryptionService ??=
+              EncryptionService(userSalt: state.user!.keySalt);
+          encryptionService!.hydrateKey();
+        }
         var navItems = $constants.navigation.bottomNavigationItems(context);
         var screens = $constants.navigation.bottomNavigationScreens();
         var floattingActionsButtons =

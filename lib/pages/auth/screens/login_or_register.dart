@@ -1,5 +1,7 @@
 import 'package:app/components/buttons/primary_button_round.dart';
 import 'package:app/i18n/strings.g.dart';
+import 'package:app/main.dart';
+import 'package:app/utils/api_client.dart';
 import 'package:app/utils/constants.dart';
 import 'package:app/utils/shortcuts.dart';
 import 'package:auto_size_text/auto_size_text.dart';
@@ -7,6 +9,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:icons_plus/icons_plus.dart';
 import 'package:lottie/lottie.dart';
+
+import '../../settings/modals/edit_self_hosted_url_modal.dart';
 
 class LoginOrRegister extends StatefulWidget {
   final VoidCallback? loginCallback;
@@ -50,6 +54,7 @@ class _LoginOrRegisterState extends State<LoginOrRegister>
 
   @override
   Widget build(BuildContext context) {
+    print(ApiClient.getSelfHostedRestApiUrl());
     return Stack(
       children: [
         SizedBox(
@@ -159,6 +164,44 @@ class _LoginOrRegisterState extends State<LoginOrRegister>
                         EdgeInsets.symmetric(horizontal: $constants.insets.md),
                     child: Column(
                       children: [
+                        GestureDetector(
+                          onTap: () async {
+                            String? selfHostedUrl =
+                                prefs?.getString("self_hosted_rest_api_url");
+                            if (selfHostedUrl == null ||
+                                selfHostedUrl.isEmpty) {
+                              selfHostedUrl = env?.restApiUrl;
+                            }
+                            await showDialog(
+                                context: context,
+                                builder: (context) => EditSelfHostedUrlModal(
+                                      selfHostedUrl: selfHostedUrl,
+                                    ));
+                          },
+                          child: Text.rich(
+                            TextSpan(
+                                text: context
+                                    .t.auth.login_or_register.connecting_to,
+                                children: [
+                                  TextSpan(
+                                      text: Uri.parse(ApiClient
+                                                  .getSelfHostedRestApiUrl() ??
+                                              env?.restApiUrl ??
+                                              "")
+                                          .host,
+                                      style: const TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        decoration: TextDecoration.underline,
+                                      )),
+                                ]),
+                            style: getTextTheme(context).bodyMedium!.copyWith(
+                                  color: Colors.grey,
+                                ),
+                          ),
+                        ),
+                        SizedBox(
+                          height: $constants.insets.xxs,
+                        ),
                         PrimaryButtonRound(
                           text: context.t.auth.login_or_register.login,
                           textColor: getTheme(context).primary,

@@ -231,6 +231,7 @@ class _TranslationsAuthLoginOrRegisterFr implements TranslationsAuthLoginOrRegis
 	@override String get login => 'Se connecter';
 	@override String get register => 'S\'inscrire';
 	@override String get or => 'ou';
+	@override String get connecting_to => 'Connexion au serveur : ';
 }
 
 // Path: auth.login
@@ -316,7 +317,7 @@ class _TranslationsSettingsAppSettingsSelfHostedUrlFr implements TranslationsSet
 	// Translations
 	@override String get title => 'URL auto-hébergée';
 	@override String get description => 'Si vous utilisez une instance auto-hébergée d\'Atomic Blend, vous pouvez saisir l\'URL ici.';
-	@override String get placeholder => 'Entrez l\'URL de votre instance auto-hébergée';
+	@override String get placeholder => 'Entrez l\'URL de votre instance';
 	@override String get not_set => 'Non défini';
 }
 
@@ -348,6 +349,7 @@ extension on TranslationsFr {
 			case 'auth.login_or_register.login': return 'Se connecter';
 			case 'auth.login_or_register.register': return 'S\'inscrire';
 			case 'auth.login_or_register.or': return 'ou';
+			case 'auth.login_or_register.connecting_to': return 'Connexion au serveur : ';
 			case 'auth.login.title': return '👋 Bon retour parmis nous !';
 			case 'auth.login.description': return 'Utilisez votre adresse e-mail et votre mot de passe pour vous reconnecter et accéder à vos données.';
 			case 'auth.login.email': return 'Adresse e-mail';
@@ -368,7 +370,7 @@ extension on TranslationsFr {
 			case 'settings.app_settings.title': return 'Paramètres de l\'application';
 			case 'settings.app_settings.selfHostedUrl.title': return 'URL auto-hébergée';
 			case 'settings.app_settings.selfHostedUrl.description': return 'Si vous utilisez une instance auto-hébergée d\'Atomic Blend, vous pouvez saisir l\'URL ici.';
-			case 'settings.app_settings.selfHostedUrl.placeholder': return 'Entrez l\'URL de votre instance auto-hébergée';
+			case 'settings.app_settings.selfHostedUrl.placeholder': return 'Entrez l\'URL de votre instance';
 			case 'settings.app_settings.selfHostedUrl.not_set': return 'Non défini';
 			case 'settings.logout': return 'Déconnexion';
 			case 'today.title': return 'Aujourd\'hui';
