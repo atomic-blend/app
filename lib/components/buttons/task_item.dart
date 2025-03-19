@@ -69,7 +69,7 @@ class TaskItem extends StatelessWidget {
                 const Spacer(),
                 if (task.startDate != null && task.startDate!.isDayDate())
                   Padding(
-                    padding: EdgeInsets.only(right: $constants.insets.md),
+                    padding: EdgeInsets.only(right: $constants.insets.xxs),
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
