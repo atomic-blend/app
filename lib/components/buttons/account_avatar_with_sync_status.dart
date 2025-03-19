@@ -1,5 +1,6 @@
 import 'package:app/blocs/auth/auth.bloc.dart';
 import 'package:app/blocs/tasks/tasks.bloc.dart';
+import 'package:app/pages/account/account.dart';
 import 'package:app/services/sync.service.dart';
 import 'package:app/utils/shortcuts.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +14,13 @@ class AccountAvatarWithSyncStatus extends StatelessWidget {
     return BlocBuilder<AuthBloc, AuthState>(builder: (context, authState) {
       return BlocBuilder<TasksBloc, TasksState>(builder: (context, taskState) {
         return GestureDetector(
+          onTap: () {
+            showModalBottomSheet(
+              context: context,
+              isScrollControlled: true,
+              builder: (context) => const Account(),
+            );
+          },
           onDoubleTap: () {
             SyncService.sync(context);
           },
