@@ -1,5 +1,6 @@
 import 'package:app/blocs/tasks/tasks.bloc.dart';
 import 'package:app/components/buttons/task_item.dart';
+import 'package:app/components/forms/search_bar.dart';
 import 'package:app/entities/tasks/tasks.entity.dart';
 import 'package:app/i18n/strings.g.dart';
 import 'package:app/services/sync.service.dart';
@@ -17,6 +18,7 @@ class Tasks extends StatefulWidget {
 }
 
 class _TasksState extends State<Tasks> {
+  final TextEditingController _searchController = TextEditingController();
   @override
   void initState() {
     SyncService.sync(context);
@@ -35,6 +37,9 @@ class _TasksState extends State<Tasks> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              ABSearchBar(
+                  controller: _searchController, onSubmitted: (value) {}),
+              SizedBox(height: $constants.insets.xs),
               Text(
                 context.t.times.today,
                 style: getTextTheme(context).titleMedium!.copyWith(
@@ -42,11 +47,10 @@ class _TasksState extends State<Tasks> {
                     ),
               ),
               if (todayTasks.isEmpty)
-                Center(
-                    child: Text(
+                Text(
                   context.t.today.nothing_to_do,
                   style: getTextTheme(context).labelSmall!,
-                )),
+                ),
               if (todayTasks.isNotEmpty) ...todayTasks,
               SizedBox(height: $constants.insets.xxs),
               Text(
@@ -56,11 +60,9 @@ class _TasksState extends State<Tasks> {
                     ),
               ),
               if (tomorrowTasks.isEmpty)
-                Center(
-                  child: Text(
-                    context.t.today.day_off,
-                    style: getTextTheme(context).labelSmall!,
-                  ),
+                Text(
+                  context.t.today.day_off,
+                  style: getTextTheme(context).labelSmall!,
                 ),
               if (tomorrowTasks.isNotEmpty) ...tomorrowTasks,
               SizedBox(height: $constants.insets.xxs),
@@ -71,11 +73,10 @@ class _TasksState extends State<Tasks> {
                     ),
               ),
               if (thisWeekTasks.isEmpty)
-                Center(
-                    child: Text(
+                Text(
                   context.t.today.nothing_to_do,
                   style: getTextTheme(context).labelSmall!,
-                )),
+                ),
               if (thisWeekTasks.isNotEmpty) ...thisWeekTasks,
             ],
           ),

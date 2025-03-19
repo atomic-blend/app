@@ -50,9 +50,7 @@ class _DueDatePickerModalState extends State<DueDatePickerModal> {
                 },
                 child: Text(
                   context.t.tasks.add_task_modal.cancel,
-                  style: getTextTheme(context).titleSmall!.copyWith(
-                        fontWeight: FontWeight.bold,
-                      ),
+                  style: getTextTheme(context).bodyMedium!.copyWith(),
                 ),
               ),
               TextButton(
@@ -62,8 +60,9 @@ class _DueDatePickerModalState extends State<DueDatePickerModal> {
                 },
                 child: Text(
                   context.t.tasks.add_task_modal.save,
-                  style: getTextTheme(context).titleSmall!.copyWith(
+                  style: getTextTheme(context).bodyMedium!.copyWith(
                         fontWeight: FontWeight.bold,
+                        color: getTheme(context).primary,
                       ),
                 ),
               ),
@@ -72,7 +71,7 @@ class _DueDatePickerModalState extends State<DueDatePickerModal> {
           SfDateRangePicker(
             headerStyle: DateRangePickerHeaderStyle(
               backgroundColor: Colors.transparent,
-              textStyle: getTextTheme(context).titleMedium!.copyWith(
+              textStyle: getTextTheme(context).bodyMedium!.copyWith(
                     fontWeight: FontWeight.bold,
                   ),
               textAlign: TextAlign.center,
@@ -105,7 +104,7 @@ class _DueDatePickerModalState extends State<DueDatePickerModal> {
             },
             child: Text(
               context.t.tasks.add_task_modal.erase,
-              style: getTextTheme(context).titleMedium!.copyWith(
+              style: getTextTheme(context).bodyMedium!.copyWith(
                     color: Colors.red,
                   ),
             ),

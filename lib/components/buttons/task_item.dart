@@ -71,6 +71,7 @@ class TaskItem extends StatelessWidget {
                   Padding(
                     padding: EdgeInsets.only(right: $constants.insets.md),
                     child: Row(
+                      mainAxisSize: MainAxisSize.min,
                       children: [
                         const Icon(
                           CupertinoIcons.calendar,
