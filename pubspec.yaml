@@ -30,7 +30,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  flutter_localizations: 
+  flutter_localizations:
     sdk: flutter
 
   # The following adds the Cupertino Icons font to your application.
@@ -215,7 +215,7 @@ flutter_native_splash:
   # of your splash screen to a solid color.  Use background_image to set the background of your
   # splash screen to a png image.  This is useful for gradients. The image will be stretch to the
   # size of the app. Only one parameter can be used, color and background_image cannot both be set.
-  color: "#f2f2f2"
+  color: "#004881"
   #background_image: "assets/background.png"
 
   # Optional parameters are listed below.  To enable a parameter, uncomment the line by removing
@@ -223,7 +223,7 @@ flutter_native_splash:
 
   # The image parameter allows you to specify an image used in the splash screen.  It must be a
   # png file and should be sized for 4x pixel density.
-  image: assets/images/appicon.png
+  image: assets/images/appicon_transparent.png
 
   # The branding property allows you to specify an image used as branding in the splash screen.
   # It must be a png file. It is supported for Android, iOS and the Web.  For Android 12,
@@ -233,14 +233,14 @@ flutter_native_splash:
   # To position the branding image at the bottom of the screen you can use bottom, bottomRight,
   # and bottomLeft. The default values is bottom if not specified or specified something else.
   #branding_mode: bottom
-  
+
   # Set the branding padding from the bottom of the screen.  The default value is 0
   # branding_bottom_padding: 24
 
   # The color_dark, background_image_dark, image_dark, branding_dark are parameters that set the background
   # and image when the device is in dark mode. If they are not specified, the app will use the
   # parameters from above.  If there is no parameter above, the app will use the light mode values.
-  # If the image_dark parameter is specified, color_dark or background_image_dark must be specified.  
+  # If the image_dark parameter is specified, color_dark or background_image_dark must be specified.
   # color_dark and background_image_dark cannot both be set.
   #color_dark: "#042a49"
   #background_image_dark: "assets/dark-background.png"
@@ -257,10 +257,10 @@ flutter_native_splash:
     # App icon with an icon background: This should be 960×960 pixels, and fit within a circle
     # 640 pixels in diameter.
     # App icon without an icon background: This should be 1152×1152 pixels, and fit within a circle
-    # 768 pixels in diameter.  To fit a 1152x1152 image within a circle with a 768 diameter, simply 
+    # 768 pixels in diameter.  To fit a 1152x1152 image within a circle with a 768 diameter, simply
     # ensure that the most important design elements of your image are placed within a circular area
     # with a 768 diameter at the center of the 1152x1152 canvas.
-    image: assets/images/appicon.png
+    image: assets/images/appicon_transparent.png
 
     # Splash screen background color.
     color: "#f2f2f2"

@@ -46,6 +46,11 @@ class TranslationsFr implements Translations {
 	@override late final _TranslationsTimesFr times = _TranslationsTimesFr._(_root);
 	@override late final _TranslationsActionsFr actions = _TranslationsActionsFr._(_root);
 	@override late final _TranslationsValidationFr validation = _TranslationsValidationFr._(_root);
+	@override Map<String, String> get errors => {
+		'wrong_email_password': 'Adresse e-mail ou mot de passe incorrect',
+		'email_malformed': 'Adresse e-mail invalide',
+		'unknown_error': 'Une erreur inconnue s\'est produite',
+	};
 }
 
 // Path: navigation
@@ -412,6 +417,9 @@ extension on TranslationsFr {
 			case 'actions.back': return 'Retour';
 			case 'validation.required': return 'Ce champ est obligatoire';
 			case 'validation.invalid_url': return 'URL invalide';
+			case 'errors.wrong_email_password': return 'Adresse e-mail ou mot de passe incorrect';
+			case 'errors.email_malformed': return 'Adresse e-mail invalide';
+			case 'errors.unknown_error': return 'Une erreur inconnue s\'est produite';
 			default: return null;
 		}
 	}

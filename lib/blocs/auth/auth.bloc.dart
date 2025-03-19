@@ -32,9 +32,13 @@ class AuthBloc extends HydratedBloc<AuthEvent, AuthState> {
         return;
       }
       emit(LoggedIn(updatedUser));
-    } on Exception catch (e) {
+    } on DioException catch (e) {
       // TODO
-      print(e);
+      if (e.response?.statusCode == 401) {
+        emit(const AuthError("wrong_email_password"));
+      } else if (e.response?.statusCode == 400) {
+        emit(const AuthError("email_malformed"));
+      }
     }
   }
 

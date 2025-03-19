@@ -88,7 +88,9 @@ class _TasksState extends State<Tasks> {
   List<TaskItem> _todayTasks(List<TaskEntity> tasks) {
     final List<TaskItem> widgets = [];
     for (final task in tasks) {
-      if (task.startDate != null && task.startDate!.isToday()) {
+      if (task.completed != true &&
+          task.startDate != null &&
+          task.startDate!.isToday()) {
         widgets.add(TaskItem(task: task));
       }
     }
@@ -98,7 +100,9 @@ class _TasksState extends State<Tasks> {
   List<TaskItem> _tomorrowTasks(List<TaskEntity> tasks) {
     final List<TaskItem> widgets = [];
     for (final task in tasks) {
-      if (task.startDate != null && task.startDate!.isTomorrow()) {
+      if (task.completed != true &&
+          task.startDate != null &&
+          task.startDate!.isTomorrow()) {
         widgets.add(TaskItem(task: task));
       }
     }
@@ -108,7 +112,8 @@ class _TasksState extends State<Tasks> {
   List<TaskItem> _thisWeekTasks(List<TaskEntity> tasks) {
     final List<TaskItem> widgets = [];
     for (final task in tasks) {
-      if (task.startDate != null &&
+      if (task.completed != true &&
+          task.startDate != null &&
           task.startDate!.isThisWeek(
             includeToday: false,
             includeTomorrow: false,

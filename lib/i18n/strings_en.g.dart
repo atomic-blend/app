@@ -50,6 +50,11 @@ class Translations implements BaseTranslations<AppLocale, Translations> {
 	late final TranslationsTimesEn times = TranslationsTimesEn._(_root);
 	late final TranslationsActionsEn actions = TranslationsActionsEn._(_root);
 	late final TranslationsValidationEn validation = TranslationsValidationEn._(_root);
+	Map<String, String> get errors => {
+		'wrong_email_password': 'Email or password incorrect',
+		'email_malformed': 'Email malformed',
+		'unknown_error': 'Unknown error',
+	};
 }
 
 // Path: navigation
@@ -416,6 +421,9 @@ extension on Translations {
 			case 'actions.back': return 'Back';
 			case 'validation.required': return 'Required';
 			case 'validation.invalid_url': return 'invalid URL';
+			case 'errors.wrong_email_password': return 'Email or password incorrect';
+			case 'errors.email_malformed': return 'Email malformed';
+			case 'errors.unknown_error': return 'Unknown error';
 			default: return null;
 		}
 	}

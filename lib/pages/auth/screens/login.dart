@@ -22,6 +22,7 @@ class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
   late AnimationController _animationController;
   final _animationDuration = const Duration(milliseconds: 250);
   final TextEditingController _emailController = TextEditingController();
+  String? _errorMessage;
   final TextEditingController _passwordController = TextEditingController();
 
   @override
@@ -42,6 +43,11 @@ class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
   Widget build(BuildContext context) {
     return BlocListener<AuthBloc, AuthState>(
       listener: (BuildContext context, AuthState state) async {
+        if (state is AuthError) {
+          setState(() {
+            _errorMessage = state.message;
+          });
+        }
         if (state is LoggedIn) {
           _animationController.reverseDuration = const Duration(
             milliseconds: 500,
@@ -137,6 +143,25 @@ class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
                           obscureText: true,
                         ),
                       ),
+                      if (_errorMessage != null) ...[
+                        SizedBox(
+                          height: $constants.insets.xs,
+                        ),
+                        Padding(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: $constants.insets.lg),
+                          child: SizedBox(
+                            width: getSize(context).width * 0.9,
+                            child: Text(
+                              context.t.errors[_errorMessage] ??
+                                  context.t.errors["unknown_error"]!,
+                              style: getTextTheme(context)
+                                  .labelSmall!
+                                  .copyWith(color: Colors.red),
+                            ),
+                          ),
+                        ),
+                      ]
                     ],
                   ),
                 ),

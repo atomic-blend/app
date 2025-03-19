@@ -52,7 +52,9 @@ class ApiClient {
         },
         onError: (error, handler) async {
           try {
-            if (error.response?.statusCode == 401) {
+            print(error.requestOptions.path);
+            if (error.response?.statusCode == 401 &&
+                !['/auth/login'].contains(error.requestOptions.path)) {
               final userDataRaw = prefs?.getString('user');
               final userData = json.decode(userDataRaw!);
               final user = UserEntity.fromJson(userData);
@@ -84,7 +86,7 @@ class ApiClient {
             }
             return handler.next(error);
           } catch (e) {
-            // TODO
+            return handler.next(error);
           }
         },
       ),
