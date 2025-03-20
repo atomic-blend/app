@@ -8,6 +8,7 @@ import 'package:app/utils/constants.dart';
 import 'package:app/utils/shortcuts.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_side_menu/flutter_side_menu.dart';
 
 class AppWrapper extends StatefulWidget {
   const AppWrapper({super.key});
@@ -18,6 +19,10 @@ class AppWrapper extends StatefulWidget {
 
 class _AppWrapperState extends State<AppWrapper> {
   bool _isLoginModalVisible = false;
+  bool _isSideMenuOpened = false;
+  final SideMenuController _sideMenuController = SideMenuController();
+  final double _sideMenuWidth = 60;
+
   @override
   void initState() {
     super.initState();
@@ -67,21 +72,65 @@ class _AppWrapperState extends State<AppWrapper> {
             });
           });
         }
-        return Scaffold(
-            floatingActionButton: state.user != null
-                ? floattingActionsButtons.elementAt(appState.pageIndex)
-                : null,
-            floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
-            backgroundColor: getTheme(context).surface,
-            appBar: appbars.elementAt(appState.pageIndex),
-            body: body,
-            bottomNavigationBar: BottomNavigation(
-              destinations: navItems,
-              currentPageIndex: appState.pageIndex,
-              onTap: (index) {
-                context.read<AppCubit>().changePageIndex(index: index);
-              },
-            ));
+        final appBarconfig = appbars.elementAt(appState.pageIndex);
+        final appBar = AppBar(
+          title: appBarconfig!.title,
+          actions: appBarconfig.actions,
+          leading: IconButton(
+            icon: appState.pageIndex == appbars.length - 1
+                ? Container()
+                : const Icon(Icons.menu),
+            onPressed: () {
+              setState(() {
+                _isSideMenuOpened = !_isSideMenuOpened;
+              });
+            },
+          ),
+        );
+
+        return Stack(
+          children: [
+            // Main content
+            AnimatedContainer(
+              duration: const Duration(milliseconds: 300),
+              curve: Curves.easeInOut,
+              transform: Matrix4.translationValues(
+                  _isSideMenuOpened ? _sideMenuWidth : 0, 0, 0),
+              child: Scaffold(
+                floatingActionButton: state.user != null
+                    ? floattingActionsButtons.elementAt(appState.pageIndex)
+                    : null,
+                floatingActionButtonLocation:
+                    FloatingActionButtonLocation.endFloat,
+                backgroundColor: getTheme(context).surface,
+                appBar: appBar,
+                body: body!,
+                bottomNavigationBar: BottomNavigation(
+                  destinations: navItems,
+                  currentPageIndex: appState.pageIndex,
+                  onTap: (index) {
+                    context.read<AppCubit>().changePageIndex(index: index);
+                  },
+                ),
+              ),
+            ),
+
+            // Side menu
+            AnimatedContainer(
+              duration: const Duration(milliseconds: 300),
+              curve: Curves.easeInOut,
+              width: _sideMenuWidth,
+              transform: Matrix4.translationValues(
+                  _isSideMenuOpened ? 0 : -_sideMenuWidth, 0, 0),
+              child: Container(
+                decoration: BoxDecoration(color: getTheme(context).surface),
+                child: Column(
+                  children: [],
+                ),
+              ),
+            ),
+          ],
+        );
       });
     });
   }
