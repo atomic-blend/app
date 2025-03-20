@@ -29,9 +29,9 @@ class _OverviewTasksState extends State<OverviewTasks> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: BlocBuilder<TasksBloc, TasksState>(builder: (context, taskState) {
-        final todayTasks = _todayTasks(taskState.tasks!);
-        final tomorrowTasks = _tomorrowTasks(taskState.tasks!);
-        final thisWeekTasks = _thisWeekTasks(taskState.tasks!);
+        final todayTasks = _todayTasks(taskState.tasks ?? []);
+        final tomorrowTasks = _tomorrowTasks(taskState.tasks ?? []);
+        final thisWeekTasks = _thisWeekTasks(taskState.tasks ?? []);
         return Padding(
           padding: EdgeInsets.symmetric(horizontal: $constants.insets.sm),
           child: Column(

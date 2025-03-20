@@ -2,7 +2,6 @@ import 'package:app/blocs/auth/auth.bloc.dart';
 import 'package:app/components/buttons/icon_text_button.dart';
 import 'package:app/i18n/strings.g.dart';
 import 'package:app/pages/settings/screens/app_settings.dart';
-import 'package:app/services/firebase.service.dart';
 import 'package:app/utils/constants.dart';
 import 'package:app/utils/shortcuts.dart';
 import 'package:flutter/cupertino.dart';
@@ -56,7 +55,7 @@ class Settings extends StatelessWidget {
                   iconColor: Colors.red,
                   textColor: Colors.red,
                   onTap: () {
-                    FirebaseService.logout(context);
+                    context.read<AuthBloc>().add(const Logout());
                     Navigator.pop(context);
                   },
                 ),

@@ -56,7 +56,7 @@ class _AppWrapperState extends State<AppWrapper> {
         var appbars = $constants.navigation.appbars(context);
         body = screens.elementAt(appState.pageIndex);
         var menuItems = $constants.navigation.sideMenuItems(context);
-        if (menuItems.isNotEmpty) {
+        if (menuItems.isNotEmpty && menuItems[appState.pageIndex] != null) {
           body = menuItems[appState.pageIndex]![appState.selectedTabIndex].body;
         }
         if (state is Loading) {
@@ -119,6 +119,7 @@ class _AppWrapperState extends State<AppWrapper> {
             ),
 
             // Side menu
+            if (menuItems[appState.pageIndex] != null) 
             AnimatedContainer(
               duration: const Duration(milliseconds: 300),
               curve: Curves.easeInOut,

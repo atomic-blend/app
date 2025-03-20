@@ -202,6 +202,7 @@ class _LoginOrRegisterState extends State<LoginOrRegister>
                           height: $constants.insets.xxs,
                         ),
                         PrimaryButtonRound(
+                          width: double.infinity,
                           text: context.t.auth.login_or_register.login,
                           textColor: getTheme(context).primary,
                           backgroundColor: getTheme(context).primaryContainer,
@@ -216,6 +217,7 @@ class _LoginOrRegisterState extends State<LoginOrRegister>
                         ),
                         SizedBox(height: $constants.insets.xs),
                         PrimaryButtonRound(
+                          width: double.infinity,
                           text: context.t.auth.login_or_register.register,
                           fontWeight: FontWeight.w800,
                           onPressed: () {

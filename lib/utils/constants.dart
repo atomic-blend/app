@@ -96,7 +96,8 @@ class Navigation {
             mainAxisSize: MainAxisSize.min,
             children: [
               BlocBuilder<AppCubit, AppState>(builder: (context, appState) {
-                var selectedSideItem = sideMenuItems(context)![appState.pageIndex]![appState.selectedTabIndex];
+                var selectedSideItem = sideMenuItems(
+                    context)[appState.pageIndex]![appState.selectedTabIndex];
                 return Text(
                   selectedSideItem.title,
                   style: getTextTheme(context).headlineSmall!.copyWith(
@@ -252,6 +253,7 @@ class Navigation {
             },
           )
         ],
+        null,
         null,
         null,
         null
