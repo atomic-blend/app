@@ -1,6 +1,7 @@
 import 'package:app/blocs/app/app.bloc.dart';
 import 'package:app/blocs/auth/auth.bloc.dart';
 import 'package:app/components/app/bottom_navigation.dart';
+import 'package:app/components/app/side_menu.dart';
 import 'package:app/pages/auth/login_or_register_modal.dart';
 import 'package:app/services/encryption.service.dart';
 import 'package:app/services/user.service.dart';
@@ -8,7 +9,6 @@ import 'package:app/utils/constants.dart';
 import 'package:app/utils/shortcuts.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_side_menu/flutter_side_menu.dart';
 
 class AppWrapper extends StatefulWidget {
   const AppWrapper({super.key});
@@ -20,7 +20,6 @@ class AppWrapper extends StatefulWidget {
 class _AppWrapperState extends State<AppWrapper> {
   bool _isLoginModalVisible = false;
   bool _isSideMenuOpened = false;
-  final SideMenuController _sideMenuController = SideMenuController();
   final double _sideMenuWidth = 60;
 
   @override
@@ -56,6 +55,10 @@ class _AppWrapperState extends State<AppWrapper> {
         late Widget? body;
         var appbars = $constants.navigation.appbars(context);
         body = screens.elementAt(appState.pageIndex);
+        var menuItems = $constants.navigation.sideMenuItems(context);
+        if (menuItems.isNotEmpty) {
+          body = menuItems[appState.pageIndex]![appState.selectedTabIndex].body;
+        }
         if (state is Loading) {
           body = const Center(child: CircularProgressIndicator());
         }
@@ -122,11 +125,8 @@ class _AppWrapperState extends State<AppWrapper> {
               width: _sideMenuWidth,
               transform: Matrix4.translationValues(
                   _isSideMenuOpened ? 0 : -_sideMenuWidth, 0, 0),
-              child: Container(
-                decoration: BoxDecoration(color: getTheme(context).surface),
-                child: Column(
-                  children: [],
-                ),
+              child: SideMenu(
+                items: menuItems[appState.pageIndex]!,
               ),
             ),
           ],

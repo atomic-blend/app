@@ -1,0 +1,46 @@
+import 'package:app/utils/constants.dart';
+import 'package:flutter/material.dart';
+
+class SideMenuItem extends StatelessWidget {
+  final String title;
+  final Widget body;
+  final VoidCallback onTap;
+  final Color? iconColor;
+  final bool? iconContainer;
+  final IconData icon;
+
+  const SideMenuItem(
+      {super.key,
+      required this.title,
+      required this.icon,
+      this.iconColor,
+      this.iconContainer,
+      required this.body,
+      required this.onTap});
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Row(
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          SizedBox(width: $constants.insets.xs),
+          Container(
+              padding: iconContainer == true
+                  ? EdgeInsets.all($constants.insets.xs)
+                  : EdgeInsets.zero,
+              decoration: iconContainer == true
+                  ? BoxDecoration(
+                      color: iconColor!.withValues(alpha: .1),
+                      borderRadius:
+                          BorderRadius.circular($constants.corners.md),
+                    )
+                  : const BoxDecoration(),
+              child: Icon(icon, color: iconColor)),
+        ],
+      ),
+    );
+  }
+}

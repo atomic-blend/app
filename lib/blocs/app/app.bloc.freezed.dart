@@ -21,6 +21,7 @@ AppState _$AppStateFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$AppState {
   int get pageIndex => throw _privateConstructorUsedError;
+  int get selectedTabIndex => throw _privateConstructorUsedError;
   bool? get mobileSyncDisabled => throw _privateConstructorUsedError;
   bool? get warnUserOnMobileInternetAccess =>
       throw _privateConstructorUsedError;
@@ -45,6 +46,7 @@ abstract class $AppStateCopyWith<$Res> {
   @useResult
   $Res call(
       {int pageIndex,
+      int selectedTabIndex,
       bool? mobileSyncDisabled,
       bool? warnUserOnMobileInternetAccess,
       bool? isIntroCompleted,
@@ -67,6 +69,7 @@ class _$AppStateCopyWithImpl<$Res, $Val extends AppState>
   @override
   $Res call({
     Object? pageIndex = null,
+    Object? selectedTabIndex = null,
     Object? mobileSyncDisabled = freezed,
     Object? warnUserOnMobileInternetAccess = freezed,
     Object? isIntroCompleted = freezed,
@@ -76,6 +79,10 @@ class _$AppStateCopyWithImpl<$Res, $Val extends AppState>
       pageIndex: null == pageIndex
           ? _value.pageIndex
           : pageIndex // ignore: cast_nullable_to_non_nullable
+              as int,
+      selectedTabIndex: null == selectedTabIndex
+          ? _value.selectedTabIndex
+          : selectedTabIndex // ignore: cast_nullable_to_non_nullable
               as int,
       mobileSyncDisabled: freezed == mobileSyncDisabled
           ? _value.mobileSyncDisabled
@@ -107,6 +114,7 @@ abstract class _$$AppStateImplCopyWith<$Res>
   @useResult
   $Res call(
       {int pageIndex,
+      int selectedTabIndex,
       bool? mobileSyncDisabled,
       bool? warnUserOnMobileInternetAccess,
       bool? isIntroCompleted,
@@ -127,6 +135,7 @@ class __$$AppStateImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? pageIndex = null,
+    Object? selectedTabIndex = null,
     Object? mobileSyncDisabled = freezed,
     Object? warnUserOnMobileInternetAccess = freezed,
     Object? isIntroCompleted = freezed,
@@ -136,6 +145,10 @@ class __$$AppStateImplCopyWithImpl<$Res>
       pageIndex: null == pageIndex
           ? _value.pageIndex
           : pageIndex // ignore: cast_nullable_to_non_nullable
+              as int,
+      selectedTabIndex: null == selectedTabIndex
+          ? _value.selectedTabIndex
+          : selectedTabIndex // ignore: cast_nullable_to_non_nullable
               as int,
       mobileSyncDisabled: freezed == mobileSyncDisabled
           ? _value.mobileSyncDisabled
@@ -162,6 +175,7 @@ class __$$AppStateImplCopyWithImpl<$Res>
 class _$AppStateImpl implements _AppState {
   _$AppStateImpl(
       {required this.pageIndex,
+      required this.selectedTabIndex,
       this.mobileSyncDisabled,
       this.warnUserOnMobileInternetAccess,
       this.isIntroCompleted,
@@ -173,6 +187,8 @@ class _$AppStateImpl implements _AppState {
 
   @override
   final int pageIndex;
+  @override
+  final int selectedTabIndex;
   @override
   final bool? mobileSyncDisabled;
   @override
@@ -192,7 +208,7 @@ class _$AppStateImpl implements _AppState {
 
   @override
   String toString() {
-    return 'AppState(pageIndex: $pageIndex, mobileSyncDisabled: $mobileSyncDisabled, warnUserOnMobileInternetAccess: $warnUserOnMobileInternetAccess, isIntroCompleted: $isIntroCompleted, showcasePageStatus: $showcasePageStatus)';
+    return 'AppState(pageIndex: $pageIndex, selectedTabIndex: $selectedTabIndex, mobileSyncDisabled: $mobileSyncDisabled, warnUserOnMobileInternetAccess: $warnUserOnMobileInternetAccess, isIntroCompleted: $isIntroCompleted, showcasePageStatus: $showcasePageStatus)';
   }
 
   @override
@@ -202,6 +218,8 @@ class _$AppStateImpl implements _AppState {
             other is _$AppStateImpl &&
             (identical(other.pageIndex, pageIndex) ||
                 other.pageIndex == pageIndex) &&
+            (identical(other.selectedTabIndex, selectedTabIndex) ||
+                other.selectedTabIndex == selectedTabIndex) &&
             (identical(other.mobileSyncDisabled, mobileSyncDisabled) ||
                 other.mobileSyncDisabled == mobileSyncDisabled) &&
             (identical(other.warnUserOnMobileInternetAccess,
@@ -219,6 +237,7 @@ class _$AppStateImpl implements _AppState {
   int get hashCode => Object.hash(
       runtimeType,
       pageIndex,
+      selectedTabIndex,
       mobileSyncDisabled,
       warnUserOnMobileInternetAccess,
       isIntroCompleted,
@@ -243,6 +262,7 @@ class _$AppStateImpl implements _AppState {
 abstract class _AppState implements AppState {
   factory _AppState(
       {required final int pageIndex,
+      required final int selectedTabIndex,
       final bool? mobileSyncDisabled,
       final bool? warnUserOnMobileInternetAccess,
       final bool? isIntroCompleted,
@@ -253,6 +273,8 @@ abstract class _AppState implements AppState {
 
   @override
   int get pageIndex;
+  @override
+  int get selectedTabIndex;
   @override
   bool? get mobileSyncDisabled;
   @override

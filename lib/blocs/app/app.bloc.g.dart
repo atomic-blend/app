@@ -9,6 +9,7 @@ part of 'app.bloc.dart';
 _$AppStateImpl _$$AppStateImplFromJson(Map<String, dynamic> json) =>
     _$AppStateImpl(
       pageIndex: (json['pageIndex'] as num).toInt(),
+      selectedTabIndex: (json['selectedTabIndex'] as num).toInt(),
       mobileSyncDisabled: json['mobileSyncDisabled'] as bool?,
       warnUserOnMobileInternetAccess:
           json['warnUserOnMobileInternetAccess'] as bool?,
@@ -22,6 +23,7 @@ _$AppStateImpl _$$AppStateImplFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$$AppStateImplToJson(_$AppStateImpl instance) =>
     <String, dynamic>{
       'pageIndex': instance.pageIndex,
+      'selectedTabIndex': instance.selectedTabIndex,
       'mobileSyncDisabled': instance.mobileSyncDisabled,
       'warnUserOnMobileInternetAccess': instance.warnUserOnMobileInternetAccess,
       'isIntroCompleted': instance.isIntroCompleted,

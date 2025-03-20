@@ -1,13 +1,15 @@
+import 'package:app/blocs/app/app.bloc.dart';
 import 'package:app/blocs/auth/auth.bloc.dart';
 import 'package:app/components/app/bottom_navigation.dart';
+import 'package:app/components/app/side_menu_item.dart';
 import 'package:app/components/buttons/account_avatar_with_sync_status.dart';
 import 'package:app/i18n/strings.g.dart';
 import 'package:app/main.dart';
 import 'package:app/pages/calendar/calendar.dart';
 import 'package:app/pages/habits/habits.dart';
 import 'package:app/pages/more_apps/more_apps.dart';
-import 'package:app/pages/today/add_task_modal.dart';
-import 'package:app/pages/today/today.dart';
+import 'package:app/pages/tasks/add_task_modal.dart';
+import 'package:app/pages/tasks/overview.dart';
 import 'package:app/utils/shortcuts.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -202,6 +204,36 @@ class Navigation {
         // ),
         null,
         null,
+        null,
+        null,
+        null
+      ];
+
+  List<List<SideMenuItem>?> sideMenuItems(BuildContext context) => [
+        [
+          SideMenuItem(
+            title: "overview",
+            icon: CupertinoIcons.collections,
+            iconColor: Colors.grey[800],
+            iconContainer: true,
+            body: const Tasks(),
+            onTap: () {
+              print("overview");
+              context.read<AppCubit>().changeSelectedTabIndex(index: 0);
+            },
+          ),
+          SideMenuItem(
+            title: "today",
+            icon: CupertinoIcons.calendar_today,
+            iconColor: getTheme(context).primary,
+            iconContainer: true,
+            body: Container(),
+            onTap: () {
+              print("overview");
+              context.read<AppCubit>().changeSelectedTabIndex(index: 1);
+            },
+          )
+        ],
         null,
         null,
         null
