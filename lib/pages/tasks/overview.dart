@@ -90,7 +90,8 @@ class _OverviewTasksState extends State<OverviewTasks> {
     for (final task in tasks) {
       if (task.completed != true &&
           task.startDate != null &&
-          task.startDate!.isToday()) {
+          (task.startDate!.isToday() ||
+              task.startDate!.isBefore(DateTime.now()))) {
         widgets.add(TaskItem(task: task));
       }
     }
