@@ -4,19 +4,22 @@ import 'package:flutter/material.dart';
 class SideMenuItem extends StatelessWidget {
   final String title;
   final Widget body;
+  bool? isSelected;
   final VoidCallback onTap;
-  final Color? iconColor;
+  final Color color;
   final bool? iconContainer;
   final IconData icon;
 
-  const SideMenuItem(
-      {super.key,
-      required this.title,
-      required this.icon,
-      this.iconColor,
-      this.iconContainer,
-      required this.body,
-      required this.onTap});
+  SideMenuItem({
+    super.key,
+    required this.title,
+    required this.icon,
+    required this.color,
+    this.iconContainer,
+    required this.body,
+    required this.onTap,
+    this.isSelected,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -33,12 +36,15 @@ class SideMenuItem extends StatelessWidget {
                   : EdgeInsets.zero,
               decoration: iconContainer == true
                   ? BoxDecoration(
-                      color: iconColor!.withValues(alpha: .1),
+                      color: color.withValues(alpha: .1),
+                      border: isSelected == true
+                          ? Border.all(color: color, width: 1)
+                          : null,
                       borderRadius:
                           BorderRadius.circular($constants.corners.md),
                     )
                   : const BoxDecoration(),
-              child: Icon(icon, color: iconColor)),
+              child: Icon(icon, color: color)),
         ],
       ),
     );

@@ -93,7 +93,6 @@ class UserService {
       await encryptionService?.deriveAndPersistKey(password);
       return user;
     } else if (result.statusCode == 401) {
-      print("wrong_email_password");
       throw Exception("wrong_email_password");
     } else {
       throw Exception('login_failed');

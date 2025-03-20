@@ -10,14 +10,14 @@ import 'package:app/utils/shortcuts.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class Tasks extends StatefulWidget {
-  const Tasks({super.key});
+class OverviewTasks extends StatefulWidget {
+  const OverviewTasks({super.key});
 
   @override
-  State<Tasks> createState() => _TasksState();
+  State<OverviewTasks> createState() => _OverviewTasksState();
 }
 
-class _TasksState extends State<Tasks> {
+class _OverviewTasksState extends State<OverviewTasks> {
   final TextEditingController _searchController = TextEditingController();
   @override
   void initState() {
@@ -48,7 +48,7 @@ class _TasksState extends State<Tasks> {
               ),
               if (todayTasks.isEmpty)
                 Text(
-                  context.t.today.nothing_to_do,
+                  context.t.tasks.nothing_to_do,
                   style: getTextTheme(context).labelSmall!,
                 ),
               if (todayTasks.isNotEmpty) ...todayTasks,
@@ -61,7 +61,7 @@ class _TasksState extends State<Tasks> {
               ),
               if (tomorrowTasks.isEmpty)
                 Text(
-                  context.t.today.day_off,
+                  context.t.tasks.day_off,
                   style: getTextTheme(context).labelSmall!,
                 ),
               if (tomorrowTasks.isNotEmpty) ...tomorrowTasks,
@@ -74,7 +74,7 @@ class _TasksState extends State<Tasks> {
               ),
               if (thisWeekTasks.isEmpty)
                 Text(
-                  context.t.today.nothing_to_do,
+                  context.t.tasks.nothing_to_do,
                   style: getTextTheme(context).labelSmall!,
                 ),
               if (thisWeekTasks.isNotEmpty) ...thisWeekTasks,

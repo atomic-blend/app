@@ -54,7 +54,6 @@ class _LoginOrRegisterState extends State<LoginOrRegister>
 
   @override
   Widget build(BuildContext context) {
-    print(ApiClient.getSelfHostedRestApiUrl());
     return Stack(
       children: [
         SizedBox(

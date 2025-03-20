@@ -3,13 +3,17 @@ import 'package:app/blocs/auth/auth.bloc.dart';
 import 'package:app/components/app/bottom_navigation.dart';
 import 'package:app/components/app/side_menu_item.dart';
 import 'package:app/components/buttons/account_avatar_with_sync_status.dart';
+import 'package:app/components/buttons/task_item.dart';
+import 'package:app/entities/tasks/tasks.entity.dart';
 import 'package:app/i18n/strings.g.dart';
 import 'package:app/main.dart';
 import 'package:app/pages/calendar/calendar.dart';
 import 'package:app/pages/habits/habits.dart';
 import 'package:app/pages/more_apps/more_apps.dart';
 import 'package:app/pages/tasks/add_task_modal.dart';
+import 'package:app/pages/tasks/filtered_view.dart';
 import 'package:app/pages/tasks/overview.dart';
+import 'package:app/utils/exntensions/date_time_extension.dart';
 import 'package:app/utils/shortcuts.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -91,12 +95,15 @@ class Navigation {
           title: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text(
-                context.t.today.title,
-                style: getTextTheme(context).headlineSmall!.copyWith(
-                      fontWeight: FontWeight.bold,
-                    ),
-              )
+              BlocBuilder<AppCubit, AppState>(builder: (context, appState) {
+                var selectedSideItem = sideMenuItems(context)![appState.pageIndex]![appState.selectedTabIndex];
+                return Text(
+                  selectedSideItem.title,
+                  style: getTextTheme(context).headlineSmall!.copyWith(
+                        fontWeight: FontWeight.bold,
+                      ),
+                );
+              })
             ],
           ),
           actions: [
@@ -180,7 +187,7 @@ class Navigation {
 
   /// Bottom navigation configuration.
   List<Widget?> bottomNavigationScreens() => [
-        const Tasks(),
+        const OverviewTasks(),
         const Calendar(),
         null,
         const Habits(),
@@ -212,22 +219,33 @@ class Navigation {
   List<List<SideMenuItem>?> sideMenuItems(BuildContext context) => [
         [
           SideMenuItem(
-            title: "overview",
+            title: context.t.tasks.overview,
             icon: CupertinoIcons.collections,
-            iconColor: Colors.grey[800],
+            color: Colors.grey[800]!,
             iconContainer: true,
-            body: const Tasks(),
+            body: const OverviewTasks(),
             onTap: () {
-              print("overview");
               context.read<AppCubit>().changeSelectedTabIndex(index: 0);
             },
           ),
           SideMenuItem(
-            title: "today",
+            title: context.t.tasks.today,
             icon: CupertinoIcons.calendar_today,
-            iconColor: getTheme(context).primary,
+            color: getTheme(context).primary,
             iconContainer: true,
-            body: Container(),
+            body: FilteredTaskView(
+              filter: (List<TaskEntity> tasks) {
+                final List<TaskItem> widgets = [];
+                for (final task in tasks) {
+                  if (task.completed != true &&
+                      task.startDate != null &&
+                      task.startDate!.isToday()) {
+                    widgets.add(TaskItem(task: task));
+                  }
+                }
+                return widgets;
+              },
+            ),
             onTap: () {
               print("overview");
               context.read<AppCubit>().changeSelectedTabIndex(index: 1);
@@ -247,10 +265,10 @@ class Navigation {
             size: 25,
           ),
           cupertinoIcon: const Icon(
-            CupertinoIcons.house_fill,
+            CupertinoIcons.checkmark_square,
             size: 25,
           ),
-          label: context.t.today.title,
+          label: context.t.tasks.title,
         ),
         BottomNavigationItem(
           key: const Key("calendar"),

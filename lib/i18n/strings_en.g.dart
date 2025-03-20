@@ -41,11 +41,10 @@ class Translations implements BaseTranslations<AppLocale, Translations> {
 	late final TranslationsNavigationEn navigation = TranslationsNavigationEn._(_root);
 	late final TranslationsAuthEn auth = TranslationsAuthEn._(_root);
 	late final TranslationsSettingsEn settings = TranslationsSettingsEn._(_root);
-	late final TranslationsTodayEn today = TranslationsTodayEn._(_root);
+	late final TranslationsTasksEn tasks = TranslationsTasksEn._(_root);
 	late final TranslationsCalendarEn calendar = TranslationsCalendarEn._(_root);
 	late final TranslationsAccountEn account = TranslationsAccountEn._(_root);
 	late final TranslationsHabitsEn habits = TranslationsHabitsEn._(_root);
-	late final TranslationsTasksEn tasks = TranslationsTasksEn._(_root);
 	late final TranslationsUnderConstructionEn under_construction = TranslationsUnderConstructionEn._(_root);
 	late final TranslationsMoreEn more = TranslationsMoreEn._(_root);
 	late final TranslationsTimesEn times = TranslationsTimesEn._(_root);
@@ -94,17 +93,23 @@ class TranslationsSettingsEn {
 	String get logout => 'Logout';
 }
 
-// Path: today
-class TranslationsTodayEn {
-	TranslationsTodayEn._(this._root);
+// Path: tasks
+class TranslationsTasksEn {
+	TranslationsTasksEn._(this._root);
 
 	final Translations _root; // ignore: unused_field
 
 	// Translations
-	String get title => 'Today';
+	String get title => 'Tasks';
+	String get today => 'Today';
+	String get overview => 'Overview';
 	String get nothing_to_do => 'Nothing to do for now, enjoy your day!';
 	String get day_off => 'You have nothing planned for tomorrow, enjoy your day!';
 	String get week_off => 'You have nothing planned for this week, try and take the time to do the stuff left behind!';
+	String get no_tasks_for_now => 'No tasks for now';
+	String get task_details => 'Task Details';
+	late final TranslationsTasksDueDatesEn due_dates = TranslationsTasksDueDatesEn._(_root);
+	late final TranslationsTasksAddTaskModalEn add_task_modal = TranslationsTasksAddTaskModalEn._(_root);
 }
 
 // Path: calendar
@@ -137,20 +142,6 @@ class TranslationsHabitsEn {
 
 	// Translations
 	String get title => 'Habits';
-}
-
-// Path: tasks
-class TranslationsTasksEn {
-	TranslationsTasksEn._(this._root);
-
-	final Translations _root; // ignore: unused_field
-
-	// Translations
-	String get title => 'My Tasks';
-	String get no_tasks_for_now => 'No tasks for now';
-	String get task_details => 'Task Details';
-	late final TranslationsTasksDueDatesEn due_dates = TranslationsTasksDueDatesEn._(_root);
-	late final TranslationsTasksAddTaskModalEn add_task_modal = TranslationsTasksAddTaskModalEn._(_root);
 }
 
 // Path: under_construction
@@ -515,27 +506,6 @@ class TranslationsSettingsAppSettingsEn {
 	late final TranslationsSettingsAppSettingsSelfHostedUrlEn selfHostedUrl = TranslationsSettingsAppSettingsSelfHostedUrlEn._(_root);
 }
 
-// Path: account.sections
-class TranslationsAccountSectionsEn {
-	TranslationsAccountSectionsEn._(this._root);
-
-	final Translations _root; // ignore: unused_field
-
-	// Translations
-	String get account => 'Account';
-}
-
-// Path: account.actions
-class TranslationsAccountActionsEn {
-	TranslationsAccountActionsEn._(this._root);
-
-	final Translations _root; // ignore: unused_field
-
-	// Translations
-	String get security => 'Security & Privacy';
-	String get delete_account => 'Delete my Account';
-}
-
 // Path: tasks.due_dates
 class TranslationsTasksDueDatesEn {
 	TranslationsTasksDueDatesEn._(this._root);
@@ -563,6 +533,27 @@ class TranslationsTasksAddTaskModalEn {
 	String get erase => 'Erase';
 	String get title_required => 'Title required';
 	String get title_required_description => 'Please enter a title for your task';
+}
+
+// Path: account.sections
+class TranslationsAccountSectionsEn {
+	TranslationsAccountSectionsEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	String get account => 'Account';
+}
+
+// Path: account.actions
+class TranslationsAccountActionsEn {
+	TranslationsAccountActionsEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	String get security => 'Security & Privacy';
+	String get delete_account => 'Delete my Account';
 }
 
 // Path: settings.app_settings.selfHostedUrl
@@ -630,17 +621,12 @@ extension on Translations {
 			case 'settings.app_settings.selfHostedUrl.placeholder': return 'Enter the URL of your instance';
 			case 'settings.app_settings.selfHostedUrl.not_set': return 'Not set';
 			case 'settings.logout': return 'Logout';
-			case 'today.title': return 'Today';
-			case 'today.nothing_to_do': return 'Nothing to do for now, enjoy your day!';
-			case 'today.day_off': return 'You have nothing planned for tomorrow, enjoy your day!';
-			case 'today.week_off': return 'You have nothing planned for this week, try and take the time to do the stuff left behind!';
-			case 'calendar.title': return 'Calendar';
-			case 'account.edit_profile': return 'Edit Profile';
-			case 'account.sections.account': return 'Account';
-			case 'account.actions.security': return 'Security & Privacy';
-			case 'account.actions.delete_account': return 'Delete my Account';
-			case 'habits.title': return 'Habits';
-			case 'tasks.title': return 'My Tasks';
+			case 'tasks.title': return 'Tasks';
+			case 'tasks.today': return 'Today';
+			case 'tasks.overview': return 'Overview';
+			case 'tasks.nothing_to_do': return 'Nothing to do for now, enjoy your day!';
+			case 'tasks.day_off': return 'You have nothing planned for tomorrow, enjoy your day!';
+			case 'tasks.week_off': return 'You have nothing planned for this week, try and take the time to do the stuff left behind!';
 			case 'tasks.no_tasks_for_now': return 'No tasks for now';
 			case 'tasks.task_details': return 'Task Details';
 			case 'tasks.due_dates.today': return 'Today';
@@ -654,6 +640,12 @@ extension on Translations {
 			case 'tasks.add_task_modal.erase': return 'Erase';
 			case 'tasks.add_task_modal.title_required': return 'Title required';
 			case 'tasks.add_task_modal.title_required_description': return 'Please enter a title for your task';
+			case 'calendar.title': return 'Calendar';
+			case 'account.edit_profile': return 'Edit Profile';
+			case 'account.sections.account': return 'Account';
+			case 'account.actions.security': return 'Security & Privacy';
+			case 'account.actions.delete_account': return 'Delete my Account';
+			case 'habits.title': return 'Habits';
 			case 'under_construction.title': return 'We\'re working on it!';
 			case 'under_construction.description': return 'This feature is not yet available, but we\'re working hard to bring it to you soon.\n\nStay tuned!';
 			case 'more.title': return 'More';

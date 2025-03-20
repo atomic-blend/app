@@ -37,11 +37,10 @@ class TranslationsFr implements Translations {
 	@override late final _TranslationsNavigationFr navigation = _TranslationsNavigationFr._(_root);
 	@override late final _TranslationsAuthFr auth = _TranslationsAuthFr._(_root);
 	@override late final _TranslationsSettingsFr settings = _TranslationsSettingsFr._(_root);
-	@override late final _TranslationsTodayFr today = _TranslationsTodayFr._(_root);
+	@override late final _TranslationsTasksFr tasks = _TranslationsTasksFr._(_root);
 	@override late final _TranslationsCalendarFr calendar = _TranslationsCalendarFr._(_root);
 	@override late final _TranslationsAccountFr account = _TranslationsAccountFr._(_root);
 	@override late final _TranslationsHabitsFr habits = _TranslationsHabitsFr._(_root);
-	@override late final _TranslationsTasksFr tasks = _TranslationsTasksFr._(_root);
 	@override late final _TranslationsUnderConstructionFr under_construction = _TranslationsUnderConstructionFr._(_root);
 	@override late final _TranslationsMoreFr more = _TranslationsMoreFr._(_root);
 	@override late final _TranslationsTimesFr times = _TranslationsTimesFr._(_root);
@@ -90,17 +89,23 @@ class _TranslationsSettingsFr implements TranslationsSettingsEn {
 	@override String get logout => 'Déconnexion';
 }
 
-// Path: today
-class _TranslationsTodayFr implements TranslationsTodayEn {
-	_TranslationsTodayFr._(this._root);
+// Path: tasks
+class _TranslationsTasksFr implements TranslationsTasksEn {
+	_TranslationsTasksFr._(this._root);
 
 	final TranslationsFr _root; // ignore: unused_field
 
 	// Translations
-	@override String get title => 'Aujourd\'hui';
+	@override String get title => 'Tâches';
+	@override String get today => 'Aujourd\'hui';
+	@override String get overview => 'Vue d\'ensemble';
 	@override String get nothing_to_do => 'Rien à faire pour le moment, vous pouvez vous détendre !';
 	@override String get day_off => 'Vous n\'avez rien de prévu pour demain, profitez-en !';
 	@override String get week_off => 'Vous n\'avez rien de prévu pour cette semaine, essayez de prendre le temps de faire les choses laissées de côté !';
+	@override String get no_tasks_for_now => 'Pas de tâches pour le moment';
+	@override String get task_details => 'Détail de la tâche';
+	@override late final _TranslationsTasksDueDatesFr due_dates = _TranslationsTasksDueDatesFr._(_root);
+	@override late final _TranslationsTasksAddTaskModalFr add_task_modal = _TranslationsTasksAddTaskModalFr._(_root);
 }
 
 // Path: calendar
@@ -133,20 +138,6 @@ class _TranslationsHabitsFr implements TranslationsHabitsEn {
 
 	// Translations
 	@override String get title => 'Habitudes';
-}
-
-// Path: tasks
-class _TranslationsTasksFr implements TranslationsTasksEn {
-	_TranslationsTasksFr._(this._root);
-
-	final TranslationsFr _root; // ignore: unused_field
-
-	// Translations
-	@override String get title => 'Mes tâches';
-	@override String get no_tasks_for_now => 'Pas de tâches pour le moment';
-	@override String get task_details => 'Détail de la tâche';
-	@override late final _TranslationsTasksDueDatesFr due_dates = _TranslationsTasksDueDatesFr._(_root);
-	@override late final _TranslationsTasksAddTaskModalFr add_task_modal = _TranslationsTasksAddTaskModalFr._(_root);
 }
 
 // Path: under_construction
@@ -508,27 +499,6 @@ class _TranslationsSettingsAppSettingsFr implements TranslationsSettingsAppSetti
 	@override late final _TranslationsSettingsAppSettingsSelfHostedUrlFr selfHostedUrl = _TranslationsSettingsAppSettingsSelfHostedUrlFr._(_root);
 }
 
-// Path: account.sections
-class _TranslationsAccountSectionsFr implements TranslationsAccountSectionsEn {
-	_TranslationsAccountSectionsFr._(this._root);
-
-	final TranslationsFr _root; // ignore: unused_field
-
-	// Translations
-	@override String get account => 'Compte';
-}
-
-// Path: account.actions
-class _TranslationsAccountActionsFr implements TranslationsAccountActionsEn {
-	_TranslationsAccountActionsFr._(this._root);
-
-	final TranslationsFr _root; // ignore: unused_field
-
-	// Translations
-	@override String get security => 'Sécurité et confidentialité';
-	@override String get delete_account => 'Supprimer mon compte';
-}
-
 // Path: tasks.due_dates
 class _TranslationsTasksDueDatesFr implements TranslationsTasksDueDatesEn {
 	_TranslationsTasksDueDatesFr._(this._root);
@@ -556,6 +526,27 @@ class _TranslationsTasksAddTaskModalFr implements TranslationsTasksAddTaskModalE
 	@override String get erase => 'Effacer';
 	@override String get title_required => 'Titre requis';
 	@override String get title_required_description => 'Veuillez saisir un titre pour votre tâche';
+}
+
+// Path: account.sections
+class _TranslationsAccountSectionsFr implements TranslationsAccountSectionsEn {
+	_TranslationsAccountSectionsFr._(this._root);
+
+	final TranslationsFr _root; // ignore: unused_field
+
+	// Translations
+	@override String get account => 'Compte';
+}
+
+// Path: account.actions
+class _TranslationsAccountActionsFr implements TranslationsAccountActionsEn {
+	_TranslationsAccountActionsFr._(this._root);
+
+	final TranslationsFr _root; // ignore: unused_field
+
+	// Translations
+	@override String get security => 'Sécurité et confidentialité';
+	@override String get delete_account => 'Supprimer mon compte';
 }
 
 // Path: settings.app_settings.selfHostedUrl
@@ -623,17 +614,12 @@ extension on TranslationsFr {
 			case 'settings.app_settings.selfHostedUrl.placeholder': return 'Entrez l\'URL de votre instance';
 			case 'settings.app_settings.selfHostedUrl.not_set': return 'Non défini';
 			case 'settings.logout': return 'Déconnexion';
-			case 'today.title': return 'Aujourd\'hui';
-			case 'today.nothing_to_do': return 'Rien à faire pour le moment, vous pouvez vous détendre !';
-			case 'today.day_off': return 'Vous n\'avez rien de prévu pour demain, profitez-en !';
-			case 'today.week_off': return 'Vous n\'avez rien de prévu pour cette semaine, essayez de prendre le temps de faire les choses laissées de côté !';
-			case 'calendar.title': return 'Calendrier';
-			case 'account.edit_profile': return 'Modifier le profil';
-			case 'account.sections.account': return 'Compte';
-			case 'account.actions.security': return 'Sécurité et confidentialité';
-			case 'account.actions.delete_account': return 'Supprimer mon compte';
-			case 'habits.title': return 'Habitudes';
-			case 'tasks.title': return 'Mes tâches';
+			case 'tasks.title': return 'Tâches';
+			case 'tasks.today': return 'Aujourd\'hui';
+			case 'tasks.overview': return 'Vue d\'ensemble';
+			case 'tasks.nothing_to_do': return 'Rien à faire pour le moment, vous pouvez vous détendre !';
+			case 'tasks.day_off': return 'Vous n\'avez rien de prévu pour demain, profitez-en !';
+			case 'tasks.week_off': return 'Vous n\'avez rien de prévu pour cette semaine, essayez de prendre le temps de faire les choses laissées de côté !';
 			case 'tasks.no_tasks_for_now': return 'Pas de tâches pour le moment';
 			case 'tasks.task_details': return 'Détail de la tâche';
 			case 'tasks.due_dates.today': return 'Aujourd\'hui';
@@ -647,6 +633,12 @@ extension on TranslationsFr {
 			case 'tasks.add_task_modal.erase': return 'Effacer';
 			case 'tasks.add_task_modal.title_required': return 'Titre requis';
 			case 'tasks.add_task_modal.title_required_description': return 'Veuillez saisir un titre pour votre tâche';
+			case 'calendar.title': return 'Calendrier';
+			case 'account.edit_profile': return 'Modifier le profil';
+			case 'account.sections.account': return 'Compte';
+			case 'account.actions.security': return 'Sécurité et confidentialité';
+			case 'account.actions.delete_account': return 'Supprimer mon compte';
+			case 'habits.title': return 'Habitudes';
 			case 'under_construction.title': return 'On travaille dessus !';
 			case 'under_construction.description': return 'Cette fonctionnalité est en cours de développement.\n\nRevenez bientôt pour découvrir les dernières mises à jour !';
 			case 'more.title': return 'Plus';
