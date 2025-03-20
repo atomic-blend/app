@@ -6,17 +6,20 @@ class PrimaryButtonRound extends StatelessWidget {
   const PrimaryButtonRound(
       {super.key,
       this.onPressed,
-      this.emoji,
+      this.leadingText,
       required this.text,
       this.backgroundColor,
       this.trailing,
       this.textColor,
       this.border,
       this.height,
-      this.width, this.fontWeight});
+      this.width,
+      this.fontWeight,
+      this.leading});
 
   final VoidCallback? onPressed;
-  final String? emoji;
+  final String? leadingText;
+  final Widget? leading;
   final FontWeight? fontWeight;
   final Widget? trailing;
   final String text;
@@ -43,33 +46,39 @@ class PrimaryButtonRound extends StatelessWidget {
               backgroundColor: WidgetStatePropertyAll(
                   backgroundColor ?? getTheme(context).primary),
             ),
-            child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-              if (emoji != null) ...[
-                Text(
-                  emoji!,
-                  style: const TextStyle(fontSize: 23),
-                ),
-                SizedBox(
-                  width: $constants.insets.xs,
-                ),
-              ],
-              Center(
-                child: Text(
-                  text,
-                  style: getTextTheme(context).bodyMedium!.copyWith(
-                        color: textColor ?? Colors.white,
-                        fontWeight: fontWeight,
-                        fontSize: 16,
-                      ),
-                ),
-              ),
-            ]),
+            child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  if (leadingText != null) ...[
+                    Text(
+                      leadingText!,
+                      style: const TextStyle(fontSize: 23),
+                    ),
+                    SizedBox(
+                      width: $constants.insets.xs,
+                    ),
+                  ],
+                  Center(
+                    child: Text(
+                      text,
+                      style: getTextTheme(context).bodyMedium!.copyWith(
+                            color: textColor ?? Colors.white,
+                            fontWeight: fontWeight,
+                            fontSize: 16,
+                          ),
+                    ),
+                  ),
+                  if (trailing != null) ...[
+                    SizedBox(
+                      width: $constants.insets.xs,
+                    ),
+                    trailing!,
+                  ]
+                ]),
           ),
         ),
-        if (trailing != null) ...[
-          Positioned(
-              top: 0, bottom: 0, right: $constants.insets.xs, child: trailing!),
-        ]
       ],
     );
   }

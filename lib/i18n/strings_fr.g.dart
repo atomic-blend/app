@@ -39,6 +39,7 @@ class TranslationsFr implements Translations {
 	@override late final _TranslationsSettingsFr settings = _TranslationsSettingsFr._(_root);
 	@override late final _TranslationsTodayFr today = _TranslationsTodayFr._(_root);
 	@override late final _TranslationsCalendarFr calendar = _TranslationsCalendarFr._(_root);
+	@override late final _TranslationsAccountFr account = _TranslationsAccountFr._(_root);
 	@override late final _TranslationsHabitsFr habits = _TranslationsHabitsFr._(_root);
 	@override late final _TranslationsTasksFr tasks = _TranslationsTasksFr._(_root);
 	@override late final _TranslationsUnderConstructionFr under_construction = _TranslationsUnderConstructionFr._(_root);
@@ -51,6 +52,7 @@ class TranslationsFr implements Translations {
 		'email_malformed': 'Adresse e-mail invalide',
 		'unknown_error': 'Une erreur inconnue s\'est produite',
 	};
+	@override late final _TranslationsNameGeneratorFr name_generator = _TranslationsNameGeneratorFr._(_root);
 }
 
 // Path: navigation
@@ -109,6 +111,18 @@ class _TranslationsCalendarFr implements TranslationsCalendarEn {
 
 	// Translations
 	@override String get title => 'Calendrier';
+}
+
+// Path: account
+class _TranslationsAccountFr implements TranslationsAccountEn {
+	_TranslationsAccountFr._(this._root);
+
+	final TranslationsFr _root; // ignore: unused_field
+
+	// Translations
+	@override String get edit_profile => 'Modifier le profil';
+	@override late final _TranslationsAccountSectionsFr sections = _TranslationsAccountSectionsFr._(_root);
+	@override late final _TranslationsAccountActionsFr actions = _TranslationsAccountActionsFr._(_root);
 }
 
 // Path: habits
@@ -199,6 +213,216 @@ class _TranslationsValidationFr implements TranslationsValidationEn {
 	@override String get invalid_url => 'URL invalide';
 }
 
+// Path: name_generator
+class _TranslationsNameGeneratorFr implements TranslationsNameGeneratorEn {
+	_TranslationsNameGeneratorFr._(this._root);
+
+	final TranslationsFr _root; // ignore: unused_field
+
+	// Translations
+	@override List<String> get animals => [
+		'hibou',
+		'renard',
+		'lapin',
+		'loutre',
+		'pingouin',
+		'panda',
+		'écureuil',
+		'koala',
+		'tigre',
+		'girafe',
+		'singe',
+		'raton-laveur',
+		'zèbre',
+		'kangourou',
+		'perroquet',
+		'dauphin',
+		'paresseux',
+		'loup',
+		'lion',
+		'ours',
+		'aigle',
+		'éléphant',
+		'léopard',
+		'guépard',
+		'hippopotame',
+		'lemurien',
+		'grenouille',
+		'caméléon',
+		'lynx',
+		'macareux',
+		'phoque',
+		'faucon',
+		'orque',
+		'suricate',
+		'hérisson',
+		'belette',
+		'tatou',
+		'wombat',
+		'ornithorynque',
+		'blaireau',
+		'yak',
+		'lézard',
+		'scarabée',
+		'chenille',
+		'jaguar',
+		'buffle',
+		'raie',
+		'taupe',
+		'âne',
+		'toucan',
+		'flamant',
+		'chèvre',
+		'alpaga',
+		'orignal',
+		'paon',
+		'rhinocéros',
+		'gecko',
+		'dinde',
+		'hamster',
+		'loutre',
+		'gorille',
+		'morse',
+		'vautour',
+		'raie',
+		'triton',
+		'iguane',
+		'porc-épic',
+		'python',
+		'antilope',
+		'gibbon',
+		'sanglier',
+		'grue',
+		'émeu',
+		'pélican',
+		'hyène',
+		'héron',
+		'agneau',
+		'tortue',
+		'crevette',
+		'homard',
+		'papillon de nuit',
+		'palourde',
+		'poisson-globe',
+		'étoile de mer',
+		'pie-grièche',
+		'rouge-gorge',
+		'caille',
+		'koala',
+		'escargot',
+		'limace',
+		'hibou',
+		'vipère',
+		'canard',
+		'hirondelle',
+		'crabe',
+		'lama',
+		'mangouste',
+		'chaton',
+	];
+	@override List<String> get adjectives => [
+		'joyeux',
+		'courageux',
+		'rigolo',
+		'jovial',
+		'espiègle',
+		'brillant',
+		'farfelu',
+		'curieux',
+		'rapide',
+		'audacieux',
+		'puissant',
+		'malin',
+		'rusé',
+		'doux',
+		'pelucheux',
+		'excentrique',
+		'rebondissant',
+		'étincelant',
+		'vif',
+		'chantant',
+		'lustré',
+		'claquant',
+		'brillant',
+		'rêveur',
+		'frétillant',
+		'ensoleillé',
+		'dingue',
+		'sauvage',
+		'funky',
+		'intrépide',
+		'confortable',
+		'croquant',
+		'vivant',
+		'coquin',
+		'spirituel',
+		'dynamique',
+		'pétillant',
+		'astucieux',
+		'élégant',
+		'souriant',
+		'chanceux',
+		'plein d\'énergie',
+		'chouette',
+		'soigné',
+		'frisquet',
+		'venté',
+		'gai',
+		'gracieux',
+		'courageux',
+		'étourdi',
+		'agile',
+		'fantasque',
+		'habile',
+		'chanteur',
+		'sautillant',
+		'bizarre',
+		'épicé',
+		'énergique',
+		'rapide',
+		'pratique',
+		'vacillant',
+		'croustillant',
+		'grognon',
+		'chic',
+		'plein d\'entrain',
+		'bouillonnant',
+		'éclaboussant',
+		'venté',
+		'rebondissant',
+		'étincelant',
+		'joyeux',
+		'moelleux',
+		'loufoque',
+		'vivifiant',
+		'claquant',
+		'joyeux',
+		'plumé',
+		'piquant',
+		'rapide',
+		'vif',
+		'moustachu',
+		'tacheté',
+		'rayé',
+		'fougueux',
+		'bavard',
+		'distingué',
+		'serpentin',
+		'rigolo',
+		'élégant',
+		'sautillant',
+		'dynamique',
+		'skippy',
+		'duveteux',
+		'rondelet',
+		'gonflé',
+		'déjanté',
+		'rose',
+		'exubérant',
+		'raffiné',
+	];
+}
+
 // Path: auth.not_logged_in
 class _TranslationsAuthNotLoggedInFr implements TranslationsAuthNotLoggedInEn {
 	_TranslationsAuthNotLoggedInFr._(this._root);
@@ -282,6 +506,27 @@ class _TranslationsSettingsAppSettingsFr implements TranslationsSettingsAppSetti
 	// Translations
 	@override String get title => 'Paramètres de l\'application';
 	@override late final _TranslationsSettingsAppSettingsSelfHostedUrlFr selfHostedUrl = _TranslationsSettingsAppSettingsSelfHostedUrlFr._(_root);
+}
+
+// Path: account.sections
+class _TranslationsAccountSectionsFr implements TranslationsAccountSectionsEn {
+	_TranslationsAccountSectionsFr._(this._root);
+
+	final TranslationsFr _root; // ignore: unused_field
+
+	// Translations
+	@override String get account => 'Compte';
+}
+
+// Path: account.actions
+class _TranslationsAccountActionsFr implements TranslationsAccountActionsEn {
+	_TranslationsAccountActionsFr._(this._root);
+
+	final TranslationsFr _root; // ignore: unused_field
+
+	// Translations
+	@override String get security => 'Sécurité et confidentialité';
+	@override String get delete_account => 'Supprimer mon compte';
 }
 
 // Path: tasks.due_dates
@@ -383,6 +628,10 @@ extension on TranslationsFr {
 			case 'today.day_off': return 'Vous n\'avez rien de prévu pour demain, profitez-en !';
 			case 'today.week_off': return 'Vous n\'avez rien de prévu pour cette semaine, essayez de prendre le temps de faire les choses laissées de côté !';
 			case 'calendar.title': return 'Calendrier';
+			case 'account.edit_profile': return 'Modifier le profil';
+			case 'account.sections.account': return 'Compte';
+			case 'account.actions.security': return 'Sécurité et confidentialité';
+			case 'account.actions.delete_account': return 'Supprimer mon compte';
 			case 'habits.title': return 'Habitudes';
 			case 'tasks.title': return 'Mes tâches';
 			case 'tasks.no_tasks_for_now': return 'Pas de tâches pour le moment';
@@ -420,6 +669,203 @@ extension on TranslationsFr {
 			case 'errors.wrong_email_password': return 'Adresse e-mail ou mot de passe incorrect';
 			case 'errors.email_malformed': return 'Adresse e-mail invalide';
 			case 'errors.unknown_error': return 'Une erreur inconnue s\'est produite';
+			case 'name_generator.animals.0': return 'hibou';
+			case 'name_generator.animals.1': return 'renard';
+			case 'name_generator.animals.2': return 'lapin';
+			case 'name_generator.animals.3': return 'loutre';
+			case 'name_generator.animals.4': return 'pingouin';
+			case 'name_generator.animals.5': return 'panda';
+			case 'name_generator.animals.6': return 'écureuil';
+			case 'name_generator.animals.7': return 'koala';
+			case 'name_generator.animals.8': return 'tigre';
+			case 'name_generator.animals.9': return 'girafe';
+			case 'name_generator.animals.10': return 'singe';
+			case 'name_generator.animals.11': return 'raton-laveur';
+			case 'name_generator.animals.12': return 'zèbre';
+			case 'name_generator.animals.13': return 'kangourou';
+			case 'name_generator.animals.14': return 'perroquet';
+			case 'name_generator.animals.15': return 'dauphin';
+			case 'name_generator.animals.16': return 'paresseux';
+			case 'name_generator.animals.17': return 'loup';
+			case 'name_generator.animals.18': return 'lion';
+			case 'name_generator.animals.19': return 'ours';
+			case 'name_generator.animals.20': return 'aigle';
+			case 'name_generator.animals.21': return 'éléphant';
+			case 'name_generator.animals.22': return 'léopard';
+			case 'name_generator.animals.23': return 'guépard';
+			case 'name_generator.animals.24': return 'hippopotame';
+			case 'name_generator.animals.25': return 'lemurien';
+			case 'name_generator.animals.26': return 'grenouille';
+			case 'name_generator.animals.27': return 'caméléon';
+			case 'name_generator.animals.28': return 'lynx';
+			case 'name_generator.animals.29': return 'macareux';
+			case 'name_generator.animals.30': return 'phoque';
+			case 'name_generator.animals.31': return 'faucon';
+			case 'name_generator.animals.32': return 'orque';
+			case 'name_generator.animals.33': return 'suricate';
+			case 'name_generator.animals.34': return 'hérisson';
+			case 'name_generator.animals.35': return 'belette';
+			case 'name_generator.animals.36': return 'tatou';
+			case 'name_generator.animals.37': return 'wombat';
+			case 'name_generator.animals.38': return 'ornithorynque';
+			case 'name_generator.animals.39': return 'blaireau';
+			case 'name_generator.animals.40': return 'yak';
+			case 'name_generator.animals.41': return 'lézard';
+			case 'name_generator.animals.42': return 'scarabée';
+			case 'name_generator.animals.43': return 'chenille';
+			case 'name_generator.animals.44': return 'jaguar';
+			case 'name_generator.animals.45': return 'buffle';
+			case 'name_generator.animals.46': return 'raie';
+			case 'name_generator.animals.47': return 'taupe';
+			case 'name_generator.animals.48': return 'âne';
+			case 'name_generator.animals.49': return 'toucan';
+			case 'name_generator.animals.50': return 'flamant';
+			case 'name_generator.animals.51': return 'chèvre';
+			case 'name_generator.animals.52': return 'alpaga';
+			case 'name_generator.animals.53': return 'orignal';
+			case 'name_generator.animals.54': return 'paon';
+			case 'name_generator.animals.55': return 'rhinocéros';
+			case 'name_generator.animals.56': return 'gecko';
+			case 'name_generator.animals.57': return 'dinde';
+			case 'name_generator.animals.58': return 'hamster';
+			case 'name_generator.animals.59': return 'loutre';
+			case 'name_generator.animals.60': return 'gorille';
+			case 'name_generator.animals.61': return 'morse';
+			case 'name_generator.animals.62': return 'vautour';
+			case 'name_generator.animals.63': return 'raie';
+			case 'name_generator.animals.64': return 'triton';
+			case 'name_generator.animals.65': return 'iguane';
+			case 'name_generator.animals.66': return 'porc-épic';
+			case 'name_generator.animals.67': return 'python';
+			case 'name_generator.animals.68': return 'antilope';
+			case 'name_generator.animals.69': return 'gibbon';
+			case 'name_generator.animals.70': return 'sanglier';
+			case 'name_generator.animals.71': return 'grue';
+			case 'name_generator.animals.72': return 'émeu';
+			case 'name_generator.animals.73': return 'pélican';
+			case 'name_generator.animals.74': return 'hyène';
+			case 'name_generator.animals.75': return 'héron';
+			case 'name_generator.animals.76': return 'agneau';
+			case 'name_generator.animals.77': return 'tortue';
+			case 'name_generator.animals.78': return 'crevette';
+			case 'name_generator.animals.79': return 'homard';
+			case 'name_generator.animals.80': return 'papillon de nuit';
+			case 'name_generator.animals.81': return 'palourde';
+			case 'name_generator.animals.82': return 'poisson-globe';
+			case 'name_generator.animals.83': return 'étoile de mer';
+			case 'name_generator.animals.84': return 'pie-grièche';
+			case 'name_generator.animals.85': return 'rouge-gorge';
+			case 'name_generator.animals.86': return 'caille';
+			case 'name_generator.animals.87': return 'koala';
+			case 'name_generator.animals.88': return 'escargot';
+			case 'name_generator.animals.89': return 'limace';
+			case 'name_generator.animals.90': return 'hibou';
+			case 'name_generator.animals.91': return 'vipère';
+			case 'name_generator.animals.92': return 'canard';
+			case 'name_generator.animals.93': return 'hirondelle';
+			case 'name_generator.animals.94': return 'crabe';
+			case 'name_generator.animals.95': return 'lama';
+			case 'name_generator.animals.96': return 'mangouste';
+			case 'name_generator.animals.97': return 'chaton';
+			case 'name_generator.adjectives.0': return 'joyeux';
+			case 'name_generator.adjectives.1': return 'courageux';
+			case 'name_generator.adjectives.2': return 'rigolo';
+			case 'name_generator.adjectives.3': return 'jovial';
+			case 'name_generator.adjectives.4': return 'espiègle';
+			case 'name_generator.adjectives.5': return 'brillant';
+			case 'name_generator.adjectives.6': return 'farfelu';
+			case 'name_generator.adjectives.7': return 'curieux';
+			case 'name_generator.adjectives.8': return 'rapide';
+			case 'name_generator.adjectives.9': return 'audacieux';
+			case 'name_generator.adjectives.10': return 'puissant';
+			case 'name_generator.adjectives.11': return 'malin';
+			case 'name_generator.adjectives.12': return 'rusé';
+			case 'name_generator.adjectives.13': return 'doux';
+			case 'name_generator.adjectives.14': return 'pelucheux';
+			case 'name_generator.adjectives.15': return 'excentrique';
+			case 'name_generator.adjectives.16': return 'rebondissant';
+			case 'name_generator.adjectives.17': return 'étincelant';
+			case 'name_generator.adjectives.18': return 'vif';
+			case 'name_generator.adjectives.19': return 'chantant';
+			case 'name_generator.adjectives.20': return 'lustré';
+			case 'name_generator.adjectives.21': return 'claquant';
+			case 'name_generator.adjectives.22': return 'brillant';
+			case 'name_generator.adjectives.23': return 'rêveur';
+			case 'name_generator.adjectives.24': return 'frétillant';
+			case 'name_generator.adjectives.25': return 'ensoleillé';
+			case 'name_generator.adjectives.26': return 'dingue';
+			case 'name_generator.adjectives.27': return 'sauvage';
+			case 'name_generator.adjectives.28': return 'funky';
+			case 'name_generator.adjectives.29': return 'intrépide';
+			case 'name_generator.adjectives.30': return 'confortable';
+			case 'name_generator.adjectives.31': return 'croquant';
+			case 'name_generator.adjectives.32': return 'vivant';
+			case 'name_generator.adjectives.33': return 'coquin';
+			case 'name_generator.adjectives.34': return 'spirituel';
+			case 'name_generator.adjectives.35': return 'dynamique';
+			case 'name_generator.adjectives.36': return 'pétillant';
+			case 'name_generator.adjectives.37': return 'astucieux';
+			case 'name_generator.adjectives.38': return 'élégant';
+			case 'name_generator.adjectives.39': return 'souriant';
+			case 'name_generator.adjectives.40': return 'chanceux';
+			case 'name_generator.adjectives.41': return 'plein d\'énergie';
+			case 'name_generator.adjectives.42': return 'chouette';
+			case 'name_generator.adjectives.43': return 'soigné';
+			case 'name_generator.adjectives.44': return 'frisquet';
+			case 'name_generator.adjectives.45': return 'venté';
+			case 'name_generator.adjectives.46': return 'gai';
+			case 'name_generator.adjectives.47': return 'gracieux';
+			case 'name_generator.adjectives.48': return 'courageux';
+			case 'name_generator.adjectives.49': return 'étourdi';
+			case 'name_generator.adjectives.50': return 'agile';
+			case 'name_generator.adjectives.51': return 'fantasque';
+			case 'name_generator.adjectives.52': return 'habile';
+			case 'name_generator.adjectives.53': return 'chanteur';
+			case 'name_generator.adjectives.54': return 'sautillant';
+			case 'name_generator.adjectives.55': return 'bizarre';
+			case 'name_generator.adjectives.56': return 'épicé';
+			case 'name_generator.adjectives.57': return 'énergique';
+			case 'name_generator.adjectives.58': return 'rapide';
+			case 'name_generator.adjectives.59': return 'pratique';
+			case 'name_generator.adjectives.60': return 'vacillant';
+			case 'name_generator.adjectives.61': return 'croustillant';
+			case 'name_generator.adjectives.62': return 'grognon';
+			case 'name_generator.adjectives.63': return 'chic';
+			case 'name_generator.adjectives.64': return 'plein d\'entrain';
+			case 'name_generator.adjectives.65': return 'bouillonnant';
+			case 'name_generator.adjectives.66': return 'éclaboussant';
+			case 'name_generator.adjectives.67': return 'venté';
+			case 'name_generator.adjectives.68': return 'rebondissant';
+			case 'name_generator.adjectives.69': return 'étincelant';
+			case 'name_generator.adjectives.70': return 'joyeux';
+			case 'name_generator.adjectives.71': return 'moelleux';
+			case 'name_generator.adjectives.72': return 'loufoque';
+			case 'name_generator.adjectives.73': return 'vivifiant';
+			case 'name_generator.adjectives.74': return 'claquant';
+			case 'name_generator.adjectives.75': return 'joyeux';
+			case 'name_generator.adjectives.76': return 'plumé';
+			case 'name_generator.adjectives.77': return 'piquant';
+			case 'name_generator.adjectives.78': return 'rapide';
+			case 'name_generator.adjectives.79': return 'vif';
+			case 'name_generator.adjectives.80': return 'moustachu';
+			case 'name_generator.adjectives.81': return 'tacheté';
+			case 'name_generator.adjectives.82': return 'rayé';
+			case 'name_generator.adjectives.83': return 'fougueux';
+			case 'name_generator.adjectives.84': return 'bavard';
+			case 'name_generator.adjectives.85': return 'distingué';
+			case 'name_generator.adjectives.86': return 'serpentin';
+			case 'name_generator.adjectives.87': return 'rigolo';
+			case 'name_generator.adjectives.88': return 'élégant';
+			case 'name_generator.adjectives.89': return 'sautillant';
+			case 'name_generator.adjectives.90': return 'dynamique';
+			case 'name_generator.adjectives.91': return 'skippy';
+			case 'name_generator.adjectives.92': return 'duveteux';
+			case 'name_generator.adjectives.93': return 'rondelet';
+			case 'name_generator.adjectives.94': return 'gonflé';
+			case 'name_generator.adjectives.95': return 'déjanté';
+			case 'name_generator.adjectives.96': return 'rose';
+			case 'name_generator.adjectives.97': return 'exubérant';
+			case 'name_generator.adjectives.98': return 'raffiné';
 			default: return null;
 		}
 	}

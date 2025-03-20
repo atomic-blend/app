@@ -43,6 +43,7 @@ class Translations implements BaseTranslations<AppLocale, Translations> {
 	late final TranslationsSettingsEn settings = TranslationsSettingsEn._(_root);
 	late final TranslationsTodayEn today = TranslationsTodayEn._(_root);
 	late final TranslationsCalendarEn calendar = TranslationsCalendarEn._(_root);
+	late final TranslationsAccountEn account = TranslationsAccountEn._(_root);
 	late final TranslationsHabitsEn habits = TranslationsHabitsEn._(_root);
 	late final TranslationsTasksEn tasks = TranslationsTasksEn._(_root);
 	late final TranslationsUnderConstructionEn under_construction = TranslationsUnderConstructionEn._(_root);
@@ -55,6 +56,7 @@ class Translations implements BaseTranslations<AppLocale, Translations> {
 		'email_malformed': 'Email malformed',
 		'unknown_error': 'Unknown error',
 	};
+	late final TranslationsNameGeneratorEn name_generator = TranslationsNameGeneratorEn._(_root);
 }
 
 // Path: navigation
@@ -113,6 +115,18 @@ class TranslationsCalendarEn {
 
 	// Translations
 	String get title => 'Calendar';
+}
+
+// Path: account
+class TranslationsAccountEn {
+	TranslationsAccountEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	String get edit_profile => 'Edit Profile';
+	late final TranslationsAccountSectionsEn sections = TranslationsAccountSectionsEn._(_root);
+	late final TranslationsAccountActionsEn actions = TranslationsAccountActionsEn._(_root);
 }
 
 // Path: habits
@@ -203,6 +217,219 @@ class TranslationsValidationEn {
 	String get invalid_url => 'invalid URL';
 }
 
+// Path: name_generator
+class TranslationsNameGeneratorEn {
+	TranslationsNameGeneratorEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	List<String> get animals => [
+		'bat',
+		'owl',
+		'fox',
+		'rabbit',
+		'otter',
+		'penguin',
+		'panda',
+		'squirrel',
+		'koala',
+		'tiger',
+		'giraffe',
+		'monkey',
+		'raccoon',
+		'zebra',
+		'kangaroo',
+		'parrot',
+		'dolphin',
+		'sloth',
+		'wolf',
+		'lion',
+		'bear',
+		'eagle',
+		'elephant',
+		'leopard',
+		'cheetah',
+		'hippo',
+		'lemur',
+		'frog',
+		'chameleon',
+		'lynx',
+		'puffin',
+		'seal',
+		'falcon',
+		'orca',
+		'meerkat',
+		'hedgehog',
+		'weasel',
+		'armadillo',
+		'wombat',
+		'platypus',
+		'badger',
+		'yak',
+		'lizard',
+		'beetle',
+		'caterpillar',
+		'jaguar',
+		'buffalo',
+		'stingray',
+		'mole',
+		'donkey',
+		'toucan',
+		'flamingo',
+		'goat',
+		'alpaca',
+		'moose',
+		'peacock',
+		'rhino',
+		'gecko',
+		'turkey',
+		'hamster',
+		'otter',
+		'gorilla',
+		'walrus',
+		'vulture',
+		'stingray',
+		'newt',
+		'iguana',
+		'porcupine',
+		'python',
+		'antelope',
+		'gibbon',
+		'boar',
+		'crane',
+		'emu',
+		'pelican',
+		'hyena',
+		'heron',
+		'lynx',
+		'lamb',
+		'tortoise',
+		'shrimp',
+		'lobster',
+		'moth',
+		'clam',
+		'pufferfish',
+		'starfish',
+		'shrike',
+		'robin',
+		'quail',
+		'koala',
+		'snail',
+		'slug',
+		'owl',
+		'viper',
+		'duck',
+		'swallow',
+		'crab',
+		'llama',
+		'mongoose',
+		'kitten',
+	];
+	List<String> get adjectives => [
+		'happy',
+		'brave',
+		'cheerful',
+		'jolly',
+		'playful',
+		'bright',
+		'silly',
+		'curious',
+		'swift',
+		'bold',
+		'mighty',
+		'clever',
+		'sneaky',
+		'gentle',
+		'fuzzy',
+		'quirky',
+		'bouncy',
+		'sparkly',
+		'zippy',
+		'chirpy',
+		'glossy',
+		'snappy',
+		'shiny',
+		'dreamy',
+		'frisky',
+		'sunny',
+		'zany',
+		'wild',
+		'funky',
+		'feisty',
+		'snug',
+		'crisp',
+		'lively',
+		'sassy',
+		'witty',
+		'spunky',
+		'perky',
+		'crafty',
+		'jazzy',
+		'dapper',
+		'smiley',
+		'lucky',
+		'peppy',
+		'peachy',
+		'tidy',
+		'chilly',
+		'breezy',
+		'giddy',
+		'graceful',
+		'plucky',
+		'dizzy',
+		'spry',
+		'whimsical',
+		'nimble',
+		'chirpy',
+		'jumpy',
+		'quirky',
+		'spicy',
+		'perky',
+		'speedy',
+		'nifty',
+		'wobbly',
+		'crunchy',
+		'cranky',
+		'snazzy',
+		'peppy',
+		'bubbly',
+		'splashy',
+		'breezy',
+		'bouncy',
+		'twinkly',
+		'gleeful',
+		'squishy',
+		'wacky',
+		'zesty',
+		'snappy',
+		'jovial',
+		'feathered',
+		'prickly',
+		'whizzy',
+		'perky',
+		'whiskery',
+		'spotty',
+		'stripy',
+		'flicky',
+		'chatty',
+		'dandy',
+		'wiggly',
+		'giggly',
+		'spiffy',
+		'jumpy',
+		'perky',
+		'skippy',
+		'fluffy',
+		'chunky',
+		'puffy',
+		'loopy',
+		'pinky',
+		'spunky',
+		'fancy',
+	];
+}
+
 // Path: auth.not_logged_in
 class TranslationsAuthNotLoggedInEn {
 	TranslationsAuthNotLoggedInEn._(this._root);
@@ -286,6 +513,27 @@ class TranslationsSettingsAppSettingsEn {
 	// Translations
 	String get title => 'App Settings';
 	late final TranslationsSettingsAppSettingsSelfHostedUrlEn selfHostedUrl = TranslationsSettingsAppSettingsSelfHostedUrlEn._(_root);
+}
+
+// Path: account.sections
+class TranslationsAccountSectionsEn {
+	TranslationsAccountSectionsEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	String get account => 'Account';
+}
+
+// Path: account.actions
+class TranslationsAccountActionsEn {
+	TranslationsAccountActionsEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	String get security => 'Security & Privacy';
+	String get delete_account => 'Delete my Account';
 }
 
 // Path: tasks.due_dates
@@ -387,6 +635,10 @@ extension on Translations {
 			case 'today.day_off': return 'You have nothing planned for tomorrow, enjoy your day!';
 			case 'today.week_off': return 'You have nothing planned for this week, try and take the time to do the stuff left behind!';
 			case 'calendar.title': return 'Calendar';
+			case 'account.edit_profile': return 'Edit Profile';
+			case 'account.sections.account': return 'Account';
+			case 'account.actions.security': return 'Security & Privacy';
+			case 'account.actions.delete_account': return 'Delete my Account';
 			case 'habits.title': return 'Habits';
 			case 'tasks.title': return 'My Tasks';
 			case 'tasks.no_tasks_for_now': return 'No tasks for now';
@@ -424,6 +676,206 @@ extension on Translations {
 			case 'errors.wrong_email_password': return 'Email or password incorrect';
 			case 'errors.email_malformed': return 'Email malformed';
 			case 'errors.unknown_error': return 'Unknown error';
+			case 'name_generator.animals.0': return 'bat';
+			case 'name_generator.animals.1': return 'owl';
+			case 'name_generator.animals.2': return 'fox';
+			case 'name_generator.animals.3': return 'rabbit';
+			case 'name_generator.animals.4': return 'otter';
+			case 'name_generator.animals.5': return 'penguin';
+			case 'name_generator.animals.6': return 'panda';
+			case 'name_generator.animals.7': return 'squirrel';
+			case 'name_generator.animals.8': return 'koala';
+			case 'name_generator.animals.9': return 'tiger';
+			case 'name_generator.animals.10': return 'giraffe';
+			case 'name_generator.animals.11': return 'monkey';
+			case 'name_generator.animals.12': return 'raccoon';
+			case 'name_generator.animals.13': return 'zebra';
+			case 'name_generator.animals.14': return 'kangaroo';
+			case 'name_generator.animals.15': return 'parrot';
+			case 'name_generator.animals.16': return 'dolphin';
+			case 'name_generator.animals.17': return 'sloth';
+			case 'name_generator.animals.18': return 'wolf';
+			case 'name_generator.animals.19': return 'lion';
+			case 'name_generator.animals.20': return 'bear';
+			case 'name_generator.animals.21': return 'eagle';
+			case 'name_generator.animals.22': return 'elephant';
+			case 'name_generator.animals.23': return 'leopard';
+			case 'name_generator.animals.24': return 'cheetah';
+			case 'name_generator.animals.25': return 'hippo';
+			case 'name_generator.animals.26': return 'lemur';
+			case 'name_generator.animals.27': return 'frog';
+			case 'name_generator.animals.28': return 'chameleon';
+			case 'name_generator.animals.29': return 'lynx';
+			case 'name_generator.animals.30': return 'puffin';
+			case 'name_generator.animals.31': return 'seal';
+			case 'name_generator.animals.32': return 'falcon';
+			case 'name_generator.animals.33': return 'orca';
+			case 'name_generator.animals.34': return 'meerkat';
+			case 'name_generator.animals.35': return 'hedgehog';
+			case 'name_generator.animals.36': return 'weasel';
+			case 'name_generator.animals.37': return 'armadillo';
+			case 'name_generator.animals.38': return 'wombat';
+			case 'name_generator.animals.39': return 'platypus';
+			case 'name_generator.animals.40': return 'badger';
+			case 'name_generator.animals.41': return 'yak';
+			case 'name_generator.animals.42': return 'lizard';
+			case 'name_generator.animals.43': return 'beetle';
+			case 'name_generator.animals.44': return 'caterpillar';
+			case 'name_generator.animals.45': return 'jaguar';
+			case 'name_generator.animals.46': return 'buffalo';
+			case 'name_generator.animals.47': return 'stingray';
+			case 'name_generator.animals.48': return 'mole';
+			case 'name_generator.animals.49': return 'donkey';
+			case 'name_generator.animals.50': return 'toucan';
+			case 'name_generator.animals.51': return 'flamingo';
+			case 'name_generator.animals.52': return 'goat';
+			case 'name_generator.animals.53': return 'alpaca';
+			case 'name_generator.animals.54': return 'moose';
+			case 'name_generator.animals.55': return 'peacock';
+			case 'name_generator.animals.56': return 'rhino';
+			case 'name_generator.animals.57': return 'gecko';
+			case 'name_generator.animals.58': return 'turkey';
+			case 'name_generator.animals.59': return 'hamster';
+			case 'name_generator.animals.60': return 'otter';
+			case 'name_generator.animals.61': return 'gorilla';
+			case 'name_generator.animals.62': return 'walrus';
+			case 'name_generator.animals.63': return 'vulture';
+			case 'name_generator.animals.64': return 'stingray';
+			case 'name_generator.animals.65': return 'newt';
+			case 'name_generator.animals.66': return 'iguana';
+			case 'name_generator.animals.67': return 'porcupine';
+			case 'name_generator.animals.68': return 'python';
+			case 'name_generator.animals.69': return 'antelope';
+			case 'name_generator.animals.70': return 'gibbon';
+			case 'name_generator.animals.71': return 'boar';
+			case 'name_generator.animals.72': return 'crane';
+			case 'name_generator.animals.73': return 'emu';
+			case 'name_generator.animals.74': return 'pelican';
+			case 'name_generator.animals.75': return 'hyena';
+			case 'name_generator.animals.76': return 'heron';
+			case 'name_generator.animals.77': return 'lynx';
+			case 'name_generator.animals.78': return 'lamb';
+			case 'name_generator.animals.79': return 'tortoise';
+			case 'name_generator.animals.80': return 'shrimp';
+			case 'name_generator.animals.81': return 'lobster';
+			case 'name_generator.animals.82': return 'moth';
+			case 'name_generator.animals.83': return 'clam';
+			case 'name_generator.animals.84': return 'pufferfish';
+			case 'name_generator.animals.85': return 'starfish';
+			case 'name_generator.animals.86': return 'shrike';
+			case 'name_generator.animals.87': return 'robin';
+			case 'name_generator.animals.88': return 'quail';
+			case 'name_generator.animals.89': return 'koala';
+			case 'name_generator.animals.90': return 'snail';
+			case 'name_generator.animals.91': return 'slug';
+			case 'name_generator.animals.92': return 'owl';
+			case 'name_generator.animals.93': return 'viper';
+			case 'name_generator.animals.94': return 'duck';
+			case 'name_generator.animals.95': return 'swallow';
+			case 'name_generator.animals.96': return 'crab';
+			case 'name_generator.animals.97': return 'llama';
+			case 'name_generator.animals.98': return 'mongoose';
+			case 'name_generator.animals.99': return 'kitten';
+			case 'name_generator.adjectives.0': return 'happy';
+			case 'name_generator.adjectives.1': return 'brave';
+			case 'name_generator.adjectives.2': return 'cheerful';
+			case 'name_generator.adjectives.3': return 'jolly';
+			case 'name_generator.adjectives.4': return 'playful';
+			case 'name_generator.adjectives.5': return 'bright';
+			case 'name_generator.adjectives.6': return 'silly';
+			case 'name_generator.adjectives.7': return 'curious';
+			case 'name_generator.adjectives.8': return 'swift';
+			case 'name_generator.adjectives.9': return 'bold';
+			case 'name_generator.adjectives.10': return 'mighty';
+			case 'name_generator.adjectives.11': return 'clever';
+			case 'name_generator.adjectives.12': return 'sneaky';
+			case 'name_generator.adjectives.13': return 'gentle';
+			case 'name_generator.adjectives.14': return 'fuzzy';
+			case 'name_generator.adjectives.15': return 'quirky';
+			case 'name_generator.adjectives.16': return 'bouncy';
+			case 'name_generator.adjectives.17': return 'sparkly';
+			case 'name_generator.adjectives.18': return 'zippy';
+			case 'name_generator.adjectives.19': return 'chirpy';
+			case 'name_generator.adjectives.20': return 'glossy';
+			case 'name_generator.adjectives.21': return 'snappy';
+			case 'name_generator.adjectives.22': return 'shiny';
+			case 'name_generator.adjectives.23': return 'dreamy';
+			case 'name_generator.adjectives.24': return 'frisky';
+			case 'name_generator.adjectives.25': return 'sunny';
+			case 'name_generator.adjectives.26': return 'zany';
+			case 'name_generator.adjectives.27': return 'wild';
+			case 'name_generator.adjectives.28': return 'funky';
+			case 'name_generator.adjectives.29': return 'feisty';
+			case 'name_generator.adjectives.30': return 'snug';
+			case 'name_generator.adjectives.31': return 'crisp';
+			case 'name_generator.adjectives.32': return 'lively';
+			case 'name_generator.adjectives.33': return 'sassy';
+			case 'name_generator.adjectives.34': return 'witty';
+			case 'name_generator.adjectives.35': return 'spunky';
+			case 'name_generator.adjectives.36': return 'perky';
+			case 'name_generator.adjectives.37': return 'crafty';
+			case 'name_generator.adjectives.38': return 'jazzy';
+			case 'name_generator.adjectives.39': return 'dapper';
+			case 'name_generator.adjectives.40': return 'smiley';
+			case 'name_generator.adjectives.41': return 'lucky';
+			case 'name_generator.adjectives.42': return 'peppy';
+			case 'name_generator.adjectives.43': return 'peachy';
+			case 'name_generator.adjectives.44': return 'tidy';
+			case 'name_generator.adjectives.45': return 'chilly';
+			case 'name_generator.adjectives.46': return 'breezy';
+			case 'name_generator.adjectives.47': return 'giddy';
+			case 'name_generator.adjectives.48': return 'graceful';
+			case 'name_generator.adjectives.49': return 'plucky';
+			case 'name_generator.adjectives.50': return 'dizzy';
+			case 'name_generator.adjectives.51': return 'spry';
+			case 'name_generator.adjectives.52': return 'whimsical';
+			case 'name_generator.adjectives.53': return 'nimble';
+			case 'name_generator.adjectives.54': return 'chirpy';
+			case 'name_generator.adjectives.55': return 'jumpy';
+			case 'name_generator.adjectives.56': return 'quirky';
+			case 'name_generator.adjectives.57': return 'spicy';
+			case 'name_generator.adjectives.58': return 'perky';
+			case 'name_generator.adjectives.59': return 'speedy';
+			case 'name_generator.adjectives.60': return 'nifty';
+			case 'name_generator.adjectives.61': return 'wobbly';
+			case 'name_generator.adjectives.62': return 'crunchy';
+			case 'name_generator.adjectives.63': return 'cranky';
+			case 'name_generator.adjectives.64': return 'snazzy';
+			case 'name_generator.adjectives.65': return 'peppy';
+			case 'name_generator.adjectives.66': return 'bubbly';
+			case 'name_generator.adjectives.67': return 'splashy';
+			case 'name_generator.adjectives.68': return 'breezy';
+			case 'name_generator.adjectives.69': return 'bouncy';
+			case 'name_generator.adjectives.70': return 'twinkly';
+			case 'name_generator.adjectives.71': return 'gleeful';
+			case 'name_generator.adjectives.72': return 'squishy';
+			case 'name_generator.adjectives.73': return 'wacky';
+			case 'name_generator.adjectives.74': return 'zesty';
+			case 'name_generator.adjectives.75': return 'snappy';
+			case 'name_generator.adjectives.76': return 'jovial';
+			case 'name_generator.adjectives.77': return 'feathered';
+			case 'name_generator.adjectives.78': return 'prickly';
+			case 'name_generator.adjectives.79': return 'whizzy';
+			case 'name_generator.adjectives.80': return 'perky';
+			case 'name_generator.adjectives.81': return 'whiskery';
+			case 'name_generator.adjectives.82': return 'spotty';
+			case 'name_generator.adjectives.83': return 'stripy';
+			case 'name_generator.adjectives.84': return 'flicky';
+			case 'name_generator.adjectives.85': return 'chatty';
+			case 'name_generator.adjectives.86': return 'dandy';
+			case 'name_generator.adjectives.87': return 'wiggly';
+			case 'name_generator.adjectives.88': return 'giggly';
+			case 'name_generator.adjectives.89': return 'spiffy';
+			case 'name_generator.adjectives.90': return 'jumpy';
+			case 'name_generator.adjectives.91': return 'perky';
+			case 'name_generator.adjectives.92': return 'skippy';
+			case 'name_generator.adjectives.93': return 'fluffy';
+			case 'name_generator.adjectives.94': return 'chunky';
+			case 'name_generator.adjectives.95': return 'puffy';
+			case 'name_generator.adjectives.96': return 'loopy';
+			case 'name_generator.adjectives.97': return 'pinky';
+			case 'name_generator.adjectives.98': return 'spunky';
+			case 'name_generator.adjectives.99': return 'fancy';
 			default: return null;
 		}
 	}
