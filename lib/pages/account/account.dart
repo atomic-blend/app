@@ -1,6 +1,7 @@
 import 'package:app/blocs/auth/auth.bloc.dart';
 import 'package:app/components/buttons/icon_text_button.dart';
 import 'package:app/components/buttons/primary_button_round.dart';
+import 'package:app/components/modals/delete_account_modal.dart';
 import 'package:app/i18n/strings.g.dart';
 import 'package:app/utils/constants.dart';
 import 'package:app/utils/name_generator.dart';
@@ -104,6 +105,14 @@ class _AccountState extends State<Account> {
                 iconColor: Colors.red,
                 textColor: Colors.red,
                 text: context.t.account.actions.delete_account,
+                onTap: () {
+                  showDialog(
+                    context: context,
+                    builder: (context) {
+                      return const DeleteAccountModal();
+                    },
+                  );
+                },
               )
             ],
           ),

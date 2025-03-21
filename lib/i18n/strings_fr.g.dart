@@ -75,6 +75,7 @@ class _TranslationsAuthFr implements TranslationsAuthEn {
 	@override late final _TranslationsAuthLoginOrRegisterFr login_or_register = _TranslationsAuthLoginOrRegisterFr._(_root);
 	@override late final _TranslationsAuthLoginFr login = _TranslationsAuthLoginFr._(_root);
 	@override late final _TranslationsAuthRegisterFr register = _TranslationsAuthRegisterFr._(_root);
+	@override late final _TranslationsAuthDeleteAccountFr delete_account = _TranslationsAuthDeleteAccountFr._(_root);
 }
 
 // Path: settings
@@ -191,6 +192,7 @@ class _TranslationsActionsFr implements TranslationsActionsEn {
 	@override String get cancel => 'Annuler';
 	@override String get next => 'Suivant';
 	@override String get back => 'Retour';
+	@override String get delete => 'Supprimer';
 }
 
 // Path: validation
@@ -488,6 +490,18 @@ class _TranslationsAuthRegisterFr implements TranslationsAuthRegisterEn {
 	@override String get no_account => 'Pas de compte ?';
 }
 
+// Path: auth.delete_account
+class _TranslationsAuthDeleteAccountFr implements TranslationsAuthDeleteAccountEn {
+	_TranslationsAuthDeleteAccountFr._(this._root);
+
+	final TranslationsFr _root; // ignore: unused_field
+
+	// Translations
+	@override String get title => 'Supprimer mon compte';
+	@override String get description => 'Etes-vous sûr de vouloir supprimer votre compte ?';
+	@override String get cannot_be_undone => 'Cette action est irréversible et toutes vos données seront perdues.';
+}
+
 // Path: settings.app_settings
 class _TranslationsSettingsAppSettingsFr implements TranslationsSettingsAppSettingsEn {
 	_TranslationsSettingsAppSettingsFr._(this._root);
@@ -607,6 +621,9 @@ extension on TranslationsFr {
 			case 'auth.register.forgot_password': return 'Mot de passe oublié';
 			case 'auth.register.register': return 'S\'inscrire';
 			case 'auth.register.no_account': return 'Pas de compte ?';
+			case 'auth.delete_account.title': return 'Supprimer mon compte';
+			case 'auth.delete_account.description': return 'Etes-vous sûr de vouloir supprimer votre compte ?';
+			case 'auth.delete_account.cannot_be_undone': return 'Cette action est irréversible et toutes vos données seront perdues.';
 			case 'settings.title': return 'Paramètres';
 			case 'settings.app_settings.title': return 'Paramètres de l\'application';
 			case 'settings.app_settings.selfHostedUrl.title': return 'URL auto-hébergée';
@@ -656,6 +673,7 @@ extension on TranslationsFr {
 			case 'actions.cancel': return 'Annuler';
 			case 'actions.next': return 'Suivant';
 			case 'actions.back': return 'Retour';
+			case 'actions.delete': return 'Supprimer';
 			case 'validation.required': return 'Ce champ est obligatoire';
 			case 'validation.invalid_url': return 'URL invalide';
 			case 'errors.wrong_email_password': return 'Adresse e-mail ou mot de passe incorrect';

@@ -65,7 +65,7 @@ class UserService {
   }
 
   Future<bool> deleteUser() async {
-    var result = await globalApiClient.delete('/user/delete');
+    var result = await globalApiClient.delete('/users/me');
     if (result.statusCode == 200) {
       logOut();
       return true;

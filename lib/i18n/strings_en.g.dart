@@ -79,6 +79,7 @@ class TranslationsAuthEn {
 	late final TranslationsAuthLoginOrRegisterEn login_or_register = TranslationsAuthLoginOrRegisterEn._(_root);
 	late final TranslationsAuthLoginEn login = TranslationsAuthLoginEn._(_root);
 	late final TranslationsAuthRegisterEn register = TranslationsAuthRegisterEn._(_root);
+	late final TranslationsAuthDeleteAccountEn delete_account = TranslationsAuthDeleteAccountEn._(_root);
 }
 
 // Path: settings
@@ -195,6 +196,7 @@ class TranslationsActionsEn {
 	String get cancel => 'Cancel';
 	String get next => 'Next';
 	String get back => 'Back';
+	String get delete => 'Delete';
 }
 
 // Path: validation
@@ -495,6 +497,18 @@ class TranslationsAuthRegisterEn {
 	String get no_account => 'No account?';
 }
 
+// Path: auth.delete_account
+class TranslationsAuthDeleteAccountEn {
+	TranslationsAuthDeleteAccountEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	String get title => 'Delete your account';
+	String get description => 'Are you sure you want to delete your account?';
+	String get cannot_be_undone => 'This action cannot be undone.';
+}
+
 // Path: settings.app_settings
 class TranslationsSettingsAppSettingsEn {
 	TranslationsSettingsAppSettingsEn._(this._root);
@@ -614,6 +628,9 @@ extension on Translations {
 			case 'auth.register.forgot_password': return 'Forgot password';
 			case 'auth.register.register': return 'Register';
 			case 'auth.register.no_account': return 'No account?';
+			case 'auth.delete_account.title': return 'Delete your account';
+			case 'auth.delete_account.description': return 'Are you sure you want to delete your account?';
+			case 'auth.delete_account.cannot_be_undone': return 'This action cannot be undone.';
 			case 'settings.title': return 'Settings';
 			case 'settings.app_settings.title': return 'App Settings';
 			case 'settings.app_settings.selfHostedUrl.title': return 'Self-Hosted URL';
@@ -663,6 +680,7 @@ extension on Translations {
 			case 'actions.cancel': return 'Cancel';
 			case 'actions.next': return 'Next';
 			case 'actions.back': return 'Back';
+			case 'actions.delete': return 'Delete';
 			case 'validation.required': return 'Required';
 			case 'validation.invalid_url': return 'invalid URL';
 			case 'errors.wrong_email_password': return 'Email or password incorrect';
