@@ -54,6 +54,7 @@ class _LoginOrRegisterState extends State<LoginOrRegister>
 
   @override
   Widget build(BuildContext context) {
+    var selfHostedUrl = ApiClient.getSelfHostedRestApiUrl();
     return Stack(
       children: [
         SizedBox(
@@ -178,16 +179,15 @@ class _LoginOrRegisterState extends State<LoginOrRegister>
                                     ));
                           },
                           child: Text.rich(
+                            textAlign: TextAlign.center,
                             TextSpan(
                                 text: context
                                     .t.auth.login_or_register.connecting_to,
                                 children: [
                                   TextSpan(
-                                      text: Uri.parse(ApiClient
-                                                  .getSelfHostedRestApiUrl() ??
-                                              env?.restApiUrl ??
-                                              "")
-                                          .host,
+                                      text: selfHostedUrl != null && selfHostedUrl != "" ?  Uri.parse(ApiClient
+                                              .getSelfHostedRestApiUrl()!).host : context.t.app_name_saas 
+                                          ,
                                       style: const TextStyle(
                                         fontWeight: FontWeight.bold,
                                         decoration: TextDecoration.underline,

@@ -26,7 +26,7 @@ platform :ios do
 
   lane :build_beta do
     Dir.chdir("..") do
-        sh('fvm flutter build ipa --flavor prod --release -t lib/main_prod.dart')
+        sh('fvm flutter build ipa --flavor prod --release -t lib/main_prod.dart --release --dart-release APP_ENV=prod')
     end
   end
 

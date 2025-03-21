@@ -34,6 +34,7 @@ class TranslationsFr implements Translations {
 
 	// Translations
 	@override String get app_name => 'Atomic Blend';
+	@override String get app_name_saas => 'Atomic Blend Cloud';
 	@override late final _TranslationsNavigationFr navigation = _TranslationsNavigationFr._(_root);
 	@override late final _TranslationsAuthFr auth = _TranslationsAuthFr._(_root);
 	@override late final _TranslationsSettingsFr settings = _TranslationsSettingsFr._(_root);
@@ -45,6 +46,7 @@ class TranslationsFr implements Translations {
 	@override late final _TranslationsMoreFr more = _TranslationsMoreFr._(_root);
 	@override late final _TranslationsTimesFr times = _TranslationsTimesFr._(_root);
 	@override late final _TranslationsActionsFr actions = _TranslationsActionsFr._(_root);
+	@override late final _TranslationsLoadingFr loading = _TranslationsLoadingFr._(_root);
 	@override late final _TranslationsValidationFr validation = _TranslationsValidationFr._(_root);
 	@override Map<String, String> get errors => {
 		'wrong_email_password': 'Adresse e-mail ou mot de passe incorrect',
@@ -193,6 +195,16 @@ class _TranslationsActionsFr implements TranslationsActionsEn {
 	@override String get next => 'Suivant';
 	@override String get back => 'Retour';
 	@override String get delete => 'Supprimer';
+}
+
+// Path: loading
+class _TranslationsLoadingFr implements TranslationsLoadingEn {
+	_TranslationsLoadingFr._(this._root);
+
+	final TranslationsFr _root; // ignore: unused_field
+
+	// Translations
+	@override String get simple => 'Chargement en cours...';
 }
 
 // Path: validation
@@ -453,7 +465,7 @@ class _TranslationsAuthLoginOrRegisterFr implements TranslationsAuthLoginOrRegis
 	@override String get login => 'Se connecter';
 	@override String get register => 'S\'inscrire';
 	@override String get or => 'ou';
-	@override String get connecting_to => 'Connexion au serveur : ';
+	@override String get connecting_to => 'Connexion à : ';
 }
 
 // Path: auth.login
@@ -582,6 +594,7 @@ extension on TranslationsFr {
 	dynamic _flatMapFunction(String path) {
 		switch (path) {
 			case 'app_name': return 'Atomic Blend';
+			case 'app_name_saas': return 'Atomic Blend Cloud';
 			case 'navigation.back': return 'Retour';
 			case 'auth.not_logged_in.welcome': return 'Bienvenue sur Atomic Blend';
 			case 'auth.not_logged_in.description_start': return 'Atomic Blend est la première';
@@ -604,7 +617,7 @@ extension on TranslationsFr {
 			case 'auth.login_or_register.login': return 'Se connecter';
 			case 'auth.login_or_register.register': return 'S\'inscrire';
 			case 'auth.login_or_register.or': return 'ou';
-			case 'auth.login_or_register.connecting_to': return 'Connexion au serveur : ';
+			case 'auth.login_or_register.connecting_to': return 'Connexion à : ';
 			case 'auth.login.title': return '👋 Bon retour parmis nous !';
 			case 'auth.login.description': return 'Utilisez votre adresse e-mail et votre mot de passe pour vous reconnecter et accéder à vos données.';
 			case 'auth.login.email': return 'Adresse e-mail';
@@ -674,6 +687,7 @@ extension on TranslationsFr {
 			case 'actions.next': return 'Suivant';
 			case 'actions.back': return 'Retour';
 			case 'actions.delete': return 'Supprimer';
+			case 'loading.simple': return 'Chargement en cours...';
 			case 'validation.required': return 'Ce champ est obligatoire';
 			case 'validation.invalid_url': return 'URL invalide';
 			case 'errors.wrong_email_password': return 'Adresse e-mail ou mot de passe incorrect';

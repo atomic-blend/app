@@ -38,6 +38,7 @@ class Translations implements BaseTranslations<AppLocale, Translations> {
 
 	// Translations
 	String get app_name => 'Atomic Blend';
+	String get app_name_saas => 'Atomic Blend Cloud';
 	late final TranslationsNavigationEn navigation = TranslationsNavigationEn._(_root);
 	late final TranslationsAuthEn auth = TranslationsAuthEn._(_root);
 	late final TranslationsSettingsEn settings = TranslationsSettingsEn._(_root);
@@ -48,6 +49,7 @@ class Translations implements BaseTranslations<AppLocale, Translations> {
 	late final TranslationsUnderConstructionEn under_construction = TranslationsUnderConstructionEn._(_root);
 	late final TranslationsMoreEn more = TranslationsMoreEn._(_root);
 	late final TranslationsTimesEn times = TranslationsTimesEn._(_root);
+	late final TranslationsLoadingEn loading = TranslationsLoadingEn._(_root);
 	late final TranslationsActionsEn actions = TranslationsActionsEn._(_root);
 	late final TranslationsValidationEn validation = TranslationsValidationEn._(_root);
 	Map<String, String> get errors => {
@@ -183,6 +185,16 @@ class TranslationsTimesEn {
 	String get this_year => 'This year';
 	String get last_year => 'Last year';
 	String get all_time => 'All time';
+}
+
+// Path: loading
+class TranslationsLoadingEn {
+	TranslationsLoadingEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	String get simple => 'Loading...';
 }
 
 // Path: actions
@@ -589,6 +601,7 @@ extension on Translations {
 	dynamic _flatMapFunction(String path) {
 		switch (path) {
 			case 'app_name': return 'Atomic Blend';
+			case 'app_name_saas': return 'Atomic Blend Cloud';
 			case 'navigation.back': return 'Back';
 			case 'auth.not_logged_in.welcome': return 'Welcome to Atomic Blend';
 			case 'auth.not_logged_in.description_start': return 'Atomic Blend is the first';
@@ -676,6 +689,7 @@ extension on Translations {
 			case 'times.this_year': return 'This year';
 			case 'times.last_year': return 'Last year';
 			case 'times.all_time': return 'All time';
+			case 'loading.simple': return 'Loading...';
 			case 'actions.save': return 'Save';
 			case 'actions.cancel': return 'Cancel';
 			case 'actions.next': return 'Next';

@@ -65,6 +65,7 @@ class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
             width: double.infinity,
             height: getSize(context).height * 0.92,
             child: Column(
+              mainAxisSize: MainAxisSize.min,
               children: [
                 SizedBox(
                   height: getSize(context).height * 0.08,
