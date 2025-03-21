@@ -125,6 +125,7 @@ class _RegisterPasswordState extends State<RegisterPassword>
                             child: AppTextFormField(
                               controller: _passwordController,
                               hintText: context.t.auth.register.password_hint,
+                              obscureText: true,
                             ),
                           ),
                         ),
