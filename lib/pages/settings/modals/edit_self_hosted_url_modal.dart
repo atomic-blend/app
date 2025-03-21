@@ -1,4 +1,4 @@
-import 'package:app/components/buttons/primary_button.dart';
+import 'package:app/components/buttons/primary_button_round.dart';
 import 'package:app/components/forms/app_text_form_field.dart';
 import 'package:app/i18n/strings.g.dart';
 import 'package:app/utils/api_client.dart';
@@ -65,7 +65,7 @@ class _EditSelfHostedUrlModalState extends State<EditSelfHostedUrlModal> {
               Row(
                 children: [
                   Expanded(
-                      child: PrimaryButton(
+                      child: PrimaryButtonRound(
                           border: Border.all(color: getTheme(context).primary),
                           textColor: getTheme(context).primary,
                           backgroundColor: getTheme(context).surface,
@@ -75,7 +75,7 @@ class _EditSelfHostedUrlModalState extends State<EditSelfHostedUrlModal> {
                           })),
                   SizedBox(width: $constants.insets.sm),
                   Expanded(
-                      child: PrimaryButton(
+                      child: PrimaryButtonRound(
                           text: context.t.actions.save,
                           onPressed: () async {
                             if (!_formKey.currentState!.validate()) {
@@ -85,6 +85,7 @@ class _EditSelfHostedUrlModalState extends State<EditSelfHostedUrlModal> {
                                 await ApiClient.setSelfHostedRestApiUrl(
                                     _selfHostedUrlController.text);
                             if (result) {
+                              if (!context.mounted) return;
                               Navigator.pop(context);
                             }
                           })),

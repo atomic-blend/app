@@ -30,20 +30,18 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  flutter_localizations: 
+  flutter_localizations:
     sdk: flutter
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.6
-  firebase_core: ^3.9.0
   freezed_annotation: ^2.4.4
   freezed: ^2.5.7
   injectable: ^2.5.0
   json_serializable: ^6.9.0
   json_annotation: ^4.9.0
   dio: ^5.7.0
-  firebase_auth: ^5.3.4
   flutter_bloc: ^8.1.6
   hydrated_bloc: ^9.1.5
   equatable: ^2.0.7
@@ -60,11 +58,18 @@ dependencies:
   pointycastle: ^3.9.1
   jiffy: ^6.3.2
   flutter_popup: ^3.3.0
-  syncfusion_flutter_datepicker: ^28.1.37
   toastification: ^2.3.0
   flutter_slidable: ^3.1.2
   rename_app: ^1.6.1
   flutter_native_splash: ^2.4.4
+  lottie: ^3.3.1
+  flutter_animate: ^4.5.2
+  calendar_date_picker2: ^1.1.9
+  random_avatar: ^0.0.8
+  unique_name_generator: ^1.0.0
+  collection: ^1.19.0
+dependency_overrides:
+  flutter_secure_storage: 9.2.4
 
 dev_dependencies:
   flutter_test:
@@ -98,6 +103,7 @@ flutter:
   assets:
     - assets/configs/
     - assets/images/
+    - assets/animations/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
@@ -124,6 +130,58 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+  fonts:
+    - family: Nunito
+      fonts:
+        - asset: fonts/nunito/Nunito-Regular.ttf
+        - asset: fonts/nunito/Nunito-Italic.ttf
+          style: italic
+        - asset: fonts/nunito/Nunito-Light.ttf
+          weight: 300
+        - asset: fonts/nunito/Nunito-LightItalic.ttf
+          weight: 300
+          style: italic
+        - asset: fonts/nunito/Nunito-Medium.ttf
+          weight: 500
+        - asset: fonts/nunito/Nunito-MediumItalic.ttf
+          weight: 500
+          style: italic
+        - asset: fonts/nunito/Nunito-SemiBold.ttf
+          weight: 600
+        - asset: fonts/nunito/Nunito-SemiBoldItalic.ttf
+          weight: 600
+          style: italic
+        - asset: fonts/nunito/Nunito-Bold.ttf
+          weight: 700
+        - asset: fonts/nunito/Nunito-BoldItalic.ttf
+          weight: 700
+          style: italic
+        - asset: fonts/nunito/Nunito-ExtraBold.ttf
+          weight: 800
+        - asset: fonts/nunito/Nunito-ExtraBoldItalic.ttf
+          weight: 800
+          style: italic
+        - asset: fonts/nunito/Nunito-Black.ttf
+          weight: 900
+        - asset: fonts/nunito/Nunito-BlackItalic.ttf
+          weight: 900
+          style: italic
+        - asset: fonts/nunito/Nunito-ExtraLight.ttf
+          weight: 200
+        - asset: fonts/nunito/Nunito-ExtraLightItalic.ttf
+          weight: 200
+          style: italic
+    - family: SpaceGrotesk
+      fonts:
+        - asset: fonts/space-grotesk/SpaceGrotesk-Light.ttf
+        - asset: fonts/space-grotesk/SpaceGrotesk-Regular.ttf
+          weight: 300
+        - asset: fonts/space-grotesk/SpaceGrotesk-Medium.ttf
+          weight: 500
+        - asset: fonts/space-grotesk/SpaceGrotesk-SemiBold.ttf
+          weight: 600
+        - asset: fonts/space-grotesk/SpaceGrotesk-Bold.ttf
+          weight: 700
 
 flutter_launcher_icons:
   android: "launcher_icon"
@@ -160,7 +218,7 @@ flutter_native_splash:
   # of your splash screen to a solid color.  Use background_image to set the background of your
   # splash screen to a png image.  This is useful for gradients. The image will be stretch to the
   # size of the app. Only one parameter can be used, color and background_image cannot both be set.
-  color: "#f2f2f2"
+  color: "#004881"
   #background_image: "assets/background.png"
 
   # Optional parameters are listed below.  To enable a parameter, uncomment the line by removing
@@ -168,7 +226,7 @@ flutter_native_splash:
 
   # The image parameter allows you to specify an image used in the splash screen.  It must be a
   # png file and should be sized for 4x pixel density.
-  image: assets/images/appicon.png
+  image: assets/images/appicon_transparent.png
 
   # The branding property allows you to specify an image used as branding in the splash screen.
   # It must be a png file. It is supported for Android, iOS and the Web.  For Android 12,
@@ -178,14 +236,14 @@ flutter_native_splash:
   # To position the branding image at the bottom of the screen you can use bottom, bottomRight,
   # and bottomLeft. The default values is bottom if not specified or specified something else.
   #branding_mode: bottom
-  
+
   # Set the branding padding from the bottom of the screen.  The default value is 0
   # branding_bottom_padding: 24
 
   # The color_dark, background_image_dark, image_dark, branding_dark are parameters that set the background
   # and image when the device is in dark mode. If they are not specified, the app will use the
   # parameters from above.  If there is no parameter above, the app will use the light mode values.
-  # If the image_dark parameter is specified, color_dark or background_image_dark must be specified.  
+  # If the image_dark parameter is specified, color_dark or background_image_dark must be specified.
   # color_dark and background_image_dark cannot both be set.
   #color_dark: "#042a49"
   #background_image_dark: "assets/dark-background.png"
@@ -202,10 +260,10 @@ flutter_native_splash:
     # App icon with an icon background: This should be 960×960 pixels, and fit within a circle
     # 640 pixels in diameter.
     # App icon without an icon background: This should be 1152×1152 pixels, and fit within a circle
-    # 768 pixels in diameter.  To fit a 1152x1152 image within a circle with a 768 diameter, simply 
+    # 768 pixels in diameter.  To fit a 1152x1152 image within a circle with a 768 diameter, simply
     # ensure that the most important design elements of your image are placed within a circular area
     # with a 768 diameter at the center of the 1152x1152 canvas.
-    image: assets/images/appicon.png
+    image: assets/images/appicon_transparent.png
 
     # Splash screen background color.
     color: "#f2f2f2"

@@ -22,9 +22,9 @@ class Loading extends AuthState {
   String toString() => 'Loading { }';
 }
 
-class Error extends AuthState {
+class AuthError extends AuthState {
   final String message;
-  const Error(this.message) : super(null);
+  const AuthError(this.message) : super(null);
 
   @override
   String toString() => 'Error { $message }';

@@ -26,15 +26,15 @@ platform :ios do
 
   lane :build_beta do
     Dir.chdir("..") do
-        sh('fvm flutter build ipa --flavor prod --release -t lib/main_prod.dart')
+        sh('fvm flutter build ipa --flavor prod --release -t lib/main_prod.dart --release --dart-release APP_ENV=prod')
     end
   end
 
   lane :upload_beta do
      upload_to_testflight(
      api_key_path: "/Users/brandonguigo/appstore_connect_api_key.json",
-     app_identifier: "fr.lifeos.app",
-     ipa: "../build/ios/ipa/LifeOS.ipa",
+     app_identifier: "fr.atomicblend.app",
+     ipa: "../build/ios/ipa/Atomic Blend.ipa",
      distribute_external: true,
      notify_external_testers: true,
      submit_beta_review: true,

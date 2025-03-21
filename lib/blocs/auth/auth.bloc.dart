@@ -1,5 +1,6 @@
 import 'package:app/entities/user/user.entity.dart';
 import 'package:app/services/user.service.dart';
+import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 
@@ -24,12 +25,21 @@ class AuthBloc extends HydratedBloc<AuthEvent, AuthState> {
 
   void _onLogIn(LoginEvent event, Emitter<AuthState> emit) async {
     emit(const Loading());
-    final updatedUser = await _userService.login(event.email, event.password);
-    if (updatedUser == null) {
-      emit(const LoggedOut());
-      return;
+    try {
+      final updatedUser = await _userService.login(event.email, event.password);
+      if (updatedUser == null) {
+        emit(const LoggedOut());
+        return;
+      }
+      emit(LoggedIn(updatedUser));
+    } on DioException catch (e) {
+      // TODO
+      if (e.response?.statusCode == 401) {
+        emit(const AuthError("wrong_email_password"));
+      } else if (e.response?.statusCode == 400) {
+        emit(const AuthError("email_malformed"));
+      }
     }
-    emit(LoggedIn(updatedUser));
   }
 
   void _onRefreshUser(RefreshUser event, Emitter<AuthState> emit) async {
@@ -44,7 +54,8 @@ class AuthBloc extends HydratedBloc<AuthEvent, AuthState> {
 
   void _onRegister(RegisterEvent event, Emitter<AuthState> emit) async {
     emit(const Loading());
-    final updatedUser = await _userService.register(event.email, event.password);
+    final updatedUser =
+        await _userService.register(event.email, event.password);
     if (updatedUser == null) {
       emit(const LoggedOut());
       return;

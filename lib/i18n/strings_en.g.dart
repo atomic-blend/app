@@ -38,14 +38,26 @@ class Translations implements BaseTranslations<AppLocale, Translations> {
 
 	// Translations
 	String get app_name => 'Atomic Blend';
+	String get app_name_saas => 'Atomic Blend Cloud';
 	late final TranslationsNavigationEn navigation = TranslationsNavigationEn._(_root);
 	late final TranslationsAuthEn auth = TranslationsAuthEn._(_root);
 	late final TranslationsSettingsEn settings = TranslationsSettingsEn._(_root);
-	late final TranslationsHomeEn home = TranslationsHomeEn._(_root);
 	late final TranslationsTasksEn tasks = TranslationsTasksEn._(_root);
+	late final TranslationsCalendarEn calendar = TranslationsCalendarEn._(_root);
+	late final TranslationsAccountEn account = TranslationsAccountEn._(_root);
+	late final TranslationsHabitsEn habits = TranslationsHabitsEn._(_root);
+	late final TranslationsUnderConstructionEn under_construction = TranslationsUnderConstructionEn._(_root);
 	late final TranslationsMoreEn more = TranslationsMoreEn._(_root);
+	late final TranslationsTimesEn times = TranslationsTimesEn._(_root);
+	late final TranslationsLoadingEn loading = TranslationsLoadingEn._(_root);
 	late final TranslationsActionsEn actions = TranslationsActionsEn._(_root);
 	late final TranslationsValidationEn validation = TranslationsValidationEn._(_root);
+	Map<String, String> get errors => {
+		'wrong_email_password': 'Email or password incorrect',
+		'email_malformed': 'Email malformed',
+		'unknown_error': 'Unknown error',
+	};
+	late final TranslationsNameGeneratorEn name_generator = TranslationsNameGeneratorEn._(_root);
 }
 
 // Path: navigation
@@ -69,6 +81,7 @@ class TranslationsAuthEn {
 	late final TranslationsAuthLoginOrRegisterEn login_or_register = TranslationsAuthLoginOrRegisterEn._(_root);
 	late final TranslationsAuthLoginEn login = TranslationsAuthLoginEn._(_root);
 	late final TranslationsAuthRegisterEn register = TranslationsAuthRegisterEn._(_root);
+	late final TranslationsAuthDeleteAccountEn delete_account = TranslationsAuthDeleteAccountEn._(_root);
 }
 
 // Path: settings
@@ -83,17 +96,6 @@ class TranslationsSettingsEn {
 	String get logout => 'Logout';
 }
 
-// Path: home
-class TranslationsHomeEn {
-	TranslationsHomeEn._(this._root);
-
-	final Translations _root; // ignore: unused_field
-
-	// Translations
-	String get title => 'Home';
-	String get whats_for_today => 'What\'s for today?';
-}
-
 // Path: tasks
 class TranslationsTasksEn {
 	TranslationsTasksEn._(this._root);
@@ -101,11 +103,59 @@ class TranslationsTasksEn {
 	final Translations _root; // ignore: unused_field
 
 	// Translations
-	String get title => 'My Tasks';
+	String get title => 'Tasks';
+	String get today => 'Today';
+	String get overview => 'Overview';
+	String get nothing_to_do => 'Nothing to do for now, enjoy your day!';
+	String get day_off => 'You have nothing planned for tomorrow, enjoy your day!';
+	String get week_off => 'You have nothing planned for this week, try and take the time to do the stuff left behind!';
 	String get no_tasks_for_now => 'No tasks for now';
 	String get task_details => 'Task Details';
 	late final TranslationsTasksDueDatesEn due_dates = TranslationsTasksDueDatesEn._(_root);
 	late final TranslationsTasksAddTaskModalEn add_task_modal = TranslationsTasksAddTaskModalEn._(_root);
+}
+
+// Path: calendar
+class TranslationsCalendarEn {
+	TranslationsCalendarEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	String get title => 'Calendar';
+}
+
+// Path: account
+class TranslationsAccountEn {
+	TranslationsAccountEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	String get edit_profile => 'Edit Profile';
+	late final TranslationsAccountSectionsEn sections = TranslationsAccountSectionsEn._(_root);
+	late final TranslationsAccountActionsEn actions = TranslationsAccountActionsEn._(_root);
+}
+
+// Path: habits
+class TranslationsHabitsEn {
+	TranslationsHabitsEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	String get title => 'Habits';
+}
+
+// Path: under_construction
+class TranslationsUnderConstructionEn {
+	TranslationsUnderConstructionEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	String get title => 'We\'re working on it!';
+	String get description => 'This feature is not yet available, but we\'re working hard to bring it to you soon.\n\nStay tuned!';
 }
 
 // Path: more
@@ -118,6 +168,35 @@ class TranslationsMoreEn {
 	String get title => 'More';
 }
 
+// Path: times
+class TranslationsTimesEn {
+	TranslationsTimesEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	String get today => 'Today';
+	String get tomorrow => 'Tomorrow';
+	String get yesterday => 'Yesterday';
+	String get this_week => 'This week';
+	String get last_week => 'Last week';
+	String get this_month => 'This month';
+	String get last_month => 'Last month';
+	String get this_year => 'This year';
+	String get last_year => 'Last year';
+	String get all_time => 'All time';
+}
+
+// Path: loading
+class TranslationsLoadingEn {
+	TranslationsLoadingEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	String get simple => 'Loading...';
+}
+
 // Path: actions
 class TranslationsActionsEn {
 	TranslationsActionsEn._(this._root);
@@ -127,6 +206,9 @@ class TranslationsActionsEn {
 	// Translations
 	String get save => 'Save';
 	String get cancel => 'Cancel';
+	String get next => 'Next';
+	String get back => 'Back';
+	String get delete => 'Delete';
 }
 
 // Path: validation
@@ -140,6 +222,219 @@ class TranslationsValidationEn {
 	String get invalid_url => 'invalid URL';
 }
 
+// Path: name_generator
+class TranslationsNameGeneratorEn {
+	TranslationsNameGeneratorEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	List<String> get animals => [
+		'bat',
+		'owl',
+		'fox',
+		'rabbit',
+		'otter',
+		'penguin',
+		'panda',
+		'squirrel',
+		'koala',
+		'tiger',
+		'giraffe',
+		'monkey',
+		'raccoon',
+		'zebra',
+		'kangaroo',
+		'parrot',
+		'dolphin',
+		'sloth',
+		'wolf',
+		'lion',
+		'bear',
+		'eagle',
+		'elephant',
+		'leopard',
+		'cheetah',
+		'hippo',
+		'lemur',
+		'frog',
+		'chameleon',
+		'lynx',
+		'puffin',
+		'seal',
+		'falcon',
+		'orca',
+		'meerkat',
+		'hedgehog',
+		'weasel',
+		'armadillo',
+		'wombat',
+		'platypus',
+		'badger',
+		'yak',
+		'lizard',
+		'beetle',
+		'caterpillar',
+		'jaguar',
+		'buffalo',
+		'stingray',
+		'mole',
+		'donkey',
+		'toucan',
+		'flamingo',
+		'goat',
+		'alpaca',
+		'moose',
+		'peacock',
+		'rhino',
+		'gecko',
+		'turkey',
+		'hamster',
+		'otter',
+		'gorilla',
+		'walrus',
+		'vulture',
+		'stingray',
+		'newt',
+		'iguana',
+		'porcupine',
+		'python',
+		'antelope',
+		'gibbon',
+		'boar',
+		'crane',
+		'emu',
+		'pelican',
+		'hyena',
+		'heron',
+		'lynx',
+		'lamb',
+		'tortoise',
+		'shrimp',
+		'lobster',
+		'moth',
+		'clam',
+		'pufferfish',
+		'starfish',
+		'shrike',
+		'robin',
+		'quail',
+		'koala',
+		'snail',
+		'slug',
+		'owl',
+		'viper',
+		'duck',
+		'swallow',
+		'crab',
+		'llama',
+		'mongoose',
+		'kitten',
+	];
+	List<String> get adjectives => [
+		'happy',
+		'brave',
+		'cheerful',
+		'jolly',
+		'playful',
+		'bright',
+		'silly',
+		'curious',
+		'swift',
+		'bold',
+		'mighty',
+		'clever',
+		'sneaky',
+		'gentle',
+		'fuzzy',
+		'quirky',
+		'bouncy',
+		'sparkly',
+		'zippy',
+		'chirpy',
+		'glossy',
+		'snappy',
+		'shiny',
+		'dreamy',
+		'frisky',
+		'sunny',
+		'zany',
+		'wild',
+		'funky',
+		'feisty',
+		'snug',
+		'crisp',
+		'lively',
+		'sassy',
+		'witty',
+		'spunky',
+		'perky',
+		'crafty',
+		'jazzy',
+		'dapper',
+		'smiley',
+		'lucky',
+		'peppy',
+		'peachy',
+		'tidy',
+		'chilly',
+		'breezy',
+		'giddy',
+		'graceful',
+		'plucky',
+		'dizzy',
+		'spry',
+		'whimsical',
+		'nimble',
+		'chirpy',
+		'jumpy',
+		'quirky',
+		'spicy',
+		'perky',
+		'speedy',
+		'nifty',
+		'wobbly',
+		'crunchy',
+		'cranky',
+		'snazzy',
+		'peppy',
+		'bubbly',
+		'splashy',
+		'breezy',
+		'bouncy',
+		'twinkly',
+		'gleeful',
+		'squishy',
+		'wacky',
+		'zesty',
+		'snappy',
+		'jovial',
+		'feathered',
+		'prickly',
+		'whizzy',
+		'perky',
+		'whiskery',
+		'spotty',
+		'stripy',
+		'flicky',
+		'chatty',
+		'dandy',
+		'wiggly',
+		'giggly',
+		'spiffy',
+		'jumpy',
+		'perky',
+		'skippy',
+		'fluffy',
+		'chunky',
+		'puffy',
+		'loopy',
+		'pinky',
+		'spunky',
+		'fancy',
+	];
+}
+
 // Path: auth.not_logged_in
 class TranslationsAuthNotLoggedInEn {
 	TranslationsAuthNotLoggedInEn._(this._root);
@@ -148,6 +443,16 @@ class TranslationsAuthNotLoggedInEn {
 
 	// Translations
 	String get welcome => 'Welcome to Atomic Blend';
+	String get description_start => 'Atomic Blend is the first';
+	String get e2e_app => 'end-to-end encrypted app';
+	String get description_middle => 'that combines all the tools you need to manage both work and personal life in one place.\n\nFrom task management to note-taking, document writing, time tracking, movie tracking, food tracking, everything stays';
+	String get description_middle_bold => 'secure and seamless.';
+	String get description_end => 'No more juggling multiple apps—Atomic Blend brings it all together with privacy at its core, so you can focus on what truly matters.';
+	String get time_to_set_things_up => 'Time to set things up!';
+	String get set_up_start => 'To use Atomic Blend and sync your data across devices, you can choose between the cloud version or a self-hosted setup.\n\nEither way, your data is';
+	String get set_up_middle => 'end-to-end encrypted';
+	String get set_up_end => ', ensuring that only you have access to your encryption key —';
+	String get set_up_end_bold => 'not us, not anyone else.';
 	String get description => 'LifeOS is a personal life management application that helps you organize your life, achieve your goals, and improve your well-being.';
 	String get e2ee => 'We use end-to-end encryption to protect your personal data. Your data is secure and accessible only by you.';
 	String get get_started_now => 'Get started now';
@@ -167,6 +472,7 @@ class TranslationsAuthLoginOrRegisterEn {
 	String get login => 'Log in';
 	String get register => 'Register';
 	String get or => 'or';
+	String get connecting_to => 'Connecting to: ';
 }
 
 // Path: auth.login
@@ -176,15 +482,13 @@ class TranslationsAuthLoginEn {
 	final Translations _root; // ignore: unused_field
 
 	// Translations
-	String get title => 'Log in to LifeOS';
-	String get description => 'Log in to your LifeOS account to access your content.';
+	String get title => '👋 Welcome back!';
+	String get description => 'Use you email and password to log back in and access your data.';
 	String get email => 'Email';
-	String get password => 'Password';
 	String get forgot_password => 'Forgot password';
 	String get login => 'Log in';
 	String get no_account => 'No account?';
 	String get email_hint => 'Enter your email address';
-	String get password_hint => 'Enter your password';
 }
 
 // Path: auth.register
@@ -194,15 +498,27 @@ class TranslationsAuthRegisterEn {
 	final Translations _root; // ignore: unused_field
 
 	// Translations
-	String get title => 'Sign up for LifeOS';
-	String get description => 'Create a LifeOS account to start a more peaceful life now.';
-	String get email => 'Email';
-	String get password => 'Password';
+	String get email => 'What’s your email ?';
+	String get email_description => 'Your email is used only for login and password recovery purposes.';
+	String get we_never_sell => 'We will never sell your data to third parties.';
+	String get email_hint => 'email@example.com';
+	String get password => 'Choose a password';
+	String get password_hint => 'SuperSecure123!';
 	String get forgot_password => 'Forgot password';
 	String get register => 'Register';
 	String get no_account => 'No account?';
-	String get email_hint => 'Enter your email address';
-	String get password_hint => 'Enter your password';
+}
+
+// Path: auth.delete_account
+class TranslationsAuthDeleteAccountEn {
+	TranslationsAuthDeleteAccountEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	String get title => 'Delete your account';
+	String get description => 'Are you sure you want to delete your account?';
+	String get cannot_be_undone => 'This action cannot be undone.';
 }
 
 // Path: settings.app_settings
@@ -245,6 +561,27 @@ class TranslationsTasksAddTaskModalEn {
 	String get title_required_description => 'Please enter a title for your task';
 }
 
+// Path: account.sections
+class TranslationsAccountSectionsEn {
+	TranslationsAccountSectionsEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	String get account => 'Account';
+}
+
+// Path: account.actions
+class TranslationsAccountActionsEn {
+	TranslationsAccountActionsEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	String get security => 'Security & Privacy';
+	String get delete_account => 'Delete my Account';
+}
+
 // Path: settings.app_settings.selfHostedUrl
 class TranslationsSettingsAppSettingsSelfHostedUrlEn {
 	TranslationsSettingsAppSettingsSelfHostedUrlEn._(this._root);
@@ -254,7 +591,7 @@ class TranslationsSettingsAppSettingsSelfHostedUrlEn {
 	// Translations
 	String get title => 'Self-Hosted URL';
 	String get description => 'If you are using a self-hosted instance of Atomic Blend, you can enter the URL here.';
-	String get placeholder => 'Enter the URL of your self-hosted instance';
+	String get placeholder => 'Enter the URL of your instance';
 	String get not_set => 'Not set';
 }
 
@@ -264,8 +601,19 @@ extension on Translations {
 	dynamic _flatMapFunction(String path) {
 		switch (path) {
 			case 'app_name': return 'Atomic Blend';
+			case 'app_name_saas': return 'Atomic Blend Cloud';
 			case 'navigation.back': return 'Back';
 			case 'auth.not_logged_in.welcome': return 'Welcome to Atomic Blend';
+			case 'auth.not_logged_in.description_start': return 'Atomic Blend is the first';
+			case 'auth.not_logged_in.e2e_app': return 'end-to-end encrypted app';
+			case 'auth.not_logged_in.description_middle': return 'that combines all the tools you need to manage both work and personal life in one place.\n\nFrom task management to note-taking, document writing, time tracking, movie tracking, food tracking, everything stays';
+			case 'auth.not_logged_in.description_middle_bold': return 'secure and seamless.';
+			case 'auth.not_logged_in.description_end': return 'No more juggling multiple apps—Atomic Blend brings it all together with privacy at its core, so you can focus on what truly matters.';
+			case 'auth.not_logged_in.time_to_set_things_up': return 'Time to set things up!';
+			case 'auth.not_logged_in.set_up_start': return 'To use Atomic Blend and sync your data across devices, you can choose between the cloud version or a self-hosted setup.\n\nEither way, your data is';
+			case 'auth.not_logged_in.set_up_middle': return 'end-to-end encrypted';
+			case 'auth.not_logged_in.set_up_end': return ', ensuring that only you have access to your encryption key —';
+			case 'auth.not_logged_in.set_up_end_bold': return 'not us, not anyone else.';
 			case 'auth.not_logged_in.description': return 'LifeOS is a personal life management application that helps you organize your life, achieve your goals, and improve your well-being.';
 			case 'auth.not_logged_in.e2ee': return 'We use end-to-end encryption to protect your personal data. Your data is secure and accessible only by you.';
 			case 'auth.not_logged_in.get_started_now': return 'Get started now';
@@ -276,34 +624,39 @@ extension on Translations {
 			case 'auth.login_or_register.login': return 'Log in';
 			case 'auth.login_or_register.register': return 'Register';
 			case 'auth.login_or_register.or': return 'or';
-			case 'auth.login.title': return 'Log in to LifeOS';
-			case 'auth.login.description': return 'Log in to your LifeOS account to access your content.';
+			case 'auth.login_or_register.connecting_to': return 'Connecting to: ';
+			case 'auth.login.title': return '👋 Welcome back!';
+			case 'auth.login.description': return 'Use you email and password to log back in and access your data.';
 			case 'auth.login.email': return 'Email';
-			case 'auth.login.password': return 'Password';
 			case 'auth.login.forgot_password': return 'Forgot password';
 			case 'auth.login.login': return 'Log in';
 			case 'auth.login.no_account': return 'No account?';
 			case 'auth.login.email_hint': return 'Enter your email address';
-			case 'auth.login.password_hint': return 'Enter your password';
-			case 'auth.register.title': return 'Sign up for LifeOS';
-			case 'auth.register.description': return 'Create a LifeOS account to start a more peaceful life now.';
-			case 'auth.register.email': return 'Email';
-			case 'auth.register.password': return 'Password';
+			case 'auth.register.email': return 'What’s your email ?';
+			case 'auth.register.email_description': return 'Your email is used only for login and password recovery purposes.';
+			case 'auth.register.we_never_sell': return 'We will never sell your data to third parties.';
+			case 'auth.register.email_hint': return 'email@example.com';
+			case 'auth.register.password': return 'Choose a password';
+			case 'auth.register.password_hint': return 'SuperSecure123!';
 			case 'auth.register.forgot_password': return 'Forgot password';
 			case 'auth.register.register': return 'Register';
 			case 'auth.register.no_account': return 'No account?';
-			case 'auth.register.email_hint': return 'Enter your email address';
-			case 'auth.register.password_hint': return 'Enter your password';
+			case 'auth.delete_account.title': return 'Delete your account';
+			case 'auth.delete_account.description': return 'Are you sure you want to delete your account?';
+			case 'auth.delete_account.cannot_be_undone': return 'This action cannot be undone.';
 			case 'settings.title': return 'Settings';
 			case 'settings.app_settings.title': return 'App Settings';
 			case 'settings.app_settings.selfHostedUrl.title': return 'Self-Hosted URL';
 			case 'settings.app_settings.selfHostedUrl.description': return 'If you are using a self-hosted instance of Atomic Blend, you can enter the URL here.';
-			case 'settings.app_settings.selfHostedUrl.placeholder': return 'Enter the URL of your self-hosted instance';
+			case 'settings.app_settings.selfHostedUrl.placeholder': return 'Enter the URL of your instance';
 			case 'settings.app_settings.selfHostedUrl.not_set': return 'Not set';
 			case 'settings.logout': return 'Logout';
-			case 'home.title': return 'Home';
-			case 'home.whats_for_today': return 'What\'s for today?';
-			case 'tasks.title': return 'My Tasks';
+			case 'tasks.title': return 'Tasks';
+			case 'tasks.today': return 'Today';
+			case 'tasks.overview': return 'Overview';
+			case 'tasks.nothing_to_do': return 'Nothing to do for now, enjoy your day!';
+			case 'tasks.day_off': return 'You have nothing planned for tomorrow, enjoy your day!';
+			case 'tasks.week_off': return 'You have nothing planned for this week, try and take the time to do the stuff left behind!';
 			case 'tasks.no_tasks_for_now': return 'No tasks for now';
 			case 'tasks.task_details': return 'Task Details';
 			case 'tasks.due_dates.today': return 'Today';
@@ -317,11 +670,236 @@ extension on Translations {
 			case 'tasks.add_task_modal.erase': return 'Erase';
 			case 'tasks.add_task_modal.title_required': return 'Title required';
 			case 'tasks.add_task_modal.title_required_description': return 'Please enter a title for your task';
+			case 'calendar.title': return 'Calendar';
+			case 'account.edit_profile': return 'Edit Profile';
+			case 'account.sections.account': return 'Account';
+			case 'account.actions.security': return 'Security & Privacy';
+			case 'account.actions.delete_account': return 'Delete my Account';
+			case 'habits.title': return 'Habits';
+			case 'under_construction.title': return 'We\'re working on it!';
+			case 'under_construction.description': return 'This feature is not yet available, but we\'re working hard to bring it to you soon.\n\nStay tuned!';
 			case 'more.title': return 'More';
+			case 'times.today': return 'Today';
+			case 'times.tomorrow': return 'Tomorrow';
+			case 'times.yesterday': return 'Yesterday';
+			case 'times.this_week': return 'This week';
+			case 'times.last_week': return 'Last week';
+			case 'times.this_month': return 'This month';
+			case 'times.last_month': return 'Last month';
+			case 'times.this_year': return 'This year';
+			case 'times.last_year': return 'Last year';
+			case 'times.all_time': return 'All time';
+			case 'loading.simple': return 'Loading...';
 			case 'actions.save': return 'Save';
 			case 'actions.cancel': return 'Cancel';
+			case 'actions.next': return 'Next';
+			case 'actions.back': return 'Back';
+			case 'actions.delete': return 'Delete';
 			case 'validation.required': return 'Required';
 			case 'validation.invalid_url': return 'invalid URL';
+			case 'errors.wrong_email_password': return 'Email or password incorrect';
+			case 'errors.email_malformed': return 'Email malformed';
+			case 'errors.unknown_error': return 'Unknown error';
+			case 'name_generator.animals.0': return 'bat';
+			case 'name_generator.animals.1': return 'owl';
+			case 'name_generator.animals.2': return 'fox';
+			case 'name_generator.animals.3': return 'rabbit';
+			case 'name_generator.animals.4': return 'otter';
+			case 'name_generator.animals.5': return 'penguin';
+			case 'name_generator.animals.6': return 'panda';
+			case 'name_generator.animals.7': return 'squirrel';
+			case 'name_generator.animals.8': return 'koala';
+			case 'name_generator.animals.9': return 'tiger';
+			case 'name_generator.animals.10': return 'giraffe';
+			case 'name_generator.animals.11': return 'monkey';
+			case 'name_generator.animals.12': return 'raccoon';
+			case 'name_generator.animals.13': return 'zebra';
+			case 'name_generator.animals.14': return 'kangaroo';
+			case 'name_generator.animals.15': return 'parrot';
+			case 'name_generator.animals.16': return 'dolphin';
+			case 'name_generator.animals.17': return 'sloth';
+			case 'name_generator.animals.18': return 'wolf';
+			case 'name_generator.animals.19': return 'lion';
+			case 'name_generator.animals.20': return 'bear';
+			case 'name_generator.animals.21': return 'eagle';
+			case 'name_generator.animals.22': return 'elephant';
+			case 'name_generator.animals.23': return 'leopard';
+			case 'name_generator.animals.24': return 'cheetah';
+			case 'name_generator.animals.25': return 'hippo';
+			case 'name_generator.animals.26': return 'lemur';
+			case 'name_generator.animals.27': return 'frog';
+			case 'name_generator.animals.28': return 'chameleon';
+			case 'name_generator.animals.29': return 'lynx';
+			case 'name_generator.animals.30': return 'puffin';
+			case 'name_generator.animals.31': return 'seal';
+			case 'name_generator.animals.32': return 'falcon';
+			case 'name_generator.animals.33': return 'orca';
+			case 'name_generator.animals.34': return 'meerkat';
+			case 'name_generator.animals.35': return 'hedgehog';
+			case 'name_generator.animals.36': return 'weasel';
+			case 'name_generator.animals.37': return 'armadillo';
+			case 'name_generator.animals.38': return 'wombat';
+			case 'name_generator.animals.39': return 'platypus';
+			case 'name_generator.animals.40': return 'badger';
+			case 'name_generator.animals.41': return 'yak';
+			case 'name_generator.animals.42': return 'lizard';
+			case 'name_generator.animals.43': return 'beetle';
+			case 'name_generator.animals.44': return 'caterpillar';
+			case 'name_generator.animals.45': return 'jaguar';
+			case 'name_generator.animals.46': return 'buffalo';
+			case 'name_generator.animals.47': return 'stingray';
+			case 'name_generator.animals.48': return 'mole';
+			case 'name_generator.animals.49': return 'donkey';
+			case 'name_generator.animals.50': return 'toucan';
+			case 'name_generator.animals.51': return 'flamingo';
+			case 'name_generator.animals.52': return 'goat';
+			case 'name_generator.animals.53': return 'alpaca';
+			case 'name_generator.animals.54': return 'moose';
+			case 'name_generator.animals.55': return 'peacock';
+			case 'name_generator.animals.56': return 'rhino';
+			case 'name_generator.animals.57': return 'gecko';
+			case 'name_generator.animals.58': return 'turkey';
+			case 'name_generator.animals.59': return 'hamster';
+			case 'name_generator.animals.60': return 'otter';
+			case 'name_generator.animals.61': return 'gorilla';
+			case 'name_generator.animals.62': return 'walrus';
+			case 'name_generator.animals.63': return 'vulture';
+			case 'name_generator.animals.64': return 'stingray';
+			case 'name_generator.animals.65': return 'newt';
+			case 'name_generator.animals.66': return 'iguana';
+			case 'name_generator.animals.67': return 'porcupine';
+			case 'name_generator.animals.68': return 'python';
+			case 'name_generator.animals.69': return 'antelope';
+			case 'name_generator.animals.70': return 'gibbon';
+			case 'name_generator.animals.71': return 'boar';
+			case 'name_generator.animals.72': return 'crane';
+			case 'name_generator.animals.73': return 'emu';
+			case 'name_generator.animals.74': return 'pelican';
+			case 'name_generator.animals.75': return 'hyena';
+			case 'name_generator.animals.76': return 'heron';
+			case 'name_generator.animals.77': return 'lynx';
+			case 'name_generator.animals.78': return 'lamb';
+			case 'name_generator.animals.79': return 'tortoise';
+			case 'name_generator.animals.80': return 'shrimp';
+			case 'name_generator.animals.81': return 'lobster';
+			case 'name_generator.animals.82': return 'moth';
+			case 'name_generator.animals.83': return 'clam';
+			case 'name_generator.animals.84': return 'pufferfish';
+			case 'name_generator.animals.85': return 'starfish';
+			case 'name_generator.animals.86': return 'shrike';
+			case 'name_generator.animals.87': return 'robin';
+			case 'name_generator.animals.88': return 'quail';
+			case 'name_generator.animals.89': return 'koala';
+			case 'name_generator.animals.90': return 'snail';
+			case 'name_generator.animals.91': return 'slug';
+			case 'name_generator.animals.92': return 'owl';
+			case 'name_generator.animals.93': return 'viper';
+			case 'name_generator.animals.94': return 'duck';
+			case 'name_generator.animals.95': return 'swallow';
+			case 'name_generator.animals.96': return 'crab';
+			case 'name_generator.animals.97': return 'llama';
+			case 'name_generator.animals.98': return 'mongoose';
+			case 'name_generator.animals.99': return 'kitten';
+			case 'name_generator.adjectives.0': return 'happy';
+			case 'name_generator.adjectives.1': return 'brave';
+			case 'name_generator.adjectives.2': return 'cheerful';
+			case 'name_generator.adjectives.3': return 'jolly';
+			case 'name_generator.adjectives.4': return 'playful';
+			case 'name_generator.adjectives.5': return 'bright';
+			case 'name_generator.adjectives.6': return 'silly';
+			case 'name_generator.adjectives.7': return 'curious';
+			case 'name_generator.adjectives.8': return 'swift';
+			case 'name_generator.adjectives.9': return 'bold';
+			case 'name_generator.adjectives.10': return 'mighty';
+			case 'name_generator.adjectives.11': return 'clever';
+			case 'name_generator.adjectives.12': return 'sneaky';
+			case 'name_generator.adjectives.13': return 'gentle';
+			case 'name_generator.adjectives.14': return 'fuzzy';
+			case 'name_generator.adjectives.15': return 'quirky';
+			case 'name_generator.adjectives.16': return 'bouncy';
+			case 'name_generator.adjectives.17': return 'sparkly';
+			case 'name_generator.adjectives.18': return 'zippy';
+			case 'name_generator.adjectives.19': return 'chirpy';
+			case 'name_generator.adjectives.20': return 'glossy';
+			case 'name_generator.adjectives.21': return 'snappy';
+			case 'name_generator.adjectives.22': return 'shiny';
+			case 'name_generator.adjectives.23': return 'dreamy';
+			case 'name_generator.adjectives.24': return 'frisky';
+			case 'name_generator.adjectives.25': return 'sunny';
+			case 'name_generator.adjectives.26': return 'zany';
+			case 'name_generator.adjectives.27': return 'wild';
+			case 'name_generator.adjectives.28': return 'funky';
+			case 'name_generator.adjectives.29': return 'feisty';
+			case 'name_generator.adjectives.30': return 'snug';
+			case 'name_generator.adjectives.31': return 'crisp';
+			case 'name_generator.adjectives.32': return 'lively';
+			case 'name_generator.adjectives.33': return 'sassy';
+			case 'name_generator.adjectives.34': return 'witty';
+			case 'name_generator.adjectives.35': return 'spunky';
+			case 'name_generator.adjectives.36': return 'perky';
+			case 'name_generator.adjectives.37': return 'crafty';
+			case 'name_generator.adjectives.38': return 'jazzy';
+			case 'name_generator.adjectives.39': return 'dapper';
+			case 'name_generator.adjectives.40': return 'smiley';
+			case 'name_generator.adjectives.41': return 'lucky';
+			case 'name_generator.adjectives.42': return 'peppy';
+			case 'name_generator.adjectives.43': return 'peachy';
+			case 'name_generator.adjectives.44': return 'tidy';
+			case 'name_generator.adjectives.45': return 'chilly';
+			case 'name_generator.adjectives.46': return 'breezy';
+			case 'name_generator.adjectives.47': return 'giddy';
+			case 'name_generator.adjectives.48': return 'graceful';
+			case 'name_generator.adjectives.49': return 'plucky';
+			case 'name_generator.adjectives.50': return 'dizzy';
+			case 'name_generator.adjectives.51': return 'spry';
+			case 'name_generator.adjectives.52': return 'whimsical';
+			case 'name_generator.adjectives.53': return 'nimble';
+			case 'name_generator.adjectives.54': return 'chirpy';
+			case 'name_generator.adjectives.55': return 'jumpy';
+			case 'name_generator.adjectives.56': return 'quirky';
+			case 'name_generator.adjectives.57': return 'spicy';
+			case 'name_generator.adjectives.58': return 'perky';
+			case 'name_generator.adjectives.59': return 'speedy';
+			case 'name_generator.adjectives.60': return 'nifty';
+			case 'name_generator.adjectives.61': return 'wobbly';
+			case 'name_generator.adjectives.62': return 'crunchy';
+			case 'name_generator.adjectives.63': return 'cranky';
+			case 'name_generator.adjectives.64': return 'snazzy';
+			case 'name_generator.adjectives.65': return 'peppy';
+			case 'name_generator.adjectives.66': return 'bubbly';
+			case 'name_generator.adjectives.67': return 'splashy';
+			case 'name_generator.adjectives.68': return 'breezy';
+			case 'name_generator.adjectives.69': return 'bouncy';
+			case 'name_generator.adjectives.70': return 'twinkly';
+			case 'name_generator.adjectives.71': return 'gleeful';
+			case 'name_generator.adjectives.72': return 'squishy';
+			case 'name_generator.adjectives.73': return 'wacky';
+			case 'name_generator.adjectives.74': return 'zesty';
+			case 'name_generator.adjectives.75': return 'snappy';
+			case 'name_generator.adjectives.76': return 'jovial';
+			case 'name_generator.adjectives.77': return 'feathered';
+			case 'name_generator.adjectives.78': return 'prickly';
+			case 'name_generator.adjectives.79': return 'whizzy';
+			case 'name_generator.adjectives.80': return 'perky';
+			case 'name_generator.adjectives.81': return 'whiskery';
+			case 'name_generator.adjectives.82': return 'spotty';
+			case 'name_generator.adjectives.83': return 'stripy';
+			case 'name_generator.adjectives.84': return 'flicky';
+			case 'name_generator.adjectives.85': return 'chatty';
+			case 'name_generator.adjectives.86': return 'dandy';
+			case 'name_generator.adjectives.87': return 'wiggly';
+			case 'name_generator.adjectives.88': return 'giggly';
+			case 'name_generator.adjectives.89': return 'spiffy';
+			case 'name_generator.adjectives.90': return 'jumpy';
+			case 'name_generator.adjectives.91': return 'perky';
+			case 'name_generator.adjectives.92': return 'skippy';
+			case 'name_generator.adjectives.93': return 'fluffy';
+			case 'name_generator.adjectives.94': return 'chunky';
+			case 'name_generator.adjectives.95': return 'puffy';
+			case 'name_generator.adjectives.96': return 'loopy';
+			case 'name_generator.adjectives.97': return 'pinky';
+			case 'name_generator.adjectives.98': return 'spunky';
+			case 'name_generator.adjectives.99': return 'fancy';
 			default: return null;
 		}
 	}

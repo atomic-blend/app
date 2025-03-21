@@ -1,4 +1,5 @@
 import 'package:app/entities/tasks/tasks.entity.dart';
+import 'package:app/entities/user/user.entity.dart';
 import 'package:app/services/user.service.dart';
 import 'package:app/utils/api_client.dart';
 
@@ -18,7 +19,10 @@ class TasksService {
     }
   }
 
-  Future<bool> createTask(TaskEntity task) async {
+  Future<bool> createTask(UserEntity user, TaskEntity task) async {
+    if (encryptionService == null) {
+      await UserService.refreshToken(user);
+    }
     final encryptedTask =
         await task.encrypt(encryptionService: encryptionService!);
     final result = await globalApiClient.post('/tasks', data: encryptedTask);

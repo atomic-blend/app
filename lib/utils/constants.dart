@@ -1,11 +1,21 @@
+import 'package:app/blocs/app/app.bloc.dart';
 import 'package:app/blocs/auth/auth.bloc.dart';
-import 'package:app/components/buttons/sync_status_button.dart';
+import 'package:app/components/app/bottom_navigation.dart';
+import 'package:app/components/app/side_menu_item.dart';
+import 'package:app/components/buttons/account_avatar_with_sync_status.dart';
+import 'package:app/components/buttons/task_item.dart';
+import 'package:app/entities/tasks/tasks.entity.dart';
 import 'package:app/i18n/strings.g.dart';
 import 'package:app/main.dart';
+import 'package:app/pages/calendar/calendar.dart';
+import 'package:app/pages/habits/habits.dart';
 import 'package:app/pages/more_apps/more_apps.dart';
 import 'package:app/pages/tasks/add_task_modal.dart';
-import 'package:app/pages/tasks/tasks.dart';
+import 'package:app/pages/tasks/filtered_view.dart';
+import 'package:app/pages/tasks/overview.dart';
+import 'package:app/utils/exntensions/date_time_extension.dart';
 import 'package:app/utils/shortcuts.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:icons_plus/icons_plus.dart';
@@ -23,13 +33,15 @@ class Constants {
 
 @immutable
 class Corners {
-  late final double xxs = 4;
-  late final double xs = 8;
-  late final double sm = 16;
-  late final double md = 24;
-  late final double lg = 32;
-  late final double xl = 48;
-  late final double xxl = 64;
+  late final double none = 0;
+  late final double xxs = 2;
+  late final double xs = 4;
+  late final double sm = 8;
+  late final double md = 12;
+  late final double lg = 16;
+  late final double xl = 28;
+  late final double xxl = 36;
+  late final double full = 1000;
 }
 
 @immutable
@@ -78,31 +90,37 @@ class Ads {
 @immutable
 class Navigation {
   /// Appbar configuration.
-  List<AppBar?> appbars(BuildContext context) => [
+  List<AppBar?> appbars(BuildContext context, {Widget? leading}) => [
         AppBar(
           title: Row(
+            mainAxisSize: MainAxisSize.min,
             children: [
-              Text(
-                context.t.tasks.title,
-                style: getTextTheme(context).titleLarge!.copyWith(
-                      fontWeight: FontWeight.bold,
-                    ),
-              )
+              BlocBuilder<AppCubit, AppState>(builder: (context, appState) {
+                var selectedSideItem = sideMenuItems(
+                    context)[appState.pageIndex]![appState.selectedTabIndex];
+                return Text(
+                  selectedSideItem.title,
+                  style: getTextTheme(context).headlineSmall!.copyWith(
+                        fontWeight: FontWeight.bold,
+                      ),
+                );
+              })
             ],
           ),
           actions: [
             Padding(
               padding: EdgeInsets.only(right: $constants.insets.sm),
-              child: const SyncStatusButton(),
+              child: const AccountAvatarWithSyncStatus(),
             )
           ],
         ),
         AppBar(
             title: Row(
+              mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
-                  context.t.more.title,
-                  style: getTextTheme(context).titleLarge!.copyWith(
+                  context.t.calendar.title,
+                  style: getTextTheme(context).headlineSmall!.copyWith(
                         fontWeight: FontWeight.bold,
                       ),
                 )
@@ -113,7 +131,54 @@ class Navigation {
                 if (authState is LoggedIn) {
                   return Padding(
                     padding: EdgeInsets.only(right: $constants.insets.sm),
-                    child: const SyncStatusButton(),
+                    child: const AccountAvatarWithSyncStatus(),
+                  );
+                }
+                return Container();
+              })
+            ]),
+        null,
+        AppBar(
+            title: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  context.t.habits.title,
+                  style: getTextTheme(context).headlineSmall!.copyWith(
+                        fontWeight: FontWeight.bold,
+                      ),
+                )
+              ],
+            ),
+            actions: [
+              BlocBuilder<AuthBloc, AuthState>(builder: (context, authState) {
+                if (authState is LoggedIn) {
+                  return Padding(
+                    padding: EdgeInsets.only(right: $constants.insets.sm),
+                    child: const AccountAvatarWithSyncStatus(),
+                  );
+                }
+                return Container();
+              })
+            ]),
+        AppBar(
+            title: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  context.t.more.title,
+                  style: getTextTheme(context).headlineSmall!.copyWith(
+                        fontWeight: FontWeight.bold,
+                      ),
+                )
+              ],
+            ),
+            actions: [
+              BlocBuilder<AuthBloc, AuthState>(builder: (context, authState) {
+                if (authState is LoggedIn) {
+                  return Padding(
+                    padding: EdgeInsets.only(right: $constants.insets.sm),
+                    child: const AccountAvatarWithSyncStatus(),
                   );
                 }
                 return Container();
@@ -122,45 +187,142 @@ class Navigation {
       ];
 
   /// Bottom navigation configuration.
-  List<Widget> bottomNavigationScreens() => [
-        const Tasks(),
+  List<Widget?> bottomNavigationScreens() => [
+        const OverviewTasks(),
+        const Calendar(),
+        null,
+        const Habits(),
         const MoreApps(),
       ];
 
   List<Widget?> floatingActionButtons(BuildContext context) => [
-        FloatingActionButton(
-          onPressed: () {
+        // FloatingActionButton(
+        //   onPressed: () {
+        //     showModalBottomSheet(
+        //         isScrollControlled: true,
+        //         context: context,
+        //         builder: (context) => const AddTaskModal());
+        //   },
+        //   shape: RoundedRectangleBorder(
+        //     borderRadius: BorderRadius.circular($constants.corners.xxl),
+        //   ),
+        //   elevation: 1,
+        //   backgroundColor: getTheme(context).surfaceContainerHighest,
+        //   child: const Icon(LineAwesome.plus_solid),
+        // ),
+        null,
+        null,
+        null,
+        null,
+        null
+      ];
+
+  List<List<SideMenuItem>?> sideMenuItems(BuildContext context) => [
+        [
+          SideMenuItem(
+            title: context.t.tasks.overview,
+            icon: CupertinoIcons.collections,
+            color: Colors.grey[800]!,
+            iconContainer: true,
+            body: const OverviewTasks(),
+            onTap: () {
+              context.read<AppCubit>().changeSelectedTabIndex(index: 0);
+            },
+          ),
+          SideMenuItem(
+            title: context.t.tasks.today,
+            icon: CupertinoIcons.calendar_today,
+            color: getTheme(context).primary,
+            iconContainer: true,
+            body: FilteredTaskView(
+              filter: (List<TaskEntity> tasks) {
+                final List<TaskItem> widgets = [];
+                for (final task in tasks) {
+                  if (task.completed != true &&
+                      task.startDate != null &&
+                      task.startDate!.isToday()) {
+                    widgets.add(TaskItem(task: task));
+                  }
+                }
+                return widgets;
+              },
+            ),
+            onTap: () {
+              context.read<AppCubit>().changeSelectedTabIndex(index: 1);
+            },
+          )
+        ],
+        null,
+        null,
+        null,
+        null
+      ];
+
+  List<Widget> bottomNavigationItems(BuildContext context) => [
+        BottomNavigationItem(
+          key: const Key("today"),
+          icon: const Icon(
+            LineAwesome.home_solid,
+            size: 25,
+          ),
+          cupertinoIcon: const Icon(
+            CupertinoIcons.checkmark_square,
+            size: 25,
+          ),
+          label: context.t.tasks.title,
+        ),
+        BottomNavigationItem(
+          key: const Key("calendar"),
+          icon: const Icon(
+            LineAwesome.calendar,
+            size: 25,
+          ),
+          cupertinoIcon: const Icon(
+            CupertinoIcons.calendar,
+            size: 25,
+          ),
+          label: context.t.calendar.title,
+        ),
+        BottomNavigationItem(
+          icon: Icon(
+            LineAwesome.plus_solid,
+            color: getTheme(context).primary,
+          ),
+          cupertinoIcon: Icon(
+            CupertinoIcons.plus_circle_fill,
+            color: getTheme(context).secondary,
+          ),
+          label: "Add",
+          onTap: (index) {
             showModalBottomSheet(
                 isScrollControlled: true,
                 context: context,
                 builder: (context) => const AddTaskModal());
           },
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular($constants.corners.xxl),
-          ),
-          elevation: 1,
-          backgroundColor: getTheme(context).surfaceContainerHighest,
-          child: const Icon(LineAwesome.plus_solid),
         ),
-        null
-      ];
-
-  List<NavigationDestination> bottomNavigationItems(BuildContext context) => [
-        const NavigationDestination(
-          key: Key("tasks"),
-          icon: Icon(
-            LineAwesome.check_circle,
+        BottomNavigationItem(
+          key: const Key("habits"),
+          icon: const Icon(
+            LineAwesome.bolt_solid,
             size: 25,
           ),
-          label: "tasks",
-        ),
-        const NavigationDestination(
-          key: Key("more"),
-          icon: Icon(
-            LineAwesome.ellipsis_h_solid,
+          cupertinoIcon: const Icon(
+            CupertinoIcons.bolt_fill,
             size: 25,
           ),
-          label: "more",
+          label: context.t.habits.title,
+        ),
+        BottomNavigationItem(
+          key: const Key("more"),
+          icon: const Icon(
+            CupertinoIcons.ellipsis_circle_fill,
+            size: 25,
+          ),
+          cupertinoIcon: const Icon(
+            CupertinoIcons.ellipsis_circle_fill,
+            size: 25,
+          ),
+          label: context.t.more.title,
         ),
       ];
 }

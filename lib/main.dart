@@ -2,10 +2,8 @@ import 'dart:async';
 import 'package:app/blocs/app/app.bloc.dart';
 import 'package:app/blocs/auth/auth.bloc.dart';
 import 'package:app/blocs/tasks/tasks.bloc.dart';
-import 'package:app/firebase_options.dart';
 import 'package:app/i18n/strings.g.dart';
 import 'package:app/utils/env/env.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -32,9 +30,6 @@ FutureOr<void> main() async {
 
   LocaleSettings.useDeviceLocale();
 
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
   runApp(MultiBlocProvider(
       providers: [
         BlocProvider(create: (context) => AppCubit()),

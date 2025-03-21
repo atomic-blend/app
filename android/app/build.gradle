@@ -1,8 +1,5 @@
 plugins {
     id "com.android.application"
-    // START: FlutterFire Configuration
-    id 'com.google.gms.google-services'
-    // END: FlutterFire Configuration
     id "kotlin-android"
     id "dev.flutter.flutter-gradle-plugin"
 }
@@ -33,12 +30,14 @@ android {
     productFlavors {
         dev {
             dimension "flavor-type"
-            applicationId "fr.atomic-blend.app-dev"
+            applicationId "fr.atomicblend.appdev"
+            namespace "fr.atomicblend.appdev"
             resValue "string", "app_name", "Atomic Blend - Dev"
         }
         prod {
             dimension "flavor-type"
-            applicationId "fr.atomic-blend.app"
+            applicationId "fr.atomicblend.app"
+            namespace "fr.atomicblend.app"
             resValue "string", "app_name", "Atomic Blend"
         }
     }

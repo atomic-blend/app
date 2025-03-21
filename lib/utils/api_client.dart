@@ -52,13 +52,14 @@ class ApiClient {
         },
         onError: (error, handler) async {
           try {
-            if (error.response?.statusCode == 401) {
+            if (error.response?.statusCode == 401 &&
+                !['/auth/login'].contains(error.requestOptions.path)) {
               final userDataRaw = prefs?.getString('user');
               final userData = json.decode(userDataRaw!);
               final user = UserEntity.fromJson(userData);
               final newToken = await UserService.refreshToken(user);
               idToken = newToken;
-              setDioAuthHeader(newToken!);
+              setIdToken(newToken!);
               final opts = Options(
                 extra: error.requestOptions.extra,
                 method: error.requestOptions.method,
@@ -84,7 +85,7 @@ class ApiClient {
             }
             return handler.next(error);
           } catch (e) {
-            // TODO
+            return handler.next(error);
           }
         },
       ),
@@ -102,13 +103,22 @@ class ApiClient {
     }
   }
 
-  setDioAuthHeader(String idToken) {
+  setIdToken(String idToken) {
     _dio.options.headers['Authorization'] = 'Bearer $idToken';
   }
 
   static Future<bool> setSelfHostedRestApiUrl(String url) async {
     bool? result = await prefs?.setString('self_hosted_rest_api_url', url);
     return result ?? false;
+  }
+
+  static String? getSelfHostedRestApiUrl() {
+    String? selfHostedRestApiUrl = prefs?.getString('self_hosted_rest_api_url');
+    if (selfHostedRestApiUrl == null || selfHostedRestApiUrl.isEmpty) {
+      return null;
+    } else {
+      return selfHostedRestApiUrl;
+    }
   }
 
   get(String path,

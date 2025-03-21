@@ -1,7 +1,10 @@
 import 'package:app/blocs/tasks/tasks.bloc.dart';
+import 'package:app/components/forms/ab_checkbox.dart';
 import 'package:app/entities/tasks/tasks.entity.dart';
 import 'package:app/pages/tasks/task_detail.dart';
 import 'package:app/utils/constants.dart';
+import 'package:app/utils/exntensions/date_time_extension.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -38,33 +41,51 @@ class TaskItem extends StatelessWidget {
             ),
           )
         ]),
-        child: GestureDetector(
-          child: Row(
-            mainAxisSize: MainAxisSize.max,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Checkbox(
-                  value: task.completed ?? false,
-                  onChanged: (value) {
-                    task.completed = value!;
-                    context.read<TasksBloc>().add(EditTask(task));
-                  }),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    task.title,
-                  ),
-                  if (task.description != null) Text(task.description!)
-                ],
-              ),
-              const Spacer(),
-              if (task.startDate != null)
-                Padding(
-                  padding: EdgeInsets.only(right: $constants.insets.md),
-                  child: Text(Jiffy.parseFromDateTime(task.startDate!).MMMd),
+        child: Padding(
+          padding: EdgeInsets.symmetric(vertical: $constants.insets.xxs),
+          child: GestureDetector(
+            child: Row(
+              mainAxisSize: MainAxisSize.max,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                ABCheckbox(
+                    value: task.completed ?? false,
+                    onChanged: (value) {
+                      task.completed = value!;
+                      context.read<TasksBloc>().add(EditTask(task));
+                    }),
+                SizedBox(
+                  width: $constants.insets.xs,
                 ),
-            ],
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      task.title,
+                    ),
+                    if (task.description != null) Text(task.description!)
+                  ],
+                ),
+                const Spacer(),
+                if (task.startDate != null && task.startDate!.isDayDate())
+                  Padding(
+                    padding: EdgeInsets.only(right: $constants.insets.xxs),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        const Icon(
+                          CupertinoIcons.calendar,
+                          size: 12,
+                        ),
+                        SizedBox(
+                          width: $constants.insets.xxs,
+                        ),
+                        Text(Jiffy.parseFromDateTime(task.startDate!).MMMd),
+                      ],
+                    ),
+                  ),
+              ],
+            ),
           ),
         ),
       ),

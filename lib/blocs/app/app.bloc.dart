@@ -30,6 +30,12 @@ class AppCubit extends HydratedCubit<AppState> {
         ),
       );
 
+  void changeSelectedTabIndex({required int index}) => emit(
+        state.copyWith(
+          selectedTabIndex: index,
+        ),
+      );
+
   void completeIntroduction() => emit(
         state.copyWith(
           isIntroCompleted: true,

@@ -23,7 +23,8 @@ class TaskEntity with _$TaskEntity {
     'createdAt',
     'updatedAt',
     'user',
-    'start_date',
+    'startDate',
+    'endDate',
     'completed'
   ];
 
@@ -37,16 +38,16 @@ class TaskEntity with _$TaskEntity {
 
   Future<Map<String, dynamic>> encrypt(
       {required EncryptionService encryptionService}) async {
-    Map<String, dynamic> encryptedData = {};
-
-    for (var entry in toJson().entries) {
-      if (nonEncryptedFields.contains(entry.key)) {
-        encryptedData[entry.key] = entry.value;
-      } else {
-        encryptedData[entry.key] =
-            await encryptionService.encryptJson(entry.value);
-      }
-    }
+    Map<String, dynamic> encryptedData = {
+      'id': id,
+      'title': await encryptionService.encryptJson(title),
+      'description': await encryptionService.encryptJson(description),
+      'createdAt': createdAt?.toUtc().toIso8601String(),
+      'updatedAt': updatedAt?.toUtc().toIso8601String(),
+      'startDate': startDate?.toUtc().toIso8601String(),
+      'endDate': endDate?.toUtc().toIso8601String(),
+      'completed': completed
+    };
     return encryptedData;
   }
 

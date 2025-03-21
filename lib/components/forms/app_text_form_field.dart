@@ -28,7 +28,8 @@ class AppTextFormField extends StatefulWidget {
       this.validator,
       this.autofocus,
       this.backgroundColor,
-      this.height, this.textStyle});
+      this.height,
+      this.textStyle});
 
   final TextEditingController? controller;
   final FocusNode? focusNode;
@@ -91,14 +92,8 @@ class _AppTextFormFieldState extends State<AppTextFormField> {
             ),
           Stack(
             children: [
-              Container(
+              SizedBox(
                 height: widget.height,
-                decoration: BoxDecoration(
-                  color: widget.backgroundColor ??
-                      getTheme(context).surfaceContainerHigh,
-                  borderRadius: BorderRadius.circular(
-                      widget.borderRadius ?? $constants.corners.xs),
-                ),
                 child: TextFormField(
                   validator: widget.validator,
                   autofocus: widget.autofocus ?? false,
@@ -117,12 +112,15 @@ class _AppTextFormFieldState extends State<AppTextFormField> {
                   focusNode: widget.focusNode,
                   initialValue: widget.value,
                   keyboardType: widget.keyboardType,
-                  style: widget.textStyle ?? getTextTheme(context).bodyMedium!.copyWith(
-                      color: widget.textColor ?? getTheme(context).primary),
+                  style: widget.textStyle ??
+                      getTextTheme(context).bodyMedium!.copyWith(
+                          color: widget.textColor ?? getTheme(context).primary),
                   decoration: InputDecoration(
+                    fillColor: widget.backgroundColor,
                     hintText: widget.hintText,
                     hintStyle: getTextTheme(context).bodyMedium!.copyWith(
-                        color: widget.textColor ?? getTheme(context).primary),
+                          color: widget.textColor,
+                        ),
                     isDense: true,
                     border: OutlineInputBorder(
                       borderSide: BorderSide.none,
