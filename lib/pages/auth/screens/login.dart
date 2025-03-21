@@ -12,8 +12,9 @@ import 'package:icons_plus/icons_plus.dart';
 
 class Login extends StatefulWidget {
   final VoidCallback onAuthSuccess;
-  const Login({super.key, this.cancelCallback, required this.onAuthSuccess});
+  const Login({super.key, this.cancelCallback, required this.onAuthSuccess, this.errorMessage});
   final VoidCallback? cancelCallback;
+  final String? errorMessage;
 
   @override
   State<Login> createState() => _LoginState();
@@ -23,7 +24,6 @@ class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
   late AnimationController _animationController;
   final _animationDuration = const Duration(milliseconds: 250);
   final TextEditingController _emailController = TextEditingController();
-  String? _errorMessage;
   final TextEditingController _passwordController = TextEditingController();
 
   @override
@@ -44,11 +44,6 @@ class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
   Widget build(BuildContext context) {
     return BlocListener<AuthBloc, AuthState>(
       listener: (BuildContext context, AuthState state) async {
-        if (state is AuthError) {
-          setState(() {
-            _errorMessage = state.message;
-          });
-        }
         if (state is LoggedIn) {
           _animationController.reverseDuration = const Duration(
             milliseconds: 500,
@@ -146,7 +141,7 @@ class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
                           obscureText: true,
                         ),
                       ),
-                      if (_errorMessage != null) ...[
+                      if (widget.errorMessage != null) ...[
                         SizedBox(
                           height: $constants.insets.xs,
                         ),
@@ -156,7 +151,7 @@ class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
                           child: SizedBox(
                             width: getSize(context).width * 0.9,
                             child: Text(
-                              context.t.errors[_errorMessage] ??
+                              context.t.errors[widget.errorMessage] ??
                                   context.t.errors["unknown_error"]!,
                               style: getTextTheme(context)
                                   .labelSmall!
