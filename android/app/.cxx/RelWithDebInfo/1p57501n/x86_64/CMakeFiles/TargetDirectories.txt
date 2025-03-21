@@ -1,0 +1,2 @@
+/Users/brandonguigo/workspace/atomic-blend/app/android/app/.cxx/RelWithDebInfo/1p57501n/x86_64/CMakeFiles/edit_cache.dir
+/Users/brandonguigo/workspace/atomic-blend/app/android/app/.cxx/RelWithDebInfo/1p57501n/x86_64/CMakeFiles/rebuild_cache.dir

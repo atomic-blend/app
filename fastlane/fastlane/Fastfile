@@ -63,16 +63,16 @@ platform :android do
 
     lane :build_beta do
         Dir.chdir("..") do
-            sh('fvm flutter build appbundle --flavor prod --release -t lib/main_prod.dart')
+            sh('fvm flutter build appbundle --flavor prod --release -t lib/main_prod.dart --dart-define APP_ENV=prod')
             Dir.chdir("..") do
-              sh('zip -r build/app/outputs/bundle/prodRelease/native-debug-symbols.zip build/app/intermediates/merged_native_libs/prodRelease/mergeProdReleaseNativeLibs/out/lib/*')
+              sh('zip -r build/app/outputs/bundle/prodRelease/native-debug-symbols.zip build/app/intermediates/merged_native_libs/prodRelease/out/lib/*')
             end
         end
       end
 
     lane :upload_beta do
         upload_to_play_store(
-            package_name: "fr.lifeos.app",
+            package_name: "fr.atomicblend.app",
             track: "alpha",
             json_key: "/Users/brandonguigo/playstore_key.json",
             aab: "../build/app/outputs/bundle/prodRelease/app-prod-release.aab",
