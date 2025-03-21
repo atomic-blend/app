@@ -248,7 +248,6 @@ class Navigation {
               },
             ),
             onTap: () {
-              print("overview");
               context.read<AppCubit>().changeSelectedTabIndex(index: 1);
             },
           )

@@ -4,10 +4,11 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
-class LoadingCity extends StatelessWidget {
+class LoadingAnimated extends StatelessWidget {
   final double? imageWidth;
   final String? title;
-  const LoadingCity({super.key, this.imageWidth, this.title});
+  final String? animationPath;
+  const LoadingAnimated({super.key, this.imageWidth, this.title, this.animationPath});
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +21,7 @@ class LoadingCity extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             Lottie.asset(
-              'assets/animations/loading-city.json',
+              animationPath ?? 'assets/animations/loading-city.json',
               width: imageWidth ?? getSize(context).width * 0.5,
             ),
             if (title != null)

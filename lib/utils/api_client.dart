@@ -52,7 +52,6 @@ class ApiClient {
         },
         onError: (error, handler) async {
           try {
-            print(error.requestOptions.path);
             if (error.response?.statusCode == 401 &&
                 !['/auth/login'].contains(error.requestOptions.path)) {
               final userDataRaw = prefs?.getString('user');

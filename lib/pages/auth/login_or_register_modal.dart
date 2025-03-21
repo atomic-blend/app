@@ -6,7 +6,6 @@ import 'package:app/pages/auth/screens/login_or_register.dart';
 import 'package:app/pages/auth/screens/register_email.dart';
 import 'package:app/pages/auth/screens/register_password.dart';
 import 'package:app/pages/auth/screens/welcome_screen.dart';
-import 'package:app/utils/constants.dart';
 import 'package:app/utils/shortcuts.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -35,7 +34,7 @@ class _LoginOrRegisterModalState extends State<LoginOrRegisterModal> {
       },
       child: BlocBuilder<AuthBloc, AuthState>(builder: (context, authState) {
         if (authState is Loading) {
-          return LoadingCity(
+          return LoadingAnimated(
             imageWidth: getSize(context).width * 0.6,
             title: context.t.loading.simple,
           );

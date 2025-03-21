@@ -3,7 +3,6 @@ import 'package:app/components/buttons/primary_button_square.dart';
 import 'package:app/i18n/strings.g.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:icons_plus/icons_plus.dart';
 
 import '../../utils/constants.dart';
 import '../../utils/shortcuts.dart';
