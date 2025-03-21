@@ -40,9 +40,16 @@ class _AccountState extends State<Account> {
                         horizontal: $constants.insets.sm),
                     child: Row(
                       children: [
-                        const Icon(CupertinoIcons.arrow_left),
+                        GestureDetector(
+                            onTap: () => Navigator.of(context).pop(),
+                            child: const Icon(CupertinoIcons.arrow_left)),
                         const Spacer(),
-                        Text(context.t.settings.logout)
+                        GestureDetector(
+                            onTap: () {
+                              context.read<AuthBloc>().add(const Logout());
+                              Navigator.of(context).pop();
+                            },
+                            child: Text(context.t.settings.logout))
                       ],
                     ),
                   ),

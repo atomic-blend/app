@@ -33,8 +33,8 @@ platform :ios do
   lane :upload_beta do
      upload_to_testflight(
      api_key_path: "/Users/brandonguigo/appstore_connect_api_key.json",
-     app_identifier: "fr.lifeos.app",
-     ipa: "../build/ios/ipa/LifeOS.ipa",
+     app_identifier: "fr.atomicblend.app",
+     ipa: "../build/ios/ipa/Atomic Blend.ipa",
      distribute_external: true,
      notify_external_testers: true,
      submit_beta_review: true,

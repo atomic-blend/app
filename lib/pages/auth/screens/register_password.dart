@@ -11,9 +11,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:icons_plus/icons_plus.dart';
 
 class RegisterPassword extends StatefulWidget {
-  const RegisterPassword({super.key, this.cancelCallback, required this.email});
+  const RegisterPassword({super.key, this.cancelCallback, required this.email, required this.onAuthSuccess});
   final String email;
   final VoidCallback? cancelCallback;
+  final VoidCallback onAuthSuccess;
 
   @override
   State<RegisterPassword> createState() => _RegisterPasswordState();
@@ -45,6 +46,7 @@ class _RegisterPasswordState extends State<RegisterPassword>
       listener: (BuildContext context, AuthState state) {
         if (state is LoggedIn) {
           if (!context.mounted) return;
+          widget.onAuthSuccess();
           Navigator.pop(context);
         }
       },

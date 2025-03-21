@@ -6,7 +6,8 @@ import 'package:app/pages/auth/screens/welcome_screen.dart';
 import 'package:flutter/material.dart';
 
 class LoginOrRegisterModal extends StatefulWidget {
-  const LoginOrRegisterModal({super.key});
+  final VoidCallback onAuthSuccess;
+  const LoginOrRegisterModal({super.key, required this.onAuthSuccess});
 
   @override
   State<LoginOrRegisterModal> createState() => _LoginOrRegisterModalState();
@@ -30,6 +31,7 @@ class _LoginOrRegisterModalState extends State<LoginOrRegisterModal> {
         );
       case 2:
         return Login(
+          onAuthSuccess: widget.onAuthSuccess,
           cancelCallback: () {
             setState(() {
               _step = 1;
@@ -51,7 +53,7 @@ class _LoginOrRegisterModalState extends State<LoginOrRegisterModal> {
           },
         );
       case 4:
-        return RegisterPassword(email: email!);
+        return RegisterPassword(onAuthSuccess: widget.onAuthSuccess,email: email!);
     }
     return Container();
   }

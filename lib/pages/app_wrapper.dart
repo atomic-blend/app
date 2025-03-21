@@ -68,7 +68,11 @@ class _AppWrapperState extends State<AppWrapper> {
               isDismissible: false,
               isScrollControlled: true,
               context: context,
-              builder: (context) => const LoginOrRegisterModal(),
+              builder: (context) => LoginOrRegisterModal(
+                onAuthSuccess: () => setState(() {
+                  _isLoginModalVisible = false;
+                }),
+              ),
             );
             setState(() {
               _isLoginModalVisible = true;
