@@ -138,6 +138,22 @@ class _AppWrapperState extends State<AppWrapper> {
               ),
             ),
 
+            // Overlay to detect taps outside the menu (only visible when menu is open)
+            if (_isSideMenuOpened)
+              Positioned.fill(
+                left: _sideMenuWidth,
+                child: GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      _isSideMenuOpened = false;
+                    });
+                  },
+                  child: Container(
+                    color: Colors.transparent,
+                  ),
+                ),
+              ),
+
             // Side menu
             if (menuItems[appState.pageIndex] != null)
               AnimatedContainer(
