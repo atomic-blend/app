@@ -11,9 +11,15 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:icons_plus/icons_plus.dart';
 
 class RegisterPassword extends StatefulWidget {
-  const RegisterPassword({super.key, this.cancelCallback, required this.email, required this.onAuthSuccess});
+  const RegisterPassword(
+      {super.key,
+      this.cancelCallback,
+      required this.email,
+      required this.onAuthSuccess, this.onPasswordUpdate, this.password});
   final String email;
+  final String? password;
   final VoidCallback? cancelCallback;
+  final Function(String)? onPasswordUpdate;
   final VoidCallback onAuthSuccess;
 
   @override
@@ -28,6 +34,7 @@ class _RegisterPasswordState extends State<RegisterPassword>
 
   @override
   initState() {
+    _passwordController.text = widget.password ?? '';
     _animationController = AnimationController(
       vsync: this,
     );
@@ -126,6 +133,11 @@ class _RegisterPasswordState extends State<RegisterPassword>
                               controller: _passwordController,
                               hintText: context.t.auth.register.password_hint,
                               obscureText: true,
+                              onChange: () {
+                                if (widget.onPasswordUpdate != null) {
+                                  widget.onPasswordUpdate!(_passwordController.text);
+                                }
+                              },
                             ),
                           ),
                         ),

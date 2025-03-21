@@ -11,7 +11,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:icons_plus/icons_plus.dart';
 
 class RegisterEmail extends StatefulWidget {
-  const RegisterEmail({super.key, this.cancelCallback, required this.nextStepCallback});
+  const RegisterEmail(
+      {super.key,
+      this.cancelCallback,
+      required this.nextStepCallback,
+      this.email});
+  final String? email;
   final VoidCallback? cancelCallback;
   final Function(String) nextStepCallback;
 
@@ -27,6 +32,7 @@ class _RegisterEmailState extends State<RegisterEmail>
 
   @override
   initState() {
+    _emailController.text = widget.email ?? '';
     _animationController = AnimationController(
       vsync: this,
     );

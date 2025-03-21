@@ -15,6 +15,7 @@ class LoginOrRegisterModal extends StatefulWidget {
 
 class _LoginOrRegisterModalState extends State<LoginOrRegisterModal> {
   String? email;
+  String? password;
   int _step = 0;
   @override
   Widget build(BuildContext context) {
@@ -40,7 +41,8 @@ class _LoginOrRegisterModalState extends State<LoginOrRegisterModal> {
         );
       case 3:
         return RegisterEmail(
-          nextStepCallback: (String newEmail){
+          email: email,
+          nextStepCallback: (String newEmail) {
             setState(() {
               email = newEmail;
               _step = 4;
@@ -53,7 +55,21 @@ class _LoginOrRegisterModalState extends State<LoginOrRegisterModal> {
           },
         );
       case 4:
-        return RegisterPassword(onAuthSuccess: widget.onAuthSuccess,email: email!);
+        return RegisterPassword(
+          password: password,
+          onAuthSuccess: widget.onAuthSuccess,
+          onPasswordUpdate: (newPwd) {
+            setState(() {
+              password = newPwd;
+            });
+          },
+          email: email!,
+          cancelCallback: () {
+            setState(() {
+              _step = 3;
+            });
+          },
+        );
     }
     return Container();
   }
