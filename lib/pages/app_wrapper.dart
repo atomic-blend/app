@@ -98,42 +98,74 @@ class _AppWrapperState extends State<AppWrapper> {
         return Stack(
           children: [
             // Main content
-            AnimatedContainer(
-              duration: const Duration(milliseconds: 300),
-              curve: Curves.easeInOut,
-              transform: Matrix4.translationValues(
-                  _isSideMenuOpened ? _sideMenuWidth : 0, 0, 0),
-              child: Scaffold(
-                floatingActionButton: state.user != null
-                    ? floattingActionsButtons.elementAt(appState.pageIndex)
-                    : null,
-                floatingActionButtonLocation:
-                    FloatingActionButtonLocation.endFloat,
-                backgroundColor: getTheme(context).surface,
-                appBar: appBar,
-                body: body!,
-                bottomNavigationBar: BottomNavigation(
-                  destinations: navItems,
-                  currentPageIndex: appState.pageIndex,
-                  onTap: (index) {
-                    context.read<AppCubit>().changePageIndex(index: index);
-                  },
+            GestureDetector(
+              onHorizontalDragEnd: (details) {
+                // Right swipe to open menu
+                if (details.primaryVelocity! > 0 && !_isSideMenuOpened) {
+                  setState(() {
+                    _isSideMenuOpened = true;
+                  });
+                }
+                // Left swipe to close menu
+                else if (details.primaryVelocity! < 0 && _isSideMenuOpened) {
+                  setState(() {
+                    _isSideMenuOpened = false;
+                  });
+                }
+              },
+              child: AnimatedContainer(
+                duration: const Duration(milliseconds: 300),
+                curve: Curves.easeInOut,
+                transform: Matrix4.translationValues(
+                    _isSideMenuOpened ? _sideMenuWidth : 0, 0, 0),
+                child: Scaffold(
+                  floatingActionButton: state.user != null
+                      ? floattingActionsButtons.elementAt(appState.pageIndex)
+                      : null,
+                  floatingActionButtonLocation:
+                      FloatingActionButtonLocation.endFloat,
+                  backgroundColor: getTheme(context).surface,
+                  appBar: appBar,
+                  body: body!,
+                  bottomNavigationBar: BottomNavigation(
+                    destinations: navItems,
+                    currentPageIndex: appState.pageIndex,
+                    onTap: (index) {
+                      context.read<AppCubit>().changePageIndex(index: index);
+                    },
+                  ),
                 ),
               ),
             ),
 
-            // Side menu
-            if (menuItems[appState.pageIndex] != null) 
-            AnimatedContainer(
-              duration: const Duration(milliseconds: 300),
-              curve: Curves.easeInOut,
-              width: _sideMenuWidth,
-              transform: Matrix4.translationValues(
-                  _isSideMenuOpened ? 0 : -_sideMenuWidth, 0, 0),
-              child: SideMenu(
-                items: menuItems[appState.pageIndex]!,
+            // Overlay to detect taps outside the menu (only visible when menu is open)
+            if (_isSideMenuOpened)
+              Positioned.fill(
+                left: _sideMenuWidth,
+                child: GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      _isSideMenuOpened = false;
+                    });
+                  },
+                  child: Container(
+                    color: Colors.transparent,
+                  ),
+                ),
               ),
-            ),
+
+            // Side menu
+            if (menuItems[appState.pageIndex] != null)
+              AnimatedContainer(
+                duration: const Duration(milliseconds: 300),
+                curve: Curves.easeInOut,
+                width: _sideMenuWidth,
+                transform: Matrix4.translationValues(
+                    _isSideMenuOpened ? 0 : -_sideMenuWidth, 0, 0),
+                child: SideMenu(
+                  items: menuItems[appState.pageIndex]!,
+                ),
+              ),
           ],
         );
       });

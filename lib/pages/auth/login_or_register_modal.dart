@@ -21,11 +21,17 @@ class LoginOrRegisterModal extends StatefulWidget {
 class _LoginOrRegisterModalState extends State<LoginOrRegisterModal> {
   String? email;
   String? password;
+  String? errorMessage;
   int _step = 0;
   @override
   Widget build(BuildContext context) {
     return BlocListener<AuthBloc, AuthState>(
       listener: (BuildContext context, AuthState state) async {
+        if (state is AuthError) {
+          setState(() {
+            errorMessage = state.message;
+          });
+        }
         if (state is LoggedIn) {
           if (!context.mounted) return;
           widget.onAuthSuccess();
@@ -58,6 +64,7 @@ class _LoginOrRegisterModalState extends State<LoginOrRegisterModal> {
                   _step = 1;
                 });
               },
+              errorMessage: errorMessage,
             );
           case 3:
             return RegisterEmail(
