@@ -2,7 +2,7 @@ import 'package:app/blocs/tasks/tasks.bloc.dart';
 import 'package:app/components/forms/app_text_form_field.dart';
 import 'package:app/entities/tasks/tasks.entity.dart';
 import 'package:app/i18n/strings.g.dart';
-import 'package:app/components/forms/due_date_picker_modal.dart';
+import 'package:app/components/forms/task_date_picker_modal.dart';
 import 'package:app/utils/constants.dart';
 import 'package:app/utils/shortcuts.dart';
 import 'package:flutter/material.dart';
@@ -57,7 +57,7 @@ class _TaskDetailState extends State<TaskDetail> {
                     await showModalBottomSheet(
                         context: context,
                         isScrollControlled: true,
-                        builder: (context) => DueDatePickerModal(
+                        builder: (context) => TaskDatePickerModal(
                               onDateChanged: (date) {
                                 setState(() {
                                   _dueDate = date;
