@@ -70,6 +70,7 @@ dependencies:
   collection: ^1.19.0
   bip39: ^1.0.6
   flutter_layout_grid: ^2.0.7
+  animated_toggle_switch: ^0.8.4
 dependency_overrides:
   flutter_secure_storage: 9.2.4
 
