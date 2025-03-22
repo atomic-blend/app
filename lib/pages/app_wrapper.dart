@@ -164,6 +164,12 @@ class _AppWrapperState extends State<AppWrapper> {
                     _isSideMenuOpened ? 0 : -_sideMenuWidth, 0, 0),
                 child: SideMenu(
                   items: menuItems[appState.pageIndex]!,
+                  onItemSelected: () {
+                    debugPrint('Side menu item selected - closing menu');
+                    setState(() {
+                      _isSideMenuOpened = false;
+                    });
+                  },
                 ),
               ),
           ],

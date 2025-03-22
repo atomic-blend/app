@@ -6,30 +6,39 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class SideMenu extends StatefulWidget {
+class SideMenu extends StatelessWidget {
   final List<SideMenuItem> items;
+  final VoidCallback? onItemSelected;
   final double? paddingTop;
-  const SideMenu({super.key, required this.items, this.paddingTop});
 
-  @override
-  State<SideMenu> createState() => _SideMenuState();
-}
+  const SideMenu({
+    super.key,
+    required this.items,
+    this.onItemSelected,
+    this.paddingTop,
+  });
 
-class _SideMenuState extends State<SideMenu> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<AppCubit, AppState>(builder: (context, appState) {
-      var items = [];
-
-      widget.items.forEachIndexed((index, element) {
+      var sideItems = [];
+      items.forEachIndexed((index, element) {
         if (index == appState.selectedTabIndex) {
           element.isSelected = true;
         } else {
           element.isSelected = false;
         }
-        items.add(Padding(
+        sideItems.add(Padding(
           padding: EdgeInsets.only(bottom: $constants.insets.xs),
-          child: element,
+          child: GestureDetector(
+            onTap: () {
+              if (onItemSelected != null) {
+                onItemSelected!();
+              }
+              element.onTap();
+            },
+            child: element,
+          ),
         ));
       });
 
@@ -38,9 +47,8 @@ class _SideMenuState extends State<SideMenu> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              SizedBox(
-                  height: widget.paddingTop ?? getSize(context).height * 0.09),
-              ...items,
+              SizedBox(height: paddingTop ?? getSize(context).height * 0.09),
+              ...sideItems,
             ],
           ),
         ),
