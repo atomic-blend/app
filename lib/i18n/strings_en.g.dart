@@ -508,6 +508,8 @@ class TranslationsAuthRegisterEn {
 	String get email_hint => 'email@example.com';
 	String get password => 'Choose a password';
 	String get password_hint => 'SuperSecure123!';
+	String get confirmation_hint => 'Confirm your password';
+	String get password_mismatch => 'Passwords do not match';
 	String get forgot_password => 'Forgot password';
 	String get register => 'Register';
 	String get no_account => 'No account?';
@@ -642,6 +644,8 @@ extension on Translations {
 			case 'auth.register.email_hint': return 'email@example.com';
 			case 'auth.register.password': return 'Choose a password';
 			case 'auth.register.password_hint': return 'SuperSecure123!';
+			case 'auth.register.confirmation_hint': return 'Confirm your password';
+			case 'auth.register.password_mismatch': return 'Passwords do not match';
 			case 'auth.register.forgot_password': return 'Forgot password';
 			case 'auth.register.register': return 'Register';
 			case 'auth.register.no_account': return 'No account?';

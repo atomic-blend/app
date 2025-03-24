@@ -15,7 +15,9 @@ class RegisterPassword extends StatefulWidget {
       {super.key,
       this.cancelCallback,
       required this.email,
-      required this.onAuthSuccess, this.onPasswordUpdate, this.password});
+      required this.onAuthSuccess,
+      this.onPasswordUpdate,
+      this.password});
   final String email;
   final String? password;
   final VoidCallback? cancelCallback;
@@ -31,6 +33,9 @@ class _RegisterPasswordState extends State<RegisterPassword>
   late AnimationController _animationController;
   final _animationDuration = const Duration(milliseconds: 250);
   final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _passwordConfirmationController =
+      TextEditingController();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
   initState() {
@@ -79,69 +84,108 @@ class _RegisterPasswordState extends State<RegisterPassword>
                   child: Padding(
                     padding:
                         EdgeInsets.symmetric(horizontal: $constants.insets.md),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Center(
-                          child: Image.asset(
-                            'assets/images/authentication.png',
-                            fit: BoxFit.cover,
-                            width: getSize(context).width * 0.6,
+                    child: Form(
+                      key: _formKey,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Center(
+                            child: Image.asset(
+                              'assets/images/authentication.png',
+                              fit: BoxFit.cover,
+                              width: getSize(context).width * 0.6,
+                            ),
                           ),
-                        ),
-                        AutoSizeText(
-                          maxLines: 1,
-                          context.t.auth.register.password,
-                          style: getTextTheme(context).displaySmall!.copyWith(
-                                fontWeight: FontWeight.bold,
-                              ),
-                        ),
-                        SizedBox(
-                          height: $constants.insets.xs,
-                        ),
-                        SizedBox(
-                          width: getSize(context).width * 0.9,
-                          child: Text(
-                            context.t.auth.register.email_description,
-                          ),
-                        ),
-                        SizedBox(
-                          width: getSize(context).width * 0.9,
-                          child: Text(
-                            "\n${context.t.auth.register.we_never_sell}",
-                            style: getTextTheme(context).bodyMedium!.copyWith(
+                          AutoSizeText(
+                            maxLines: 1,
+                            context.t.auth.register.password,
+                            style: getTextTheme(context).displaySmall!.copyWith(
                                   fontWeight: FontWeight.bold,
                                 ),
                           ),
-                        ),
-                        SizedBox(
-                          height: $constants.insets.xs,
-                        ),
-                        Animate(
-                          controller: _animationController,
-                          effects: [
-                            FadeEffect(
-                              duration: _animationDuration,
-                              delay: const Duration(milliseconds: 300),
-                            )
-                          ],
-                          onPlay: (controller) => controller.forward(),
-                          child: SizedBox(
+                          SizedBox(
+                            height: $constants.insets.xs,
+                          ),
+                          SizedBox(
                             width: getSize(context).width * 0.9,
-                            child: AppTextFormField(
-                              controller: _passwordController,
-                              hintText: context.t.auth.register.password_hint,
-                              obscureText: true,
-                              onChange: () {
-                                if (widget.onPasswordUpdate != null) {
-                                  widget.onPasswordUpdate!(_passwordController.text);
-                                }
-                              },
+                            child: Text(
+                              context.t.auth.register.email_description,
                             ),
                           ),
-                        ),
-                      ],
+                          SizedBox(
+                            width: getSize(context).width * 0.9,
+                            child: Text(
+                              "\n${context.t.auth.register.we_never_sell}",
+                              style: getTextTheme(context).bodyMedium!.copyWith(
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                            ),
+                          ),
+                          SizedBox(
+                            height: $constants.insets.xs,
+                          ),
+                          Animate(
+                            controller: _animationController,
+                            effects: [
+                              FadeEffect(
+                                duration: _animationDuration,
+                                delay: const Duration(milliseconds: 300),
+                              )
+                            ],
+                            onPlay: (controller) => controller.forward(),
+                            child: SizedBox(
+                              width: getSize(context).width * 0.9,
+                              child: AppTextFormField(
+                                controller: _passwordController,
+                                hintText: context.t.auth.register.password_hint,
+                                obscureText: true,
+                                onChange: () {
+                                  if (widget.onPasswordUpdate != null) {
+                                    widget.onPasswordUpdate!(
+                                        _passwordController.text);
+                                  }
+                                },
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            height: $constants.insets.xs,
+                          ),
+                          Animate(
+                            controller: _animationController,
+                            effects: [
+                              FadeEffect(
+                                duration: _animationDuration,
+                                delay: const Duration(milliseconds: 300),
+                              )
+                            ],
+                            onPlay: (controller) => controller.forward(),
+                            child: SizedBox(
+                              width: getSize(context).width * 0.9,
+                              child: AppTextFormField(
+                                controller: _passwordConfirmationController,
+                                validator: (value) {
+                                  if (value != _passwordController.text) {
+                                    return context
+                                        .t.auth.register.password_mismatch;
+                                  }
+                                  return null;
+                                },
+                                hintText:
+                                    context.t.auth.register.confirmation_hint,
+                                obscureText: true,
+                                onChange: () {
+                                  if (widget.onPasswordUpdate != null) {
+                                    widget.onPasswordUpdate!(
+                                        _passwordController.text);
+                                  }
+                                },
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -172,6 +216,9 @@ class _RegisterPasswordState extends State<RegisterPassword>
                           backgroundColor: getTheme(context).primary,
                           onPressed: () async {
                             if (_passwordController.text.isEmpty) {
+                              return;
+                            }
+                            if (!_formKey.currentState!.validate()) {
                               return;
                             }
                             _animationController.reverseDuration =

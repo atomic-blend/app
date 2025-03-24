@@ -502,6 +502,8 @@ class _TranslationsAuthRegisterFr implements TranslationsAuthRegisterEn {
 	@override String get password => 'Choisissez un mot de passe';
 	@override String get password_hint => 'SuperSecure123!';
 	@override String get forgot_password => 'Mot de passe oublié';
+	@override String get confirmation_hint => 'Confirmez votre mot de passe';
+	@override String get password_mismatch => 'Les mots de passe ne correspondent pas';
 	@override String get register => 'S\'inscrire';
 	@override String get no_account => 'Pas de compte ?';
 }
@@ -636,6 +638,8 @@ extension on TranslationsFr {
 			case 'auth.register.password': return 'Choisissez un mot de passe';
 			case 'auth.register.password_hint': return 'SuperSecure123!';
 			case 'auth.register.forgot_password': return 'Mot de passe oublié';
+			case 'auth.register.confirmation_hint': return 'Confirmez votre mot de passe';
+			case 'auth.register.password_mismatch': return 'Les mots de passe ne correspondent pas';
 			case 'auth.register.register': return 'S\'inscrire';
 			case 'auth.register.no_account': return 'Pas de compte ?';
 			case 'auth.delete_account.title': return 'Supprimer mon compte';
