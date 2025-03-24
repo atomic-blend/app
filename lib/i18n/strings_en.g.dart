@@ -48,6 +48,10 @@ class Translations implements BaseTranslations<AppLocale, Translations> {
 	late final TranslationsHabitsEn habits = TranslationsHabitsEn._(_root);
 	late final TranslationsUnderConstructionEn under_construction = TranslationsUnderConstructionEn._(_root);
 	late final TranslationsMoreEn more = TranslationsMoreEn._(_root);
+	Map<String, String> get date_modes => {
+		'date': 'Date',
+		'duration': 'Duration',
+	};
 	late final TranslationsTimesEn times = TranslationsTimesEn._(_root);
 	late final TranslationsLoadingEn loading = TranslationsLoadingEn._(_root);
 	late final TranslationsActionsEn actions = TranslationsActionsEn._(_root);
@@ -679,6 +683,8 @@ extension on Translations {
 			case 'under_construction.title': return 'We\'re working on it!';
 			case 'under_construction.description': return 'This feature is not yet available, but we\'re working hard to bring it to you soon.\n\nStay tuned!';
 			case 'more.title': return 'More';
+			case 'date_modes.date': return 'Date';
+			case 'date_modes.duration': return 'Duration';
 			case 'times.today': return 'Today';
 			case 'times.tomorrow': return 'Tomorrow';
 			case 'times.yesterday': return 'Yesterday';

@@ -46,6 +46,10 @@ class TranslationsFr implements Translations {
 	@override late final _TranslationsMoreFr more = _TranslationsMoreFr._(_root);
 	@override late final _TranslationsTimesFr times = _TranslationsTimesFr._(_root);
 	@override late final _TranslationsActionsFr actions = _TranslationsActionsFr._(_root);
+	@override Map<String, String> get date_modes => {
+		'date': 'Date',
+		'duration': 'Durée',
+	};
 	@override late final _TranslationsLoadingFr loading = _TranslationsLoadingFr._(_root);
 	@override late final _TranslationsValidationFr validation = _TranslationsValidationFr._(_root);
 	@override Map<String, String> get errors => {
@@ -687,6 +691,8 @@ extension on TranslationsFr {
 			case 'actions.next': return 'Suivant';
 			case 'actions.back': return 'Retour';
 			case 'actions.delete': return 'Supprimer';
+			case 'date_modes.date': return 'Date';
+			case 'date_modes.duration': return 'Durée';
 			case 'loading.simple': return 'Chargement en cours...';
 			case 'validation.required': return 'Ce champ est obligatoire';
 			case 'validation.invalid_url': return 'URL invalide';

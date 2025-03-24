@@ -68,6 +68,7 @@ dependencies:
   random_avatar: ^0.0.8
   unique_name_generator: ^1.0.0
   collection: ^1.19.0
+  bip39: ^1.0.6
 dependency_overrides:
   flutter_secure_storage: 9.2.4
 
