@@ -31,7 +31,8 @@ class AuthError extends AuthState {
 }
 
 class LoggedIn extends AuthState {
-  const LoggedIn(UserEntity super.user);
+  final bool? isRegistration;
+  const LoggedIn(UserEntity super.user, this.isRegistration);
 
   @override
   List<Object?> get props => [user];

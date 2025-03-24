@@ -16,7 +16,6 @@ _$UserEntityImpl _$$UserEntityImplFromJson(Map<String, dynamic> json) =>
       firstname: json['firstname'] as String?,
       lastname: json['lastname'] as String?,
       refreshToken: json['refreshToken'] as String?,
-      keySalt: json['keySalt'] as String,
       keySet:
           EncryptionKeyEntity.fromJson(json['keySet'] as Map<String, dynamic>),
       accessToken: json['accessToken'] as String?,
@@ -38,7 +37,6 @@ Map<String, dynamic> _$$UserEntityImplToJson(_$UserEntityImpl instance) =>
       'firstname': instance.firstname,
       'lastname': instance.lastname,
       'refreshToken': instance.refreshToken,
-      'keySalt': instance.keySalt,
       'keySet': instance.keySet,
       'accessToken': instance.accessToken,
       'createdAt': instance.createdAt?.toIso8601String(),

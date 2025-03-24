@@ -13,6 +13,8 @@ class EncryptionKeyEntity with _$EncryptionKeyEntity {
     required String backupKey,
     // the salt used to derive the encryption key
     required String salt,
+    // the salt used to derive the mnemonic
+    required String mnemonicSalt,
     @JsonKey(includeToJson: false) String? backupPhrase,
   }) = _EncryptionKeyEntity;
 

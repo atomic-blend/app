@@ -31,7 +31,11 @@ mixin _$EncryptionKeyEntity {
       throw _privateConstructorUsedError; // the salt used to derive the encryption key
   String get salt =>
       throw _privateConstructorUsedError; // the salt used to derive the encryption key
-  set salt(String value) => throw _privateConstructorUsedError;
+  set salt(String value) =>
+      throw _privateConstructorUsedError; // the salt used to derive the mnemonic
+  String get mnemonicSalt =>
+      throw _privateConstructorUsedError; // the salt used to derive the mnemonic
+  set mnemonicSalt(String value) => throw _privateConstructorUsedError;
   @JsonKey(includeToJson: false)
   String? get backupPhrase => throw _privateConstructorUsedError;
   @JsonKey(includeToJson: false)
@@ -57,6 +61,7 @@ abstract class $EncryptionKeyEntityCopyWith<$Res> {
       {String userKey,
       String backupKey,
       String salt,
+      String mnemonicSalt,
       @JsonKey(includeToJson: false) String? backupPhrase});
 }
 
@@ -78,6 +83,7 @@ class _$EncryptionKeyEntityCopyWithImpl<$Res, $Val extends EncryptionKeyEntity>
     Object? userKey = null,
     Object? backupKey = null,
     Object? salt = null,
+    Object? mnemonicSalt = null,
     Object? backupPhrase = freezed,
   }) {
     return _then(_value.copyWith(
@@ -92,6 +98,10 @@ class _$EncryptionKeyEntityCopyWithImpl<$Res, $Val extends EncryptionKeyEntity>
       salt: null == salt
           ? _value.salt
           : salt // ignore: cast_nullable_to_non_nullable
+              as String,
+      mnemonicSalt: null == mnemonicSalt
+          ? _value.mnemonicSalt
+          : mnemonicSalt // ignore: cast_nullable_to_non_nullable
               as String,
       backupPhrase: freezed == backupPhrase
           ? _value.backupPhrase
@@ -113,6 +123,7 @@ abstract class _$$EncryptionKeyEntityImplCopyWith<$Res>
       {String userKey,
       String backupKey,
       String salt,
+      String mnemonicSalt,
       @JsonKey(includeToJson: false) String? backupPhrase});
 }
 
@@ -132,6 +143,7 @@ class __$$EncryptionKeyEntityImplCopyWithImpl<$Res>
     Object? userKey = null,
     Object? backupKey = null,
     Object? salt = null,
+    Object? mnemonicSalt = null,
     Object? backupPhrase = freezed,
   }) {
     return _then(_$EncryptionKeyEntityImpl(
@@ -146,6 +158,10 @@ class __$$EncryptionKeyEntityImplCopyWithImpl<$Res>
       salt: null == salt
           ? _value.salt
           : salt // ignore: cast_nullable_to_non_nullable
+              as String,
+      mnemonicSalt: null == mnemonicSalt
+          ? _value.mnemonicSalt
+          : mnemonicSalt // ignore: cast_nullable_to_non_nullable
               as String,
       backupPhrase: freezed == backupPhrase
           ? _value.backupPhrase
@@ -162,6 +178,7 @@ class _$EncryptionKeyEntityImpl extends _EncryptionKeyEntity {
       {required this.userKey,
       required this.backupKey,
       required this.salt,
+      required this.mnemonicSalt,
       @JsonKey(includeToJson: false) this.backupPhrase})
       : super._();
 
@@ -177,6 +194,9 @@ class _$EncryptionKeyEntityImpl extends _EncryptionKeyEntity {
 // the salt used to derive the encryption key
   @override
   String salt;
+// the salt used to derive the mnemonic
+  @override
+  String mnemonicSalt;
   @override
   @JsonKey(includeToJson: false)
   String? backupPhrase;
@@ -203,6 +223,7 @@ abstract class _EncryptionKeyEntity extends EncryptionKeyEntity {
           {required String userKey,
           required String backupKey,
           required String salt,
+          required String mnemonicSalt,
           @JsonKey(includeToJson: false) String? backupPhrase}) =
       _$EncryptionKeyEntityImpl;
   _EncryptionKeyEntity._() : super._();
@@ -219,7 +240,10 @@ abstract class _EncryptionKeyEntity extends EncryptionKeyEntity {
   set backupKey(String value); // the salt used to derive the encryption key
   @override
   String get salt; // the salt used to derive the encryption key
-  set salt(String value);
+  set salt(String value); // the salt used to derive the mnemonic
+  @override
+  String get mnemonicSalt; // the salt used to derive the mnemonic
+  set mnemonicSalt(String value);
   @override
   @JsonKey(includeToJson: false)
   String? get backupPhrase;

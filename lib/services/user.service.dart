@@ -89,7 +89,7 @@ class UserService {
       globalApiClient.setIdToken(user.accessToken!);
 
       // restore data key from password
-      encryptionService ??= EncryptionService(userSalt: user.keySalt);
+      encryptionService ??= EncryptionService(userSalt: user.keySet.salt);
       await encryptionService?.restoreDataKey(password, user.keySet);
       return user;
     } else if (result.statusCode == 401) {

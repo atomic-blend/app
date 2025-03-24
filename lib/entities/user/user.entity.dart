@@ -17,7 +17,6 @@ class UserEntity with _$UserEntity {
     String? firstname,
     String? lastname,
     String? refreshToken,
-    required String keySalt,
     required EncryptionKeyEntity keySet,
     String? accessToken,
     DateTime? createdAt,

@@ -36,8 +36,6 @@ mixin _$UserEntity {
   set lastname(String? value) => throw _privateConstructorUsedError;
   String? get refreshToken => throw _privateConstructorUsedError;
   set refreshToken(String? value) => throw _privateConstructorUsedError;
-  String get keySalt => throw _privateConstructorUsedError;
-  set keySalt(String value) => throw _privateConstructorUsedError;
   EncryptionKeyEntity get keySet => throw _privateConstructorUsedError;
   set keySet(EncryptionKeyEntity value) => throw _privateConstructorUsedError;
   String? get accessToken => throw _privateConstructorUsedError;
@@ -72,7 +70,6 @@ abstract class $UserEntityCopyWith<$Res> {
       String? firstname,
       String? lastname,
       String? refreshToken,
-      String keySalt,
       EncryptionKeyEntity keySet,
       String? accessToken,
       DateTime? createdAt,
@@ -104,7 +101,6 @@ class _$UserEntityCopyWithImpl<$Res, $Val extends UserEntity>
     Object? firstname = freezed,
     Object? lastname = freezed,
     Object? refreshToken = freezed,
-    Object? keySalt = null,
     Object? keySet = null,
     Object? accessToken = freezed,
     Object? createdAt = freezed,
@@ -143,10 +139,6 @@ class _$UserEntityCopyWithImpl<$Res, $Val extends UserEntity>
           ? _value.refreshToken
           : refreshToken // ignore: cast_nullable_to_non_nullable
               as String?,
-      keySalt: null == keySalt
-          ? _value.keySalt
-          : keySalt // ignore: cast_nullable_to_non_nullable
-              as String,
       keySet: null == keySet
           ? _value.keySet
           : keySet // ignore: cast_nullable_to_non_nullable
@@ -194,7 +186,6 @@ abstract class _$$UserEntityImplCopyWith<$Res>
       String? firstname,
       String? lastname,
       String? refreshToken,
-      String keySalt,
       EncryptionKeyEntity keySet,
       String? accessToken,
       DateTime? createdAt,
@@ -225,7 +216,6 @@ class __$$UserEntityImplCopyWithImpl<$Res>
     Object? firstname = freezed,
     Object? lastname = freezed,
     Object? refreshToken = freezed,
-    Object? keySalt = null,
     Object? keySet = null,
     Object? accessToken = freezed,
     Object? createdAt = freezed,
@@ -264,10 +254,6 @@ class __$$UserEntityImplCopyWithImpl<$Res>
           ? _value.refreshToken
           : refreshToken // ignore: cast_nullable_to_non_nullable
               as String?,
-      keySalt: null == keySalt
-          ? _value.keySalt
-          : keySalt // ignore: cast_nullable_to_non_nullable
-              as String,
       keySet: null == keySet
           ? _value.keySet
           : keySet // ignore: cast_nullable_to_non_nullable
@@ -300,7 +286,6 @@ class _$UserEntityImpl extends _UserEntity {
       this.firstname,
       this.lastname,
       this.refreshToken,
-      required this.keySalt,
       required this.keySet,
       this.accessToken,
       this.createdAt,
@@ -326,8 +311,6 @@ class _$UserEntityImpl extends _UserEntity {
   String? lastname;
   @override
   String? refreshToken;
-  @override
-  String keySalt;
   @override
   EncryptionKeyEntity keySet;
   @override
@@ -363,7 +346,6 @@ abstract class _UserEntity extends UserEntity {
       String? firstname,
       String? lastname,
       String? refreshToken,
-      required String keySalt,
       required EncryptionKeyEntity keySet,
       String? accessToken,
       DateTime? createdAt,
@@ -397,9 +379,6 @@ abstract class _UserEntity extends UserEntity {
   @override
   String? get refreshToken;
   set refreshToken(String? value);
-  @override
-  String get keySalt;
-  set keySalt(String value);
   @override
   EncryptionKeyEntity get keySet;
   set keySet(EncryptionKeyEntity value);

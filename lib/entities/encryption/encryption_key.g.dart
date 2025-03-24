@@ -12,6 +12,7 @@ _$EncryptionKeyEntityImpl _$$EncryptionKeyEntityImplFromJson(
       userKey: json['userKey'] as String,
       backupKey: json['backupKey'] as String,
       salt: json['salt'] as String,
+      mnemonicSalt: json['mnemonicSalt'] as String,
       backupPhrase: json['backupPhrase'] as String?,
     );
 
@@ -21,4 +22,5 @@ Map<String, dynamic> _$$EncryptionKeyEntityImplToJson(
       'userKey': instance.userKey,
       'backupKey': instance.backupKey,
       'salt': instance.salt,
+      'mnemonicSalt': instance.mnemonicSalt,
     };
