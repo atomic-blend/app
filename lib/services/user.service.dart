@@ -114,6 +114,7 @@ class UserService {
       userData['refreshToken'] = result.data['refreshToken'];
       final user = UserEntity.fromJson(userData);
       prefs?.setString('user', json.encode(user.toJson()));
+      user.keySet = keySet!;
 
       globalApiClient.setIdToken(user.accessToken!);
       return user;

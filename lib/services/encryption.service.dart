@@ -143,7 +143,7 @@ class EncryptionService {
       userKey: base64.encode(encryptedDataKey),
       backupKey: base64.encode(encryptedMnemonicDataKey),
       salt: base64.encode(userSalt),
-      backupPhrase: mnemonic,
+      backupPhrase: mnemonic.toString(),
       mnemonicSalt: base64.encode(mnemonicSalt), // Store the mnemonic salt
     );
 

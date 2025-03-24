@@ -82,6 +82,7 @@ class _TranslationsAuthFr implements TranslationsAuthEn {
 	@override late final _TranslationsAuthLoginFr login = _TranslationsAuthLoginFr._(_root);
 	@override late final _TranslationsAuthRegisterFr register = _TranslationsAuthRegisterFr._(_root);
 	@override late final _TranslationsAuthDeleteAccountFr delete_account = _TranslationsAuthDeleteAccountFr._(_root);
+	@override late final _TranslationsAuthMnemonicKeyFr mnemonic_key = _TranslationsAuthMnemonicKeyFr._(_root);
 }
 
 // Path: settings
@@ -520,6 +521,21 @@ class _TranslationsAuthDeleteAccountFr implements TranslationsAuthDeleteAccountE
 	@override String get cannot_be_undone => 'Cette action est irréversible et toutes vos données seront perdues.';
 }
 
+// Path: auth.mnemonic_key
+class _TranslationsAuthMnemonicKeyFr implements TranslationsAuthMnemonicKeyEn {
+	_TranslationsAuthMnemonicKeyFr._(this._root);
+
+	final TranslationsFr _root; // ignore: unused_field
+
+	// Translations
+	@override String get title => 'Clé de récupération';
+	@override String get description_start => 'Ceci est votre clé de récupération';
+	@override String get description_mid => 'Écrivez-la sur un papier et gardez-la en sécurité.';
+	@override String get description_end => 'Vous en aurez besoin pour récupérer l\'accès à vos données si vous perdez votre mot de passe.';
+	@override String get mnemonic_hint => 'Entrez votre clé de récupération';
+	@override String get mnemonic_error => 'Clé de récupération invalide';
+}
+
 // Path: settings.app_settings
 class _TranslationsSettingsAppSettingsFr implements TranslationsSettingsAppSettingsEn {
 	_TranslationsSettingsAppSettingsFr._(this._root);
@@ -645,6 +661,12 @@ extension on TranslationsFr {
 			case 'auth.delete_account.title': return 'Supprimer mon compte';
 			case 'auth.delete_account.description': return 'Etes-vous sûr de vouloir supprimer votre compte ?';
 			case 'auth.delete_account.cannot_be_undone': return 'Cette action est irréversible et toutes vos données seront perdues.';
+			case 'auth.mnemonic_key.title': return 'Clé de récupération';
+			case 'auth.mnemonic_key.description_start': return 'Ceci est votre clé de récupération';
+			case 'auth.mnemonic_key.description_mid': return 'Écrivez-la sur un papier et gardez-la en sécurité.';
+			case 'auth.mnemonic_key.description_end': return 'Vous en aurez besoin pour récupérer l\'accès à vos données si vous perdez votre mot de passe.';
+			case 'auth.mnemonic_key.mnemonic_hint': return 'Entrez votre clé de récupération';
+			case 'auth.mnemonic_key.mnemonic_error': return 'Clé de récupération invalide';
 			case 'settings.title': return 'Paramètres';
 			case 'settings.app_settings.title': return 'Paramètres de l\'application';
 			case 'settings.app_settings.selfHostedUrl.title': return 'URL auto-hébergée';

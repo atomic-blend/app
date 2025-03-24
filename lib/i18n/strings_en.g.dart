@@ -86,6 +86,7 @@ class TranslationsAuthEn {
 	late final TranslationsAuthLoginEn login = TranslationsAuthLoginEn._(_root);
 	late final TranslationsAuthRegisterEn register = TranslationsAuthRegisterEn._(_root);
 	late final TranslationsAuthDeleteAccountEn delete_account = TranslationsAuthDeleteAccountEn._(_root);
+	late final TranslationsAuthMnemonicKeyEn mnemonic_key = TranslationsAuthMnemonicKeyEn._(_root);
 }
 
 // Path: settings
@@ -527,6 +528,21 @@ class TranslationsAuthDeleteAccountEn {
 	String get cannot_be_undone => 'This action cannot be undone.';
 }
 
+// Path: auth.mnemonic_key
+class TranslationsAuthMnemonicKeyEn {
+	TranslationsAuthMnemonicKeyEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	String get title => 'Your recovery key';
+	String get description_start => 'This is your recovery key.';
+	String get description_mid => 'Write it down and keep it in a safe place.';
+	String get description_end => 'You will need it to recover access to your data if you forget your password.';
+	String get mnemonic_hint => 'Enter your recovery key';
+	String get mnemonic_error => 'Invalid recovery key';
+}
+
 // Path: settings.app_settings
 class TranslationsSettingsAppSettingsEn {
 	TranslationsSettingsAppSettingsEn._(this._root);
@@ -652,6 +668,12 @@ extension on Translations {
 			case 'auth.delete_account.title': return 'Delete your account';
 			case 'auth.delete_account.description': return 'Are you sure you want to delete your account?';
 			case 'auth.delete_account.cannot_be_undone': return 'This action cannot be undone.';
+			case 'auth.mnemonic_key.title': return 'Your recovery key';
+			case 'auth.mnemonic_key.description_start': return 'This is your recovery key.';
+			case 'auth.mnemonic_key.description_mid': return 'Write it down and keep it in a safe place.';
+			case 'auth.mnemonic_key.description_end': return 'You will need it to recover access to your data if you forget your password.';
+			case 'auth.mnemonic_key.mnemonic_hint': return 'Enter your recovery key';
+			case 'auth.mnemonic_key.mnemonic_error': return 'Invalid recovery key';
 			case 'settings.title': return 'Settings';
 			case 'settings.app_settings.title': return 'App Settings';
 			case 'settings.app_settings.selfHostedUrl.title': return 'Self-Hosted URL';
