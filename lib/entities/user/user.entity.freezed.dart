@@ -36,8 +36,8 @@ mixin _$UserEntity {
   set lastname(String? value) => throw _privateConstructorUsedError;
   String? get refreshToken => throw _privateConstructorUsedError;
   set refreshToken(String? value) => throw _privateConstructorUsedError;
-  String get keySalt => throw _privateConstructorUsedError;
-  set keySalt(String value) => throw _privateConstructorUsedError;
+  EncryptionKeyEntity get keySet => throw _privateConstructorUsedError;
+  set keySet(EncryptionKeyEntity value) => throw _privateConstructorUsedError;
   String? get accessToken => throw _privateConstructorUsedError;
   set accessToken(String? value) => throw _privateConstructorUsedError;
   DateTime? get createdAt => throw _privateConstructorUsedError;
@@ -70,10 +70,12 @@ abstract class $UserEntityCopyWith<$Res> {
       String? firstname,
       String? lastname,
       String? refreshToken,
-      String keySalt,
+      EncryptionKeyEntity keySet,
       String? accessToken,
       DateTime? createdAt,
       DateTime? updatedAt});
+
+  $EncryptionKeyEntityCopyWith<$Res> get keySet;
 }
 
 /// @nodoc
@@ -99,7 +101,7 @@ class _$UserEntityCopyWithImpl<$Res, $Val extends UserEntity>
     Object? firstname = freezed,
     Object? lastname = freezed,
     Object? refreshToken = freezed,
-    Object? keySalt = null,
+    Object? keySet = null,
     Object? accessToken = freezed,
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
@@ -137,10 +139,10 @@ class _$UserEntityCopyWithImpl<$Res, $Val extends UserEntity>
           ? _value.refreshToken
           : refreshToken // ignore: cast_nullable_to_non_nullable
               as String?,
-      keySalt: null == keySalt
-          ? _value.keySalt
-          : keySalt // ignore: cast_nullable_to_non_nullable
-              as String,
+      keySet: null == keySet
+          ? _value.keySet
+          : keySet // ignore: cast_nullable_to_non_nullable
+              as EncryptionKeyEntity,
       accessToken: freezed == accessToken
           ? _value.accessToken
           : accessToken // ignore: cast_nullable_to_non_nullable
@@ -154,6 +156,16 @@ class _$UserEntityCopyWithImpl<$Res, $Val extends UserEntity>
           : updatedAt // ignore: cast_nullable_to_non_nullable
               as DateTime?,
     ) as $Val);
+  }
+
+  /// Create a copy of UserEntity
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $EncryptionKeyEntityCopyWith<$Res> get keySet {
+    return $EncryptionKeyEntityCopyWith<$Res>(_value.keySet, (value) {
+      return _then(_value.copyWith(keySet: value) as $Val);
+    });
   }
 }
 
@@ -174,10 +186,13 @@ abstract class _$$UserEntityImplCopyWith<$Res>
       String? firstname,
       String? lastname,
       String? refreshToken,
-      String keySalt,
+      EncryptionKeyEntity keySet,
       String? accessToken,
       DateTime? createdAt,
       DateTime? updatedAt});
+
+  @override
+  $EncryptionKeyEntityCopyWith<$Res> get keySet;
 }
 
 /// @nodoc
@@ -201,7 +216,7 @@ class __$$UserEntityImplCopyWithImpl<$Res>
     Object? firstname = freezed,
     Object? lastname = freezed,
     Object? refreshToken = freezed,
-    Object? keySalt = null,
+    Object? keySet = null,
     Object? accessToken = freezed,
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
@@ -239,10 +254,10 @@ class __$$UserEntityImplCopyWithImpl<$Res>
           ? _value.refreshToken
           : refreshToken // ignore: cast_nullable_to_non_nullable
               as String?,
-      keySalt: null == keySalt
-          ? _value.keySalt
-          : keySalt // ignore: cast_nullable_to_non_nullable
-              as String,
+      keySet: null == keySet
+          ? _value.keySet
+          : keySet // ignore: cast_nullable_to_non_nullable
+              as EncryptionKeyEntity,
       accessToken: freezed == accessToken
           ? _value.accessToken
           : accessToken // ignore: cast_nullable_to_non_nullable
@@ -271,7 +286,7 @@ class _$UserEntityImpl extends _UserEntity {
       this.firstname,
       this.lastname,
       this.refreshToken,
-      required this.keySalt,
+      required this.keySet,
       this.accessToken,
       this.createdAt,
       this.updatedAt})
@@ -297,7 +312,7 @@ class _$UserEntityImpl extends _UserEntity {
   @override
   String? refreshToken;
   @override
-  String keySalt;
+  EncryptionKeyEntity keySet;
   @override
   String? accessToken;
   @override
@@ -331,7 +346,7 @@ abstract class _UserEntity extends UserEntity {
       String? firstname,
       String? lastname,
       String? refreshToken,
-      required String keySalt,
+      required EncryptionKeyEntity keySet,
       String? accessToken,
       DateTime? createdAt,
       DateTime? updatedAt}) = _$UserEntityImpl;
@@ -365,8 +380,8 @@ abstract class _UserEntity extends UserEntity {
   String? get refreshToken;
   set refreshToken(String? value);
   @override
-  String get keySalt;
-  set keySalt(String value);
+  EncryptionKeyEntity get keySet;
+  set keySet(EncryptionKeyEntity value);
   @override
   String? get accessToken;
   set accessToken(String? value);

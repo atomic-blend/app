@@ -48,6 +48,10 @@ class Translations implements BaseTranslations<AppLocale, Translations> {
 	late final TranslationsHabitsEn habits = TranslationsHabitsEn._(_root);
 	late final TranslationsUnderConstructionEn under_construction = TranslationsUnderConstructionEn._(_root);
 	late final TranslationsMoreEn more = TranslationsMoreEn._(_root);
+	Map<String, String> get date_modes => {
+		'date': 'Date',
+		'duration': 'Duration',
+	};
 	late final TranslationsTimesEn times = TranslationsTimesEn._(_root);
 	late final TranslationsLoadingEn loading = TranslationsLoadingEn._(_root);
 	late final TranslationsActionsEn actions = TranslationsActionsEn._(_root);
@@ -82,6 +86,7 @@ class TranslationsAuthEn {
 	late final TranslationsAuthLoginEn login = TranslationsAuthLoginEn._(_root);
 	late final TranslationsAuthRegisterEn register = TranslationsAuthRegisterEn._(_root);
 	late final TranslationsAuthDeleteAccountEn delete_account = TranslationsAuthDeleteAccountEn._(_root);
+	late final TranslationsAuthMnemonicKeyEn mnemonic_key = TranslationsAuthMnemonicKeyEn._(_root);
 }
 
 // Path: settings
@@ -504,6 +509,8 @@ class TranslationsAuthRegisterEn {
 	String get email_hint => 'email@example.com';
 	String get password => 'Choose a password';
 	String get password_hint => 'SuperSecure123!';
+	String get confirmation_hint => 'Confirm your password';
+	String get password_mismatch => 'Passwords do not match';
 	String get forgot_password => 'Forgot password';
 	String get register => 'Register';
 	String get no_account => 'No account?';
@@ -519,6 +526,21 @@ class TranslationsAuthDeleteAccountEn {
 	String get title => 'Delete your account';
 	String get description => 'Are you sure you want to delete your account?';
 	String get cannot_be_undone => 'This action cannot be undone.';
+}
+
+// Path: auth.mnemonic_key
+class TranslationsAuthMnemonicKeyEn {
+	TranslationsAuthMnemonicKeyEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	String get title => 'Your recovery key';
+	String get description_start => 'This is your recovery key.';
+	String get description_mid => 'Write it down and keep it in a safe place.';
+	String get description_end => 'You will need it to recover access to your data if you forget your password.';
+	String get mnemonic_hint => 'Enter your recovery key';
+	String get mnemonic_error => 'Invalid recovery key';
 }
 
 // Path: settings.app_settings
@@ -638,12 +660,20 @@ extension on Translations {
 			case 'auth.register.email_hint': return 'email@example.com';
 			case 'auth.register.password': return 'Choose a password';
 			case 'auth.register.password_hint': return 'SuperSecure123!';
+			case 'auth.register.confirmation_hint': return 'Confirm your password';
+			case 'auth.register.password_mismatch': return 'Passwords do not match';
 			case 'auth.register.forgot_password': return 'Forgot password';
 			case 'auth.register.register': return 'Register';
 			case 'auth.register.no_account': return 'No account?';
 			case 'auth.delete_account.title': return 'Delete your account';
 			case 'auth.delete_account.description': return 'Are you sure you want to delete your account?';
 			case 'auth.delete_account.cannot_be_undone': return 'This action cannot be undone.';
+			case 'auth.mnemonic_key.title': return 'Your recovery key';
+			case 'auth.mnemonic_key.description_start': return 'This is your recovery key.';
+			case 'auth.mnemonic_key.description_mid': return 'Write it down and keep it in a safe place.';
+			case 'auth.mnemonic_key.description_end': return 'You will need it to recover access to your data if you forget your password.';
+			case 'auth.mnemonic_key.mnemonic_hint': return 'Enter your recovery key';
+			case 'auth.mnemonic_key.mnemonic_error': return 'Invalid recovery key';
 			case 'settings.title': return 'Settings';
 			case 'settings.app_settings.title': return 'App Settings';
 			case 'settings.app_settings.selfHostedUrl.title': return 'Self-Hosted URL';
@@ -679,6 +709,8 @@ extension on Translations {
 			case 'under_construction.title': return 'We\'re working on it!';
 			case 'under_construction.description': return 'This feature is not yet available, but we\'re working hard to bring it to you soon.\n\nStay tuned!';
 			case 'more.title': return 'More';
+			case 'date_modes.date': return 'Date';
+			case 'date_modes.duration': return 'Duration';
 			case 'times.today': return 'Today';
 			case 'times.tomorrow': return 'Tomorrow';
 			case 'times.yesterday': return 'Yesterday';

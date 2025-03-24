@@ -31,7 +31,7 @@ class AuthBloc extends HydratedBloc<AuthEvent, AuthState> {
         emit(const LoggedOut());
         return;
       }
-      emit(LoggedIn(updatedUser));
+      emit(LoggedIn(updatedUser, false));
     } on DioException catch (e) {
       // TODO
       if (e.response?.statusCode == 401) {
@@ -49,7 +49,7 @@ class AuthBloc extends HydratedBloc<AuthEvent, AuthState> {
     }
     final user = state.user!;
     final updatedUser = await _userService.getUser(user);
-    emit(LoggedIn(updatedUser!));
+    emit(LoggedIn(updatedUser!, false));
   }
 
   void _onRegister(RegisterEvent event, Emitter<AuthState> emit) async {
@@ -60,13 +60,13 @@ class AuthBloc extends HydratedBloc<AuthEvent, AuthState> {
       emit(const LoggedOut());
       return;
     }
-    emit(LoggedIn(updatedUser));
+    emit(LoggedIn(updatedUser, true));
   }
 
   @override
   AuthState? fromJson(Map<String, dynamic> json) {
     if (json['user'] != null) {
-      return LoggedIn(UserEntity.fromJson(json['user']));
+      return LoggedIn(UserEntity.fromJson(json['user']), false);
     }
     return const LoggedOut();
   }

@@ -45,7 +45,7 @@ class _AppWrapperState extends State<AppWrapper> {
       return BlocBuilder<AuthBloc, AuthState>(builder: (context, state) {
         if (state is LoggedIn) {
           encryptionService ??=
-              EncryptionService(userSalt: state.user!.keySalt);
+              EncryptionService(userSalt: state.user!.keySet.salt);
           encryptionService!.hydrateKey();
         }
         var navItems = $constants.navigation.bottomNavigationItems(context);

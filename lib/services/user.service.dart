@@ -88,9 +88,9 @@ class UserService {
 
       globalApiClient.setIdToken(user.accessToken!);
 
-      // derive and persist key from password
-      encryptionService ??= EncryptionService(userSalt: user.keySalt);
-      await encryptionService?.deriveAndPersistKey(password);
+      // restore data key from password
+      encryptionService ??= EncryptionService(userSalt: user.keySet.salt);
+      await encryptionService?.restoreDataKey(password, user.keySet);
       return user;
     } else if (result.statusCode == 401) {
       throw Exception("wrong_email_password");
@@ -100,9 +100,13 @@ class UserService {
   }
 
   Future<UserEntity?> register(String email, String password) async {
+    // derive and persist key from password
+    final keySet = await EncryptionService.generateKeySet(password);
+
     final result = await globalApiClient.post('/auth/register', data: {
       'email': email,
       'password': password,
+      'keySet': keySet?.toJson(),
     });
     if (result.statusCode == 201) {
       final userData = result.data['user'];
@@ -110,12 +114,9 @@ class UserService {
       userData['refreshToken'] = result.data['refreshToken'];
       final user = UserEntity.fromJson(userData);
       prefs?.setString('user', json.encode(user.toJson()));
+      user.keySet = keySet!;
 
       globalApiClient.setIdToken(user.accessToken!);
-
-      // derive and persist key from password
-      encryptionService ??= EncryptionService(userSalt: user.keySalt);
-      await encryptionService?.deriveAndPersistKey(password);
       return user;
     } else {
       throw Exception('registration_failed');

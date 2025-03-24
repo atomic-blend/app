@@ -1,7 +1,10 @@
 import 'dart:convert';
+import 'dart:math';
 import 'dart:typed_data';
 
+import 'package:app/entities/encryption/encryption_key.dart';
 import 'package:app/main.dart';
+import 'package:bip39/bip39.dart' as bip39;
 import 'package:pointycastle/block/aes.dart';
 import 'package:pointycastle/block/modes/gcm.dart';
 import 'package:pointycastle/key_derivators/argon2_native_int_impl.dart';
@@ -19,15 +22,139 @@ class EncryptionService {
     argon2.init(argon2parameters);
   }
 
-  Future<void> deriveAndPersistKey(String password) async {
+  Future<void> restoreDataKey(
+      String password, EncryptionKeyEntity keySet) async {
+    // Use the salt from the keySet to initialize argon2 correctly
+    final saltBytes = base64.decode(keySet.salt);
+
+    // Initialize Argon2 with the correct salt
+    final restoreArgon2 = Argon2BytesGenerator();
+    final restoreArgon2parameters = Argon2Parameters(
+        Argon2Parameters.ARGON2_id, saltBytes,
+        desiredKeyLength: 32);
+    restoreArgon2.init(restoreArgon2parameters);
+
+    // Generate user key from password
     final passwordBytes = Uint8List.fromList(password.codeUnits);
-    final Uint8List derivedKey = Uint8List(32);
-    argon2.deriveKey(passwordBytes, passwordBytes.length, derivedKey, 0);
-    await prefs?.setString("user_key", base64.encode(derivedKey));
+    final Uint8List userKey = Uint8List(32);
+    restoreArgon2.deriveKey(passwordBytes, passwordBytes.length, userKey, 0);
+
+    // Decrypt data key with user key
+    final encryptedDataKey = base64.decode(keySet.userKey);
+    final iv = encryptedDataKey.sublist(encryptedDataKey.length - 12);
+    final tag = encryptedDataKey.sublist(
+        encryptedDataKey.length - 28, encryptedDataKey.length - 12);
+    final cipherText =
+        encryptedDataKey.sublist(0, encryptedDataKey.length - 28);
+
+    final cipher = GCMBlockCipher(AESEngine())
+      ..init(false, ParametersWithIV(KeyParameter(userKey), iv));
+
+    final decrypted = cipher.process(cipherText);
+
+    // Verify the authentication tag
+    if (tag.length != cipher.mac.length) {
+      throw Exception("Authentication failed");
+    }
+    for (var i = 0; i < tag.length; i++) {
+      if (tag[i] != cipher.mac[i]) {
+        throw Exception("Authentication failed");
+      }
+    }
+
+    // Store the data key in the storage
+    prefs?.setString("key", base64.encode(decrypted));
+  }
+
+  //TODO: display the mnemonic to the user and ask him to write it down after registration
+  static Future<EncryptionKeyEntity?> generateKeySet(String password) async {
+    //generate user salt
+    final userSalt = generateRandomBytes(32);
+
+    // Generate a different salt for the mnemonic - ensure it's different
+    Uint8List mnemonicSalt;
+    do {
+      mnemonicSalt = generateRandomBytes(32);
+      // Continue generating until we get a different salt
+    } while (bytesEqual(userSalt, mnemonicSalt));
+
+    // init argon2 key derivation
+    final argon2 = Argon2BytesGenerator();
+    final argon2parameters = Argon2Parameters(
+        Argon2Parameters.ARGON2_id, userSalt,
+        desiredKeyLength: 32);
+    argon2.init(argon2parameters);
+
+    // generate user key from password
+    final passwordBytes = Uint8List.fromList(password.codeUnits);
+    final Uint8List userKey = Uint8List(32);
+    argon2.deriveKey(passwordBytes, passwordBytes.length, userKey, 0);
+
+    // generate random data key
+    final dataKey = generateRandomBytes(32);
+
+    // encrypt data key with user key
+    final iv = generateRandomBytes(12);
+    final cipher = GCMBlockCipher(AESEngine())
+      ..init(true, ParametersWithIV(KeyParameter(userKey), iv));
+    final cipheResult = cipher.process(dataKey);
+    final tag = cipher.mac;
+
+    // concat: encrypted data + tag + iv
+    final encryptedDataKey =
+        Uint8List(cipheResult.length + tag.length + iv.length);
+    encryptedDataKey.setAll(0, cipheResult);
+    encryptedDataKey.setAll(cipheResult.length, tag);
+    encryptedDataKey.setAll(cipheResult.length + tag.length, iv);
+
+    // generate the backup mnemonic
+    var mnemonic = bip39.generateMnemonic();
+    final mnemonicPass = bip39.mnemonicToSeedHex(mnemonic);
+
+    // Create a separate salt for the mnemonic key to ensure uniqueness
+    final mnemonicArgon2 = Argon2BytesGenerator();
+    final mnemonicArgon2parameters = Argon2Parameters(
+        Argon2Parameters.ARGON2_id, mnemonicSalt,
+        desiredKeyLength: 32);
+    mnemonicArgon2.init(mnemonicArgon2parameters);
+
+    final mnemonicKey = Uint8List(32);
+    mnemonicArgon2.deriveKey(Uint8List.fromList(mnemonicPass.codeUnits),
+        mnemonicPass.length, mnemonicKey, 0);
+
+    final mnemonicIv = generateRandomBytes(12);
+    final mnemonicCipher = GCMBlockCipher(AESEngine())
+      ..init(true, ParametersWithIV(KeyParameter(mnemonicKey), mnemonicIv));
+
+    // encrypt data key with mnemonic key
+    final mnemonicCipherResult = mnemonicCipher.process(dataKey);
+    final mnemonicTag = mnemonicCipher.mac;
+
+    // concat: encrypted data + tag + iv
+    final encryptedMnemonicDataKey = Uint8List(
+        mnemonicCipherResult.length + mnemonicTag.length + mnemonicIv.length);
+    encryptedMnemonicDataKey.setAll(0, mnemonicCipherResult);
+    encryptedMnemonicDataKey.setAll(mnemonicCipherResult.length, mnemonicTag);
+    encryptedMnemonicDataKey.setAll(
+        mnemonicCipherResult.length + mnemonicTag.length, mnemonicIv);
+
+    // store the keys and mnemonic
+    final EncryptionKeyEntity encryptionKey = EncryptionKeyEntity(
+      userKey: base64.encode(encryptedDataKey),
+      backupKey: base64.encode(encryptedMnemonicDataKey),
+      salt: base64.encode(userSalt),
+      backupPhrase: mnemonic.toString(),
+      mnemonicSalt: base64.encode(mnemonicSalt), // Store the mnemonic salt
+    );
+
+    // store the data key in the secure storage
+    await prefs?.setString("key", base64.encode(dataKey));
+
+    return encryptionKey;
   }
 
   Future<Uint8List?> hydrateKey() async {
-    final userKey = prefs?.getString("user_key");
+    final userKey = prefs?.getString("key");
     if (userKey != null) {
       return base64.decode(userKey);
     }
@@ -35,10 +162,35 @@ class EncryptionService {
   }
 
   static Uint8List generateRandomBytes(int numBytes) {
-    final secureRandom = SecureRandom('Fortuna')
-      ..seed(
-          KeyParameter(Uint8List.fromList(List<int>.generate(32, (i) => i))));
+    // Create a seed that's exactly 32 bytes (256 bits) as required by Fortuna
+    final Uint8List seed = Uint8List(32);
+
+    // Fill first part with sequential data
+    for (int i = 0; i < 16; i++) {
+      seed[i] = i;
+    }
+
+    // Add timestamp to ensure different results on each call
+    final timestamp = DateTime.now().millisecondsSinceEpoch;
+    final timestampBytes = timestamp.toString().codeUnits;
+
+    // Fill the remaining bytes with timestamp data (making sure not to exceed 32 bytes)
+    for (int i = 0; i < min(timestampBytes.length, 16); i++) {
+      seed[16 + i] = timestampBytes[i];
+    }
+
+    final secureRandom = SecureRandom('Fortuna')..seed(KeyParameter(seed));
+
     return secureRandom.nextBytes(numBytes);
+  }
+
+  // Helper method to compare byte arrays
+  static bool bytesEqual(Uint8List a, Uint8List b) {
+    if (a.length != b.length) return false;
+    for (var i = 0; i < a.length; i++) {
+      if (a[i] != b[i]) return false;
+    }
+    return true;
   }
 
   Future<String> encryptString({required String data}) async {

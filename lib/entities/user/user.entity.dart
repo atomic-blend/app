@@ -1,3 +1,4 @@
+import 'package:app/entities/encryption/encryption_key.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'user.entity.freezed.dart';
@@ -16,7 +17,7 @@ class UserEntity with _$UserEntity {
     String? firstname,
     String? lastname,
     String? refreshToken,
-    required String keySalt,
+    required EncryptionKeyEntity keySet,
     String? accessToken,
     DateTime? createdAt,
     DateTime? updatedAt,

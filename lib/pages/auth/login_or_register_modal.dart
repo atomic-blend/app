@@ -3,6 +3,7 @@ import 'package:app/components/widgets/loading_city.dart';
 import 'package:app/i18n/strings.g.dart';
 import 'package:app/pages/auth/screens/login.dart';
 import 'package:app/pages/auth/screens/login_or_register.dart';
+import 'package:app/pages/auth/screens/mnemonic_key.dart';
 import 'package:app/pages/auth/screens/register_email.dart';
 import 'package:app/pages/auth/screens/register_password.dart';
 import 'package:app/pages/auth/screens/welcome_screen.dart';
@@ -33,9 +34,15 @@ class _LoginOrRegisterModalState extends State<LoginOrRegisterModal> {
           });
         }
         if (state is LoggedIn) {
-          if (!context.mounted) return;
-          widget.onAuthSuccess();
-          Navigator.pop(context);
+          if (state.isRegistration == false) {
+            if (!context.mounted) return;
+            widget.onAuthSuccess();
+            Navigator.pop(context);
+          } else {
+            setState(() {
+              _step = 5;
+            });
+          }
         }
       },
       child: BlocBuilder<AuthBloc, AuthState>(builder: (context, authState) {
@@ -97,6 +104,8 @@ class _LoginOrRegisterModalState extends State<LoginOrRegisterModal> {
                 });
               },
             );
+          case 5:
+            return MnemonicKey(onSuccess: () {}, mnemonic: authState.user?.keySet.backupPhrase ?? '');
         }
         return Container();
       }),

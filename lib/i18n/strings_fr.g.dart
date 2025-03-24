@@ -46,6 +46,10 @@ class TranslationsFr implements Translations {
 	@override late final _TranslationsMoreFr more = _TranslationsMoreFr._(_root);
 	@override late final _TranslationsTimesFr times = _TranslationsTimesFr._(_root);
 	@override late final _TranslationsActionsFr actions = _TranslationsActionsFr._(_root);
+	@override Map<String, String> get date_modes => {
+		'date': 'Date',
+		'duration': 'Durée',
+	};
 	@override late final _TranslationsLoadingFr loading = _TranslationsLoadingFr._(_root);
 	@override late final _TranslationsValidationFr validation = _TranslationsValidationFr._(_root);
 	@override Map<String, String> get errors => {
@@ -78,6 +82,7 @@ class _TranslationsAuthFr implements TranslationsAuthEn {
 	@override late final _TranslationsAuthLoginFr login = _TranslationsAuthLoginFr._(_root);
 	@override late final _TranslationsAuthRegisterFr register = _TranslationsAuthRegisterFr._(_root);
 	@override late final _TranslationsAuthDeleteAccountFr delete_account = _TranslationsAuthDeleteAccountFr._(_root);
+	@override late final _TranslationsAuthMnemonicKeyFr mnemonic_key = _TranslationsAuthMnemonicKeyFr._(_root);
 }
 
 // Path: settings
@@ -498,6 +503,8 @@ class _TranslationsAuthRegisterFr implements TranslationsAuthRegisterEn {
 	@override String get password => 'Choisissez un mot de passe';
 	@override String get password_hint => 'SuperSecure123!';
 	@override String get forgot_password => 'Mot de passe oublié';
+	@override String get confirmation_hint => 'Confirmez votre mot de passe';
+	@override String get password_mismatch => 'Les mots de passe ne correspondent pas';
 	@override String get register => 'S\'inscrire';
 	@override String get no_account => 'Pas de compte ?';
 }
@@ -512,6 +519,21 @@ class _TranslationsAuthDeleteAccountFr implements TranslationsAuthDeleteAccountE
 	@override String get title => 'Supprimer mon compte';
 	@override String get description => 'Etes-vous sûr de vouloir supprimer votre compte ?';
 	@override String get cannot_be_undone => 'Cette action est irréversible et toutes vos données seront perdues.';
+}
+
+// Path: auth.mnemonic_key
+class _TranslationsAuthMnemonicKeyFr implements TranslationsAuthMnemonicKeyEn {
+	_TranslationsAuthMnemonicKeyFr._(this._root);
+
+	final TranslationsFr _root; // ignore: unused_field
+
+	// Translations
+	@override String get title => 'Clé de récupération';
+	@override String get description_start => 'Ceci est votre clé de récupération';
+	@override String get description_mid => 'Écrivez-la sur un papier et gardez-la en sécurité.';
+	@override String get description_end => 'Vous en aurez besoin pour récupérer l\'accès à vos données si vous perdez votre mot de passe.';
+	@override String get mnemonic_hint => 'Entrez votre clé de récupération';
+	@override String get mnemonic_error => 'Clé de récupération invalide';
 }
 
 // Path: settings.app_settings
@@ -632,11 +654,19 @@ extension on TranslationsFr {
 			case 'auth.register.password': return 'Choisissez un mot de passe';
 			case 'auth.register.password_hint': return 'SuperSecure123!';
 			case 'auth.register.forgot_password': return 'Mot de passe oublié';
+			case 'auth.register.confirmation_hint': return 'Confirmez votre mot de passe';
+			case 'auth.register.password_mismatch': return 'Les mots de passe ne correspondent pas';
 			case 'auth.register.register': return 'S\'inscrire';
 			case 'auth.register.no_account': return 'Pas de compte ?';
 			case 'auth.delete_account.title': return 'Supprimer mon compte';
 			case 'auth.delete_account.description': return 'Etes-vous sûr de vouloir supprimer votre compte ?';
 			case 'auth.delete_account.cannot_be_undone': return 'Cette action est irréversible et toutes vos données seront perdues.';
+			case 'auth.mnemonic_key.title': return 'Clé de récupération';
+			case 'auth.mnemonic_key.description_start': return 'Ceci est votre clé de récupération';
+			case 'auth.mnemonic_key.description_mid': return 'Écrivez-la sur un papier et gardez-la en sécurité.';
+			case 'auth.mnemonic_key.description_end': return 'Vous en aurez besoin pour récupérer l\'accès à vos données si vous perdez votre mot de passe.';
+			case 'auth.mnemonic_key.mnemonic_hint': return 'Entrez votre clé de récupération';
+			case 'auth.mnemonic_key.mnemonic_error': return 'Clé de récupération invalide';
 			case 'settings.title': return 'Paramètres';
 			case 'settings.app_settings.title': return 'Paramètres de l\'application';
 			case 'settings.app_settings.selfHostedUrl.title': return 'URL auto-hébergée';
@@ -687,6 +717,8 @@ extension on TranslationsFr {
 			case 'actions.next': return 'Suivant';
 			case 'actions.back': return 'Retour';
 			case 'actions.delete': return 'Supprimer';
+			case 'date_modes.date': return 'Date';
+			case 'date_modes.duration': return 'Durée';
 			case 'loading.simple': return 'Chargement en cours...';
 			case 'validation.required': return 'Ce champ est obligatoire';
 			case 'validation.invalid_url': return 'URL invalide';

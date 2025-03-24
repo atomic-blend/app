@@ -139,16 +139,15 @@ class _AppTextFormFieldState extends State<AppTextFormField> {
                         icon: const Icon(LineAwesome.times_circle))),
               if (widget.obscureText != null)
                 Positioned(
-                    right: 0,
-                    top: 0,
-                    bottom: 0,
-                    child: IconButton(
-                        onPressed: () {
+                    right: $constants.insets.sm,
+                    top: $constants.insets.xs,
+                    child: GestureDetector(
+                        onTap: () {
                           setState(() {
                             _obscureText = !_obscureText!;
                           });
                         },
-                        icon: Icon(_obscureText != true
+                        child: Icon(_obscureText != true
                             ? LineAwesome.eye_slash
                             : LineAwesome.eye))),
               if (widget.trailing != null)
