@@ -3,9 +3,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'dart:io';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter_timezone/flutter_timezone.dart';
-import 'package:injectable/injectable.dart';
 
 class DeviceInfoService {
   final FirebaseMessaging _messaging = FirebaseMessaging.instance;

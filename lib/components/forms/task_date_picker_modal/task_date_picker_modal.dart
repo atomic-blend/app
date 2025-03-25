@@ -1,8 +1,11 @@
 import 'package:animated_toggle_switch/animated_toggle_switch.dart';
+import 'package:app/components/forms/task_date_picker_modal/single_date_picker.dart';
 import 'package:app/i18n/strings.g.dart';
+import 'package:app/pages/under_construction/under_construction.dart';
 import 'package:app/utils/constants.dart';
 import 'package:app/utils/shortcuts.dart';
 import 'package:calendar_date_picker2/calendar_date_picker2.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:jiffy/jiffy.dart';
 import 'package:app/utils/exntensions/date_time_extension.dart';
@@ -100,47 +103,12 @@ class _TaskDatePickerModalState extends State<TaskDatePickerModal> {
               ),
             ],
           ),
-          Padding(
-            padding: EdgeInsets.symmetric(
-              vertical: $constants.insets.xxs,
-              horizontal: $constants.insets.sm,
-            ),
-            child: Container(
-              decoration: BoxDecoration(
-                color: getTheme(context).surface,
-                borderRadius: BorderRadius.circular($constants.corners.md),
-              ),
-              child: CalendarDatePicker2(
-                config: CalendarDatePicker2Config(
-                  calendarType: CalendarDatePicker2Type.single,
-                  firstDate: widget.firstDate ??
-                      Jiffy.parseFromDateTime(DateTime.now())
-                          .subtract(years: 100)
-                          .dateTime,
-                  lastDate: widget.lastDate ??
-                      Jiffy.parseFromDateTime(DateTime.now())
-                          .add(years: 100)
-                          .dateTime,
-                ),
-                value: [_dueDate],
-                onValueChanged: (value) {
-                  setState(() {
-                    _dueDate = value.first.midnight();
-                  });
-                },
-              ),
-            ),
-          ),
-          SizedBox(height: $constants.insets.sm),
-          Container(
-            decoration: BoxDecoration(
-              color: getTheme(context).surface,
-              borderRadius: BorderRadius.circular($constants.corners.md),
-            ),
-            child: const Row(
-              children: [],
-            ),
-          ),
+          if (mode == 0) const SingleDatePicker(),
+          if (mode == 1)
+            SizedBox(
+                height: getSize(context).height * 0.5,
+                width: double.infinity,
+                child: UnderConstruction()),
           const Spacer(),
           TextButton(
             onPressed: () {
