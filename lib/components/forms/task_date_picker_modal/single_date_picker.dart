@@ -4,6 +4,7 @@ import 'package:app/utils/shortcuts.dart';
 import 'package:calendar_date_picker2/calendar_date_picker2.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_popup/flutter_popup.dart';
 import 'package:jiffy/jiffy.dart';
 
 class SingleDatePicker extends StatefulWidget {
@@ -48,68 +49,122 @@ class _SingleDatePickerState extends State<SingleDatePicker> {
               value: [_dueDate],
               onValueChanged: (value) {
                 setState(() {
-                  _dueDate = value.first.midnight();
+                  if (_dueDate == null) {
+                    _dueDate = value[0];
+                  } else {
+                    _dueDate = _dueDate!.copyWith(
+                      year: value[0].year,
+                      month: value[0].month,
+                      day: value[0].day,
+                    );
+                  }
                 });
               },
             ),
           ),
         ),
         SizedBox(height: $constants.insets.sm),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: $constants.insets.sm),
-            child: Container(
-              decoration: BoxDecoration(
-                color: getTheme(context).surface,
-                borderRadius: BorderRadius.circular($constants.corners.md),
-              ),
-              padding: EdgeInsets.symmetric(
-                  vertical: $constants.insets.sm,
-                  horizontal: $constants.insets.sm),
-              child: Column(
-                children: [
-                  Padding(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: $constants.insets.sm,
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Row(
-                          spacing: $constants.insets.sm,
-                          children: const [
-                            Icon(CupertinoIcons.clock),
-                            Text("Planned time"),
-                          ],
-                        ),
-                        const Text("15:00"),
-                      ],
-                    ),
-                  ),
-                  SizedBox(height: $constants.insets.xs),
-                  Divider(),
-                  SizedBox(height: $constants.insets.xs),
-                  Padding(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: $constants.insets.sm,
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Row(
-                          spacing: $constants.insets.sm,
-                          children: const [
-                            Icon(CupertinoIcons.alarm),
-                            Text("Reminder")
-                          ],
-                        ),
-                        const Text("15 minutes before"),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: $constants.insets.sm),
+          child: Container(
+            decoration: BoxDecoration(
+              color: getTheme(context).surface,
+              borderRadius: BorderRadius.circular($constants.corners.md),
             ),
-          )
+            padding: EdgeInsets.symmetric(
+                vertical: $constants.insets.sm,
+                horizontal: $constants.insets.sm),
+            child: Column(
+              children: [
+                Padding(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: $constants.insets.sm,
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        spacing: $constants.insets.sm,
+                        children: const [
+                          Icon(CupertinoIcons.clock),
+                          Text("Planned time"),
+                        ],
+                      ),
+                      CustomPopup(
+                        content: SizedBox(
+                          width: getSize(context).width * 0.5,
+                          height: getSize(context).height * 0.25,
+                          child: CupertinoDatePicker(
+                            use24hFormat: true,
+                            mode: CupertinoDatePickerMode.time,
+                            onDateTimeChanged: (value) {
+                              setState(() {
+                                _dueDate ??= DateTime.now();
+                                _dueDate = _dueDate?.copyWith(
+                                  hour: value.hour,
+                                  minute: value.minute,
+                                );
+                              });
+                            },
+                          ),
+                        ),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text(_dueDate != null &&
+                                    (_dueDate?.hour != 0 &&
+                                        _dueDate?.minute != 0)
+                                ? "${_dueDate?.hour}:${_dueDate?.minute}"
+                                : "none"),
+                            SizedBox(width: $constants.insets.xs),
+                            if (_dueDate != null &&
+                                (_dueDate?.hour != 0 && _dueDate?.minute != 0))
+                              GestureDetector(
+                                onTap: () {
+                                  setState(() {
+                                    _dueDate = _dueDate?.copyWith(
+                                      hour: 0,
+                                      minute: 0,
+                                    );
+                                  });
+                                },
+                                child: Icon(
+                                  CupertinoIcons.xmark,
+                                  color: getTheme(context).error,
+                                  size: 20,
+                                ),
+                              )
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(height: $constants.insets.xs),
+                Divider(),
+                SizedBox(height: $constants.insets.xs),
+                Padding(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: $constants.insets.sm,
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        spacing: $constants.insets.sm,
+                        children: const [
+                          Icon(CupertinoIcons.alarm),
+                          Text("Reminder")
+                        ],
+                      ),
+                      const Text("-"),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        )
       ],
     );
   }
