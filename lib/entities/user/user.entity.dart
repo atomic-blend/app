@@ -17,10 +17,10 @@ class UserEntity with _$UserEntity {
     List<dynamic>? purchases,
     String? firstname,
     String? lastname,
-    String? refreshToken,
     required EncryptionKeyEntity keySet,
     List<UserDeviceEntity>? devices,
     String? accessToken,
+    String? refreshToken,
     DateTime? createdAt,
     DateTime? updatedAt,
   }) = _UserEntity;

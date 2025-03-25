@@ -53,39 +53,59 @@ class ApiClient {
         onError: (error, handler) async {
           try {
             if (error.response?.statusCode == 401 &&
-                !['/auth/login'].contains(error.requestOptions.path)) {
+                !['/auth/login', '/auth/refresh']
+                    .contains(error.requestOptions.path)) {
+              // Get stored user data
               final userDataRaw = prefs?.getString('user');
-              final userData = json.decode(userDataRaw!);
+              if (userDataRaw == null) {
+                return handler.reject(error);
+              }
+
+              final userData = json.decode(userDataRaw);
               final user = UserEntity.fromJson(userData);
-              final newToken = await UserService.refreshToken(user);
-              idToken = newToken;
-              setIdToken(newToken!);
-              final opts = Options(
-                extra: error.requestOptions.extra,
-                method: error.requestOptions.method,
-                responseType: error.requestOptions.responseType,
-                sendTimeout: error.requestOptions.sendTimeout,
-                headers: error.requestOptions.headers,
-              );
-              opts.headers!['Authorization'] = 'Bearer $newToken';
-              final response = await _dio.request(
-                error.requestOptions.path,
-                options: opts,
-                cancelToken: error.requestOptions.cancelToken,
-                data: error.requestOptions.data,
-                onReceiveProgress: error.requestOptions.onReceiveProgress,
-                onSendProgress: error.requestOptions.onSendProgress,
-                queryParameters: error.requestOptions.queryParameters,
-              );
-              if (response.statusCode != 401) {
+
+              try {
+                final newToken = await UserService.refreshToken(user);
+                if (newToken == null) {
+                  return handler.reject(error);
+                }
+
+                // Update stored token
+                idToken = newToken;
+                setIdToken(newToken);
+
+                // Update stored user data with new token
+                userData['idToken'] = newToken;
+                await prefs?.setString('user', json.encode(userData));
+
+                // Retry original request with new token
+                final opts = Options(
+                  extra: error.requestOptions.extra,
+                  method: error.requestOptions.method,
+                  responseType: error.requestOptions.responseType,
+                  sendTimeout: error.requestOptions.sendTimeout,
+                  headers: error.requestOptions.headers,
+                );
+                opts.headers!['Authorization'] = 'Bearer $newToken';
+
+                final response = await _dio.request(
+                  error.requestOptions.path,
+                  options: opts,
+                  cancelToken: error.requestOptions.cancelToken,
+                  data: error.requestOptions.data,
+                  onReceiveProgress: error.requestOptions.onReceiveProgress,
+                  onSendProgress: error.requestOptions.onSendProgress,
+                  queryParameters: error.requestOptions.queryParameters,
+                );
+
                 return handler.resolve(response);
-              } else {
+              } catch (refreshError) {
                 return handler.reject(error);
               }
             }
             return handler.next(error);
           } catch (e) {
-            return handler.next(error);
+            return handler.reject(error);
           }
         },
       ),
@@ -93,12 +113,12 @@ class ApiClient {
     return this;
   }
 
-  readFromCache() async {
+  readFromCache() {
     final userDataRaw = prefs?.getString('user');
     selfHostedRestApiUrl = prefs?.getString('self_hosted_rest_api_url');
     if (userDataRaw != null) {
       final userData = json.decode(userDataRaw);
-      idToken = userData?['idToken'];
+      idToken = userData?['accessToken'];
       refreshToken = userData?['refreshToken'];
     }
   }
@@ -123,7 +143,7 @@ class ApiClient {
 
   get(String path,
       {Options? options, Map<String, dynamic>? queryParameters}) async {
-    await readFromCache();
+    readFromCache();
     return await _dio.get(path,
         options: options, queryParameters: queryParameters);
   }

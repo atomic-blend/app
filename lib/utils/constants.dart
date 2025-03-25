@@ -239,8 +239,8 @@ class Navigation {
                 final List<TaskItem> widgets = [];
                 for (final task in tasks) {
                   if (task.completed != true &&
-                      task.startDate != null &&
-                      task.startDate!.isToday()) {
+                      task.endDate != null &&
+                      task.endDate!.isToday()) {
                     widgets.add(TaskItem(task: task));
                   }
                 }

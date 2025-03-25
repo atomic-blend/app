@@ -99,7 +99,7 @@ class UserService {
       userData['accessToken'] = result.data['accessToken'];
       userData['refreshToken'] = result.data['refreshToken'];
       final user = UserEntity.fromJson(userData);
-      prefs?.setString('user', json.encode(user.toJson()));
+      await prefs?.setString('user', json.encode(user.toJson()));
 
       globalApiClient.setIdToken(user.accessToken!);
 
@@ -140,6 +140,9 @@ class UserService {
 
   static Future<String?> refreshToken(UserEntity user) async {
     final refreshToken = user.refreshToken;
+    if (refreshToken == null || refreshToken.isEmpty) {
+      throw Exception('No refresh token available');
+    }
     final apiClient = Dio();
     apiClient.options = BaseOptions(
       baseUrl: env!.restApiUrl,
@@ -148,7 +151,9 @@ class UserService {
       },
     );
     final result = await apiClient.post('/auth/refresh');
-
+    if (result.statusCode != 200) {
+      throw Exception('Token refresh failed');
+    }
     final accessToken = result.data['accessToken'];
     user.accessToken = accessToken;
     user.refreshToken = result.data['refreshToken'];

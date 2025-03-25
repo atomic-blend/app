@@ -61,7 +61,7 @@ class _TaskDatePickerModalState extends State<TaskDatePickerModal> {
                   current: mode,
                   indicatorSize:
                       Size.fromWidth(getSize(context).width * 0.4 / 2),
-                  values: [0, 1],
+                  values: const [0, 1],
                   iconBuilder: (value, foreground) {
                     return Text(context.t.date_modes.values.elementAt(value!),
                         style: getTextTheme(context).bodyMedium!.copyWith());
@@ -84,6 +84,9 @@ class _TaskDatePickerModalState extends State<TaskDatePickerModal> {
               ),
               TextButton(
                 onPressed: () {
+                  if (mode == 0) {
+                    _dueDate = _dueDate?.midnight();
+                  }
                   widget.onDateChanged(_dueDate);
                   Navigator.of(context).pop();
                 },
@@ -134,7 +137,7 @@ class _TaskDatePickerModalState extends State<TaskDatePickerModal> {
               color: getTheme(context).surfaceContainer,
               borderRadius: BorderRadius.circular($constants.corners.md),
             ),
-            child: Row(
+            child: const Row(
               children: [],
             ),
           ),

@@ -67,7 +67,7 @@ class TaskItem extends StatelessWidget {
                   ],
                 ),
                 const Spacer(),
-                if (task.startDate != null && task.startDate!.isDayDate())
+                if (task.endDate != null && task.endDate!.isDayDate())
                   Padding(
                     padding: EdgeInsets.only(right: $constants.insets.xxs),
                     child: Row(
@@ -80,7 +80,7 @@ class TaskItem extends StatelessWidget {
                         SizedBox(
                           width: $constants.insets.xxs,
                         ),
-                        Text(Jiffy.parseFromDateTime(task.startDate!).MMMd),
+                        Text(Jiffy.parseFromDateTime(task.endDate!).MMMd),
                       ],
                     ),
                   ),

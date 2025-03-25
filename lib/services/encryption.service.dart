@@ -66,7 +66,6 @@ class EncryptionService {
     prefs?.setString("key", base64.encode(decrypted));
   }
 
-  //TODO: display the mnemonic to the user and ask him to write it down after registration
   static Future<EncryptionKeyEntity?> generateKeySet(String password) async {
     //generate user salt
     final userSalt = generateRandomBytes(32);

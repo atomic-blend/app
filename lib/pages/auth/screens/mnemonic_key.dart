@@ -9,7 +9,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_layout_grid/flutter_layout_grid.dart';
 import 'package:icons_plus/icons_plus.dart';
 import 'package:lottie/lottie.dart';
 
@@ -51,8 +50,6 @@ class _MnemonicKeyState extends State<MnemonicKey>
 
   @override
   Widget build(BuildContext context) {
-    print("Mnemonic " + widget.mnemonic);
-    final _splittedMnemonic = widget.mnemonic.split(' ');
     return BlocListener<AuthBloc, AuthState>(
       listener: (BuildContext context, AuthState state) {
         if (state is LoggedIn) {
@@ -229,6 +226,7 @@ class _MnemonicKeyState extends State<MnemonicKey>
                             await _animationController.reverse(from: 1.0);
 
                             //TODO:
+                            if (!context.mounted) return;
                             Navigator.pop(context);
                           },
                         )
