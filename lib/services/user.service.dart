@@ -67,7 +67,7 @@ class UserService {
   }
 
   Future<UserEntity?> checkForLoggedInUser() async {
-    final userRaw = prefs?.getString('user');
+    final userRaw = prefs?.getString('accessToken');
     if (userRaw != null) {
       final user = json.decode(userRaw);
       if (user != null) {
@@ -96,12 +96,12 @@ class UserService {
     });
     if (result.statusCode == 200) {
       final userData = result.data['user'];
-      userData['accessToken'] = result.data['accessToken'];
-      userData['refreshToken'] = result.data['refreshToken'];
       final user = UserEntity.fromJson(userData);
       await prefs?.setString('user', json.encode(user.toJson()));
+      await prefs?.setString('accessToken', result.data["accessToken"]);
+      await prefs?.setString('refreshToken', result.data["refreshToken"]);
 
-      globalApiClient.setIdToken(user.accessToken!);
+      globalApiClient.setIdToken(result.data["accessToken"]);
 
       // restore data key from password
       encryptionService ??= EncryptionService(userSalt: user.keySet.salt);

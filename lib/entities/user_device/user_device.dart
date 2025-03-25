@@ -10,11 +10,12 @@ class UserDeviceEntity with _$UserDeviceEntity {
     required String fcmToken,
     required String deviceName,
     required String deviceId,
+    String? deviceTimezone,
   }) = _UserDeviceEntity;
 
   @override
   String toString() {
-    return 'UserDeviceEntity { fcm_token: $fcmToken, device_name: $deviceName, device_id: $deviceId }';
+    return 'UserDeviceEntity { fcm_token: $fcmToken, device_name: $deviceName, device_id: $deviceId, device_timezone: $deviceTimezone }';
   }
 
   factory UserDeviceEntity.fromJson(Map<String, dynamic> json) =>

@@ -12,6 +12,7 @@ _$UserDeviceEntityImpl _$$UserDeviceEntityImplFromJson(
       fcmToken: json['fcmToken'] as String,
       deviceName: json['deviceName'] as String,
       deviceId: json['deviceId'] as String,
+      deviceTimezone: json['deviceTimezone'] as String?,
     );
 
 Map<String, dynamic> _$$UserDeviceEntityImplToJson(
@@ -20,4 +21,5 @@ Map<String, dynamic> _$$UserDeviceEntityImplToJson(
       'fcmToken': instance.fcmToken,
       'deviceName': instance.deviceName,
       'deviceId': instance.deviceId,
+      'deviceTimezone': instance.deviceTimezone,
     };

@@ -35,9 +35,11 @@ mixin _$EncryptionKeyEntity {
       throw _privateConstructorUsedError; // the salt used to derive the mnemonic
   String get mnemonicSalt =>
       throw _privateConstructorUsedError; // the salt used to derive the mnemonic
-  set mnemonicSalt(String value) => throw _privateConstructorUsedError;
+  set mnemonicSalt(String value) =>
+      throw _privateConstructorUsedError; // ignore: invalid_annotation_target
   @JsonKey(includeToJson: false)
-  String? get backupPhrase => throw _privateConstructorUsedError;
+  String? get backupPhrase =>
+      throw _privateConstructorUsedError; // ignore: invalid_annotation_target
   @JsonKey(includeToJson: false)
   set backupPhrase(String? value) => throw _privateConstructorUsedError;
 
@@ -197,6 +199,7 @@ class _$EncryptionKeyEntityImpl extends _EncryptionKeyEntity {
 // the salt used to derive the mnemonic
   @override
   String mnemonicSalt;
+// ignore: invalid_annotation_target
   @override
   @JsonKey(includeToJson: false)
   String? backupPhrase;
@@ -243,10 +246,10 @@ abstract class _EncryptionKeyEntity extends EncryptionKeyEntity {
   set salt(String value); // the salt used to derive the mnemonic
   @override
   String get mnemonicSalt; // the salt used to derive the mnemonic
-  set mnemonicSalt(String value);
+  set mnemonicSalt(String value); // ignore: invalid_annotation_target
   @override
   @JsonKey(includeToJson: false)
-  String? get backupPhrase;
+  String? get backupPhrase; // ignore: invalid_annotation_target
   @JsonKey(includeToJson: false)
   set backupPhrase(String? value);
 

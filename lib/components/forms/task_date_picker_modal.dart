@@ -34,7 +34,7 @@ class _TaskDatePickerModalState extends State<TaskDatePickerModal> {
       width: double.infinity,
       height: getSize(context).height * 0.7,
       decoration: BoxDecoration(
-        color: Theme.of(context).scaffoldBackgroundColor,
+        color: getTheme(context).surfaceContainer,
         borderRadius: BorderRadius.only(
           topLeft: Radius.circular($constants.corners.xs),
           topRight: Radius.circular($constants.corners.xs),
@@ -107,7 +107,7 @@ class _TaskDatePickerModalState extends State<TaskDatePickerModal> {
             ),
             child: Container(
               decoration: BoxDecoration(
-                color: getTheme(context).surfaceContainer,
+                color: getTheme(context).surface,
                 borderRadius: BorderRadius.circular($constants.corners.md),
               ),
               child: CalendarDatePicker2(
@@ -134,7 +134,7 @@ class _TaskDatePickerModalState extends State<TaskDatePickerModal> {
           SizedBox(height: $constants.insets.sm),
           Container(
             decoration: BoxDecoration(
-              color: getTheme(context).surfaceContainer,
+              color: getTheme(context).surface,
               borderRadius: BorderRadius.circular($constants.corners.md),
             ),
             child: const Row(

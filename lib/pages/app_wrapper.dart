@@ -48,10 +48,15 @@ class _AppWrapperState extends State<AppWrapper> {
               state.user!.devices = [];
             }
             deviceInfoService ??= DeviceInfoService();
+
             final userDeviceInfo = await deviceInfoService!.getDeviceInfo();
-            if (state.user!.devices!.every(
-                (device) => device.deviceId != userDeviceInfo.deviceId)) {
-              state.user!.devices!.add(userDeviceInfo);
+            // update the userDeviceInfo only if it do not precisely match the one in the user's devices list
+
+            if (state.user!.devices!.isEmpty ||
+                state.user!.devices!.every((device) =>
+                    device.deviceId != userDeviceInfo.deviceId ||
+                    device.deviceName != userDeviceInfo.deviceName ||
+                    device.deviceTimezone != userDeviceInfo.deviceTimezone )) {
               if (!context.mounted) return;
               context.read<AuthBloc>().add(
                     UpdateUserDevice(

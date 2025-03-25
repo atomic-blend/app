@@ -57,12 +57,14 @@ class ApiClient {
                     .contains(error.requestOptions.path)) {
               // Get stored user data
               final userDataRaw = prefs?.getString('user');
+              final refreshToken = prefs?.getString('refreshToken');
               if (userDataRaw == null) {
                 return handler.reject(error);
               }
 
               final userData = json.decode(userDataRaw);
               final user = UserEntity.fromJson(userData);
+              user.refreshToken = refreshToken;
 
               try {
                 final newToken = await UserService.refreshToken(user);
@@ -75,8 +77,8 @@ class ApiClient {
                 setIdToken(newToken);
 
                 // Update stored user data with new token
-                userData['idToken'] = newToken;
                 await prefs?.setString('user', json.encode(userData));
+                await prefs?.setString('accessToken', newToken);
 
                 // Retry original request with new token
                 final opts = Options(
@@ -113,14 +115,10 @@ class ApiClient {
     return this;
   }
 
-  readFromCache() {
-    final userDataRaw = prefs?.getString('user');
+  readFromCache() async {
     selfHostedRestApiUrl = prefs?.getString('self_hosted_rest_api_url');
-    if (userDataRaw != null) {
-      final userData = json.decode(userDataRaw);
-      idToken = userData?['accessToken'];
-      refreshToken = userData?['refreshToken'];
-    }
+    idToken = prefs?.getString('accessToken');
+    refreshToken = prefs?.getString('refreshToken');
   }
 
   setIdToken(String idToken) {

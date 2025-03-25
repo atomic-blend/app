@@ -26,6 +26,8 @@ mixin _$UserDeviceEntity {
   set deviceName(String value) => throw _privateConstructorUsedError;
   String get deviceId => throw _privateConstructorUsedError;
   set deviceId(String value) => throw _privateConstructorUsedError;
+  String? get deviceTimezone => throw _privateConstructorUsedError;
+  set deviceTimezone(String? value) => throw _privateConstructorUsedError;
 
   /// Serializes this UserDeviceEntity to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -43,7 +45,11 @@ abstract class $UserDeviceEntityCopyWith<$Res> {
           UserDeviceEntity value, $Res Function(UserDeviceEntity) then) =
       _$UserDeviceEntityCopyWithImpl<$Res, UserDeviceEntity>;
   @useResult
-  $Res call({String fcmToken, String deviceName, String deviceId});
+  $Res call(
+      {String fcmToken,
+      String deviceName,
+      String deviceId,
+      String? deviceTimezone});
 }
 
 /// @nodoc
@@ -64,6 +70,7 @@ class _$UserDeviceEntityCopyWithImpl<$Res, $Val extends UserDeviceEntity>
     Object? fcmToken = null,
     Object? deviceName = null,
     Object? deviceId = null,
+    Object? deviceTimezone = freezed,
   }) {
     return _then(_value.copyWith(
       fcmToken: null == fcmToken
@@ -78,6 +85,10 @@ class _$UserDeviceEntityCopyWithImpl<$Res, $Val extends UserDeviceEntity>
           ? _value.deviceId
           : deviceId // ignore: cast_nullable_to_non_nullable
               as String,
+      deviceTimezone: freezed == deviceTimezone
+          ? _value.deviceTimezone
+          : deviceTimezone // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 }
@@ -90,7 +101,11 @@ abstract class _$$UserDeviceEntityImplCopyWith<$Res>
       __$$UserDeviceEntityImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String fcmToken, String deviceName, String deviceId});
+  $Res call(
+      {String fcmToken,
+      String deviceName,
+      String deviceId,
+      String? deviceTimezone});
 }
 
 /// @nodoc
@@ -109,6 +124,7 @@ class __$$UserDeviceEntityImplCopyWithImpl<$Res>
     Object? fcmToken = null,
     Object? deviceName = null,
     Object? deviceId = null,
+    Object? deviceTimezone = freezed,
   }) {
     return _then(_$UserDeviceEntityImpl(
       fcmToken: null == fcmToken
@@ -123,6 +139,10 @@ class __$$UserDeviceEntityImplCopyWithImpl<$Res>
           ? _value.deviceId
           : deviceId // ignore: cast_nullable_to_non_nullable
               as String,
+      deviceTimezone: freezed == deviceTimezone
+          ? _value.deviceTimezone
+          : deviceTimezone // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -133,7 +153,8 @@ class _$UserDeviceEntityImpl extends _UserDeviceEntity {
   _$UserDeviceEntityImpl(
       {required this.fcmToken,
       required this.deviceName,
-      required this.deviceId})
+      required this.deviceId,
+      this.deviceTimezone})
       : super._();
 
   factory _$UserDeviceEntityImpl.fromJson(Map<String, dynamic> json) =>
@@ -145,6 +166,8 @@ class _$UserDeviceEntityImpl extends _UserDeviceEntity {
   String deviceName;
   @override
   String deviceId;
+  @override
+  String? deviceTimezone;
 
   /// Create a copy of UserDeviceEntity
   /// with the given fields replaced by the non-null parameter values.
@@ -167,7 +190,8 @@ abstract class _UserDeviceEntity extends UserDeviceEntity {
   factory _UserDeviceEntity(
       {required String fcmToken,
       required String deviceName,
-      required String deviceId}) = _$UserDeviceEntityImpl;
+      required String deviceId,
+      String? deviceTimezone}) = _$UserDeviceEntityImpl;
   _UserDeviceEntity._() : super._();
 
   factory _UserDeviceEntity.fromJson(Map<String, dynamic> json) =
@@ -182,6 +206,9 @@ abstract class _UserDeviceEntity extends UserDeviceEntity {
   @override
   String get deviceId;
   set deviceId(String value);
+  @override
+  String? get deviceTimezone;
+  set deviceTimezone(String? value);
 
   /// Create a copy of UserDeviceEntity
   /// with the given fields replaced by the non-null parameter values.
