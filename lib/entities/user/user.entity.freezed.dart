@@ -38,6 +38,9 @@ mixin _$UserEntity {
   set refreshToken(String? value) => throw _privateConstructorUsedError;
   EncryptionKeyEntity get keySet => throw _privateConstructorUsedError;
   set keySet(EncryptionKeyEntity value) => throw _privateConstructorUsedError;
+  List<UserDeviceEntity>? get devices => throw _privateConstructorUsedError;
+  set devices(List<UserDeviceEntity>? value) =>
+      throw _privateConstructorUsedError;
   String? get accessToken => throw _privateConstructorUsedError;
   set accessToken(String? value) => throw _privateConstructorUsedError;
   DateTime? get createdAt => throw _privateConstructorUsedError;
@@ -71,6 +74,7 @@ abstract class $UserEntityCopyWith<$Res> {
       String? lastname,
       String? refreshToken,
       EncryptionKeyEntity keySet,
+      List<UserDeviceEntity>? devices,
       String? accessToken,
       DateTime? createdAt,
       DateTime? updatedAt});
@@ -102,6 +106,7 @@ class _$UserEntityCopyWithImpl<$Res, $Val extends UserEntity>
     Object? lastname = freezed,
     Object? refreshToken = freezed,
     Object? keySet = null,
+    Object? devices = freezed,
     Object? accessToken = freezed,
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
@@ -143,6 +148,10 @@ class _$UserEntityCopyWithImpl<$Res, $Val extends UserEntity>
           ? _value.keySet
           : keySet // ignore: cast_nullable_to_non_nullable
               as EncryptionKeyEntity,
+      devices: freezed == devices
+          ? _value.devices
+          : devices // ignore: cast_nullable_to_non_nullable
+              as List<UserDeviceEntity>?,
       accessToken: freezed == accessToken
           ? _value.accessToken
           : accessToken // ignore: cast_nullable_to_non_nullable
@@ -187,6 +196,7 @@ abstract class _$$UserEntityImplCopyWith<$Res>
       String? lastname,
       String? refreshToken,
       EncryptionKeyEntity keySet,
+      List<UserDeviceEntity>? devices,
       String? accessToken,
       DateTime? createdAt,
       DateTime? updatedAt});
@@ -217,6 +227,7 @@ class __$$UserEntityImplCopyWithImpl<$Res>
     Object? lastname = freezed,
     Object? refreshToken = freezed,
     Object? keySet = null,
+    Object? devices = freezed,
     Object? accessToken = freezed,
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
@@ -258,6 +269,10 @@ class __$$UserEntityImplCopyWithImpl<$Res>
           ? _value.keySet
           : keySet // ignore: cast_nullable_to_non_nullable
               as EncryptionKeyEntity,
+      devices: freezed == devices
+          ? _value.devices
+          : devices // ignore: cast_nullable_to_non_nullable
+              as List<UserDeviceEntity>?,
       accessToken: freezed == accessToken
           ? _value.accessToken
           : accessToken // ignore: cast_nullable_to_non_nullable
@@ -287,6 +302,7 @@ class _$UserEntityImpl extends _UserEntity {
       this.lastname,
       this.refreshToken,
       required this.keySet,
+      this.devices,
       this.accessToken,
       this.createdAt,
       this.updatedAt})
@@ -313,6 +329,8 @@ class _$UserEntityImpl extends _UserEntity {
   String? refreshToken;
   @override
   EncryptionKeyEntity keySet;
+  @override
+  List<UserDeviceEntity>? devices;
   @override
   String? accessToken;
   @override
@@ -347,6 +365,7 @@ abstract class _UserEntity extends UserEntity {
       String? lastname,
       String? refreshToken,
       required EncryptionKeyEntity keySet,
+      List<UserDeviceEntity>? devices,
       String? accessToken,
       DateTime? createdAt,
       DateTime? updatedAt}) = _$UserEntityImpl;
@@ -382,6 +401,9 @@ abstract class _UserEntity extends UserEntity {
   @override
   EncryptionKeyEntity get keySet;
   set keySet(EncryptionKeyEntity value);
+  @override
+  List<UserDeviceEntity>? get devices;
+  set devices(List<UserDeviceEntity>? value);
   @override
   String? get accessToken;
   set accessToken(String? value);
