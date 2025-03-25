@@ -2,12 +2,15 @@ import 'dart:convert';
 
 import 'package:app/entities/user/user.entity.dart';
 import 'package:app/entities/userRole/userRole.entity.dart';
+import 'package:app/entities/user_device/user_device.dart';
 import 'package:app/main.dart';
+import 'package:app/services/device_info.service.dart';
 import 'package:app/services/encryption.service.dart';
 import 'package:app/utils/api_client.dart';
 import 'package:dio/dio.dart';
 
 EncryptionService? encryptionService;
+DeviceInfoService? deviceInfoService;
 
 class UserService {
   UserService();
@@ -30,6 +33,18 @@ class UserService {
       return user;
     } else {
       throw Exception('user_creation_failed');
+    }
+  }
+
+  Future<UserEntity> updateUserDevice(
+      UserEntity user, UserDeviceEntity device) async {
+    final result = await globalApiClient.put('/users/device', data: device);
+    if (result.statusCode == 200) {
+      final user = UserEntity.fromJson(result.data["data"]);
+      prefs?.setString('user', json.encode(user.toJson()));
+      return user;
+    } else {
+      throw Exception('user_device_update_failed');
     }
   }
 

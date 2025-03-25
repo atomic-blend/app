@@ -13,7 +13,7 @@ final class LoginEvent extends AuthEvent {
 final class RegisterEvent extends AuthEvent {
   final String email;
   final String password;
-  const RegisterEvent({ required this.email, required this.password });
+  const RegisterEvent({required this.email, required this.password});
 }
 
 final class Logout extends AuthEvent {
@@ -26,4 +26,10 @@ final class RefreshUser extends AuthEvent {
 
 final class DeleteUser extends AuthEvent {
   const DeleteUser();
+}
+
+final class UpdateUserDevice extends AuthEvent {
+  final UserEntity user;
+  final UserDeviceEntity deviceInfo;
+  const UpdateUserDevice(this.user, this.deviceInfo);
 }
