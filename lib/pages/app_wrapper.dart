@@ -37,12 +37,6 @@ class _AppWrapperState extends State<AppWrapper> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<AppCubit, AppState>(builder: (context, appState) {
-      // if (appState.isIntroCompleted != true) {
-      //   WidgetsBinding.instance.addPostFrameCallback((_) {
-      //     Navigator.of(context).pushReplacement(
-      //         MaterialPageRoute(builder: (context) => const AppIntroduction()));
-      //   });
-      // }
       return BlocBuilder<AuthBloc, AuthState>(builder: (context, state) {
         if (state is LoggedIn) {
           encryptionService ??=
@@ -58,7 +52,6 @@ class _AppWrapperState extends State<AppWrapper> {
             if (state.user!.devices!.every(
                 (device) => device.deviceId != userDeviceInfo.deviceId)) {
               state.user!.devices!.add(userDeviceInfo);
-              //TODO: send edit profile api call
               if (!context.mounted) return;
               context.read<AuthBloc>().add(
                     UpdateUserDevice(
