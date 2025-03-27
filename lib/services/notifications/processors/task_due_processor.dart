@@ -9,7 +9,7 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 class TaskDueProcessor {
   static processAndNotify(RemoteMessage message) async {
-    // final locale = AppLocaleUtils.findDeviceLocale();
+    final locale = AppLocaleUtils.findDeviceLocale();
     final data = message.data;
 
     //get data from local storage or remote message
@@ -24,7 +24,7 @@ class TaskDueProcessor {
 
     // prepare notification body
     final title = await encryptionService?.decryptString(data: encryptedTitle);
-    // final body = locale.translations.notifications.task_due_now;
+    final body = locale.translations.notifications.task_due_now;
 
     // setup notification client
     final localNotificationsPlugin = FlutterLocalNotificationsPlugin();
@@ -54,7 +54,7 @@ class TaskDueProcessor {
     await localNotificationsPlugin.show(
       DateTime.now().millisecondsSinceEpoch ~/ 1000,
       title,
-      "body",
+      body,
       notifDetails,
     );
   }
