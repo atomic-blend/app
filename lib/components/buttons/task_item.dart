@@ -84,6 +84,23 @@ class TaskItem extends StatelessWidget {
                       ],
                     ),
                   ),
+                if (task.endDate != null && !task.endDate!.isDayDate())
+                  Padding(
+                    padding: EdgeInsets.only(right: $constants.insets.xxs),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        const Icon(
+                          CupertinoIcons.time,
+                          size: 12,
+                        ),
+                        SizedBox(
+                          width: $constants.insets.xxs,
+                        ),
+                        Text(Jiffy.parseFromDateTime(task.endDate!).jm),
+                      ],
+                    ),
+                  )
               ],
             ),
           ),
