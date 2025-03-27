@@ -116,7 +116,6 @@ class _TaskDatePickerModalState extends State<TaskDatePickerModal> {
                 setState(() {
                   _dueDate = value;
                 });
-                print(_dueDate);
               },
             ),
           if (mode == 1)

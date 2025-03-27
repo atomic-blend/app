@@ -4,6 +4,7 @@ import 'package:app/entities/tasks/tasks.entity.dart';
 import 'package:app/i18n/strings.g.dart';
 import 'package:app/components/forms/task_date_picker_modal/task_date_picker_modal.dart';
 import 'package:app/utils/constants.dart';
+import 'package:app/utils/exntensions/date_time_extension.dart';
 import 'package:app/utils/shortcuts.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -84,7 +85,10 @@ class _TaskDetailState extends State<TaskDetail> {
                   },
                   child: Container(
                     child: _dueDate != null
-                        ? Text(Jiffy.parseFromDateTime(_dueDate!).yMMMMdjm,
+                        ? Text(
+                            _dueDate?.isDayDate() == true
+                                ? Jiffy.parseFromDateTime(_dueDate!).yMMMEd
+                                : Jiffy.parseFromDateTime(_dueDate!).yMMMMdjm,
                             style: getTextTheme(context).bodyMedium!.copyWith())
                         : Text(
                             context.t.tasks.due_dates.no_due_date,

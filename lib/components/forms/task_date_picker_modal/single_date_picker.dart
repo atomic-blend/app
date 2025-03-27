@@ -146,6 +146,7 @@ class _SingleDatePickerState extends State<SingleDatePicker> {
                                       minute: 0,
                                     );
                                   });
+                                  widget.onEndDateChanged?.call(endDate!);
                                 },
                                 child: Icon(
                                   CupertinoIcons.xmark,
