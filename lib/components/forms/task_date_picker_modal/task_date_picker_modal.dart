@@ -17,7 +17,8 @@ class TaskDatePickerModal extends StatefulWidget {
       {super.key,
       required this.onEndDateChanged,
       this.firstDate,
-      this.lastDate, this.value});
+      this.lastDate,
+      this.value});
 
   @override
   State<TaskDatePickerModal> createState() => _TaskDatePickerModalState();
@@ -89,9 +90,6 @@ class _TaskDatePickerModalState extends State<TaskDatePickerModal> {
               ),
               TextButton(
                 onPressed: () {
-                  if (mode == 0) {
-                    _dueDate = _dueDate?.midnight();
-                  }
                   widget.onEndDateChanged(_dueDate);
                   Navigator.of(context).pop();
                 },

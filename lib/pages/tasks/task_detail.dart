@@ -63,6 +63,7 @@ class _TaskDetailState extends State<TaskDetail> {
                                 setState(() {
                                   _dueDate = date;
                                 });
+                                print("edited date: $_dueDate");
                               },
                               firstDate: DateTime(2000),
                               lastDate: DateTime(2100),
@@ -73,7 +74,7 @@ class _TaskDetailState extends State<TaskDetail> {
                   },
                   child: Container(
                     child: _dueDate != null
-                        ? Text(Jiffy.parseFromDateTime(_dueDate!).yMMMMd,
+                        ? Text(Jiffy.parseFromDateTime(_dueDate!).yMMMMdjm,
                             style: getTextTheme(context).bodyMedium!.copyWith())
                         : Text(
                             context.t.tasks.due_dates.no_due_date,
