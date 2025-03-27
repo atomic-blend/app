@@ -80,6 +80,7 @@ class _AddTaskModalState extends State<AddTaskModal> {
                                   context: context,
                                   isScrollControlled: true,
                                   builder: (context) => TaskDatePickerModal(
+                                        onRemindersChanged: (newRem) {},
                                         onEndDateChanged: (date) {
                                           setState(() {
                                             _dueDate = date;

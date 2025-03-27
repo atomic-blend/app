@@ -22,16 +22,19 @@ class TaskDetail extends StatefulWidget {
 class _TaskDetailState extends State<TaskDetail> {
   final TextEditingController _titleController = TextEditingController();
   DateTime? _dueDate;
+  List<DateTime>? _reminders;
 
   @override
   void initState() {
     _titleController.text = widget.task.title;
     _dueDate = widget.task.endDate;
+    _reminders = widget.task.reminders;
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    print(_reminders);
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -58,7 +61,13 @@ class _TaskDetailState extends State<TaskDetail> {
                         context: context,
                         isScrollControlled: true,
                         builder: (context) => TaskDatePickerModal(
-                              value: _dueDate,
+                              endDate: _dueDate,
+                              reminders: _reminders,
+                              onRemindersChanged: (newRem) {
+                                setState(() {
+                                  _reminders = newRem;
+                                });
+                              },
                               onEndDateChanged: (date) {
                                 setState(() {
                                   _dueDate = date;
@@ -69,6 +78,7 @@ class _TaskDetailState extends State<TaskDetail> {
                               lastDate: DateTime(2100),
                             ));
                     widget.task.endDate = _dueDate;
+                    widget.task.reminders = _reminders;
                     if (!context.mounted) return;
                     context.read<TasksBloc>().add(EditTask(widget.task));
                   },

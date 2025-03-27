@@ -257,7 +257,12 @@ class EncryptionService {
         return await encryptString(data: jsonValue);
       } else {
         String decryptedValue = await decryptString(data: value.toString());
-        return json.decode(decryptedValue);
+        try {
+          return json.decode(decryptedValue);
+        } catch (e) {
+          // If cannot decode as JSON, return as is (might be a date string or other primitive)
+          return decryptedValue;
+        }
       }
     }
   }
@@ -278,9 +283,16 @@ class EncryptionService {
 
   Future<dynamic> decryptJson(dynamic data) async {
     if (data == null) return null;
+
+    if (data is List) {
+      return await Future.wait(
+          data.map((item) => _processJsonValue(item, false)));
+    }
+
     if (data.runtimeType != Map) {
       return await decryptString(data: data);
     }
+
     Map<String, dynamic> decryptedData = {};
 
     for (var entry in data.entries) {

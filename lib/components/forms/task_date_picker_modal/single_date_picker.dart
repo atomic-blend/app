@@ -10,9 +10,11 @@ import 'package:flutter_popup/flutter_popup.dart';
 import 'package:jiffy/jiffy.dart';
 
 class SingleDatePicker extends StatefulWidget {
+  final Function(List<DateTime>?) onRemindersChanged;
   final DateTime? firstDate;
   final DateTime? lastDate;
   final DateTime? endDate;
+  final List<DateTime>? reminders;
   final Function(DateTime)? onEndDateChanged;
 
   const SingleDatePicker(
@@ -20,7 +22,8 @@ class SingleDatePicker extends StatefulWidget {
       this.firstDate,
       this.lastDate,
       this.endDate,
-      this.onEndDateChanged});
+      this.onEndDateChanged,
+      required this.onRemindersChanged, this.reminders});
 
   @override
   State<SingleDatePicker> createState() => _SingleDatePickerState();
@@ -34,6 +37,7 @@ class _SingleDatePickerState extends State<SingleDatePicker> {
   void initState() {
     // TODO: implement initState
     endDate = widget.endDate;
+    _reminders = widget.reminders;
     super.initState();
   }
 
@@ -172,6 +176,7 @@ class _SingleDatePickerState extends State<SingleDatePicker> {
                             setState(() {
                               _reminders = newValue;
                             });
+                            widget.onRemindersChanged(_reminders);
                           },
                           mode: ReminderPickerMode.day),
                     ),

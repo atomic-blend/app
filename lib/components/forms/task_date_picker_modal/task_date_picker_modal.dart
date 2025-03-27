@@ -10,7 +10,9 @@ import 'package:app/utils/exntensions/date_time_extension.dart';
 
 class TaskDatePickerModal extends StatefulWidget {
   final Function(DateTime?) onEndDateChanged;
-  final DateTime? value;
+  final Function(List<DateTime>?) onRemindersChanged;
+  final DateTime? endDate;
+  final List<DateTime>? reminders;
   final DateTime? firstDate;
   final DateTime? lastDate;
   const TaskDatePickerModal(
@@ -18,7 +20,9 @@ class TaskDatePickerModal extends StatefulWidget {
       required this.onEndDateChanged,
       this.firstDate,
       this.lastDate,
-      this.value});
+      this.endDate,
+      required this.onRemindersChanged,
+      this.reminders});
 
   @override
   State<TaskDatePickerModal> createState() => _TaskDatePickerModalState();
@@ -30,7 +34,7 @@ class _TaskDatePickerModalState extends State<TaskDatePickerModal> {
 
   @override
   void initState() {
-    _dueDate = widget.value ?? DateTime.now();
+    _dueDate = widget.endDate ?? DateTime.now();
     super.initState();
   }
 
@@ -106,6 +110,8 @@ class _TaskDatePickerModalState extends State<TaskDatePickerModal> {
           if (mode == 0)
             SingleDatePicker(
               endDate: _dueDate,
+              reminders: widget.reminders,
+              onRemindersChanged: widget.onRemindersChanged,
               onEndDateChanged: (value) {
                 setState(() {
                   _dueDate = value;
