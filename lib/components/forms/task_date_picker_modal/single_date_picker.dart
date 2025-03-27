@@ -1,3 +1,5 @@
+import 'package:app/components/forms/task_date_picker_modal/reminder_picker.dart';
+import 'package:app/i18n/strings.g.dart';
 import 'package:app/utils/constants.dart';
 import 'package:app/utils/exntensions/date_time_extension.dart';
 import 'package:app/utils/shortcuts.dart';
@@ -10,18 +12,34 @@ import 'package:jiffy/jiffy.dart';
 class SingleDatePicker extends StatefulWidget {
   final DateTime? firstDate;
   final DateTime? lastDate;
+  final DateTime? endDate;
+  final Function(DateTime)? onEndDateChanged;
 
-  const SingleDatePicker({super.key, this.firstDate, this.lastDate});
+  const SingleDatePicker(
+      {super.key,
+      this.firstDate,
+      this.lastDate,
+      this.endDate,
+      this.onEndDateChanged});
 
   @override
   State<SingleDatePicker> createState() => _SingleDatePickerState();
 }
 
 class _SingleDatePickerState extends State<SingleDatePicker> {
-  DateTime? _dueDate;
+  DateTime? endDate;
+  List<DateTime>? _reminders;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    endDate = widget.endDate;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
+    print(endDate);
     return Column(
       children: [
         Padding(
@@ -46,13 +64,13 @@ class _SingleDatePickerState extends State<SingleDatePicker> {
                         .add(years: 100)
                         .dateTime,
               ),
-              value: [_dueDate],
+              value: [endDate],
               onValueChanged: (value) {
                 setState(() {
-                  if (_dueDate == null) {
-                    _dueDate = value[0];
+                  if (endDate == null) {
+                    endDate = value[0];
                   } else {
-                    _dueDate = _dueDate!.copyWith(
+                    endDate = endDate!.copyWith(
                       year: value[0].year,
                       month: value[0].month,
                       day: value[0].day,
@@ -99,30 +117,27 @@ class _SingleDatePickerState extends State<SingleDatePicker> {
                             mode: CupertinoDatePickerMode.time,
                             onDateTimeChanged: (value) {
                               setState(() {
-                                _dueDate ??= DateTime.now();
-                                _dueDate = _dueDate?.copyWith(
+                                endDate = endDate?.copyWith(
                                   hour: value.hour,
                                   minute: value.minute,
                                 );
                               });
+                              widget.onEndDateChanged?.call(endDate!);
                             },
                           ),
                         ),
                         child: Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            Text(_dueDate != null &&
-                                    (_dueDate?.hour != 0 &&
-                                        _dueDate?.minute != 0)
-                                ? "${_dueDate?.hour}:${_dueDate?.minute}"
+                            Text(endDate != null && endDate?.isDayDate() != true
+                                ? "${endDate?.hour}:${endDate?.minute}"
                                 : "none"),
                             SizedBox(width: $constants.insets.xs),
-                            if (_dueDate != null &&
-                                (_dueDate?.hour != 0 && _dueDate?.minute != 0))
+                            if (endDate != null && endDate?.isDayDate() != true)
                               GestureDetector(
                                 onTap: () {
                                   setState(() {
-                                    _dueDate = _dueDate?.copyWith(
+                                    endDate = endDate?.copyWith(
                                       hour: 0,
                                       minute: 0,
                                     );
@@ -141,24 +156,42 @@ class _SingleDatePickerState extends State<SingleDatePicker> {
                   ),
                 ),
                 SizedBox(height: $constants.insets.xs),
-                Divider(),
+                const Divider(),
                 SizedBox(height: $constants.insets.xs),
                 Padding(
                   padding: EdgeInsets.symmetric(
                     horizontal: $constants.insets.sm,
                   ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
-                        spacing: $constants.insets.sm,
-                        children: const [
-                          Icon(CupertinoIcons.alarm),
-                          Text("Reminder")
-                        ],
-                      ),
-                      const Text("-"),
-                    ],
+                  child: CustomPopup(
+                    content: SizedBox(
+                      width: getSize(context).width * 0.75,
+                      child: ReminderPicker(
+                          reminders: _reminders,
+                          dueDate: endDate ?? DateTime.now(),
+                          onRemindersChanged: (newValue) {
+                            setState(() {
+                              _reminders = newValue;
+                            });
+                          },
+                          mode: ReminderPickerMode.day),
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
+                          spacing: $constants.insets.sm,
+                          children: const [
+                            Icon(CupertinoIcons.alarm),
+                            Text("Reminder")
+                          ],
+                        ),
+                        Center(
+                            child: Text(_reminders != null &&
+                                    _reminders!.isNotEmpty
+                                ? "${_reminders?.length.toString()} ${context.t.tasks.add_task_modal.reminders(n: _reminders?.length ?? 0).toLowerCase()}"
+                                : "-")),
+                      ],
+                    ),
                   ),
                 ),
               ],

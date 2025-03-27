@@ -45,6 +45,25 @@ class TranslationsFr implements Translations {
 	@override late final _TranslationsUnderConstructionFr under_construction = _TranslationsUnderConstructionFr._(_root);
 	@override late final _TranslationsMoreFr more = _TranslationsMoreFr._(_root);
 	@override late final _TranslationsTimesFr times = _TranslationsTimesFr._(_root);
+	@override Map<String, dynamic> get days_before => {
+		'none': _TranslationsDaysBeforeNoneFr._(_root),
+		'same_day': _TranslationsDaysBeforeSameDayFr._(_root),
+		'one_day': _TranslationsDaysBeforeOneDayFr._(_root),
+		'two_days': _TranslationsDaysBeforeTwoDaysFr._(_root),
+		'three_days': _TranslationsDaysBeforeThreeDaysFr._(_root),
+		'one_week': _TranslationsDaysBeforeOneWeekFr._(_root),
+		'custom': _TranslationsDaysBeforeCustomFr._(_root),
+	};
+	@override Map<String, dynamic> get time_before => {
+		'same_time': _TranslationsTimeBeforeSameTimeFr._(_root),
+		'five_minutes': _TranslationsTimeBeforeFiveMinutesFr._(_root),
+		'fifteen_minutes': _TranslationsTimeBeforeFifteenMinutesFr._(_root),
+		'thirty_minutes': _TranslationsTimeBeforeThirtyMinutesFr._(_root),
+		'one_hour': _TranslationsTimeBeforeOneHourFr._(_root),
+		'two_hours': _TranslationsTimeBeforeTwoHoursFr._(_root),
+		'one_day': _TranslationsTimeBeforeOneDayFr._(_root),
+		'custom': _TranslationsTimeBeforeCustomFr._(_root),
+	};
 	@override late final _TranslationsActionsFr actions = _TranslationsActionsFr._(_root);
 	@override Map<String, String> get date_modes => {
 		'date': 'Date',
@@ -188,6 +207,171 @@ class _TranslationsTimesFr implements TranslationsTimesEn {
 	@override String get all_time => 'Tout le temps';
 }
 
+// Path: days_before.none
+class _TranslationsDaysBeforeNoneFr implements TranslationsDaysBeforeNoneEn {
+	_TranslationsDaysBeforeNoneFr._(this._root);
+
+	final TranslationsFr _root; // ignore: unused_field
+
+	// Translations
+	@override String get value => '0';
+	@override String get label => 'Aucun';
+}
+
+// Path: days_before.same_day
+class _TranslationsDaysBeforeSameDayFr implements TranslationsDaysBeforeSameDayEn {
+	_TranslationsDaysBeforeSameDayFr._(this._root);
+
+	final TranslationsFr _root; // ignore: unused_field
+
+	// Translations
+	@override String get value => '0';
+	@override String get label => 'Le même jour';
+}
+
+// Path: days_before.one_day
+class _TranslationsDaysBeforeOneDayFr implements TranslationsDaysBeforeOneDayEn {
+	_TranslationsDaysBeforeOneDayFr._(this._root);
+
+	final TranslationsFr _root; // ignore: unused_field
+
+	// Translations
+	@override String get value => '-1';
+	@override String get label => '1 jour avant';
+}
+
+// Path: days_before.two_days
+class _TranslationsDaysBeforeTwoDaysFr implements TranslationsDaysBeforeTwoDaysEn {
+	_TranslationsDaysBeforeTwoDaysFr._(this._root);
+
+	final TranslationsFr _root; // ignore: unused_field
+
+	// Translations
+	@override String get value => '-2';
+	@override String get label => '2 jours avant';
+}
+
+// Path: days_before.three_days
+class _TranslationsDaysBeforeThreeDaysFr implements TranslationsDaysBeforeThreeDaysEn {
+	_TranslationsDaysBeforeThreeDaysFr._(this._root);
+
+	final TranslationsFr _root; // ignore: unused_field
+
+	// Translations
+	@override String get value => '-3';
+	@override String get label => '3 jours avant';
+}
+
+// Path: days_before.one_week
+class _TranslationsDaysBeforeOneWeekFr implements TranslationsDaysBeforeOneWeekEn {
+	_TranslationsDaysBeforeOneWeekFr._(this._root);
+
+	final TranslationsFr _root; // ignore: unused_field
+
+	// Translations
+	@override String get value => '-7';
+	@override String get label => '1 semaine avant';
+}
+
+// Path: days_before.custom
+class _TranslationsDaysBeforeCustomFr implements TranslationsDaysBeforeCustomEn {
+	_TranslationsDaysBeforeCustomFr._(this._root);
+
+	final TranslationsFr _root; // ignore: unused_field
+
+	// Translations
+	@override String get value => 'null';
+	@override String get label => 'Personnalisé';
+}
+
+// Path: time_before.same_time
+class _TranslationsTimeBeforeSameTimeFr implements TranslationsTimeBeforeSameTimeEn {
+	_TranslationsTimeBeforeSameTimeFr._(this._root);
+
+	final TranslationsFr _root; // ignore: unused_field
+
+	// Translations
+	@override String get value => '0';
+	@override String get label => 'Au même moment';
+}
+
+// Path: time_before.five_minutes
+class _TranslationsTimeBeforeFiveMinutesFr implements TranslationsTimeBeforeFiveMinutesEn {
+	_TranslationsTimeBeforeFiveMinutesFr._(this._root);
+
+	final TranslationsFr _root; // ignore: unused_field
+
+	// Translations
+	@override String get value => '-5';
+	@override String get label => '5 minutes avant';
+}
+
+// Path: time_before.fifteen_minutes
+class _TranslationsTimeBeforeFifteenMinutesFr implements TranslationsTimeBeforeFifteenMinutesEn {
+	_TranslationsTimeBeforeFifteenMinutesFr._(this._root);
+
+	final TranslationsFr _root; // ignore: unused_field
+
+	// Translations
+	@override String get value => '-15';
+	@override String get label => '15 minutes avant';
+}
+
+// Path: time_before.thirty_minutes
+class _TranslationsTimeBeforeThirtyMinutesFr implements TranslationsTimeBeforeThirtyMinutesEn {
+	_TranslationsTimeBeforeThirtyMinutesFr._(this._root);
+
+	final TranslationsFr _root; // ignore: unused_field
+
+	// Translations
+	@override String get value => '-30';
+	@override String get label => '30 minutes avant';
+}
+
+// Path: time_before.one_hour
+class _TranslationsTimeBeforeOneHourFr implements TranslationsTimeBeforeOneHourEn {
+	_TranslationsTimeBeforeOneHourFr._(this._root);
+
+	final TranslationsFr _root; // ignore: unused_field
+
+	// Translations
+	@override String get value => '-60';
+	@override String get label => '1 heure avant';
+}
+
+// Path: time_before.two_hours
+class _TranslationsTimeBeforeTwoHoursFr implements TranslationsTimeBeforeTwoHoursEn {
+	_TranslationsTimeBeforeTwoHoursFr._(this._root);
+
+	final TranslationsFr _root; // ignore: unused_field
+
+	// Translations
+	@override String get value => '-120';
+	@override String get label => '2 heures avant';
+}
+
+// Path: time_before.one_day
+class _TranslationsTimeBeforeOneDayFr implements TranslationsTimeBeforeOneDayEn {
+	_TranslationsTimeBeforeOneDayFr._(this._root);
+
+	final TranslationsFr _root; // ignore: unused_field
+
+	// Translations
+	@override String get value => '-1440';
+	@override String get label => '1 jour avant';
+}
+
+// Path: time_before.custom
+class _TranslationsTimeBeforeCustomFr implements TranslationsTimeBeforeCustomEn {
+	_TranslationsTimeBeforeCustomFr._(this._root);
+
+	final TranslationsFr _root; // ignore: unused_field
+
+	// Translations
+	@override String get value => 'null';
+	@override String get label => 'Personnalisé';
+}
+
 // Path: actions
 class _TranslationsActionsFr implements TranslationsActionsEn {
 	_TranslationsActionsFr._(this._root);
@@ -200,6 +384,7 @@ class _TranslationsActionsFr implements TranslationsActionsEn {
 	@override String get next => 'Suivant';
 	@override String get back => 'Retour';
 	@override String get delete => 'Supprimer';
+	@override String get add => 'Ajouter';
 }
 
 // Path: loading
@@ -574,6 +759,14 @@ class _TranslationsTasksAddTaskModalFr implements TranslationsTasksAddTaskModalE
 	@override String get erase => 'Effacer';
 	@override String get title_required => 'Titre requis';
 	@override String get title_required_description => 'Veuillez saisir un titre pour votre tâche';
+	@override String reminders({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('fr'))(n,
+		zero: 'Rappel',
+		one: 'Rappel',
+		other: 'Rappels',
+	);
+	@override String get no_reminders => 'Pas de rappels';
+	@override String get add_reminder => 'Ajouter un rappel';
+	@override String get when_would_you_like_to_be_reminded => 'Quand aimeriez-vous être rappelé ?';
 }
 
 // Path: account.sections
@@ -693,6 +886,14 @@ extension on TranslationsFr {
 			case 'tasks.add_task_modal.erase': return 'Effacer';
 			case 'tasks.add_task_modal.title_required': return 'Titre requis';
 			case 'tasks.add_task_modal.title_required_description': return 'Veuillez saisir un titre pour votre tâche';
+			case 'tasks.add_task_modal.reminders': return ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('fr'))(n,
+				zero: 'Rappel',
+				one: 'Rappel',
+				other: 'Rappels',
+			);
+			case 'tasks.add_task_modal.no_reminders': return 'Pas de rappels';
+			case 'tasks.add_task_modal.add_reminder': return 'Ajouter un rappel';
+			case 'tasks.add_task_modal.when_would_you_like_to_be_reminded': return 'Quand aimeriez-vous être rappelé ?';
 			case 'calendar.title': return 'Calendrier';
 			case 'account.edit_profile': return 'Modifier le profil';
 			case 'account.sections.account': return 'Compte';
@@ -712,11 +913,42 @@ extension on TranslationsFr {
 			case 'times.this_year': return 'Cette année';
 			case 'times.last_year': return 'L\'année dernière';
 			case 'times.all_time': return 'Tout le temps';
+			case 'days_before.none.value': return '0';
+			case 'days_before.none.label': return 'Aucun';
+			case 'days_before.same_day.value': return '0';
+			case 'days_before.same_day.label': return 'Le même jour';
+			case 'days_before.one_day.value': return '-1';
+			case 'days_before.one_day.label': return '1 jour avant';
+			case 'days_before.two_days.value': return '-2';
+			case 'days_before.two_days.label': return '2 jours avant';
+			case 'days_before.three_days.value': return '-3';
+			case 'days_before.three_days.label': return '3 jours avant';
+			case 'days_before.one_week.value': return '-7';
+			case 'days_before.one_week.label': return '1 semaine avant';
+			case 'days_before.custom.value': return 'null';
+			case 'days_before.custom.label': return 'Personnalisé';
+			case 'time_before.same_time.value': return '0';
+			case 'time_before.same_time.label': return 'Au même moment';
+			case 'time_before.five_minutes.value': return '-5';
+			case 'time_before.five_minutes.label': return '5 minutes avant';
+			case 'time_before.fifteen_minutes.value': return '-15';
+			case 'time_before.fifteen_minutes.label': return '15 minutes avant';
+			case 'time_before.thirty_minutes.value': return '-30';
+			case 'time_before.thirty_minutes.label': return '30 minutes avant';
+			case 'time_before.one_hour.value': return '-60';
+			case 'time_before.one_hour.label': return '1 heure avant';
+			case 'time_before.two_hours.value': return '-120';
+			case 'time_before.two_hours.label': return '2 heures avant';
+			case 'time_before.one_day.value': return '-1440';
+			case 'time_before.one_day.label': return '1 jour avant';
+			case 'time_before.custom.value': return 'null';
+			case 'time_before.custom.label': return 'Personnalisé';
 			case 'actions.save': return 'Enregistrer';
 			case 'actions.cancel': return 'Annuler';
 			case 'actions.next': return 'Suivant';
 			case 'actions.back': return 'Retour';
 			case 'actions.delete': return 'Supprimer';
+			case 'actions.add': return 'Ajouter';
 			case 'date_modes.date': return 'Date';
 			case 'date_modes.duration': return 'Durée';
 			case 'loading.simple': return 'Chargement en cours...';

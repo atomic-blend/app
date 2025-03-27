@@ -4,18 +4,20 @@ import 'package:app/i18n/strings.g.dart';
 import 'package:app/pages/under_construction/under_construction.dart';
 import 'package:app/utils/constants.dart';
 import 'package:app/utils/shortcuts.dart';
-import 'package:calendar_date_picker2/calendar_date_picker2.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:jiffy/jiffy.dart';
 import 'package:app/utils/exntensions/date_time_extension.dart';
 
 class TaskDatePickerModal extends StatefulWidget {
-  final Function(DateTime?) onDateChanged;
+  final Function(DateTime?) onEndDateChanged;
+  final DateTime? value;
   final DateTime? firstDate;
   final DateTime? lastDate;
   const TaskDatePickerModal(
-      {super.key, required this.onDateChanged, this.firstDate, this.lastDate});
+      {super.key,
+      required this.onEndDateChanged,
+      this.firstDate,
+      this.lastDate, this.value});
 
   @override
   State<TaskDatePickerModal> createState() => _TaskDatePickerModalState();
@@ -27,7 +29,7 @@ class _TaskDatePickerModalState extends State<TaskDatePickerModal> {
 
   @override
   void initState() {
-    _dueDate = DateTime.now();
+    _dueDate = widget.value ?? DateTime.now();
     super.initState();
   }
 
@@ -90,7 +92,7 @@ class _TaskDatePickerModalState extends State<TaskDatePickerModal> {
                   if (mode == 0) {
                     _dueDate = _dueDate?.midnight();
                   }
-                  widget.onDateChanged(_dueDate);
+                  widget.onEndDateChanged(_dueDate);
                   Navigator.of(context).pop();
                 },
                 child: Text(
@@ -103,7 +105,16 @@ class _TaskDatePickerModalState extends State<TaskDatePickerModal> {
               ),
             ],
           ),
-          if (mode == 0) const SingleDatePicker(),
+          if (mode == 0)
+            SingleDatePicker(
+              endDate: _dueDate,
+              onEndDateChanged: (value) {
+                setState(() {
+                  _dueDate = value;
+                });
+                print(_dueDate);
+              },
+            ),
           if (mode == 1)
             SizedBox(
                 height: getSize(context).height * 0.5,
@@ -115,7 +126,7 @@ class _TaskDatePickerModalState extends State<TaskDatePickerModal> {
               setState(() {
                 _dueDate = null;
               });
-              widget.onDateChanged(null);
+              widget.onEndDateChanged(null);
               Navigator.pop(context);
             },
             child: Text(

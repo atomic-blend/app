@@ -58,7 +58,8 @@ class _TaskDetailState extends State<TaskDetail> {
                         context: context,
                         isScrollControlled: true,
                         builder: (context) => TaskDatePickerModal(
-                              onDateChanged: (date) {
+                              value: _dueDate,
+                              onEndDateChanged: (date) {
                                 setState(() {
                                   _dueDate = date;
                                 });

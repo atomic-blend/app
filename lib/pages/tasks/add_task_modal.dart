@@ -80,7 +80,7 @@ class _AddTaskModalState extends State<AddTaskModal> {
                                   context: context,
                                   isScrollControlled: true,
                                   builder: (context) => TaskDatePickerModal(
-                                        onDateChanged: (date) {
+                                        onEndDateChanged: (date) {
                                           setState(() {
                                             _dueDate = date;
                                           });
