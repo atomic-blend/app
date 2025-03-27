@@ -9,24 +9,22 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 class TaskDueProcessor {
   static processAndNotify(RemoteMessage message) async {
-    final locale = AppLocaleUtils.findDeviceLocale();
+    // final locale = AppLocaleUtils.findDeviceLocale();
     final data = message.data;
 
     //get data from local storage or remote message
     final encryptedTitle = data['title'];
-    final rawUserData = prefs?.getString('user');
-    if (rawUserData == null) {
+    if (userData == null) {
       return;
     }
 
     //initialize the encryption engine
-    final userData = json.decode(rawUserData);
-    encryptionService ??=
-        EncryptionService(userSalt: userData['keySet']['salt']);
+    encryptionService =
+        EncryptionService(userSalt: userData!['keySet']['salt']);
 
     // prepare notification body
     final title = await encryptionService?.decryptString(data: encryptedTitle);
-    final body = locale.translations.notifications.task_due_now;
+    // final body = locale.translations.notifications.task_due_now;
 
     // setup notification client
     final localNotificationsPlugin = FlutterLocalNotificationsPlugin();
@@ -56,7 +54,7 @@ class TaskDueProcessor {
     await localNotificationsPlugin.show(
       DateTime.now().millisecondsSinceEpoch ~/ 1000,
       title,
-      body,
+      "body",
       notifDetails,
     );
   }

@@ -19,8 +19,7 @@ class FcmService {
       sound: true,
     );
 
-    // Register background handler
-    FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
+    
 
     // Initialize local notifications
     const AndroidInitializationSettings androidInitSettings =
@@ -42,10 +41,5 @@ class FcmService {
     );
 
     await localNotificationsPlugin.initialize(initSettings);
-
-    // Foreground message handler
-    FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
-      await Processors.processAndNotify(message);
-    });
   }
 }

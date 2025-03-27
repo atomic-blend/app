@@ -86,8 +86,8 @@ class EncryptionService {
 
     // generate user key from password
     final passwordBytes = Uint8List.fromList(password.codeUnits);
-    final Uint8List userKey = Uint8List(32);
-    argon2.deriveKey(passwordBytes, passwordBytes.length, userKey, 0);
+    final Uint8List uKey = Uint8List(32);
+    argon2.deriveKey(passwordBytes, passwordBytes.length, uKey, 0);
 
     // generate random data key
     final dataKey = generateRandomBytes(32);
@@ -95,7 +95,7 @@ class EncryptionService {
     // encrypt data key with user key
     final iv = generateRandomBytes(12);
     final cipher = GCMBlockCipher(AESEngine())
-      ..init(true, ParametersWithIV(KeyParameter(userKey), iv));
+      ..init(true, ParametersWithIV(KeyParameter(uKey), iv));
     final cipheResult = cipher.process(dataKey);
     final tag = cipher.mac;
 
@@ -147,15 +147,15 @@ class EncryptionService {
     );
 
     // store the data key in the secure storage
+    userKey = base64.encode(uKey);
     await prefs?.setString("key", base64.encode(dataKey));
 
     return encryptionKey;
   }
 
   Future<Uint8List?> hydrateKey() async {
-    final userKey = prefs?.getString("key");
     if (userKey != null) {
-      return base64.decode(userKey);
+      return base64.decode(userKey!);
     }
     return null;
   }
@@ -214,7 +214,7 @@ class EncryptionService {
     return base64.encode(result);
   }
 
-  Future<String> decryptString({required String data}) async {
+  Future<String> decryptString({required String data,}) async {
     final key = await hydrateKey();
     if (key == null) {
       throw Exception("Key not found");
