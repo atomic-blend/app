@@ -118,6 +118,7 @@ class _ReminderPickerState extends State<ReminderPicker> {
               context: context,
               builder: (context) {
                 return ABDatePickerDialog(
+                  initialDate: widget.dueDate,
                   title: context.t.tasks.add_task_modal
                       .when_would_you_like_to_be_reminded,
                   onDateChanged: (value) {
@@ -139,57 +140,6 @@ class _ReminderPickerState extends State<ReminderPicker> {
             ),
           ),
         ),
-        // ...items.entries.mapIndexed((index, element) {
-        //   final isSelected = _isReminderSelected(element.value.value);
-
-        //   Widget w = GestureDetector(
-        //     onTap: () {
-        //       int days = int.parse(element.value.value);
-        //       DateTime reminderDate = widget.dueDate.add(Duration(days: days));
-
-        //       setState(() {
-        //         if (isSelected) {
-        //           // Remove the reminder if it's already selected
-        //           _reminders.removeWhere((r) => _isSameDay(r, reminderDate));
-        //         } else {
-        //           // Add the reminder if it's not already selected
-        //           _reminders.add(reminderDate);
-        //         }
-
-        //         // Notify parent about changes
-        //         widget
-        //             .onRemindersChanged(_reminders.isEmpty ? null : _reminders);
-        //       });
-        //     },
-        //     child: Padding(
-        //       padding: EdgeInsets.symmetric(
-        //         horizontal: $constants.insets.xs,
-        //         vertical: $constants.insets.xs,
-        //       ),
-        //       child: Text(
-        //         element.value.label,
-        //         style: getTextTheme(context).bodyMedium!.copyWith(
-        //               color: isSelected ? getTheme(context).primary : null,
-        //             ),
-        //       ),
-        //     ),
-        //   );
-
-        //   // Show checkmark if this reminder is selected
-        //   if (isSelected) {
-        //     w = Row(
-        //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        //       mainAxisSize: MainAxisSize.max,
-        //       children: [
-        //         Expanded(child: w),
-        //         Icon(CupertinoIcons.check_mark,
-        //             color: getTheme(context).primary)
-        //       ],
-        //     );
-        //   }
-
-        //   return w;
-        // })
       ],
     );
   }

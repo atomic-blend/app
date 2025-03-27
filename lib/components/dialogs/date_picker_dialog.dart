@@ -8,9 +8,10 @@ import 'package:flutter/material.dart';
 class ABDatePickerDialog extends StatefulWidget {
   final String title;
   final double? height;
+  final DateTime? initialDate;
   final Function(DateTime)? onDateChanged;
   const ABDatePickerDialog(
-      {super.key, this.height, this.onDateChanged, required this.title});
+      {super.key, this.height, this.onDateChanged, required this.title, this.initialDate});
 
   @override
   State<ABDatePickerDialog> createState() => _ABDatePickerDialogState();
@@ -21,8 +22,7 @@ class _ABDatePickerDialogState extends State<ABDatePickerDialog> {
 
   @override
   void initState() {
-    // TODO: implement initState
-    _date = DateTime.now();
+    _date = widget.initialDate ?? DateTime.now();
     super.initState();
   }
 
