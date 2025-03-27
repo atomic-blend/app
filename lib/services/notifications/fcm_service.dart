@@ -18,8 +18,19 @@ class FcmService {
     const AndroidInitializationSettings androidInitSettings =
         AndroidInitializationSettings('@mipmap/ic_launcher');
 
+    // iOS Settings
+    const DarwinInitializationSettings iosInitSettings =
+        DarwinInitializationSettings(
+      requestAlertPermission: true,
+      requestBadgePermission: true,
+      requestSoundPermission: true,
+      requestProvisionalPermission: false,
+      requestCriticalPermission: true,
+    );
+
     const InitializationSettings initSettings = InitializationSettings(
       android: androidInitSettings,
+      iOS: iosInitSettings,
     );
 
     await localNotificationsPlugin.initialize(initSettings);

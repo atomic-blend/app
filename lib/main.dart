@@ -3,6 +3,7 @@ import 'package:app/blocs/app/app.bloc.dart';
 import 'package:app/blocs/auth/auth.bloc.dart';
 import 'package:app/blocs/tasks/tasks.bloc.dart';
 import 'package:app/i18n/strings.g.dart';
+import 'package:app/services/notifications/fcm_service.dart';
 import 'package:app/utils/env/env.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
@@ -18,6 +19,7 @@ import 'firebase_options.dart';
 
 EnvModel? env;
 SharedPreferences? prefs;
+FcmService? fcmService;
 
 FutureOr<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -28,6 +30,8 @@ FutureOr<void> main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  fcmService = FcmService();
+  await fcmService!.initFCM();
 
   HydratedBloc.storage = await HydratedStorage.build(
     storageDirectory: kIsWeb
