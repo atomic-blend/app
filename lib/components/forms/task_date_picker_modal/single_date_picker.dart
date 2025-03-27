@@ -35,7 +35,6 @@ class _SingleDatePickerState extends State<SingleDatePicker> {
 
   @override
   void initState() {
-    // TODO: implement initState
     endDate = widget.endDate;
     _reminders = widget.reminders;
     super.initState();
@@ -43,7 +42,6 @@ class _SingleDatePickerState extends State<SingleDatePicker> {
 
   @override
   Widget build(BuildContext context) {
-    print(endDate);
     return Column(
       children: [
         Padding(

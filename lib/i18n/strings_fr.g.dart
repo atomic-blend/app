@@ -76,6 +76,7 @@ class TranslationsFr implements Translations {
 		'email_malformed': 'Adresse e-mail invalide',
 		'unknown_error': 'Une erreur inconnue s\'est produite',
 	};
+	@override late final _TranslationsNotificationsFr notifications = _TranslationsNotificationsFr._(_root);
 	@override late final _TranslationsNameGeneratorFr name_generator = _TranslationsNameGeneratorFr._(_root);
 }
 
@@ -406,6 +407,16 @@ class _TranslationsValidationFr implements TranslationsValidationEn {
 	// Translations
 	@override String get required => 'Ce champ est obligatoire';
 	@override String get invalid_url => 'URL invalide';
+}
+
+// Path: notifications
+class _TranslationsNotificationsFr implements TranslationsNotificationsEn {
+	_TranslationsNotificationsFr._(this._root);
+
+	final TranslationsFr _root; // ignore: unused_field
+
+	// Translations
+	@override String get task_due_now => 'La tâche est due maintenant';
 }
 
 // Path: name_generator
@@ -957,6 +968,7 @@ extension on TranslationsFr {
 			case 'errors.wrong_email_password': return 'Adresse e-mail ou mot de passe incorrect';
 			case 'errors.email_malformed': return 'Adresse e-mail invalide';
 			case 'errors.unknown_error': return 'Une erreur inconnue s\'est produite';
+			case 'notifications.task_due_now': return 'La tâche est due maintenant';
 			case 'name_generator.animals.0': return 'hibou';
 			case 'name_generator.animals.1': return 'renard';
 			case 'name_generator.animals.2': return 'lapin';

@@ -80,6 +80,7 @@ class Translations implements BaseTranslations<AppLocale, Translations> {
 		'email_malformed': 'Email malformed',
 		'unknown_error': 'Unknown error',
 	};
+	late final TranslationsNotificationsEn notifications = TranslationsNotificationsEn._(_root);
 	late final TranslationsNameGeneratorEn name_generator = TranslationsNameGeneratorEn._(_root);
 }
 
@@ -410,6 +411,16 @@ class TranslationsValidationEn {
 	// Translations
 	String get required => 'Required';
 	String get invalid_url => 'invalid URL';
+}
+
+// Path: notifications
+class TranslationsNotificationsEn {
+	TranslationsNotificationsEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	String get task_due_now => 'The task is due';
 }
 
 // Path: name_generator
@@ -964,6 +975,7 @@ extension on Translations {
 			case 'errors.wrong_email_password': return 'Email or password incorrect';
 			case 'errors.email_malformed': return 'Email malformed';
 			case 'errors.unknown_error': return 'Unknown error';
+			case 'notifications.task_due_now': return 'The task is due';
 			case 'name_generator.animals.0': return 'bat';
 			case 'name_generator.animals.1': return 'owl';
 			case 'name_generator.animals.2': return 'fox';

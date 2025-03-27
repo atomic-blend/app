@@ -2,7 +2,6 @@ import 'package:app/components/dialogs/date_picker_dialog.dart';
 import 'package:app/i18n/strings.g.dart';
 import 'package:app/utils/constants.dart';
 import 'package:app/utils/shortcuts.dart';
-import 'package:collection/collection.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:jiffy/jiffy.dart';
@@ -35,28 +34,10 @@ class _ReminderPickerState extends State<ReminderPicker> {
     _reminders = widget.reminders?.toList() ?? [];
   }
 
-  bool _isReminderSelected(String value) {
-    if (!RegExp(r'^[0-9]+$').hasMatch(value)) return false;
 
-    int days = int.parse(value);
-    DateTime reminderDate = widget.dueDate.add(Duration(days: days));
-
-    return _reminders.contains(reminderDate);
-  }
-
-  bool _isSameDay(DateTime a, DateTime b) {
-    return a.day == b.day && a.month == b.month && a.year == b.year;
-  }
 
   @override
   Widget build(BuildContext context) {
-    Map<String, dynamic> items;
-    if (widget.mode == ReminderPickerMode.day) {
-      items = context.t.days_before;
-    } else {
-      items = context.t.time_before;
-    }
-
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,

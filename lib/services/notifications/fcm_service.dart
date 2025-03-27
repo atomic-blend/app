@@ -9,7 +9,15 @@ class FcmService {
 
   Future<void> initFCM() async {
     // Request permission (iOS)
-    await FirebaseMessaging.instance.requestPermission();
+    await FirebaseMessaging.instance.requestPermission(
+      alert: true,
+      announcement: false,
+      badge: true,
+      carPlay: false,
+      criticalAlert: true,
+      provisional: false,
+      sound: true,
+    );
 
     // Register background handler
     FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
@@ -36,8 +44,8 @@ class FcmService {
     await localNotificationsPlugin.initialize(initSettings);
 
     // Foreground message handler
-    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-      Processors.processAndNotify(message);
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
+      await Processors.processAndNotify(message);
     });
   }
 }

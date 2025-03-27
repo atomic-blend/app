@@ -35,7 +35,6 @@ class _TaskDetailState extends State<TaskDetail> {
 
   @override
   Widget build(BuildContext context) {
-    print(_reminders);
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -73,7 +72,6 @@ class _TaskDetailState extends State<TaskDetail> {
                                 setState(() {
                                   _dueDate = date;
                                 });
-                                print("edited date: $_dueDate");
                               },
                               firstDate: DateTime(2000),
                               lastDate: DateTime(2100),

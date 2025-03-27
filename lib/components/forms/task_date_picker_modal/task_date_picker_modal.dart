@@ -5,8 +5,6 @@ import 'package:app/pages/under_construction/under_construction.dart';
 import 'package:app/utils/constants.dart';
 import 'package:app/utils/shortcuts.dart';
 import 'package:flutter/material.dart';
-import 'package:jiffy/jiffy.dart';
-import 'package:app/utils/exntensions/date_time_extension.dart';
 
 class TaskDatePickerModal extends StatefulWidget {
   final Function(DateTime?) onEndDateChanged;

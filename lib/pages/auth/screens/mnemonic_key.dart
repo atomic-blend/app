@@ -225,7 +225,6 @@ class _MnemonicKeyState extends State<MnemonicKey>
                             );
                             await _animationController.reverse(from: 1.0);
 
-                            //TODO:
                             if (!context.mounted) return;
                             Navigator.pop(context);
                           },
