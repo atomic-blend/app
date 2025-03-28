@@ -22,7 +22,9 @@ class AddTaskModal extends StatefulWidget {
 class _AddTaskModalState extends State<AddTaskModal> {
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
-  DateTime? _dueDate;
+  DateTime? _endDate;
+  DateTime? _startDate;
+  List<DateTime>? _reminders;
 
   @override
   Widget build(BuildContext context) {
@@ -68,7 +70,7 @@ class _AddTaskModalState extends State<AddTaskModal> {
                         padding: EdgeInsets.symmetric(
                             horizontal: $constants.insets.xs + 4, vertical: 2),
                         decoration: BoxDecoration(
-                          color: _dueDate != null
+                          color: _endDate != null
                               ? getTheme(context).primaryContainer
                               : null,
                           borderRadius:
@@ -80,10 +82,19 @@ class _AddTaskModalState extends State<AddTaskModal> {
                                   context: context,
                                   isScrollControlled: true,
                                   builder: (context) => TaskDatePickerModal(
-                                        onRemindersChanged: (newRem) {},
+                                        onStartDateChanged: (date) {
+                                          setState(() {
+                                            _startDate = date;
+                                          });
+                                        },
+                                        onRemindersChanged: (newRem) {
+                                          setState(() {
+                                            _reminders = newRem;
+                                          });
+                                        },
                                         onEndDateChanged: (date) {
                                           setState(() {
-                                            _dueDate = date;
+                                            _endDate = date;
                                           });
                                         },
                                         firstDate: DateTime(2000),
@@ -93,20 +104,20 @@ class _AddTaskModalState extends State<AddTaskModal> {
                             child: Row(
                               children: [
                                 Icon(CupertinoIcons.calendar,
-                                    color: _dueDate != null
+                                    color: _endDate != null
                                         ? getTheme(context).primary
                                         : null),
-                                if (_dueDate != null)
+                                if (_endDate != null)
                                   Padding(
                                     padding: EdgeInsets.only(
                                         left: $constants.insets.xxs),
                                     child: Text(
-                                      _dueDate!.formatDueDate(context),
+                                      _endDate!.formatDueDate(context),
                                       style: getTextTheme(context)
                                           .bodySmall!
                                           .copyWith(
                                             fontWeight: FontWeight.bold,
-                                            color: _dueDate != null
+                                            color: _endDate != null
                                                 ? getTheme(context).primary
                                                 : null,
                                           ),
@@ -130,7 +141,9 @@ class _AddTaskModalState extends State<AddTaskModal> {
                         }
                         final task = TaskEntity(
                             title: _titleController.text,
-                            endDate: _dueDate,
+                            startDate: _startDate,
+                            endDate: _endDate,
+                            reminders: _reminders,
                             completed: false,
                             createdAt: DateTime.now(),
                             updatedAt: DateTime.now());

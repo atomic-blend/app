@@ -1,15 +1,18 @@
 import 'package:animated_toggle_switch/animated_toggle_switch.dart';
+import 'package:app/components/forms/task_date_picker_modal/duration_picker.dart';
 import 'package:app/components/forms/task_date_picker_modal/single_date_picker.dart';
 import 'package:app/i18n/strings.g.dart';
-import 'package:app/pages/under_construction/under_construction.dart';
 import 'package:app/utils/constants.dart';
+import 'package:app/utils/exntensions/date_time_extension.dart';
 import 'package:app/utils/shortcuts.dart';
 import 'package:flutter/material.dart';
 
 class TaskDatePickerModal extends StatefulWidget {
+  final Function(DateTime?) onStartDateChanged;
   final Function(DateTime?) onEndDateChanged;
   final Function(List<DateTime>?) onRemindersChanged;
   final DateTime? endDate;
+  final DateTime? startDate;
   final List<DateTime>? reminders;
   final DateTime? firstDate;
   final DateTime? lastDate;
@@ -20,7 +23,9 @@ class TaskDatePickerModal extends StatefulWidget {
       this.lastDate,
       this.endDate,
       required this.onRemindersChanged,
-      this.reminders});
+      this.reminders,
+      required this.onStartDateChanged,
+      this.startDate});
 
   @override
   State<TaskDatePickerModal> createState() => _TaskDatePickerModalState();
@@ -28,11 +33,14 @@ class TaskDatePickerModal extends StatefulWidget {
 
 class _TaskDatePickerModalState extends State<TaskDatePickerModal> {
   int? mode = 0;
-  DateTime? _dueDate;
+  DateTime? endDate;
+  DateTime? startDate;
 
   @override
   void initState() {
-    _dueDate = widget.endDate ?? DateTime.now();
+    final now = DateTime.now();
+    endDate = widget.endDate ?? now.midnight();
+    startDate = widget.startDate;
     super.initState();
   }
 
@@ -92,7 +100,9 @@ class _TaskDatePickerModalState extends State<TaskDatePickerModal> {
               ),
               TextButton(
                 onPressed: () {
-                  widget.onEndDateChanged(_dueDate);
+                  widget.onStartDateChanged(startDate);
+                  widget.onRemindersChanged(widget.reminders);
+                  widget.onEndDateChanged(endDate);
                   Navigator.of(context).pop();
                 },
                 child: Text(
@@ -107,12 +117,12 @@ class _TaskDatePickerModalState extends State<TaskDatePickerModal> {
           ),
           if (mode == 0)
             SingleDatePicker(
-              endDate: _dueDate,
+              endDate: endDate,
               reminders: widget.reminders,
               onRemindersChanged: widget.onRemindersChanged,
               onEndDateChanged: (value) {
                 setState(() {
-                  _dueDate = value;
+                  endDate = value;
                 });
               },
             ),
@@ -120,12 +130,28 @@ class _TaskDatePickerModalState extends State<TaskDatePickerModal> {
             SizedBox(
                 height: getSize(context).height * 0.5,
                 width: double.infinity,
-                child: UnderConstruction()),
+                child: DurationPicker(
+                  endDate: endDate,
+                  startDate: startDate,
+                  reminders: widget.reminders,
+                  onRemindersChanged: widget.onRemindersChanged,
+                  onEndDateChanged: (value) {
+                    setState(() {
+                      endDate = value;
+                    });
+                  },
+                  onStartDateChanged: (value) {
+                    setState(() {
+                      startDate = value;
+                      endDate = value.add(const Duration(minutes: 30));
+                    });
+                  },
+                )),
           const Spacer(),
           TextButton(
             onPressed: () {
               setState(() {
-                _dueDate = null;
+                endDate = null;
               });
               widget.onEndDateChanged(null);
               Navigator.pop(context);

@@ -133,6 +133,8 @@ class _TranslationsTasksFr implements TranslationsTasksEn {
 	@override String get week_off => 'Vous n\'avez rien de prévu pour cette semaine, essayez de prendre le temps de faire les choses laissées de côté !';
 	@override String get no_tasks_for_now => 'Pas de tâches pour le moment';
 	@override String get task_details => 'Détail de la tâche';
+	@override String get from => 'De';
+	@override String get to => 'À';
 	@override late final _TranslationsTasksDueDatesFr due_dates = _TranslationsTasksDueDatesFr._(_root);
 	@override late final _TranslationsTasksAddTaskModalFr add_task_modal = _TranslationsTasksAddTaskModalFr._(_root);
 }
@@ -789,9 +791,13 @@ class _TranslationsTasksAddTaskModalFr implements TranslationsTasksAddTaskModalE
 		one: 'Rappel',
 		other: 'Rappels',
 	);
+	@override String get time_planned => 'Heure prévue';
+	@override String get none => 'Aucun';
 	@override String get no_reminders => 'Pas de rappels';
 	@override String get add_reminder => 'Ajouter un rappel';
 	@override String get when_would_you_like_to_be_reminded => 'Quand aimeriez-vous être rappelé ?';
+	@override String get when_would_you_like_the_task_to_start => 'Quand aimeriez-vous que la tâche commence ?';
+	@override String get when_would_you_like_the_task_to_end => 'Quand aimeriez-vous que la tâche se termine ?';
 }
 
 // Path: account.sections
@@ -924,6 +930,8 @@ extension on TranslationsFr {
 			case 'tasks.week_off': return 'Vous n\'avez rien de prévu pour cette semaine, essayez de prendre le temps de faire les choses laissées de côté !';
 			case 'tasks.no_tasks_for_now': return 'Pas de tâches pour le moment';
 			case 'tasks.task_details': return 'Détail de la tâche';
+			case 'tasks.from': return 'De';
+			case 'tasks.to': return 'À';
 			case 'tasks.due_dates.today': return 'Aujourd\'hui';
 			case 'tasks.due_dates.tomorrow': return 'Demain';
 			case 'tasks.due_dates.no_due_date': return 'Pas de date d\'échéance';
@@ -940,9 +948,13 @@ extension on TranslationsFr {
 				one: 'Rappel',
 				other: 'Rappels',
 			);
+			case 'tasks.add_task_modal.time_planned': return 'Heure prévue';
+			case 'tasks.add_task_modal.none': return 'Aucun';
 			case 'tasks.add_task_modal.no_reminders': return 'Pas de rappels';
 			case 'tasks.add_task_modal.add_reminder': return 'Ajouter un rappel';
 			case 'tasks.add_task_modal.when_would_you_like_to_be_reminded': return 'Quand aimeriez-vous être rappelé ?';
+			case 'tasks.add_task_modal.when_would_you_like_the_task_to_start': return 'Quand aimeriez-vous que la tâche commence ?';
+			case 'tasks.add_task_modal.when_would_you_like_the_task_to_end': return 'Quand aimeriez-vous que la tâche se termine ?';
 			case 'calendar.title': return 'Calendrier';
 			case 'account.edit_profile': return 'Modifier le profil';
 			case 'account.sections.account': return 'Compte';

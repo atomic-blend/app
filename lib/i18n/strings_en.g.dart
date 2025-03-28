@@ -137,6 +137,8 @@ class TranslationsTasksEn {
 	String get week_off => 'You have nothing planned for this week, try and take the time to do the stuff left behind!';
 	String get no_tasks_for_now => 'No tasks for now';
 	String get task_details => 'Task Details';
+	String get from => 'From';
+	String get to => 'To';
 	late final TranslationsTasksDueDatesEn due_dates = TranslationsTasksDueDatesEn._(_root);
 	late final TranslationsTasksAddTaskModalEn add_task_modal = TranslationsTasksAddTaskModalEn._(_root);
 }
@@ -796,9 +798,13 @@ class TranslationsTasksAddTaskModalEn {
 		one: 'Reminder',
 		other: 'Reminders',
 	);
+	String get time_planned => 'Expected time';
+	String get none => 'None';
 	String get no_reminders => 'No reminders';
 	String get add_reminder => 'Add a Reminder';
 	String get when_would_you_like_to_be_reminded => 'When would you like to be reminded?';
+	String get when_would_you_like_the_task_to_start => 'When would you like the task to start?';
+	String get when_would_you_like_the_task_to_end => 'When would you like the task to end?';
 }
 
 // Path: account.sections
@@ -931,6 +937,8 @@ extension on Translations {
 			case 'tasks.week_off': return 'You have nothing planned for this week, try and take the time to do the stuff left behind!';
 			case 'tasks.no_tasks_for_now': return 'No tasks for now';
 			case 'tasks.task_details': return 'Task Details';
+			case 'tasks.from': return 'From';
+			case 'tasks.to': return 'To';
 			case 'tasks.due_dates.today': return 'Today';
 			case 'tasks.due_dates.tomorrow': return 'Tomorrow';
 			case 'tasks.due_dates.no_due_date': return 'No due date';
@@ -947,9 +955,13 @@ extension on Translations {
 				one: 'Reminder',
 				other: 'Reminders',
 			);
+			case 'tasks.add_task_modal.time_planned': return 'Expected time';
+			case 'tasks.add_task_modal.none': return 'None';
 			case 'tasks.add_task_modal.no_reminders': return 'No reminders';
 			case 'tasks.add_task_modal.add_reminder': return 'Add a Reminder';
 			case 'tasks.add_task_modal.when_would_you_like_to_be_reminded': return 'When would you like to be reminded?';
+			case 'tasks.add_task_modal.when_would_you_like_the_task_to_start': return 'When would you like the task to start?';
+			case 'tasks.add_task_modal.when_would_you_like_the_task_to_end': return 'When would you like the task to end?';
 			case 'calendar.title': return 'Calendar';
 			case 'account.edit_profile': return 'Edit Profile';
 			case 'account.sections.account': return 'Account';

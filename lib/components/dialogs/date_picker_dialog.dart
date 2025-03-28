@@ -11,7 +11,11 @@ class ABDatePickerDialog extends StatefulWidget {
   final DateTime? initialDate;
   final Function(DateTime)? onDateChanged;
   const ABDatePickerDialog(
-      {super.key, this.height, this.onDateChanged, required this.title, this.initialDate});
+      {super.key,
+      this.height,
+      this.onDateChanged,
+      required this.title,
+      this.initialDate});
 
   @override
   State<ABDatePickerDialog> createState() => _ABDatePickerDialogState();
@@ -35,7 +39,7 @@ class _ABDatePickerDialogState extends State<ABDatePickerDialog> {
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(
-              context.t.tasks.add_task_modal.when_would_you_like_to_be_reminded,
+              widget.title,
               style: getTextTheme(context).headlineMedium!.copyWith(
                     fontWeight: FontWeight.bold,
                   ),

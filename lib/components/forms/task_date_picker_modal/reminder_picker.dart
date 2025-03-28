@@ -67,14 +67,14 @@ class _ReminderPickerState extends State<ReminderPicker> {
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           Text(
-                            Jiffy.parseFromDateTime(reminder).Hm,
+                            Jiffy.parseFromDateTime(reminder).toLocal().Hm,
                             style:
                                 getTextTheme(context).headlineSmall!.copyWith(
                                       fontWeight: FontWeight.bold,
                                     ),
                           ),
                           Text(
-                            Jiffy.parseFromDateTime(reminder).yMMMMEEEEd,
+                            Jiffy.parseFromDateTime(reminder).toLocal().yMMMMEEEEd,
                             style: getTextTheme(context).bodySmall,
                           ),
                         ],

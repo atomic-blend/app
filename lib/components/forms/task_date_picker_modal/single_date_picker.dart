@@ -23,7 +23,8 @@ class SingleDatePicker extends StatefulWidget {
       this.lastDate,
       this.endDate,
       this.onEndDateChanged,
-      required this.onRemindersChanged, this.reminders});
+      required this.onRemindersChanged,
+      this.reminders});
 
   @override
   State<SingleDatePicker> createState() => _SingleDatePickerState();
@@ -105,9 +106,9 @@ class _SingleDatePickerState extends State<SingleDatePicker> {
                     children: [
                       Row(
                         spacing: $constants.insets.sm,
-                        children: const [
-                          Icon(CupertinoIcons.clock),
-                          Text("Planned time"),
+                        children: [
+                          const Icon(CupertinoIcons.clock),
+                          Text(context.t.tasks.add_task_modal.time_planned),
                         ],
                       ),
                       CustomPopup(
@@ -134,9 +135,10 @@ class _SingleDatePickerState extends State<SingleDatePicker> {
                           children: [
                             Text(endDate != null && endDate?.isDayDate() != true
                                 ? "${endDate?.hour}:${endDate?.minute}"
-                                : "none"),
-                            SizedBox(width: $constants.insets.xs),
-                            if (endDate != null && endDate?.isDayDate() != true)
+                                : context.t.tasks.add_task_modal.none),
+                            if (endDate != null &&
+                                endDate?.isDayDate() != true) ...[
+                              SizedBox(width: $constants.insets.xs),
                               GestureDetector(
                                 onTap: () {
                                   setState(() {
@@ -153,6 +155,7 @@ class _SingleDatePickerState extends State<SingleDatePicker> {
                                   size: 20,
                                 ),
                               )
+                            ]
                           ],
                         ),
                       ),
@@ -185,16 +188,16 @@ class _SingleDatePickerState extends State<SingleDatePicker> {
                       children: [
                         Row(
                           spacing: $constants.insets.sm,
-                          children: const [
-                            Icon(CupertinoIcons.alarm),
-                            Text("Reminder")
+                          children: [
+                            const Icon(CupertinoIcons.alarm),
+                            Text(context.t.tasks.add_task_modal.reminders(n: 2))
                           ],
                         ),
                         Center(
                             child: Text(_reminders != null &&
                                     _reminders!.isNotEmpty
                                 ? "${_reminders?.length.toString()} ${context.t.tasks.add_task_modal.reminders(n: _reminders?.length ?? 0).toLowerCase()}"
-                                : "-")),
+                                : context.t.tasks.add_task_modal.none)),
                       ],
                     ),
                   ),

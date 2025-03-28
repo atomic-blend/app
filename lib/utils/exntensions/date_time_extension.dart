@@ -9,7 +9,7 @@ extension DateTimeExtension on DateTime {
     } else if (isTomorrow()) {
       return context.t.tasks.due_dates.tomorrow;
     } else {
-      return Jiffy.parseFromDateTime(this).yMMMMd;
+      return Jiffy.parseFromDateTime(this).toLocal().yMMMMd;
     }
   }
 

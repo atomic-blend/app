@@ -22,13 +22,15 @@ class TaskDetail extends StatefulWidget {
 
 class _TaskDetailState extends State<TaskDetail> {
   final TextEditingController _titleController = TextEditingController();
-  DateTime? _dueDate;
+  DateTime? _endDate;
+  DateTime? _startDate;
   List<DateTime>? _reminders;
 
   @override
   void initState() {
     _titleController.text = widget.task.title;
-    _dueDate = widget.task.endDate;
+    _endDate = widget.task.endDate;
+    _startDate = widget.task.startDate;
     _reminders = widget.task.reminders;
     super.initState();
   }
@@ -61,7 +63,8 @@ class _TaskDetailState extends State<TaskDetail> {
                         context: context,
                         isScrollControlled: true,
                         builder: (context) => TaskDatePickerModal(
-                              endDate: _dueDate,
+                              endDate: _endDate,
+                              startDate: _startDate,
                               reminders: _reminders,
                               onRemindersChanged: (newRem) {
                                 setState(() {
@@ -70,28 +73,50 @@ class _TaskDetailState extends State<TaskDetail> {
                               },
                               onEndDateChanged: (date) {
                                 setState(() {
-                                  _dueDate = date;
+                                  _endDate = date;
+                                });
+                              },
+                              onStartDateChanged: (date) {
+                                setState(() {
+                                  _startDate = date;
                                 });
                               },
                               firstDate: DateTime(2000),
                               lastDate: DateTime(2100),
                             ));
-                    widget.task.endDate = _dueDate;
+                    widget.task.endDate = _endDate;
+                    widget.task.startDate = _startDate;
                     widget.task.reminders = _reminders;
                     if (!context.mounted) return;
                     context.read<TasksBloc>().add(EditTask(widget.task));
                   },
                   child: Container(
-                    child: _dueDate != null
+                    child: _endDate != null && _startDate == null
                         ? Text(
-                            _dueDate?.isDayDate() == true
-                                ? Jiffy.parseFromDateTime(_dueDate!).yMMMEd
-                                : Jiffy.parseFromDateTime(_dueDate!).yMMMMdjm,
+                            _endDate?.isDayDate() == true
+                                ? Jiffy.parseFromDateTime(_endDate!)
+                                    .toLocal()
+                                    .yMMMEd
+                                : Jiffy.parseFromDateTime(_endDate!)
+                                    .toLocal()
+                                    .yMMMMdjm,
                             style: getTextTheme(context).bodyMedium!.copyWith())
-                        : Text(
-                            context.t.tasks.due_dates.no_due_date,
-                            style: getTextTheme(context).titleSmall!.copyWith(),
-                          ),
+                        : _startDate != null
+                            ? Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Text(
+                                    Jiffy.parseFromDateTime(_endDate!).toLocal().yMMMEd,
+                                  ),
+                                  Text("${context.t.tasks.from.toLowerCase()} ${Jiffy.parseFromDateTime(_startDate!).toLocal().Hm} ${context.t.tasks.to.toLowerCase()} ${Jiffy.parseFromDateTime(_endDate!).toLocal().Hm}")
+                              ],
+                            )
+                            : Text(
+                                context.t.tasks.due_dates.no_due_date,
+                                style: getTextTheme(context)
+                                    .titleSmall!
+                                    .copyWith(),
+                              ),
                   ),
                 ),
                 Container(
