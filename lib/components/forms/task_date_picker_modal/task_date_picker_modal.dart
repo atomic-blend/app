@@ -41,6 +41,9 @@ class _TaskDatePickerModalState extends State<TaskDatePickerModal> {
     final now = DateTime.now();
     endDate = widget.endDate ?? now.midnight();
     startDate = widget.startDate;
+    if (startDate != null) {
+      mode = 1;
+    }
     super.initState();
   }
 

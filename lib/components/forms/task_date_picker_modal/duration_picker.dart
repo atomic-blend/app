@@ -154,7 +154,7 @@ class _DurationPickerState extends State<DurationPicker> {
             context: context,
             builder: (context) {
               return ABDatePickerDialog(
-                initialDate: date,
+                initialDate: date.toLocal(),
                 title: title,
                 onDateChanged: (value) {
                   setState(() {
