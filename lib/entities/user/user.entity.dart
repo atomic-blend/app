@@ -1,4 +1,5 @@
 import 'package:app/entities/encryption/encryption_key.dart';
+import 'package:app/entities/user_device/user_device.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'user.entity.freezed.dart';
@@ -16,16 +17,17 @@ class UserEntity with _$UserEntity {
     List<dynamic>? purchases,
     String? firstname,
     String? lastname,
-    String? refreshToken,
     required EncryptionKeyEntity keySet,
+    List<UserDeviceEntity>? devices,
     String? accessToken,
+    String? refreshToken,
     DateTime? createdAt,
     DateTime? updatedAt,
   }) = _UserEntity;
 
   @override
   String toString() {
-    return 'UserEntity { id: $id, roles: $roles, firebase_id: $firebase_id, email: $email, name: $firstname, lastname: $lastname, purchases: $purchases, createdAt: $createdAt, updatedAt: $updatedAt }';
+    return 'UserEntity { id: $id, roles: $roles, firebase_id: $firebase_id, email: $email, name: $firstname, lastname: $lastname, purchases: $purchases, devices: $devices, createdAt: $createdAt, updatedAt: $updatedAt }';
   }
 
   String? displayName() {

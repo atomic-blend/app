@@ -53,6 +53,25 @@ class Translations implements BaseTranslations<AppLocale, Translations> {
 		'duration': 'Duration',
 	};
 	late final TranslationsTimesEn times = TranslationsTimesEn._(_root);
+	Map<String, dynamic> get days_before => {
+		'none': TranslationsDaysBeforeNoneEn._(_root),
+		'same_day': TranslationsDaysBeforeSameDayEn._(_root),
+		'one_day': TranslationsDaysBeforeOneDayEn._(_root),
+		'two_days': TranslationsDaysBeforeTwoDaysEn._(_root),
+		'three_days': TranslationsDaysBeforeThreeDaysEn._(_root),
+		'one_week': TranslationsDaysBeforeOneWeekEn._(_root),
+		'custom': TranslationsDaysBeforeCustomEn._(_root),
+	};
+	Map<String, dynamic> get time_before => {
+		'same_time': TranslationsTimeBeforeSameTimeEn._(_root),
+		'five_minutes': TranslationsTimeBeforeFiveMinutesEn._(_root),
+		'fifteen_minutes': TranslationsTimeBeforeFifteenMinutesEn._(_root),
+		'thirty_minutes': TranslationsTimeBeforeThirtyMinutesEn._(_root),
+		'one_hour': TranslationsTimeBeforeOneHourEn._(_root),
+		'two_hours': TranslationsTimeBeforeTwoHoursEn._(_root),
+		'one_day': TranslationsTimeBeforeOneDayEn._(_root),
+		'custom': TranslationsTimeBeforeCustomEn._(_root),
+	};
 	late final TranslationsLoadingEn loading = TranslationsLoadingEn._(_root);
 	late final TranslationsActionsEn actions = TranslationsActionsEn._(_root);
 	late final TranslationsValidationEn validation = TranslationsValidationEn._(_root);
@@ -61,6 +80,8 @@ class Translations implements BaseTranslations<AppLocale, Translations> {
 		'email_malformed': 'Email malformed',
 		'unknown_error': 'Unknown error',
 	};
+	late final TranslationsNotificationsEn notifications = TranslationsNotificationsEn._(_root);
+	late final TranslationsTimeUnitsEn time_units = TranslationsTimeUnitsEn._(_root);
 	late final TranslationsNameGeneratorEn name_generator = TranslationsNameGeneratorEn._(_root);
 }
 
@@ -116,6 +137,8 @@ class TranslationsTasksEn {
 	String get week_off => 'You have nothing planned for this week, try and take the time to do the stuff left behind!';
 	String get no_tasks_for_now => 'No tasks for now';
 	String get task_details => 'Task Details';
+	String get from => 'From';
+	String get to => 'To';
 	late final TranslationsTasksDueDatesEn due_dates = TranslationsTasksDueDatesEn._(_root);
 	late final TranslationsTasksAddTaskModalEn add_task_modal = TranslationsTasksAddTaskModalEn._(_root);
 }
@@ -192,6 +215,171 @@ class TranslationsTimesEn {
 	String get all_time => 'All time';
 }
 
+// Path: days_before.none
+class TranslationsDaysBeforeNoneEn {
+	TranslationsDaysBeforeNoneEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	String get value => '0';
+	String get label => 'None';
+}
+
+// Path: days_before.same_day
+class TranslationsDaysBeforeSameDayEn {
+	TranslationsDaysBeforeSameDayEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	String get value => 'same_day';
+	String get label => 'Same day';
+}
+
+// Path: days_before.one_day
+class TranslationsDaysBeforeOneDayEn {
+	TranslationsDaysBeforeOneDayEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	String get value => '-1';
+	String get label => '1 day before';
+}
+
+// Path: days_before.two_days
+class TranslationsDaysBeforeTwoDaysEn {
+	TranslationsDaysBeforeTwoDaysEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	String get value => '-2';
+	String get label => '2 days before';
+}
+
+// Path: days_before.three_days
+class TranslationsDaysBeforeThreeDaysEn {
+	TranslationsDaysBeforeThreeDaysEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	String get value => '-3';
+	String get label => '3 days before';
+}
+
+// Path: days_before.one_week
+class TranslationsDaysBeforeOneWeekEn {
+	TranslationsDaysBeforeOneWeekEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	String get value => '-7';
+	String get label => '1 week before';
+}
+
+// Path: days_before.custom
+class TranslationsDaysBeforeCustomEn {
+	TranslationsDaysBeforeCustomEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	String get value => 'null';
+	String get label => 'Custom';
+}
+
+// Path: time_before.same_time
+class TranslationsTimeBeforeSameTimeEn {
+	TranslationsTimeBeforeSameTimeEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	String get value => '0';
+	String get label => 'Same time';
+}
+
+// Path: time_before.five_minutes
+class TranslationsTimeBeforeFiveMinutesEn {
+	TranslationsTimeBeforeFiveMinutesEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	String get value => '-5';
+	String get label => '5 minutes before';
+}
+
+// Path: time_before.fifteen_minutes
+class TranslationsTimeBeforeFifteenMinutesEn {
+	TranslationsTimeBeforeFifteenMinutesEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	String get value => '-15';
+	String get label => '15 minutes before';
+}
+
+// Path: time_before.thirty_minutes
+class TranslationsTimeBeforeThirtyMinutesEn {
+	TranslationsTimeBeforeThirtyMinutesEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	String get value => '-30';
+	String get label => '30 minutes before';
+}
+
+// Path: time_before.one_hour
+class TranslationsTimeBeforeOneHourEn {
+	TranslationsTimeBeforeOneHourEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	String get value => '-60';
+	String get label => '1 hour before';
+}
+
+// Path: time_before.two_hours
+class TranslationsTimeBeforeTwoHoursEn {
+	TranslationsTimeBeforeTwoHoursEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	String get value => '-120';
+	String get label => '2 hours before';
+}
+
+// Path: time_before.one_day
+class TranslationsTimeBeforeOneDayEn {
+	TranslationsTimeBeforeOneDayEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	String get value => '-1440';
+	String get label => '1 day before';
+}
+
+// Path: time_before.custom
+class TranslationsTimeBeforeCustomEn {
+	TranslationsTimeBeforeCustomEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	String get value => 'null';
+	String get label => 'Custom';
+}
+
 // Path: loading
 class TranslationsLoadingEn {
 	TranslationsLoadingEn._(this._root);
@@ -214,6 +402,7 @@ class TranslationsActionsEn {
 	String get next => 'Next';
 	String get back => 'Back';
 	String get delete => 'Delete';
+	String get add => 'Add';
 }
 
 // Path: validation
@@ -225,6 +414,29 @@ class TranslationsValidationEn {
 	// Translations
 	String get required => 'Required';
 	String get invalid_url => 'invalid URL';
+}
+
+// Path: notifications
+class TranslationsNotificationsEn {
+	TranslationsNotificationsEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	String get task_due_now => 'The task is due';
+	String get task_starting => 'The task is starting';
+	String task_starting_in({required Object time}) => 'The task is starting in ${time}';
+}
+
+// Path: time_units
+class TranslationsTimeUnitsEn {
+	TranslationsTimeUnitsEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	late final TranslationsTimeUnitsShortEn short = TranslationsTimeUnitsShortEn._(_root);
+	late final TranslationsTimeUnitsLongEn long = TranslationsTimeUnitsLongEn._(_root);
 }
 
 // Path: name_generator
@@ -581,6 +793,18 @@ class TranslationsTasksAddTaskModalEn {
 	String get erase => 'Erase';
 	String get title_required => 'Title required';
 	String get title_required_description => 'Please enter a title for your task';
+	String reminders({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n,
+		zero: 'Reminder',
+		one: 'Reminder',
+		other: 'Reminders',
+	);
+	String get time_planned => 'Expected time';
+	String get none => 'None';
+	String get no_reminders => 'No reminders';
+	String get add_reminder => 'Add a Reminder';
+	String get when_would_you_like_to_be_reminded => 'When would you like to be reminded?';
+	String get when_would_you_like_the_task_to_start => 'When would you like the task to start?';
+	String get when_would_you_like_the_task_to_end => 'When would you like the task to end?';
 }
 
 // Path: account.sections
@@ -602,6 +826,30 @@ class TranslationsAccountActionsEn {
 	// Translations
 	String get security => 'Security & Privacy';
 	String get delete_account => 'Delete my Account';
+}
+
+// Path: time_units.short
+class TranslationsTimeUnitsShortEn {
+	TranslationsTimeUnitsShortEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	String get day => 'd';
+	String get hour => 'h';
+	String get minute => 'm';
+}
+
+// Path: time_units.long
+class TranslationsTimeUnitsLongEn {
+	TranslationsTimeUnitsLongEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	String get day => 'day';
+	String get hour => 'hour';
+	String get minute => 'minute';
 }
 
 // Path: settings.app_settings.selfHostedUrl
@@ -689,6 +937,8 @@ extension on Translations {
 			case 'tasks.week_off': return 'You have nothing planned for this week, try and take the time to do the stuff left behind!';
 			case 'tasks.no_tasks_for_now': return 'No tasks for now';
 			case 'tasks.task_details': return 'Task Details';
+			case 'tasks.from': return 'From';
+			case 'tasks.to': return 'To';
 			case 'tasks.due_dates.today': return 'Today';
 			case 'tasks.due_dates.tomorrow': return 'Tomorrow';
 			case 'tasks.due_dates.no_due_date': return 'No due date';
@@ -700,6 +950,18 @@ extension on Translations {
 			case 'tasks.add_task_modal.erase': return 'Erase';
 			case 'tasks.add_task_modal.title_required': return 'Title required';
 			case 'tasks.add_task_modal.title_required_description': return 'Please enter a title for your task';
+			case 'tasks.add_task_modal.reminders': return ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n,
+				zero: 'Reminder',
+				one: 'Reminder',
+				other: 'Reminders',
+			);
+			case 'tasks.add_task_modal.time_planned': return 'Expected time';
+			case 'tasks.add_task_modal.none': return 'None';
+			case 'tasks.add_task_modal.no_reminders': return 'No reminders';
+			case 'tasks.add_task_modal.add_reminder': return 'Add a Reminder';
+			case 'tasks.add_task_modal.when_would_you_like_to_be_reminded': return 'When would you like to be reminded?';
+			case 'tasks.add_task_modal.when_would_you_like_the_task_to_start': return 'When would you like the task to start?';
+			case 'tasks.add_task_modal.when_would_you_like_the_task_to_end': return 'When would you like the task to end?';
 			case 'calendar.title': return 'Calendar';
 			case 'account.edit_profile': return 'Edit Profile';
 			case 'account.sections.account': return 'Account';
@@ -721,17 +983,57 @@ extension on Translations {
 			case 'times.this_year': return 'This year';
 			case 'times.last_year': return 'Last year';
 			case 'times.all_time': return 'All time';
+			case 'days_before.none.value': return '0';
+			case 'days_before.none.label': return 'None';
+			case 'days_before.same_day.value': return 'same_day';
+			case 'days_before.same_day.label': return 'Same day';
+			case 'days_before.one_day.value': return '-1';
+			case 'days_before.one_day.label': return '1 day before';
+			case 'days_before.two_days.value': return '-2';
+			case 'days_before.two_days.label': return '2 days before';
+			case 'days_before.three_days.value': return '-3';
+			case 'days_before.three_days.label': return '3 days before';
+			case 'days_before.one_week.value': return '-7';
+			case 'days_before.one_week.label': return '1 week before';
+			case 'days_before.custom.value': return 'null';
+			case 'days_before.custom.label': return 'Custom';
+			case 'time_before.same_time.value': return '0';
+			case 'time_before.same_time.label': return 'Same time';
+			case 'time_before.five_minutes.value': return '-5';
+			case 'time_before.five_minutes.label': return '5 minutes before';
+			case 'time_before.fifteen_minutes.value': return '-15';
+			case 'time_before.fifteen_minutes.label': return '15 minutes before';
+			case 'time_before.thirty_minutes.value': return '-30';
+			case 'time_before.thirty_minutes.label': return '30 minutes before';
+			case 'time_before.one_hour.value': return '-60';
+			case 'time_before.one_hour.label': return '1 hour before';
+			case 'time_before.two_hours.value': return '-120';
+			case 'time_before.two_hours.label': return '2 hours before';
+			case 'time_before.one_day.value': return '-1440';
+			case 'time_before.one_day.label': return '1 day before';
+			case 'time_before.custom.value': return 'null';
+			case 'time_before.custom.label': return 'Custom';
 			case 'loading.simple': return 'Loading...';
 			case 'actions.save': return 'Save';
 			case 'actions.cancel': return 'Cancel';
 			case 'actions.next': return 'Next';
 			case 'actions.back': return 'Back';
 			case 'actions.delete': return 'Delete';
+			case 'actions.add': return 'Add';
 			case 'validation.required': return 'Required';
 			case 'validation.invalid_url': return 'invalid URL';
 			case 'errors.wrong_email_password': return 'Email or password incorrect';
 			case 'errors.email_malformed': return 'Email malformed';
 			case 'errors.unknown_error': return 'Unknown error';
+			case 'notifications.task_due_now': return 'The task is due';
+			case 'notifications.task_starting': return 'The task is starting';
+			case 'notifications.task_starting_in': return ({required Object time}) => 'The task is starting in ${time}';
+			case 'time_units.short.day': return 'd';
+			case 'time_units.short.hour': return 'h';
+			case 'time_units.short.minute': return 'm';
+			case 'time_units.long.day': return 'day';
+			case 'time_units.long.hour': return 'hour';
+			case 'time_units.long.minute': return 'minute';
 			case 'name_generator.animals.0': return 'bat';
 			case 'name_generator.animals.1': return 'owl';
 			case 'name_generator.animals.2': return 'fox';

@@ -89,9 +89,8 @@ class _OverviewTasksState extends State<OverviewTasks> {
     final List<TaskItem> widgets = [];
     for (final task in tasks) {
       if (task.completed != true &&
-          task.startDate != null &&
-          (task.startDate!.isToday() ||
-              task.startDate!.isBefore(DateTime.now()))) {
+          task.endDate != null &&
+          (task.endDate!.isToday() || task.endDate!.isBefore(DateTime.now()))) {
         widgets.add(TaskItem(task: task));
       }
     }
@@ -102,8 +101,8 @@ class _OverviewTasksState extends State<OverviewTasks> {
     final List<TaskItem> widgets = [];
     for (final task in tasks) {
       if (task.completed != true &&
-          task.startDate != null &&
-          task.startDate!.isTomorrow()) {
+          task.endDate != null &&
+          task.endDate!.isTomorrow()) {
         widgets.add(TaskItem(task: task));
       }
     }
@@ -114,8 +113,8 @@ class _OverviewTasksState extends State<OverviewTasks> {
     final List<TaskItem> widgets = [];
     for (final task in tasks) {
       if (task.completed != true &&
-          task.startDate != null &&
-          task.startDate!.isThisWeek(
+          task.endDate != null &&
+          task.endDate!.isThisWeek(
             includeToday: false,
             includeTomorrow: false,
           )) {

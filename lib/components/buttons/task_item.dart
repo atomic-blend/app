@@ -67,7 +67,9 @@ class TaskItem extends StatelessWidget {
                   ],
                 ),
                 const Spacer(),
-                if (task.startDate != null && task.startDate!.isDayDate())
+                if (task.startDate == null &&
+                    task.endDate != null &&
+                    task.endDate!.isDayDate())
                   Padding(
                     padding: EdgeInsets.only(right: $constants.insets.xxs),
                     child: Row(
@@ -80,10 +82,51 @@ class TaskItem extends StatelessWidget {
                         SizedBox(
                           width: $constants.insets.xxs,
                         ),
-                        Text(Jiffy.parseFromDateTime(task.startDate!).MMMd),
+                        Text(Jiffy.parseFromDateTime(task.endDate!)
+                            .toLocal()
+                            .MMMd),
                       ],
                     ),
                   ),
+                if (task.startDate == null &&
+                    task.endDate != null &&
+                    !task.endDate!.isDayDate())
+                  Padding(
+                    padding: EdgeInsets.only(right: $constants.insets.xxs),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        const Icon(
+                          CupertinoIcons.time,
+                          size: 12,
+                        ),
+                        SizedBox(
+                          width: $constants.insets.xxs,
+                        ),
+                        Text(Jiffy.parseFromDateTime(task.endDate!)
+                            .toLocal()
+                            .jm),
+                      ],
+                    ),
+                  ),
+                if (task.startDate != null && task.endDate != null)
+                  Padding(
+                    padding: EdgeInsets.only(right: $constants.insets.xxs),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        const Icon(
+                          CupertinoIcons.alarm,
+                          size: 12,
+                        ),
+                        SizedBox(
+                          width: $constants.insets.xxs,
+                        ),
+                        Text(
+                            "${Jiffy.parseFromDateTime(task.startDate!).toLocal().Hm} - ${Jiffy.parseFromDateTime(task.endDate!).toLocal().Hm}"),
+                      ],
+                    ),
+                  )
               ],
             ),
           ),

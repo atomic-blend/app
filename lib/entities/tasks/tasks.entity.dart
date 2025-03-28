@@ -15,6 +15,7 @@ class TaskEntity with _$TaskEntity {
     DateTime? endDate,
     DateTime? createdAt,
     DateTime? updatedAt,
+    List<DateTime>? reminders,
     bool? completed,
   }) = _TaskEntity;
 
@@ -23,6 +24,7 @@ class TaskEntity with _$TaskEntity {
     'createdAt',
     'updatedAt',
     'user',
+    'reminders',
     'startDate',
     'endDate',
     'completed'
@@ -46,6 +48,7 @@ class TaskEntity with _$TaskEntity {
       'updatedAt': updatedAt?.toUtc().toIso8601String(),
       'startDate': startDate?.toUtc().toIso8601String(),
       'endDate': endDate?.toUtc().toIso8601String(),
+      'reminders': reminders?.map((e) => e.toUtc().toIso8601String()).toList(),
       'completed': completed
     };
     return encryptedData;

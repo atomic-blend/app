@@ -34,12 +34,15 @@ mixin _$UserEntity {
   set firstname(String? value) => throw _privateConstructorUsedError;
   String? get lastname => throw _privateConstructorUsedError;
   set lastname(String? value) => throw _privateConstructorUsedError;
-  String? get refreshToken => throw _privateConstructorUsedError;
-  set refreshToken(String? value) => throw _privateConstructorUsedError;
   EncryptionKeyEntity get keySet => throw _privateConstructorUsedError;
   set keySet(EncryptionKeyEntity value) => throw _privateConstructorUsedError;
+  List<UserDeviceEntity>? get devices => throw _privateConstructorUsedError;
+  set devices(List<UserDeviceEntity>? value) =>
+      throw _privateConstructorUsedError;
   String? get accessToken => throw _privateConstructorUsedError;
   set accessToken(String? value) => throw _privateConstructorUsedError;
+  String? get refreshToken => throw _privateConstructorUsedError;
+  set refreshToken(String? value) => throw _privateConstructorUsedError;
   DateTime? get createdAt => throw _privateConstructorUsedError;
   set createdAt(DateTime? value) => throw _privateConstructorUsedError;
   DateTime? get updatedAt => throw _privateConstructorUsedError;
@@ -69,9 +72,10 @@ abstract class $UserEntityCopyWith<$Res> {
       List<dynamic>? purchases,
       String? firstname,
       String? lastname,
-      String? refreshToken,
       EncryptionKeyEntity keySet,
+      List<UserDeviceEntity>? devices,
       String? accessToken,
+      String? refreshToken,
       DateTime? createdAt,
       DateTime? updatedAt});
 
@@ -100,9 +104,10 @@ class _$UserEntityCopyWithImpl<$Res, $Val extends UserEntity>
     Object? purchases = freezed,
     Object? firstname = freezed,
     Object? lastname = freezed,
-    Object? refreshToken = freezed,
     Object? keySet = null,
+    Object? devices = freezed,
     Object? accessToken = freezed,
+    Object? refreshToken = freezed,
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
   }) {
@@ -135,17 +140,21 @@ class _$UserEntityCopyWithImpl<$Res, $Val extends UserEntity>
           ? _value.lastname
           : lastname // ignore: cast_nullable_to_non_nullable
               as String?,
-      refreshToken: freezed == refreshToken
-          ? _value.refreshToken
-          : refreshToken // ignore: cast_nullable_to_non_nullable
-              as String?,
       keySet: null == keySet
           ? _value.keySet
           : keySet // ignore: cast_nullable_to_non_nullable
               as EncryptionKeyEntity,
+      devices: freezed == devices
+          ? _value.devices
+          : devices // ignore: cast_nullable_to_non_nullable
+              as List<UserDeviceEntity>?,
       accessToken: freezed == accessToken
           ? _value.accessToken
           : accessToken // ignore: cast_nullable_to_non_nullable
+              as String?,
+      refreshToken: freezed == refreshToken
+          ? _value.refreshToken
+          : refreshToken // ignore: cast_nullable_to_non_nullable
               as String?,
       createdAt: freezed == createdAt
           ? _value.createdAt
@@ -185,9 +194,10 @@ abstract class _$$UserEntityImplCopyWith<$Res>
       List<dynamic>? purchases,
       String? firstname,
       String? lastname,
-      String? refreshToken,
       EncryptionKeyEntity keySet,
+      List<UserDeviceEntity>? devices,
       String? accessToken,
+      String? refreshToken,
       DateTime? createdAt,
       DateTime? updatedAt});
 
@@ -215,9 +225,10 @@ class __$$UserEntityImplCopyWithImpl<$Res>
     Object? purchases = freezed,
     Object? firstname = freezed,
     Object? lastname = freezed,
-    Object? refreshToken = freezed,
     Object? keySet = null,
+    Object? devices = freezed,
     Object? accessToken = freezed,
+    Object? refreshToken = freezed,
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
   }) {
@@ -250,17 +261,21 @@ class __$$UserEntityImplCopyWithImpl<$Res>
           ? _value.lastname
           : lastname // ignore: cast_nullable_to_non_nullable
               as String?,
-      refreshToken: freezed == refreshToken
-          ? _value.refreshToken
-          : refreshToken // ignore: cast_nullable_to_non_nullable
-              as String?,
       keySet: null == keySet
           ? _value.keySet
           : keySet // ignore: cast_nullable_to_non_nullable
               as EncryptionKeyEntity,
+      devices: freezed == devices
+          ? _value.devices
+          : devices // ignore: cast_nullable_to_non_nullable
+              as List<UserDeviceEntity>?,
       accessToken: freezed == accessToken
           ? _value.accessToken
           : accessToken // ignore: cast_nullable_to_non_nullable
+              as String?,
+      refreshToken: freezed == refreshToken
+          ? _value.refreshToken
+          : refreshToken // ignore: cast_nullable_to_non_nullable
               as String?,
       createdAt: freezed == createdAt
           ? _value.createdAt
@@ -285,9 +300,10 @@ class _$UserEntityImpl extends _UserEntity {
       this.purchases,
       this.firstname,
       this.lastname,
-      this.refreshToken,
       required this.keySet,
+      this.devices,
       this.accessToken,
+      this.refreshToken,
       this.createdAt,
       this.updatedAt})
       : super._();
@@ -310,11 +326,13 @@ class _$UserEntityImpl extends _UserEntity {
   @override
   String? lastname;
   @override
-  String? refreshToken;
-  @override
   EncryptionKeyEntity keySet;
   @override
+  List<UserDeviceEntity>? devices;
+  @override
   String? accessToken;
+  @override
+  String? refreshToken;
   @override
   DateTime? createdAt;
   @override
@@ -345,9 +363,10 @@ abstract class _UserEntity extends UserEntity {
       List<dynamic>? purchases,
       String? firstname,
       String? lastname,
-      String? refreshToken,
       required EncryptionKeyEntity keySet,
+      List<UserDeviceEntity>? devices,
       String? accessToken,
+      String? refreshToken,
       DateTime? createdAt,
       DateTime? updatedAt}) = _$UserEntityImpl;
   _UserEntity._() : super._();
@@ -377,14 +396,17 @@ abstract class _UserEntity extends UserEntity {
   String? get lastname;
   set lastname(String? value);
   @override
-  String? get refreshToken;
-  set refreshToken(String? value);
-  @override
   EncryptionKeyEntity get keySet;
   set keySet(EncryptionKeyEntity value);
   @override
+  List<UserDeviceEntity>? get devices;
+  set devices(List<UserDeviceEntity>? value);
+  @override
   String? get accessToken;
   set accessToken(String? value);
+  @override
+  String? get refreshToken;
+  set refreshToken(String? value);
   @override
   DateTime? get createdAt;
   set createdAt(DateTime? value);

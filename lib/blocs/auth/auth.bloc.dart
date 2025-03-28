@@ -1,4 +1,5 @@
 import 'package:app/entities/user/user.entity.dart';
+import 'package:app/entities/user_device/user_device.dart';
 import 'package:app/services/user.service.dart';
 import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
@@ -16,6 +17,7 @@ class AuthBloc extends HydratedBloc<AuthEvent, AuthState> {
     on<RegisterEvent>(_onRegister);
     on<RefreshUser>(_onRefreshUser);
     on<DeleteUser>(_onDeleteUser);
+    on<UpdateUserDevice>(_onUpdateUserDevice);
   }
 
   void _onLogOut(Logout event, Emitter<AuthState> emit) async {
@@ -80,5 +82,19 @@ class AuthBloc extends HydratedBloc<AuthEvent, AuthState> {
     emit(const UserDeleting());
     await _userService.deleteUser();
     emit(const UserDeleted());
+  }
+
+  void _onUpdateUserDevice(
+      UpdateUserDevice event, Emitter<AuthState> emit) async {
+    if (state.user == null) {
+      emit(const LoggedOut());
+      return;
+    }
+    final user = state.user!;
+    final updatedUser = await _userService.updateUserDevice(
+      user,
+      event.deviceInfo,
+    );
+    emit(LoggedIn(updatedUser, false));
   }
 }

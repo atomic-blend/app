@@ -34,11 +34,7 @@ class _LoginOrRegisterModalState extends State<LoginOrRegisterModal> {
           });
         }
         if (state is LoggedIn) {
-          if (state.isRegistration == false) {
-            if (!context.mounted) return;
-            widget.onAuthSuccess();
-            Navigator.pop(context);
-          } else {
+          if (state.isRegistration == true) {
             setState(() {
               _step = 5;
             });
@@ -105,7 +101,9 @@ class _LoginOrRegisterModalState extends State<LoginOrRegisterModal> {
               },
             );
           case 5:
-            return MnemonicKey(onSuccess: () {}, mnemonic: authState.user?.keySet.backupPhrase ?? '');
+            return MnemonicKey(
+                onSuccess: () {},
+                mnemonic: authState.user?.keySet.backupPhrase ?? '');
         }
         return Container();
       }),

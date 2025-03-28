@@ -23,6 +23,9 @@ _$TaskEntityImpl _$$TaskEntityImplFromJson(Map<String, dynamic> json) =>
       updatedAt: json['updatedAt'] == null
           ? null
           : DateTime.parse(json['updatedAt'] as String),
+      reminders: (json['reminders'] as List<dynamic>?)
+          ?.map((e) => DateTime.parse(e as String))
+          .toList(),
       completed: json['completed'] as bool?,
     );
 
@@ -35,5 +38,6 @@ Map<String, dynamic> _$$TaskEntityImplToJson(_$TaskEntityImpl instance) =>
       'endDate': instance.endDate?.toIso8601String(),
       'createdAt': instance.createdAt?.toIso8601String(),
       'updatedAt': instance.updatedAt?.toIso8601String(),
+      'reminders': instance.reminders?.map((e) => e.toIso8601String()).toList(),
       'completed': instance.completed,
     };

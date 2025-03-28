@@ -3,6 +3,7 @@ import 'package:app/blocs/auth/auth.bloc.dart';
 import 'package:app/components/app/bottom_navigation.dart';
 import 'package:app/components/app/side_menu.dart';
 import 'package:app/pages/auth/login_or_register_modal.dart';
+import 'package:app/services/device_info.service.dart';
 import 'package:app/services/encryption.service.dart';
 import 'package:app/services/user.service.dart';
 import 'package:app/utils/constants.dart';
@@ -36,17 +37,35 @@ class _AppWrapperState extends State<AppWrapper> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<AppCubit, AppState>(builder: (context, appState) {
-      // if (appState.isIntroCompleted != true) {
-      //   WidgetsBinding.instance.addPostFrameCallback((_) {
-      //     Navigator.of(context).pushReplacement(
-      //         MaterialPageRoute(builder: (context) => const AppIntroduction()));
-      //   });
-      // }
       return BlocBuilder<AuthBloc, AuthState>(builder: (context, state) {
         if (state is LoggedIn) {
           encryptionService ??=
               EncryptionService(userSalt: state.user!.keySet.salt);
           encryptionService!.hydrateKey();
+
+          WidgetsBinding.instance.addPostFrameCallback((_) async {
+            if (state.user!.devices == null) {
+              state.user!.devices = [];
+            }
+            deviceInfoService ??= DeviceInfoService();
+
+            final userDeviceInfo = await deviceInfoService!.getDeviceInfo();
+            // update the userDeviceInfo only if it do not precisely match the one in the user's devices list
+
+            if (state.user!.devices!.isEmpty ||
+                state.user!.devices!.every((device) =>
+                    device.deviceId != userDeviceInfo.deviceId ||
+                    device.deviceName != userDeviceInfo.deviceName ||
+                    device.deviceTimezone != userDeviceInfo.deviceTimezone )) {
+              if (!context.mounted) return;
+              context.read<AuthBloc>().add(
+                    UpdateUserDevice(
+                      state.user!,
+                      userDeviceInfo,
+                    ),
+                  );
+            }
+          });
         }
         var navItems = $constants.navigation.bottomNavigationItems(context);
         var screens = $constants.navigation.bottomNavigationScreens();

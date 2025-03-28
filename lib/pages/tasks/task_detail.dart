@@ -2,8 +2,9 @@ import 'package:app/blocs/tasks/tasks.bloc.dart';
 import 'package:app/components/forms/app_text_form_field.dart';
 import 'package:app/entities/tasks/tasks.entity.dart';
 import 'package:app/i18n/strings.g.dart';
-import 'package:app/components/forms/due_date_picker_modal.dart';
+import 'package:app/components/forms/task_date_picker_modal/task_date_picker_modal.dart';
 import 'package:app/utils/constants.dart';
+import 'package:app/utils/exntensions/date_time_extension.dart';
 import 'package:app/utils/shortcuts.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -21,12 +22,16 @@ class TaskDetail extends StatefulWidget {
 
 class _TaskDetailState extends State<TaskDetail> {
   final TextEditingController _titleController = TextEditingController();
-  DateTime? _dueDate;
+  DateTime? _endDate;
+  DateTime? _startDate;
+  List<DateTime>? _reminders;
 
   @override
   void initState() {
     _titleController.text = widget.task.title;
-    _dueDate = widget.task.startDate;
+    _endDate = widget.task.endDate;
+    _startDate = widget.task.startDate;
+    _reminders = widget.task.reminders;
     super.initState();
   }
 
@@ -57,27 +62,61 @@ class _TaskDetailState extends State<TaskDetail> {
                     await showModalBottomSheet(
                         context: context,
                         isScrollControlled: true,
-                        builder: (context) => DueDatePickerModal(
-                              onDateChanged: (date) {
+                        builder: (context) => TaskDatePickerModal(
+                              endDate: _endDate,
+                              startDate: _startDate,
+                              reminders: _reminders,
+                              onRemindersChanged: (newRem) {
                                 setState(() {
-                                  _dueDate = date;
+                                  _reminders = newRem;
+                                });
+                              },
+                              onEndDateChanged: (date) {
+                                setState(() {
+                                  _endDate = date;
+                                });
+                              },
+                              onStartDateChanged: (date) {
+                                setState(() {
+                                  _startDate = date;
                                 });
                               },
                               firstDate: DateTime(2000),
                               lastDate: DateTime(2100),
                             ));
-                    widget.task.startDate = _dueDate;
+                    widget.task.endDate = _endDate;
+                    widget.task.startDate = _startDate;
+                    widget.task.reminders = _reminders;
                     if (!context.mounted) return;
                     context.read<TasksBloc>().add(EditTask(widget.task));
                   },
                   child: Container(
-                    child: _dueDate != null
-                        ? Text(Jiffy.parseFromDateTime(_dueDate!).yMMMMd,
+                    child: _endDate != null && _startDate == null
+                        ? Text(
+                            _endDate?.isDayDate() == true
+                                ? Jiffy.parseFromDateTime(_endDate!)
+                                    .toLocal()
+                                    .yMMMEd
+                                : Jiffy.parseFromDateTime(_endDate!)
+                                    .toLocal()
+                                    .yMMMMdjm,
                             style: getTextTheme(context).bodyMedium!.copyWith())
-                        : Text(
-                            context.t.tasks.due_dates.no_due_date,
-                            style: getTextTheme(context).titleSmall!.copyWith(),
-                          ),
+                        : _startDate != null
+                            ? Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Text(
+                                    Jiffy.parseFromDateTime(_endDate!).toLocal().yMMMEd,
+                                  ),
+                                  Text("${context.t.tasks.from.toLowerCase()} ${Jiffy.parseFromDateTime(_startDate!).toLocal().Hm} ${context.t.tasks.to.toLowerCase()} ${Jiffy.parseFromDateTime(_endDate!).toLocal().Hm}")
+                              ],
+                            )
+                            : Text(
+                                context.t.tasks.due_dates.no_due_date,
+                                style: getTextTheme(context)
+                                    .titleSmall!
+                                    .copyWith(),
+                              ),
                   ),
                 ),
                 Container(

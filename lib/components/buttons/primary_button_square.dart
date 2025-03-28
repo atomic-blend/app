@@ -13,7 +13,8 @@ class PrimaryButtonSquare extends StatelessWidget {
       this.textColor,
       this.border,
       this.height,
-      this.width});
+      this.width,
+      this.outlined});
 
   final VoidCallback? onPressed;
   final String? emoji;
@@ -24,6 +25,7 @@ class PrimaryButtonSquare extends StatelessWidget {
   final Border? border;
   final double? height;
   final double? width;
+  final bool? outlined;
 
   @override
   Widget build(BuildContext context) {
@@ -31,15 +33,19 @@ class PrimaryButtonSquare extends StatelessWidget {
       children: [
         Container(
           decoration: BoxDecoration(
-            border: border,
+            border: outlined == true
+                ? Border.all(color: getTheme(context).primary)
+                : border,
+            borderRadius: BorderRadius.circular($constants.corners.md),
           ),
           height: height ?? 50,
           width: width,
           child: TextButton(
             onPressed: onPressed,
             style: ButtonStyle(
-              backgroundColor: WidgetStatePropertyAll(
-                  backgroundColor ?? getTheme(context).primary),
+              backgroundColor: WidgetStatePropertyAll(outlined == true
+                  ? null
+                  : backgroundColor ?? getTheme(context).primary),
               shape: WidgetStateProperty.all<RoundedRectangleBorder>(
                 RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(
@@ -61,7 +67,9 @@ class PrimaryButtonSquare extends StatelessWidget {
                 child: Text(
                   text,
                   style: getTextTheme(context).bodyMedium!.copyWith(
-                        color: textColor ?? Colors.white,
+                        color: outlined == true
+                            ? getTheme(context).primary
+                            : textColor ?? Colors.white,
                         fontWeight: FontWeight.bold,
                         fontSize: 16,
                       ),

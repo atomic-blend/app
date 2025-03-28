@@ -3,7 +3,7 @@ import 'package:app/blocs/tasks/tasks.bloc.dart';
 import 'package:app/components/forms/app_text_form_field.dart';
 import 'package:app/entities/tasks/tasks.entity.dart';
 import 'package:app/i18n/strings.g.dart';
-import 'package:app/components/forms/due_date_picker_modal.dart';
+import 'package:app/components/forms/task_date_picker_modal/task_date_picker_modal.dart';
 import 'package:app/utils/constants.dart';
 import 'package:app/utils/exntensions/date_time_extension.dart';
 import 'package:app/utils/shortcuts.dart';
@@ -22,7 +22,9 @@ class AddTaskModal extends StatefulWidget {
 class _AddTaskModalState extends State<AddTaskModal> {
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
-  DateTime? _dueDate;
+  DateTime? _endDate;
+  DateTime? _startDate;
+  List<DateTime>? _reminders;
 
   @override
   Widget build(BuildContext context) {
@@ -68,7 +70,7 @@ class _AddTaskModalState extends State<AddTaskModal> {
                         padding: EdgeInsets.symmetric(
                             horizontal: $constants.insets.xs + 4, vertical: 2),
                         decoration: BoxDecoration(
-                          color: _dueDate != null
+                          color: _endDate != null
                               ? getTheme(context).primaryContainer
                               : null,
                           borderRadius:
@@ -79,10 +81,20 @@ class _AddTaskModalState extends State<AddTaskModal> {
                               await showModalBottomSheet(
                                   context: context,
                                   isScrollControlled: true,
-                                  builder: (context) => DueDatePickerModal(
-                                        onDateChanged: (date) {
+                                  builder: (context) => TaskDatePickerModal(
+                                        onStartDateChanged: (date) {
                                           setState(() {
-                                            _dueDate = date;
+                                            _startDate = date;
+                                          });
+                                        },
+                                        onRemindersChanged: (newRem) {
+                                          setState(() {
+                                            _reminders = newRem;
+                                          });
+                                        },
+                                        onEndDateChanged: (date) {
+                                          setState(() {
+                                            _endDate = date;
                                           });
                                         },
                                         firstDate: DateTime(2000),
@@ -92,20 +104,20 @@ class _AddTaskModalState extends State<AddTaskModal> {
                             child: Row(
                               children: [
                                 Icon(CupertinoIcons.calendar,
-                                    color: _dueDate != null
+                                    color: _endDate != null
                                         ? getTheme(context).primary
                                         : null),
-                                if (_dueDate != null)
+                                if (_endDate != null)
                                   Padding(
                                     padding: EdgeInsets.only(
                                         left: $constants.insets.xxs),
                                     child: Text(
-                                      _dueDate!.formatDueDate(context),
+                                      _endDate!.formatDueDate(context),
                                       style: getTextTheme(context)
                                           .bodySmall!
                                           .copyWith(
                                             fontWeight: FontWeight.bold,
-                                            color: _dueDate != null
+                                            color: _endDate != null
                                                 ? getTheme(context).primary
                                                 : null,
                                           ),
@@ -129,11 +141,12 @@ class _AddTaskModalState extends State<AddTaskModal> {
                         }
                         final task = TaskEntity(
                             title: _titleController.text,
-                            startDate: _dueDate,
+                            startDate: _startDate,
+                            endDate: _endDate,
+                            reminders: _reminders,
                             completed: false,
                             createdAt: DateTime.now(),
-                            updatedAt: DateTime.now()
-                          );
+                            updatedAt: DateTime.now());
                         if (_descriptionController.text.isNotEmpty) {
                           task.description = _descriptionController.text;
                         }

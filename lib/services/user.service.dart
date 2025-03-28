@@ -2,12 +2,15 @@ import 'dart:convert';
 
 import 'package:app/entities/user/user.entity.dart';
 import 'package:app/entities/userRole/userRole.entity.dart';
+import 'package:app/entities/user_device/user_device.dart';
 import 'package:app/main.dart';
+import 'package:app/services/device_info.service.dart';
 import 'package:app/services/encryption.service.dart';
 import 'package:app/utils/api_client.dart';
 import 'package:dio/dio.dart';
 
 EncryptionService? encryptionService;
+DeviceInfoService? deviceInfoService;
 
 class UserService {
   UserService();
@@ -33,6 +36,18 @@ class UserService {
     }
   }
 
+  Future<UserEntity> updateUserDevice(
+      UserEntity user, UserDeviceEntity device) async {
+    final result = await globalApiClient.put('/users/device', data: device);
+    if (result.statusCode == 200) {
+      final user = UserEntity.fromJson(result.data["data"]);
+      prefs?.setString('user', json.encode(user.toJson()));
+      return user;
+    } else {
+      throw Exception('user_device_update_failed');
+    }
+  }
+
   Future<UserEntity?> getUser(UserEntity user) async {
     try {
       globalApiClient.setIdToken(user.accessToken!);
@@ -52,7 +67,7 @@ class UserService {
   }
 
   Future<UserEntity?> checkForLoggedInUser() async {
-    final userRaw = prefs?.getString('user');
+    final userRaw = prefs?.getString('accessToken');
     if (userRaw != null) {
       final user = json.decode(userRaw);
       if (user != null) {
@@ -81,12 +96,12 @@ class UserService {
     });
     if (result.statusCode == 200) {
       final userData = result.data['user'];
-      userData['accessToken'] = result.data['accessToken'];
-      userData['refreshToken'] = result.data['refreshToken'];
       final user = UserEntity.fromJson(userData);
-      prefs?.setString('user', json.encode(user.toJson()));
+      await prefs?.setString('user', json.encode(user.toJson()));
+      await prefs?.setString('accessToken', result.data["accessToken"]);
+      await prefs?.setString('refreshToken', result.data["refreshToken"]);
 
-      globalApiClient.setIdToken(user.accessToken!);
+      globalApiClient.setIdToken(result.data["accessToken"]);
 
       // restore data key from password
       encryptionService ??= EncryptionService(userSalt: user.keySet.salt);
@@ -125,6 +140,9 @@ class UserService {
 
   static Future<String?> refreshToken(UserEntity user) async {
     final refreshToken = user.refreshToken;
+    if (refreshToken == null || refreshToken.isEmpty) {
+      throw Exception('No refresh token available');
+    }
     final apiClient = Dio();
     apiClient.options = BaseOptions(
       baseUrl: env!.restApiUrl,
@@ -133,7 +151,9 @@ class UserService {
       },
     );
     final result = await apiClient.post('/auth/refresh');
-
+    if (result.statusCode != 200) {
+      throw Exception('Token refresh failed');
+    }
     final accessToken = result.data['accessToken'];
     user.accessToken = accessToken;
     user.refreshToken = result.data['refreshToken'];
