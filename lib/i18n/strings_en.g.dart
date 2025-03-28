@@ -81,6 +81,7 @@ class Translations implements BaseTranslations<AppLocale, Translations> {
 		'unknown_error': 'Unknown error',
 	};
 	late final TranslationsNotificationsEn notifications = TranslationsNotificationsEn._(_root);
+	late final TranslationsTimeUnitsEn time_units = TranslationsTimeUnitsEn._(_root);
 	late final TranslationsNameGeneratorEn name_generator = TranslationsNameGeneratorEn._(_root);
 }
 
@@ -421,6 +422,19 @@ class TranslationsNotificationsEn {
 
 	// Translations
 	String get task_due_now => 'The task is due';
+	String get task_starting => 'The task is starting';
+	String task_starting_in({required Object time}) => 'The task is starting in ${time}';
+}
+
+// Path: time_units
+class TranslationsTimeUnitsEn {
+	TranslationsTimeUnitsEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	late final TranslationsTimeUnitsShortEn short = TranslationsTimeUnitsShortEn._(_root);
+	late final TranslationsTimeUnitsLongEn long = TranslationsTimeUnitsLongEn._(_root);
 }
 
 // Path: name_generator
@@ -808,6 +822,30 @@ class TranslationsAccountActionsEn {
 	String get delete_account => 'Delete my Account';
 }
 
+// Path: time_units.short
+class TranslationsTimeUnitsShortEn {
+	TranslationsTimeUnitsShortEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	String get day => 'd';
+	String get hour => 'h';
+	String get minute => 'm';
+}
+
+// Path: time_units.long
+class TranslationsTimeUnitsLongEn {
+	TranslationsTimeUnitsLongEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	String get day => 'day';
+	String get hour => 'hour';
+	String get minute => 'minute';
+}
+
 // Path: settings.app_settings.selfHostedUrl
 class TranslationsSettingsAppSettingsSelfHostedUrlEn {
 	TranslationsSettingsAppSettingsSelfHostedUrlEn._(this._root);
@@ -976,6 +1014,14 @@ extension on Translations {
 			case 'errors.email_malformed': return 'Email malformed';
 			case 'errors.unknown_error': return 'Unknown error';
 			case 'notifications.task_due_now': return 'The task is due';
+			case 'notifications.task_starting': return 'The task is starting';
+			case 'notifications.task_starting_in': return ({required Object time}) => 'The task is starting in ${time}';
+			case 'time_units.short.day': return 'd';
+			case 'time_units.short.hour': return 'h';
+			case 'time_units.short.minute': return 'm';
+			case 'time_units.long.day': return 'day';
+			case 'time_units.long.hour': return 'hour';
+			case 'time_units.long.minute': return 'minute';
 			case 'name_generator.animals.0': return 'bat';
 			case 'name_generator.animals.1': return 'owl';
 			case 'name_generator.animals.2': return 'fox';

@@ -77,6 +77,7 @@ class TranslationsFr implements Translations {
 		'unknown_error': 'Une erreur inconnue s\'est produite',
 	};
 	@override late final _TranslationsNotificationsFr notifications = _TranslationsNotificationsFr._(_root);
+	@override late final _TranslationsTimeUnitsFr time_units = _TranslationsTimeUnitsFr._(_root);
 	@override late final _TranslationsNameGeneratorFr name_generator = _TranslationsNameGeneratorFr._(_root);
 }
 
@@ -417,6 +418,19 @@ class _TranslationsNotificationsFr implements TranslationsNotificationsEn {
 
 	// Translations
 	@override String get task_due_now => 'La tâche est due maintenant';
+	@override String get task_starting => 'La tâche commence maintenant';
+	@override String task_starting_in({required Object time}) => 'La tâche commence dans ${time}';
+}
+
+// Path: time_units
+class _TranslationsTimeUnitsFr implements TranslationsTimeUnitsEn {
+	_TranslationsTimeUnitsFr._(this._root);
+
+	final TranslationsFr _root; // ignore: unused_field
+
+	// Translations
+	@override late final _TranslationsTimeUnitsShortFr short = _TranslationsTimeUnitsShortFr._(_root);
+	@override late final _TranslationsTimeUnitsLongFr long = _TranslationsTimeUnitsLongFr._(_root);
 }
 
 // Path: name_generator
@@ -801,6 +815,30 @@ class _TranslationsAccountActionsFr implements TranslationsAccountActionsEn {
 	@override String get delete_account => 'Supprimer mon compte';
 }
 
+// Path: time_units.short
+class _TranslationsTimeUnitsShortFr implements TranslationsTimeUnitsShortEn {
+	_TranslationsTimeUnitsShortFr._(this._root);
+
+	final TranslationsFr _root; // ignore: unused_field
+
+	// Translations
+	@override String get day => 'j';
+	@override String get hour => 'h';
+	@override String get minute => 'm';
+}
+
+// Path: time_units.long
+class _TranslationsTimeUnitsLongFr implements TranslationsTimeUnitsLongEn {
+	_TranslationsTimeUnitsLongFr._(this._root);
+
+	final TranslationsFr _root; // ignore: unused_field
+
+	// Translations
+	@override String get day => 'jour';
+	@override String get hour => 'heure';
+	@override String get minute => 'minute';
+}
+
 // Path: settings.app_settings.selfHostedUrl
 class _TranslationsSettingsAppSettingsSelfHostedUrlFr implements TranslationsSettingsAppSettingsSelfHostedUrlEn {
 	_TranslationsSettingsAppSettingsSelfHostedUrlFr._(this._root);
@@ -969,6 +1007,14 @@ extension on TranslationsFr {
 			case 'errors.email_malformed': return 'Adresse e-mail invalide';
 			case 'errors.unknown_error': return 'Une erreur inconnue s\'est produite';
 			case 'notifications.task_due_now': return 'La tâche est due maintenant';
+			case 'notifications.task_starting': return 'La tâche commence maintenant';
+			case 'notifications.task_starting_in': return ({required Object time}) => 'La tâche commence dans ${time}';
+			case 'time_units.short.day': return 'j';
+			case 'time_units.short.hour': return 'h';
+			case 'time_units.short.minute': return 'm';
+			case 'time_units.long.day': return 'jour';
+			case 'time_units.long.hour': return 'heure';
+			case 'time_units.long.minute': return 'minute';
 			case 'name_generator.animals.0': return 'hibou';
 			case 'name_generator.animals.1': return 'renard';
 			case 'name_generator.animals.2': return 'lapin';

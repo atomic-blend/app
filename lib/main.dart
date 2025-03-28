@@ -48,7 +48,6 @@ FutureOr<void> main() async {
 
   // Foreground message handler
   FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-    print(message.data);
     Processors.processAndNotify(message);
   });
 

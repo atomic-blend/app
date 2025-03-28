@@ -2,11 +2,12 @@ import 'package:app/i18n/strings.g.dart';
 import 'package:app/main.dart';
 import 'package:app/services/encryption.service.dart';
 import 'package:app/services/user.service.dart';
+import 'package:app/utils/exntensions/date_time_extension.dart';
 import 'package:app/utils/local_notifications.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
-class TaskDueProcessor {
+class TaskReminderProcessor {
   static processAndNotify(RemoteMessage message) async {
     final locale = AppLocaleUtils.findDeviceLocale();
     final data = message.data;
@@ -23,7 +24,13 @@ class TaskDueProcessor {
 
     // prepare notification body
     final title = await encryptionService?.decryptString(data: encryptedTitle);
-    final body = locale.translations.notifications.task_due_now;
+    final dueDateString = data['due_date'];
+    if (dueDateString == null) {
+      return;
+    }
+    final dueDate = DateTime.parse(dueDateString);
+    final now = DateTime.now();
+    final body = locale.translations.notifications.task_starting_in(time: dueDate.diffString(locale, now));
 
     // setup notification client
     final localNotificationsPlugin = FlutterLocalNotificationsPlugin();

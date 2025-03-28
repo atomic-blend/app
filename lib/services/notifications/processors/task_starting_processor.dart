@@ -6,7 +6,7 @@ import 'package:app/utils/local_notifications.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
-class TaskDueProcessor {
+class TaskStartingProcessor {
   static processAndNotify(RemoteMessage message) async {
     final locale = AppLocaleUtils.findDeviceLocale();
     final data = message.data;
@@ -23,7 +23,7 @@ class TaskDueProcessor {
 
     // prepare notification body
     final title = await encryptionService?.decryptString(data: encryptedTitle);
-    final body = locale.translations.notifications.task_due_now;
+    final body = locale.translations.notifications.task_starting;
 
     // setup notification client
     final localNotificationsPlugin = FlutterLocalNotificationsPlugin();

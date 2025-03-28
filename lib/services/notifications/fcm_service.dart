@@ -1,5 +1,3 @@
-import 'package:app/services/notifications/background_notification_processor.dart';
-import 'package:app/services/notifications/processors/processors.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 

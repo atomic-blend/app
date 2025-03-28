@@ -24,7 +24,23 @@ extension DateTimeExtension on DateTime {
         month == tomorrow.month &&
         day == tomorrow.day;
   }
-  
+
+  String diffString(AppLocale locale, DateTime other) {
+    final diff = difference(other).abs();
+
+    final days = diff.inDays;
+    final hours = diff.inHours % 24;
+    final minutes = diff.inMinutes % 60;
+
+    final parts = <String>[];
+    if (days > 0) parts.add('$days${locale.translations.time_units.short.day}');
+    if (hours > 0 || days > 0) {
+      parts.add('$hours${locale.translations.time_units.short.hour}');
+    }
+    parts.add('$minutes${locale.translations.time_units.short.minute}');
+
+    return parts.join(' ');
+  }
 
   bool isDayDate() {
     // check if a date is at midnight
