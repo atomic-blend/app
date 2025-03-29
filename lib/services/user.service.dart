@@ -124,10 +124,10 @@ class UserService {
       'keySet': keySet?.toJson(),
     });
     if (result.statusCode == 201) {
-      final userData = result.data['user'];
-      userData['accessToken'] = result.data['accessToken'];
-      userData['refreshToken'] = result.data['refreshToken'];
-      final user = UserEntity.fromJson(userData);
+      userData = result.data['user'];
+      userData!['accessToken'] = result.data['accessToken'];
+      userData!['refreshToken'] = result.data['refreshToken'];
+      final user = UserEntity.fromJson(userData!);
       prefs?.setString('user', json.encode(user.toJson()));
       user.keySet = keySet!;
 

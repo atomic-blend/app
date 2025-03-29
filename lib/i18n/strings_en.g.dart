@@ -17,9 +17,9 @@ class Translations implements BaseTranslations<AppLocale, Translations> {
 
 	/// You can call this constructor and build your own translation instance of this locale.
 	/// Constructing via the enum [AppLocale.build] is preferred.
-	Translations({Map<String, Node>? overrides, PluralResolver? cardinalResolver, PluralResolver? ordinalResolver})
+	Translations({Map<String, Node>? overrides, PluralResolver? cardinalResolver, PluralResolver? ordinalResolver, TranslationMetadata<AppLocale, Translations>? meta})
 		: assert(overrides == null, 'Set "translation_overrides: true" in order to enable this feature.'),
-		  $meta = TranslationMetadata(
+		  $meta = meta ?? TranslationMetadata(
 		    locale: AppLocale.en,
 		    overrides: overrides ?? {},
 		    cardinalResolver: cardinalResolver,
@@ -35,6 +35,8 @@ class Translations implements BaseTranslations<AppLocale, Translations> {
 	dynamic operator[](String key) => $meta.getTranslation(key);
 
 	late final Translations _root = this; // ignore: unused_field
+
+	Translations $copyWith({TranslationMetadata<AppLocale, Translations>? meta}) => Translations(meta: meta ?? this.$meta);
 
 	// Translations
 	String get app_name => 'Atomic Blend';
@@ -753,6 +755,7 @@ class TranslationsAuthMnemonicKeyEn {
 	String get description_end => 'You will need it to recover access to your data if you forget your password.';
 	String get mnemonic_hint => 'Enter your recovery key';
 	String get mnemonic_error => 'Invalid recovery key';
+	String get copy_success => 'Recovery key copied to clipboard';
 }
 
 // Path: settings.app_settings
@@ -922,6 +925,7 @@ extension on Translations {
 			case 'auth.mnemonic_key.description_end': return 'You will need it to recover access to your data if you forget your password.';
 			case 'auth.mnemonic_key.mnemonic_hint': return 'Enter your recovery key';
 			case 'auth.mnemonic_key.mnemonic_error': return 'Invalid recovery key';
+			case 'auth.mnemonic_key.copy_success': return 'Recovery key copied to clipboard';
 			case 'settings.title': return 'Settings';
 			case 'settings.app_settings.title': return 'App Settings';
 			case 'settings.app_settings.selfHostedUrl.title': return 'Self-Hosted URL';

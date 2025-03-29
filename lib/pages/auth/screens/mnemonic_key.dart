@@ -4,6 +4,7 @@ import 'package:app/components/forms/app_text_form_field.dart';
 import 'package:app/i18n/strings.g.dart';
 import 'package:app/utils/constants.dart';
 import 'package:app/utils/shortcuts.dart';
+import 'package:app/utils/toast_helper.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -33,12 +34,14 @@ class _MnemonicKeyState extends State<MnemonicKey>
   final TextEditingController _mnemonicController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   bool _isConfirmStep = false;
+  String? _mnemonic;
 
   @override
   initState() {
     _animationController = AnimationController(
       vsync: this,
     );
+    _mnemonic = widget.mnemonic;
     super.initState();
   }
 
@@ -51,13 +54,7 @@ class _MnemonicKeyState extends State<MnemonicKey>
   @override
   Widget build(BuildContext context) {
     return BlocListener<AuthBloc, AuthState>(
-      listener: (BuildContext context, AuthState state) {
-        if (state is LoggedIn) {
-          if (!context.mounted) return;
-          widget.onSuccess();
-          Navigator.pop(context);
-        }
-      },
+      listener: (BuildContext context, AuthState state) {},
       child: Stack(
         children: [
           SizedBox(
@@ -132,8 +129,13 @@ class _MnemonicKeyState extends State<MnemonicKey>
                               onTap: () {
                                 //copy to clipboard
                                 Clipboard.setData(
-                                  ClipboardData(text: widget.mnemonic),
+                                  ClipboardData(text: _mnemonic ?? ""),
                                 );
+                                ToastHelper.showSuccess(
+                                    context: context,
+                                    title: context
+                                        .t.auth.mnemonic_key.copy_success,
+                                    description: "");
                               },
                               child: Container(
                                 padding: EdgeInsets.all($constants.insets.sm),
@@ -143,7 +145,7 @@ class _MnemonicKeyState extends State<MnemonicKey>
                                       $constants.corners.md),
                                 ),
                                 child: Text(
-                                  widget.mnemonic,
+                                  _mnemonic ?? "",
                                   style: getTextTheme(context)
                                       .titleSmall!
                                       .copyWith(fontWeight: FontWeight.bold),
@@ -167,7 +169,7 @@ class _MnemonicKeyState extends State<MnemonicKey>
                                     return context
                                         .t.auth.mnemonic_key.mnemonic_error;
                                   }
-                                  if (value != widget.mnemonic) {
+                                  if (value != _mnemonic) {
                                     return context
                                         .t.auth.mnemonic_key.mnemonic_error;
                                   }
