@@ -121,8 +121,8 @@ class ApiClient {
     refreshToken = prefs?.getString('refreshToken');
   }
 
-  setIdToken(String idToken) {
-    _dio.options.headers['Authorization'] = 'Bearer $idToken';
+  setIdToken(String? idToken) {
+    _dio.options.headers['Authorization'] = idToken == null ? null : 'Bearer $idToken';
   }
 
   static Future<bool> setSelfHostedRestApiUrl(String url) async {

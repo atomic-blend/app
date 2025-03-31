@@ -16,7 +16,12 @@ class UserService {
   UserService();
 
   Future<void> logOut() async {
-    await prefs?.setString('user', 'null');
+    userKey = null;
+    userData = null;
+    await prefs?.clear();
+    globalApiClient.setIdToken(null);
+    encryptionService = null;
+    deviceInfoService = null;
   }
 
   Future<UserEntity> createUser(UserEntity user) async {
