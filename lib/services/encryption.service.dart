@@ -36,10 +36,11 @@ class EncryptionService {
 
     // Generate user key from password
     final passwordBytes = Uint8List.fromList(password.codeUnits);
-    final Uint8List userKey = Uint8List(32);
-    restoreArgon2.deriveKey(passwordBytes, passwordBytes.length, userKey, 0);
+    final Uint8List uKey = Uint8List(32);
+    restoreArgon2.deriveKey(passwordBytes, passwordBytes.length, uKey, 0);
 
-    // Decrypt data key with user key
+    // Decrypt data key with user key : 
+    // concat: encrypted data + tag + iv
     final encryptedDataKey = base64.decode(keySet.userKey);
     final iv = encryptedDataKey.sublist(encryptedDataKey.length - 12);
     final tag = encryptedDataKey.sublist(
@@ -48,7 +49,7 @@ class EncryptionService {
         encryptedDataKey.sublist(0, encryptedDataKey.length - 28);
 
     final cipher = GCMBlockCipher(AESEngine())
-      ..init(false, ParametersWithIV(KeyParameter(userKey), iv));
+      ..init(false, ParametersWithIV(KeyParameter(uKey), iv));
 
     final decrypted = cipher.process(cipherText);
 
@@ -63,6 +64,7 @@ class EncryptionService {
     }
 
     // Store the data key in the storage
+    userKey = base64.encode(decrypted);
     prefs?.setString("key", base64.encode(decrypted));
   }
 

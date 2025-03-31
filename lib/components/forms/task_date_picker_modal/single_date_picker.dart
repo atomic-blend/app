@@ -122,8 +122,8 @@ class _SingleDatePickerState extends State<SingleDatePicker> {
                             onDateTimeChanged: (value) {
                               setState(() {
                                 endDate = endDate?.copyWith(
-                                  hour: value.hour,
-                                  minute: value.minute,
+                                  hour: value.toUtc().hour,
+                                  minute: value.toUtc().minute,
                                 );
                               });
                               widget.onEndDateChanged?.call(endDate!);
