@@ -14,6 +14,7 @@ _$AppStateImpl _$$AppStateImplFromJson(Map<String, dynamic> json) =>
       warnUserOnMobileInternetAccess:
           json['warnUserOnMobileInternetAccess'] as bool?,
       isIntroCompleted: json['isIntroCompleted'] as bool?,
+      calendarView: json['calendarView'] as String?,
       showcasePageStatus:
           (json['showcasePageStatus'] as Map<String, dynamic>?)?.map(
         (k, e) => MapEntry(k, e as bool),
@@ -27,5 +28,6 @@ Map<String, dynamic> _$$AppStateImplToJson(_$AppStateImpl instance) =>
       'mobileSyncDisabled': instance.mobileSyncDisabled,
       'warnUserOnMobileInternetAccess': instance.warnUserOnMobileInternetAccess,
       'isIntroCompleted': instance.isIntroCompleted,
+      'calendarView': instance.calendarView,
       'showcasePageStatus': instance.showcasePageStatus,
     };

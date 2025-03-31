@@ -47,6 +47,7 @@ class AppCubit extends HydratedCubit<AppState> {
           isIntroCompleted: false,
         ),
       );
+      
 
   void changeShowcasePageStatus({required String key, required bool value}) {
     final showcasePageStatus = {

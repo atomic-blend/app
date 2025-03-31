@@ -19,6 +19,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:icons_plus/icons_plus.dart';
+import 'package:syncfusion_flutter_calendar/calendar.dart';
 
 final $constants = Constants();
 
@@ -189,7 +190,9 @@ class Navigation {
   /// Bottom navigation configuration.
   List<Widget?> bottomNavigationScreens() => [
         const OverviewTasks(),
-        const Calendar(),
+        const Calendar(
+          view: CalendarView.month,
+        ),
         null,
         const Habits(),
         const MoreApps(),
@@ -252,7 +255,51 @@ class Navigation {
             },
           )
         ],
-        null,
+        [
+          SideMenuItem(
+            title: context.t.calendar.month,
+            initialOnly: true,
+            icon: CupertinoIcons.collections,
+            color: Colors.grey[800]!,
+            iconContainer: true,
+            body: Calendar(
+              key: UniqueKey(),
+              view: CalendarView.month,
+            ),
+            onTap: () {
+              context.read<AppCubit>().changeSelectedTabIndex(index: 0);
+            },
+          ),
+          SideMenuItem(
+            title: context.t.calendar.day,
+            initialOnly: true,
+            icon: CupertinoIcons.calendar_today,
+            color: Colors.grey[800]!,
+            iconContainer: true,
+            body: Calendar(
+              key: UniqueKey(),
+              view: CalendarView.day,
+            ),
+            onTap: () {
+              context.read<AppCubit>().changeSelectedTabIndex(index: 1);
+            },
+          ),
+          SideMenuItem(
+            title: context.t.calendar.threeDays,
+            initialOnly: true,
+            icon: CupertinoIcons.book,
+            color: Colors.grey[800]!,
+            iconContainer: true,
+            body: Calendar(
+              key: UniqueKey(),
+              view: CalendarView.week,
+              numberOfDays: 3,
+            ),
+            onTap: () {
+              context.read<AppCubit>().changeSelectedTabIndex(index: 2);
+            },
+          )
+        ],
         null,
         null,
         null

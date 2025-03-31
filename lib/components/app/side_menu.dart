@@ -29,7 +29,8 @@ class SideMenu extends StatelessWidget {
           element.isSelected = false;
         }
         sideItems.add(Padding(
-          padding: EdgeInsets.only(bottom: $constants.insets.xs),
+          padding: EdgeInsets.only(
+              bottom: $constants.insets.xs, right: $constants.insets.xs),
           child: GestureDetector(
             onTap: () {
               if (onItemSelected != null) {
@@ -44,6 +45,7 @@ class SideMenu extends StatelessWidget {
 
       return Container(
         decoration: BoxDecoration(color: getTheme(context).surface),
+        height: double.infinity,
         child: SingleChildScrollView(
           child: Column(
             children: [

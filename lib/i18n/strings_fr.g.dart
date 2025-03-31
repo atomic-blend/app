@@ -150,6 +150,9 @@ class _TranslationsCalendarFr implements TranslationsCalendarEn {
 
 	// Translations
 	@override String get title => 'Calendrier';
+	@override String get month => 'Mois';
+	@override String get day => 'Jour';
+	@override String get threeDays => '3 jours';
 }
 
 // Path: account
@@ -961,6 +964,9 @@ extension on TranslationsFr {
 			case 'tasks.add_task_modal.when_would_you_like_the_task_to_start': return 'Quand aimeriez-vous que la tâche commence ?';
 			case 'tasks.add_task_modal.when_would_you_like_the_task_to_end': return 'Quand aimeriez-vous que la tâche se termine ?';
 			case 'calendar.title': return 'Calendrier';
+			case 'calendar.month': return 'Mois';
+			case 'calendar.day': return 'Jour';
+			case 'calendar.threeDays': return '3 jours';
 			case 'account.edit_profile': return 'Modifier le profil';
 			case 'account.sections.account': return 'Compte';
 			case 'account.actions.security': return 'Sécurité et confidentialité';
