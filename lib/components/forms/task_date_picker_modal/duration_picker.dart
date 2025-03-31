@@ -69,8 +69,8 @@ class _DurationPickerState extends State<DurationPicker> {
                         .when_would_you_like_the_task_to_start,
                     onDateChanged: (value) {
                       setState(() {
-                        _startDate = value;
-                        _endDate = value?.add(const Duration(minutes: 30));
+                        _startDate = value?.toUtc();
+                        _endDate = value?.toUtc().add(const Duration(minutes: 30));
                       });
                       widget.onStartDateChanged?.call(value!);
                     }),
@@ -80,7 +80,7 @@ class _DurationPickerState extends State<DurationPicker> {
                         .when_would_you_like_the_task_to_end,
                     onDateChanged: (value) {
                       setState(() {
-                        _endDate = value;
+                        _endDate = value?.toUtc();
                       });
                       widget.onEndDateChanged?.call(value!);
                     }),
