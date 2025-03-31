@@ -70,7 +70,8 @@ class _DurationPickerState extends State<DurationPicker> {
                     onDateChanged: (value) {
                       setState(() {
                         _startDate = value?.toUtc();
-                        _endDate = value?.toUtc().add(const Duration(minutes: 30));
+                        _endDate =
+                            value?.toUtc().add(const Duration(minutes: 30));
                       });
                       widget.onStartDateChanged?.call(value!);
                     }),
@@ -107,7 +108,7 @@ class _DurationPickerState extends State<DurationPicker> {
                       width: getSize(context).width * 0.75,
                       child: ReminderPicker(
                           reminders: _reminders,
-                          dueDate: _endDate ?? DateTime.now(),
+                          dueDate: _endDate!,
                           onRemindersChanged: (newValue) {
                             setState(() {
                               _reminders = newValue;
@@ -154,7 +155,7 @@ class _DurationPickerState extends State<DurationPicker> {
             context: context,
             builder: (context) {
               return ABDatePickerDialog(
-                initialDate: date.toLocal(),
+                initialDate: date?.toLocal(),
                 title: title,
                 onDateChanged: (value) {
                   setState(() {
@@ -176,14 +177,20 @@ class _DurationPickerState extends State<DurationPicker> {
             children: [
               AutoSizeText(
                 maxLines: 1,
-                Jiffy.parseFromDateTime(date!).toLocal().yMMMEd.capitalize,
+                Jiffy.parseFromDateTime(date ?? DateTime.now())
+                    .toLocal()
+                    .yMMMEd
+                    .capitalize,
                 style: getTextTheme(context).titleSmall!.copyWith(
                       fontWeight: FontWeight.bold,
                     ),
               ),
               AutoSizeText(
                 maxLines: 1,
-                Jiffy.parseFromDateTime(date).toLocal().Hm.capitalize,
+                Jiffy.parseFromDateTime(date ?? DateTime.now())
+                    .toLocal()
+                    .Hm
+                    .capitalize,
                 style: getTextTheme(context).bodyMedium!.copyWith(),
               )
             ],

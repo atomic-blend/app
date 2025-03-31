@@ -100,10 +100,11 @@ class _TaskDatePickerModalState extends State<TaskDatePickerModal> {
                     });
                     if (mode == 0) {
                       setState(() {
-                        startDate = null;
+                        endDate = widget.endDate;
                       });
                     } else {
                       setState(() {
+                        startDate = widget.endDate;
                         endDate = startDate?.add(const Duration(minutes: 30));
                       });
                     }
