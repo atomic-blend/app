@@ -117,7 +117,7 @@ class _SingleDatePickerState extends State<SingleDatePicker> {
                           height: getSize(context).height * 0.25,
                           child: CupertinoDatePicker(
                             use24hFormat: true,
-                            initialDateTime: endDate ?? DateTime.now(),
+                            initialDateTime: endDate?.toLocal() ?? DateTime.now(),
                             mode: CupertinoDatePickerMode.time,
                             onDateTimeChanged: (value) {
                               setState(() {
@@ -134,7 +134,7 @@ class _SingleDatePickerState extends State<SingleDatePicker> {
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             Text(endDate != null && endDate?.isDayDate() != true
-                                ? "${endDate?.hour}:${endDate?.minute}"
+                                ? "${endDate?.toLocal().hour}:${endDate?.toLocal().minute}"
                                 : context.t.tasks.add_task_modal.none),
                             if (endDate != null &&
                                 endDate?.isDayDate() != true) ...[

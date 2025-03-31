@@ -25,6 +25,23 @@ class _AppWrapperState extends State<AppWrapper> {
 
   @override
   void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      if (context.read<AuthBloc>().state.user!.devices == null) {
+        context.read<AuthBloc>().state.user!.devices = [];
+      }
+      deviceInfoService ??= DeviceInfoService();
+
+      final userDeviceInfo = await deviceInfoService!.getDeviceInfo();
+
+      if (!context.mounted) return;
+      context.read<AuthBloc>().add(
+            UpdateUserDevice(
+              context.read<AuthBloc>().state.user!,
+              userDeviceInfo,
+            ),
+          );
+      // }
+    });
     super.initState();
   }
 
@@ -42,30 +59,6 @@ class _AppWrapperState extends State<AppWrapper> {
           encryptionService ??=
               EncryptionService(userSalt: state.user!.keySet.salt);
           encryptionService!.hydrateKey();
-
-          WidgetsBinding.instance.addPostFrameCallback((_) async {
-            if (state.user!.devices == null) {
-              state.user!.devices = [];
-            }
-            deviceInfoService ??= DeviceInfoService();
-
-            final userDeviceInfo = await deviceInfoService!.getDeviceInfo();
-            // update the userDeviceInfo only if it do not precisely match the one in the user's devices list
-
-            if (state.user!.devices!.isEmpty ||
-                state.user!.devices!.every((device) =>
-                    device.deviceId != userDeviceInfo.deviceId ||
-                    device.deviceName != userDeviceInfo.deviceName ||
-                    device.deviceTimezone != userDeviceInfo.deviceTimezone )) {
-              if (!context.mounted) return;
-              context.read<AuthBloc>().add(
-                    UpdateUserDevice(
-                      state.user!,
-                      userDeviceInfo,
-                    ),
-                  );
-            }
-          });
         }
         var navItems = $constants.navigation.bottomNavigationItems(context);
         var screens = $constants.navigation.bottomNavigationScreens();
