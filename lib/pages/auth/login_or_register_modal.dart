@@ -87,7 +87,9 @@ class _LoginOrRegisterModalState extends State<LoginOrRegisterModal> {
           case 4:
             return RegisterPassword(
               password: password,
-              onAuthSuccess: widget.onAuthSuccess,
+              onAuthSuccess: () {
+                widget.onAuthSuccess();
+              },
               onPasswordUpdate: (newPwd) {
                 setState(() {
                   password = newPwd;

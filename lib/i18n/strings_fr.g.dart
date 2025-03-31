@@ -13,9 +13,9 @@ import 'strings.g.dart';
 class TranslationsFr implements Translations {
 	/// You can call this constructor and build your own translation instance of this locale.
 	/// Constructing via the enum [AppLocale.build] is preferred.
-	TranslationsFr({Map<String, Node>? overrides, PluralResolver? cardinalResolver, PluralResolver? ordinalResolver})
+	TranslationsFr({Map<String, Node>? overrides, PluralResolver? cardinalResolver, PluralResolver? ordinalResolver, TranslationMetadata<AppLocale, Translations>? meta})
 		: assert(overrides == null, 'Set "translation_overrides: true" in order to enable this feature.'),
-		  $meta = TranslationMetadata(
+		  $meta = meta ?? TranslationMetadata(
 		    locale: AppLocale.fr,
 		    overrides: overrides ?? {},
 		    cardinalResolver: cardinalResolver,
@@ -31,6 +31,9 @@ class TranslationsFr implements Translations {
 	@override dynamic operator[](String key) => $meta.getTranslation(key);
 
 	late final TranslationsFr _root = this; // ignore: unused_field
+
+	@override 
+	TranslationsFr $copyWith({TranslationMetadata<AppLocale, Translations>? meta}) => TranslationsFr(meta: meta ?? this.$meta);
 
 	// Translations
 	@override String get app_name => 'Atomic Blend';
@@ -746,6 +749,7 @@ class _TranslationsAuthMnemonicKeyFr implements TranslationsAuthMnemonicKeyEn {
 	@override String get description_end => 'Vous en aurez besoin pour récupérer l\'accès à vos données si vous perdez votre mot de passe.';
 	@override String get mnemonic_hint => 'Entrez votre clé de récupération';
 	@override String get mnemonic_error => 'Clé de récupération invalide';
+	@override String get copy_success => 'Clé copiée dans le presse-papiers';
 }
 
 // Path: settings.app_settings
@@ -915,6 +919,7 @@ extension on TranslationsFr {
 			case 'auth.mnemonic_key.description_end': return 'Vous en aurez besoin pour récupérer l\'accès à vos données si vous perdez votre mot de passe.';
 			case 'auth.mnemonic_key.mnemonic_hint': return 'Entrez votre clé de récupération';
 			case 'auth.mnemonic_key.mnemonic_error': return 'Clé de récupération invalide';
+			case 'auth.mnemonic_key.copy_success': return 'Clé copiée dans le presse-papiers';
 			case 'settings.title': return 'Paramètres';
 			case 'settings.app_settings.title': return 'Paramètres de l\'application';
 			case 'settings.app_settings.selfHostedUrl.title': return 'URL auto-hébergée';
