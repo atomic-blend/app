@@ -33,12 +33,16 @@ class _LoginOrRegisterModalState extends State<LoginOrRegisterModal> {
             errorMessage = state.message;
           });
         }
-        if (state is LoggedIn) {
-          if (state.isRegistration == true) {
-            setState(() {
-              _step = 5;
-            });
-          }
+        if (state is LoggedIn && state.isRegistration == true) {
+          setState(() {
+            _step = 5;
+          });
+        }
+        if (state is LoggedIn && state.isRegistration == false) {
+          widget.onAuthSuccess.call();
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            Navigator.of(context).pop();
+          });
         }
       },
       child: BlocBuilder<AuthBloc, AuthState>(builder: (context, authState) {
@@ -61,7 +65,9 @@ class _LoginOrRegisterModalState extends State<LoginOrRegisterModal> {
             );
           case 2:
             return Login(
-              onAuthSuccess: widget.onAuthSuccess,
+              onAuthSuccess: () {
+                widget.onAuthSuccess.call();
+              },
               cancelCallback: () {
                 setState(() {
                   _step = 1;

@@ -12,7 +12,11 @@ import 'package:icons_plus/icons_plus.dart';
 
 class Login extends StatefulWidget {
   final VoidCallback onAuthSuccess;
-  const Login({super.key, this.cancelCallback, required this.onAuthSuccess, this.errorMessage});
+  const Login(
+      {super.key,
+      this.cancelCallback,
+      required this.onAuthSuccess,
+      this.errorMessage});
   final VoidCallback? cancelCallback;
   final String? errorMessage;
 
@@ -50,8 +54,6 @@ class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
           );
           await _animationController.reverse(from: 1.0);
           if (!context.mounted) return;
-          widget.onAuthSuccess();
-          Navigator.pop(context);
         }
       },
       child: Stack(

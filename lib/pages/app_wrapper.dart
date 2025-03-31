@@ -25,23 +25,25 @@ class _AppWrapperState extends State<AppWrapper> {
 
   @override
   void initState() {
-    WidgetsBinding.instance.addPostFrameCallback((_) async {
-      if (context.read<AuthBloc>().state.user!.devices == null) {
-        context.read<AuthBloc>().state.user!.devices = [];
-      }
-      deviceInfoService ??= DeviceInfoService();
+    if (context.read<AuthBloc>().state.user != null) {
+      WidgetsBinding.instance.addPostFrameCallback((_) async {
+        if (context.read<AuthBloc>().state.user?.devices == null) {
+          context.read<AuthBloc>().state.user?.devices = [];
+        }
+        deviceInfoService ??= DeviceInfoService();
 
-      final userDeviceInfo = await deviceInfoService!.getDeviceInfo();
+        final userDeviceInfo = await deviceInfoService!.getDeviceInfo();
 
-      if (!context.mounted) return;
-      context.read<AuthBloc>().add(
-            UpdateUserDevice(
-              context.read<AuthBloc>().state.user!,
-              userDeviceInfo,
-            ),
-          );
-      // }
-    });
+        if (!context.mounted) return;
+        context.read<AuthBloc>().add(
+              UpdateUserDevice(
+                context.read<AuthBloc>().state.user!,
+                userDeviceInfo,
+              ),
+            );
+        // }
+      });
+    }
     super.initState();
   }
 
