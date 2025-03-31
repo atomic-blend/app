@@ -93,6 +93,7 @@ class Navigation {
   /// Appbar configuration.
   List<AppBar?> appbars(BuildContext context, {Widget? leading}) => [
         AppBar(
+          backgroundColor: getTheme(context).surface,
           title: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -116,6 +117,7 @@ class Navigation {
           ],
         ),
         AppBar(
+            backgroundColor: getTheme(context).surface,
             title: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -140,6 +142,7 @@ class Navigation {
             ]),
         null,
         AppBar(
+            backgroundColor: getTheme(context).surface,
             title: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -163,6 +166,7 @@ class Navigation {
               })
             ]),
         AppBar(
+            backgroundColor: getTheme(context).surface,
             title: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -257,6 +261,21 @@ class Navigation {
         ],
         [
           SideMenuItem(
+            title: context.t.calendar.threeDays,
+            initialOnly: true,
+            icon: CupertinoIcons.book,
+            color: Colors.grey[800]!,
+            iconContainer: true,
+            body: Calendar(
+              key: UniqueKey(),
+              view: CalendarView.week,
+              numberOfDays: 3,
+            ),
+            onTap: () {
+              context.read<AppCubit>().changeSelectedTabIndex(index: 0);
+            },
+          ),
+          SideMenuItem(
             title: context.t.calendar.month,
             initialOnly: true,
             icon: CupertinoIcons.collections,
@@ -267,7 +286,7 @@ class Navigation {
               view: CalendarView.month,
             ),
             onTap: () {
-              context.read<AppCubit>().changeSelectedTabIndex(index: 0);
+              context.read<AppCubit>().changeSelectedTabIndex(index: 1);
             },
           ),
           SideMenuItem(
@@ -281,24 +300,9 @@ class Navigation {
               view: CalendarView.day,
             ),
             onTap: () {
-              context.read<AppCubit>().changeSelectedTabIndex(index: 1);
-            },
-          ),
-          SideMenuItem(
-            title: context.t.calendar.threeDays,
-            initialOnly: true,
-            icon: CupertinoIcons.book,
-            color: Colors.grey[800]!,
-            iconContainer: true,
-            body: Calendar(
-              key: UniqueKey(),
-              view: CalendarView.week,
-              numberOfDays: 3,
-            ),
-            onTap: () {
               context.read<AppCubit>().changeSelectedTabIndex(index: 2);
             },
-          )
+          ),
         ],
         null,
         null,

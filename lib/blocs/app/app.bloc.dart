@@ -15,6 +15,7 @@ class AppCubit extends HydratedCubit<AppState> {
   void changePageIndex({required int index}) => emit(
         state.copyWith(
           pageIndex: index,
+          selectedTabIndex: 0,
         ),
       );
 
@@ -47,7 +48,6 @@ class AppCubit extends HydratedCubit<AppState> {
           isIntroCompleted: false,
         ),
       );
-      
 
   void changeShowcasePageStatus({required String key, required bool value}) {
     final showcasePageStatus = {

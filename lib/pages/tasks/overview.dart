@@ -34,8 +34,8 @@ class _OverviewTasksState extends State<OverviewTasks> {
         final thisWeekTasks = _thisWeekTasks(taskState.tasks ?? []);
         return Padding(
           padding: EdgeInsets.symmetric(horizontal: $constants.insets.sm),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+          child: ListView(
+            padding: EdgeInsets.zero,
             children: [
               ABSearchBar(
                   controller: _searchController, onSubmitted: (value) {}),
