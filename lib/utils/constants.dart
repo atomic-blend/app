@@ -117,7 +117,7 @@ class Navigation {
           ],
         ),
         AppBar(
-            backgroundColor: getTheme(context).surface,
+          backgroundColor: getTheme(context).surface,
             title: Row(
               mainAxisSize: MainAxisSize.min,
               children: [

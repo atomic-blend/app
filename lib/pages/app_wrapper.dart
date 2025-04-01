@@ -95,6 +95,9 @@ class _AppWrapperState extends State<AppWrapper> {
         }
         final appBarconfig = appbars.elementAt(appState.pageIndex);
         final appBar = AppBar(
+          backgroundColor: getTheme(context).surface,
+          elevation: 0,
+          scrolledUnderElevation: 0,
           title: appBarconfig!.title,
           actions: appBarconfig.actions,
           leading: IconButton(
