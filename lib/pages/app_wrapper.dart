@@ -114,6 +114,9 @@ class _AppWrapperState extends State<AppWrapper> {
             // Main content
             GestureDetector(
               onHorizontalDragEnd: (details) {
+                // Ensure we have a velocity (avoid null issues)
+                if (details.primaryVelocity == null) return;
+
                 // Right swipe to open menu
                 if (details.primaryVelocity! > 0 && !_isSideMenuOpened) {
                   setState(() {
@@ -122,6 +125,14 @@ class _AppWrapperState extends State<AppWrapper> {
                 }
                 // Left swipe to close menu
                 else if (details.primaryVelocity! < 0 && _isSideMenuOpened) {
+                  setState(() {
+                    _isSideMenuOpened = false;
+                  });
+                }
+              },
+              // Add onHorizontalDragUpdate to detect smaller swipes
+              onHorizontalDragUpdate: (details) {
+                if (_isSideMenuOpened && details.delta.dx < -10) {
                   setState(() {
                     _isSideMenuOpened = false;
                   });
@@ -157,6 +168,23 @@ class _AppWrapperState extends State<AppWrapper> {
               Positioned.fill(
                 left: _sideMenuWidth,
                 child: GestureDetector(
+                  onHorizontalDragEnd: (details) {
+                    // Left swipe to close menu
+                    if (details.primaryVelocity != null &&
+                        details.primaryVelocity! < 0) {
+                      setState(() {
+                        _isSideMenuOpened = false;
+                      });
+                    }
+                  },
+                  onHorizontalDragUpdate: (details) {
+                    // Close on smaller left drags too
+                    if (details.delta.dx < -10) {
+                      setState(() {
+                        _isSideMenuOpened = false;
+                      });
+                    }
+                  },
                   onTap: () {
                     setState(() {
                       _isSideMenuOpened = false;
@@ -170,20 +198,39 @@ class _AppWrapperState extends State<AppWrapper> {
 
             // Side menu
             if (menuItems[appState.pageIndex] != null)
-              AnimatedContainer(
-                duration: const Duration(milliseconds: 300),
-                curve: Curves.easeInOut,
-                width: _sideMenuWidth,
-                transform: Matrix4.translationValues(
-                    _isSideMenuOpened ? 0 : -_sideMenuWidth, 0, 0),
-                child: SideMenu(
-                  items: menuItems[appState.pageIndex]!,
-                  onItemSelected: () {
-                    debugPrint('Side menu item selected - closing menu');
+              GestureDetector(
+                onHorizontalDragEnd: (details) {
+                  // Left swipe to close menu
+                  if (details.primaryVelocity != null &&
+                      details.primaryVelocity! < 0) {
                     setState(() {
                       _isSideMenuOpened = false;
                     });
-                  },
+                  }
+                },
+                onHorizontalDragUpdate: (details) {
+                  // Close on smaller left drags too
+                  if (details.delta.dx < -10) {
+                    setState(() {
+                      _isSideMenuOpened = false;
+                    });
+                  }
+                },
+                child: AnimatedContainer(
+                  duration: const Duration(milliseconds: 300),
+                  curve: Curves.easeInOut,
+                  width: _sideMenuWidth,
+                  transform: Matrix4.translationValues(
+                      _isSideMenuOpened ? 0 : -_sideMenuWidth, 0, 0),
+                  child: SideMenu(
+                    items: menuItems[appState.pageIndex]!,
+                    onItemSelected: () {
+                      debugPrint('Side menu item selected - closing menu');
+                      setState(() {
+                        _isSideMenuOpened = false;
+                      });
+                    },
+                  ),
                 ),
               ),
           ],

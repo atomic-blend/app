@@ -153,6 +153,9 @@ class TranslationsCalendarEn {
 
 	// Translations
 	String get title => 'Calendar';
+	String get month => 'Month';
+	String get day => 'Day';
+	String get threeDays => '3 Days';
 }
 
 // Path: account
@@ -967,6 +970,9 @@ extension on Translations {
 			case 'tasks.add_task_modal.when_would_you_like_the_task_to_start': return 'When would you like the task to start?';
 			case 'tasks.add_task_modal.when_would_you_like_the_task_to_end': return 'When would you like the task to end?';
 			case 'calendar.title': return 'Calendar';
+			case 'calendar.month': return 'Month';
+			case 'calendar.day': return 'Day';
+			case 'calendar.threeDays': return '3 Days';
 			case 'account.edit_profile': return 'Edit Profile';
 			case 'account.sections.account': return 'Account';
 			case 'account.actions.security': return 'Security & Privacy';

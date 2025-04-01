@@ -1,4 +1,5 @@
 import 'package:app/utils/constants.dart';
+import 'package:app/utils/shortcuts.dart';
 import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
@@ -10,6 +11,7 @@ class SideMenuItem extends StatelessWidget {
   final Color color;
   final bool? iconContainer;
   final IconData icon;
+  final bool? initialOnly;
 
   SideMenuItem({
     super.key,
@@ -20,6 +22,7 @@ class SideMenuItem extends StatelessWidget {
     required this.body,
     required this.onTap,
     this.isSelected,
+    this.initialOnly,
   });
 
   @override
@@ -29,20 +32,31 @@ class SideMenuItem extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         SizedBox(width: $constants.insets.xs),
-        Container(
-            padding: iconContainer == true
-                ? EdgeInsets.all($constants.insets.xs)
-                : EdgeInsets.zero,
-            decoration: iconContainer == true
-                ? BoxDecoration(
-                    color: color.withValues(alpha: .1),
-                    border: isSelected == true
-                        ? Border.all(color: color, width: 1)
-                        : null,
-                    borderRadius: BorderRadius.circular($constants.corners.md),
-                  )
-                : const BoxDecoration(),
-            child: Icon(icon, color: color)),
+        Expanded(
+          child: Container(
+              padding: iconContainer == true
+                  ? EdgeInsets.all($constants.insets.xs)
+                  : EdgeInsets.zero,
+              decoration: iconContainer == true
+                  ? BoxDecoration(
+                      color: color.withValues(alpha: .1),
+                      border: isSelected == true
+                          ? Border.all(color: color, width: 1)
+                          : null,
+                      borderRadius:
+                          BorderRadius.circular($constants.corners.md),
+                    )
+                  : const BoxDecoration(),
+              child: initialOnly != true
+                  ? Icon(icon, color: color)
+                  : Center(
+                      child: Text(
+                        title[0],
+                        style: getTextTheme(context).headlineMedium!.copyWith(
+                            color: color, fontWeight: FontWeight.bold),
+                      ),
+                    )),
+        ),
       ],
     );
   }
