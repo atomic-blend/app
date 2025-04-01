@@ -25,6 +25,7 @@ class _CalendarState extends State<Calendar> {
         view: widget.view,
         initialSelectedDate: DateTime.now(),
         backgroundColor: getTheme(context).surface,
+        showTodayButton: true,
         todayHighlightColor: getTheme(context).primary,
         timeSlotViewSettings: TimeSlotViewSettings(
             numberOfDaysInView: widget.numberOfDays ?? -1, timeFormat: "HH:mm"),
