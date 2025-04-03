@@ -3,6 +3,9 @@ import 'package:app/blocs/tasks/tasks.bloc.dart';
 import 'package:app/entities/device_calendar/calendar/device_calendar.dart';
 import 'package:app/entities/tasks/tasks.entity.dart';
 import 'package:app/pages/calendar/appointment_data_source.dart';
+import 'package:app/pages/calendar/custom_appointment.dart';
+import 'package:app/pages/calendar/custom_calendar_data_source.dart';
+import 'package:app/pages/tasks/task_detail.dart';
 import 'package:app/utils/constants.dart';
 import 'package:app/utils/shortcuts.dart';
 import 'package:auto_size_text/auto_size_text.dart';
@@ -37,7 +40,6 @@ class _CalendarState extends State<Calendar> {
   Widget build(BuildContext context) {
     return BlocBuilder<DeviceCalendarBloc, DeviceCalendarState>(
         builder: (context, deviceCalendarState) {
-      print(deviceCalendarState);
       return BlocBuilder<TasksBloc, TasksState>(builder: (context, taskState) {
         return SfCalendar(
           view: widget.view,
@@ -70,10 +72,13 @@ class _CalendarState extends State<Calendar> {
               taskState.tasks ?? [], deviceCalendarState.deviceCalendar ?? []),
           appointmentBuilder:
               (BuildContext context, CalendarAppointmentDetails details) {
+            final CustomAppointment appointment =
+                details.appointments.first as CustomAppointment;
+
             return LayoutBuilder(builder: (context, constraints) {
               return Container(
                 decoration: BoxDecoration(
-                  color: details.appointments.first.color,
+                  color: appointment.color,
                   borderRadius: BorderRadius.circular(6),
                 ),
                 padding: EdgeInsets.symmetric(horizontal: $constants.insets.sm),
@@ -85,7 +90,7 @@ class _CalendarState extends State<Calendar> {
                       child: AutoSizeText(
                         maxLines: 3,
                         overflow: TextOverflow.ellipsis,
-                        "${details.appointments.first.subject}",
+                        appointment.subject,
                         style: getTextTheme(context).bodyMedium!.copyWith(
                               fontWeight: FontWeight.bold,
                             ),
@@ -100,47 +105,74 @@ class _CalendarState extends State<Calendar> {
               );
             });
           },
+          onTap: (calendarTapDetails) {
+            if (calendarTapDetails.appointments?.first.itemType ==
+                CustomAppointmentType.task) {
+              showModalBottomSheet(
+                  context: context,
+                  isScrollControlled: true,
+                  builder: (context) => Container(
+                        height: getSize(context).height * 0.8,
+                        child: ClipRRect(
+                          borderRadius:
+                              BorderRadius.circular($constants.corners.md),
+                          child: TaskDetail(
+                            task: taskState.tasks!.firstWhere((element) =>
+                                element.id ==
+                                calendarTapDetails.appointments?.first.itemId),
+                          ),
+                        ),
+                      ));
+            } else if (calendarTapDetails.appointments?.first.itemType ==
+                CustomAppointmentType.event) {
+              //TODO
+            }
+          },
         );
       });
     });
   }
 
-  AppointmentDataSource _getTasks(List<TaskEntity> tasks) {
-    final List<Appointment> appointments = <Appointment>[];
+  CustomCalendarDataSource _getTasks(List<TaskEntity> tasks) {
+    final List<CustomAppointment> appointments = <CustomAppointment>[];
     for (TaskEntity task in tasks) {
       if (task.startDate != null && task.endDate != null) {
         appointments.add(
-          Appointment(
+          CustomAppointment(
             startTime: task.startDate!.toLocal()!,
             endTime: task.endDate!.toLocal(),
             subject: task.title,
             color: getTheme(context).primary.withValues(alpha: 0.2),
             notes: task.description,
             isAllDay: false,
+            itemType: CustomAppointmentType.task,
+            itemId: task.id ?? '',
           ),
         );
       } else if (task.endDate != null) {
         appointments.add(
-          Appointment(
+          CustomAppointment(
             startTime: task.endDate!,
             endTime: task.endDate!.add(const Duration(minutes: 30)),
             subject: task.title,
             color: getTheme(context).primary,
             notes: task.description,
             isAllDay: false,
+            itemType: CustomAppointmentType.task,
+            itemId: task.id ?? '',
           ),
         );
       }
     }
-    return AppointmentDataSource(appointments);
+    return CustomCalendarDataSource(appointments);
   }
 
-  AppointmentDataSource _getDeviceEvents(List<DeviceCalendar> calendars) {
-    final List<Appointment> appointments = <Appointment>[];
+  CustomCalendarDataSource _getDeviceEvents(List<DeviceCalendar> calendars) {
+    final List<CustomAppointment> appointments = <CustomAppointment>[];
     for (DeviceCalendar calendar in calendars) {
       for (Event event in calendar.events) {
         appointments.add(
-          Appointment(
+          CustomAppointment(
             startTime: event.start!.toLocal(),
             endTime: event.end!.toLocal(),
             subject: event.title ?? "No title",
@@ -149,22 +181,33 @@ class _CalendarState extends State<Calendar> {
                 : getTheme(context).primary.withValues(alpha: 0.2),
             notes: event.description,
             isAllDay: event.allDay ?? false,
+            itemType: CustomAppointmentType.event,
+            itemId: event.eventId ?? '',
           ),
         );
       }
     }
-    return AppointmentDataSource(appointments);
+    return CustomCalendarDataSource(appointments);
   }
 
-  AppointmentDataSource _getDataSource(
+  CalendarDataSource _getDataSource(
       List<TaskEntity> tasks, List<DeviceCalendar> calendars) {
-    final List<Appointment> appointments = <Appointment>[];
-    for (final a in _getTasks(tasks).appointments ?? []) {
-      appointments.add(a);
+    final List<CustomAppointment> appointments = <CustomAppointment>[];
+
+    // Add tasks
+    final taskAppointments = _getTasks(tasks);
+    if (taskAppointments.appointments != null) {
+      appointments
+          .addAll(taskAppointments.appointments!.cast<CustomAppointment>());
     }
-    for (final a in _getDeviceEvents(calendars).appointments ?? []) {
-      appointments.add(a);
+
+    // Add events
+    final eventAppointments = _getDeviceEvents(calendars);
+    if (eventAppointments.appointments != null) {
+      appointments
+          .addAll(eventAppointments.appointments!.cast<CustomAppointment>());
     }
-    return AppointmentDataSource(appointments);
+
+    return CustomCalendarDataSource(appointments);
   }
 }
