@@ -148,7 +148,9 @@ class _CalendarState extends State<Calendar> {
             startTime: event.start!.toLocal(),
             endTime: event.end!.toLocal(),
             subject: event.title ?? "No title",
-            color: getTheme(context).primary.withValues(alpha: 0.2),
+            color: calendar.calendar.color != null
+                ? Color(calendar.calendar.color!).withValues(alpha: 0.5)
+                : getTheme(context).primary.withValues(alpha: 0.2),
             notes: event.description,
             isAllDay: event.allDay ?? false,
           ),
