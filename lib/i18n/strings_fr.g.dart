@@ -820,6 +820,12 @@ class _TranslationsCalendarEventDetailFr implements TranslationsCalendarEventDet
 	@override String get organizer => 'Organisateur';
 	@override String get reminders => 'Rappels';
 	@override String get no_reminders => 'Pas de rappels';
+	@override String get details => 'Détails';
+	@override String get join_meeting => 'Rejoindre la réunion';
+	@override String get google_meet_call => 'Appel Meet Call';
+	@override String get zoom_meet_call => 'Appel Zoom';
+	@override String get ms_teams_call => 'Appel MS Teams';
+	@override String get join_now => 'Rejoindre maintenant';
 }
 
 // Path: account.sections
@@ -987,6 +993,12 @@ extension on TranslationsFr {
 			case 'calendar.event_detail.organizer': return 'Organisateur';
 			case 'calendar.event_detail.reminders': return 'Rappels';
 			case 'calendar.event_detail.no_reminders': return 'Pas de rappels';
+			case 'calendar.event_detail.details': return 'Détails';
+			case 'calendar.event_detail.join_meeting': return 'Rejoindre la réunion';
+			case 'calendar.event_detail.google_meet_call': return 'Appel Meet Call';
+			case 'calendar.event_detail.zoom_meet_call': return 'Appel Zoom';
+			case 'calendar.event_detail.ms_teams_call': return 'Appel MS Teams';
+			case 'calendar.event_detail.join_now': return 'Rejoindre maintenant';
 			case 'account.edit_profile': return 'Modifier le profil';
 			case 'account.sections.account': return 'Compte';
 			case 'account.actions.security': return 'Sécurité et confidentialité';

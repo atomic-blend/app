@@ -1,6 +1,8 @@
 import 'package:app/i18n/strings.g.dart';
 import 'package:app/utils/constants.dart';
+import 'package:app/utils/meeting_link_parser.dart';
 import 'package:app/utils/shortcuts.dart';
+import 'package:app/utils/url_launcher.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:collection/collection.dart';
 import 'package:device_calendar/device_calendar.dart';
@@ -21,6 +23,7 @@ class _DeviceEventDetailState extends State<DeviceEventDetail> {
 
   @override
   Widget build(BuildContext context) {
+    final meetingLink = MeetingLinkParser.parse(widget.event.description ?? "");
     return Scaffold(
         appBar: AppBar(
           leading: IconButton(
@@ -76,6 +79,10 @@ class _DeviceEventDetailState extends State<DeviceEventDetail> {
                 SizedBox(
                   height: getSize(context).height * 0.03,
                 ),
+              Text(context.t.calendar.event_detail.details,
+                  style: getTextTheme(context).titleMedium!.copyWith(
+                        fontWeight: FontWeight.bold,
+                      )),
               Row(
                 children: [
                   Expanded(
@@ -233,9 +240,93 @@ class _DeviceEventDetailState extends State<DeviceEventDetail> {
                     ),
                   ),
                 ],
-              )
+              ),
+              SizedBox(
+                height: $constants.insets.sm,
+              ),
+              if (meetingLink != null) ...[
+                Text(context.t.calendar.event_detail.join_meeting,
+                    style: getTextTheme(context).titleMedium!.copyWith(
+                          fontWeight: FontWeight.bold,
+                        )),
+                SizedBox(
+                  height: $constants.insets.xxs,
+                ),
+                GestureDetector(
+                  onTap: () {
+                    final meeting = meetingLink.url;
+
+                    UrlLauncher.launchUrl(meeting);
+                  },
+                  child: Material(
+                    color: Colors.transparent,
+                    borderRadius: BorderRadius.circular($constants.corners.sm),
+                    elevation: 1,
+                    child: Container(
+                      height: 80,
+                      decoration: BoxDecoration(
+                        color: getTheme(context).surface,
+                        borderRadius:
+                            BorderRadius.circular($constants.corners.sm),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          SizedBox(
+                            width: $constants.insets.xl,
+                          ),
+                          SizedBox(
+                            width: 40,
+                            child: Image.asset(
+                              meetingLinkIcons[meetingLink.type]!,
+                            ),
+                          ),
+                          SizedBox(
+                            width: $constants.insets.sm,
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Text(
+                                _getMeetingButtonTitle(
+                                    context, meetingLink.type),
+                                style: getTextTheme(context)
+                                    .headlineSmall!
+                                    .copyWith(
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                              ),
+                              Text(
+                                context.t.calendar.event_detail.join_now,
+                                style: getTextTheme(context)
+                                    .bodyMedium!
+                                    .copyWith(),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                )
+              ]
             ],
           ),
         ));
+  }
+
+  String _getMeetingButtonTitle(BuildContext context, MeetingLinkType type) {
+    switch (type) {
+      case MeetingLinkType.zoom:
+        return context.t.calendar.event_detail.zoom_meet_call;
+      case MeetingLinkType.googleMeet:
+        return context.t.calendar.event_detail.google_meet_call;
+      case MeetingLinkType.microsoftTeams:
+        return context.t.calendar.event_detail.ms_teams_call;
+      default:
+        return "";
+    }
   }
 }

@@ -826,6 +826,12 @@ class TranslationsCalendarEventDetailEn {
 	String get organizer => 'Organizer';
 	String get reminders => 'Reminder';
 	String get no_reminders => 'No reminders';
+	String get details => 'Details';
+	String get join_meeting => 'Join meeting';
+	String get google_meet_call => 'Google Meet Call';
+	String get zoom_meet_call => 'Zoom Call';
+	String get ms_teams_call => 'MS Teams Call';
+	String get join_now => 'Join now';
 }
 
 // Path: account.sections
@@ -993,6 +999,12 @@ extension on Translations {
 			case 'calendar.event_detail.organizer': return 'Organizer';
 			case 'calendar.event_detail.reminders': return 'Reminder';
 			case 'calendar.event_detail.no_reminders': return 'No reminders';
+			case 'calendar.event_detail.details': return 'Details';
+			case 'calendar.event_detail.join_meeting': return 'Join meeting';
+			case 'calendar.event_detail.google_meet_call': return 'Google Meet Call';
+			case 'calendar.event_detail.zoom_meet_call': return 'Zoom Call';
+			case 'calendar.event_detail.ms_teams_call': return 'MS Teams Call';
+			case 'calendar.event_detail.join_now': return 'Join now';
 			case 'account.edit_profile': return 'Edit Profile';
 			case 'account.sections.account': return 'Account';
 			case 'account.actions.security': return 'Security & Privacy';
