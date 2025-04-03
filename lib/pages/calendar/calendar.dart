@@ -139,7 +139,7 @@ class _CalendarState extends State<Calendar> {
                   context: context,
                   isScrollControlled: true,
                   builder: (context) => Container(
-                        height: getSize(context).height * 0.8,
+                        height: getSize(context).height * 0.83,
                         child: ClipRRect(
                           borderRadius:
                               BorderRadius.circular($constants.corners.md),

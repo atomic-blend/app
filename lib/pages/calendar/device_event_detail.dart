@@ -46,6 +46,7 @@ class _DeviceEventDetailState extends State<DeviceEventDetail> {
             padding: EdgeInsets.zero,
             children: [
               AutoSizeText(
+                maxLines: 3,
                 widget.event.title ?? "",
                 style: getTextTheme(context).titleLarge!.copyWith(
                       fontWeight: FontWeight.bold,
@@ -310,7 +311,62 @@ class _DeviceEventDetailState extends State<DeviceEventDetail> {
                       ),
                     ),
                   ),
-                )
+                ),
+                SizedBox(
+                  height: $constants.insets.sm,
+                ),
+                Text(context.t.calendar.event_detail.attendee(n: 2),
+                    style: getTextTheme(context).titleMedium!.copyWith(
+                          fontWeight: FontWeight.bold,
+                        )),
+                SizedBox(
+                  height: $constants.insets.xs,
+                ),
+                ...widget.event.attendees!
+                    .where((element) => element?.isOrganiser != true)
+                    .map((e) {
+                  return Padding(
+                    padding: EdgeInsets.only(bottom: $constants.insets.xs),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        CircleAvatar(
+                          backgroundColor: getTheme(context).surfaceContainer,
+                          child: Text(
+                            e?.name?.substring(0, 1).toUpperCase() ??
+                                e?.emailAddress
+                                    ?.substring(0, 1)
+                                    .toUpperCase() ??
+                                "",
+                            style: getTextTheme(context).bodyLarge,
+                          ),
+                        ),
+                        SizedBox(
+                          width: $constants.insets.sm,
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text(e?.name ?? e?.emailAddress ?? "",
+                                style:
+                                    getTextTheme(context).bodyMedium!.copyWith(
+                                          fontWeight: FontWeight.bold,
+                                        )),
+                            Text(
+                              context.t.calendar.event_detail.attendee(
+                                n: 1,
+                              ),
+                            )
+                          ],
+                        ),
+                      ],
+                    ),
+                  );
+                }).toList(),
+                SizedBox(
+                  height: $constants.insets.lg,
+                ),
               ]
             ],
           ),

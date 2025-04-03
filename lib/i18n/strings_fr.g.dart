@@ -826,6 +826,11 @@ class _TranslationsCalendarEventDetailFr implements TranslationsCalendarEventDet
 	@override String get zoom_meet_call => 'Appel Zoom';
 	@override String get ms_teams_call => 'Appel MS Teams';
 	@override String get join_now => 'Rejoindre maintenant';
+	@override String attendee({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('fr'))(n,
+		zero: 'Participant',
+		one: 'Participant',
+		other: 'Participants',
+	);
 }
 
 // Path: account.sections
@@ -999,6 +1004,11 @@ extension on TranslationsFr {
 			case 'calendar.event_detail.zoom_meet_call': return 'Appel Zoom';
 			case 'calendar.event_detail.ms_teams_call': return 'Appel MS Teams';
 			case 'calendar.event_detail.join_now': return 'Rejoindre maintenant';
+			case 'calendar.event_detail.attendee': return ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('fr'))(n,
+				zero: 'Participant',
+				one: 'Participant',
+				other: 'Participants',
+			);
 			case 'account.edit_profile': return 'Modifier le profil';
 			case 'account.sections.account': return 'Compte';
 			case 'account.actions.security': return 'Sécurité et confidentialité';
