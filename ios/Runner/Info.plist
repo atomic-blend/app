@@ -52,5 +52,12 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>NSCalendarsUsageDescription</key>
+	<string>Access device calendar to display in app</string>
+
+	<key>NSContactsUsageDescription</key>
+	<string>Access device contacts to display in app</string>
+	<key>NSCalendarsFullAccessUsageDescription</key>
+	<string>Access device calendar to display in app.</string>
 </dict>
 </plist>
