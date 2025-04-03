@@ -5,10 +5,12 @@ import 'package:app/entities/tasks/tasks.entity.dart';
 import 'package:app/pages/calendar/appointment_data_source.dart';
 import 'package:app/pages/calendar/custom_appointment.dart';
 import 'package:app/pages/calendar/custom_calendar_data_source.dart';
+import 'package:app/pages/calendar/device_event_detail.dart';
 import 'package:app/pages/tasks/task_detail.dart';
 import 'package:app/utils/constants.dart';
 import 'package:app/utils/shortcuts.dart';
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:collection/collection.dart';
 import 'package:device_calendar/device_calendar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -126,6 +128,26 @@ class _CalendarState extends State<Calendar> {
             } else if (calendarTapDetails.appointments?.first.itemType ==
                 CustomAppointmentType.event) {
               //TODO
+              Event? event;
+              for (DeviceCalendar calendar
+                  in deviceCalendarState.deviceCalendar ?? []) {
+                event = calendar.events.firstWhereOrNull((element) =>
+                    element.eventId ==
+                    calendarTapDetails.appointments?.first.itemId);
+              }
+              showModalBottomSheet(
+                  context: context,
+                  isScrollControlled: true,
+                  builder: (context) => Container(
+                        height: getSize(context).height * 0.8,
+                        child: ClipRRect(
+                          borderRadius:
+                              BorderRadius.circular($constants.corners.md),
+                          child: DeviceEventDetail(
+                            event: event!,
+                          ),
+                        ),
+                      ));
             }
           },
         );

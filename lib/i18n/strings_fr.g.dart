@@ -153,6 +153,7 @@ class _TranslationsCalendarFr implements TranslationsCalendarEn {
 	@override String get month => 'Mois';
 	@override String get day => 'Jour';
 	@override String get threeDays => '3 jours';
+	@override late final _TranslationsCalendarEventDetailFr event_detail = _TranslationsCalendarEventDetailFr._(_root);
 }
 
 // Path: account
@@ -807,6 +808,20 @@ class _TranslationsTasksAddTaskModalFr implements TranslationsTasksAddTaskModalE
 	@override String get when_would_you_like_the_task_to_end => 'Quand aimeriez-vous que la tâche se termine ?';
 }
 
+// Path: calendar.event_detail
+class _TranslationsCalendarEventDetailFr implements TranslationsCalendarEventDetailEn {
+	_TranslationsCalendarEventDetailFr._(this._root);
+
+	final TranslationsFr _root; // ignore: unused_field
+
+	// Translations
+	@override String get date => 'Date';
+	@override String get time => 'Heure';
+	@override String get organizer => 'Organisateur';
+	@override String get reminders => 'Rappels';
+	@override String get no_reminders => 'Pas de rappels';
+}
+
 // Path: account.sections
 class _TranslationsAccountSectionsFr implements TranslationsAccountSectionsEn {
 	_TranslationsAccountSectionsFr._(this._root);
@@ -967,6 +982,11 @@ extension on TranslationsFr {
 			case 'calendar.month': return 'Mois';
 			case 'calendar.day': return 'Jour';
 			case 'calendar.threeDays': return '3 jours';
+			case 'calendar.event_detail.date': return 'Date';
+			case 'calendar.event_detail.time': return 'Heure';
+			case 'calendar.event_detail.organizer': return 'Organisateur';
+			case 'calendar.event_detail.reminders': return 'Rappels';
+			case 'calendar.event_detail.no_reminders': return 'Pas de rappels';
 			case 'account.edit_profile': return 'Modifier le profil';
 			case 'account.sections.account': return 'Compte';
 			case 'account.actions.security': return 'Sécurité et confidentialité';

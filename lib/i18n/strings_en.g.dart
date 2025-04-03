@@ -156,6 +156,7 @@ class TranslationsCalendarEn {
 	String get month => 'Month';
 	String get day => 'Day';
 	String get threeDays => '3 Days';
+	late final TranslationsCalendarEventDetailEn event_detail = TranslationsCalendarEventDetailEn._(_root);
 }
 
 // Path: account
@@ -813,6 +814,20 @@ class TranslationsTasksAddTaskModalEn {
 	String get when_would_you_like_the_task_to_end => 'When would you like the task to end?';
 }
 
+// Path: calendar.event_detail
+class TranslationsCalendarEventDetailEn {
+	TranslationsCalendarEventDetailEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	String get date => 'Date';
+	String get time => 'Time';
+	String get organizer => 'Organizer';
+	String get reminders => 'Reminder';
+	String get no_reminders => 'No reminders';
+}
+
 // Path: account.sections
 class TranslationsAccountSectionsEn {
 	TranslationsAccountSectionsEn._(this._root);
@@ -973,6 +988,11 @@ extension on Translations {
 			case 'calendar.month': return 'Month';
 			case 'calendar.day': return 'Day';
 			case 'calendar.threeDays': return '3 Days';
+			case 'calendar.event_detail.date': return 'Date';
+			case 'calendar.event_detail.time': return 'Time';
+			case 'calendar.event_detail.organizer': return 'Organizer';
+			case 'calendar.event_detail.reminders': return 'Reminder';
+			case 'calendar.event_detail.no_reminders': return 'No reminders';
 			case 'account.edit_profile': return 'Edit Profile';
 			case 'account.sections.account': return 'Account';
 			case 'account.actions.security': return 'Security & Privacy';
