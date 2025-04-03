@@ -81,11 +81,7 @@ class _CalendarState extends State<Calendar> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     SizedBox(
-                      height: details.appointments.first.isAllDay ||
-                              details.appointments.first.notes == "" ||
-                              details.appointments.first.notes == null
-                          ? constraints.maxHeight
-                          : constraints.maxHeight * 0.5,
+                      height: constraints.maxHeight,
                       child: AutoSizeText(
                         maxLines: 3,
                         overflow: TextOverflow.ellipsis,
