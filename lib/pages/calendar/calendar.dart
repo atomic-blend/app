@@ -1,4 +1,6 @@
+import 'package:app/blocs/device_calendar/device_calendar.bloc.dart';
 import 'package:app/blocs/tasks/tasks.bloc.dart';
+import 'package:app/entities/device_calendar/calendar/device_calendar.dart';
 import 'package:app/entities/tasks/tasks.entity.dart';
 import 'package:app/pages/calendar/appointment_data_source.dart';
 import 'package:app/utils/constants.dart';
@@ -19,62 +21,78 @@ class Calendar extends StatefulWidget {
 
 class _CalendarState extends State<Calendar> {
   @override
-  Widget build(BuildContext context) {
-    return BlocBuilder<TasksBloc, TasksState>(builder: (context, taskState) {
-      return SfCalendar(
-        view: widget.view,
-        initialSelectedDate: DateTime.now(),
-        backgroundColor: getTheme(context).surface,
-        showTodayButton: true,
-        todayHighlightColor: getTheme(context).primary,
-        timeSlotViewSettings: TimeSlotViewSettings(
-            numberOfDaysInView: widget.numberOfDays ?? -1, timeFormat: "HH:mm"),
-        selectionDecoration: BoxDecoration(
-          color: getTheme(context).primary.withValues(alpha: 0.2),
-          shape: BoxShape.rectangle,
-          borderRadius: BorderRadius.circular(6),
-        ),
-        headerStyle: CalendarHeaderStyle(
-            backgroundColor: getTheme(context).surface,
-            textStyle: getTextTheme(context).headlineMedium!.copyWith(
-                  fontWeight: FontWeight.bold,
-                )),
-        monthViewSettings: MonthViewSettings(
-          showAgenda: true,
-          dayFormat: 'EEE',
-          agendaStyle: AgendaStyle(
-            appointmentTextStyle: getTextTheme(context).bodyMedium,
-            dateTextStyle: getTextTheme(context).bodyMedium,
+  void initState() {
+    context.read<DeviceCalendarBloc>().add(
+          GetDeviceCalendar(
+            DateTime.now().subtract(const Duration(days: 30)),
+            DateTime.now().add(const Duration(days: 30)),
           ),
-        ),
-        dataSource: _getTasks(taskState.tasks ?? []),
-        appointmentBuilder:
-            (BuildContext context, CalendarAppointmentDetails details) {
-          return Container(
-            decoration: BoxDecoration(
-              color: details.appointments.first.color,
-              borderRadius: BorderRadius.circular(6),
+        );
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<DeviceCalendarBloc, DeviceCalendarState>(
+        builder: (context, deviceCalendarState) {
+      print(deviceCalendarState);
+      return BlocBuilder<TasksBloc, TasksState>(builder: (context, taskState) {
+        return SfCalendar(
+          view: widget.view,
+          initialSelectedDate: DateTime.now(),
+          backgroundColor: getTheme(context).surface,
+          showTodayButton: true,
+          todayHighlightColor: getTheme(context).primary,
+          timeSlotViewSettings: TimeSlotViewSettings(
+              numberOfDaysInView: widget.numberOfDays ?? -1,
+              timeFormat: "HH:mm"),
+          selectionDecoration: BoxDecoration(
+            color: getTheme(context).primary.withValues(alpha: 0.2),
+            shape: BoxShape.rectangle,
+            borderRadius: BorderRadius.circular(6),
+          ),
+          headerStyle: CalendarHeaderStyle(
+              backgroundColor: getTheme(context).surface,
+              textStyle: getTextTheme(context).headlineMedium!.copyWith(
+                    fontWeight: FontWeight.bold,
+                  )),
+          monthViewSettings: MonthViewSettings(
+            showAgenda: true,
+            dayFormat: 'EEE',
+            agendaStyle: AgendaStyle(
+              appointmentTextStyle: getTextTheme(context).bodyMedium,
+              dateTextStyle: getTextTheme(context).bodyMedium,
             ),
-            padding: EdgeInsets.symmetric(horizontal: $constants.insets.sm),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "${details.appointments.first.subject}",
-                  style: getTextTheme(context).bodyMedium!.copyWith(
-                        fontWeight: FontWeight.bold,
-                      ),
-                  overflow: TextOverflow.ellipsis,
-                ),
-                // Text(
-                //   "${Jiffy.parseFromDateTime(details.appointments.first.startTime).Hm.toString()} - ${Jiffy.parseFromDateTime(details.appointments.first.endTime).Hm.toString()}",
-                //   style: getTextTheme(context).bodySmall!,
-                // ),
-              ],
-            ),
-          );
-        },
-      );
+          ),
+          dataSource: _getTasks(taskState.tasks ?? []),
+          appointmentBuilder:
+              (BuildContext context, CalendarAppointmentDetails details) {
+            return Container(
+              decoration: BoxDecoration(
+                color: details.appointments.first.color,
+                borderRadius: BorderRadius.circular(6),
+              ),
+              padding: EdgeInsets.symmetric(horizontal: $constants.insets.sm),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "${details.appointments.first.subject}",
+                    style: getTextTheme(context).bodyMedium!.copyWith(
+                          fontWeight: FontWeight.bold,
+                        ),
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  // Text(
+                  //   "${Jiffy.parseFromDateTime(details.appointments.first.startTime).Hm.toString()} - ${Jiffy.parseFromDateTime(details.appointments.first.endTime).Hm.toString()}",
+                  //   style: getTextTheme(context).bodySmall!,
+                  // ),
+                ],
+              ),
+            );
+          },
+        );
+      });
     });
   }
 
