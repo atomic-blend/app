@@ -11,6 +11,8 @@ class Habits extends StatefulWidget {
 class _HabitsState extends State<Habits> {
   @override
   Widget build(BuildContext context) {
-    return UnderConstruction();
+    return Column(
+      children: [],
+    );
   }
 }
