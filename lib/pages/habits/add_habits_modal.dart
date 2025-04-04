@@ -9,6 +9,8 @@ import 'package:app/utils/shortcuts.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_multi_select_items/flutter_multi_select_items.dart';
+import 'package:input_quantity/input_quantity.dart';
 
 class AddHabitModal extends StatefulWidget {
   final Habit? habit;
@@ -32,6 +34,8 @@ class _AddHabitModalState extends State<AddHabitModal> {
   DateTime? _startDate;
   DateTime? _endDate;
   String? _frequency;
+  int? _numberOfTimes;
+  List<int>? _daysOfWeek = [];
 
   @override
   void initState() {
@@ -41,9 +45,14 @@ class _AddHabitModalState extends State<AddHabitModal> {
       _citationController.text = widget.habit!.citation ?? '';
       _startDate = widget.habit!.startDate;
       _endDate = widget.habit!.endDate;
+      _frequency = widget.habit!.frequency;
+      _numberOfTimes = widget.habit!.numberOfTimes;
+      _daysOfWeek = widget.habit!.daysOfWeek;
     } else {
       _startDate = DateTime.now();
       _frequency = ALLOWED_FREQUENCIES[0];
+      _numberOfTimes = 0;
+      _daysOfWeek = [];
     }
     super.initState();
   }
@@ -59,140 +68,254 @@ class _AddHabitModalState extends State<AddHabitModal> {
         children: [
           Form(
             key: _formKey,
-            child: Column(
-              children: [
-                Row(
-                  children: [
-                    IconButton(
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                        icon: const Icon(CupertinoIcons.arrow_left))
-                  ],
-                ),
-                SizedBox(
-                  height: $constants.insets.xxs,
-                ),
-                AutoSizeText(
-                  maxLines: 1,
-                  context.t.habits.add.title,
-                  style: getTextTheme(context).headlineLarge!.copyWith(
-                        fontWeight: FontWeight.bold,
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      IconButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          icon: const Icon(CupertinoIcons.arrow_left))
+                    ],
+                  ),
+                  SizedBox(
+                    height: $constants.insets.xxs,
+                  ),
+                  AutoSizeText(
+                    maxLines: 1,
+                    context.t.habits.add.title,
+                    style: getTextTheme(context).headlineLarge!.copyWith(
+                          fontWeight: FontWeight.bold,
+                        ),
+                  ),
+                  SizedBox(
+                    height: $constants.insets.md,
+                  ),
+                  AppTextFormField(
+                    controller: _nameController,
+                    labelText: context.t.habits.add.name,
+                    hintText: context.t.habits.add.name_hint,
+                    labelDescription: context.t.habits.add.name_description,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return context.t.habits.add.name_required;
+                      }
+                      return null;
+                    },
+                    trailing: Padding(
+                      padding: EdgeInsets.only(right: $constants.insets.xs),
+                      child: GestureDetector(
+                        child: const Icon(CupertinoIcons.smiley),
                       ),
-                ),
-                SizedBox(
-                  height: $constants.insets.md,
-                ),
-                AppTextFormField(
-                  controller: _nameController,
-                  labelText: context.t.habits.add.name,
-                  hintText: context.t.habits.add.name_hint,
-                  labelDescription: context.t.habits.add.name_description,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return context.t.habits.add.name_required;
-                    }
-                    return null;
-                  },
-                  trailing: Padding(
-                    padding: EdgeInsets.only(right: $constants.insets.xs),
-                    child: GestureDetector(
-                      child: const Icon(CupertinoIcons.smiley),
                     ),
                   ),
-                ),
-                SizedBox(
-                  height: $constants.insets.sm,
-                ),
-                AppTextFormField(
-                  controller: _citationController,
-                  labelText: context.t.habits.add.citation,
-                  hintText: context.t.habits.add.citation_hint,
-                  labelDescription: context.t.habits.add.citation_description,
-                ),
-                SizedBox(
-                  height: $constants.insets.sm,
-                ),
-                Row(
-                  children: [
-                    DatePickerButton(
-                      title: context
-                          .t.habits.add.when_would_you_like_the_habit_to_start,
-                      label: context.t.habits.add.start_date,
-                      date: _startDate,
-                      onDateChanged: (value) {
+                  SizedBox(
+                    height: $constants.insets.sm,
+                  ),
+                  AppTextFormField(
+                    controller: _citationController,
+                    labelText: context.t.habits.add.citation,
+                    hintText: context.t.habits.add.citation_hint,
+                    labelDescription: context.t.habits.add.citation_description,
+                  ),
+                  SizedBox(
+                    height: $constants.insets.sm,
+                  ),
+                  Row(
+                    children: [
+                      DatePickerButton(
+                        title: context.t.habits.add
+                            .when_would_you_like_the_habit_to_start,
+                        label: context.t.habits.add.start_date,
+                        date: _startDate,
+                        onDateChanged: (value) {
+                          setState(() {
+                            _startDate = value;
+                          });
+                        },
+                      ),
+                      SizedBox(
+                        width: $constants.insets.xs,
+                      ),
+                      DatePickerButton(
+                        title: context
+                            .t.habits.add.when_would_you_like_the_habit_to_end,
+                        label: context.t.habits.add.end_date,
+                        date: _endDate,
+                        onDateChanged: (value) {
+                          setState(() {
+                            _endDate = value;
+                          });
+                        },
+                      )
+                    ],
+                  ),
+                  // frequency switch
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.only(left: $constants.insets.xs),
+                        child: AutoSizeText(
+                          maxLines: 1,
+                          context.t.habits.add.frequency_label!,
+                          style: getTextTheme(context).bodyMedium!.copyWith(
+                                fontWeight: FontWeight.bold,
+                              ),
+                        ),
+                      ),
+                      SizedBox(
+                        width: double.infinity,
+                        height: 30,
+                        child: AnimatedToggleSwitch<String?>.rolling(
+                          current: _frequency,
+                          indicatorSize:
+                              Size.fromWidth(getSize(context).width * 0.4 / 2),
+                          values: ALLOWED_FREQUENCIES,
+                          iconBuilder: (value, foreground) {
+                            return AutoSizeText(
+                                maxLines: 1,
+                                context.t.habits.add.frequency[value]!,
+                                style: getTextTheme(context)
+                                    .bodyMedium!
+                                    .copyWith());
+                          },
+                          styleBuilder: (value) {
+                            return ToggleStyle(
+                              borderColor: Colors.transparent,
+                              indicatorColor: value == _frequency
+                                  ? getTheme(context).surface
+                                  : getTheme(context).surfaceContainer,
+                              backgroundColor:
+                                  getTheme(context).surfaceContainer,
+                            );
+                          },
+                          onChanged: (value) {
+                            setState(() {
+                              _frequency = value;
+                            });
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                  // numberOfTimes int selector
+                  SizedBox(
+                    height: $constants.insets.sm,
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(left: $constants.insets.xs),
+                    child: AutoSizeText(
+                      maxLines: 1,
+                      context.t.habits.add.number_of_times_label,
+                      style: getTextTheme(context).bodyMedium!.copyWith(
+                            fontWeight: FontWeight.bold,
+                          ),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(left: $constants.insets.xs),
+                    child: AutoSizeText(
+                      context.t.habits.add.number_of_times_description,
+                      style: getTextTheme(context)
+                          .bodySmall!
+                          .copyWith(color: Colors.grey[700]),
+                    ),
+                  ),
+                  SizedBox(
+                    height: $constants.insets.xxs,
+                  ),
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular($constants.corners.md),
+                    child: InputQty(
+                      maxVal: 100,
+                      initVal: _numberOfTimes!,
+                      minVal: 0,
+                      steps: 1,
+                      decoration: QtyDecorationProps(
+                        fillColor: getTheme(context).surfaceContainerHigh,
+                        plusBtn: Padding(
+                          padding: EdgeInsets.only(right: $constants.insets.xs),
+                          child: const Icon(CupertinoIcons.add),
+                        ),
+                        minusBtn: Padding(
+                          padding: EdgeInsets.only(left: $constants.insets.xs),
+                          child: Icon(CupertinoIcons.minus),
+                        ),
+                        isBordered: false,
+                        isDense: true,
+                      ),
+                      onQtyChanged: (val) {
                         setState(() {
-                          _startDate = value;
+                          _numberOfTimes = val.toInt();
                         });
                       },
                     ),
+                  ),
+
+                  // daysOfWeek selector for the habit if it's daily
+                  if (_frequency == "daily") ...[
                     SizedBox(
-                      width: $constants.insets.xs,
+                      height: $constants.insets.sm,
                     ),
-                    DatePickerButton(
-                      title: context
-                          .t.habits.add.when_would_you_like_the_habit_to_end,
-                      label: context.t.habits.add.end_date,
-                      date: _endDate,
-                      onDateChanged: (value) {
-                        setState(() {
-                          _endDate = value;
-                        });
-                      },
-                    )
-                  ],
-                ),
-                // frequency switch
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
                     Padding(
                       padding: EdgeInsets.only(left: $constants.insets.xs),
                       child: AutoSizeText(
                         maxLines: 1,
-                        context.t.habits.add.frequency_label!,
+                        context.t.habits.add.days_of_week_label,
                         style: getTextTheme(context).bodyMedium!.copyWith(
                               fontWeight: FontWeight.bold,
                             ),
                       ),
                     ),
-                    SizedBox(
-                      width: double.infinity,
-                      height: 30,
-                      child: AnimatedToggleSwitch<String?>.rolling(
-                        current: _frequency,
-                        indicatorSize:
-                            Size.fromWidth(getSize(context).width * 0.4 / 2),
-                        values: ALLOWED_FREQUENCIES,
-                        iconBuilder: (value, foreground) {
-                          return AutoSizeText(
-                              maxLines: 1,
-                              context.t.habits.add.frequency[value]!,
-                              style:
-                                  getTextTheme(context).bodyMedium!.copyWith());
-                        },
-                        styleBuilder: (value) {
-                          return ToggleStyle(
-                            borderColor: Colors.transparent,
-                            indicatorColor: value == _frequency
-                                ? getTheme(context).surface
-                                : getTheme(context).surfaceContainer,
-                            backgroundColor: getTheme(context).surfaceContainer,
-                          );
-                        },
-                        onChanged: (value) {
-                          setState(() {
-                            _frequency = value;
-                          });
-                        },
+                    Padding(
+                      padding: EdgeInsets.only(left: $constants.insets.xs),
+                      child: AutoSizeText(
+                        context.t.habits.add.days_of_week_description,
+                        style: getTextTheme(context)
+                            .bodySmall!
+                            .copyWith(color: Colors.grey[700]),
                       ),
                     ),
-                  ],
-                ),
-                //TODO: numberOfTimes int selector
-                //TODO: daysOfWeek selector for the habit if it's daily
-                //TODO: reminders selector (list of times)
-              ],
+                    SizedBox(
+                      height: $constants.insets.xxs,
+                    ),
+                    MultiSelectContainer(
+                        items: [
+                          MultiSelectCard(
+                              value: 0,
+                              label: context.t.days_of_week["monday"]!),
+                          MultiSelectCard(
+                              value: 1,
+                              label: context.t.days_of_week["tuesday"]!),
+                          MultiSelectCard(
+                              value: 2,
+                              label: context.t.days_of_week["wednesday"]!),
+                          MultiSelectCard(
+                              value: 3,
+                              label: context.t.days_of_week["thursday"]!),
+                          MultiSelectCard(
+                              value: 4,
+                              label: context.t.days_of_week["friday"]!),
+                          MultiSelectCard(
+                              value: 5,
+                              label: context.t.days_of_week["saturday"]!),
+                          MultiSelectCard(
+                              value: 6,
+                              label: context.t.days_of_week["sunday"]!),
+                        ],
+                        onChange: (allSelectedItems, selectedItem) {
+                          setState(() {
+                            _daysOfWeek = allSelectedItems;
+                          });
+                        }),
+                  ]
+                  //TODO: reminders selector (list of times)
+                ],
+              ),
             ),
           ),
           Padding(

@@ -55,6 +55,15 @@ class Translations implements BaseTranslations<AppLocale, Translations> {
 		'duration': 'Duration',
 	};
 	late final TranslationsTimesEn times = TranslationsTimesEn._(_root);
+	Map<String, String> get days_of_week => {
+		'monday': 'Monday',
+		'tuesday': 'Tuesday',
+		'wednesday': 'Wednesday',
+		'thursday': 'Thursday',
+		'friday': 'Friday',
+		'saturday': 'Saturday',
+		'sunday': 'Sunday',
+	};
 	Map<String, dynamic> get days_before => {
 		'none': TranslationsDaysBeforeNoneEn._(_root),
 		'same_day': TranslationsDaysBeforeSameDayEn._(_root),
@@ -892,6 +901,10 @@ class TranslationsHabitsAddEn {
 		'monthly': 'Monthly',
 		'repeatition': 'Repeatition',
 	};
+	String get number_of_times_label => 'Number of times';
+	String get number_of_times_description => 'How many times do you want to do this habit?\nEach time the frequency is reached, it will be reseted (for example, if you set it to 3 times and a daily frequency, you will have to do it 3 times a day).';
+	String get days_of_week_label => 'Days of the week';
+	String get days_of_week_description => 'On which days of the week do you want to do this habit?';
 }
 
 // Path: time_units.short
@@ -1076,6 +1089,10 @@ extension on Translations {
 			case 'habits.add.frequency.weekly': return 'Weekly';
 			case 'habits.add.frequency.monthly': return 'Monthly';
 			case 'habits.add.frequency.repeatition': return 'Repeatition';
+			case 'habits.add.number_of_times_label': return 'Number of times';
+			case 'habits.add.number_of_times_description': return 'How many times do you want to do this habit?\nEach time the frequency is reached, it will be reseted (for example, if you set it to 3 times and a daily frequency, you will have to do it 3 times a day).';
+			case 'habits.add.days_of_week_label': return 'Days of the week';
+			case 'habits.add.days_of_week_description': return 'On which days of the week do you want to do this habit?';
 			case 'under_construction.title': return 'We\'re working on it!';
 			case 'under_construction.description': return 'This feature is not yet available, but we\'re working hard to bring it to you soon.\n\nStay tuned!';
 			case 'more.title': return 'More';
@@ -1091,6 +1108,13 @@ extension on Translations {
 			case 'times.this_year': return 'This year';
 			case 'times.last_year': return 'Last year';
 			case 'times.all_time': return 'All time';
+			case 'days_of_week.monday': return 'Monday';
+			case 'days_of_week.tuesday': return 'Tuesday';
+			case 'days_of_week.wednesday': return 'Wednesday';
+			case 'days_of_week.thursday': return 'Thursday';
+			case 'days_of_week.friday': return 'Friday';
+			case 'days_of_week.saturday': return 'Saturday';
+			case 'days_of_week.sunday': return 'Sunday';
 			case 'days_before.none.value': return '0';
 			case 'days_before.none.label': return 'None';
 			case 'days_before.same_day.value': return 'same_day';
