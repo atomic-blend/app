@@ -82,6 +82,7 @@ dependencies:
   input_quantity: ^2.5.1
   flutter_multi_select_items: ^0.4.3
   emoji_picker_flutter: ^4.3.0
+  flutter_heatmap_calendar: ^1.0.5
 dependency_overrides:
   flutter_secure_storage: 9.2.4
   timezone: 0.10.0
