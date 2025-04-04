@@ -19,6 +19,7 @@ class AddHabitModal extends StatefulWidget {
 class _AddHabitModalState extends State<AddHabitModal> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _citationController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -65,6 +66,15 @@ class _AddHabitModalState extends State<AddHabitModal> {
                     }
                     return null;
                   },
+                ),
+                SizedBox(
+                  height: $constants.insets.sm,
+                ),
+                AppTextFormField(
+                  controller: _citationController,
+                  labelText: context.t.habits.add.citation,
+                  hintText: context.t.habits.add.citation_hint,
+                  labelDescription: context.t.habits.add.citation_description,
                 ),
               ],
             ),

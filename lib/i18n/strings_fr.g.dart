@@ -869,6 +869,9 @@ class _TranslationsHabitsAddFr implements TranslationsHabitsAddEn {
 	@override String get name_hint => 'Boire de l\'eau';
 	@override String get name_description => 'Définissez un nom pour votre habitude, cela sera affiché dans le tableau de bord et dans les notifications.';
 	@override String get name_required => 'Le nom de l\'habitude est requis';
+	@override String get citation => 'Citation';
+	@override String get citation_description => 'Ajoutez une citation à votre habitude, cela vous aidera à vous souvenir de la raison pour laquelle vous la suivez et vous motivera.';
+	@override String get citation_hint => '“L\'eau est la seule boisson d\'un homme sage.” - Henry David Thoreau';
 }
 
 // Path: time_units.short
@@ -1038,6 +1041,9 @@ extension on TranslationsFr {
 			case 'habits.add.name_hint': return 'Boire de l\'eau';
 			case 'habits.add.name_description': return 'Définissez un nom pour votre habitude, cela sera affiché dans le tableau de bord et dans les notifications.';
 			case 'habits.add.name_required': return 'Le nom de l\'habitude est requis';
+			case 'habits.add.citation': return 'Citation';
+			case 'habits.add.citation_description': return 'Ajoutez une citation à votre habitude, cela vous aidera à vous souvenir de la raison pour laquelle vous la suivez et vous motivera.';
+			case 'habits.add.citation_hint': return '“L\'eau est la seule boisson d\'un homme sage.” - Henry David Thoreau';
 			case 'under_construction.title': return 'On travaille dessus !';
 			case 'under_construction.description': return 'Cette fonctionnalité est en cours de développement.\n\nRevenez bientôt pour découvrir les dernières mises à jour !';
 			case 'more.title': return 'Plus';
