@@ -900,6 +900,9 @@ class _TranslationsHabitsAddFr implements TranslationsHabitsAddEn {
 	@override String get days_of_week_label => 'Jours de la semaine';
 	@override String get days_of_week_description => 'Quels jours de la semaine souhaitez-vous suivre cette habitude ?';
 	@override String get search_emoji_hint => 'Rechercher un emoji';
+	@override String get reminders_label => 'Rappels';
+	@override String get reminders_description => 'Fixez une heure pour vos rappels. Vous serez averti lorsque l\'heure sera atteinte.';
+	@override String get reminders_add => 'Ajouter un rappel';
 }
 
 // Path: time_units.short
@@ -1089,6 +1092,9 @@ extension on TranslationsFr {
 			case 'habits.add.days_of_week_label': return 'Jours de la semaine';
 			case 'habits.add.days_of_week_description': return 'Quels jours de la semaine souhaitez-vous suivre cette habitude ?';
 			case 'habits.add.search_emoji_hint': return 'Rechercher un emoji';
+			case 'habits.add.reminders_label': return 'Rappels';
+			case 'habits.add.reminders_description': return 'Fixez une heure pour vos rappels. Vous serez averti lorsque l\'heure sera atteinte.';
+			case 'habits.add.reminders_add': return 'Ajouter un rappel';
 			case 'under_construction.title': return 'On travaille dessus !';
 			case 'under_construction.description': return 'Cette fonctionnalité est en cours de développement.\n\nRevenez bientôt pour découvrir les dernières mises à jour !';
 			case 'more.title': return 'Plus';

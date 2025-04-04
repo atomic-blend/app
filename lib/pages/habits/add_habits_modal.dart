@@ -1,7 +1,9 @@
 import 'package:animated_toggle_switch/animated_toggle_switch.dart';
 import 'package:app/components/buttons/date_picker_button.dart';
 import 'package:app/components/buttons/primary_button_square.dart';
+import 'package:app/components/dialogs/date_picker_dialog.dart';
 import 'package:app/components/forms/app_text_form_field.dart';
+import 'package:app/components/forms/task_date_picker_modal/reminder_picker.dart';
 import 'package:app/entities/habit/habit.entity.dart';
 import 'package:app/i18n/strings.g.dart';
 import 'package:app/utils/constants.dart';
@@ -38,6 +40,7 @@ class _AddHabitModalState extends State<AddHabitModal> {
   int? _numberOfTimes;
   List<int>? _daysOfWeek = [];
   bool _showEmojiPicker = false;
+  List<String>? _reminders = [];
 
   @override
   void initState() {
@@ -50,11 +53,13 @@ class _AddHabitModalState extends State<AddHabitModal> {
       _frequency = widget.habit!.frequency;
       _numberOfTimes = widget.habit!.numberOfTimes;
       _daysOfWeek = widget.habit!.daysOfWeek;
+      _reminders = widget.habit!.reminders;
     } else {
       _startDate = DateTime.now();
       _frequency = ALLOWED_FREQUENCIES[0];
       _numberOfTimes = 0;
       _daysOfWeek = [];
+      _reminders = [];
     }
     super.initState();
   }
@@ -378,8 +383,97 @@ class _AddHabitModalState extends State<AddHabitModal> {
                             _daysOfWeek = allSelectedItems;
                           });
                         }),
-                  ]
-                  //TODO: reminders selector (list of times)
+                  ],
+                  SizedBox(
+                    height: $constants.insets.sm,
+                  ),
+                  // reminders selector (list of times)
+                  Padding(
+                    padding: EdgeInsets.only(left: $constants.insets.xs),
+                    child: AutoSizeText(
+                      maxLines: 1,
+                      context.t.habits.add.reminders_label,
+                      style: getTextTheme(context).bodyMedium!.copyWith(
+                            fontWeight: FontWeight.bold,
+                          ),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(left: $constants.insets.xs),
+                    child: AutoSizeText(
+                      context.t.habits.add.reminders_description,
+                      style: getTextTheme(context)
+                          .bodySmall!
+                          .copyWith(color: Colors.grey[700]),
+                    ),
+                  ),
+                  ...(_reminders ?? []).map(
+                    (e) => Stack(
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: $constants.insets.xs,
+                              vertical: $constants.insets.xs),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: getTheme(context).surfaceContainerHigh,
+                              borderRadius:
+                                  BorderRadius.circular($constants.corners.md),
+                            ),
+                            padding: EdgeInsets.symmetric(
+                                horizontal: $constants.insets.xs,
+                                vertical: $constants.insets.xs),
+                            child: Text(e),
+                          ),
+                        ),
+                        Positioned(
+                            right: 0,
+                            top: 3,
+                            child: GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  _reminders?.remove(e);
+                                });
+                              },
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  color: getTheme(context).error,
+                                  borderRadius: BorderRadius.circular(
+                                      $constants.corners.md),
+                                ),
+                                padding: const EdgeInsets.all(2),
+                                child: Icon(
+                                  CupertinoIcons.xmark,
+                                  color: getTheme(context).surface,
+                                  size: 12,
+                                ),
+                              ),
+                            ))
+                      ],
+                    ),
+                  ),
+                  Center(
+                    child: PrimaryButtonSquare(
+                      height: getSize(context).height * 0.04,
+                      width: getSize(context).width * 0.4,
+                      text: context.t.habits.add.reminders_add,
+                      outlined: true,
+                      onPressed: () {
+                        showDialog(
+                            context: context,
+                            builder: (context) => ABDatePickerDialog(
+                                initialDate: _startDate,
+                                title: context.t.tasks.add_task_modal
+                                    .when_would_you_like_to_be_reminded,
+                                onDateChanged: (value) {
+                                  setState(() {
+                                    _reminders
+                                        ?.add("${value.hour}:${value.minute}");
+                                  });
+                                }));
+                      },
+                    ),
+                  )
                 ],
               ),
             ),
@@ -401,5 +495,25 @@ class _AddHabitModalState extends State<AddHabitModal> {
         ),
       ),
     );
+  }
+
+  _remindersToDateTime() {
+    if (_reminders == null) {
+      return [];
+    }
+    return _reminders!.map((e) {
+      final splitted = e.split(':');
+      final hour = int.parse(splitted[0]);
+      final minute = int.parse(splitted[1]);
+      final dateTime = DateTime(
+          _startDate!.year, _startDate!.month, _startDate!.day, hour, minute);
+      return dateTime;
+    }).toList();
+  }
+
+  _dateTimeToReminders(List<DateTime>? reminders) {
+    return reminders?.map((e) {
+      return "${e.hour}:${e.minute}";
+    }).toList();
   }
 }
