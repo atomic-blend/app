@@ -188,6 +188,13 @@ class _TranslationsHabitsFr implements TranslationsHabitsEn {
 	@override String get no_habits => 'Aucune habitude';
 	@override String get get_started_now => 'Ajoutez votre première habitude pour commencer !';
 	@override late final _TranslationsHabitsAddFr add = _TranslationsHabitsAddFr._(_root);
+	@override String get list => 'Habitudes';
+	@override String get overview => 'Vue d\'ensemble';
+	@override String times_a_day({required num n, required Object nb}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('fr'))(n,
+		zero: '${nb} fois par jour',
+		one: '${nb} fois par jour',
+		other: '${nb} fois par jour',
+	);
 }
 
 // Path: under_construction
@@ -1095,6 +1102,13 @@ extension on TranslationsFr {
 			case 'habits.add.reminders_label': return 'Rappels';
 			case 'habits.add.reminders_description': return 'Fixez une heure pour vos rappels. Vous serez averti lorsque l\'heure sera atteinte.';
 			case 'habits.add.reminders_add': return 'Ajouter un rappel';
+			case 'habits.list': return 'Habitudes';
+			case 'habits.overview': return 'Vue d\'ensemble';
+			case 'habits.times_a_day': return ({required num n, required Object nb}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('fr'))(n,
+				zero: '${nb} fois par jour',
+				one: '${nb} fois par jour',
+				other: '${nb} fois par jour',
+			);
 			case 'under_construction.title': return 'On travaille dessus !';
 			case 'under_construction.description': return 'Cette fonctionnalité est en cours de développement.\n\nRevenez bientôt pour découvrir les dernières mises à jour !';
 			case 'more.title': return 'Plus';
