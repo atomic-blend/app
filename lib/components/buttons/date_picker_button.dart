@@ -1,4 +1,5 @@
 import 'package:app/components/dialogs/date_picker_dialog.dart';
+import 'package:app/i18n/strings.g.dart';
 import 'package:app/utils/constants.dart';
 import 'package:app/utils/shortcuts.dart';
 import 'package:auto_size_text/auto_size_text.dart';
@@ -66,13 +67,13 @@ class DatePickerButton extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   AutoSizeText(
-                    maxLines: 1,
+                    maxLines: date != null ? 1 : 2,
                     date != null
                         ? Jiffy.parseFromDateTime(date!)
                             .toLocal()
                             .yMMMEd
                             .capitalize
-                        : "no date selected",
+                        : context.t.habits.add.no_date_selected,
                     style: getTextTheme(context).titleSmall!.copyWith(
                           fontWeight: FontWeight.bold,
                         ),

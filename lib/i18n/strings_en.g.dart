@@ -884,6 +884,14 @@ class TranslationsHabitsAddEn {
 	String get end_date => 'End date';
 	String get when_would_you_like_the_habit_to_start => 'When would you like the habit to start?';
 	String get when_would_you_like_the_habit_to_end => 'When would you like the habit to end?';
+	String get no_date_selected => 'No date selected';
+	String get frequency_label => 'Frequency*';
+	Map<String, String> get frequency => {
+		'daily': 'Daily',
+		'weekly': 'Weekly',
+		'monthly': 'Monthly',
+		'repeatition': 'Repeatition',
+	};
 }
 
 // Path: time_units.short
@@ -1062,6 +1070,12 @@ extension on Translations {
 			case 'habits.add.end_date': return 'End date';
 			case 'habits.add.when_would_you_like_the_habit_to_start': return 'When would you like the habit to start?';
 			case 'habits.add.when_would_you_like_the_habit_to_end': return 'When would you like the habit to end?';
+			case 'habits.add.no_date_selected': return 'No date selected';
+			case 'habits.add.frequency_label': return 'Frequency*';
+			case 'habits.add.frequency.daily': return 'Daily';
+			case 'habits.add.frequency.weekly': return 'Weekly';
+			case 'habits.add.frequency.monthly': return 'Monthly';
+			case 'habits.add.frequency.repeatition': return 'Repeatition';
 			case 'under_construction.title': return 'We\'re working on it!';
 			case 'under_construction.description': return 'This feature is not yet available, but we\'re working hard to bring it to you soon.\n\nStay tuned!';
 			case 'more.title': return 'More';

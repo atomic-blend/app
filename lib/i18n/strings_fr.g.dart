@@ -878,6 +878,14 @@ class _TranslationsHabitsAddFr implements TranslationsHabitsAddEn {
 	@override String get end_date => 'Date de fin';
 	@override String get when_would_you_like_the_habit_to_start => 'Quand aimeriez-vous que l\'habitude commence ?';
 	@override String get when_would_you_like_the_habit_to_end => 'Quand aimeriez-vous que l\'habitude se termine ?';
+	@override String get no_date_selected => 'Pas de date sélectionnée';
+	@override String get frequency_label => 'Fréquence*';
+	@override Map<String, String> get frequency => {
+		'daily': 'Journalier',
+		'weekly': 'Hebdomadaire',
+		'monthly': 'Mensuel',
+		'repeatition': 'Répétition',
+	};
 }
 
 // Path: time_units.short
@@ -1056,6 +1064,12 @@ extension on TranslationsFr {
 			case 'habits.add.end_date': return 'Date de fin';
 			case 'habits.add.when_would_you_like_the_habit_to_start': return 'Quand aimeriez-vous que l\'habitude commence ?';
 			case 'habits.add.when_would_you_like_the_habit_to_end': return 'Quand aimeriez-vous que l\'habitude se termine ?';
+			case 'habits.add.no_date_selected': return 'Pas de date sélectionnée';
+			case 'habits.add.frequency_label': return 'Fréquence*';
+			case 'habits.add.frequency.daily': return 'Journalier';
+			case 'habits.add.frequency.weekly': return 'Hebdomadaire';
+			case 'habits.add.frequency.monthly': return 'Mensuel';
+			case 'habits.add.frequency.repeatition': return 'Répétition';
 			case 'under_construction.title': return 'On travaille dessus !';
 			case 'under_construction.description': return 'Cette fonctionnalité est en cours de développement.\n\nRevenez bientôt pour découvrir les dernières mises à jour !';
 			case 'more.title': return 'Plus';
