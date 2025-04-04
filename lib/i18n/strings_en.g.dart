@@ -906,6 +906,9 @@ class TranslationsHabitsAddEn {
 	String get days_of_week_label => 'Days of the week';
 	String get days_of_week_description => 'On which days of the week do you want to do this habit?';
 	String get search_emoji_hint => 'Search for an emoji';
+	String get reminders_label => 'Reminders';
+	String get reminders_description => 'Set a time for your reminders. You will be notified when the time is reached.';
+	String get reminders_add => 'Add a reminder';
 }
 
 // Path: time_units.short
@@ -1095,6 +1098,9 @@ extension on Translations {
 			case 'habits.add.days_of_week_label': return 'Days of the week';
 			case 'habits.add.days_of_week_description': return 'On which days of the week do you want to do this habit?';
 			case 'habits.add.search_emoji_hint': return 'Search for an emoji';
+			case 'habits.add.reminders_label': return 'Reminders';
+			case 'habits.add.reminders_description': return 'Set a time for your reminders. You will be notified when the time is reached.';
+			case 'habits.add.reminders_add': return 'Add a reminder';
 			case 'under_construction.title': return 'We\'re working on it!';
 			case 'under_construction.description': return 'This feature is not yet available, but we\'re working hard to bring it to you soon.\n\nStay tuned!';
 			case 'more.title': return 'More';
