@@ -9,8 +9,8 @@ part 'habit.entity.g.dart';
 class Habit with _$Habit {
   Habit._();
   factory Habit({
-    required String id,
-    required String userId,
+    String? id,
+    String? userId,
     String? name,
     String? emoji,
     String? citation,

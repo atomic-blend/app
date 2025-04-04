@@ -17,4 +17,33 @@ class HabitService {
       throw Exception('habit_fetch_failed');
     }
   }
+
+  Future<bool> create(Habit habit) async {
+    final result = await globalApiClient.post('/habits',
+        data: await habit.encrypt(encryptionService: encryptionService!));
+    if (result.statusCode == 201) {
+      return true;
+    } else {
+      throw Exception('habit_create_failed');
+    }
+  }
+
+  Future<bool> update(Habit habit) async {
+    final result =
+        await globalApiClient.put('/habits/${habit.id}', data: habit);
+    if (result.statusCode == 200) {
+      return true;
+    } else {
+      throw Exception('habit_update_failed');
+    }
+  }
+
+  Future<bool> delete(String id) async {
+    final result = await globalApiClient.delete('/habits/$id');
+    if (result.statusCode == 200) {
+      return true;
+    } else {
+      throw Exception('habit_delete_failed');
+    }
+  }
 }

@@ -23,6 +23,10 @@ class HabitsLoaded extends HabitState {
   List<Object?> get props => [habits];
 }
 
+class HabitCreated extends HabitState {
+  const HabitCreated(List<Habit> super.habits);
+}
+
 class HabitLoadingError extends HabitState {
   const HabitLoadingError(List<Habit> super.habits, this.message);
   final String message;

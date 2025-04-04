@@ -7,8 +7,8 @@ part of 'habit.entity.dart';
 // **************************************************************************
 
 _$HabitImpl _$$HabitImplFromJson(Map<String, dynamic> json) => _$HabitImpl(
-      id: json['id'] as String,
-      userId: json['userId'] as String,
+      id: json['id'] as String?,
+      userId: json['userId'] as String?,
       name: json['name'] as String?,
       emoji: json['emoji'] as String?,
       citation: json['citation'] as String?,
