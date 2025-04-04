@@ -905,6 +905,7 @@ class TranslationsHabitsAddEn {
 	String get number_of_times_description => 'How many times do you want to do this habit?\nEach time the frequency is reached, it will be reseted (for example, if you set it to 3 times and a daily frequency, you will have to do it 3 times a day).';
 	String get days_of_week_label => 'Days of the week';
 	String get days_of_week_description => 'On which days of the week do you want to do this habit?';
+	String get search_emoji_hint => 'Search for an emoji';
 }
 
 // Path: time_units.short
@@ -1093,6 +1094,7 @@ extension on Translations {
 			case 'habits.add.number_of_times_description': return 'How many times do you want to do this habit?\nEach time the frequency is reached, it will be reseted (for example, if you set it to 3 times and a daily frequency, you will have to do it 3 times a day).';
 			case 'habits.add.days_of_week_label': return 'Days of the week';
 			case 'habits.add.days_of_week_description': return 'On which days of the week do you want to do this habit?';
+			case 'habits.add.search_emoji_hint': return 'Search for an emoji';
 			case 'under_construction.title': return 'We\'re working on it!';
 			case 'under_construction.description': return 'This feature is not yet available, but we\'re working hard to bring it to you soon.\n\nStay tuned!';
 			case 'more.title': return 'More';
