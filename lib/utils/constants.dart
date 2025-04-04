@@ -117,7 +117,7 @@ class Navigation {
           ],
         ),
         AppBar(
-          backgroundColor: getTheme(context).surface,
+            backgroundColor: getTheme(context).surface,
             title: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -143,18 +143,21 @@ class Navigation {
         null,
         AppBar(
             backgroundColor: getTheme(context).surface,
-            title: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  context.t.habits.title,
-                  style: getTextTheme(context).headlineSmall!.copyWith(
-                        fontWeight: FontWeight.bold,
-                      ),
-                )
-              ],
+            title: Center(
+              child: Text(
+                context.t.habits.title,
+                style: getTextTheme(context).headlineSmall!.copyWith(
+                      fontWeight: FontWeight.bold,
+                    ),
+              ),
             ),
             actions: [
+              IconButton(
+                icon: const Icon(CupertinoIcons.add),
+                onPressed: () {
+                  //TODO:
+                },
+              ),
               BlocBuilder<AuthBloc, AuthState>(builder: (context, authState) {
                 if (authState is LoggedIn) {
                   return Padding(
