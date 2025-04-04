@@ -179,6 +179,9 @@ class TranslationsHabitsEn {
 
 	// Translations
 	String get title => 'Habits';
+	String get no_habits => 'No habits for now';
+	String get get_started_now => 'Add your first habit to get started!';
+	late final TranslationsHabitsAddEn add = TranslationsHabitsAddEn._(_root);
 }
 
 // Path: under_construction
@@ -860,6 +863,20 @@ class TranslationsAccountActionsEn {
 	String get delete_account => 'Delete my Account';
 }
 
+// Path: habits.add
+class TranslationsHabitsAddEn {
+	TranslationsHabitsAddEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	String get title => 'What do you want to achieve?';
+	String get name => 'Habit name*';
+	String get name_hint => 'Drink water';
+	String get name_description => 'Define a name for your habit, this will help you remember what it is about and be shown in notifications.';
+	String get name_required => 'Name is required';
+}
+
 // Path: time_units.short
 class TranslationsTimeUnitsShortEn {
 	TranslationsTimeUnitsShortEn._(this._root);
@@ -1020,6 +1037,13 @@ extension on Translations {
 			case 'account.actions.security': return 'Security & Privacy';
 			case 'account.actions.delete_account': return 'Delete my Account';
 			case 'habits.title': return 'Habits';
+			case 'habits.no_habits': return 'No habits for now';
+			case 'habits.get_started_now': return 'Add your first habit to get started!';
+			case 'habits.add.title': return 'What do you want to achieve?';
+			case 'habits.add.name': return 'Habit name*';
+			case 'habits.add.name_hint': return 'Drink water';
+			case 'habits.add.name_description': return 'Define a name for your habit, this will help you remember what it is about and be shown in notifications.';
+			case 'habits.add.name_required': return 'Name is required';
 			case 'under_construction.title': return 'We\'re working on it!';
 			case 'under_construction.description': return 'This feature is not yet available, but we\'re working hard to bring it to you soon.\n\nStay tuned!';
 			case 'more.title': return 'More';

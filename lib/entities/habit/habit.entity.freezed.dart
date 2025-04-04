@@ -286,8 +286,8 @@ class __$$HabitImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$HabitImpl implements _Habit {
-  const _$HabitImpl(
+class _$HabitImpl extends _Habit {
+  _$HabitImpl(
       {required this.id,
       required this.userId,
       this.name,
@@ -301,7 +301,8 @@ class _$HabitImpl implements _Habit {
       this.createdAt,
       this.updatedAt,
       this.reminders,
-      this.entries});
+      this.entries})
+      : super._();
 
   factory _$HabitImpl.fromJson(Map<String, dynamic> json) =>
       _$$HabitImplFromJson(json);
@@ -356,8 +357,8 @@ class _$HabitImpl implements _Habit {
   }
 }
 
-abstract class _Habit implements Habit {
-  const factory _Habit(
+abstract class _Habit extends Habit {
+  factory _Habit(
       {required String id,
       required String userId,
       String? name,
@@ -372,6 +373,7 @@ abstract class _Habit implements Habit {
       DateTime? updatedAt,
       List<String>? reminders,
       List<HabitEntry>? entries}) = _$HabitImpl;
+  _Habit._() : super._();
 
   factory _Habit.fromJson(Map<String, dynamic> json) = _$HabitImpl.fromJson;
 

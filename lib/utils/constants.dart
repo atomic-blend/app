@@ -8,6 +8,7 @@ import 'package:app/entities/tasks/tasks.entity.dart';
 import 'package:app/i18n/strings.g.dart';
 import 'package:app/main.dart';
 import 'package:app/pages/calendar/calendar.dart';
+import 'package:app/pages/habits/add_habits_modal.dart';
 import 'package:app/pages/habits/habits.dart';
 import 'package:app/pages/more_apps/more_apps.dart';
 import 'package:app/pages/tasks/add_task_modal.dart';
@@ -155,7 +156,10 @@ class Navigation {
               IconButton(
                 icon: const Icon(CupertinoIcons.add),
                 onPressed: () {
-                  //TODO:
+                  showModalBottomSheet(
+                      isScrollControlled: true,
+                      context: context,
+                      builder: (context) => const AddHabitModal());
                 },
               ),
               BlocBuilder<AuthBloc, AuthState>(builder: (context, authState) {

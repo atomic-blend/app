@@ -2,7 +2,6 @@ import 'package:app/blocs/device_calendar/device_calendar.bloc.dart';
 import 'package:app/blocs/tasks/tasks.bloc.dart';
 import 'package:app/entities/device_calendar/calendar/device_calendar.dart';
 import 'package:app/entities/tasks/tasks.entity.dart';
-import 'package:app/pages/calendar/appointment_data_source.dart';
 import 'package:app/pages/calendar/custom_appointment.dart';
 import 'package:app/pages/calendar/custom_calendar_data_source.dart';
 import 'package:app/pages/calendar/device_event_detail.dart';
@@ -12,7 +11,6 @@ import 'package:app/utils/shortcuts.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:collection/collection.dart';
 import 'package:device_calendar/device_calendar.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
@@ -113,7 +111,7 @@ class _CalendarState extends State<Calendar> {
               showModalBottomSheet(
                   context: context,
                   isScrollControlled: true,
-                  builder: (context) => Container(
+                  builder: (context) => SizedBox(
                         height: getSize(context).height * 0.8,
                         child: ClipRRect(
                           borderRadius:
@@ -127,7 +125,6 @@ class _CalendarState extends State<Calendar> {
                       ));
             } else if (calendarTapDetails.appointments?.first.itemType ==
                 CustomAppointmentType.event) {
-              //TODO
               Event? event;
               for (DeviceCalendar calendar
                   in deviceCalendarState.deviceCalendar ?? []) {
@@ -138,7 +135,7 @@ class _CalendarState extends State<Calendar> {
               showModalBottomSheet(
                   context: context,
                   isScrollControlled: true,
-                  builder: (context) => Container(
+                  builder: (context) => SizedBox(
                         height: getSize(context).height * 0.83,
                         child: ClipRRect(
                           borderRadius:
@@ -161,7 +158,7 @@ class _CalendarState extends State<Calendar> {
       if (task.startDate != null && task.endDate != null) {
         appointments.add(
           CustomAppointment(
-            startTime: task.startDate!.toLocal()!,
+            startTime: task.startDate!.toLocal(),
             endTime: task.endDate!.toLocal(),
             subject: task.title,
             color: getTheme(context).primary.withValues(alpha: 0.2),

@@ -6,7 +6,7 @@ part 'habit_entry.entity.g.dart';
 @unfreezed
 
 class HabitEntry with _$HabitEntry {
-  const factory HabitEntry({
+   factory HabitEntry({
     required String id,
     required String habitId,
     required String userId,

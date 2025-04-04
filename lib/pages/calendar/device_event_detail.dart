@@ -363,7 +363,7 @@ class _DeviceEventDetailState extends State<DeviceEventDetail> {
                       ],
                     ),
                   );
-                }).toList(),
+                }),
                 SizedBox(
                   height: $constants.insets.lg,
                 ),

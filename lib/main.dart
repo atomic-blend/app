@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:app/blocs/app/app.bloc.dart';
 import 'package:app/blocs/auth/auth.bloc.dart';
 import 'package:app/blocs/device_calendar/device_calendar.bloc.dart';
+import 'package:app/blocs/habit/habit.bloc.dart';
 import 'package:app/blocs/tasks/tasks.bloc.dart';
 import 'package:app/i18n/strings.g.dart';
 import 'package:app/services/notifications/background_notification_processor.dart';
@@ -54,7 +55,7 @@ FutureOr<void> main() async {
   });
 
   final deviceCalendarPlugin = DeviceCalendarPlugin();
-  var permissionResult = await deviceCalendarPlugin.requestPermissions();
+  await deviceCalendarPlugin.requestPermissions();
 
   HydratedBloc.storage = await HydratedStorage.build(
     storageDirectory: kIsWeb
@@ -71,6 +72,7 @@ FutureOr<void> main() async {
         BlocProvider(create: (context) => AuthBloc()),
         BlocProvider(create: (context) => TasksBloc()),
         BlocProvider(create: (context) => DeviceCalendarBloc()),
+        BlocProvider(create: (context) => HabitBloc()),
       ],
       child: TranslationProvider(
           child: const ToastificationWrapper(child: App()))));

@@ -29,12 +29,14 @@ class AppTextFormField extends StatefulWidget {
       this.autofocus,
       this.backgroundColor,
       this.height,
-      this.textStyle});
+      this.textStyle,
+      this.labelDescription});
 
   final TextEditingController? controller;
   final FocusNode? focusNode;
   final String? hintText;
   final String? labelText;
+  final String? labelDescription;
   final String? value;
   final bool? disabled;
   final VoidCallback? onDelete;
@@ -86,10 +88,18 @@ class _AppTextFormFieldState extends State<AppTextFormField> {
           if (widget.labelText != null)
             Text(
               widget.labelText!,
-              style: getTextTheme(context)
-                  .titleMedium!
-                  .copyWith(color: Colors.grey.shade500),
+              style: getTextTheme(context).bodyLarge,
             ),
+          if (widget.labelDescription != null)
+            Text(
+              widget.labelDescription!,
+              style: getTextTheme(context).bodySmall!.copyWith(
+                    color: Colors.grey[700],
+                  ),
+            ),
+          SizedBox(
+            height: $constants.insets.xxs,
+          ),
           Stack(
             children: [
               SizedBox(
@@ -119,7 +129,7 @@ class _AppTextFormFieldState extends State<AppTextFormField> {
                     fillColor: widget.backgroundColor,
                     hintText: widget.hintText,
                     hintStyle: getTextTheme(context).bodyMedium!.copyWith(
-                          color: widget.textColor,
+                          color: Colors.grey[700],
                         ),
                     isDense: true,
                     border: OutlineInputBorder(

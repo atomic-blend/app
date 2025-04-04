@@ -178,7 +178,7 @@ class __$$HabitEntryImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$HabitEntryImpl implements _HabitEntry {
-  const _$HabitEntryImpl(
+  _$HabitEntryImpl(
       {required this.id,
       required this.habitId,
       required this.userId,
@@ -224,7 +224,7 @@ class _$HabitEntryImpl implements _HabitEntry {
 }
 
 abstract class _HabitEntry implements HabitEntry {
-  const factory _HabitEntry(
+  factory _HabitEntry(
       {required String id,
       required String habitId,
       required String userId,
