@@ -875,6 +875,9 @@ class TranslationsHabitsAddEn {
 	String get name_hint => 'Drink water';
 	String get name_description => 'Define a name for your habit, this will help you remember what it is about and be shown in notifications.';
 	String get name_required => 'Name is required';
+	String get citation => 'Citation';
+	String get citation_description => 'Add a citation to your habit, this will help you remember why you are doing it and motivate you.';
+	String get citation_hint => '“Water is the only drink for a wise man.” — Henry David Thoreau';
 }
 
 // Path: time_units.short
@@ -1044,6 +1047,9 @@ extension on Translations {
 			case 'habits.add.name_hint': return 'Drink water';
 			case 'habits.add.name_description': return 'Define a name for your habit, this will help you remember what it is about and be shown in notifications.';
 			case 'habits.add.name_required': return 'Name is required';
+			case 'habits.add.citation': return 'Citation';
+			case 'habits.add.citation_description': return 'Add a citation to your habit, this will help you remember why you are doing it and motivate you.';
+			case 'habits.add.citation_hint': return '“Water is the only drink for a wise man.” — Henry David Thoreau';
 			case 'under_construction.title': return 'We\'re working on it!';
 			case 'under_construction.description': return 'This feature is not yet available, but we\'re working hard to bring it to you soon.\n\nStay tuned!';
 			case 'more.title': return 'More';
