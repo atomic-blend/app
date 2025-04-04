@@ -792,6 +792,8 @@ class _TranslationsTasksAddTaskModalFr implements TranslationsTasksAddTaskModalE
 	@override String get task_title => 'Que devez-vous faire ?';
 	@override String get description => 'Description';
 	@override String get due_date => 'Date d\'échéance';
+	@override String get start_date => 'Date de début';
+	@override String get end_date => 'Date de fin';
 	@override String get cancel => 'Annuler';
 	@override String get save => 'Enregistrer';
 	@override String get erase => 'Effacer';
@@ -872,6 +874,10 @@ class _TranslationsHabitsAddFr implements TranslationsHabitsAddEn {
 	@override String get citation => 'Citation';
 	@override String get citation_description => 'Ajoutez une citation à votre habitude, cela vous aidera à vous souvenir de la raison pour laquelle vous la suivez et vous motivera.';
 	@override String get citation_hint => '“L\'eau est la seule boisson d\'un homme sage.” - Henry David Thoreau';
+	@override String get start_date => 'Date de début*';
+	@override String get end_date => 'Date de fin';
+	@override String get when_would_you_like_the_habit_to_start => 'Quand aimeriez-vous que l\'habitude commence ?';
+	@override String get when_would_you_like_the_habit_to_end => 'Quand aimeriez-vous que l\'habitude se termine ?';
 }
 
 // Path: time_units.short
@@ -992,6 +998,8 @@ extension on TranslationsFr {
 			case 'tasks.add_task_modal.task_title': return 'Que devez-vous faire ?';
 			case 'tasks.add_task_modal.description': return 'Description';
 			case 'tasks.add_task_modal.due_date': return 'Date d\'échéance';
+			case 'tasks.add_task_modal.start_date': return 'Date de début';
+			case 'tasks.add_task_modal.end_date': return 'Date de fin';
 			case 'tasks.add_task_modal.cancel': return 'Annuler';
 			case 'tasks.add_task_modal.save': return 'Enregistrer';
 			case 'tasks.add_task_modal.erase': return 'Effacer';
@@ -1044,6 +1052,10 @@ extension on TranslationsFr {
 			case 'habits.add.citation': return 'Citation';
 			case 'habits.add.citation_description': return 'Ajoutez une citation à votre habitude, cela vous aidera à vous souvenir de la raison pour laquelle vous la suivez et vous motivera.';
 			case 'habits.add.citation_hint': return '“L\'eau est la seule boisson d\'un homme sage.” - Henry David Thoreau';
+			case 'habits.add.start_date': return 'Date de début*';
+			case 'habits.add.end_date': return 'Date de fin';
+			case 'habits.add.when_would_you_like_the_habit_to_start': return 'Quand aimeriez-vous que l\'habitude commence ?';
+			case 'habits.add.when_would_you_like_the_habit_to_end': return 'Quand aimeriez-vous que l\'habitude se termine ?';
 			case 'under_construction.title': return 'On travaille dessus !';
 			case 'under_construction.description': return 'Cette fonctionnalité est en cours de développement.\n\nRevenez bientôt pour découvrir les dernières mises à jour !';
 			case 'more.title': return 'Plus';

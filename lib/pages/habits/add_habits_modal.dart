@@ -1,3 +1,4 @@
+import 'package:app/components/buttons/date_picker_button.dart';
 import 'package:app/components/buttons/primary_button_square.dart';
 import 'package:app/components/forms/app_text_form_field.dart';
 import 'package:app/entities/habit/habit.entity.dart';
@@ -19,7 +20,25 @@ class AddHabitModal extends StatefulWidget {
 class _AddHabitModalState extends State<AddHabitModal> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _emojiController = TextEditingController();
   final TextEditingController _citationController = TextEditingController();
+  DateTime? _startDate;
+  DateTime? _endDate;
+
+  @override
+  void initState() {
+    if (widget.habit != null) {
+      _nameController.text = widget.habit!.name ?? '';
+      _emojiController.text = widget.habit!.emoji ?? '';
+      _citationController.text = widget.habit!.citation ?? '';
+      _startDate = widget.habit!.startDate;
+      _endDate = widget.habit!.endDate;
+    } else {
+      _startDate = DateTime.now();
+    }
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -53,7 +72,7 @@ class _AddHabitModalState extends State<AddHabitModal> {
                       ),
                 ),
                 SizedBox(
-                  height: $constants.insets.xxl,
+                  height: $constants.insets.md,
                 ),
                 AppTextFormField(
                   controller: _nameController,
@@ -66,6 +85,12 @@ class _AddHabitModalState extends State<AddHabitModal> {
                     }
                     return null;
                   },
+                  trailing: Padding(
+                    padding: EdgeInsets.only(right: $constants.insets.xs),
+                    child: GestureDetector(
+                      child: const Icon(CupertinoIcons.smiley),
+                    ),
+                  ),
                 ),
                 SizedBox(
                   height: $constants.insets.sm,
@@ -76,6 +101,38 @@ class _AddHabitModalState extends State<AddHabitModal> {
                   hintText: context.t.habits.add.citation_hint,
                   labelDescription: context.t.habits.add.citation_description,
                 ),
+                SizedBox(
+                  height: $constants.insets.sm,
+                ),
+                Row(
+                  children: [
+                    DatePickerButton(
+                      title: context
+                          .t.habits.add.when_would_you_like_the_habit_to_start,
+                      label: context.t.habits.add.start_date,
+                      date: _startDate,
+                      onDateChanged: (value) {
+                        setState(() {
+                          _startDate = value;
+                        });
+                      },
+                    ),
+                    SizedBox(
+                      width: $constants.insets.xs,
+                    ),
+                    DatePickerButton(
+                      title: context
+                          .t.habits.add.when_would_you_like_the_habit_to_end,
+                      label: context.t.habits.add.end_date,
+                      date: _endDate,
+                      onDateChanged: (value) {
+                        setState(() {
+                          _endDate = value;
+                        });
+                      },
+                    )
+                  ],
+                )
               ],
             ),
           ),

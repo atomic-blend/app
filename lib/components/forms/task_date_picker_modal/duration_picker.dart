@@ -1,3 +1,4 @@
+import 'package:app/components/buttons/date_picker_button.dart';
 import 'package:app/components/dialogs/date_picker_dialog.dart';
 import 'package:app/components/forms/task_date_picker_modal/reminder_picker.dart';
 import 'package:app/i18n/strings.g.dart';
@@ -59,12 +60,12 @@ class _DurationPickerState extends State<DurationPicker> {
       child: Column(
         children: [
           SizedBox(
-            height: getSize(context).height * 0.1,
             child: Row(
               spacing: $constants.insets.sm,
               children: [
-                _generateDateContainer(
+                DatePickerButton(
                     date: _startDate,
+                    label: context.t.tasks.add_task_modal.start_date,
                     title: context.t.tasks.add_task_modal
                         .when_would_you_like_the_task_to_start,
                     onDateChanged: (value) {
@@ -75,8 +76,9 @@ class _DurationPickerState extends State<DurationPicker> {
                       });
                       widget.onStartDateChanged?.call(value!);
                     }),
-                _generateDateContainer(
+                DatePickerButton(
                     date: _endDate,
+                    label: context.t.tasks.add_task_modal.end_date,
                     title: context.t.tasks.add_task_modal
                         .when_would_you_like_the_task_to_end,
                     onDateChanged: (value) {
@@ -108,7 +110,7 @@ class _DurationPickerState extends State<DurationPicker> {
                       width: getSize(context).width * 0.75,
                       child: ReminderPicker(
                           reminders: _reminders,
-                          dueDate: _endDate!,
+                          dueDate: _endDate ?? DateTime.now(),
                           onRemindersChanged: (newValue) {
                             setState(() {
                               _reminders = newValue;
