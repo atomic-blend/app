@@ -195,10 +195,10 @@ class _HabitsState extends State<Habits> {
                         ),
                       ],
                     ),
-                    SizedBox(height: $constants.insets.sm),
-                    HeatMapCalendar(
+                    HeatMap(
+                      scrollable: true,
+                      endDate: DateTime.now(),
                       defaultColor: Colors.white,
-                      flexible: true,
                       showColorTip: false,
                       colorMode: ColorMode.opacity,
                       datasets: _generateHeatMapData(habit),
