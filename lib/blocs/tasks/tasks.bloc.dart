@@ -37,8 +37,8 @@ class TasksBloc extends HydratedBloc<TasksEvent, TasksState> {
   void _onLoadTasks(LoadTasks event, Emitter<TasksState> emit) async {
     final prevState = state;
     emit(TasksLoading(prevState.tasks ?? []));
-    final tasks = await _tasksService.getAllTasks();
     try {
+    final tasks = await _tasksService.getAllTasks();
       emit(TasksLoaded(tasks));
     } catch (e) {
       emit(TaskLoadingError(prevState.tasks ?? [], e.toString()));

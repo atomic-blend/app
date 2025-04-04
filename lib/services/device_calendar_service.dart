@@ -8,7 +8,7 @@ class DeviceCalendarService {
     List<DeviceCalendar> calendars = [];
     var calendarsResult = await _deviceCalendarPlugin.retrieveCalendars();
 
-    for (var calendarResult in calendarsResult.data! ?? []) {
+    for (var calendarResult in calendarsResult.data ?? []) {
       var eventsResult = await _deviceCalendarPlugin.retrieveEvents(
         calendarResult.id,
         RetrieveEventsParams(

@@ -35,8 +35,10 @@ class _AppWrapperState extends State<AppWrapper> {
         final userDeviceInfo = await deviceInfoService!.getDeviceInfo();
 
         if (!context.mounted) return;
+        // ignore: use_build_context_synchronously
         context.read<AuthBloc>().add(
               UpdateUserDevice(
+                // ignore: use_build_context_synchronously
                 context.read<AuthBloc>().state.user!,
                 userDeviceInfo,
               ),

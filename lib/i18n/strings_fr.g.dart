@@ -176,6 +176,9 @@ class _TranslationsHabitsFr implements TranslationsHabitsEn {
 
 	// Translations
 	@override String get title => 'Habitudes';
+	@override String get no_habits => 'Aucune habitude';
+	@override String get get_started_now => 'Ajoutez votre première habitude pour commencer !';
+	@override late final _TranslationsHabitsAddFr add = _TranslationsHabitsAddFr._(_root);
 }
 
 // Path: under_construction
@@ -854,6 +857,20 @@ class _TranslationsAccountActionsFr implements TranslationsAccountActionsEn {
 	@override String get delete_account => 'Supprimer mon compte';
 }
 
+// Path: habits.add
+class _TranslationsHabitsAddFr implements TranslationsHabitsAddEn {
+	_TranslationsHabitsAddFr._(this._root);
+
+	final TranslationsFr _root; // ignore: unused_field
+
+	// Translations
+	@override String get title => 'Que souhaitez-vous accomplir ?';
+	@override String get name => 'Nom de l\'habitude*';
+	@override String get name_hint => 'Boire de l\'eau';
+	@override String get name_description => 'Définissez un nom pour votre habitude, cela sera affiché dans le tableau de bord et dans les notifications.';
+	@override String get name_required => 'Le nom de l\'habitude est requis';
+}
+
 // Path: time_units.short
 class _TranslationsTimeUnitsShortFr implements TranslationsTimeUnitsShortEn {
 	_TranslationsTimeUnitsShortFr._(this._root);
@@ -1014,6 +1031,13 @@ extension on TranslationsFr {
 			case 'account.actions.security': return 'Sécurité et confidentialité';
 			case 'account.actions.delete_account': return 'Supprimer mon compte';
 			case 'habits.title': return 'Habitudes';
+			case 'habits.no_habits': return 'Aucune habitude';
+			case 'habits.get_started_now': return 'Ajoutez votre première habitude pour commencer !';
+			case 'habits.add.title': return 'Que souhaitez-vous accomplir ?';
+			case 'habits.add.name': return 'Nom de l\'habitude*';
+			case 'habits.add.name_hint': return 'Boire de l\'eau';
+			case 'habits.add.name_description': return 'Définissez un nom pour votre habitude, cela sera affiché dans le tableau de bord et dans les notifications.';
+			case 'habits.add.name_required': return 'Le nom de l\'habitude est requis';
 			case 'under_construction.title': return 'On travaille dessus !';
 			case 'under_construction.description': return 'Cette fonctionnalité est en cours de développement.\n\nRevenez bientôt pour découvrir les dernières mises à jour !';
 			case 'more.title': return 'Plus';
