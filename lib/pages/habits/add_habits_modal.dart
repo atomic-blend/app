@@ -1,3 +1,4 @@
+import 'package:animated_toggle_switch/animated_toggle_switch.dart';
 import 'package:app/components/buttons/date_picker_button.dart';
 import 'package:app/components/buttons/primary_button_square.dart';
 import 'package:app/components/forms/app_text_form_field.dart';
@@ -22,8 +23,15 @@ class _AddHabitModalState extends State<AddHabitModal> {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _emojiController = TextEditingController();
   final TextEditingController _citationController = TextEditingController();
+  final ALLOWED_FREQUENCIES = [
+    'daily',
+    'weekly',
+    'monthly',
+    'repeatition',
+  ];
   DateTime? _startDate;
   DateTime? _endDate;
+  String? _frequency;
 
   @override
   void initState() {
@@ -35,6 +43,7 @@ class _AddHabitModalState extends State<AddHabitModal> {
       _endDate = widget.habit!.endDate;
     } else {
       _startDate = DateTime.now();
+      _frequency = ALLOWED_FREQUENCIES[0];
     }
     super.initState();
   }
@@ -132,7 +141,57 @@ class _AddHabitModalState extends State<AddHabitModal> {
                       },
                     )
                   ],
-                )
+                ),
+                // frequency switch
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.only(left: $constants.insets.xs),
+                      child: AutoSizeText(
+                        maxLines: 1,
+                        context.t.habits.add.frequency_label!,
+                        style: getTextTheme(context).bodyMedium!.copyWith(
+                              fontWeight: FontWeight.bold,
+                            ),
+                      ),
+                    ),
+                    SizedBox(
+                      width: double.infinity,
+                      height: 30,
+                      child: AnimatedToggleSwitch<String?>.rolling(
+                        current: _frequency,
+                        indicatorSize:
+                            Size.fromWidth(getSize(context).width * 0.4 / 2),
+                        values: ALLOWED_FREQUENCIES,
+                        iconBuilder: (value, foreground) {
+                          return AutoSizeText(
+                              maxLines: 1,
+                              context.t.habits.add.frequency[value]!,
+                              style:
+                                  getTextTheme(context).bodyMedium!.copyWith());
+                        },
+                        styleBuilder: (value) {
+                          return ToggleStyle(
+                            borderColor: Colors.transparent,
+                            indicatorColor: value == _frequency
+                                ? getTheme(context).surface
+                                : getTheme(context).surfaceContainer,
+                            backgroundColor: getTheme(context).surfaceContainer,
+                          );
+                        },
+                        onChanged: (value) {
+                          setState(() {
+                            _frequency = value;
+                          });
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+                //TODO: numberOfTimes int selector
+                //TODO: daysOfWeek selector for the habit if it's daily
+                //TODO: reminders selector (list of times)
               ],
             ),
           ),
