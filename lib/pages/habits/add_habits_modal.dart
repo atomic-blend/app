@@ -4,7 +4,6 @@ import 'package:app/components/buttons/date_picker_button.dart';
 import 'package:app/components/buttons/primary_button_square.dart';
 import 'package:app/components/dialogs/date_picker_dialog.dart';
 import 'package:app/components/forms/app_text_form_field.dart';
-import 'package:app/components/forms/task_date_picker_modal/reminder_picker.dart';
 import 'package:app/entities/habit/habit.entity.dart';
 import 'package:app/i18n/strings.g.dart';
 import 'package:app/utils/constants.dart';
@@ -322,7 +321,7 @@ class _AddHabitModalState extends State<AddHabitModal> {
                           ),
                           minusBtn: Padding(
                             padding: EdgeInsets.only(left: $constants.insets.xs),
-                            child: Icon(CupertinoIcons.minus),
+                            child: const Icon(CupertinoIcons.minus),
                           ),
                           isBordered: false,
                           isDense: true,

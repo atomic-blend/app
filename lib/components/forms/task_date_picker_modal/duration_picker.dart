@@ -1,15 +1,10 @@
 import 'package:app/components/buttons/date_picker_button.dart';
-import 'package:app/components/dialogs/date_picker_dialog.dart';
 import 'package:app/components/forms/task_date_picker_modal/reminder_picker.dart';
 import 'package:app/i18n/strings.g.dart';
 import 'package:app/utils/constants.dart';
 import 'package:app/utils/shortcuts.dart';
-import 'package:auto_size_text/auto_size_text.dart';
-import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_popup/flutter_popup.dart';
-import 'package:jiffy/jiffy.dart';
 
 class DurationPicker extends StatefulWidget {
   final Function(List<DateTime>?) onRemindersChanged;
@@ -142,62 +137,6 @@ class _DurationPickerState extends State<DurationPicker> {
             ),
           )
         ],
-      ),
-    );
-  }
-
-  Widget _generateDateContainer(
-      {DateTime? date,
-      Function(DateTime?)? onDateChanged,
-      required String title}) {
-    return Expanded(
-      child: GestureDetector(
-        onTap: () {
-          showDialog(
-            context: context,
-            builder: (context) {
-              return ABDatePickerDialog(
-                initialDate: date?.toLocal(),
-                title: title,
-                onDateChanged: (value) {
-                  setState(() {
-                    onDateChanged?.call(value);
-                  });
-                },
-              );
-            },
-          );
-        },
-        child: Container(
-          decoration: BoxDecoration(
-            color: getTheme(context).surface,
-            borderRadius: BorderRadius.circular($constants.corners.md),
-          ),
-          padding: EdgeInsets.all($constants.insets.sm),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              AutoSizeText(
-                maxLines: 1,
-                Jiffy.parseFromDateTime(date ?? DateTime.now())
-                    .toLocal()
-                    .yMMMEd
-                    .capitalize,
-                style: getTextTheme(context).titleSmall!.copyWith(
-                      fontWeight: FontWeight.bold,
-                    ),
-              ),
-              AutoSizeText(
-                maxLines: 1,
-                Jiffy.parseFromDateTime(date ?? DateTime.now())
-                    .toLocal()
-                    .Hm
-                    .capitalize,
-                style: getTextTheme(context).bodyMedium!.copyWith(),
-              )
-            ],
-          ),
-        ),
       ),
     );
   }
