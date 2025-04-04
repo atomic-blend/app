@@ -191,6 +191,13 @@ class TranslationsHabitsEn {
 	String get no_habits => 'No habits for now';
 	String get get_started_now => 'Add your first habit to get started!';
 	late final TranslationsHabitsAddEn add = TranslationsHabitsAddEn._(_root);
+	String get list => 'Habits';
+	String get overview => 'Overview';
+	String times_a_day({required num n, required Object nb}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n,
+		zero: '${nb} times a day',
+		one: '${nb} time a day',
+		other: '${nb} times a day',
+	);
 }
 
 // Path: under_construction
@@ -1101,6 +1108,13 @@ extension on Translations {
 			case 'habits.add.reminders_label': return 'Reminders';
 			case 'habits.add.reminders_description': return 'Set a time for your reminders. You will be notified when the time is reached.';
 			case 'habits.add.reminders_add': return 'Add a reminder';
+			case 'habits.list': return 'Habits';
+			case 'habits.overview': return 'Overview';
+			case 'habits.times_a_day': return ({required num n, required Object nb}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n,
+				zero: '${nb} times a day',
+				one: '${nb} time a day',
+				other: '${nb} times a day',
+			);
 			case 'under_construction.title': return 'We\'re working on it!';
 			case 'under_construction.description': return 'This feature is not yet available, but we\'re working hard to bring it to you soon.\n\nStay tuned!';
 			case 'more.title': return 'More';
