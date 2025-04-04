@@ -899,6 +899,7 @@ class _TranslationsHabitsAddFr implements TranslationsHabitsAddEn {
 	@override String get number_of_times_description => 'Combien de fois voulez-vous faire cette habitude ?\nSera réinitialisé à chaque fois que la fréquence est atteinte (par exemple, si vous le réglez sur 3 fois et une fréquence quotidienne, vous devrez le faire 3 fois par jour)..';
 	@override String get days_of_week_label => 'Jours de la semaine';
 	@override String get days_of_week_description => 'Quels jours de la semaine souhaitez-vous suivre cette habitude ?';
+	@override String get search_emoji_hint => 'Rechercher un emoji';
 }
 
 // Path: time_units.short
@@ -1087,6 +1088,7 @@ extension on TranslationsFr {
 			case 'habits.add.number_of_times_description': return 'Combien de fois voulez-vous faire cette habitude ?\nSera réinitialisé à chaque fois que la fréquence est atteinte (par exemple, si vous le réglez sur 3 fois et une fréquence quotidienne, vous devrez le faire 3 fois par jour)..';
 			case 'habits.add.days_of_week_label': return 'Jours de la semaine';
 			case 'habits.add.days_of_week_description': return 'Quels jours de la semaine souhaitez-vous suivre cette habitude ?';
+			case 'habits.add.search_emoji_hint': return 'Rechercher un emoji';
 			case 'under_construction.title': return 'On travaille dessus !';
 			case 'under_construction.description': return 'Cette fonctionnalité est en cours de développement.\n\nRevenez bientôt pour découvrir les dernières mises à jour !';
 			case 'more.title': return 'Plus';

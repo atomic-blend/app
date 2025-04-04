@@ -7,6 +7,7 @@ import 'package:app/i18n/strings.g.dart';
 import 'package:app/utils/constants.dart';
 import 'package:app/utils/shortcuts.dart';
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_multi_select_items/flutter_multi_select_items.dart';
@@ -36,6 +37,7 @@ class _AddHabitModalState extends State<AddHabitModal> {
   String? _frequency;
   int? _numberOfTimes;
   List<int>? _daysOfWeek = [];
+  bool _showEmojiPicker = false;
 
   @override
   void initState() {
@@ -57,18 +59,31 @@ class _AddHabitModalState extends State<AddHabitModal> {
     super.initState();
   }
 
+  void _toggleEmojiPicker() {
+    setState(() {
+      _showEmojiPicker = !_showEmojiPicker;
+    });
+  }
+
+  void _onEmojiSelected(Category? category, Emoji emoji) {
+    setState(() {
+      _emojiController.text = emoji.emoji;
+      _showEmojiPicker = false;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
       height: getSize(context).height * 0.88,
       padding: EdgeInsets.symmetric(
           horizontal: $constants.insets.sm, vertical: $constants.insets.xs),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Form(
-            key: _formKey,
-            child: SingleChildScrollView(
+      child: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Form(
+              key: _formKey,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -108,10 +123,61 @@ class _AddHabitModalState extends State<AddHabitModal> {
                     trailing: Padding(
                       padding: EdgeInsets.only(right: $constants.insets.xs),
                       child: GestureDetector(
-                        child: const Icon(CupertinoIcons.smiley),
+                        onTap: _toggleEmojiPicker,
+                        child: _emojiController.text.isEmpty
+                            ? const Icon(CupertinoIcons.smiley)
+                            : Center(
+                                child: Text(
+                                  _emojiController.text,
+                                  style: const TextStyle(fontSize: 24),
+                                ),
+                              ),
                       ),
                     ),
                   ),
+                  if (_showEmojiPicker)
+                    SizedBox(
+                      height: 250,
+                      child: EmojiPicker(
+                        onEmojiSelected: _onEmojiSelected,
+                        textEditingController: _emojiController,
+                        config: Config(
+                            locale:
+                                AppLocaleUtils.findDeviceLocale().flutterLocale,
+                            emojiViewConfig: const EmojiViewConfig(
+                              emojiSizeMax: 32.0,
+                              verticalSpacing: 0,
+                              horizontalSpacing: 0,
+                              gridPadding: EdgeInsets.zero,
+                              recentsLimit: 28,
+                              replaceEmojiOnLimitExceed: true,
+                              buttonMode: ButtonMode.CUPERTINO,
+                              loadingIndicator: SizedBox.shrink(),
+                            ),
+                            categoryViewConfig: CategoryViewConfig(
+                              initCategory: Category.SMILEYS,
+                              extraTab: CategoryExtraTab.SEARCH,
+                              tabIndicatorAnimDuration:
+                                  const Duration(milliseconds: 300),
+                              backgroundColor:
+                                  getTheme(context).surfaceContainerLow,
+                              indicatorColor: getTheme(context).primary,
+                              iconColor: Colors.grey,
+                              iconColorSelected: getTheme(context).primary,
+                              categoryIcons: const CategoryIcons(),
+                            ),
+                            bottomActionBarConfig: BottomActionBarConfig(
+                              enabled: false,
+                              backgroundColor:
+                                  getTheme(context).surfaceContainerLow,
+                              buttonColor: Colors.grey,
+                              buttonIconColor: Colors.white,
+                            ),
+                            searchViewConfig: SearchViewConfig(
+                              hintText: context.t.habits.add.search_emoji_hint,
+                            )),
+                      ),
+                    ),
                   SizedBox(
                     height: $constants.insets.sm,
                   ),
@@ -161,7 +227,7 @@ class _AddHabitModalState extends State<AddHabitModal> {
                         padding: EdgeInsets.only(left: $constants.insets.xs),
                         child: AutoSizeText(
                           maxLines: 1,
-                          context.t.habits.add.frequency_label!,
+                          context.t.habits.add.frequency_label,
                           style: getTextTheme(context).bodyMedium!.copyWith(
                                 fontWeight: FontWeight.bold,
                               ),
@@ -317,19 +383,22 @@ class _AddHabitModalState extends State<AddHabitModal> {
                 ],
               ),
             ),
-          ),
-          Padding(
-            padding: EdgeInsets.only(bottom: $constants.insets.lg),
-            child: PrimaryButtonSquare(
-              text: context.t.actions.save,
-              onPressed: () {
-                if (!_formKey.currentState!.validate()) {
-                  return;
-                }
-              },
+            SizedBox(
+              height: $constants.insets.md,
             ),
-          )
-        ],
+            Padding(
+              padding: EdgeInsets.only(bottom: $constants.insets.lg),
+              child: PrimaryButtonSquare(
+                text: context.t.actions.save,
+                onPressed: () {
+                  if (!_formKey.currentState!.validate()) {
+                    return;
+                  }
+                },
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
