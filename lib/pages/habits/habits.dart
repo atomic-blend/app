@@ -8,6 +8,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_heatmap_calendar/flutter_heatmap_calendar.dart';
 import 'package:lottie/lottie.dart';
 
 class Habits extends StatefulWidget {
@@ -79,7 +80,8 @@ class _HabitsState extends State<Habits> {
               ),
             ),
           ),
-          if (mode == 0) _listView(context, habitState.habits!)
+          if (mode == 0) _listView(context, habitState.habits!),
+          if (mode == 1) _heatMapView(context, habitState.habits!),
         ],
       );
     });
@@ -145,5 +147,82 @@ class _HabitsState extends State<Habits> {
         ),
       ),
     );
+  }
+
+  _heatMapView(BuildContext context, List<Habit> habits) {
+    return Expanded(
+      child: Padding(
+        padding: EdgeInsets.symmetric(
+            horizontal: $constants.insets.sm, vertical: $constants.insets.sm),
+        child: ListView.builder(
+            itemCount: habits.length,
+            itemBuilder: (context, index) {
+              final habit = habits[index];
+              return Container(
+                decoration: BoxDecoration(
+                  color: getTheme(context).surfaceContainer,
+                  borderRadius: BorderRadius.circular($constants.corners.sm),
+                ),
+                padding: EdgeInsets.all($constants.insets.sm),
+                margin: EdgeInsets.only(bottom: $constants.insets.sm),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Container(
+                          width: 40,
+                          height: 40,
+                          decoration: BoxDecoration(
+                            color: getTheme(context).surface,
+                            borderRadius:
+                                BorderRadius.circular($constants.corners.full),
+                          ),
+                          child: Center(
+                            child: Text(
+                              habit.emoji ?? "📋",
+                              style: TextStyle(fontSize: 20),
+                            ),
+                          ),
+                        ),
+                        SizedBox(width: $constants.insets.xs),
+                        Expanded(
+                          child: Text(
+                            habit.name ?? context.t.habits.add.title,
+                            style: getTextTheme(context).titleMedium!.copyWith(
+                                  fontWeight: FontWeight.bold,
+                                ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: $constants.insets.sm),
+                    HeatMapCalendar(
+                      defaultColor: Colors.white,
+                      flexible: true,
+                      showColorTip: false,
+                      colorMode: ColorMode.opacity,
+                      datasets: _generateHeatMapData(habit),
+                      colorsets: {
+                        1: getTheme(context).primary,
+                      },
+                      onClick: (value) {},
+                    )
+                  ],
+                ),
+              );
+            }),
+      ),
+    );
+  }
+
+  _generateHeatMapData(Habit habit) {
+    final data = <DateTime, int>{};
+    for (var entry in habit.entries ?? []) {
+      final date = entry.entryDate;
+      data[date] ??= 0;
+      data[date] = data[date]! + 1;
+    }
+    return data;
   }
 }
