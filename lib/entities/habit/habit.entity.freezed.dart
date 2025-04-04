@@ -20,10 +20,10 @@ Habit _$HabitFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Habit {
-  String get id => throw _privateConstructorUsedError;
-  set id(String value) => throw _privateConstructorUsedError;
-  String get userId => throw _privateConstructorUsedError;
-  set userId(String value) => throw _privateConstructorUsedError;
+  String? get id => throw _privateConstructorUsedError;
+  set id(String? value) => throw _privateConstructorUsedError;
+  String? get userId => throw _privateConstructorUsedError;
+  set userId(String? value) => throw _privateConstructorUsedError;
   String? get name => throw _privateConstructorUsedError;
   set name(String? value) => throw _privateConstructorUsedError;
   String? get emoji => throw _privateConstructorUsedError;
@@ -64,8 +64,8 @@ abstract class $HabitCopyWith<$Res> {
       _$HabitCopyWithImpl<$Res, Habit>;
   @useResult
   $Res call(
-      {String id,
-      String userId,
+      {String? id,
+      String? userId,
       String? name,
       String? emoji,
       String? citation,
@@ -95,8 +95,8 @@ class _$HabitCopyWithImpl<$Res, $Val extends Habit>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
-    Object? userId = null,
+    Object? id = freezed,
+    Object? userId = freezed,
     Object? name = freezed,
     Object? emoji = freezed,
     Object? citation = freezed,
@@ -111,14 +111,14 @@ class _$HabitCopyWithImpl<$Res, $Val extends Habit>
     Object? entries = freezed,
   }) {
     return _then(_value.copyWith(
-      id: null == id
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      userId: null == userId
+              as String?,
+      userId: freezed == userId
           ? _value.userId
           : userId // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -179,8 +179,8 @@ abstract class _$$HabitImplCopyWith<$Res> implements $HabitCopyWith<$Res> {
   @override
   @useResult
   $Res call(
-      {String id,
-      String userId,
+      {String? id,
+      String? userId,
       String? name,
       String? emoji,
       String? citation,
@@ -208,8 +208,8 @@ class __$$HabitImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
-    Object? userId = null,
+    Object? id = freezed,
+    Object? userId = freezed,
     Object? name = freezed,
     Object? emoji = freezed,
     Object? citation = freezed,
@@ -224,14 +224,14 @@ class __$$HabitImplCopyWithImpl<$Res>
     Object? entries = freezed,
   }) {
     return _then(_$HabitImpl(
-      id: null == id
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      userId: null == userId
+              as String?,
+      userId: freezed == userId
           ? _value.userId
           : userId // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -288,8 +288,8 @@ class __$$HabitImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$HabitImpl extends _Habit {
   _$HabitImpl(
-      {required this.id,
-      required this.userId,
+      {this.id,
+      this.userId,
       this.name,
       this.emoji,
       this.citation,
@@ -308,9 +308,9 @@ class _$HabitImpl extends _Habit {
       _$$HabitImplFromJson(json);
 
   @override
-  String id;
+  String? id;
   @override
-  String userId;
+  String? userId;
   @override
   String? name;
   @override
@@ -359,8 +359,8 @@ class _$HabitImpl extends _Habit {
 
 abstract class _Habit extends Habit {
   factory _Habit(
-      {required String id,
-      required String userId,
+      {String? id,
+      String? userId,
       String? name,
       String? emoji,
       String? citation,
@@ -378,11 +378,11 @@ abstract class _Habit extends Habit {
   factory _Habit.fromJson(Map<String, dynamic> json) = _$HabitImpl.fromJson;
 
   @override
-  String get id;
-  set id(String value);
+  String? get id;
+  set id(String? value);
   @override
-  String get userId;
-  set userId(String value);
+  String? get userId;
+  set userId(String? value);
   @override
   String? get name;
   set name(String? value);
