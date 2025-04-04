@@ -798,6 +798,8 @@ class TranslationsTasksAddTaskModalEn {
 	String get task_title => 'What do you need to do?';
 	String get description => 'Description';
 	String get due_date => 'Due Date';
+	String get start_date => 'Start Date';
+	String get end_date => 'End Date';
 	String get cancel => 'Cancel';
 	String get save => 'Save';
 	String get erase => 'Erase';
@@ -878,6 +880,10 @@ class TranslationsHabitsAddEn {
 	String get citation => 'Citation';
 	String get citation_description => 'Add a citation to your habit, this will help you remember why you are doing it and motivate you.';
 	String get citation_hint => '“Water is the only drink for a wise man.” — Henry David Thoreau';
+	String get start_date => 'Start date*';
+	String get end_date => 'End date';
+	String get when_would_you_like_the_habit_to_start => 'When would you like the habit to start?';
+	String get when_would_you_like_the_habit_to_end => 'When would you like the habit to end?';
 }
 
 // Path: time_units.short
@@ -998,6 +1004,8 @@ extension on Translations {
 			case 'tasks.add_task_modal.task_title': return 'What do you need to do?';
 			case 'tasks.add_task_modal.description': return 'Description';
 			case 'tasks.add_task_modal.due_date': return 'Due Date';
+			case 'tasks.add_task_modal.start_date': return 'Start Date';
+			case 'tasks.add_task_modal.end_date': return 'End Date';
 			case 'tasks.add_task_modal.cancel': return 'Cancel';
 			case 'tasks.add_task_modal.save': return 'Save';
 			case 'tasks.add_task_modal.erase': return 'Erase';
@@ -1050,6 +1058,10 @@ extension on Translations {
 			case 'habits.add.citation': return 'Citation';
 			case 'habits.add.citation_description': return 'Add a citation to your habit, this will help you remember why you are doing it and motivate you.';
 			case 'habits.add.citation_hint': return '“Water is the only drink for a wise man.” — Henry David Thoreau';
+			case 'habits.add.start_date': return 'Start date*';
+			case 'habits.add.end_date': return 'End date';
+			case 'habits.add.when_would_you_like_the_habit_to_start': return 'When would you like the habit to start?';
+			case 'habits.add.when_would_you_like_the_habit_to_end': return 'When would you like the habit to end?';
 			case 'under_construction.title': return 'We\'re working on it!';
 			case 'under_construction.description': return 'This feature is not yet available, but we\'re working hard to bring it to you soon.\n\nStay tuned!';
 			case 'more.title': return 'More';

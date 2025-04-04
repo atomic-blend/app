@@ -88,7 +88,9 @@ class _AppTextFormFieldState extends State<AppTextFormField> {
           if (widget.labelText != null)
             Text(
               widget.labelText!,
-              style: getTextTheme(context).bodyLarge,
+              style: getTextTheme(context).bodyMedium!.copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
             ),
           if (widget.labelDescription != null)
             Text(
