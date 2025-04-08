@@ -14,6 +14,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_multi_select_items/flutter_multi_select_items.dart';
+import 'package:flutter_popup/flutter_popup.dart';
 import 'package:input_quantity/input_quantity.dart';
 
 class AddHabitModal extends StatefulWidget {
@@ -29,6 +30,7 @@ class _AddHabitModalState extends State<AddHabitModal> {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _emojiController = TextEditingController();
   final TextEditingController _citationController = TextEditingController();
+  final TextEditingController _durationController = TextEditingController();
   final ALLOWED_FREQUENCIES = [
     'daily',
     'weekly',
@@ -55,6 +57,7 @@ class _AddHabitModalState extends State<AddHabitModal> {
       _numberOfTimes = widget.habit!.numberOfTimes;
       _daysOfWeek = widget.habit!.daysOfWeek;
       _reminders = widget.habit!.reminders;
+      //TODO: add duration
     } else {
       _startDate = DateTime.now();
       _frequency = ALLOWED_FREQUENCIES[0];
@@ -145,6 +148,38 @@ class _AddHabitModalState extends State<AddHabitModal> {
                                   ),
                                 ),
                         ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: $constants.insets.md,
+                    ),
+                    CustomPopup(
+                      content: SizedBox(
+                          width: getSize(context).width * 0.6,
+                          height: getSize(context).height * 0.25,
+                          child: CupertinoTimerPicker(
+                              mode: CupertinoTimerPickerMode.hm,
+                              onTimerDurationChanged: (newDuration) {
+                                setState(() {
+                                  _durationController.text =
+                                      "${newDuration.inHours != 0 ? "${newDuration.inHours}:" : ""}${newDuration.inMinutes.remainder(60)} ${context.t.time_units.long.minute(n: newDuration.inMinutes.remainder(60))}";
+                                });
+                              })),
+                      child: AppTextFormField(
+                        controller: _durationController,
+                        disabled: true,
+                        backgroundColor:
+                            getTheme(context).surfaceContainerHighest,
+                        labelText: context.t.habits.add.duration_label,
+                        hintText: context.t.habits.add.duration_hint,
+                        labelDescription:
+                            context.t.habits.add.duration_description,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return context.t.habits.add.name_required;
+                          }
+                          return null;
+                        },
                       ),
                     ),
                     if (_showEmojiPicker)

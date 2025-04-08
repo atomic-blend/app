@@ -910,6 +910,9 @@ class _TranslationsHabitsAddFr implements TranslationsHabitsAddEn {
 	@override String get reminders_label => 'Rappels';
 	@override String get reminders_description => 'Fixez une heure pour vos rappels. Vous serez averti lorsque l\'heure sera atteinte.';
 	@override String get reminders_add => 'Ajouter un rappel';
+	@override String get duration_label => 'Durée';
+	@override String get duration_description => 'Combien de temps dure cette habitude ?';
+	@override String get duration_hint => '5 minutes';
 }
 
 // Path: time_units.short
@@ -931,9 +934,21 @@ class _TranslationsTimeUnitsLongFr implements TranslationsTimeUnitsLongEn {
 	final TranslationsFr _root; // ignore: unused_field
 
 	// Translations
-	@override String get day => 'jour';
-	@override String get hour => 'heure';
-	@override String get minute => 'minute';
+	@override String day({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('fr'))(n,
+		zero: 'jour',
+		one: 'jour',
+		other: 'jours',
+	);
+	@override String hour({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('fr'))(n,
+		zero: 'heure',
+		one: 'heure',
+		other: 'heures',
+	);
+	@override String minute({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('fr'))(n,
+		zero: 'minute',
+		one: 'minute',
+		other: 'minutes',
+	);
 }
 
 // Path: settings.app_settings.selfHostedUrl
@@ -1102,6 +1117,9 @@ extension on TranslationsFr {
 			case 'habits.add.reminders_label': return 'Rappels';
 			case 'habits.add.reminders_description': return 'Fixez une heure pour vos rappels. Vous serez averti lorsque l\'heure sera atteinte.';
 			case 'habits.add.reminders_add': return 'Ajouter un rappel';
+			case 'habits.add.duration_label': return 'Durée';
+			case 'habits.add.duration_description': return 'Combien de temps dure cette habitude ?';
+			case 'habits.add.duration_hint': return '5 minutes';
 			case 'habits.list': return 'Habitudes';
 			case 'habits.overview': return 'Vue d\'ensemble';
 			case 'habits.times_a_day': return ({required num n, required Object nb}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('fr'))(n,
@@ -1179,9 +1197,21 @@ extension on TranslationsFr {
 			case 'time_units.short.day': return 'j';
 			case 'time_units.short.hour': return 'h';
 			case 'time_units.short.minute': return 'm';
-			case 'time_units.long.day': return 'jour';
-			case 'time_units.long.hour': return 'heure';
-			case 'time_units.long.minute': return 'minute';
+			case 'time_units.long.day': return ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('fr'))(n,
+				zero: 'jour',
+				one: 'jour',
+				other: 'jours',
+			);
+			case 'time_units.long.hour': return ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('fr'))(n,
+				zero: 'heure',
+				one: 'heure',
+				other: 'heures',
+			);
+			case 'time_units.long.minute': return ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('fr'))(n,
+				zero: 'minute',
+				one: 'minute',
+				other: 'minutes',
+			);
 			case 'name_generator.animals.0': return 'hibou';
 			case 'name_generator.animals.1': return 'renard';
 			case 'name_generator.animals.2': return 'lapin';

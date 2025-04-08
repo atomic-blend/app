@@ -916,6 +916,9 @@ class TranslationsHabitsAddEn {
 	String get reminders_label => 'Reminders';
 	String get reminders_description => 'Set a time for your reminders. You will be notified when the time is reached.';
 	String get reminders_add => 'Add a reminder';
+	String get duration_label => 'Duration';
+	String get duration_description => 'How long do you want to do this habit?';
+	String get duration_hint => '5 minutes';
 }
 
 // Path: time_units.short
@@ -937,9 +940,21 @@ class TranslationsTimeUnitsLongEn {
 	final Translations _root; // ignore: unused_field
 
 	// Translations
-	String get day => 'day';
-	String get hour => 'hour';
-	String get minute => 'minute';
+	String day({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n,
+		zero: 'days',
+		one: 'day',
+		other: 'days',
+	);
+	String hour({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n,
+		zero: 'hours',
+		one: 'hour',
+		other: 'hours',
+	);
+	String minute({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n,
+		zero: 'minutes',
+		one: 'minute',
+		other: 'minutes',
+	);
 }
 
 // Path: settings.app_settings.selfHostedUrl
@@ -1108,6 +1123,9 @@ extension on Translations {
 			case 'habits.add.reminders_label': return 'Reminders';
 			case 'habits.add.reminders_description': return 'Set a time for your reminders. You will be notified when the time is reached.';
 			case 'habits.add.reminders_add': return 'Add a reminder';
+			case 'habits.add.duration_label': return 'Duration';
+			case 'habits.add.duration_description': return 'How long do you want to do this habit?';
+			case 'habits.add.duration_hint': return '5 minutes';
 			case 'habits.list': return 'Habits';
 			case 'habits.overview': return 'Overview';
 			case 'habits.times_a_day': return ({required num n, required Object nb}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n,
@@ -1185,9 +1203,21 @@ extension on Translations {
 			case 'time_units.short.day': return 'd';
 			case 'time_units.short.hour': return 'h';
 			case 'time_units.short.minute': return 'm';
-			case 'time_units.long.day': return 'day';
-			case 'time_units.long.hour': return 'hour';
-			case 'time_units.long.minute': return 'minute';
+			case 'time_units.long.day': return ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n,
+				zero: 'days',
+				one: 'day',
+				other: 'days',
+			);
+			case 'time_units.long.hour': return ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n,
+				zero: 'hours',
+				one: 'hour',
+				other: 'hours',
+			);
+			case 'time_units.long.minute': return ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n,
+				zero: 'minutes',
+				one: 'minute',
+				other: 'minutes',
+			);
 			case 'name_generator.animals.0': return 'bat';
 			case 'name_generator.animals.1': return 'owl';
 			case 'name_generator.animals.2': return 'fox';
