@@ -17,6 +17,7 @@ class Habit with _$Habit {
     DateTime? startDate,
     DateTime? endDate,
     String? frequency,
+    Duration? duration,
     int? numberOfTimes,
     List<int>? daysOfWeek,
     DateTime? createdAt,
@@ -36,6 +37,7 @@ class Habit with _$Habit {
     'startDate',
     'endDate',
     'frequency',
+    'duration',
     'numberOfTimes',
     'daysOfWeek',
     'emoji',
@@ -43,21 +45,22 @@ class Habit with _$Habit {
 
   Future<Map<String, dynamic>> encrypt(
       {required EncryptionService encryptionService}) async {
-        return Map<String, dynamic>.from({
-          'id': id,
-          'name': await encryptionService.encryptJson(name),
-          'emoji': emoji,
-          'citation': await encryptionService.encryptJson(citation),
-          'createdAt': createdAt?.toUtc().toIso8601String(),
-          'updatedAt': updatedAt?.toUtc().toIso8601String(),
-          'startDate': startDate?.toUtc().toIso8601String(),
-          'endDate': endDate?.toUtc().toIso8601String(),
-          'frequency': frequency,
-          'numberOfTimes': numberOfTimes,
-          'daysOfWeek': daysOfWeek,
-          'reminders': reminders,
-        });
-      }
+    return Map<String, dynamic>.from({
+      'id': id,
+      'name': await encryptionService.encryptJson(name),
+      'emoji': emoji,
+      'citation': await encryptionService.encryptJson(citation),
+      'createdAt': createdAt?.toUtc().toIso8601String(),
+      'updatedAt': updatedAt?.toUtc().toIso8601String(),
+      'startDate': startDate?.toUtc().toIso8601String(),
+      'duration': duration?.inMilliseconds,
+      'endDate': endDate?.toUtc().toIso8601String(),
+      'frequency': frequency,
+      'numberOfTimes': numberOfTimes,
+      'daysOfWeek': daysOfWeek,
+      'reminders': reminders,
+    });
+  }
 
   static Future<Habit> decrypt(
       Map<String, dynamic> data, EncryptionService encryptionService) async {
@@ -72,7 +75,10 @@ class Habit with _$Habit {
       }
     }
 
-    return Habit.fromJson(decryptedData);
+    final habit = Habit.fromJson(decryptedData);
+    habit.duration = Duration(milliseconds: data['duration'] ?? 0);
+
+    return habit;
   }
 
   factory Habit.fromJson(Map<String, dynamic> json) => _$HabitFromJson(json);

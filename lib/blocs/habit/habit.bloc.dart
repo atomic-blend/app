@@ -59,6 +59,7 @@ class HabitBloc extends HydratedBloc<HabitEvent, HabitState> {
       emit(HabitCreated(prevState.habits ?? []));
       add(const LoadHabits());
     } catch (e) {
+      print(e.toString());
       emit(HabitLoadingError(prevState.habits ?? [], e.toString()));
     }
   }

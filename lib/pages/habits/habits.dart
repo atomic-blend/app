@@ -94,52 +94,58 @@ class _HabitsState extends State<Habits> {
         child: ListView.builder(
           itemCount: habits.length,
           itemBuilder: (context, index) {
-            return Container(
-              decoration: BoxDecoration(
-                color: getTheme(context).surfaceContainer,
-                borderRadius: BorderRadius.circular($constants.corners.sm),
-              ),
-              padding: EdgeInsets.all($constants.insets.sm),
-              child: Row(
-                children: [
-                  Container(
-                    width: 50,
-                    height: 50,
-                    decoration: BoxDecoration(
-                      color: getTheme(context).surface,
-                      borderRadius:
-                          BorderRadius.circular($constants.corners.full),
-                    ),
-                    child: Center(
-                      child: AutoSizeText(
-                        habits[index].emoji ?? "📋",
-                        maxLines: 1,
-                        style: getTextTheme(context).titleLarge!.copyWith(
-                              color: getTheme(context).onPrimary,
-                            ),
+            return Padding(
+              padding: EdgeInsets.only(bottom: $constants.insets.xs),
+              child: Container(
+                decoration: BoxDecoration(
+                  color: getTheme(context).surfaceContainer,
+                  borderRadius: BorderRadius.circular($constants.corners.sm),
+                ),
+                padding: EdgeInsets.all($constants.insets.sm),
+                child: Row(
+                  children: [
+                    Container(
+                      width: 50,
+                      height: 50,
+                      decoration: BoxDecoration(
+                        color: getTheme(context).surface,
+                        borderRadius:
+                            BorderRadius.circular($constants.corners.full),
+                      ),
+                      child: Center(
+                        child: AutoSizeText(
+                          habits[index].emoji != null &&
+                                  habits[index].emoji != ""
+                              ? habits[index].emoji!
+                              : "📋",
+                          maxLines: 1,
+                          style: getTextTheme(context).headlineLarge!.copyWith(
+                                color: getTheme(context).onPrimary,
+                              ),
+                        ),
                       ),
                     ),
-                  ),
-                  SizedBox(
-                    width: $constants.insets.sm,
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text(
-                        habits[index].name!,
-                        style: getTextTheme(context).titleSmall!.copyWith(
-                              fontWeight: FontWeight.bold,
-                            ),
-                      ),
-                      Text(
-                        "${context.t.habits.add.frequency[habits[index].frequency!]}, ${context.t.habits.times_a_day(n: habits[index].numberOfTimes ?? 0, nb: habits[index].numberOfTimes ?? 0)}",
-                        style: getTextTheme(context).bodyMedium,
-                      ),
-                    ],
-                  ),
-                ],
+                    SizedBox(
+                      width: $constants.insets.sm,
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(
+                          habits[index].name!,
+                          style: getTextTheme(context).titleSmall!.copyWith(
+                                fontWeight: FontWeight.bold,
+                              ),
+                        ),
+                        Text(
+                          "${habits[index].duration != null ? "${habits[index].duration!.inMinutes} ${context.t.time_units.long.minute(n: habits[index].duration!.inMinutes)}, " : ""}${context.t.habits.add.frequency[habits[index].frequency!]}, ${context.t.habits.times_a_day(n: habits[index].numberOfTimes ?? 0, nb: habits[index].numberOfTimes ?? 0)}",
+                          style: getTextTheme(context).bodyMedium,
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
             );
           },

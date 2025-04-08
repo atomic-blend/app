@@ -36,6 +36,8 @@ mixin _$Habit {
   set endDate(DateTime? value) => throw _privateConstructorUsedError;
   String? get frequency => throw _privateConstructorUsedError;
   set frequency(String? value) => throw _privateConstructorUsedError;
+  Duration? get duration => throw _privateConstructorUsedError;
+  set duration(Duration? value) => throw _privateConstructorUsedError;
   int? get numberOfTimes => throw _privateConstructorUsedError;
   set numberOfTimes(int? value) => throw _privateConstructorUsedError;
   List<int>? get daysOfWeek => throw _privateConstructorUsedError;
@@ -72,6 +74,7 @@ abstract class $HabitCopyWith<$Res> {
       DateTime? startDate,
       DateTime? endDate,
       String? frequency,
+      Duration? duration,
       int? numberOfTimes,
       List<int>? daysOfWeek,
       DateTime? createdAt,
@@ -103,6 +106,7 @@ class _$HabitCopyWithImpl<$Res, $Val extends Habit>
     Object? startDate = freezed,
     Object? endDate = freezed,
     Object? frequency = freezed,
+    Object? duration = freezed,
     Object? numberOfTimes = freezed,
     Object? daysOfWeek = freezed,
     Object? createdAt = freezed,
@@ -143,6 +147,10 @@ class _$HabitCopyWithImpl<$Res, $Val extends Habit>
           ? _value.frequency
           : frequency // ignore: cast_nullable_to_non_nullable
               as String?,
+      duration: freezed == duration
+          ? _value.duration
+          : duration // ignore: cast_nullable_to_non_nullable
+              as Duration?,
       numberOfTimes: freezed == numberOfTimes
           ? _value.numberOfTimes
           : numberOfTimes // ignore: cast_nullable_to_non_nullable
@@ -187,6 +195,7 @@ abstract class _$$HabitImplCopyWith<$Res> implements $HabitCopyWith<$Res> {
       DateTime? startDate,
       DateTime? endDate,
       String? frequency,
+      Duration? duration,
       int? numberOfTimes,
       List<int>? daysOfWeek,
       DateTime? createdAt,
@@ -216,6 +225,7 @@ class __$$HabitImplCopyWithImpl<$Res>
     Object? startDate = freezed,
     Object? endDate = freezed,
     Object? frequency = freezed,
+    Object? duration = freezed,
     Object? numberOfTimes = freezed,
     Object? daysOfWeek = freezed,
     Object? createdAt = freezed,
@@ -256,6 +266,10 @@ class __$$HabitImplCopyWithImpl<$Res>
           ? _value.frequency
           : frequency // ignore: cast_nullable_to_non_nullable
               as String?,
+      duration: freezed == duration
+          ? _value.duration
+          : duration // ignore: cast_nullable_to_non_nullable
+              as Duration?,
       numberOfTimes: freezed == numberOfTimes
           ? _value.numberOfTimes
           : numberOfTimes // ignore: cast_nullable_to_non_nullable
@@ -296,6 +310,7 @@ class _$HabitImpl extends _Habit {
       this.startDate,
       this.endDate,
       this.frequency,
+      this.duration,
       this.numberOfTimes,
       this.daysOfWeek,
       this.createdAt,
@@ -324,6 +339,8 @@ class _$HabitImpl extends _Habit {
   @override
   String? frequency;
   @override
+  Duration? duration;
+  @override
   int? numberOfTimes;
   @override
   List<int>? daysOfWeek;
@@ -338,7 +355,7 @@ class _$HabitImpl extends _Habit {
 
   @override
   String toString() {
-    return 'Habit(id: $id, userId: $userId, name: $name, emoji: $emoji, citation: $citation, startDate: $startDate, endDate: $endDate, frequency: $frequency, numberOfTimes: $numberOfTimes, daysOfWeek: $daysOfWeek, createdAt: $createdAt, updatedAt: $updatedAt, reminders: $reminders, entries: $entries)';
+    return 'Habit(id: $id, userId: $userId, name: $name, emoji: $emoji, citation: $citation, startDate: $startDate, endDate: $endDate, frequency: $frequency, duration: $duration, numberOfTimes: $numberOfTimes, daysOfWeek: $daysOfWeek, createdAt: $createdAt, updatedAt: $updatedAt, reminders: $reminders, entries: $entries)';
   }
 
   /// Create a copy of Habit
@@ -367,6 +384,7 @@ abstract class _Habit extends Habit {
       DateTime? startDate,
       DateTime? endDate,
       String? frequency,
+      Duration? duration,
       int? numberOfTimes,
       List<int>? daysOfWeek,
       DateTime? createdAt,
@@ -401,6 +419,9 @@ abstract class _Habit extends Habit {
   @override
   String? get frequency;
   set frequency(String? value);
+  @override
+  Duration? get duration;
+  set duration(Duration? value);
   @override
   int? get numberOfTimes;
   set numberOfTimes(int? value);

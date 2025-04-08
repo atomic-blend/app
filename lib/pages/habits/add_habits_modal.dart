@@ -30,7 +30,7 @@ class _AddHabitModalState extends State<AddHabitModal> {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _emojiController = TextEditingController();
   final TextEditingController _citationController = TextEditingController();
-  final TextEditingController _durationController = TextEditingController();
+
   final ALLOWED_FREQUENCIES = [
     'daily',
     'weekly',
@@ -44,6 +44,7 @@ class _AddHabitModalState extends State<AddHabitModal> {
   List<int>? _daysOfWeek = [];
   bool _showEmojiPicker = false;
   List<String>? _reminders = [];
+  Duration? _duration;
 
   @override
   void initState() {
@@ -57,6 +58,7 @@ class _AddHabitModalState extends State<AddHabitModal> {
       _numberOfTimes = widget.habit!.numberOfTimes;
       _daysOfWeek = widget.habit!.daysOfWeek;
       _reminders = widget.habit!.reminders;
+      _duration = widget.habit!.duration;
       //TODO: add duration
     } else {
       _startDate = DateTime.now();
@@ -64,6 +66,7 @@ class _AddHabitModalState extends State<AddHabitModal> {
       _numberOfTimes = 0;
       _daysOfWeek = [];
       _reminders = [];
+      _duration = const Duration(minutes: 5);
     }
     super.initState();
   }
@@ -158,15 +161,19 @@ class _AddHabitModalState extends State<AddHabitModal> {
                           width: getSize(context).width * 0.6,
                           height: getSize(context).height * 0.25,
                           child: CupertinoTimerPicker(
+                              initialTimerDuration:
+                                  _duration ?? const Duration(),
                               mode: CupertinoTimerPickerMode.hm,
                               onTimerDurationChanged: (newDuration) {
                                 setState(() {
-                                  _durationController.text =
-                                      "${newDuration.inHours != 0 ? "${newDuration.inHours}:" : ""}${newDuration.inMinutes.remainder(60)} ${context.t.time_units.long.minute(n: newDuration.inMinutes.remainder(60))}";
+                                  _duration = newDuration;
                                 });
                               })),
                       child: AppTextFormField(
-                        controller: _durationController,
+                        controller: TextEditingController(
+                          text:
+                              "${_duration?.inHours != 0 ? "${_duration?.inHours}:" : ""}${_duration?.inMinutes.remainder(60)} ${context.t.time_units.long.minute(n: _duration?.inMinutes.remainder(60) ?? 0)}",
+                        ),
                         disabled: true,
                         backgroundColor:
                             getTheme(context).surfaceContainerHighest,
@@ -569,8 +576,11 @@ class _AddHabitModalState extends State<AddHabitModal> {
       numberOfTimes: _numberOfTimes,
       daysOfWeek: _daysOfWeek,
       reminders: _reminders,
+      duration: _duration,
     );
 
-    context.read<HabitBloc>().add(CreateHabit(habit));
+    print(habit);
+
+    // context.read<HabitBloc>().add(CreateHabit(habit));
   }
 }
