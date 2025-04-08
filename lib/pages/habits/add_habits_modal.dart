@@ -81,11 +81,11 @@ class _AddHabitModalState extends State<AddHabitModal> {
   @override
   Widget build(BuildContext context) {
     return BlocListener<HabitBloc, HabitState>(
-      listener: (BuildContext context, HabitState state) { 
+      listener: (BuildContext context, HabitState state) {
         if (state is HabitCreated) {
           Navigator.pop(context);
         }
-       },
+      },
       child: Container(
         height: getSize(context).height * 0.88,
         padding: EdgeInsets.symmetric(
@@ -154,8 +154,8 @@ class _AddHabitModalState extends State<AddHabitModal> {
                           onEmojiSelected: _onEmojiSelected,
                           textEditingController: _emojiController,
                           config: Config(
-                              locale:
-                                  AppLocaleUtils.findDeviceLocale().flutterLocale,
+                              locale: AppLocaleUtils.findDeviceLocale()
+                                  .flutterLocale,
                               emojiViewConfig: const EmojiViewConfig(
                                 emojiSizeMax: 32.0,
                                 verticalSpacing: 0,
@@ -186,21 +186,23 @@ class _AddHabitModalState extends State<AddHabitModal> {
                                 buttonIconColor: Colors.white,
                               ),
                               searchViewConfig: SearchViewConfig(
-                                hintText: context.t.habits.add.search_emoji_hint,
+                                hintText:
+                                    context.t.habits.add.search_emoji_hint,
                               )),
                         ),
                       ),
                     SizedBox(
-                      height: $constants.insets.sm,
+                      height: $constants.insets.md,
                     ),
                     AppTextFormField(
                       controller: _citationController,
                       labelText: context.t.habits.add.citation,
                       hintText: context.t.habits.add.citation_hint,
-                      labelDescription: context.t.habits.add.citation_description,
+                      labelDescription:
+                          context.t.habits.add.citation_description,
                     ),
                     SizedBox(
-                      height: $constants.insets.sm,
+                      height: $constants.insets.md,
                     ),
                     Row(
                       children: [
@@ -219,8 +221,8 @@ class _AddHabitModalState extends State<AddHabitModal> {
                           width: $constants.insets.xs,
                         ),
                         DatePickerButton(
-                          title: context
-                              .t.habits.add.when_would_you_like_the_habit_to_end,
+                          title: context.t.habits.add
+                              .when_would_you_like_the_habit_to_end,
                           label: context.t.habits.add.end_date,
                           date: _endDate,
                           onDateChanged: (value) {
@@ -230,6 +232,9 @@ class _AddHabitModalState extends State<AddHabitModal> {
                           },
                         )
                       ],
+                    ),
+                    SizedBox(
+                      height: $constants.insets.md,
                     ),
                     // frequency switch
                     Column(
@@ -250,8 +255,8 @@ class _AddHabitModalState extends State<AddHabitModal> {
                           height: 30,
                           child: AnimatedToggleSwitch<String?>.rolling(
                             current: _frequency,
-                            indicatorSize:
-                                Size.fromWidth(getSize(context).width * 0.4 / 2),
+                            indicatorSize: Size.fromWidth(
+                                getSize(context).width * 0.4 / 2),
                             values: ALLOWED_FREQUENCIES,
                             iconBuilder: (value, foreground) {
                               return AutoSizeText(
@@ -282,7 +287,7 @@ class _AddHabitModalState extends State<AddHabitModal> {
                     ),
                     // numberOfTimes int selector
                     SizedBox(
-                      height: $constants.insets.sm,
+                      height: $constants.insets.md,
                     ),
                     Padding(
                       padding: EdgeInsets.only(left: $constants.insets.xs),
@@ -307,7 +312,8 @@ class _AddHabitModalState extends State<AddHabitModal> {
                       height: $constants.insets.xxs,
                     ),
                     ClipRRect(
-                      borderRadius: BorderRadius.circular($constants.corners.md),
+                      borderRadius:
+                          BorderRadius.circular($constants.corners.md),
                       child: InputQty(
                         maxVal: 100,
                         initVal: _numberOfTimes!,
@@ -316,11 +322,13 @@ class _AddHabitModalState extends State<AddHabitModal> {
                         decoration: QtyDecorationProps(
                           fillColor: getTheme(context).surfaceContainerHigh,
                           plusBtn: Padding(
-                            padding: EdgeInsets.only(right: $constants.insets.xs),
+                            padding:
+                                EdgeInsets.only(right: $constants.insets.xs),
                             child: const Icon(CupertinoIcons.add),
                           ),
                           minusBtn: Padding(
-                            padding: EdgeInsets.only(left: $constants.insets.xs),
+                            padding:
+                                EdgeInsets.only(left: $constants.insets.xs),
                             child: const Icon(CupertinoIcons.minus),
                           ),
                           isBordered: false,
@@ -333,7 +341,9 @@ class _AddHabitModalState extends State<AddHabitModal> {
                         },
                       ),
                     ),
-      
+                    SizedBox(
+                      height: $constants.insets.sm,
+                    ),
                     // daysOfWeek selector for the habit if it's daily
                     if (_frequency == "daily") ...[
                       SizedBox(
@@ -392,7 +402,7 @@ class _AddHabitModalState extends State<AddHabitModal> {
                           }),
                     ],
                     SizedBox(
-                      height: $constants.insets.sm,
+                      height: $constants.insets.md,
                     ),
                     // reminders selector (list of times)
                     Padding(
@@ -424,8 +434,8 @@ class _AddHabitModalState extends State<AddHabitModal> {
                             child: Container(
                               decoration: BoxDecoration(
                                 color: getTheme(context).surfaceContainerHigh,
-                                borderRadius:
-                                    BorderRadius.circular($constants.corners.md),
+                                borderRadius: BorderRadius.circular(
+                                    $constants.corners.md),
                               ),
                               padding: EdgeInsets.symmetric(
                                   horizontal: $constants.insets.xs,
@@ -459,6 +469,9 @@ class _AddHabitModalState extends State<AddHabitModal> {
                         ],
                       ),
                     ),
+                    SizedBox(
+                      height: $constants.insets.md,
+                    ),
                     Center(
                       child: PrimaryButtonSquare(
                         height: getSize(context).height * 0.04,
@@ -474,8 +487,8 @@ class _AddHabitModalState extends State<AddHabitModal> {
                                       .when_would_you_like_to_be_reminded,
                                   onDateChanged: (value) {
                                     setState(() {
-                                      _reminders
-                                          ?.add("${value.hour}:${value.minute}");
+                                      _reminders?.add(
+                                          "${value.hour}:${value.minute}");
                                     });
                                   }));
                         },
