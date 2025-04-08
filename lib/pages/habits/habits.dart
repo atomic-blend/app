@@ -8,9 +8,11 @@ import 'package:app/pages/habits/habit_heatmap.dart';
 import 'package:app/utils/constants.dart';
 import 'package:app/utils/shortcuts.dart';
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_heatmap_calendar/flutter_heatmap_calendar.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:lottie/lottie.dart';
 
 class Habits extends StatefulWidget {
@@ -97,67 +99,103 @@ class _HabitsState extends State<Habits> {
         child: ListView.builder(
           itemCount: habits.length,
           itemBuilder: (context, index) {
-            return GestureDetector(
-              onTap: () {
-                showModalBottomSheet(
-                    context: context,
-                    isScrollControlled: true,
-                    builder: (context) => ViewOrEditHabitModal(
-                          habit: habits[index],
-                        ));
-              },
-              child: Padding(
-                padding: EdgeInsets.only(bottom: $constants.insets.xs),
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: getTheme(context).surfaceContainer,
-                    borderRadius: BorderRadius.circular($constants.corners.sm),
-                  ),
-                  padding: EdgeInsets.all($constants.insets.sm),
-                  child: Row(
+            return Padding(
+              padding: EdgeInsets.only(bottom: $constants.insets.xs),
+              child: Slidable(
+                key: ValueKey(habits[index].id),
+                endActionPane: ActionPane(
+                    motion: const ScrollMotion(),
+                    extentRatio: 0.25,
                     children: [
-                      Container(
-                        width: 50,
-                        height: 50,
-                        decoration: BoxDecoration(
-                          color: getTheme(context).surface,
-                          borderRadius:
-                              BorderRadius.circular($constants.corners.full),
-                        ),
-                        child: Center(
-                          child: AutoSizeText(
-                            habits[index].emoji != null &&
-                                    habits[index].emoji != ""
-                                ? habits[index].emoji!
-                                : "📋",
-                            maxLines: 1,
-                            style:
-                                getTextTheme(context).headlineLarge!.copyWith(
-                                      color: getTheme(context).onPrimary,
-                                    ),
-                          ),
-                        ),
-                      ),
                       SizedBox(
-                        width: $constants.insets.sm,
+                        width: $constants.insets.xs,
                       ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Text(
-                            habits[index].name!,
-                            style: getTextTheme(context).titleSmall!.copyWith(
-                                  fontWeight: FontWeight.bold,
-                                ),
+                      GestureDetector(
+                        onTap: () {
+                          showModalBottomSheet(
+                              context: context,
+                              isScrollControlled: true,
+                              builder: (context) => ViewOrEditHabitModal(
+                                    habit: habits[index],
+                                    isEdit: true,
+                                  ));
+                        },
+                        child: Container(
+                          height: double.infinity,
+                          width: getSize(context).width * 0.2,
+                          decoration: BoxDecoration(
+                            color: getTheme(context).surfaceContainer,
+                            borderRadius:
+                                BorderRadius.circular($constants.corners.sm),
                           ),
-                          Text(
-                            "${habits[index].duration != null ? "${habits[index].duration!.inMinutes} ${context.t.time_units.long.minute(n: habits[index].duration!.inMinutes)}, " : ""}${context.t.habits.add.frequency[habits[index].frequency!]}, ${context.t.habits.times_a_day(n: habits[index].numberOfTimes ?? 0, nb: habits[index].numberOfTimes ?? 0)}",
-                            style: getTextTheme(context).bodyMedium,
+                          child: const Icon(
+                            CupertinoIcons.pencil,
+                            size: 30,
                           ),
-                        ],
+                        ),
                       ),
-                    ],
+                    ]),
+                child: GestureDetector(
+                  onTap: () {
+                    showModalBottomSheet(
+                        context: context,
+                        isScrollControlled: true,
+                        builder: (context) => ViewOrEditHabitModal(
+                              habit: habits[index],
+                            ));
+                  },
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: getTheme(context).surfaceContainer,
+                      borderRadius:
+                          BorderRadius.circular($constants.corners.sm),
+                    ),
+                    padding: EdgeInsets.all($constants.insets.sm),
+                    child: Row(
+                      children: [
+                        Container(
+                          width: 50,
+                          height: 50,
+                          decoration: BoxDecoration(
+                            color: getTheme(context).surface,
+                            borderRadius:
+                                BorderRadius.circular($constants.corners.full),
+                          ),
+                          child: Center(
+                            child: AutoSizeText(
+                              habits[index].emoji != null &&
+                                      habits[index].emoji != ""
+                                  ? habits[index].emoji!
+                                  : "📋",
+                              maxLines: 1,
+                              style:
+                                  getTextTheme(context).headlineLarge!.copyWith(
+                                        color: getTheme(context).onPrimary,
+                                      ),
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          width: $constants.insets.sm,
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text(
+                              habits[index].name!,
+                              style: getTextTheme(context).titleSmall!.copyWith(
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                            ),
+                            Text(
+                              "${habits[index].duration != null ? "${habits[index].duration!.inMinutes} ${context.t.time_units.long.minute(n: habits[index].duration!.inMinutes)}, " : ""}${context.t.habits.add.frequency[habits[index].frequency!]}, ${context.t.habits.times_a_day(n: habits[index].numberOfTimes ?? 0, nb: habits[index].numberOfTimes ?? 0)}",
+                              style: getTextTheme(context).bodyMedium,
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),

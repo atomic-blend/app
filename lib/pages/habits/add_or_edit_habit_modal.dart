@@ -5,7 +5,8 @@ import 'package:flutter/material.dart';
 
 class ViewOrEditHabitModal extends StatefulWidget {
   final Habit? habit;
-  const ViewOrEditHabitModal({super.key, this.habit});
+  final bool? isEdit;
+  const ViewOrEditHabitModal({super.key, this.habit, this.isEdit});
 
   @override
   State<ViewOrEditHabitModal> createState() => _ViewOrEditHabitModalState();
@@ -16,9 +17,7 @@ class _ViewOrEditHabitModalState extends State<ViewOrEditHabitModal> {
 
   @override
   void initState() {
-    if (widget.habit != null) {
-      _isEdit = true;
-    }
+    _isEdit = widget.isEdit ?? false;
     super.initState();
   }
 

@@ -59,7 +59,7 @@ dependencies:
   jiffy: ^6.3.2
   flutter_popup: ^3.3.0
   toastification: ^2.3.0
-  flutter_slidable: ^3.1.2
+  flutter_slidable: ^4.0.0
   rename_app: ^1.6.1
   flutter_native_splash: ^2.4.4
   lottie: ^3.3.1
