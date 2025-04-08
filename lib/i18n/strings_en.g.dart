@@ -198,6 +198,7 @@ class TranslationsHabitsEn {
 		one: '${nb} time a day',
 		other: '${nb} times a day',
 	);
+	late final TranslationsHabitsHabitDetailEn habit_detail = TranslationsHabitsHabitDetailEn._(_root);
 }
 
 // Path: under_construction
@@ -896,12 +897,12 @@ class TranslationsHabitsAddEn {
 	String get citation => 'Citation';
 	String get citation_description => 'Add a citation to your habit, this will help you remember why you are doing it and motivate you.';
 	String get citation_hint => '“Water is the only drink for a wise man.” — Henry David Thoreau';
-	String get start_date => 'Start date*';
+	String get start_date => 'Start date';
 	String get end_date => 'End date';
 	String get when_would_you_like_the_habit_to_start => 'When would you like the habit to start?';
 	String get when_would_you_like_the_habit_to_end => 'When would you like the habit to end?';
 	String get no_date_selected => 'No date selected';
-	String get frequency_label => 'Frequency*';
+	String get frequency_label => 'Frequency';
 	Map<String, String> get frequency => {
 		'daily': 'Daily',
 		'weekly': 'Weekly',
@@ -919,6 +920,17 @@ class TranslationsHabitsAddEn {
 	String get duration_label => 'Duration';
 	String get duration_description => 'How long do you want to do this habit?';
 	String get duration_hint => '5 minutes';
+}
+
+// Path: habits.habit_detail
+class TranslationsHabitsHabitDetailEn {
+	TranslationsHabitsHabitDetailEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	String get no_citation => 'No citation';
+	String get no_end_date => 'No end date';
 }
 
 // Path: time_units.short
@@ -1105,12 +1117,12 @@ extension on Translations {
 			case 'habits.add.citation': return 'Citation';
 			case 'habits.add.citation_description': return 'Add a citation to your habit, this will help you remember why you are doing it and motivate you.';
 			case 'habits.add.citation_hint': return '“Water is the only drink for a wise man.” — Henry David Thoreau';
-			case 'habits.add.start_date': return 'Start date*';
+			case 'habits.add.start_date': return 'Start date';
 			case 'habits.add.end_date': return 'End date';
 			case 'habits.add.when_would_you_like_the_habit_to_start': return 'When would you like the habit to start?';
 			case 'habits.add.when_would_you_like_the_habit_to_end': return 'When would you like the habit to end?';
 			case 'habits.add.no_date_selected': return 'No date selected';
-			case 'habits.add.frequency_label': return 'Frequency*';
+			case 'habits.add.frequency_label': return 'Frequency';
 			case 'habits.add.frequency.daily': return 'Daily';
 			case 'habits.add.frequency.weekly': return 'Weekly';
 			case 'habits.add.frequency.monthly': return 'Monthly';
@@ -1133,6 +1145,8 @@ extension on Translations {
 				one: '${nb} time a day',
 				other: '${nb} times a day',
 			);
+			case 'habits.habit_detail.no_citation': return 'No citation';
+			case 'habits.habit_detail.no_end_date': return 'No end date';
 			case 'under_construction.title': return 'We\'re working on it!';
 			case 'under_construction.description': return 'This feature is not yet available, but we\'re working hard to bring it to you soon.\n\nStay tuned!';
 			case 'more.title': return 'More';

@@ -19,7 +19,8 @@ import 'package:input_quantity/input_quantity.dart';
 
 class AddHabitModal extends StatefulWidget {
   final Habit? habit;
-  const AddHabitModal({super.key, this.habit});
+  final VoidCallback? onEditEnd;
+  const AddHabitModal({super.key, this.habit, this.onEditEnd});
 
   @override
   State<AddHabitModal> createState() => _AddHabitModalState();
@@ -95,7 +96,7 @@ class _AddHabitModalState extends State<AddHabitModal> {
       child: Container(
         height: getSize(context).height * 0.88,
         padding: EdgeInsets.symmetric(
-            horizontal: $constants.insets.sm, vertical: $constants.insets.xs),
+            horizontal: $constants.insets.md, vertical: $constants.insets.sm),
         child: SingleChildScrollView(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -105,24 +106,62 @@ class _AddHabitModalState extends State<AddHabitModal> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Row(
-                      children: [
-                        IconButton(
-                            onPressed: () {
-                              Navigator.pop(context);
-                            },
-                            icon: const Icon(CupertinoIcons.arrow_left))
-                      ],
-                    ),
                     SizedBox(
                       height: $constants.insets.xxs,
                     ),
-                    AutoSizeText(
-                      maxLines: 1,
-                      context.t.habits.add.title,
-                      style: getTextTheme(context).headlineLarge!.copyWith(
-                            fontWeight: FontWeight.bold,
+                    Row(
+                      children: [
+                        Expanded(
+                          child: AutoSizeText(
+                            maxLines: 1,
+                            context.t.habits.add.title,
+                            style:
+                                getTextTheme(context).headlineLarge!.copyWith(
+                                      fontWeight: FontWeight.bold,
+                                    ),
                           ),
+                        ),
+                        SizedBox(
+                          width: $constants.insets.sm,
+                        ),
+                        if (widget.onEditEnd != null)
+                          GestureDetector(
+                            onTap: () {
+                              widget.onEditEnd?.call();
+                            },
+                            child: Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(
+                                    $constants.corners.full),
+                              ),
+                              padding: EdgeInsets.all($constants.insets.xs),
+                              child: const Icon(
+                                CupertinoIcons.return_icon,
+                                size: 20,
+                              ),
+                            ),
+                          ),
+                        SizedBox(
+                          width: $constants.insets.xs,
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.pop(context);
+                          },
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: getTheme(context).surfaceContainerHighest,
+                              borderRadius: BorderRadius.circular(
+                                  $constants.corners.full),
+                            ),
+                            padding: EdgeInsets.all($constants.insets.xs),
+                            child: const Icon(
+                              CupertinoIcons.xmark,
+                              size: 20,
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                     SizedBox(
                       height: $constants.insets.md,
@@ -550,11 +589,7 @@ class _AddHabitModalState extends State<AddHabitModal> {
                     if (!_formKey.currentState!.validate()) {
                       return;
                     }
-                    if (widget.habit == null) {
-                      _createHabit(context);
-                    } else {
-                      // update habit
-                    }
+                    _createOrEditHabit(context);
                   },
                 ),
               )
@@ -565,7 +600,7 @@ class _AddHabitModalState extends State<AddHabitModal> {
     );
   }
 
-  _createHabit(BuildContext context) {
+  _createOrEditHabit(BuildContext context) {
     final habit = Habit(
       name: _nameController.text,
       emoji: _emojiController.text,
@@ -579,8 +614,13 @@ class _AddHabitModalState extends State<AddHabitModal> {
       duration: _duration,
     );
 
-    print(habit);
-
-    // context.read<HabitBloc>().add(CreateHabit(habit));
+    if (widget.habit == null) {
+      context.read<HabitBloc>().add(CreateHabit(habit));
+    } else {
+      context
+          .read<HabitBloc>()
+          .add(UpdateHabit(habit.copyWith(id: widget.habit!.id)));
+      widget.onEditEnd?.call();
+    }
   }
 }

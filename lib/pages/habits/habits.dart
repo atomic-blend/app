@@ -2,6 +2,9 @@ import 'package:animated_toggle_switch/animated_toggle_switch.dart';
 import 'package:app/blocs/habit/habit.bloc.dart';
 import 'package:app/entities/habit/habit.entity.dart';
 import 'package:app/i18n/strings.g.dart';
+import 'package:app/pages/habits/add_or_edit_habit_modal.dart';
+import 'package:app/pages/habits/habit_detail.dart';
+import 'package:app/pages/habits/habit_heatmap.dart';
 import 'package:app/utils/constants.dart';
 import 'package:app/utils/shortcuts.dart';
 import 'package:auto_size_text/auto_size_text.dart';
@@ -94,57 +97,68 @@ class _HabitsState extends State<Habits> {
         child: ListView.builder(
           itemCount: habits.length,
           itemBuilder: (context, index) {
-            return Padding(
-              padding: EdgeInsets.only(bottom: $constants.insets.xs),
-              child: Container(
-                decoration: BoxDecoration(
-                  color: getTheme(context).surfaceContainer,
-                  borderRadius: BorderRadius.circular($constants.corners.sm),
-                ),
-                padding: EdgeInsets.all($constants.insets.sm),
-                child: Row(
-                  children: [
-                    Container(
-                      width: 50,
-                      height: 50,
-                      decoration: BoxDecoration(
-                        color: getTheme(context).surface,
-                        borderRadius:
-                            BorderRadius.circular($constants.corners.full),
-                      ),
-                      child: Center(
-                        child: AutoSizeText(
-                          habits[index].emoji != null &&
-                                  habits[index].emoji != ""
-                              ? habits[index].emoji!
-                              : "📋",
-                          maxLines: 1,
-                          style: getTextTheme(context).headlineLarge!.copyWith(
-                                color: getTheme(context).onPrimary,
-                              ),
+            return GestureDetector(
+              onTap: () {
+                showModalBottomSheet(
+                    context: context,
+                    isScrollControlled: true,
+                    builder: (context) => ViewOrEditHabitModal(
+                          habit: habits[index],
+                        ));
+              },
+              child: Padding(
+                padding: EdgeInsets.only(bottom: $constants.insets.xs),
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: getTheme(context).surfaceContainer,
+                    borderRadius: BorderRadius.circular($constants.corners.sm),
+                  ),
+                  padding: EdgeInsets.all($constants.insets.sm),
+                  child: Row(
+                    children: [
+                      Container(
+                        width: 50,
+                        height: 50,
+                        decoration: BoxDecoration(
+                          color: getTheme(context).surface,
+                          borderRadius:
+                              BorderRadius.circular($constants.corners.full),
+                        ),
+                        child: Center(
+                          child: AutoSizeText(
+                            habits[index].emoji != null &&
+                                    habits[index].emoji != ""
+                                ? habits[index].emoji!
+                                : "📋",
+                            maxLines: 1,
+                            style:
+                                getTextTheme(context).headlineLarge!.copyWith(
+                                      color: getTheme(context).onPrimary,
+                                    ),
+                          ),
                         ),
                       ),
-                    ),
-                    SizedBox(
-                      width: $constants.insets.sm,
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Text(
-                          habits[index].name!,
-                          style: getTextTheme(context).titleSmall!.copyWith(
-                                fontWeight: FontWeight.bold,
-                              ),
-                        ),
-                        Text(
-                          "${habits[index].duration != null ? "${habits[index].duration!.inMinutes} ${context.t.time_units.long.minute(n: habits[index].duration!.inMinutes)}, " : ""}${context.t.habits.add.frequency[habits[index].frequency!]}, ${context.t.habits.times_a_day(n: habits[index].numberOfTimes ?? 0, nb: habits[index].numberOfTimes ?? 0)}",
-                          style: getTextTheme(context).bodyMedium,
-                        ),
-                      ],
-                    ),
-                  ],
+                      SizedBox(
+                        width: $constants.insets.sm,
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(
+                            habits[index].name!,
+                            style: getTextTheme(context).titleSmall!.copyWith(
+                                  fontWeight: FontWeight.bold,
+                                ),
+                          ),
+                          Text(
+                            "${habits[index].duration != null ? "${habits[index].duration!.inMinutes} ${context.t.time_units.long.minute(n: habits[index].duration!.inMinutes)}, " : ""}${context.t.habits.add.frequency[habits[index].frequency!]}, ${context.t.habits.times_a_day(n: habits[index].numberOfTimes ?? 0, nb: habits[index].numberOfTimes ?? 0)}",
+                            style: getTextTheme(context).bodyMedium,
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
             );
@@ -163,71 +177,9 @@ class _HabitsState extends State<Habits> {
             itemCount: habits.length,
             itemBuilder: (context, index) {
               final habit = habits[index];
-              return Container(
-                decoration: BoxDecoration(
-                  color: getTheme(context).surfaceContainer,
-                  borderRadius: BorderRadius.circular($constants.corners.sm),
-                ),
-                padding: EdgeInsets.all($constants.insets.sm),
-                margin: EdgeInsets.only(bottom: $constants.insets.sm),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        Container(
-                          width: 40,
-                          height: 40,
-                          decoration: BoxDecoration(
-                            color: getTheme(context).surface,
-                            borderRadius:
-                                BorderRadius.circular($constants.corners.full),
-                          ),
-                          child: Center(
-                            child: Text(
-                              habit.emoji ?? "📋",
-                              style: const TextStyle(fontSize: 20),
-                            ),
-                          ),
-                        ),
-                        SizedBox(width: $constants.insets.xs),
-                        Expanded(
-                          child: Text(
-                            habit.name ?? context.t.habits.add.title,
-                            style: getTextTheme(context).titleMedium!.copyWith(
-                                  fontWeight: FontWeight.bold,
-                                ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    HeatMap(
-                      scrollable: true,
-                      endDate: DateTime.now(),
-                      defaultColor: Colors.white,
-                      showColorTip: false,
-                      colorMode: ColorMode.opacity,
-                      datasets: _generateHeatMapData(habit),
-                      colorsets: {
-                        1: getTheme(context).primary,
-                      },
-                      onClick: (value) {},
-                    )
-                  ],
-                ),
-              );
+              return HabitHeatmap(habit: habit);
             }),
       ),
     );
-  }
-
-  _generateHeatMapData(Habit habit) {
-    final data = <DateTime, int>{};
-    for (var entry in habit.entries ?? []) {
-      final date = entry.entryDate;
-      data[date] ??= 0;
-      data[date] = data[date]! + 1;
-    }
-    return data;
   }
 }

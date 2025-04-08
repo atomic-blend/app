@@ -195,6 +195,7 @@ class _TranslationsHabitsFr implements TranslationsHabitsEn {
 		one: '${nb} fois par jour',
 		other: '${nb} fois par jour',
 	);
+	@override late final _TranslationsHabitsHabitDetailFr habit_detail = _TranslationsHabitsHabitDetailFr._(_root);
 }
 
 // Path: under_construction
@@ -890,12 +891,12 @@ class _TranslationsHabitsAddFr implements TranslationsHabitsAddEn {
 	@override String get citation => 'Citation';
 	@override String get citation_description => 'Ajoutez une citation à votre habitude, cela vous aidera à vous souvenir de la raison pour laquelle vous la suivez et vous motivera.';
 	@override String get citation_hint => '“L\'eau est la seule boisson d\'un homme sage.” - Henry David Thoreau';
-	@override String get start_date => 'Date de début*';
+	@override String get start_date => 'Date de début';
 	@override String get end_date => 'Date de fin';
 	@override String get when_would_you_like_the_habit_to_start => 'Quand aimeriez-vous que l\'habitude commence ?';
 	@override String get when_would_you_like_the_habit_to_end => 'Quand aimeriez-vous que l\'habitude se termine ?';
 	@override String get no_date_selected => 'Pas de date sélectionnée';
-	@override String get frequency_label => 'Fréquence*';
+	@override String get frequency_label => 'Fréquence';
 	@override Map<String, String> get frequency => {
 		'daily': 'Journalier',
 		'weekly': 'Hebdomadaire',
@@ -913,6 +914,17 @@ class _TranslationsHabitsAddFr implements TranslationsHabitsAddEn {
 	@override String get duration_label => 'Durée';
 	@override String get duration_description => 'Combien de temps dure cette habitude ?';
 	@override String get duration_hint => '5 minutes';
+}
+
+// Path: habits.habit_detail
+class _TranslationsHabitsHabitDetailFr implements TranslationsHabitsHabitDetailEn {
+	_TranslationsHabitsHabitDetailFr._(this._root);
+
+	final TranslationsFr _root; // ignore: unused_field
+
+	// Translations
+	@override String get no_citation => 'Pas de citation';
+	@override String get no_end_date => 'Pas de date de fin';
 }
 
 // Path: time_units.short
@@ -1099,12 +1111,12 @@ extension on TranslationsFr {
 			case 'habits.add.citation': return 'Citation';
 			case 'habits.add.citation_description': return 'Ajoutez une citation à votre habitude, cela vous aidera à vous souvenir de la raison pour laquelle vous la suivez et vous motivera.';
 			case 'habits.add.citation_hint': return '“L\'eau est la seule boisson d\'un homme sage.” - Henry David Thoreau';
-			case 'habits.add.start_date': return 'Date de début*';
+			case 'habits.add.start_date': return 'Date de début';
 			case 'habits.add.end_date': return 'Date de fin';
 			case 'habits.add.when_would_you_like_the_habit_to_start': return 'Quand aimeriez-vous que l\'habitude commence ?';
 			case 'habits.add.when_would_you_like_the_habit_to_end': return 'Quand aimeriez-vous que l\'habitude se termine ?';
 			case 'habits.add.no_date_selected': return 'Pas de date sélectionnée';
-			case 'habits.add.frequency_label': return 'Fréquence*';
+			case 'habits.add.frequency_label': return 'Fréquence';
 			case 'habits.add.frequency.daily': return 'Journalier';
 			case 'habits.add.frequency.weekly': return 'Hebdomadaire';
 			case 'habits.add.frequency.monthly': return 'Mensuel';
@@ -1127,6 +1139,8 @@ extension on TranslationsFr {
 				one: '${nb} fois par jour',
 				other: '${nb} fois par jour',
 			);
+			case 'habits.habit_detail.no_citation': return 'Pas de citation';
+			case 'habits.habit_detail.no_end_date': return 'Pas de date de fin';
 			case 'under_construction.title': return 'On travaille dessus !';
 			case 'under_construction.description': return 'Cette fonctionnalité est en cours de développement.\n\nRevenez bientôt pour découvrir les dernières mises à jour !';
 			case 'more.title': return 'Plus';
