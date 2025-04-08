@@ -42,6 +42,8 @@ mixin _$Habit {
   set numberOfTimes(int? value) => throw _privateConstructorUsedError;
   List<int>? get daysOfWeek => throw _privateConstructorUsedError;
   set daysOfWeek(List<int>? value) => throw _privateConstructorUsedError;
+  List<DateTime>? get daysOfMonth => throw _privateConstructorUsedError;
+  set daysOfMonth(List<DateTime>? value) => throw _privateConstructorUsedError;
   DateTime? get createdAt => throw _privateConstructorUsedError;
   set createdAt(DateTime? value) => throw _privateConstructorUsedError;
   DateTime? get updatedAt => throw _privateConstructorUsedError;
@@ -77,6 +79,7 @@ abstract class $HabitCopyWith<$Res> {
       Duration? duration,
       int? numberOfTimes,
       List<int>? daysOfWeek,
+      List<DateTime>? daysOfMonth,
       DateTime? createdAt,
       DateTime? updatedAt,
       List<String>? reminders,
@@ -109,6 +112,7 @@ class _$HabitCopyWithImpl<$Res, $Val extends Habit>
     Object? duration = freezed,
     Object? numberOfTimes = freezed,
     Object? daysOfWeek = freezed,
+    Object? daysOfMonth = freezed,
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
     Object? reminders = freezed,
@@ -159,6 +163,10 @@ class _$HabitCopyWithImpl<$Res, $Val extends Habit>
           ? _value.daysOfWeek
           : daysOfWeek // ignore: cast_nullable_to_non_nullable
               as List<int>?,
+      daysOfMonth: freezed == daysOfMonth
+          ? _value.daysOfMonth
+          : daysOfMonth // ignore: cast_nullable_to_non_nullable
+              as List<DateTime>?,
       createdAt: freezed == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -198,6 +206,7 @@ abstract class _$$HabitImplCopyWith<$Res> implements $HabitCopyWith<$Res> {
       Duration? duration,
       int? numberOfTimes,
       List<int>? daysOfWeek,
+      List<DateTime>? daysOfMonth,
       DateTime? createdAt,
       DateTime? updatedAt,
       List<String>? reminders,
@@ -228,6 +237,7 @@ class __$$HabitImplCopyWithImpl<$Res>
     Object? duration = freezed,
     Object? numberOfTimes = freezed,
     Object? daysOfWeek = freezed,
+    Object? daysOfMonth = freezed,
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
     Object? reminders = freezed,
@@ -278,6 +288,10 @@ class __$$HabitImplCopyWithImpl<$Res>
           ? _value.daysOfWeek
           : daysOfWeek // ignore: cast_nullable_to_non_nullable
               as List<int>?,
+      daysOfMonth: freezed == daysOfMonth
+          ? _value.daysOfMonth
+          : daysOfMonth // ignore: cast_nullable_to_non_nullable
+              as List<DateTime>?,
       createdAt: freezed == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -313,6 +327,7 @@ class _$HabitImpl extends _Habit {
       this.duration,
       this.numberOfTimes,
       this.daysOfWeek,
+      this.daysOfMonth,
       this.createdAt,
       this.updatedAt,
       this.reminders,
@@ -345,6 +360,8 @@ class _$HabitImpl extends _Habit {
   @override
   List<int>? daysOfWeek;
   @override
+  List<DateTime>? daysOfMonth;
+  @override
   DateTime? createdAt;
   @override
   DateTime? updatedAt;
@@ -355,7 +372,7 @@ class _$HabitImpl extends _Habit {
 
   @override
   String toString() {
-    return 'Habit(id: $id, userId: $userId, name: $name, emoji: $emoji, citation: $citation, startDate: $startDate, endDate: $endDate, frequency: $frequency, duration: $duration, numberOfTimes: $numberOfTimes, daysOfWeek: $daysOfWeek, createdAt: $createdAt, updatedAt: $updatedAt, reminders: $reminders, entries: $entries)';
+    return 'Habit(id: $id, userId: $userId, name: $name, emoji: $emoji, citation: $citation, startDate: $startDate, endDate: $endDate, frequency: $frequency, duration: $duration, numberOfTimes: $numberOfTimes, daysOfWeek: $daysOfWeek, daysOfMonth: $daysOfMonth, createdAt: $createdAt, updatedAt: $updatedAt, reminders: $reminders, entries: $entries)';
   }
 
   /// Create a copy of Habit
@@ -387,6 +404,7 @@ abstract class _Habit extends Habit {
       Duration? duration,
       int? numberOfTimes,
       List<int>? daysOfWeek,
+      List<DateTime>? daysOfMonth,
       DateTime? createdAt,
       DateTime? updatedAt,
       List<String>? reminders,
@@ -428,6 +446,9 @@ abstract class _Habit extends Habit {
   @override
   List<int>? get daysOfWeek;
   set daysOfWeek(List<int>? value);
+  @override
+  List<DateTime>? get daysOfMonth;
+  set daysOfMonth(List<DateTime>? value);
   @override
   DateTime? get createdAt;
   set createdAt(DateTime? value);

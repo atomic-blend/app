@@ -916,6 +916,9 @@ class _TranslationsHabitsAddFr implements TranslationsHabitsAddEn {
 	@override String get days_of_week_mismatch => 'Vous devez sélectionner autant de jours que le nombre de fois que vous avez défini';
 	@override String get every_number_day_title => 'Interval de répétition';
 	@override String get every_number_day_description => 'Combien de jours entre chaque répétition ?';
+	@override String get days_of_month_title => 'Jours du mois';
+	@override String get days_of_month_description => 'Quels jours du mois souhaitez-vous suivre cette habitude ?';
+	@override String get select_days => 'Sélectionner les jours';
 }
 
 // Path: habits.habit_detail
@@ -1141,6 +1144,9 @@ extension on TranslationsFr {
 			case 'habits.add.days_of_week_mismatch': return 'Vous devez sélectionner autant de jours que le nombre de fois que vous avez défini';
 			case 'habits.add.every_number_day_title': return 'Interval de répétition';
 			case 'habits.add.every_number_day_description': return 'Combien de jours entre chaque répétition ?';
+			case 'habits.add.days_of_month_title': return 'Jours du mois';
+			case 'habits.add.days_of_month_description': return 'Quels jours du mois souhaitez-vous suivre cette habitude ?';
+			case 'habits.add.select_days': return 'Sélectionner les jours';
 			case 'habits.list': return 'Habitudes';
 			case 'habits.overview': return 'Vue d\'ensemble';
 			case 'habits.times_a_day': return ({required Object nb}) => '${nb} fois par jour';

@@ -22,6 +22,7 @@ class Habit with _$Habit {
     Duration? duration,
     int? numberOfTimes,
     List<int>? daysOfWeek,
+    List<DateTime>? daysOfMonth,
     DateTime? createdAt,
     DateTime? updatedAt,
     List<String>? reminders,
@@ -42,6 +43,7 @@ class Habit with _$Habit {
     'duration',
     'numberOfTimes',
     'daysOfWeek',
+    'daysOfMonth',
     'emoji',
   ];
 
@@ -60,6 +62,7 @@ class Habit with _$Habit {
       'frequency': frequency,
       'numberOfTimes': numberOfTimes,
       'daysOfWeek': daysOfWeek,
+      'daysOfMonth': daysOfMonth?.map((e) => e.toUtc().toIso8601String()).toList(),
       'reminders': reminders,
     });
   }

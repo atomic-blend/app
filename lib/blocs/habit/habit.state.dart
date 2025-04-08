@@ -27,6 +27,14 @@ class HabitCreated extends HabitState {
   const HabitCreated(List<Habit> super.habits);
 }
 
+class HabitDeleted extends HabitState {
+  const HabitDeleted(List<Habit> super.habits);
+}
+
+class HabitUpdated extends HabitState {
+  const HabitUpdated(List<Habit> super.habits);
+}
+
 class HabitLoadingError extends HabitState {
   const HabitLoadingError(List<Habit> super.habits, this.message);
   final String message;

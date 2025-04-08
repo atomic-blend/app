@@ -3,6 +3,7 @@ import 'package:app/blocs/habit/habit.bloc.dart';
 import 'package:app/components/buttons/date_picker_button.dart';
 import 'package:app/components/buttons/primary_button_square.dart';
 import 'package:app/components/dialogs/date_picker_dialog.dart';
+import 'package:app/components/dialogs/multiple_date_picker_dialog.dart';
 import 'package:app/components/forms/app_text_form_field.dart';
 import 'package:app/entities/habit/habit.entity.dart';
 import 'package:app/i18n/strings.g.dart';
@@ -16,6 +17,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_multi_select_items/flutter_multi_select_items.dart';
 import 'package:flutter_popup/flutter_popup.dart';
 import 'package:input_quantity/input_quantity.dart';
+import 'package:jiffy/jiffy.dart';
 
 class AddHabitModal extends StatefulWidget {
   final Habit? habit;
@@ -44,6 +46,8 @@ class _AddHabitModalState extends State<AddHabitModal> {
   int? _numberOfTimes;
   List<int>? _daysOfWeek = [];
   String? _daysOfWeekError;
+  List<DateTime>? _daysOfMonth = [];
+  List<String>? _daysOfMonthError;
   bool _showEmojiPicker = false;
   List<String>? _reminders = [];
   Duration? _duration;
@@ -59,6 +63,7 @@ class _AddHabitModalState extends State<AddHabitModal> {
       _frequency = widget.habit!.frequency;
       _numberOfTimes = widget.habit!.numberOfTimes;
       _daysOfWeek = widget.habit!.daysOfWeek;
+      _daysOfMonth = widget.habit!.daysOfMonth;
       _reminders = widget.habit!.reminders;
       _duration = widget.habit!.duration;
     } else {
@@ -66,6 +71,7 @@ class _AddHabitModalState extends State<AddHabitModal> {
       _frequency = ALLOWED_FREQUENCIES[0];
       _numberOfTimes = 1;
       _daysOfWeek = [];
+      _daysOfMonth = [];
       _reminders = [];
       _duration = const Duration(minutes: 5);
     }
@@ -552,6 +558,93 @@ class _AddHabitModalState extends State<AddHabitModal> {
                           },
                         ),
                       ),
+                      SizedBox(
+                        height: $constants.insets.md,
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(left: $constants.insets.xs),
+                        child: AutoSizeText(
+                          maxLines: 1,
+                          context.t.habits.add.days_of_month_title,
+                          style: getTextTheme(context).bodyMedium!.copyWith(
+                                fontWeight: FontWeight.bold,
+                              ),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(left: $constants.insets.xs),
+                        child: AutoSizeText(
+                          context.t.habits.add.days_of_month_description,
+                          style: getTextTheme(context)
+                              .bodySmall!
+                              .copyWith(color: Colors.grey[700]),
+                        ),
+                      ),
+                      if (_daysOfMonth != null && _daysOfMonth!.isNotEmpty)
+                        Row(
+                          children: _daysOfMonth!
+                              .map((e) => Stack(
+                                    children: [
+                                      Padding(
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: $constants.insets.sm,
+                                            vertical: $constants.insets.sm),
+                                        child: Text(Jiffy.parseFromDateTime(e)
+                                            .format(pattern: "EEEE dd")),
+                                      ),
+                                      Positioned(
+                                          right: 0,
+                                          top: 3,
+                                          child: GestureDetector(
+                                            onTap: () {
+                                              setState(() {
+                                                _daysOfMonth?.remove(e);
+                                              });
+                                            },
+                                            child: Container(
+                                              decoration: BoxDecoration(
+                                                color: getTheme(context).error,
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                                        $constants.corners.md),
+                                              ),
+                                              padding: const EdgeInsets.all(2),
+                                              child: Icon(
+                                                CupertinoIcons.xmark,
+                                                color:
+                                                    getTheme(context).surface,
+                                                size: 12,
+                                              ),
+                                            ),
+                                          )),
+                                    ],
+                                  ))
+                              .toList(),
+                        ),
+                      SizedBox(
+                        height: $constants.insets.sm,
+                      ),
+                      Center(
+                        child: PrimaryButtonSquare(
+                          height: getSize(context).height * 0.04,
+                          width: getSize(context).width * 0.5,
+                          text: context.t.habits.add.select_days,
+                          outlined: true,
+                          onPressed: () {
+                            showDialog(
+                                context: context,
+                                builder: (context) =>
+                                    ABMultupleDatePickerDialog(
+                                      title: context.t.habits.add.select_days,
+                                      onDateChanged: (value) {
+                                        setState(() {
+                                          _daysOfMonth = value;
+                                        });
+                                      },
+                                    ));
+                          },
+                        ),
+                      )
                     ],
                     SizedBox(
                       height: $constants.insets.xs,
@@ -690,6 +783,7 @@ class _AddHabitModalState extends State<AddHabitModal> {
       frequency: _frequency,
       numberOfTimes: _numberOfTimes,
       daysOfWeek: _daysOfWeek,
+      daysOfMonth: _daysOfMonth,
       reminders: _reminders,
       duration: _duration,
     );

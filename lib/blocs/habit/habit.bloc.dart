@@ -69,6 +69,7 @@ class HabitBloc extends HydratedBloc<HabitEvent, HabitState> {
     final prevState = state;
     try {
       await _habitService.update(event.habit);
+      emit(HabitUpdated(prevState.habits ?? []));
       add(const LoadHabits());
     } catch (e) {
       emit(HabitLoadingError(prevState.habits ?? [], e.toString()));
@@ -80,6 +81,7 @@ class HabitBloc extends HydratedBloc<HabitEvent, HabitState> {
     final prevState = state;
     try {
       await _habitService.delete(event.habit.id!);
+      emit(HabitDeleted(prevState.habits ?? []));
       add(const LoadHabits());
     } catch (e) {
       emit(HabitLoadingError(prevState.habits ?? [], e.toString()));

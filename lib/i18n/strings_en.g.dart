@@ -922,6 +922,9 @@ class TranslationsHabitsAddEn {
 	String get days_of_week_mismatch => 'You must select the same number of days as the number of times';
 	String get every_number_day_title => 'Repeatition in days';
 	String get every_number_day_description => 'How many days do you want to wait before repeating this habit?';
+	String get days_of_month_title => 'Days of the month';
+	String get days_of_month_description => 'On which days of the month do you want to do this habit?';
+	String get select_days => 'Select days';
 }
 
 // Path: habits.habit_detail
@@ -1147,6 +1150,9 @@ extension on Translations {
 			case 'habits.add.days_of_week_mismatch': return 'You must select the same number of days as the number of times';
 			case 'habits.add.every_number_day_title': return 'Repeatition in days';
 			case 'habits.add.every_number_day_description': return 'How many days do you want to wait before repeating this habit?';
+			case 'habits.add.days_of_month_title': return 'Days of the month';
+			case 'habits.add.days_of_month_description': return 'On which days of the month do you want to do this habit?';
+			case 'habits.add.select_days': return 'Select days';
 			case 'habits.list': return 'Habits';
 			case 'habits.overview': return 'Overview';
 			case 'habits.times_a_day': return ({required Object nb}) => '${nb} times a day';

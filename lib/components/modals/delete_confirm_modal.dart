@@ -86,7 +86,7 @@ class _DeleteConfirmModalState extends State<DeleteConfirmModal> {
                   child: PrimaryButtonSquare(
                     onPressed: () async {
                       widget.onDelete?.call();
-                      Navigator.popUntil(context, (_) => true);
+                      Navigator.pop(context, true);
                     },
                     text: context.t.actions.delete,
                     backgroundColor: getTheme(context).error,

@@ -26,6 +26,9 @@ _$HabitImpl _$$HabitImplFromJson(Map<String, dynamic> json) => _$HabitImpl(
       daysOfWeek: (json['daysOfWeek'] as List<dynamic>?)
           ?.map((e) => (e as num).toInt())
           .toList(),
+      daysOfMonth: (json['daysOfMonth'] as List<dynamic>?)
+          ?.map((e) => DateTime.parse(e as String))
+          .toList(),
       createdAt: json['createdAt'] == null
           ? null
           : DateTime.parse(json['createdAt'] as String),
@@ -53,6 +56,8 @@ Map<String, dynamic> _$$HabitImplToJson(_$HabitImpl instance) =>
       'duration': instance.duration?.inMicroseconds,
       'numberOfTimes': instance.numberOfTimes,
       'daysOfWeek': instance.daysOfWeek,
+      'daysOfMonth':
+          instance.daysOfMonth?.map((e) => e.toIso8601String()).toList(),
       'createdAt': instance.createdAt?.toIso8601String(),
       'updatedAt': instance.updatedAt?.toIso8601String(),
       'reminders': instance.reminders,
