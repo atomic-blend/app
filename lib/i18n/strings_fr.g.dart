@@ -925,6 +925,9 @@ class _TranslationsHabitsHabitDetailFr implements TranslationsHabitsHabitDetailE
 	// Translations
 	@override String get no_citation => 'Pas de citation';
 	@override String get no_end_date => 'Pas de date de fin';
+	@override String get delete_habit => 'Supprimer l\'habitude';
+	@override String get delete_habit_description => 'Êtes-vous sûr de vouloir supprimer cette habitude ?';
+	@override String get delete_habit_warning => 'Cette action est irréversible et toutes les entrées associées à l\'habitude seront supprimées.';
 }
 
 // Path: time_units.short
@@ -1141,6 +1144,9 @@ extension on TranslationsFr {
 			);
 			case 'habits.habit_detail.no_citation': return 'Pas de citation';
 			case 'habits.habit_detail.no_end_date': return 'Pas de date de fin';
+			case 'habits.habit_detail.delete_habit': return 'Supprimer l\'habitude';
+			case 'habits.habit_detail.delete_habit_description': return 'Êtes-vous sûr de vouloir supprimer cette habitude ?';
+			case 'habits.habit_detail.delete_habit_warning': return 'Cette action est irréversible et toutes les entrées associées à l\'habitude seront supprimées.';
 			case 'under_construction.title': return 'On travaille dessus !';
 			case 'under_construction.description': return 'Cette fonctionnalité est en cours de développement.\n\nRevenez bientôt pour découvrir les dernières mises à jour !';
 			case 'more.title': return 'Plus';

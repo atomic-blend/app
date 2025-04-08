@@ -1,3 +1,5 @@
+import 'package:app/blocs/habit/habit.bloc.dart';
+import 'package:app/components/modals/delete_confirm_modal.dart';
 import 'package:app/entities/habit/habit.entity.dart';
 import 'package:app/i18n/strings.g.dart';
 import 'package:app/pages/habits/habit_heatmap.dart';
@@ -5,6 +7,8 @@ import 'package:app/utils/constants.dart';
 import 'package:app/utils/shortcuts.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:jiffy/jiffy.dart';
 
 class HabitDetail extends StatefulWidget {
@@ -259,6 +263,36 @@ class _HabitDetailState extends State<HabitDetail> {
             height: $constants.insets.xs,
           ),
           HabitHeatmap(habit: widget.habit, hideTitle: true),
+          const Spacer(),
+          Center(
+            child: TextButton(
+                onPressed: () {
+                  showDialog(
+                    context: context,
+                    builder: (context) => DeleteConfirmModal(
+                      title: context.t.habits.habit_detail.delete_habit,
+                      description: context
+                          .t.habits.habit_detail.delete_habit_description,
+                      warning:
+                          context.t.habits.habit_detail.delete_habit_warning,
+                      onDelete: () {
+                        if (!context.mounted) return;
+                        context.read<HabitBloc>().add(
+                              DeleteHabit(
+                                widget.habit,
+                              ),
+                            );
+                      },
+                    ),
+                  );
+                },
+                child: Text(
+                  context.t.habits.habit_detail.delete_habit,
+                  style: getTextTheme(context).bodyMedium!.copyWith(
+                      fontWeight: FontWeight.bold,
+                      color: getTheme(context).error),
+                )),
+          )
         ],
       ),
     );
