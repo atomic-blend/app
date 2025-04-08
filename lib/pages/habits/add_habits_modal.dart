@@ -43,6 +43,7 @@ class _AddHabitModalState extends State<AddHabitModal> {
   String? _frequency;
   int? _numberOfTimes;
   List<int>? _daysOfWeek = [];
+  String? _daysOfWeekError;
   bool _showEmojiPicker = false;
   List<String>? _reminders = [];
   Duration? _duration;
@@ -60,11 +61,10 @@ class _AddHabitModalState extends State<AddHabitModal> {
       _daysOfWeek = widget.habit!.daysOfWeek;
       _reminders = widget.habit!.reminders;
       _duration = widget.habit!.duration;
-      //TODO: add duration
     } else {
       _startDate = DateTime.now();
       _frequency = ALLOWED_FREQUENCIES[0];
-      _numberOfTimes = 0;
+      _numberOfTimes = 1;
       _daysOfWeek = [];
       _reminders = [];
       _duration = const Duration(minutes: 5);
@@ -361,72 +361,77 @@ class _AddHabitModalState extends State<AddHabitModal> {
                               setState(() {
                                 _frequency = value;
                               });
+                              _daysOfWeekError = null;
                             },
                           ),
                         ),
                       ],
                     ),
                     // numberOfTimes int selector
-                    SizedBox(
-                      height: $constants.insets.md,
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(left: $constants.insets.xs),
-                      child: AutoSizeText(
-                        maxLines: 1,
-                        context.t.habits.add.number_of_times_label,
-                        style: getTextTheme(context).bodyMedium!.copyWith(
-                              fontWeight: FontWeight.bold,
-                            ),
+                    if (_frequency == "daily" ||
+                        _frequency == "weekly" ||
+                        _frequency == "monthly") ...[
+                      SizedBox(
+                        height: $constants.insets.md,
                       ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(left: $constants.insets.xs),
-                      child: AutoSizeText(
-                        context.t.habits.add.number_of_times_description,
-                        style: getTextTheme(context)
-                            .bodySmall!
-                            .copyWith(color: Colors.grey[700]),
-                      ),
-                    ),
-                    SizedBox(
-                      height: $constants.insets.xxs,
-                    ),
-                    ClipRRect(
-                      borderRadius:
-                          BorderRadius.circular($constants.corners.md),
-                      child: InputQty(
-                        maxVal: 100,
-                        initVal: _numberOfTimes!,
-                        minVal: 0,
-                        steps: 1,
-                        decoration: QtyDecorationProps(
-                          fillColor: getTheme(context).surfaceContainerHigh,
-                          plusBtn: Padding(
-                            padding:
-                                EdgeInsets.only(right: $constants.insets.xs),
-                            child: const Icon(CupertinoIcons.add),
-                          ),
-                          minusBtn: Padding(
-                            padding:
-                                EdgeInsets.only(left: $constants.insets.xs),
-                            child: const Icon(CupertinoIcons.minus),
-                          ),
-                          isBordered: false,
-                          isDense: true,
+                      Padding(
+                        padding: EdgeInsets.only(left: $constants.insets.xs),
+                        child: AutoSizeText(
+                          maxLines: 1,
+                          context.t.habits.add.number_of_times_label,
+                          style: getTextTheme(context).bodyMedium!.copyWith(
+                                fontWeight: FontWeight.bold,
+                              ),
                         ),
-                        onQtyChanged: (val) {
-                          setState(() {
-                            _numberOfTimes = val.toInt();
-                          });
-                        },
                       ),
-                    ),
+                      Padding(
+                        padding: EdgeInsets.only(left: $constants.insets.xs),
+                        child: AutoSizeText(
+                          context.t.habits.add.number_of_times_description,
+                          style: getTextTheme(context)
+                              .bodySmall!
+                              .copyWith(color: Colors.grey[700]),
+                        ),
+                      ),
+                      SizedBox(
+                        height: $constants.insets.xxs,
+                      ),
+                      ClipRRect(
+                        borderRadius:
+                            BorderRadius.circular($constants.corners.md),
+                        child: InputQty(
+                          maxVal: 100,
+                          initVal: _numberOfTimes!,
+                          minVal: 0,
+                          steps: 1,
+                          decoration: QtyDecorationProps(
+                            fillColor: getTheme(context).surfaceContainerHigh,
+                            plusBtn: Padding(
+                              padding:
+                                  EdgeInsets.only(right: $constants.insets.xs),
+                              child: const Icon(CupertinoIcons.add),
+                            ),
+                            minusBtn: Padding(
+                              padding:
+                                  EdgeInsets.only(left: $constants.insets.xs),
+                              child: const Icon(CupertinoIcons.minus),
+                            ),
+                            isBordered: false,
+                            isDense: true,
+                          ),
+                          onQtyChanged: (val) {
+                            setState(() {
+                              _numberOfTimes = val.toInt();
+                            });
+                          },
+                        ),
+                      ),
+                    ],
                     SizedBox(
                       height: $constants.insets.sm,
                     ),
                     // daysOfWeek selector for the habit if it's daily
-                    if (_frequency == "daily") ...[
+                    if (_frequency == "daily" || _frequency == "weekly") ...[
                       SizedBox(
                         height: $constants.insets.sm,
                       ),
@@ -481,9 +486,75 @@ class _AddHabitModalState extends State<AddHabitModal> {
                               _daysOfWeek = allSelectedItems;
                             });
                           }),
+                      if (_daysOfWeekError != null)
+                        Padding(
+                          padding: EdgeInsets.only(left: $constants.insets.xs),
+                          child: Text(_daysOfWeekError!,
+                              style: getTextTheme(context).bodySmall!.copyWith(
+                                    color: Colors.red,
+                                    fontWeight: FontWeight.bold,
+                                  )),
+                        ),
+                    ],
+                    if (_frequency == "repeatition") ...[
+                      SizedBox(
+                        height: $constants.insets.xs,
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(left: $constants.insets.xs),
+                        child: AutoSizeText(
+                          maxLines: 1,
+                          context.t.habits.add.every_number_day_title,
+                          style: getTextTheme(context).bodyMedium!.copyWith(
+                                fontWeight: FontWeight.bold,
+                              ),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(left: $constants.insets.xs),
+                        child: AutoSizeText(
+                          context.t.habits.add.every_number_day_description,
+                          style: getTextTheme(context)
+                              .bodySmall!
+                              .copyWith(color: Colors.grey[700]),
+                        ),
+                      ),
+                      SizedBox(
+                        height: $constants.insets.xxs,
+                      ),
+                      ClipRRect(
+                        borderRadius:
+                            BorderRadius.circular($constants.corners.md),
+                        child: InputQty(
+                          maxVal: 100,
+                          initVal: _numberOfTimes!,
+                          minVal: 0,
+                          steps: 1,
+                          decoration: QtyDecorationProps(
+                            fillColor: getTheme(context).surfaceContainerHigh,
+                            plusBtn: Padding(
+                              padding:
+                                  EdgeInsets.only(right: $constants.insets.xs),
+                              child: const Icon(CupertinoIcons.add),
+                            ),
+                            minusBtn: Padding(
+                              padding:
+                                  EdgeInsets.only(left: $constants.insets.xs),
+                              child: const Icon(CupertinoIcons.minus),
+                            ),
+                            isBordered: false,
+                            isDense: true,
+                          ),
+                          onQtyChanged: (val) {
+                            setState(() {
+                              _numberOfTimes = val.toInt();
+                            });
+                          },
+                        ),
+                      ),
                     ],
                     SizedBox(
-                      height: $constants.insets.md,
+                      height: $constants.insets.xs,
                     ),
                     // reminders selector (list of times)
                     Padding(
@@ -587,6 +658,15 @@ class _AddHabitModalState extends State<AddHabitModal> {
                   text: context.t.actions.save,
                   onPressed: () {
                     if (!_formKey.currentState!.validate()) {
+                      return;
+                    }
+
+                    if ((_frequency == "weekly") &&
+                        _daysOfWeek?.length != _numberOfTimes) {
+                      setState(() {
+                        _daysOfWeekError =
+                            context.t.habits.add.days_of_week_mismatch;
+                      });
                       return;
                     }
                     _createOrEditHabit(context);

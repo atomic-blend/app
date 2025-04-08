@@ -190,11 +190,9 @@ class _TranslationsHabitsFr implements TranslationsHabitsEn {
 	@override late final _TranslationsHabitsAddFr add = _TranslationsHabitsAddFr._(_root);
 	@override String get list => 'Habitudes';
 	@override String get overview => 'Vue d\'ensemble';
-	@override String times_a_day({required num n, required Object nb}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('fr'))(n,
-		zero: '${nb} fois par jour',
-		one: '${nb} fois par jour',
-		other: '${nb} fois par jour',
-	);
+	@override String times_a_day({required Object nb}) => '${nb} fois par jour';
+	@override String times_a_week({required Object nb}) => '${nb} fois par semaine';
+	@override String times_a_month({required Object nb}) => '${nb} fois par mois';
 	@override late final _TranslationsHabitsHabitDetailFr habit_detail = _TranslationsHabitsHabitDetailFr._(_root);
 }
 
@@ -914,6 +912,10 @@ class _TranslationsHabitsAddFr implements TranslationsHabitsAddEn {
 	@override String get duration_label => 'Durée';
 	@override String get duration_description => 'Combien de temps dure cette habitude ?';
 	@override String get duration_hint => '5 minutes';
+	@override String get name_too_short => 'Le nom de l\'habitude doit contenir au moins 4 caractères';
+	@override String get days_of_week_mismatch => 'Vous devez sélectionner autant de jours que le nombre de fois que vous avez défini';
+	@override String get every_number_day_title => 'Interval de répétition';
+	@override String get every_number_day_description => 'Combien de jours entre chaque répétition ?';
 }
 
 // Path: habits.habit_detail
@@ -1135,13 +1137,15 @@ extension on TranslationsFr {
 			case 'habits.add.duration_label': return 'Durée';
 			case 'habits.add.duration_description': return 'Combien de temps dure cette habitude ?';
 			case 'habits.add.duration_hint': return '5 minutes';
+			case 'habits.add.name_too_short': return 'Le nom de l\'habitude doit contenir au moins 4 caractères';
+			case 'habits.add.days_of_week_mismatch': return 'Vous devez sélectionner autant de jours que le nombre de fois que vous avez défini';
+			case 'habits.add.every_number_day_title': return 'Interval de répétition';
+			case 'habits.add.every_number_day_description': return 'Combien de jours entre chaque répétition ?';
 			case 'habits.list': return 'Habitudes';
 			case 'habits.overview': return 'Vue d\'ensemble';
-			case 'habits.times_a_day': return ({required num n, required Object nb}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('fr'))(n,
-				zero: '${nb} fois par jour',
-				one: '${nb} fois par jour',
-				other: '${nb} fois par jour',
-			);
+			case 'habits.times_a_day': return ({required Object nb}) => '${nb} fois par jour';
+			case 'habits.times_a_week': return ({required Object nb}) => '${nb} fois par semaine';
+			case 'habits.times_a_month': return ({required Object nb}) => '${nb} fois par mois';
 			case 'habits.habit_detail.no_citation': return 'Pas de citation';
 			case 'habits.habit_detail.no_end_date': return 'Pas de date de fin';
 			case 'habits.habit_detail.delete_habit': return 'Supprimer l\'habitude';

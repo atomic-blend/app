@@ -189,7 +189,7 @@ class _HabitsState extends State<Habits> {
                                   ),
                             ),
                             Text(
-                              "${habits[index].duration != null ? "${habits[index].duration!.inMinutes} ${context.t.time_units.long.minute(n: habits[index].duration!.inMinutes)}, " : ""}${context.t.habits.add.frequency[habits[index].frequency!]}, ${context.t.habits.times_a_day(n: habits[index].numberOfTimes ?? 0, nb: habits[index].numberOfTimes ?? 0)}",
+                              habits[index].getHabitShortDescription(context),
                               style: getTextTheme(context).bodyMedium,
                             ),
                           ],

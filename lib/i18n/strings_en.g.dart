@@ -193,11 +193,9 @@ class TranslationsHabitsEn {
 	late final TranslationsHabitsAddEn add = TranslationsHabitsAddEn._(_root);
 	String get list => 'Habits';
 	String get overview => 'Overview';
-	String times_a_day({required num n, required Object nb}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n,
-		zero: '${nb} times a day',
-		one: '${nb} time a day',
-		other: '${nb} times a day',
-	);
+	String times_a_day({required Object nb}) => '${nb} times a day';
+	String times_a_week({required Object nb}) => '${nb} times a week';
+	String times_a_month({required Object nb}) => '${nb} times a month';
 	late final TranslationsHabitsHabitDetailEn habit_detail = TranslationsHabitsHabitDetailEn._(_root);
 }
 
@@ -920,6 +918,10 @@ class TranslationsHabitsAddEn {
 	String get duration_label => 'Duration';
 	String get duration_description => 'How long do you want to do this habit?';
 	String get duration_hint => '5 minutes';
+	String get name_too_short => 'The name of the habit should be at least 4 characters long';
+	String get days_of_week_mismatch => 'You must select the same number of days as the number of times';
+	String get every_number_day_title => 'Repeatition in days';
+	String get every_number_day_description => 'How many days do you want to wait before repeating this habit?';
 }
 
 // Path: habits.habit_detail
@@ -1141,13 +1143,15 @@ extension on Translations {
 			case 'habits.add.duration_label': return 'Duration';
 			case 'habits.add.duration_description': return 'How long do you want to do this habit?';
 			case 'habits.add.duration_hint': return '5 minutes';
+			case 'habits.add.name_too_short': return 'The name of the habit should be at least 4 characters long';
+			case 'habits.add.days_of_week_mismatch': return 'You must select the same number of days as the number of times';
+			case 'habits.add.every_number_day_title': return 'Repeatition in days';
+			case 'habits.add.every_number_day_description': return 'How many days do you want to wait before repeating this habit?';
 			case 'habits.list': return 'Habits';
 			case 'habits.overview': return 'Overview';
-			case 'habits.times_a_day': return ({required num n, required Object nb}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n,
-				zero: '${nb} times a day',
-				one: '${nb} time a day',
-				other: '${nb} times a day',
-			);
+			case 'habits.times_a_day': return ({required Object nb}) => '${nb} times a day';
+			case 'habits.times_a_week': return ({required Object nb}) => '${nb} times a week';
+			case 'habits.times_a_month': return ({required Object nb}) => '${nb} times a month';
 			case 'habits.habit_detail.no_citation': return 'No citation';
 			case 'habits.habit_detail.no_end_date': return 'No end date';
 			case 'habits.habit_detail.delete_habit': return 'Delete habit';

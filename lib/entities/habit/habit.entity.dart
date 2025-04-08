@@ -1,5 +1,7 @@
 import 'package:app/entities/habit/habit_entry/habit_entry.entity.dart';
+import 'package:app/i18n/strings.g.dart';
 import 'package:app/services/encryption.service.dart';
+import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'habit.entity.freezed.dart';
@@ -79,6 +81,17 @@ class Habit with _$Habit {
     habit.duration = Duration(milliseconds: data['duration'] ?? 0);
 
     return habit;
+  }
+
+  String getHabitShortDescription(BuildContext context) {
+    if (frequency == "daily") {
+      return "${duration != null ? "${duration!.inMinutes} ${context.t.time_units.long.minute(n: duration!.inMinutes)}, " : ""}${context.t.habits.add.frequency[frequency!]}, ${context.t.habits.times_a_day(nb: numberOfTimes ?? 0)}";
+    } else if (frequency == "weekly") {
+      return "${duration != null ? "${duration!.inMinutes} ${context.t.time_units.long.minute(n: duration!.inMinutes)}, " : ""}${context.t.habits.add.frequency[frequency!]}, ${context.t.habits.times_a_week(nb: numberOfTimes ?? 0)}";
+    } else if (frequency == "monthly") {
+      return "${duration != null ? "${duration!.inMinutes} ${context.t.time_units.long.minute(n: duration!.inMinutes)}, " : ""}${context.t.habits.add.frequency[frequency!]}, ${context.t.habits.times_a_month(nb: numberOfTimes ?? 0)}";
+    }
+    return "";
   }
 
   factory Habit.fromJson(Map<String, dynamic> json) => _$HabitFromJson(json);

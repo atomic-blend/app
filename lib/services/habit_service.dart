@@ -30,7 +30,7 @@ class HabitService {
 
   Future<bool> update(Habit habit) async {
     final result =
-        await globalApiClient.put('/habits/${habit.id}', data: habit);
+        await globalApiClient.put('/habits/${habit.id}', data: await habit.encrypt(encryptionService: encryptionService!));
     if (result.statusCode == 200) {
       return true;
     } else {
