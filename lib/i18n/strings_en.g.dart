@@ -951,6 +951,8 @@ class TranslationsHabitsHabitDetailEn {
 	String get delete_habit => 'Delete habit';
 	String get delete_habit_description => 'Are you sure you want to delete this habit?';
 	String get delete_habit_warning => 'This action cannot be undone and all the related entries will also be deleted.';
+	String get entries => 'Entries';
+	String get no_entries => 'No entries for now';
 }
 
 // Path: time_units.short
@@ -1177,6 +1179,8 @@ extension on Translations {
 			case 'habits.habit_detail.delete_habit': return 'Delete habit';
 			case 'habits.habit_detail.delete_habit_description': return 'Are you sure you want to delete this habit?';
 			case 'habits.habit_detail.delete_habit_warning': return 'This action cannot be undone and all the related entries will also be deleted.';
+			case 'habits.habit_detail.entries': return 'Entries';
+			case 'habits.habit_detail.no_entries': return 'No entries for now';
 			case 'under_construction.title': return 'We\'re working on it!';
 			case 'under_construction.description': return 'This feature is not yet available, but we\'re working hard to bring it to you soon.\n\nStay tuned!';
 			case 'more.title': return 'More';

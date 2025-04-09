@@ -271,6 +271,36 @@ class _HabitDetailState extends State<HabitDetail> {
               height: $constants.insets.xs,
             ),
             HabitHeatmap(habit: widget.habit, hideTitle: true),
+            SizedBox(
+              height: $constants.insets.xs,
+            ),
+            AutoSizeText(
+              context.t.habits.habit_detail.entries,
+              style: getTextTheme(context).titleMedium!.copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
+            ),
+            SizedBox(
+              height: $constants.insets.xs,
+            ),
+            Flexible(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: widget.habit.entries != null
+                    ? widget.habit.entries!
+                        .map((e) => ListTile(
+                              title: Text(
+                                Jiffy.parseFromDateTime(e.entryDate).yMMMd,
+                                style:
+                                    getTextTheme(context).bodyMedium!.copyWith(
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                              ),
+                            ))
+                        .toList()
+                    : [Text(context.t.habits.habit_detail.no_entries)],
+              ),
+            ),
             const Spacer(),
             Center(
               child: TextButton(
