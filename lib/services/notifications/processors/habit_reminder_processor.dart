@@ -23,13 +23,18 @@ class HabitReminderProcessor {
         EncryptionService(userSalt: userData!['keySet']['salt']);
 
     // prepare notification body
-    final title = await encryptionService?.decryptString(data: encryptedTitle);
+    String? title = await encryptionService?.decryptString(data: encryptedTitle);
+    final emoji = data['emoji'];
     final citation =
         await encryptionService?.decryptString(data: encryptedCitation);
 
     final body = citation != null && citation != ""
         ? citation
         : locale.translations.notifications.habit_due_now;
+
+        if (emoji != null && emoji != "") {
+          title = "$emoji $title";
+        }
 
     // setup notification client
     final localNotificationsPlugin = FlutterLocalNotificationsPlugin();
