@@ -58,6 +58,7 @@ class _HabitDetailState extends State<HabitDetail> {
                           fontWeight: FontWeight.bold,
                         ),
                   ),
+                  const Spacer(),
                   GestureDetector(
                     onTap: () {
                       widget.onEdit?.call();
