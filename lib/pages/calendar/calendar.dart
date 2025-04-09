@@ -11,6 +11,7 @@ import 'package:app/pages/calendar/device_event_detail.dart';
 import 'package:app/pages/settings/screens/app_settings.dart';
 import 'package:app/pages/tasks/task_detail.dart';
 import 'package:app/utils/constants.dart';
+import 'package:app/utils/exntensions/date_time_extension.dart';
 import 'package:app/utils/shortcuts.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:collection/collection.dart';
@@ -30,6 +31,7 @@ class Calendar extends StatefulWidget {
 }
 
 class _CalendarState extends State<Calendar> {
+  final calendarEndDate = DateTime.now().add(const Duration(days: 3650));
   @override
   void initState() {
     context.read<DeviceCalendarBloc>().add(
@@ -50,7 +52,8 @@ class _CalendarState extends State<Calendar> {
             builder: (context, taskState) {
           return SfCalendar(
             view: widget.view,
-            initialSelectedDate: DateTime.now(),
+            initialDisplayDate: DateTime.now(),
+            maxDate: calendarEndDate,
             backgroundColor: getTheme(context).surface,
             showTodayButton: true,
             todayHighlightColor: getTheme(context).primary,
@@ -222,55 +225,160 @@ class _CalendarState extends State<Calendar> {
     return CustomCalendarDataSource(appointments);
   }
 
-  CustomCalendarDataSource _getHabitDataSource(List<Habit>? habits) {
+  CustomCalendarDataSource _getHabitDataSource(List<Habit>? habits,
+      {int maxOccurrences = 100}) {
     final List<CustomAppointment> appointments = <CustomAppointment>[];
     for (Habit habit in habits ?? []) {
       switch (habit.frequency) {
         case "daily":
+        case "weekly":
           final now = DateTime.now();
-          final startTime = habit.startDate!;
-          // skip if the habit is not started yet
-          if (startTime.isAfter(now)) {
-            continue;
-          }
-          // skip if it's not the right day
-          if (habit.daysOfWeek?.contains(now.weekday) != true) {
-            continue;
-          }
+          final startTime = habit.startDate!.isBefore(now)
+              ? now
+              : habit.startDate!; // skip if the habit is not started yet
+          final endLimit = habit.endDate ?? calendarEndDate;
 
-          for (String reminder in habit.reminders ?? []) {
-            final endTime = DateTime(
-              now.year,
-              now.month,
-              now.day,
-              int.parse(reminder.split(":")[0]),
-              int.parse(reminder.split(":")[1]),
-            ).add(habit.duration ?? const Duration(minutes: 5));
-            appointments.add(
-              CustomAppointment(
-                startTime: DateTime(
-                  now.year,
-                  now.month,
-                  now.day,
+          var current = startTime;
+          int count = 0;
+
+          while (current.isBefore(endLimit) && count < maxOccurrences) {
+            bool shouldAdd = false;
+
+            if (habit.daysOfWeek != null &&
+                habit.daysOfWeek!.contains(current.weekday - 1)) {
+              shouldAdd = true;
+            }
+
+            if (shouldAdd) {
+              for (String reminder in habit.reminders ?? []) {
+                final startHabitTime = DateTime(
+                  current.year,
+                  current.month,
+                  current.day,
                   int.parse(reminder.split(":")[0]),
                   int.parse(reminder.split(":")[1]),
-                ),
-                endTime: endTime,
-                subject: habit.name!,
-                color: getTheme(context).primary.withValues(alpha: 0.2),
-                notes: habit.citation,
-                isAllDay: false,
-                itemType: CustomAppointmentType.habit,
-                itemId: habit.id ?? '',
-              ),
-            );
+                );
+                final endTime = startHabitTime
+                    .add(habit.duration ?? const Duration(minutes: 5));
+                appointments.add(
+                  CustomAppointment(
+                    startTime: startHabitTime,
+                    endTime: endTime,
+                    subject: habit.name!,
+                    color: getTheme(context).primary.withValues(alpha: 0.2),
+                    notes: habit.citation,
+                    isAllDay: false,
+                    itemType: CustomAppointmentType.habit,
+                    itemId: habit.id ?? '',
+                  ),
+                );
+              }
+              count++;
+            }
+            current = current.add(const Duration(days: 1));
           }
-          break;
-        case "weekly":
+
           break;
         case "monthly":
+          final now = DateTime.now();
+          final startTime = habit.startDate!.isBefore(now)
+              ? now
+              : habit.startDate!; // skip if the habit is not started yet
+          final endLimit = habit.endDate ?? calendarEndDate;
+
+          var current = startTime;
+          int count = 0;
+
+          while (current.isBefore(endLimit) && count < maxOccurrences) {
+            bool shouldAdd = false;
+
+            if (habit.daysOfMonth != null &&
+                habit.daysOfMonth!.contains(current.midnight())) {
+              shouldAdd = true;
+            }
+
+            if (shouldAdd) {
+              for (String reminder in habit.reminders ?? []) {
+                final startHabitTime = DateTime(
+                  current.year,
+                  current.month,
+                  current.day,
+                  int.parse(reminder.split(":")[0]),
+                  int.parse(reminder.split(":")[1]),
+                );
+                final endTime = startHabitTime
+                    .add(habit.duration ?? const Duration(minutes: 5));
+                appointments.add(
+                  CustomAppointment(
+                    startTime: startHabitTime,
+                    endTime: endTime,
+                    subject: habit.name!,
+                    color: getTheme(context).primary.withValues(alpha: 0.2),
+                    notes: habit.citation,
+                    isAllDay: false,
+                    itemType: CustomAppointmentType.habit,
+                    itemId: habit.id ?? '',
+                  ),
+                );
+              }
+              count++;
+            }
+            current = current.add(const Duration(days: 1));
+          }
           break;
         case "repeatition":
+          final now = DateTime.now();
+          final startTime = habit.startDate!.isBefore(now)
+              ? now
+              : habit.startDate!; // skip if the habit is not started yet
+          final endLimit = habit.endDate ?? calendarEndDate;
+
+          // get the last entry date of the habit or use start date
+          DateTime lastEntryDate = habit.entries?.isNotEmpty == true
+              ? habit.entries!.last.entryDate
+              : startTime;
+
+          var current = startTime;
+          int count = 0;
+
+          // loop through reminders with the same logic as daily
+          while (current.isBefore(endLimit) && count < maxOccurrences) {
+            bool shouldAdd = false;
+
+            if (current.difference(lastEntryDate).inDays ==
+                habit.numberOfTimes!) {
+              shouldAdd = true;
+            }
+
+            if (shouldAdd) {
+              for (String reminder in habit.reminders ?? []) {
+                final startHabitTime = DateTime(
+                  current.year,
+                  current.month,
+                  current.day,
+                  int.parse(reminder.split(":")[0]),
+                  int.parse(reminder.split(":")[1]),
+                );
+                final endTime = startHabitTime
+                    .add(habit.duration ?? const Duration(minutes: 5));
+                appointments.add(
+                  CustomAppointment(
+                    startTime: startHabitTime,
+                    endTime: endTime,
+                    subject: habit.name!,
+                    color: getTheme(context).primary.withValues(alpha: 0.2),
+                    notes: habit.citation,
+                    isAllDay: false,
+                    itemType: CustomAppointmentType.habit,
+                    itemId: habit.id ?? '',
+                  ),
+                );
+                lastEntryDate = current;
+              }
+              count++;
+            }
+            current = current.add(const Duration(days: 1));
+          }
           break;
         default:
           if (kDebugMode) {

@@ -62,7 +62,9 @@ class Habit with _$Habit {
       'frequency': frequency,
       'numberOfTimes': numberOfTimes,
       'daysOfWeek': daysOfWeek,
-      'daysOfMonth': daysOfMonth?.map((e) => e.toUtc().toIso8601String()).toList(),
+      'daysOfMonth': daysOfMonth
+          ?.map((e) => DateTime.utc(e.year, e.month, e.day).toIso8601String())
+          .toList(),
       'reminders': reminders,
     });
   }

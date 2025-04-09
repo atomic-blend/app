@@ -502,62 +502,7 @@ class _AddHabitModalState extends State<AddHabitModal> {
                                   )),
                         ),
                     ],
-                    if (_frequency == "repeatition") ...[
-                      SizedBox(
-                        height: $constants.insets.xs,
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(left: $constants.insets.xs),
-                        child: AutoSizeText(
-                          maxLines: 1,
-                          context.t.habits.add.every_number_day_title,
-                          style: getTextTheme(context).bodyMedium!.copyWith(
-                                fontWeight: FontWeight.bold,
-                              ),
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(left: $constants.insets.xs),
-                        child: AutoSizeText(
-                          context.t.habits.add.every_number_day_description,
-                          style: getTextTheme(context)
-                              .bodySmall!
-                              .copyWith(color: Colors.grey[700]),
-                        ),
-                      ),
-                      SizedBox(
-                        height: $constants.insets.xxs,
-                      ),
-                      ClipRRect(
-                        borderRadius:
-                            BorderRadius.circular($constants.corners.md),
-                        child: InputQty(
-                          maxVal: 100,
-                          initVal: _numberOfTimes!,
-                          minVal: 0,
-                          steps: 1,
-                          decoration: QtyDecorationProps(
-                            fillColor: getTheme(context).surfaceContainerHigh,
-                            plusBtn: Padding(
-                              padding:
-                                  EdgeInsets.only(right: $constants.insets.xs),
-                              child: const Icon(CupertinoIcons.add),
-                            ),
-                            minusBtn: Padding(
-                              padding:
-                                  EdgeInsets.only(left: $constants.insets.xs),
-                              child: const Icon(CupertinoIcons.minus),
-                            ),
-                            isBordered: false,
-                            isDense: true,
-                          ),
-                          onQtyChanged: (val) {
-                            setState(() {
-                              _numberOfTimes = val.toInt();
-                            });
-                          },
-                        ),
-                      ),
+                    if (_frequency == "monthly") ...[
                       SizedBox(
                         height: $constants.insets.md,
                       ),
@@ -621,7 +566,7 @@ class _AddHabitModalState extends State<AddHabitModal> {
                                   ))
                               .toList(),
                         ),
-                        if (_daysOfMonthError != null)
+                      if (_daysOfMonthError != null)
                         Padding(
                           padding: EdgeInsets.only(left: $constants.insets.xs),
                           child: Text(_daysOfMonthError!,
@@ -654,6 +599,60 @@ class _AddHabitModalState extends State<AddHabitModal> {
                           },
                         ),
                       )
+                    ],
+                    if (_frequency == "repeatition") ...[
+                      Padding(
+                        padding: EdgeInsets.only(left: $constants.insets.xs),
+                        child: AutoSizeText(
+                          maxLines: 1,
+                          context.t.habits.add.every_number_day_title,
+                          style: getTextTheme(context).bodyMedium!.copyWith(
+                                fontWeight: FontWeight.bold,
+                              ),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(left: $constants.insets.xs),
+                        child: AutoSizeText(
+                          context.t.habits.add.every_number_day_description,
+                          style: getTextTheme(context)
+                              .bodySmall!
+                              .copyWith(color: Colors.grey[700]),
+                        ),
+                      ),
+                      SizedBox(
+                        height: $constants.insets.xxs,
+                      ),
+                      ClipRRect(
+                        borderRadius:
+                            BorderRadius.circular($constants.corners.md),
+                        child: InputQty(
+                          maxVal: 100,
+                          initVal: _numberOfTimes!,
+                          minVal: 0,
+                          steps: 1,
+                          decoration: QtyDecorationProps(
+                            fillColor: getTheme(context).surfaceContainerHigh,
+                            plusBtn: Padding(
+                              padding:
+                                  EdgeInsets.only(right: $constants.insets.xs),
+                              child: const Icon(CupertinoIcons.add),
+                            ),
+                            minusBtn: Padding(
+                              padding:
+                                  EdgeInsets.only(left: $constants.insets.xs),
+                              child: const Icon(CupertinoIcons.minus),
+                            ),
+                            isBordered: false,
+                            isDense: true,
+                          ),
+                          onQtyChanged: (val) {
+                            setState(() {
+                              _numberOfTimes = val.toInt();
+                            });
+                          },
+                        ),
+                      ),
                     ],
                     SizedBox(
                       height: $constants.insets.xs,
@@ -772,7 +771,7 @@ class _AddHabitModalState extends State<AddHabitModal> {
                       return;
                     }
 
-                    if (_frequency == "repeatition" &&
+                    if (_frequency == "monthly" &&
                         _daysOfMonth?.length != _numberOfTimes) {
                       setState(() {
                         _daysOfMonthError =
