@@ -209,7 +209,7 @@ class _CalendarState extends State<Calendar> {
         appointments.add(
           CustomAppointment(
             startTime: event.start!.toLocal(),
-            endTime: event.end!.toLocal(),
+            endTime: event.allDay == true ? event.start!.toLocal() : event.end!.toLocal(),
             subject: event.title ?? "No title",
             color: calendar.calendar.color != null
                 ? Color(calendar.calendar.color!).withValues(alpha: 0.5)
@@ -334,9 +334,7 @@ class _CalendarState extends State<Calendar> {
           final endLimit = habit.endDate ?? calendarEndDate;
 
           // get the last entry date of the habit or use start date
-          DateTime lastEntryDate = habit.entries?.isNotEmpty == true
-              ? habit.entries!.last.entryDate
-              : startTime;
+          DateTime lastEntryDate = startTime;
 
           var current = startTime;
           int count = 0;
