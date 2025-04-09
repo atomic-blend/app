@@ -14,7 +14,7 @@ class HabitHeatmap extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: getTheme(context).surfaceContainer,
+        color: getTheme(context).surfaceContainerHigh,
         borderRadius: BorderRadius.circular($constants.corners.sm),
       ),
       padding: EdgeInsets.all($constants.insets.sm),

@@ -1,4 +1,5 @@
 import 'package:app/blocs/habit/habit.bloc.dart';
+import 'package:app/components/buttons/icon_text_card.dart';
 import 'package:app/components/modals/delete_confirm_modal.dart';
 import 'package:app/entities/habit/habit.entity.dart';
 import 'package:app/i18n/strings.g.dart';
@@ -30,279 +31,164 @@ class _HabitDetailState extends State<HabitDetail> {
           Navigator.popUntil(context, (_) => true);
         }
       },
-      child: BlocBuilder<HabitBloc, HabitState>(
-        builder: (context, habitState) {
-          final habit = habitState.habits?.firstWhere(
-            (element) => element.id == widget.habit.id,
-            orElse: () => widget.habit,
-          );
-          return Container(
-            height: getSize(context).height * 0.88,
-            padding: EdgeInsets.symmetric(
-                horizontal: $constants.insets.md, vertical: $constants.insets.sm),
-            child: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(
-                    height: $constants.insets.xxs,
-                  ),
-                  Row(
-                    children: [
-                      Text(
-                        habit?.emoji != null && habit!.emoji != ""
-                            ? habit!.emoji!
-                            : "📋",
-                        style: const TextStyle(fontSize: 30),
-                      ),
-                      SizedBox(
-                        width: $constants.insets.sm,
-                      ),
-                      AutoSizeText(
-                        maxLines: 1,
-                        habit?.name ?? "",
-                        style: getTextTheme(context).headlineLarge!.copyWith(
-                              fontWeight: FontWeight.bold,
-                            ),
-                      ),
-                      const Spacer(),
-                      GestureDetector(
-                        onTap: () {
-                          widget.onEdit?.call();
-                        },
-                        child: Container(
-                          padding: EdgeInsets.all($constants.insets.xs),
-                          child: const Icon(
-                            CupertinoIcons.pencil,
-                            size: 20,
+      child: BlocBuilder<HabitBloc, HabitState>(builder: (context, habitState) {
+        final habit = habitState.habits?.firstWhere(
+          (element) => element.id == widget.habit.id,
+          orElse: () => widget.habit,
+        );
+        return Container(
+          height: getSize(context).height * 0.88,
+          padding: EdgeInsets.symmetric(
+              horizontal: $constants.insets.md, vertical: $constants.insets.sm),
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(
+                  height: $constants.insets.xxs,
+                ),
+                Row(
+                  children: [
+                    Text(
+                      habit?.emoji != null && habit!.emoji != ""
+                          ? habit!.emoji!
+                          : "📋",
+                      style: const TextStyle(fontSize: 30),
+                    ),
+                    SizedBox(
+                      width: $constants.insets.sm,
+                    ),
+                    AutoSizeText(
+                      maxLines: 1,
+                      habit?.name ?? "",
+                      style: getTextTheme(context).headlineLarge!.copyWith(
+                            fontWeight: FontWeight.bold,
                           ),
+                    ),
+                    const Spacer(),
+                    GestureDetector(
+                      onTap: () {
+                        widget.onEdit?.call();
+                      },
+                      child: Container(
+                        padding: EdgeInsets.all($constants.insets.xs),
+                        child: Text(context.t.actions.edit),
+                      ),
+                    ),
+                    SizedBox(
+                      width: $constants.insets.xs,
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: getTheme(context).surfaceContainerHighest,
+                          borderRadius:
+                              BorderRadius.circular($constants.corners.full),
+                        ),
+                        padding: EdgeInsets.all($constants.insets.xs),
+                        child: const Icon(
+                          CupertinoIcons.xmark,
+                          size: 20,
                         ),
                       ),
-                      SizedBox(
-                        width: $constants.insets.xs,
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: $constants.insets.md,
+                ),
+                Text(
+                  context.t.calendar.event_detail.details,
+                  style: getTextTheme(context).titleMedium!.copyWith(
+                        fontWeight: FontWeight.bold,
                       ),
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.pop(context);
-                        },
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: getTheme(context).surfaceContainerHighest,
-                            borderRadius:
-                                BorderRadius.circular($constants.corners.full),
-                          ),
-                          padding: EdgeInsets.all($constants.insets.xs),
-                          child: const Icon(
-                            CupertinoIcons.xmark,
-                            size: 20,
-                          ),
-                        ),
+                ),
+                SizedBox(
+                  height: $constants.insets.xs,
+                ),
+                Row(
+                  spacing: $constants.insets.xs,
+                  children: [
+                    IconTextCard(
+                      title: context.t.habits.add.citation,
+                      value: habit?.citation != null && habit?.citation != ""
+                          ? habit!.citation!
+                          : context.t.habits.habit_detail.no_citation,
+                      icon: CupertinoIcons.quote_bubble,
+                    ),
+                    IconTextCard(
+                      title: context.t.habits.add.frequency_label,
+                      value: context.t.habits.add.frequency[habit!.frequency!]!,
+                      icon: CupertinoIcons.metronome,
+                    )
+                  ],
+                ),
+                SizedBox(
+                  height: $constants.insets.xs,
+                ),
+                Row(
+                  spacing: $constants.insets.xs,
+                  children: [
+                    IconTextCard(
+                      title: context.t.habits.add.start_date,
+                      value: Jiffy.parseFromDateTime(habit.startDate!).yMMMd,
+                      icon: CupertinoIcons.clock,
+                    ),
+                    IconTextCard(
+                      title: context.t.habits.add.end_date,
+                      value: habit.endDate != null
+                          ? Jiffy.parseFromDateTime(habit.endDate!).yMMMd
+                          : context.t.habits.habit_detail.no_end_date,
+                      icon: CupertinoIcons.clock_fill,
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: $constants.insets.md,
+                ),
+                Text(
+                  context.t.habits.overview,
+                  style: getTextTheme(context).titleMedium!.copyWith(
+                        fontWeight: FontWeight.bold,
                       ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: $constants.insets.md,
-                  ),
-                  Text(
-                    context.t.calendar.event_detail.details,
-                    style: getTextTheme(context).titleMedium!.copyWith(
-                          fontWeight: FontWeight.bold,
-                        ),
-                  ),
-                  SizedBox(
-                    height: $constants.insets.xs,
-                  ),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                const Icon(
-                                  CupertinoIcons.quote_bubble,
-                                  size: 30,
-                                ),
-                                SizedBox(
-                                  width: $constants.insets.xs,
-                                ),
-                                Text(
-                                  context.t.habits.add.citation,
-                                  style:
-                                      getTextTheme(context).bodyLarge!.copyWith(),
-                                )
-                              ],
-                            ),
-                            SizedBox(
-                              height: $constants.insets.sm,
-                            ),
-                            AutoSizeText(
-                              maxLines: 1,
-                              habit?.citation != null &&
-                                      habit?.citation != ""
-                                  ? habit!.citation!
-                                  : context.t.habits.habit_detail.no_citation,
-                              style: getTextTheme(context).bodyMedium!.copyWith(
-                                    color: getTheme(context).onSurfaceVariant,
-                                  ),
-                            ),
-                          ],
-                        ),
+                ),
+                SizedBox(
+                  height: $constants.insets.xs,
+                ),
+                SizedBox(
+                    height: getSize(context).height * 0.255,
+                    child: HabitHeatmap(habit: habit, hideTitle: true)),
+                SizedBox(
+                  height: $constants.insets.xs,
+                ),
+                AutoSizeText(
+                  context.t.habits.habit_detail.entries,
+                  style: getTextTheme(context).titleMedium!.copyWith(
+                        fontWeight: FontWeight.bold,
                       ),
-                      Expanded(
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                const Icon(
-                                  CupertinoIcons.metronome,
-                                  size: 30,
-                                ),
-                                SizedBox(
-                                  width: $constants.insets.xs,
-                                ),
-                                Text(
-                                  context.t.habits.add.frequency_label,
-                                  style:
-                                      getTextTheme(context).bodyLarge!.copyWith(),
-                                )
-                              ],
-                            ),
-                            SizedBox(
-                              height: $constants.insets.sm,
-                            ),
-                            AutoSizeText(
-                              maxLines: 1,
-                              context
-                                  .t.habits.add.frequency[habit!.frequency!]!,
-                              style: getTextTheme(context).bodyMedium!.copyWith(
-                                    color: getTheme(context).onSurfaceVariant,
-                                  ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
+                ),
+                SizedBox(
+                  height: $constants.insets.xs,
+                ),
+                ConstrainedBox(
+                  constraints: BoxConstraints(
+                    minHeight: getSize(context).height * 0.15,
                   ),
-                  SizedBox(
-                    height: $constants.insets.xs,
-                  ),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                const Icon(
-                                  CupertinoIcons.clock,
-                                  size: 30,
-                                ),
-                                SizedBox(
-                                  width: $constants.insets.xs,
-                                ),
-                                Text(
-                                  context.t.habits.add.start_date,
-                                  style:
-                                      getTextTheme(context).bodyLarge!.copyWith(),
-                                )
-                              ],
-                            ),
-                            SizedBox(
-                              height: $constants.insets.sm,
-                            ),
-                            AutoSizeText(
-                              maxLines: 1,
-                              Jiffy.parseFromDateTime(habit.startDate!)
-                                  .yMMMd,
-                              style: getTextTheme(context).bodyMedium!.copyWith(
-                                    color: getTheme(context).onSurfaceVariant,
-                                  ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Expanded(
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                const Icon(
-                                  CupertinoIcons.clock_fill,
-                                  size: 30,
-                                ),
-                                SizedBox(
-                                  width: $constants.insets.xs,
-                                ),
-                                Text(
-                                  context.t.habits.add.end_date,
-                                  style:
-                                      getTextTheme(context).bodyLarge!.copyWith(),
-                                )
-                              ],
-                            ),
-                            SizedBox(
-                              height: $constants.insets.sm,
-                            ),
-                            AutoSizeText(
-                              maxLines: 1,
-                              habit.endDate != null
-                                  ? Jiffy.parseFromDateTime(habit.endDate!)
-                                      .yMMMd
-                                  : context.t.habits.habit_detail.no_end_date,
-                              style: getTextTheme(context).bodyMedium!.copyWith(
-                                    color: getTheme(context).onSurfaceVariant,
-                                  ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: $constants.insets.md,
-                  ),
-                  Text(
-                    context.t.habits.overview,
-                    style: getTextTheme(context).titleMedium!.copyWith(
-                          fontWeight: FontWeight.bold,
-                        ),
-                  ),
-                  SizedBox(
-                    height: $constants.insets.xs,
-                  ),
-                  SizedBox(
-                      height: getSize(context).height * 0.255,
-                      child: HabitHeatmap(habit: habit, hideTitle: true)),
-                  SizedBox(
-                    height: $constants.insets.xs,
-                  ),
-                  AutoSizeText(
-                    context.t.habits.habit_detail.entries,
-                    style: getTextTheme(context).titleMedium!.copyWith(
-                          fontWeight: FontWeight.bold,
-                        ),
-                  ),
-                  SizedBox(
-                    height: $constants.insets.xs,
-                  ),
-                  ConstrainedBox(
-                    constraints: BoxConstraints(
-                      minHeight: getSize(context).height * 0.15,
+                  child: Container(
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      color: getTheme(context).surfaceContainerHigh,
+                      borderRadius:
+                          BorderRadius.circular($constants.corners.sm),
+                    ),
+                    padding: EdgeInsets.all(
+                      $constants.insets.sm,
                     ),
                     child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisSize: MainAxisSize.min,
                       children: habit.entries != null
                           ? habit.entries!
@@ -325,7 +211,8 @@ class _HabitDetailState extends State<HabitDetail> {
                                                         WidgetStatePropertyAll(
                                                             Colors.white),
                                                     iconSize:
-                                                        WidgetStatePropertyAll(25)),
+                                                        WidgetStatePropertyAll(
+                                                            25)),
                                               )),
                                               child: SlidableAction(
                                                 autoClose: true,
@@ -354,14 +241,16 @@ class _HabitDetailState extends State<HabitDetail> {
                                                           return;
                                                         context
                                                             .read<HabitBloc>()
-                                                            .add(DeleteHabitEntry(
-                                                                e));
+                                                            .add(
+                                                                DeleteHabitEntry(
+                                                                    e));
                                                       },
                                                     ),
                                                   );
                                                 },
-                                                borderRadius: BorderRadius.circular(
-                                                    $constants.corners.sm),
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                                        $constants.corners.sm),
                                                 backgroundColor:
                                                     getTheme(context).error,
                                                 icon: CupertinoIcons.delete,
@@ -390,7 +279,8 @@ class _HabitDetailState extends State<HabitDetail> {
                                               width: $constants.insets.sm,
                                             ),
                                             Text(
-                                              Jiffy.parseFromDateTime(e.entryDate)
+                                              Jiffy.parseFromDateTime(
+                                                      e.entryDate)
                                                   .yMMMEdjm,
                                               style: getTextTheme(context)
                                                   .bodyMedium!
@@ -407,45 +297,45 @@ class _HabitDetailState extends State<HabitDetail> {
                           : [Text(context.t.habits.habit_detail.no_entries)],
                     ),
                   ),
-                  Center(
-                    child: TextButton(
-                        onPressed: () async {
-                          final result = await showDialog(
-                            context: context,
-                            builder: (context) => DeleteConfirmModal(
-                              title: context.t.habits.habit_detail.delete_habit,
-                              description: context
-                                  .t.habits.habit_detail.delete_habit_description,
-                              warning: context
-                                  .t.habits.habit_detail.delete_habit_warning,
-                              onDelete: () async {
-                                if (!context.mounted) return;
-                                context.read<HabitBloc>().add(
-                                      DeleteHabit(
-                                        habit,
-                                      ),
-                                    );
-                              },
-                            ),
-                          );
-                          if (result == true) {
-                            if (!context.mounted) return;
-                            Navigator.pop(context, true);
-                          }
-                        },
-                        child: Text(
-                          context.t.habits.habit_detail.delete_habit,
-                          style: getTextTheme(context).bodyMedium!.copyWith(
-                              fontWeight: FontWeight.bold,
-                              color: getTheme(context).error),
-                        )),
-                  )
-                ],
-              ),
+                ),
+                Center(
+                  child: TextButton(
+                      onPressed: () async {
+                        final result = await showDialog(
+                          context: context,
+                          builder: (context) => DeleteConfirmModal(
+                            title: context.t.habits.habit_detail.delete_habit,
+                            description: context
+                                .t.habits.habit_detail.delete_habit_description,
+                            warning: context
+                                .t.habits.habit_detail.delete_habit_warning,
+                            onDelete: () async {
+                              if (!context.mounted) return;
+                              context.read<HabitBloc>().add(
+                                    DeleteHabit(
+                                      habit,
+                                    ),
+                                  );
+                            },
+                          ),
+                        );
+                        if (result == true) {
+                          if (!context.mounted) return;
+                          Navigator.pop(context, true);
+                        }
+                      },
+                      child: Text(
+                        context.t.habits.habit_detail.delete_habit,
+                        style: getTextTheme(context).bodyMedium!.copyWith(
+                            fontWeight: FontWeight.bold,
+                            color: getTheme(context).error),
+                      )),
+                )
+              ],
             ),
-          );
-        }
-      ),
+          ),
+        );
+      }),
     );
   }
 }

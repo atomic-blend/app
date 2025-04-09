@@ -117,6 +117,26 @@ class _AddHabitModalState extends State<AddHabitModal> {
                     ),
                     Row(
                       children: [
+                        if (widget.onEditEnd != null) ...[
+                          GestureDetector(
+                            onTap: () {
+                              widget.onEditEnd?.call();
+                            },
+                            child: Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(
+                                    $constants.corners.full),
+                              ),
+                              child: const Icon(
+                                CupertinoIcons.back,
+                                size: 25,
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            width: $constants.insets.sm,
+                          ),
+                        ],
                         Expanded(
                           child: AutoSizeText(
                             maxLines: 1,
@@ -129,26 +149,6 @@ class _AddHabitModalState extends State<AddHabitModal> {
                         ),
                         SizedBox(
                           width: $constants.insets.sm,
-                        ),
-                        if (widget.onEditEnd != null)
-                          GestureDetector(
-                            onTap: () {
-                              widget.onEditEnd?.call();
-                            },
-                            child: Container(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(
-                                    $constants.corners.full),
-                              ),
-                              padding: EdgeInsets.all($constants.insets.xs),
-                              child: const Icon(
-                                CupertinoIcons.return_icon,
-                                size: 20,
-                              ),
-                            ),
-                          ),
-                        SizedBox(
-                          width: $constants.insets.xs,
                         ),
                         GestureDetector(
                           onTap: () {
@@ -467,24 +467,31 @@ class _AddHabitModalState extends State<AddHabitModal> {
                           items: [
                             MultiSelectCard(
                                 value: 0,
+                                selected: _daysOfWeek?.contains(0) ?? false,
                                 label: context.t.days_of_week["monday"]!),
                             MultiSelectCard(
                                 value: 1,
+                                selected: _daysOfWeek?.contains(1) ?? false,
                                 label: context.t.days_of_week["tuesday"]!),
                             MultiSelectCard(
                                 value: 2,
+                                selected: _daysOfWeek?.contains(2) ?? false,
                                 label: context.t.days_of_week["wednesday"]!),
                             MultiSelectCard(
                                 value: 3,
+                                selected: _daysOfWeek?.contains(3) ?? false,
                                 label: context.t.days_of_week["thursday"]!),
                             MultiSelectCard(
                                 value: 4,
+                                selected: _daysOfWeek?.contains(4) ?? false,
                                 label: context.t.days_of_week["friday"]!),
                             MultiSelectCard(
                                 value: 5,
+                                selected: _daysOfWeek?.contains(5) ?? false,
                                 label: context.t.days_of_week["saturday"]!),
                             MultiSelectCard(
                                 value: 6,
+                                selected: _daysOfWeek?.contains(6) ?? false,
                                 label: context.t.days_of_week["sunday"]!),
                           ],
                           onChange: (allSelectedItems, selectedItem) {
@@ -677,50 +684,55 @@ class _AddHabitModalState extends State<AddHabitModal> {
                             .copyWith(color: Colors.grey[700]),
                       ),
                     ),
-                    ...(_reminders ?? []).map(
-                      (e) => Stack(
-                        children: [
-                          Padding(
-                            padding: EdgeInsets.symmetric(
-                                horizontal: $constants.insets.xs,
-                                vertical: $constants.insets.xs),
-                            child: Container(
-                              decoration: BoxDecoration(
-                                color: getTheme(context).surfaceContainerHigh,
-                                borderRadius: BorderRadius.circular(
-                                    $constants.corners.md),
-                              ),
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: $constants.insets.xs,
-                                  vertical: $constants.insets.xs),
-                              child: Text(e),
-                            ),
-                          ),
-                          Positioned(
-                              right: 0,
-                              top: 3,
-                              child: GestureDetector(
-                                onTap: () {
-                                  setState(() {
-                                    _reminders?.remove(e);
-                                  });
-                                },
+                    Row(
+                      children: [
+                        ...(_reminders ?? []).map(
+                          (e) => Stack(
+                            children: [
+                              Padding(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: $constants.insets.xs,
+                                    vertical: $constants.insets.xs),
                                 child: Container(
                                   decoration: BoxDecoration(
-                                    color: getTheme(context).error,
+                                    color:
+                                        getTheme(context).surfaceContainerHigh,
                                     borderRadius: BorderRadius.circular(
                                         $constants.corners.md),
                                   ),
-                                  padding: const EdgeInsets.all(2),
-                                  child: Icon(
-                                    CupertinoIcons.xmark,
-                                    color: getTheme(context).surface,
-                                    size: 12,
-                                  ),
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: $constants.insets.xs,
+                                      vertical: $constants.insets.xs),
+                                  child: Text(e),
                                 ),
-                              ))
-                        ],
-                      ),
+                              ),
+                              Positioned(
+                                  right: 0,
+                                  top: 3,
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      setState(() {
+                                        _reminders?.remove(e);
+                                      });
+                                    },
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        color: getTheme(context).error,
+                                        borderRadius: BorderRadius.circular(
+                                            $constants.corners.md),
+                                      ),
+                                      padding: const EdgeInsets.all(2),
+                                      child: Icon(
+                                        CupertinoIcons.xmark,
+                                        color: getTheme(context).surface,
+                                        size: 12,
+                                      ),
+                                    ),
+                                  ))
+                            ],
+                          ),
+                        ),
+                      ],
                     ),
                     SizedBox(
                       height: $constants.insets.md,
