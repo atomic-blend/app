@@ -465,34 +465,34 @@ class _AddHabitModalState extends State<AddHabitModal> {
                       ),
                       MultiSelectContainer(
                           items: [
-                            MultiSelectCard(
-                                value: 0,
-                                selected: _daysOfWeek?.contains(0) ?? false,
-                                label: context.t.days_of_week["monday"]!),
-                            MultiSelectCard(
-                                value: 1,
-                                selected: _daysOfWeek?.contains(1) ?? false,
-                                label: context.t.days_of_week["tuesday"]!),
-                            MultiSelectCard(
-                                value: 2,
-                                selected: _daysOfWeek?.contains(2) ?? false,
-                                label: context.t.days_of_week["wednesday"]!),
-                            MultiSelectCard(
-                                value: 3,
-                                selected: _daysOfWeek?.contains(3) ?? false,
-                                label: context.t.days_of_week["thursday"]!),
-                            MultiSelectCard(
-                                value: 4,
-                                selected: _daysOfWeek?.contains(4) ?? false,
-                                label: context.t.days_of_week["friday"]!),
-                            MultiSelectCard(
-                                value: 5,
-                                selected: _daysOfWeek?.contains(5) ?? false,
-                                label: context.t.days_of_week["saturday"]!),
-                            MultiSelectCard(
-                                value: 6,
-                                selected: _daysOfWeek?.contains(6) ?? false,
-                                label: context.t.days_of_week["sunday"]!),
+                            _getMultiSelectItem(
+                                0,
+                                _daysOfWeek?.contains(0) ?? false,
+                                context.t.days_of_week["monday"]!),
+                            _getMultiSelectItem(
+                                1,
+                                _daysOfWeek?.contains(1) ?? false,
+                                context.t.days_of_week["tuesday"]!),
+                            _getMultiSelectItem(
+                                2,
+                                _daysOfWeek?.contains(2) ?? false,
+                                context.t.days_of_week["wednesday"]!),
+                            _getMultiSelectItem(
+                                3,
+                                _daysOfWeek?.contains(3) ?? false,
+                                context.t.days_of_week["thursday"]!),
+                            _getMultiSelectItem(
+                                4,
+                                _daysOfWeek?.contains(4) ?? false,
+                                context.t.days_of_week["friday"]!),
+                            _getMultiSelectItem(
+                                5,
+                                _daysOfWeek?.contains(5) ?? false,
+                                context.t.days_of_week["saturday"]!),
+                            _getMultiSelectItem(
+                                6,
+                                _daysOfWeek?.contains(6) ?? false,
+                                context.t.days_of_week["sunday"]!),
                           ],
                           onChange: (allSelectedItems, selectedItem) {
                             setState(() {
@@ -825,5 +825,18 @@ class _AddHabitModalState extends State<AddHabitModal> {
           .add(UpdateHabit(habit.copyWith(id: widget.habit!.id)));
       widget.onEditEnd?.call();
     }
+  }
+
+  MultiSelectCard<int> _getMultiSelectItem(
+      int value, bool selected, String label) {
+    return MultiSelectCard<int>(
+        value: value,
+        selected: selected,
+        decorations: MultiSelectItemDecorations(
+            decoration: BoxDecoration(
+          color: getTheme(context).surfaceContainerHigh,
+          borderRadius: BorderRadius.circular($constants.corners.full),
+        )),
+        label: label);
   }
 }

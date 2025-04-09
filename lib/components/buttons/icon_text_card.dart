@@ -8,11 +8,13 @@ class IconTextCard extends StatelessWidget {
   final String title;
   final String value;
   final IconData icon;
+  final double? iconSize;
   const IconTextCard(
       {super.key,
       required this.title,
       required this.value,
-      required this.icon});
+      required this.icon,
+      this.iconSize});
 
   @override
   Widget build(BuildContext context) {
@@ -34,14 +36,16 @@ class IconTextCard extends StatelessWidget {
               children: [
                 Icon(
                   icon,
-                  size: 30,
+                  size: iconSize ?? 20,
                 ),
                 SizedBox(
                   width: $constants.insets.xs,
                 ),
                 Text(
                   title,
-                  style: getTextTheme(context).bodyLarge!.copyWith(),
+                  style: getTextTheme(context).bodyLarge!.copyWith(
+                        fontWeight: FontWeight.bold,
+                      ),
                 )
               ],
             ),
@@ -50,10 +54,9 @@ class IconTextCard extends StatelessWidget {
             ),
             AutoSizeText(
               maxLines: 1,
+              overflow: TextOverflow.ellipsis,
               value,
-              style: getTextTheme(context).bodyMedium!.copyWith(
-                    color: getTheme(context).onSurfaceVariant,
-                  ),
+              style: getTextTheme(context).bodyMedium!.copyWith(),
             ),
           ],
         ),
