@@ -47,7 +47,7 @@ class _AddHabitModalState extends State<AddHabitModal> {
   List<int>? _daysOfWeek = [];
   String? _daysOfWeekError;
   List<DateTime>? _daysOfMonth = [];
-  List<String>? _daysOfMonthError;
+  String? _daysOfMonthError;
   bool _showEmojiPicker = false;
   List<String>? _reminders = [];
   Duration? _duration;
@@ -621,6 +621,15 @@ class _AddHabitModalState extends State<AddHabitModal> {
                                   ))
                               .toList(),
                         ),
+                        if (_daysOfMonthError != null)
+                        Padding(
+                          padding: EdgeInsets.only(left: $constants.insets.xs),
+                          child: Text(_daysOfMonthError!,
+                              style: getTextTheme(context).bodySmall!.copyWith(
+                                    color: Colors.red,
+                                    fontWeight: FontWeight.bold,
+                                  )),
+                        ),
                       SizedBox(
                         height: $constants.insets.sm,
                       ),
@@ -758,6 +767,15 @@ class _AddHabitModalState extends State<AddHabitModal> {
                         _daysOfWeek?.length != _numberOfTimes) {
                       setState(() {
                         _daysOfWeekError =
+                            context.t.habits.add.days_of_week_mismatch;
+                      });
+                      return;
+                    }
+
+                    if (_frequency == "repeatition" &&
+                        _daysOfMonth?.length != _numberOfTimes) {
+                      setState(() {
+                        _daysOfMonthError =
                             context.t.habits.add.days_of_week_mismatch;
                       });
                       return;
