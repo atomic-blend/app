@@ -213,6 +213,8 @@ class _HabitsState extends State<Habits> {
                                   );
                             },
                             child: CircularPercentIndicator(
+                              progressColor: getTheme(context).primary,
+                              circularStrokeCap: CircularStrokeCap.round,
                               center: Text(
                                 "${(habitProgress * 100).toStringAsFixed(0)} %",
                                 style:
