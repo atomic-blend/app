@@ -452,6 +452,7 @@ class TranslationsNotificationsEn {
 	String get task_due_now => 'The task is due';
 	String get task_starting => 'The task is starting';
 	String task_starting_in({required Object time}) => 'The task is starting in ${time}';
+	String get habit_due_now => 'Perform the habit now, one less thing to do!';
 }
 
 // Path: time_units
@@ -1256,6 +1257,7 @@ extension on Translations {
 			case 'notifications.task_due_now': return 'The task is due';
 			case 'notifications.task_starting': return 'The task is starting';
 			case 'notifications.task_starting_in': return ({required Object time}) => 'The task is starting in ${time}';
+			case 'notifications.habit_due_now': return 'Perform the habit now, one less thing to do!';
 			case 'time_units.short.day': return 'd';
 			case 'time_units.short.hour': return 'h';
 			case 'time_units.short.minute': return 'm';

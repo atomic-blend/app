@@ -449,6 +449,7 @@ class _TranslationsNotificationsFr implements TranslationsNotificationsEn {
 	@override String get task_due_now => 'La tâche est due maintenant';
 	@override String get task_starting => 'La tâche commence maintenant';
 	@override String task_starting_in({required Object time}) => 'La tâche commence dans ${time}';
+	@override String get habit_due_now => 'Effectuez votre habitude maintenant, une chose en moins à faire !';
 }
 
 // Path: time_units
@@ -1250,6 +1251,7 @@ extension on TranslationsFr {
 			case 'notifications.task_due_now': return 'La tâche est due maintenant';
 			case 'notifications.task_starting': return 'La tâche commence maintenant';
 			case 'notifications.task_starting_in': return ({required Object time}) => 'La tâche commence dans ${time}';
+			case 'notifications.habit_due_now': return 'Effectuez votre habitude maintenant, une chose en moins à faire !';
 			case 'time_units.short.day': return 'j';
 			case 'time_units.short.hour': return 'h';
 			case 'time_units.short.minute': return 'm';
