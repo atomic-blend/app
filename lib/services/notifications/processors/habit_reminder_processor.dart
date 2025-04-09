@@ -24,14 +24,18 @@ class HabitReminderProcessor {
 
     // prepare notification body
     final title = await encryptionService?.decryptString(data: encryptedTitle);
-    final citation = await encryptionService?.decryptString(data: encryptedCitation);
-    
-    final body = citation != null && citation != "" ? citation : locale.translations.notifications.habit_due_now;
+    final citation =
+        await encryptionService?.decryptString(data: encryptedCitation);
+
+    final body = citation != null && citation != ""
+        ? citation
+        : locale.translations.notifications.habit_due_now;
 
     // setup notification client
     final localNotificationsPlugin = FlutterLocalNotificationsPlugin();
 
-    final notifDetails = LocalNotificationUtil.getNotifDetails("main_channel", "Habit Notifications");
+    final notifDetails = LocalNotificationUtil.getNotifDetails(
+        "main_channel", "Habit Notifications");
 
     // show notification
     await localNotificationsPlugin.show(

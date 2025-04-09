@@ -703,7 +703,15 @@ class _AddHabitModalState extends State<AddHabitModal> {
                                   padding: EdgeInsets.symmetric(
                                       horizontal: $constants.insets.xs,
                                       vertical: $constants.insets.xs),
-                                  child: Text(e),
+                                  child: Text(Jiffy.parseFromDateTime(
+                                          DateTime.utc(
+                                              DateTime.now().year,
+                                              DateTime.now().month,
+                                              DateTime.now().day,
+                                              int.parse(e.split(":")[0]),
+                                              int.parse(e.split(":")[1]),),)
+                                      .toLocal()
+                                      .Hm),
                                 ),
                               ),
                               Positioned(

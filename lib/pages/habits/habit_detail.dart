@@ -158,9 +158,7 @@ class _HabitDetailState extends State<HabitDetail> {
                 SizedBox(
                   height: $constants.insets.xs,
                 ),
-                SizedBox(
-                    height: getSize(context).height * 0.255,
-                    child: HabitHeatmap(habit: habit, hideTitle: true)),
+                HabitHeatmap(habit: habit, hideTitle: true),
                 SizedBox(
                   height: $constants.insets.xs,
                 ),

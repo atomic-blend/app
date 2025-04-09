@@ -26,7 +26,7 @@ class _ABDatePickerDialogState extends State<ABDatePickerDialog> {
 
   @override
   void initState() {
-    _date = widget.initialDate ?? DateTime.now();
+    _date = widget.initialDate?.toLocal() ?? DateTime.now();
     super.initState();
   }
 
@@ -73,7 +73,7 @@ class _ABDatePickerDialogState extends State<ABDatePickerDialog> {
                   child: PrimaryButtonSquare(
                     text: context.t.actions.save,
                     onPressed: () {
-                      widget.onDateChanged!(_date!);
+                      widget.onDateChanged!(_date!.toUtc());
                       Navigator.of(context).pop();
                     },
                   ),
