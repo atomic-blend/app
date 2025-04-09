@@ -20,12 +20,12 @@ HabitEntry _$HabitEntryFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$HabitEntry {
-  String get id => throw _privateConstructorUsedError;
-  set id(String value) => throw _privateConstructorUsedError;
+  String? get id => throw _privateConstructorUsedError;
+  set id(String? value) => throw _privateConstructorUsedError;
   String get habitId => throw _privateConstructorUsedError;
   set habitId(String value) => throw _privateConstructorUsedError;
-  String get userId => throw _privateConstructorUsedError;
-  set userId(String value) => throw _privateConstructorUsedError;
+  String? get userId => throw _privateConstructorUsedError;
+  set userId(String? value) => throw _privateConstructorUsedError;
   DateTime get entryDate => throw _privateConstructorUsedError;
   set entryDate(DateTime value) => throw _privateConstructorUsedError;
   DateTime? get createdAt => throw _privateConstructorUsedError;
@@ -50,9 +50,9 @@ abstract class $HabitEntryCopyWith<$Res> {
       _$HabitEntryCopyWithImpl<$Res, HabitEntry>;
   @useResult
   $Res call(
-      {String id,
+      {String? id,
       String habitId,
-      String userId,
+      String? userId,
       DateTime entryDate,
       DateTime? createdAt,
       DateTime? updatedAt});
@@ -73,26 +73,26 @@ class _$HabitEntryCopyWithImpl<$Res, $Val extends HabitEntry>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
+    Object? id = freezed,
     Object? habitId = null,
-    Object? userId = null,
+    Object? userId = freezed,
     Object? entryDate = null,
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
   }) {
     return _then(_value.copyWith(
-      id: null == id
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       habitId: null == habitId
           ? _value.habitId
           : habitId // ignore: cast_nullable_to_non_nullable
               as String,
-      userId: null == userId
+      userId: freezed == userId
           ? _value.userId
           : userId // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       entryDate: null == entryDate
           ? _value.entryDate
           : entryDate // ignore: cast_nullable_to_non_nullable
@@ -118,9 +118,9 @@ abstract class _$$HabitEntryImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String id,
+      {String? id,
       String habitId,
-      String userId,
+      String? userId,
       DateTime entryDate,
       DateTime? createdAt,
       DateTime? updatedAt});
@@ -139,26 +139,26 @@ class __$$HabitEntryImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
+    Object? id = freezed,
     Object? habitId = null,
-    Object? userId = null,
+    Object? userId = freezed,
     Object? entryDate = null,
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
   }) {
     return _then(_$HabitEntryImpl(
-      id: null == id
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       habitId: null == habitId
           ? _value.habitId
           : habitId // ignore: cast_nullable_to_non_nullable
               as String,
-      userId: null == userId
+      userId: freezed == userId
           ? _value.userId
           : userId // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       entryDate: null == entryDate
           ? _value.entryDate
           : entryDate // ignore: cast_nullable_to_non_nullable
@@ -179,9 +179,9 @@ class __$$HabitEntryImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$HabitEntryImpl implements _HabitEntry {
   _$HabitEntryImpl(
-      {required this.id,
+      {this.id,
       required this.habitId,
-      required this.userId,
+      this.userId,
       required this.entryDate,
       this.createdAt,
       this.updatedAt});
@@ -190,11 +190,11 @@ class _$HabitEntryImpl implements _HabitEntry {
       _$$HabitEntryImplFromJson(json);
 
   @override
-  String id;
+  String? id;
   @override
   String habitId;
   @override
-  String userId;
+  String? userId;
   @override
   DateTime entryDate;
   @override
@@ -225,9 +225,9 @@ class _$HabitEntryImpl implements _HabitEntry {
 
 abstract class _HabitEntry implements HabitEntry {
   factory _HabitEntry(
-      {required String id,
+      {String? id,
       required String habitId,
-      required String userId,
+      String? userId,
       required DateTime entryDate,
       DateTime? createdAt,
       DateTime? updatedAt}) = _$HabitEntryImpl;
@@ -236,14 +236,14 @@ abstract class _HabitEntry implements HabitEntry {
       _$HabitEntryImpl.fromJson;
 
   @override
-  String get id;
-  set id(String value);
+  String? get id;
+  set id(String? value);
   @override
   String get habitId;
   set habitId(String value);
   @override
-  String get userId;
-  set userId(String value);
+  String? get userId;
+  set userId(String? value);
   @override
   DateTime get entryDate;
   set entryDate(DateTime value);

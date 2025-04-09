@@ -8,9 +8,9 @@ part of 'habit_entry.entity.dart';
 
 _$HabitEntryImpl _$$HabitEntryImplFromJson(Map<String, dynamic> json) =>
     _$HabitEntryImpl(
-      id: json['id'] as String,
+      id: json['id'] as String?,
       habitId: json['habitId'] as String,
-      userId: json['userId'] as String,
+      userId: json['userId'] as String?,
       entryDate: DateTime.parse(json['entryDate'] as String),
       createdAt: json['createdAt'] == null
           ? null

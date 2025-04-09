@@ -1,4 +1,5 @@
 import 'package:app/entities/habit/habit.entity.dart';
+import 'package:app/entities/habit/habit_entry/habit_entry.entity.dart';
 import 'package:app/services/user.service.dart';
 import 'package:app/utils/api_client.dart';
 
@@ -35,6 +36,16 @@ class HabitService {
       return true;
     } else {
       throw Exception('habit_update_failed');
+    }
+  }
+
+  Future<bool> addEntry(HabitEntry habitEntry) async {
+    final result = await globalApiClient.post('/habits/entry/add',
+        data:  habitEntry.toJson());
+    if (result.statusCode == 201) {
+      return true;
+    } else {
+      throw Exception('habit_entry_create_failed');
     }
   }
 

@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:app/entities/habit/habit.entity.dart';
+import 'package:app/entities/habit/habit_entry/habit_entry.entity.dart';
 import 'package:app/services/habit_service.dart';
 import 'package:equatable/equatable.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
@@ -12,6 +13,7 @@ class HabitBloc extends HydratedBloc<HabitEvent, HabitState> {
   final HabitService _habitService = HabitService();
   HabitBloc() : super(const HabitInitial()) {
     on<LoadHabits>(_onLoadHabits);
+    on<AddHabitEntry>(_onAddHabitEntry);
     on<CreateHabit>(_onCreateHabit);
     on<UpdateHabit>(_onUpdateHabit);
     on<DeleteHabit>(_onDeleteHabit);
@@ -82,6 +84,17 @@ class HabitBloc extends HydratedBloc<HabitEvent, HabitState> {
     try {
       await _habitService.delete(event.habit.id!);
       emit(HabitDeleted(prevState.habits ?? []));
+      add(const LoadHabits());
+    } catch (e) {
+      emit(HabitLoadingError(prevState.habits ?? [], e.toString()));
+    }
+  }
+
+  FutureOr<void> _onAddHabitEntry(AddHabitEntry event, Emitter<HabitState> emit) {
+    final prevState = state;
+    try {
+      _habitService.addEntry(event.habitEntry);
+      emit(HabitUpdated(prevState.habits ?? []));
       add(const LoadHabits());
     } catch (e) {
       emit(HabitLoadingError(prevState.habits ?? [], e.toString()));

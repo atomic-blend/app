@@ -1,6 +1,7 @@
 import 'package:animated_toggle_switch/animated_toggle_switch.dart';
 import 'package:app/blocs/habit/habit.bloc.dart';
 import 'package:app/entities/habit/habit.entity.dart';
+import 'package:app/entities/habit/habit_entry/habit_entry.entity.dart';
 import 'package:app/i18n/strings.g.dart';
 import 'package:app/pages/habits/add_or_edit_habit_modal.dart';
 import 'package:app/pages/habits/habit_detail.dart';
@@ -9,11 +10,13 @@ import 'package:app/utils/constants.dart';
 import 'package:app/utils/shortcuts.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_heatmap_calendar/flutter_heatmap_calendar.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:lottie/lottie.dart';
+import 'package:percent_indicator/percent_indicator.dart';
 
 class Habits extends StatefulWidget {
   const Habits({super.key});
@@ -99,6 +102,8 @@ class _HabitsState extends State<Habits> {
         child: ListView.builder(
           itemCount: habits.length,
           itemBuilder: (context, index) {
+            final habit = habits[index];
+            final habitProgress = _computeDailyProgress(habit);
             return Padding(
               padding: EdgeInsets.only(bottom: $constants.insets.xs),
               child: Slidable(
@@ -194,6 +199,41 @@ class _HabitsState extends State<Habits> {
                             ),
                           ],
                         ),
+                        const Spacer(),
+                        if (habitProgress != null && habitProgress < 1)
+                          GestureDetector(
+                            onTap: () {
+                              context.read<HabitBloc>().add(
+                                    AddHabitEntry(
+                                      HabitEntry(
+                                        entryDate: DateTime.now().toUtc(),
+                                        habitId: habit.id!,
+                                      ),
+                                    ),
+                                  );
+                            },
+                            child: CircularPercentIndicator(
+                              center: Text(
+                                "${(habitProgress * 100).toStringAsFixed(0)} %",
+                                style:
+                                    getTextTheme(context).bodySmall!.copyWith(
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                              ),
+                              radius: 23,
+                              percent: habitProgress,
+                            ),
+                          ),
+                        if (habitProgress != null && habitProgress == 1)
+                          Padding(
+                            padding:
+                                EdgeInsets.only(right: $constants.insets.xs),
+                            child: Icon(
+                              CupertinoIcons.check_mark_circled_solid,
+                              color: getTheme(context).primary,
+                              size: 30,
+                            ),
+                          ),
                       ],
                     ),
                   ),
@@ -204,6 +244,40 @@ class _HabitsState extends State<Habits> {
         ),
       ),
     );
+  }
+
+  // compute the daily progress of the habit
+  double? _computeDailyProgress(Habit habit) {
+    final now = DateTime.now();
+    switch (habit.frequency) {
+      case "daily":
+      case "weekly":
+        if (habit.startDate == null) return null;
+        if (habit.daysOfWeek?.contains(now.weekday - 1) == false) {
+          return null;
+        }
+        final entriesToday = habit.entries
+                ?.where((entry) =>
+                    entry.entryDate.year == now.year &&
+                    entry.entryDate.month == now.month &&
+                    entry.entryDate.day == now.day)
+                .toList() ??
+            [];
+        final total = habit.numberOfTimes!;
+        if (kDebugMode) {
+          print((entriesToday.length / total).toDouble());
+        }
+        return (entriesToday.length / total).toDouble();
+      case "monthly":
+        break;
+      case "repeatition":
+        break;
+      default:
+        if (kDebugMode) {
+          print("Unknown frequency: ${habit.frequency}");
+        }
+        break;
+    }
   }
 
   _heatMapView(BuildContext context, List<Habit> habits) {
