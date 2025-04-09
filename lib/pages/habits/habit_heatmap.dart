@@ -20,6 +20,7 @@ class HabitHeatmap extends StatelessWidget {
       padding: EdgeInsets.all($constants.insets.sm),
       margin: EdgeInsets.only(bottom: $constants.insets.sm),
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           if (hideTitle != true)
