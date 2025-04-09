@@ -49,6 +49,25 @@ class HabitService {
     }
   }
 
+  Future<bool> updateEntry(HabitEntry habitEntry) async {
+    final result = await globalApiClient.put('/habits/entry/edit/${habitEntry.id}',
+        data: habitEntry.toJson());
+    if (result.statusCode == 200) {
+      return true;
+    } else {
+      throw Exception('habit_entry_update_failed');
+    }
+  }
+
+  Future<bool> deleteEntry(String id) async {
+    final result = await globalApiClient.delete('/habits/entry/delete/$id');
+    if (result.statusCode == 200) {
+      return true;
+    } else {
+      throw Exception('habit_entry_delete_failed');
+    }
+  }
+
   Future<bool> delete(String id) async {
     final result = await globalApiClient.delete('/habits/$id');
     if (result.statusCode == 200) {

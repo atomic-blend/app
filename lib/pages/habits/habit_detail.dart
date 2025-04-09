@@ -9,6 +9,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:jiffy/jiffy.dart';
 
 class HabitDetail extends StatefulWidget {
@@ -298,36 +299,70 @@ class _HabitDetailState extends State<HabitDetail> {
                         .map((e) => Padding(
                               padding:
                                   EdgeInsets.only(bottom: $constants.insets.xs),
-                              child: Container(
-                                width: double.infinity,
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: $constants.insets.md,
-                                    vertical: $constants.insets.sm),
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(
-                                        $constants.corners.sm),
-                                    color:
-                                        getTheme(context).surfaceContainerHigh),
-                                child: Row(
-                                  children: [
-                                    Icon(
-                                      CupertinoIcons.check_mark_circled_solid,
-                                      size: 30,
-                                      color: getTheme(context).primary,
-                                    ),
-                                    SizedBox(
-                                      width: $constants.insets.sm,
-                                    ),
-                                    Text(
-                                      Jiffy.parseFromDateTime(e.entryDate)
-                                          .yMMMEdjm,
-                                      style: getTextTheme(context)
-                                          .bodyMedium!
-                                          .copyWith(
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                    ),
-                                  ],
+                              child: Slidable(
+                                endActionPane: ActionPane(
+                                    motion: const ScrollMotion(),
+                                    children: [
+                                      SizedBox(
+                                        width: $constants.insets.xs,
+                                      ),
+                                      Theme(
+                                        data: Theme.of(context).copyWith(
+                                            outlinedButtonTheme:
+                                                const OutlinedButtonThemeData(
+                                          style: ButtonStyle(
+                                              iconColor: WidgetStatePropertyAll(
+                                                  Colors.white),
+                                              iconSize:
+                                                  WidgetStatePropertyAll(25)),
+                                        )),
+                                        child: SlidableAction(
+                                          onPressed: (context) {
+                                            context.read<HabitBloc>().add(
+                                                  DeleteHabitEntry(
+                                                    e,
+                                                  ),
+                                                );
+                                          },
+                                          borderRadius: BorderRadius.circular(
+                                              $constants.corners.sm),
+                                          backgroundColor:
+                                              getTheme(context).error,
+                                          icon: CupertinoIcons.delete,
+                                        ),
+                                      )
+                                    ]),
+                                child: Container(
+                                  width: double.infinity,
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: $constants.insets.md,
+                                      vertical: $constants.insets.sm),
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(
+                                          $constants.corners.sm),
+                                      color: getTheme(context)
+                                          .surfaceContainerHigh),
+                                  child: Row(
+                                    children: [
+                                      Icon(
+                                        CupertinoIcons.check_mark_circled_solid,
+                                        size: 30,
+                                        color: getTheme(context).primary,
+                                      ),
+                                      SizedBox(
+                                        width: $constants.insets.sm,
+                                      ),
+                                      Text(
+                                        Jiffy.parseFromDateTime(e.entryDate)
+                                            .yMMMEdjm,
+                                        style: getTextTheme(context)
+                                            .bodyMedium!
+                                            .copyWith(
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
                             ))

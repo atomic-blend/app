@@ -14,6 +14,8 @@ class HabitBloc extends HydratedBloc<HabitEvent, HabitState> {
   HabitBloc() : super(const HabitInitial()) {
     on<LoadHabits>(_onLoadHabits);
     on<AddHabitEntry>(_onAddHabitEntry);
+    on<UpdateHabitEntry>(_onUpdateHabitEntry);
+    on<DeleteHabitEntry>(_onDeleteHabitEntry);
     on<CreateHabit>(_onCreateHabit);
     on<UpdateHabit>(_onUpdateHabit);
     on<DeleteHabit>(_onDeleteHabit);
@@ -94,6 +96,30 @@ class HabitBloc extends HydratedBloc<HabitEvent, HabitState> {
     final prevState = state;
     try {
       _habitService.addEntry(event.habitEntry);
+      emit(HabitUpdated(prevState.habits ?? []));
+      add(const LoadHabits());
+    } catch (e) {
+      emit(HabitLoadingError(prevState.habits ?? [], e.toString()));
+    }
+  }
+
+  FutureOr<void> _onUpdateHabitEntry(
+      UpdateHabitEntry event, Emitter<HabitState> emit) {
+    final prevState = state;
+    try {
+      _habitService.updateEntry(event.habitEntry);
+      emit(HabitUpdated(prevState.habits ?? []));
+      add(const LoadHabits());
+    } catch (e) {
+      emit(HabitLoadingError(prevState.habits ?? [], e.toString()));
+    }
+  }
+
+  FutureOr<void> _onDeleteHabitEntry(
+      DeleteHabitEntry event, Emitter<HabitState> emit) {
+    final prevState = state;
+    try {
+      _habitService.deleteEntry(event.habitEntry.id!);
       emit(HabitUpdated(prevState.habits ?? []));
       add(const LoadHabits());
     } catch (e) {
