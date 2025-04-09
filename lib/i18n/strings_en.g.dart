@@ -166,6 +166,7 @@ class TranslationsCalendarEn {
 	String get day => 'Day';
 	String get threeDays => '3 Days';
 	late final TranslationsCalendarEventDetailEn event_detail = TranslationsCalendarEventDetailEn._(_root);
+	late final TranslationsCalendarSettingsEn settings = TranslationsCalendarSettingsEn._(_root);
 }
 
 // Path: account
@@ -859,6 +860,17 @@ class TranslationsCalendarEventDetailEn {
 	);
 }
 
+// Path: calendar.settings
+class TranslationsCalendarSettingsEn {
+	TranslationsCalendarSettingsEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	String get title => 'Calendar Settings';
+	String get display_habits => 'Display habits';
+}
+
 // Path: account.sections
 class TranslationsAccountSectionsEn {
 	TranslationsAccountSectionsEn._(this._root);
@@ -1110,6 +1122,8 @@ extension on Translations {
 				one: 'Attendee',
 				other: 'Attendees',
 			);
+			case 'calendar.settings.title': return 'Calendar Settings';
+			case 'calendar.settings.display_habits': return 'Display habits';
 			case 'account.edit_profile': return 'Edit Profile';
 			case 'account.sections.account': return 'Account';
 			case 'account.actions.security': return 'Security & Privacy';

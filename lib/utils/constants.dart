@@ -8,6 +8,7 @@ import 'package:app/entities/tasks/tasks.entity.dart';
 import 'package:app/i18n/strings.g.dart';
 import 'package:app/main.dart';
 import 'package:app/pages/calendar/calendar.dart';
+import 'package:app/pages/calendar/calendar_settings.dart';
 import 'package:app/pages/habits/add_habits_modal.dart';
 import 'package:app/pages/habits/habits.dart';
 import 'package:app/pages/more_apps/more_apps.dart';
@@ -131,6 +132,15 @@ class Navigation {
               ],
             ),
             actions: [
+              IconButton(onPressed: (){
+                showModalBottomSheet(
+                    isScrollControlled: true,
+                    context: context,
+                    builder: (context) => const CalendarSettings());
+              }, icon: Icon(CupertinoIcons.settings)),
+              SizedBox(
+                width: $constants.insets.sm,
+              ),
               BlocBuilder<AuthBloc, AuthState>(builder: (context, authState) {
                 if (authState is LoggedIn) {
                   return Padding(

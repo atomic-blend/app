@@ -8,6 +8,7 @@ class AppState with _$AppState {
       bool? mobileSyncDisabled,
       bool? warnUserOnMobileInternetAccess,
       bool? isIntroCompleted,
+      bool? displayHabitsInCalendar,
       Map<String, bool>? showcasePageStatus}) = _AppState;
 
   factory AppState.initial() => _AppState(

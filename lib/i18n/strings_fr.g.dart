@@ -163,6 +163,7 @@ class _TranslationsCalendarFr implements TranslationsCalendarEn {
 	@override String get day => 'Jour';
 	@override String get threeDays => '3 jours';
 	@override late final _TranslationsCalendarEventDetailFr event_detail = _TranslationsCalendarEventDetailFr._(_root);
+	@override late final _TranslationsCalendarSettingsFr settings = _TranslationsCalendarSettingsFr._(_root);
 }
 
 // Path: account
@@ -853,6 +854,17 @@ class _TranslationsCalendarEventDetailFr implements TranslationsCalendarEventDet
 	);
 }
 
+// Path: calendar.settings
+class _TranslationsCalendarSettingsFr implements TranslationsCalendarSettingsEn {
+	_TranslationsCalendarSettingsFr._(this._root);
+
+	final TranslationsFr _root; // ignore: unused_field
+
+	// Translations
+	@override String get title => 'Paramètres du calendrier';
+	@override String get display_habits => 'Afficher les habitudes';
+}
+
 // Path: account.sections
 class _TranslationsAccountSectionsFr implements TranslationsAccountSectionsEn {
 	_TranslationsAccountSectionsFr._(this._root);
@@ -1104,6 +1116,8 @@ extension on TranslationsFr {
 				one: 'Participant',
 				other: 'Participants',
 			);
+			case 'calendar.settings.title': return 'Paramètres du calendrier';
+			case 'calendar.settings.display_habits': return 'Afficher les habitudes';
 			case 'account.edit_profile': return 'Modifier le profil';
 			case 'account.sections.account': return 'Compte';
 			case 'account.actions.security': return 'Sécurité et confidentialité';

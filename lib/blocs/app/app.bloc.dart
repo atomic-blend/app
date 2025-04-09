@@ -49,6 +49,12 @@ class AppCubit extends HydratedCubit<AppState> {
         ),
       );
 
+  void changeDisplayHabitsInCalendar({required bool value}) => emit(
+        state.copyWith(
+          displayHabitsInCalendar: value,
+        ),
+      );
+
   void changeShowcasePageStatus({required String key, required bool value}) {
     final showcasePageStatus = {
       ...?state.showcasePageStatus,
