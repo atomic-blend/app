@@ -59,7 +59,7 @@ dependencies:
   jiffy: ^6.3.2
   flutter_popup: ^3.3.0
   toastification: ^2.3.0
-  flutter_slidable: ^3.1.2
+  flutter_slidable: ^4.0.0
   rename_app: ^1.6.1
   flutter_native_splash: ^2.4.4
   lottie: ^3.3.1
@@ -79,6 +79,12 @@ dependencies:
   syncfusion_flutter_calendar: ^29.1.33
   device_calendar: ^4.3.3
   url_launcher: ^6.3.1
+  input_quantity: ^2.5.1
+  flutter_multi_select_items: ^0.4.3
+  emoji_picker_flutter: ^4.3.0
+  flutter_heatmap_calendar: ^1.0.5
+  syncfusion_flutter_datepicker: ^29.1.37
+  percent_indicator: ^4.2.5
 dependency_overrides:
   flutter_secure_storage: 9.2.4
   timezone: 0.10.0

@@ -8,6 +8,8 @@ import 'package:app/entities/tasks/tasks.entity.dart';
 import 'package:app/i18n/strings.g.dart';
 import 'package:app/main.dart';
 import 'package:app/pages/calendar/calendar.dart';
+import 'package:app/pages/calendar/calendar_settings.dart';
+import 'package:app/pages/habits/add_habits_modal.dart';
 import 'package:app/pages/habits/habits.dart';
 import 'package:app/pages/more_apps/more_apps.dart';
 import 'package:app/pages/tasks/add_task_modal.dart';
@@ -117,7 +119,7 @@ class Navigation {
           ],
         ),
         AppBar(
-          backgroundColor: getTheme(context).surface,
+            backgroundColor: getTheme(context).surface,
             title: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -130,6 +132,15 @@ class Navigation {
               ],
             ),
             actions: [
+              IconButton(onPressed: (){
+                showModalBottomSheet(
+                    isScrollControlled: true,
+                    context: context,
+                    builder: (context) => const CalendarSettings());
+              }, icon: Icon(CupertinoIcons.settings)),
+              SizedBox(
+                width: $constants.insets.sm,
+              ),
               BlocBuilder<AuthBloc, AuthState>(builder: (context, authState) {
                 if (authState is LoggedIn) {
                   return Padding(
@@ -143,18 +154,24 @@ class Navigation {
         null,
         AppBar(
             backgroundColor: getTheme(context).surface,
-            title: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  context.t.habits.title,
-                  style: getTextTheme(context).headlineSmall!.copyWith(
-                        fontWeight: FontWeight.bold,
-                      ),
-                )
-              ],
+            title: Center(
+              child: Text(
+                context.t.habits.title,
+                style: getTextTheme(context).headlineSmall!.copyWith(
+                      fontWeight: FontWeight.bold,
+                    ),
+              ),
             ),
             actions: [
+              IconButton(
+                icon: const Icon(CupertinoIcons.add),
+                onPressed: () {
+                  showModalBottomSheet(
+                      isScrollControlled: true,
+                      context: context,
+                      builder: (context) => const AddHabitModal());
+                },
+              ),
               BlocBuilder<AuthBloc, AuthState>(builder: (context, authState) {
                 if (authState is LoggedIn) {
                   return Padding(

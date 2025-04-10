@@ -26,6 +26,7 @@ mixin _$AppState {
   bool? get warnUserOnMobileInternetAccess =>
       throw _privateConstructorUsedError;
   bool? get isIntroCompleted => throw _privateConstructorUsedError;
+  bool? get displayHabitsInCalendar => throw _privateConstructorUsedError;
   Map<String, bool>? get showcasePageStatus =>
       throw _privateConstructorUsedError;
 
@@ -50,6 +51,7 @@ abstract class $AppStateCopyWith<$Res> {
       bool? mobileSyncDisabled,
       bool? warnUserOnMobileInternetAccess,
       bool? isIntroCompleted,
+      bool? displayHabitsInCalendar,
       Map<String, bool>? showcasePageStatus});
 }
 
@@ -73,6 +75,7 @@ class _$AppStateCopyWithImpl<$Res, $Val extends AppState>
     Object? mobileSyncDisabled = freezed,
     Object? warnUserOnMobileInternetAccess = freezed,
     Object? isIntroCompleted = freezed,
+    Object? displayHabitsInCalendar = freezed,
     Object? showcasePageStatus = freezed,
   }) {
     return _then(_value.copyWith(
@@ -96,6 +99,10 @@ class _$AppStateCopyWithImpl<$Res, $Val extends AppState>
           ? _value.isIntroCompleted
           : isIntroCompleted // ignore: cast_nullable_to_non_nullable
               as bool?,
+      displayHabitsInCalendar: freezed == displayHabitsInCalendar
+          ? _value.displayHabitsInCalendar
+          : displayHabitsInCalendar // ignore: cast_nullable_to_non_nullable
+              as bool?,
       showcasePageStatus: freezed == showcasePageStatus
           ? _value.showcasePageStatus
           : showcasePageStatus // ignore: cast_nullable_to_non_nullable
@@ -118,6 +125,7 @@ abstract class _$$AppStateImplCopyWith<$Res>
       bool? mobileSyncDisabled,
       bool? warnUserOnMobileInternetAccess,
       bool? isIntroCompleted,
+      bool? displayHabitsInCalendar,
       Map<String, bool>? showcasePageStatus});
 }
 
@@ -139,6 +147,7 @@ class __$$AppStateImplCopyWithImpl<$Res>
     Object? mobileSyncDisabled = freezed,
     Object? warnUserOnMobileInternetAccess = freezed,
     Object? isIntroCompleted = freezed,
+    Object? displayHabitsInCalendar = freezed,
     Object? showcasePageStatus = freezed,
   }) {
     return _then(_$AppStateImpl(
@@ -162,6 +171,10 @@ class __$$AppStateImplCopyWithImpl<$Res>
           ? _value.isIntroCompleted
           : isIntroCompleted // ignore: cast_nullable_to_non_nullable
               as bool?,
+      displayHabitsInCalendar: freezed == displayHabitsInCalendar
+          ? _value.displayHabitsInCalendar
+          : displayHabitsInCalendar // ignore: cast_nullable_to_non_nullable
+              as bool?,
       showcasePageStatus: freezed == showcasePageStatus
           ? _value._showcasePageStatus
           : showcasePageStatus // ignore: cast_nullable_to_non_nullable
@@ -179,6 +192,7 @@ class _$AppStateImpl implements _AppState {
       this.mobileSyncDisabled,
       this.warnUserOnMobileInternetAccess,
       this.isIntroCompleted,
+      this.displayHabitsInCalendar,
       final Map<String, bool>? showcasePageStatus})
       : _showcasePageStatus = showcasePageStatus;
 
@@ -195,6 +209,8 @@ class _$AppStateImpl implements _AppState {
   final bool? warnUserOnMobileInternetAccess;
   @override
   final bool? isIntroCompleted;
+  @override
+  final bool? displayHabitsInCalendar;
   final Map<String, bool>? _showcasePageStatus;
   @override
   Map<String, bool>? get showcasePageStatus {
@@ -208,7 +224,7 @@ class _$AppStateImpl implements _AppState {
 
   @override
   String toString() {
-    return 'AppState(pageIndex: $pageIndex, selectedTabIndex: $selectedTabIndex, mobileSyncDisabled: $mobileSyncDisabled, warnUserOnMobileInternetAccess: $warnUserOnMobileInternetAccess, isIntroCompleted: $isIntroCompleted, showcasePageStatus: $showcasePageStatus)';
+    return 'AppState(pageIndex: $pageIndex, selectedTabIndex: $selectedTabIndex, mobileSyncDisabled: $mobileSyncDisabled, warnUserOnMobileInternetAccess: $warnUserOnMobileInternetAccess, isIntroCompleted: $isIntroCompleted, displayHabitsInCalendar: $displayHabitsInCalendar, showcasePageStatus: $showcasePageStatus)';
   }
 
   @override
@@ -228,6 +244,9 @@ class _$AppStateImpl implements _AppState {
                     warnUserOnMobileInternetAccess) &&
             (identical(other.isIntroCompleted, isIntroCompleted) ||
                 other.isIntroCompleted == isIntroCompleted) &&
+            (identical(
+                    other.displayHabitsInCalendar, displayHabitsInCalendar) ||
+                other.displayHabitsInCalendar == displayHabitsInCalendar) &&
             const DeepCollectionEquality()
                 .equals(other._showcasePageStatus, _showcasePageStatus));
   }
@@ -241,6 +260,7 @@ class _$AppStateImpl implements _AppState {
       mobileSyncDisabled,
       warnUserOnMobileInternetAccess,
       isIntroCompleted,
+      displayHabitsInCalendar,
       const DeepCollectionEquality().hash(_showcasePageStatus));
 
   /// Create a copy of AppState
@@ -266,6 +286,7 @@ abstract class _AppState implements AppState {
       final bool? mobileSyncDisabled,
       final bool? warnUserOnMobileInternetAccess,
       final bool? isIntroCompleted,
+      final bool? displayHabitsInCalendar,
       final Map<String, bool>? showcasePageStatus}) = _$AppStateImpl;
 
   factory _AppState.fromJson(Map<String, dynamic> json) =
@@ -281,6 +302,8 @@ abstract class _AppState implements AppState {
   bool? get warnUserOnMobileInternetAccess;
   @override
   bool? get isIntroCompleted;
+  @override
+  bool? get displayHabitsInCalendar;
   @override
   Map<String, bool>? get showcasePageStatus;
 

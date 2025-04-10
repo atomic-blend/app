@@ -4,13 +4,14 @@ import 'package:app/utils/constants.dart';
 import 'package:app/utils/shortcuts.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
-class ABDatePickerDialog extends StatefulWidget {
+class ABMultupleDatePickerDialog extends StatefulWidget {
   final String title;
   final double? height;
   final DateTime? initialDate;
-  final Function(DateTime)? onDateChanged;
-  const ABDatePickerDialog(
+  final Function(List<DateTime>)? onDateChanged;
+  const ABMultupleDatePickerDialog(
       {super.key,
       this.height,
       this.onDateChanged,
@@ -18,15 +19,17 @@ class ABDatePickerDialog extends StatefulWidget {
       this.initialDate});
 
   @override
-  State<ABDatePickerDialog> createState() => _ABDatePickerDialogState();
+  State<ABMultupleDatePickerDialog> createState() =>
+      _ABMultupleDatePickerDialogState();
 }
 
-class _ABDatePickerDialogState extends State<ABDatePickerDialog> {
-  DateTime? _date;
+class _ABMultupleDatePickerDialogState
+    extends State<ABMultupleDatePickerDialog> {
+  List<DateTime>? _dates;
 
   @override
   void initState() {
-    _date = widget.initialDate?.toLocal() ?? DateTime.now();
+    _dates = [widget.initialDate ?? DateTime.now()] as List<DateTime>?;
     super.initState();
   }
 
@@ -46,13 +49,13 @@ class _ABDatePickerDialogState extends State<ABDatePickerDialog> {
             ),
             SizedBox(
               height: widget.height ?? getSize(context).height * 0.25,
-              child: CupertinoDatePicker(
-                mode: CupertinoDatePickerMode.dateAndTime,
-                use24hFormat: true,
-                initialDateTime: _date,
-                onDateTimeChanged: (DateTime value) {
+              child: SfDateRangePicker(
+                selectionMode: DateRangePickerSelectionMode.multiple,
+                onSelectionChanged: (dateRangePickerSelectionChangedArgs) {
+                  print(dateRangePickerSelectionChangedArgs.value);
                   setState(() {
-                    _date = value;
+                    _dates = dateRangePickerSelectionChangedArgs.value
+                        as List<DateTime>?;
                   });
                 },
               ),
@@ -73,7 +76,7 @@ class _ABDatePickerDialogState extends State<ABDatePickerDialog> {
                   child: PrimaryButtonSquare(
                     text: context.t.actions.save,
                     onPressed: () {
-                      widget.onDateChanged!(_date!.toUtc());
+                      widget.onDateChanged?.call(_dates!);
                       Navigator.of(context).pop();
                     },
                   ),

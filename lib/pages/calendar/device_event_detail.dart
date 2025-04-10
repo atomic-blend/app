@@ -164,45 +164,47 @@ class _DeviceEventDetailState extends State<DeviceEventDetail> {
               ),
               Row(
                 children: [
-                  Expanded(
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            const Icon(
-                              CupertinoIcons.person,
-                              size: 30,
-                            ),
-                            SizedBox(
-                              width: $constants.insets.xs,
-                            ),
-                            Text(
-                              context.t.calendar.event_detail.organizer,
-                              style: getTextTheme(context).bodyLarge!.copyWith(
-                                    color: Colors.grey[700],
-                                  ),
-                            )
-                          ],
-                        ),
-                        SizedBox(
-                          height: $constants.insets.sm,
-                        ),
-                        AutoSizeText(
-                          maxLines: 1,
-                          widget.event.attendees
-                                  ?.firstWhereOrNull(
-                                      (element) => element?.isOrganiser == true)
-                                  ?.name ??
-                              widget.event.attendees?.first?.name ??
-                              "",
-                          style: getTextTheme(context).bodyLarge,
-                        ),
-                      ],
+                  if (widget.event.attendees?.length != 0)
+                    Expanded(
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              const Icon(
+                                CupertinoIcons.person,
+                                size: 30,
+                              ),
+                              SizedBox(
+                                width: $constants.insets.xs,
+                              ),
+                              Text(
+                                context.t.calendar.event_detail.organizer,
+                                style:
+                                    getTextTheme(context).bodyLarge!.copyWith(
+                                          color: Colors.grey[700],
+                                        ),
+                              )
+                            ],
+                          ),
+                          SizedBox(
+                            height: $constants.insets.sm,
+                          ),
+                          AutoSizeText(
+                            maxLines: 1,
+                            widget.event.attendees
+                                    ?.firstWhereOrNull((element) =>
+                                        element?.isOrganiser == true)
+                                    ?.name ??
+                                widget.event.attendees?.first?.name ??
+                                "",
+                            style: getTextTheme(context).bodyLarge,
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
                   Expanded(
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
@@ -363,7 +365,7 @@ class _DeviceEventDetailState extends State<DeviceEventDetail> {
                       ],
                     ),
                   );
-                }).toList(),
+                }),
                 SizedBox(
                   height: $constants.insets.lg,
                 ),

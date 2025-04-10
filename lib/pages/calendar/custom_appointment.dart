@@ -1,9 +1,9 @@
-import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 
 enum CustomAppointmentType {
   task,
   event,
+  habit,
 }
 
 class CustomAppointment extends Appointment {

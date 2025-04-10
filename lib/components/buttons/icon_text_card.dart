@@ -1,0 +1,66 @@
+import 'package:app/utils/constants.dart';
+import 'package:app/utils/shortcuts.dart';
+import 'package:auto_size_text/auto_size_text.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+
+class IconTextCard extends StatelessWidget {
+  final String title;
+  final String value;
+  final IconData icon;
+  final double? iconSize;
+  const IconTextCard(
+      {super.key,
+      required this.title,
+      required this.value,
+      required this.icon,
+      this.iconSize});
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: Container(
+        decoration: BoxDecoration(
+          color: getTheme(context).surfaceContainerHigh,
+          borderRadius: BorderRadius.circular(
+            $constants.corners.sm,
+          ),
+        ),
+        padding: EdgeInsets.all($constants.insets.sm),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(
+                  icon,
+                  size: iconSize ?? 20,
+                ),
+                SizedBox(
+                  width: $constants.insets.xs,
+                ),
+                Text(
+                  title,
+                  style: getTextTheme(context).bodyLarge!.copyWith(
+                        fontWeight: FontWeight.bold,
+                      ),
+                )
+              ],
+            ),
+            SizedBox(
+              height: $constants.insets.sm,
+            ),
+            AutoSizeText(
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              value,
+              style: getTextTheme(context).bodyMedium!.copyWith(),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}

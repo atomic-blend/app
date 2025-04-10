@@ -1,3 +1,4 @@
+import 'package:app/services/notifications/processors/habit_reminder_processor.dart';
 import 'package:app/services/notifications/processors/task_due_processor.dart';
 import 'package:app/services/notifications/processors/task_starting_processor.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -10,6 +11,9 @@ class Processors {
         break;
       case 'TASK_STARTING':
         await TaskStartingProcessor.processAndNotify(message);
+        break;
+      case 'HABIT_REMINDER':
+        await HabitReminderProcessor.processAndNotify(message);
         break;
       default:
         throw UnimplementedError(

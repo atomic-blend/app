@@ -55,6 +55,15 @@ class Translations implements BaseTranslations<AppLocale, Translations> {
 		'duration': 'Duration',
 	};
 	late final TranslationsTimesEn times = TranslationsTimesEn._(_root);
+	Map<String, String> get days_of_week => {
+		'monday': 'Monday',
+		'tuesday': 'Tuesday',
+		'wednesday': 'Wednesday',
+		'thursday': 'Thursday',
+		'friday': 'Friday',
+		'saturday': 'Saturday',
+		'sunday': 'Sunday',
+	};
 	Map<String, dynamic> get days_before => {
 		'none': TranslationsDaysBeforeNoneEn._(_root),
 		'same_day': TranslationsDaysBeforeSameDayEn._(_root),
@@ -157,6 +166,7 @@ class TranslationsCalendarEn {
 	String get day => 'Day';
 	String get threeDays => '3 Days';
 	late final TranslationsCalendarEventDetailEn event_detail = TranslationsCalendarEventDetailEn._(_root);
+	late final TranslationsCalendarSettingsEn settings = TranslationsCalendarSettingsEn._(_root);
 }
 
 // Path: account
@@ -179,6 +189,15 @@ class TranslationsHabitsEn {
 
 	// Translations
 	String get title => 'Habits';
+	String get no_habits => 'No habits for now';
+	String get get_started_now => 'Add your first habit to get started!';
+	late final TranslationsHabitsAddEn add = TranslationsHabitsAddEn._(_root);
+	String get list => 'Habits';
+	String get overview => 'Overview';
+	String times_a_day({required Object nb}) => '${nb} times a day';
+	String times_a_week({required Object nb}) => '${nb} times a week';
+	String times_a_month({required Object nb}) => '${nb} times a month';
+	late final TranslationsHabitsHabitDetailEn habit_detail = TranslationsHabitsHabitDetailEn._(_root);
 }
 
 // Path: under_construction
@@ -409,6 +428,7 @@ class TranslationsActionsEn {
 	String get back => 'Back';
 	String get delete => 'Delete';
 	String get add => 'Add';
+	String get edit => 'Edit';
 }
 
 // Path: validation
@@ -432,6 +452,7 @@ class TranslationsNotificationsEn {
 	String get task_due_now => 'The task is due';
 	String get task_starting => 'The task is starting';
 	String task_starting_in({required Object time}) => 'The task is starting in ${time}';
+	String get habit_due_now => 'Perform the habit now, one less thing to do!';
 }
 
 // Path: time_units
@@ -795,6 +816,8 @@ class TranslationsTasksAddTaskModalEn {
 	String get task_title => 'What do you need to do?';
 	String get description => 'Description';
 	String get due_date => 'Due Date';
+	String get start_date => 'Start Date';
+	String get end_date => 'End Date';
 	String get cancel => 'Cancel';
 	String get save => 'Save';
 	String get erase => 'Erase';
@@ -839,6 +862,17 @@ class TranslationsCalendarEventDetailEn {
 	);
 }
 
+// Path: calendar.settings
+class TranslationsCalendarSettingsEn {
+	TranslationsCalendarSettingsEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	String get title => 'Calendar Settings';
+	String get display_habits => 'Display habits';
+}
+
 // Path: account.sections
 class TranslationsAccountSectionsEn {
 	TranslationsAccountSectionsEn._(this._root);
@@ -860,6 +894,72 @@ class TranslationsAccountActionsEn {
 	String get delete_account => 'Delete my Account';
 }
 
+// Path: habits.add
+class TranslationsHabitsAddEn {
+	TranslationsHabitsAddEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	String get title => 'What do you want to achieve?';
+	String get name => 'Habit name*';
+	String get name_hint => 'Drink water';
+	String get name_description => 'Define a name for your habit, this will help you remember what it is about and be shown in notifications.';
+	String get name_required => 'Name is required';
+	String get citation => 'Citation';
+	String get citation_description => 'Add a citation to your habit, this will help you remember why you are doing it and motivate you.';
+	String get citation_hint => '“Water is the only drink for a wise man.” — Henry David Thoreau';
+	String get start_date => 'Start date';
+	String get end_date => 'End date';
+	String get when_would_you_like_the_habit_to_start => 'When would you like the habit to start?';
+	String get when_would_you_like_the_habit_to_end => 'When would you like the habit to end?';
+	String get no_date_selected => 'No date selected';
+	String get frequency_label => 'Frequency';
+	Map<String, String> get frequency => {
+		'daily': 'Daily',
+		'weekly': 'Weekly',
+		'monthly': 'Monthly',
+		'repeatition': 'Repeatition',
+	};
+	String get number_of_times_label => 'Number of times';
+	String get number_of_times_description => 'How many times do you want to do this habit?\nEach time the frequency is reached, it will be reseted (for example, if you set it to 3 times and a daily frequency, you will have to do it 3 times a day).';
+	String get days_of_week_label => 'Days of the week';
+	String get days_of_week_description => 'On which days of the week do you want to do this habit?';
+	String get search_emoji_hint => 'Search for an emoji';
+	String get reminders_label => 'Reminders';
+	String get reminders_description => 'Set a time for your reminders. You will be notified when the time is reached.';
+	String get reminders_add => 'Add a reminder';
+	String get duration_label => 'Duration';
+	String get duration_description => 'How long do you want to do this habit?';
+	String get duration_hint => '5 minutes';
+	String get name_too_short => 'The name of the habit should be at least 4 characters long';
+	String get days_of_week_mismatch => 'You must select the same number of days as the number of times';
+	String get every_number_day_title => 'Repeatition in days';
+	String get every_number_day_description => 'How many days do you want to wait before repeating this habit?';
+	String get days_of_month_title => 'Days of the month';
+	String get days_of_month_description => 'On which days of the month do you want to do this habit?';
+	String get select_days => 'Select days';
+}
+
+// Path: habits.habit_detail
+class TranslationsHabitsHabitDetailEn {
+	TranslationsHabitsHabitDetailEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	String get no_citation => 'No citation';
+	String get no_end_date => 'No end date';
+	String get delete_habit => 'Delete habit';
+	String get delete_habit_description => 'Are you sure you want to delete this habit?';
+	String get delete_habit_warning => 'This action cannot be undone and all the related entries will also be deleted.';
+	String get entries => 'Entries';
+	String get no_entries => 'No entries for now';
+	String get delete_entry => 'Delete entry';
+	String get delete_entry_description => 'Are you sure you want to delete this entry?';
+	String get delete_entry_warning => 'This action cannot be undone.';
+}
+
 // Path: time_units.short
 class TranslationsTimeUnitsShortEn {
 	TranslationsTimeUnitsShortEn._(this._root);
@@ -879,9 +979,21 @@ class TranslationsTimeUnitsLongEn {
 	final Translations _root; // ignore: unused_field
 
 	// Translations
-	String get day => 'day';
-	String get hour => 'hour';
-	String get minute => 'minute';
+	String day({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n,
+		zero: 'days',
+		one: 'day',
+		other: 'days',
+	);
+	String hour({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n,
+		zero: 'hours',
+		one: 'hour',
+		other: 'hours',
+	);
+	String minute({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n,
+		zero: 'minutes',
+		one: 'minute',
+		other: 'minutes',
+	);
 }
 
 // Path: settings.app_settings.selfHostedUrl
@@ -978,6 +1090,8 @@ extension on Translations {
 			case 'tasks.add_task_modal.task_title': return 'What do you need to do?';
 			case 'tasks.add_task_modal.description': return 'Description';
 			case 'tasks.add_task_modal.due_date': return 'Due Date';
+			case 'tasks.add_task_modal.start_date': return 'Start Date';
+			case 'tasks.add_task_modal.end_date': return 'End Date';
 			case 'tasks.add_task_modal.cancel': return 'Cancel';
 			case 'tasks.add_task_modal.save': return 'Save';
 			case 'tasks.add_task_modal.erase': return 'Erase';
@@ -1015,11 +1129,66 @@ extension on Translations {
 				one: 'Attendee',
 				other: 'Attendees',
 			);
+			case 'calendar.settings.title': return 'Calendar Settings';
+			case 'calendar.settings.display_habits': return 'Display habits';
 			case 'account.edit_profile': return 'Edit Profile';
 			case 'account.sections.account': return 'Account';
 			case 'account.actions.security': return 'Security & Privacy';
 			case 'account.actions.delete_account': return 'Delete my Account';
 			case 'habits.title': return 'Habits';
+			case 'habits.no_habits': return 'No habits for now';
+			case 'habits.get_started_now': return 'Add your first habit to get started!';
+			case 'habits.add.title': return 'What do you want to achieve?';
+			case 'habits.add.name': return 'Habit name*';
+			case 'habits.add.name_hint': return 'Drink water';
+			case 'habits.add.name_description': return 'Define a name for your habit, this will help you remember what it is about and be shown in notifications.';
+			case 'habits.add.name_required': return 'Name is required';
+			case 'habits.add.citation': return 'Citation';
+			case 'habits.add.citation_description': return 'Add a citation to your habit, this will help you remember why you are doing it and motivate you.';
+			case 'habits.add.citation_hint': return '“Water is the only drink for a wise man.” — Henry David Thoreau';
+			case 'habits.add.start_date': return 'Start date';
+			case 'habits.add.end_date': return 'End date';
+			case 'habits.add.when_would_you_like_the_habit_to_start': return 'When would you like the habit to start?';
+			case 'habits.add.when_would_you_like_the_habit_to_end': return 'When would you like the habit to end?';
+			case 'habits.add.no_date_selected': return 'No date selected';
+			case 'habits.add.frequency_label': return 'Frequency';
+			case 'habits.add.frequency.daily': return 'Daily';
+			case 'habits.add.frequency.weekly': return 'Weekly';
+			case 'habits.add.frequency.monthly': return 'Monthly';
+			case 'habits.add.frequency.repeatition': return 'Repeatition';
+			case 'habits.add.number_of_times_label': return 'Number of times';
+			case 'habits.add.number_of_times_description': return 'How many times do you want to do this habit?\nEach time the frequency is reached, it will be reseted (for example, if you set it to 3 times and a daily frequency, you will have to do it 3 times a day).';
+			case 'habits.add.days_of_week_label': return 'Days of the week';
+			case 'habits.add.days_of_week_description': return 'On which days of the week do you want to do this habit?';
+			case 'habits.add.search_emoji_hint': return 'Search for an emoji';
+			case 'habits.add.reminders_label': return 'Reminders';
+			case 'habits.add.reminders_description': return 'Set a time for your reminders. You will be notified when the time is reached.';
+			case 'habits.add.reminders_add': return 'Add a reminder';
+			case 'habits.add.duration_label': return 'Duration';
+			case 'habits.add.duration_description': return 'How long do you want to do this habit?';
+			case 'habits.add.duration_hint': return '5 minutes';
+			case 'habits.add.name_too_short': return 'The name of the habit should be at least 4 characters long';
+			case 'habits.add.days_of_week_mismatch': return 'You must select the same number of days as the number of times';
+			case 'habits.add.every_number_day_title': return 'Repeatition in days';
+			case 'habits.add.every_number_day_description': return 'How many days do you want to wait before repeating this habit?';
+			case 'habits.add.days_of_month_title': return 'Days of the month';
+			case 'habits.add.days_of_month_description': return 'On which days of the month do you want to do this habit?';
+			case 'habits.add.select_days': return 'Select days';
+			case 'habits.list': return 'Habits';
+			case 'habits.overview': return 'Overview';
+			case 'habits.times_a_day': return ({required Object nb}) => '${nb} times a day';
+			case 'habits.times_a_week': return ({required Object nb}) => '${nb} times a week';
+			case 'habits.times_a_month': return ({required Object nb}) => '${nb} times a month';
+			case 'habits.habit_detail.no_citation': return 'No citation';
+			case 'habits.habit_detail.no_end_date': return 'No end date';
+			case 'habits.habit_detail.delete_habit': return 'Delete habit';
+			case 'habits.habit_detail.delete_habit_description': return 'Are you sure you want to delete this habit?';
+			case 'habits.habit_detail.delete_habit_warning': return 'This action cannot be undone and all the related entries will also be deleted.';
+			case 'habits.habit_detail.entries': return 'Entries';
+			case 'habits.habit_detail.no_entries': return 'No entries for now';
+			case 'habits.habit_detail.delete_entry': return 'Delete entry';
+			case 'habits.habit_detail.delete_entry_description': return 'Are you sure you want to delete this entry?';
+			case 'habits.habit_detail.delete_entry_warning': return 'This action cannot be undone.';
 			case 'under_construction.title': return 'We\'re working on it!';
 			case 'under_construction.description': return 'This feature is not yet available, but we\'re working hard to bring it to you soon.\n\nStay tuned!';
 			case 'more.title': return 'More';
@@ -1035,6 +1204,13 @@ extension on Translations {
 			case 'times.this_year': return 'This year';
 			case 'times.last_year': return 'Last year';
 			case 'times.all_time': return 'All time';
+			case 'days_of_week.monday': return 'Monday';
+			case 'days_of_week.tuesday': return 'Tuesday';
+			case 'days_of_week.wednesday': return 'Wednesday';
+			case 'days_of_week.thursday': return 'Thursday';
+			case 'days_of_week.friday': return 'Friday';
+			case 'days_of_week.saturday': return 'Saturday';
+			case 'days_of_week.sunday': return 'Sunday';
 			case 'days_before.none.value': return '0';
 			case 'days_before.none.label': return 'None';
 			case 'days_before.same_day.value': return 'same_day';
@@ -1072,6 +1248,7 @@ extension on Translations {
 			case 'actions.back': return 'Back';
 			case 'actions.delete': return 'Delete';
 			case 'actions.add': return 'Add';
+			case 'actions.edit': return 'Edit';
 			case 'validation.required': return 'Required';
 			case 'validation.invalid_url': return 'invalid URL';
 			case 'errors.wrong_email_password': return 'Email or password incorrect';
@@ -1080,12 +1257,25 @@ extension on Translations {
 			case 'notifications.task_due_now': return 'The task is due';
 			case 'notifications.task_starting': return 'The task is starting';
 			case 'notifications.task_starting_in': return ({required Object time}) => 'The task is starting in ${time}';
+			case 'notifications.habit_due_now': return 'Perform the habit now, one less thing to do!';
 			case 'time_units.short.day': return 'd';
 			case 'time_units.short.hour': return 'h';
 			case 'time_units.short.minute': return 'm';
-			case 'time_units.long.day': return 'day';
-			case 'time_units.long.hour': return 'hour';
-			case 'time_units.long.minute': return 'minute';
+			case 'time_units.long.day': return ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n,
+				zero: 'days',
+				one: 'day',
+				other: 'days',
+			);
+			case 'time_units.long.hour': return ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n,
+				zero: 'hours',
+				one: 'hour',
+				other: 'hours',
+			);
+			case 'time_units.long.minute': return ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n,
+				zero: 'minutes',
+				one: 'minute',
+				other: 'minutes',
+			);
 			case 'name_generator.animals.0': return 'bat';
 			case 'name_generator.animals.1': return 'owl';
 			case 'name_generator.animals.2': return 'fox';
