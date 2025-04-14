@@ -179,6 +179,7 @@ class TranslationsAccountEn {
 	String get edit_profile => 'Edit Profile';
 	late final TranslationsAccountSectionsEn sections = TranslationsAccountSectionsEn._(_root);
 	late final TranslationsAccountActionsEn actions = TranslationsAccountActionsEn._(_root);
+	late final TranslationsAccountProfileEn profile = TranslationsAccountProfileEn._(_root);
 }
 
 // Path: habits
@@ -894,6 +895,18 @@ class TranslationsAccountActionsEn {
 	String get delete_account => 'Delete my Account';
 }
 
+// Path: account.profile
+class TranslationsAccountProfileEn {
+	TranslationsAccountProfileEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	String get my_profile => 'My Profile';
+	String get email => 'Email';
+	String get undefined => 'Undefined';
+}
+
 // Path: habits.add
 class TranslationsHabitsAddEn {
 	TranslationsHabitsAddEn._(this._root);
@@ -1135,6 +1148,9 @@ extension on Translations {
 			case 'account.sections.account': return 'Account';
 			case 'account.actions.security': return 'Security & Privacy';
 			case 'account.actions.delete_account': return 'Delete my Account';
+			case 'account.profile.my_profile': return 'My Profile';
+			case 'account.profile.email': return 'Email';
+			case 'account.profile.undefined': return 'Undefined';
 			case 'habits.title': return 'Habits';
 			case 'habits.no_habits': return 'No habits for now';
 			case 'habits.get_started_now': return 'Add your first habit to get started!';
