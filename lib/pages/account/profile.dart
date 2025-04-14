@@ -1,5 +1,6 @@
 import 'package:app/blocs/auth/auth.bloc.dart';
 import 'package:app/i18n/strings.g.dart';
+import 'package:app/pages/account/profile_edit.dart';
 import 'package:app/pages/account/profile_info.dart';
 import 'package:app/utils/constants.dart';
 import 'package:app/utils/name_generator.dart';
@@ -34,11 +35,18 @@ class UserProfileState extends State<UserProfile> {
         actions: [
           Padding(
             padding: EdgeInsets.only(right: $constants.insets.sm),
-            child: IconButton(onPressed: (){
-              setState(() {
-                _editMode = !_editMode!;
-              });
-            }, icon: Icon(_editMode == true ? CupertinoIcons.floppy_disk : CupertinoIcons.pencil, size: 30,)),
+            child: IconButton(
+                onPressed: () {
+                  setState(() {
+                    _editMode = !_editMode!;
+                  });
+                },
+                icon: Icon(
+                  _editMode == true
+                      ? CupertinoIcons.floppy_disk
+                      : CupertinoIcons.pencil,
+                  size: 30,
+                )),
           ),
         ],
       ),
@@ -77,7 +85,8 @@ class UserProfileState extends State<UserProfile> {
               SizedBox(
                 height: $constants.insets.md,
               ),
-              if (_editMode != true) const UserProfileInfos()
+              if (_editMode != true) const UserProfileInfos(),
+              if (_editMode == true) const Expanded(child: UserProfileEdit()),
             ],
           ),
         );

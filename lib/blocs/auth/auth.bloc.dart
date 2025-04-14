@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:app/entities/user/user.entity.dart';
 import 'package:app/entities/user_device/user_device.dart';
 import 'package:app/services/user.service.dart';
@@ -18,6 +20,7 @@ class AuthBloc extends HydratedBloc<AuthEvent, AuthState> {
     on<RefreshUser>(_onRefreshUser);
     on<DeleteUser>(_onDeleteUser);
     on<UpdateUserDevice>(_onUpdateUserDevice);
+    on<UpdateUserProfile>(_onUpdateUserProfile);
   }
 
   void _onLogOut(Logout event, Emitter<AuthState> emit) async {
@@ -95,6 +98,22 @@ class AuthBloc extends HydratedBloc<AuthEvent, AuthState> {
       user,
       event.deviceInfo,
     );
+    emit(LoggedIn(updatedUser, false));
+  }
+
+  FutureOr<void> _onUpdateUserProfile(
+      UpdateUserProfile event, Emitter<AuthState> emit) async {
+    final prevState = state;
+    if (state.user == null) {
+      emit(const LoggedOut());
+    }
+    emit(const UserUpdateProfileLoading());
+    final user = prevState.user!;
+    final updatedUser = await _userService.updateUserProfile(
+      user.id!,
+      event.user,
+    );
+    emit(UserUpdateProfileSuccess(updatedUser));
     emit(LoggedIn(updatedUser, false));
   }
 }

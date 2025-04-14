@@ -167,4 +167,16 @@ class UserService {
 
     return accessToken;
   }
+
+  updateUserProfile(String userId, UserEntity userPayload) async {
+    final result =
+        await globalApiClient.put('/users/profile', data: userPayload);
+    if (result.statusCode == 200) {
+      final user = UserEntity.fromJson(result.data["data"]);
+      prefs?.setString('user', json.encode(user.toJson()));
+      return user;
+    } else {
+      throw Exception('user_update_failed');
+    }
+  }
 }

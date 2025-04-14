@@ -33,3 +33,8 @@ final class UpdateUserDevice extends AuthEvent {
   final UserDeviceEntity deviceInfo;
   const UpdateUserDevice(this.user, this.deviceInfo);
 }
+
+final class UpdateUserProfile extends AuthEvent {
+  final UserEntity user;
+  const UpdateUserProfile(this.user);
+}
