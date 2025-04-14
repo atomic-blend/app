@@ -33,21 +33,20 @@ class UserProfileState extends State<UserProfile> {
               ),
         ),
         actions: [
-          Padding(
-            padding: EdgeInsets.only(right: $constants.insets.sm),
-            child: IconButton(
-                onPressed: () {
-                  setState(() {
-                    _editMode = !_editMode!;
-                  });
-                },
-                icon: Icon(
-                  _editMode == true
-                      ? CupertinoIcons.floppy_disk
-                      : CupertinoIcons.pencil,
-                  size: 30,
-                )),
-          ),
+          if (_editMode != true)
+            Padding(
+              padding: EdgeInsets.only(right: $constants.insets.sm),
+              child: IconButton(
+                  onPressed: () {
+                    setState(() {
+                      _editMode = true;
+                    });
+                  },
+                  icon: const Icon(
+                    CupertinoIcons.pencil,
+                    size: 30,
+                  )),
+            ),
         ],
       ),
       body: BlocBuilder<AuthBloc, AuthState>(builder: (context, authState) {
