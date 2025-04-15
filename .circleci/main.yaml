@@ -158,12 +158,6 @@ jobs:
     steps:
       - checkout:
           path: ~/project
-      - go/load-cache # Load Go module cache if available
-
-      - go/mod-download # Download Go modules
-
-      - go/save-cache # Save Go module cache for future runs
-
       - run:
           name: Install ghr
           command: |
