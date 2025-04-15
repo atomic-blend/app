@@ -2,6 +2,14 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## 0.4.4 - 2025-04-15
+#### Bug Fixes
+- try persisting changelog file for gh release step - (184bd0e) - Brandon Guigo
+#### Miscellaneous Chores
+- **(release)** 0.4.3 [skip ci] - (9f58d7c) - CircleCI
+
+- - -
+
 ## 0.4.3 - 2025-04-15
 #### Bug Fixes
 - remove go cache - (7a1dd89) - Brandon Guigo
