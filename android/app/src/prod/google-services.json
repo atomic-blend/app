@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "840843408515",
+    "project_id": "atomic-blend-prod",
+    "storage_bucket": "atomic-blend-prod.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:840843408515:android:d4bf35b96dae31bca257b6",
+        "android_client_info": {
+          "package_name": "fr.atomicblend.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDE8tcKiJZN9iyEM8kRXOW9M3mQrnPJWUQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

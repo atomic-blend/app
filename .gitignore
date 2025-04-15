@@ -1,4 +1,4 @@
-**/*.json
+**/configs/*.json
 !**/*.example.json
 
 **/GoogleService-Info.plist
