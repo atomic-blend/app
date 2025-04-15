@@ -164,7 +164,7 @@ class _DeviceEventDetailState extends State<DeviceEventDetail> {
               ),
               Row(
                 children: [
-                  if (widget.event.attendees?.length != 0)
+                  if (widget.event.attendees?.isNotEmpty == true)
                     Expanded(
                       child: Column(
                         mainAxisSize: MainAxisSize.min,

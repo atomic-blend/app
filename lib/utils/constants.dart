@@ -132,12 +132,14 @@ class Navigation {
               ],
             ),
             actions: [
-              IconButton(onPressed: (){
-                showModalBottomSheet(
-                    isScrollControlled: true,
-                    context: context,
-                    builder: (context) => const CalendarSettings());
-              }, icon: Icon(CupertinoIcons.settings)),
+              IconButton(
+                  onPressed: () {
+                    showModalBottomSheet(
+                        isScrollControlled: true,
+                        context: context,
+                        builder: (context) => const CalendarSettings());
+                  },
+                  icon: const Icon(CupertinoIcons.settings)),
               SizedBox(
                 width: $constants.insets.sm,
               ),

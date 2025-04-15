@@ -51,7 +51,7 @@ class _HabitDetailState extends State<HabitDetail> {
                   children: [
                     Text(
                       habit?.emoji != null && habit!.emoji != ""
-                          ? habit!.emoji!
+                          ? habit.emoji!
                           : "📋",
                       style: const TextStyle(fontSize: 30),
                     ),
@@ -235,8 +235,9 @@ class _HabitDetailState extends State<HabitDetail> {
                                                           .habit_detail
                                                           .delete_entry_warning,
                                                       onDelete: () {
-                                                        if (!context.mounted)
+                                                        if (!context.mounted) {
                                                           return;
+                                                        }
                                                         context
                                                             .read<HabitBloc>()
                                                             .add(

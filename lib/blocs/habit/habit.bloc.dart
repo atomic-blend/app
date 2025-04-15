@@ -4,6 +4,7 @@ import 'package:app/entities/habit/habit.entity.dart';
 import 'package:app/entities/habit/habit_entry/habit_entry.entity.dart';
 import 'package:app/services/habit_service.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/foundation.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 
 part 'habit.event.dart';
@@ -63,7 +64,9 @@ class HabitBloc extends HydratedBloc<HabitEvent, HabitState> {
       emit(HabitCreated(prevState.habits ?? []));
       add(const LoadHabits());
     } catch (e) {
-      print(e.toString());
+      if (kDebugMode) {
+        print(e.toString());
+      }
       emit(HabitLoadingError(prevState.habits ?? [], e.toString()));
     }
   }

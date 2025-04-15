@@ -54,3 +54,17 @@ class UserDeleted extends AuthState {
   @override
   String toString() => 'UserDeleted { }';
 }
+
+class UserUpdateProfileLoading extends AuthState {
+  const UserUpdateProfileLoading() : super(null);
+
+  @override
+  String toString() => 'UserUpdateProfileLoading { }';
+}
+
+class UserUpdateProfileSuccess extends AuthState {
+  const UserUpdateProfileSuccess(UserEntity super.user);
+
+  @override
+  String toString() => 'UserUpdateProfileSuccess { user: $user }';
+}

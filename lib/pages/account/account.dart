@@ -3,6 +3,7 @@ import 'package:app/components/buttons/icon_text_button.dart';
 import 'package:app/components/buttons/primary_button_round.dart';
 import 'package:app/components/modals/delete_account_modal.dart';
 import 'package:app/i18n/strings.g.dart';
+import 'package:app/pages/account/profile.dart';
 import 'package:app/utils/constants.dart';
 import 'package:app/utils/name_generator.dart';
 import 'package:app/utils/shortcuts.dart';
@@ -80,6 +81,13 @@ class _AccountState extends State<Account> {
                       color: getTheme(context).surface,
                     ),
                     text: context.t.account.edit_profile,
+                    onPressed: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => const UserProfile(),
+                        ),
+                      );
+                    },
                   ),
                   SizedBox(
                     height: $constants.insets.lg,
