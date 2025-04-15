@@ -149,6 +149,71 @@ jobs:
             git push https://${GITHUB_PAT}@github.com/${GITHUB_ORG_NAME}/${GITHUB_REPO_NAME}.git main
             git push https://${GITHUB_PAT}@github.com/${GITHUB_ORG_NAME}/${GITHUB_REPO_NAME}.git tag $(git describe --abbrev=0 --tags)
 
+  create_github_release:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: medium
+    working_directory: ~/project
+    steps:
+      - checkout:
+          path: ~/project
+      - go/load-cache # Load Go module cache if available
+
+      - go/mod-download # Download Go modules
+
+      - go/save-cache # Save Go module cache for future runs
+
+      - run:
+          name: Install ghr
+          command: |
+            go install github.com/tcnksm/ghr@latest
+      - run:
+          name: Create GitHub Release
+          command: |
+            echo "Creating GitHub release"
+            TAG=$(git describe --abbrev=0 --tags)
+            echo "Release tag: $TAG"
+
+            # Extract changelog for the current version - improved approach
+            # Handle tags with or without 'v' prefix
+            CLEAN_TAG=$(echo "$TAG" | sed 's/^v//')
+            echo "Clean tag for changelog matching: $CLEAN_TAG"
+
+            CHANGELOG=""
+            if [ -f "CHANGELOG.md" ]; then
+              # First try exact match with the tag format in the file
+              CHANGELOG=$(sed -n "/^## $TAG - /,/^## /p" CHANGELOG.md | sed '1d;$d')
+              
+              # If nothing found, try without the 'v' prefix
+              if [ -z "$CHANGELOG" ]; then
+                CHANGELOG=$(sed -n "/^## $CLEAN_TAG - /,/^## /p" CHANGELOG.md | sed '1d;$d')
+              fi
+              
+              # If still nothing, look for formats like [x.y.z]
+              if [ -z "$CHANGELOG" ]; then
+                CHANGELOG=$(sed -n "/^## \[$CLEAN_TAG\] - /,/^## /p" CHANGELOG.md | sed '1d;$d')
+              fi
+            fi
+
+            echo "CHANGELOG content:"
+            echo "$CHANGELOG"
+
+            echo "Release $TAG" > release_notes.md
+            echo "" >> release_notes.md
+            echo "$CHANGELOG" >> release_notes.md
+
+            echo "Release notes: $(cat release_notes.md)"
+
+            echo "Creating GitHub release with tag $TAG"
+            ghr -t ${GITHUB_PAT} \
+                -u ${GITHUB_ORG_NAME} \
+                -r ${GITHUB_REPO_NAME} \
+                -n "v$TAG" \
+                -b "$(cat release_notes.md)" \
+                -c $(git rev-parse HEAD) \
+                $TAG 
+            echo "GitHub release created successfully"
+
 workflows:
   version: 2
   test:
@@ -157,3 +222,6 @@ workflows:
       - bump-version:
           requires:
             - test-coverage
+      - create_github_release:
+          requires:
+            - bump-version
