@@ -1,0 +1,159 @@
+version: 2.1
+
+# Import required orbs
+orbs:
+  codecov: codecov/codecov@5.3.0 # Codecov orb for uploading coverage reports
+  flutter: circleci/flutter@2.1.0
+
+parameters:
+  cocogitto_version:
+    type: string
+    default: "6.2.0" # Set your desired default version here
+  flutter_version:
+    type: string
+    default: "3.29.2" # Set your desired default version here
+
+jobs:
+  test-coverage:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: medium
+    working_directory: ~/project
+    parameters:
+      flutter_version:
+        type: string
+        default: << pipeline.parameters.flutter_version >>
+    steps:
+      - checkout:
+          path: ~/project
+
+      - flutter/install_sdk_and_pub:
+          channel: stable
+          version: << parameters.flutter_version >>
+
+      - run:
+          name: Lint
+          command: |
+            dart analyze --fatal-infos
+      - run:
+          name: Test
+          command: |
+            dart test --coverage=coverage
+            dart pub global activate coverage
+            ~/.pub-cache/bin/format_coverage --lcov --in=coverage --out=coverage.lcov --report-on=lib
+      - store_artifacts:
+          path: coverage.lcov
+          destination: coverage-report
+
+      - codecov/upload:
+          files: "coverage.lcov"
+          slug: atomic-blend/app
+
+  bump-version:
+    parameters:
+      cocogitto_version:
+        type: string
+        default: << pipeline.parameters.cocogitto_version >>
+    machine:
+      image: ubuntu-2204:current
+    resource_class: medium
+    working_directory: ~/project
+    steps:
+      - checkout:
+          path: ~/project
+      - run:
+          name: Configure git
+          command: |
+            git config credential.helper 'cache --timeout=120'
+            git config user.email "pro@brandonguigo.com"
+            git config user.name "CircleCI"
+
+      # Check for cached cocogitto installation
+      - restore_cache:
+          keys:
+            - cocogitto-v<< parameters.cocogitto_version >>
+
+      # Check if cocogitto is installed from cache
+      - run:
+          name: Check for cached cocogitto
+          command: |
+            if [ -f "/home/circleci/.cargo/bin/cog" ]; then
+              echo "Cocogitto found in cache"
+              /home/circleci/.cargo/bin/cog --version
+              echo 'export PATH=$HOME/.cargo/bin:$PATH' >> $BASH_ENV
+              source $BASH_ENV
+            else
+              echo "Cocogitto not found in cache, will install"
+            fi
+
+      # Install Rust and Cocogitto if not in cache
+      - run:
+          name: Download rustup
+          command: |
+            if [ ! -f "/home/circleci/.cargo/bin/cog" ]; then
+              wget https://static.rust-lang.org/rustup/dist/x86_64-unknown-linux-gnu/rustup-init
+              chmod +x rustup-init
+            fi
+
+      - run:
+          name: Install Rust
+          command: |
+            if [ ! -f "/home/circleci/.cargo/bin/cog" ]; then
+              ./rustup-init -y --no-modify-path --default-toolchain nightly
+              rm rustup-init
+              echo 'export PATH=$HOME/.cargo/bin:$PATH' >> $BASH_ENV
+              source $BASH_ENV
+            fi
+
+      - run:
+          name: Install Cocogitto
+          command: |
+            if [ ! -f "/home/circleci/.cargo/bin/cog" ]; then
+              cargo install cocogitto --version << parameters.cocogitto_version >>
+            fi
+          environment:
+            RUSTFLAGS: --cfg procmacro2_semver_exempt
+
+      # Save cache after installation
+      - save_cache:
+          key: cocogitto-v<< parameters.cocogitto_version >>
+          paths:
+            - /home/circleci/.cargo/bin/cog
+            - /home/circleci/.cargo/registry
+            - /home/circleci/.cargo/bin/cargo-install-update
+            - /home/circleci/.cargo/bin/cargo-update
+
+      - run:
+          name: Check conventional commits validity
+          command: |
+            cog check
+
+      - run:
+          name: Bump version
+          command: |
+            cog bump --auto
+
+      - run:
+          name: Commit and push changes
+          command: |
+            TAG=$(git describe --abbrev=0 --tags) 
+            # Check if there are changes to commit
+            if git diff --quiet HEAD; then
+              echo "No changes to commit"
+            else
+              ./cog_bump.sh $TAG
+              git add pubspec.yaml
+              git add CHANGELOG.md
+              git commit -m "chore(release): $(git describe --abbrev=0 --tags) [skip ci]"
+            fi
+            git push https://${GITHUB_PAT}@github.com/${GITHUB_ORG_NAME}/${GITHUB_REPO_NAME}.git main
+            git push https://${GITHUB_PAT}@github.com/${GITHUB_ORG_NAME}/${GITHUB_REPO_NAME}.git tag $(git describe --abbrev=0 --tags)
+
+workflows:
+  version: 2
+  test:
+    jobs:
+      - test-coverage
+      - bump-version:
+          requires:
+            - test-coverage

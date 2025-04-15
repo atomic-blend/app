@@ -4,6 +4,8 @@
 **/GoogleService-Info.plist
 **/firebase_options_*.dart
 
+coverage.lcov
+
 # Do not remove or rename entries in this file, only add new ones
 # See https://github.com/flutter/flutter/issues/128635 for more context.
 
