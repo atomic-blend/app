@@ -149,6 +149,10 @@ jobs:
             fi
             git push https://${GITHUB_PAT}@github.com/${GITHUB_ORG_NAME}/${GITHUB_REPO_NAME}.git main
             git push https://${GITHUB_PAT}@github.com/${GITHUB_ORG_NAME}/${GITHUB_REPO_NAME}.git tag $(git describe --abbrev=0 --tags)
+      - persist_to_workspace:
+          root: ~/project
+          paths:
+            - CHANGELOG.md
 
   create_github_release:
     machine:
