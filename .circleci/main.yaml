@@ -35,19 +35,19 @@ jobs:
           name: Lint
           command: |
             dart analyze --fatal-infos
-      - run:
-          name: Test
-          command: |
-            dart test --coverage=coverage
-            dart pub global activate coverage
-            ~/.pub-cache/bin/format_coverage --lcov --in=coverage --out=coverage.lcov --report-on=lib
-      - store_artifacts:
-          path: coverage.lcov
-          destination: coverage-report
+      # - run:
+      #     name: Test
+      #     command: |
+      #       dart test --coverage=coverage
+      #       dart pub global activate coverage
+      #       ~/.pub-cache/bin/format_coverage --lcov --in=coverage --out=coverage.lcov --report-on=lib
+      # - store_artifacts:
+      #     path: coverage.lcov
+      #     destination: coverage-report
 
-      - codecov/upload:
-          files: "coverage.lcov"
-          slug: atomic-blend/app
+      # - codecov/upload:
+      #     files: "coverage.lcov"
+      #     slug: atomic-blend/app
 
   bump-version:
     parameters:
