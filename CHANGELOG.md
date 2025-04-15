@@ -2,6 +2,14 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## 0.4.3 - 2025-04-15
+#### Bug Fixes
+- remove go cache - (7a1dd89) - Brandon Guigo
+#### Miscellaneous Chores
+- **(release)** 0.4.2 [skip ci] - (30ea2e7) - CircleCI
+
+- - -
+
 ## 0.4.2 - 2025-04-15
 #### Bug Fixes
 - add missing orb for gh release - (fd58e4e) - Brandon Guigo
