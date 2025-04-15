@@ -4,7 +4,6 @@ import 'package:app/entities/habit/habit.entity.dart';
 import 'package:app/entities/habit/habit_entry/habit_entry.entity.dart';
 import 'package:app/i18n/strings.g.dart';
 import 'package:app/pages/habits/add_or_edit_habit_modal.dart';
-import 'package:app/pages/habits/habit_detail.dart';
 import 'package:app/pages/habits/habit_heatmap.dart';
 import 'package:app/utils/constants.dart';
 import 'package:app/utils/shortcuts.dart';
@@ -13,7 +12,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_heatmap_calendar/flutter_heatmap_calendar.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:lottie/lottie.dart';
 import 'package:percent_indicator/percent_indicator.dart';
@@ -280,6 +278,7 @@ class _HabitsState extends State<Habits> {
         }
         break;
     }
+    return null;
   }
 
   _heatMapView(BuildContext context, List<Habit> habits) {

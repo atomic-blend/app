@@ -8,7 +8,6 @@ import 'package:app/entities/tasks/tasks.entity.dart';
 import 'package:app/pages/calendar/custom_appointment.dart';
 import 'package:app/pages/calendar/custom_calendar_data_source.dart';
 import 'package:app/pages/calendar/device_event_detail.dart';
-import 'package:app/pages/settings/screens/app_settings.dart';
 import 'package:app/pages/tasks/task_detail.dart';
 import 'package:app/utils/constants.dart';
 import 'package:app/utils/exntensions/date_time_extension.dart';
@@ -406,7 +405,7 @@ class _CalendarState extends State<Calendar> {
     }
 
     // Add habits
-    if (context.read<AppCubit>().state?.displayHabitsInCalendar == true) {
+    if (context.read<AppCubit>().state.displayHabitsInCalendar == true) {
       final habitAppointments = _getHabitDataSource(habits);
       if (habitAppointments.appointments != null) {
         appointments
