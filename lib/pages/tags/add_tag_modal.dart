@@ -130,7 +130,14 @@ class _AddTagModalState extends State<AddTagModal> {
                             ),
                           );
                     } else {
-                      //TODO: send the update to the backend
+                      context.read<TagBloc>().add(
+                            EditTag(
+                              widget.tag!.copyWith(
+                                name: _nameController.text,
+                                color: _color?.hexCode,
+                              ),
+                            ),
+                          );
                     }
                   },
                 ),

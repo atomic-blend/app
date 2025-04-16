@@ -36,4 +36,14 @@ class TagService {
       throw Exception('tag_delete_failed');
     }
   }
+
+  Future<bool> editTag(TagEntity tag) async {
+    final result = await globalApiClient.put('/tags/${tag.id}',
+        data: await tag.encrypt(encryptionService: encryptionService!));
+    if (result.statusCode == 200) {
+      return true;
+    } else {
+      throw Exception('tag_update_failed');
+    }
+  }
 }

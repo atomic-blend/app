@@ -19,3 +19,9 @@ final class DeleteTag extends TagEvent {
 
   const DeleteTag(this.tagId);
 }
+
+final class EditTag extends TagEvent {
+  final TagEntity tag;
+
+  const EditTag(this.tag);
+}
