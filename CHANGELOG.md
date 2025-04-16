@@ -2,6 +2,14 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## 0.4.5 - 2025-04-16
+#### Bug Fixes
+- restore the changelog in the create gh release job - (6a19889) - Brandon Guigo
+#### Miscellaneous Chores
+- **(release)** 0.4.4 [skip ci] - (eec85fb) - CircleCI
+
+- - -
+
 ## 0.4.4 - 2025-04-15
 #### Bug Fixes
 - try persisting changelog file for gh release step - (184bd0e) - Brandon Guigo
