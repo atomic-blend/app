@@ -1,3 +1,4 @@
+import 'package:app/entities/tag/tag.entity.dart';
 import 'package:app/services/encryption.service.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -15,6 +16,7 @@ class TaskEntity with _$TaskEntity {
     DateTime? endDate,
     DateTime? createdAt,
     DateTime? updatedAt,
+    List<TagEntity>? tags,
     List<DateTime>? reminders,
     bool? completed,
   }) = _TaskEntity;
@@ -26,6 +28,7 @@ class TaskEntity with _$TaskEntity {
     'user',
     'reminders',
     'startDate',
+    'tags',
     'endDate',
     'completed'
   ];
