@@ -44,6 +44,7 @@ class Translations implements BaseTranslations<AppLocale, Translations> {
 	late final TranslationsNavigationEn navigation = TranslationsNavigationEn._(_root);
 	late final TranslationsAuthEn auth = TranslationsAuthEn._(_root);
 	late final TranslationsSettingsEn settings = TranslationsSettingsEn._(_root);
+	late final TranslationsTagsEn tags = TranslationsTagsEn._(_root);
 	late final TranslationsTasksEn tasks = TranslationsTasksEn._(_root);
 	late final TranslationsCalendarEn calendar = TranslationsCalendarEn._(_root);
 	late final TranslationsAccountEn account = TranslationsAccountEn._(_root);
@@ -131,6 +132,16 @@ class TranslationsSettingsEn {
 	String get title => 'Settings';
 	late final TranslationsSettingsAppSettingsEn app_settings = TranslationsSettingsAppSettingsEn._(_root);
 	String get logout => 'Logout';
+}
+
+// Path: tags
+class TranslationsTagsEn {
+	TranslationsTagsEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	String get title => 'Tags';
 }
 
 // Path: tasks
@@ -1089,6 +1100,7 @@ extension on Translations {
 			case 'settings.app_settings.selfHostedUrl.placeholder': return 'Enter the URL of your instance';
 			case 'settings.app_settings.selfHostedUrl.not_set': return 'Not set';
 			case 'settings.logout': return 'Logout';
+			case 'tags.title': return 'Tags';
 			case 'tasks.title': return 'Tasks';
 			case 'tasks.today': return 'Today';
 			case 'tasks.overview': return 'Overview';

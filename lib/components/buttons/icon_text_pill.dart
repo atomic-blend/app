@@ -14,8 +14,11 @@ class IconTextPill extends StatelessWidget {
   const IconTextPill(
       {super.key,
       required this.title,
-      required this.icon,
-      this.iconSize, this.height, this.width, this.color});
+      this.icon,
+      this.iconSize,
+      this.height,
+      this.width,
+      this.color});
 
   @override
   Widget build(BuildContext context) {

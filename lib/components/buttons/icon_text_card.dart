@@ -6,60 +6,63 @@ import 'package:flutter/material.dart';
 
 class IconTextCard extends StatelessWidget {
   final String title;
-  final String value;
+  final String? value;
+  final double? width;
   final IconData icon;
   final double? iconSize;
   const IconTextCard(
       {super.key,
       required this.title,
-      required this.value,
+      this.value,
       required this.icon,
-      this.iconSize});
+      this.iconSize,
+      this.width});
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: Container(
-        decoration: BoxDecoration(
-          color: getTheme(context).surfaceContainerHigh,
-          borderRadius: BorderRadius.circular(
-            $constants.corners.sm,
-          ),
+    return Container(
+      width: width,
+      decoration: BoxDecoration(
+        color: getTheme(context).surfaceContainerHigh,
+        borderRadius: BorderRadius.circular(
+          $constants.corners.sm,
         ),
-        padding: EdgeInsets.all($constants.insets.sm),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Icon(
-                  icon,
-                  size: iconSize ?? 20,
-                ),
-                SizedBox(
-                  width: $constants.insets.xs,
-                ),
-                Text(
-                  title,
-                  style: getTextTheme(context).bodyLarge!.copyWith(
-                        fontWeight: FontWeight.bold,
-                      ),
-                )
-              ],
-            ),
+      ),
+      padding: EdgeInsets.all($constants.insets.sm),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(
+                icon,
+                size: iconSize ?? 20,
+              ),
+              SizedBox(
+                width: $constants.insets.xs,
+              ),
+              Text(
+                title,
+                style: getTextTheme(context).bodyLarge!.copyWith(
+                      fontWeight: FontWeight.bold,
+                    ),
+              )
+            ],
+          ),
+          if (value != null) ...[
             SizedBox(
               height: $constants.insets.sm,
             ),
             AutoSizeText(
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              value,
+              value!,
               style: getTextTheme(context).bodyMedium!.copyWith(),
             ),
-          ],
-        ),
+          ]
+        ],
       ),
     );
   }

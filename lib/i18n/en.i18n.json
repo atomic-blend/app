@@ -81,6 +81,9 @@
         },
         "logout": "Logout"
     },
+    "tags": {
+        "title": "Tags"
+    },
     "tasks": {
         "title": "Tasks",
         "today": "Today",

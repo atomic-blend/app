@@ -81,6 +81,9 @@
         },
         "logout": "Déconnexion"
     },
+    "tags": {
+        "title": "Tags"
+    },
     "tasks": {
         "title": "Tâches",
         "today": "Aujourd'hui",

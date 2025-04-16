@@ -41,6 +41,7 @@ class TranslationsFr implements Translations {
 	@override late final _TranslationsNavigationFr navigation = _TranslationsNavigationFr._(_root);
 	@override late final _TranslationsAuthFr auth = _TranslationsAuthFr._(_root);
 	@override late final _TranslationsSettingsFr settings = _TranslationsSettingsFr._(_root);
+	@override late final _TranslationsTagsFr tags = _TranslationsTagsFr._(_root);
 	@override late final _TranslationsTasksFr tasks = _TranslationsTasksFr._(_root);
 	@override late final _TranslationsCalendarFr calendar = _TranslationsCalendarFr._(_root);
 	@override late final _TranslationsAccountFr account = _TranslationsAccountFr._(_root);
@@ -128,6 +129,16 @@ class _TranslationsSettingsFr implements TranslationsSettingsEn {
 	@override String get title => 'Paramètres';
 	@override late final _TranslationsSettingsAppSettingsFr app_settings = _TranslationsSettingsAppSettingsFr._(_root);
 	@override String get logout => 'Déconnexion';
+}
+
+// Path: tags
+class _TranslationsTagsFr implements TranslationsTagsEn {
+	_TranslationsTagsFr._(this._root);
+
+	final TranslationsFr _root; // ignore: unused_field
+
+	// Translations
+	@override String get title => 'Tags';
 }
 
 // Path: tasks
@@ -1083,6 +1094,7 @@ extension on TranslationsFr {
 			case 'settings.app_settings.selfHostedUrl.placeholder': return 'Entrez l\'URL de votre instance';
 			case 'settings.app_settings.selfHostedUrl.not_set': return 'Non défini';
 			case 'settings.logout': return 'Déconnexion';
+			case 'tags.title': return 'Tags';
 			case 'tasks.title': return 'Tâches';
 			case 'tasks.today': return 'Aujourd\'hui';
 			case 'tasks.tags': return 'Tags';
