@@ -85,6 +85,8 @@
         "title": "Tasks",
         "today": "Today",
         "overview": "Overview",
+        "tags": "Tags",
+        "my_tags": "My tags",
         "nothing_to_do": "Nothing to do for now, enjoy your day!",
         "day_off": "You have nothing planned for tomorrow, enjoy your day!",
         "week_off": "You have nothing planned for this week, try and take the time to do the stuff left behind!",

@@ -84,6 +84,8 @@
     "tasks": {
         "title": "Tâches",
         "today": "Aujourd'hui",
+        "tags": "Tags",
+        "my_tags": "Mes tags",
         "overview": "Vue d'ensemble",
         "nothing_to_do": "Rien à faire pour le moment, vous pouvez vous détendre !",
         "day_off": "Vous n'avez rien de prévu pour demain, profitez-en !",

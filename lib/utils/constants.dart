@@ -15,6 +15,7 @@ import 'package:app/pages/more_apps/more_apps.dart';
 import 'package:app/pages/tasks/add_task_modal.dart';
 import 'package:app/pages/tasks/filtered_view.dart';
 import 'package:app/pages/tasks/overview.dart';
+import 'package:app/pages/tasks/tags.dart';
 import 'package:app/utils/exntensions/date_time_extension.dart';
 import 'package:app/utils/shortcuts.dart';
 import 'package:flutter/cupertino.dart';
@@ -275,6 +276,16 @@ class Navigation {
             ),
             onTap: () {
               context.read<AppCubit>().changeSelectedTabIndex(index: 1);
+            },
+          ),
+          SideMenuItem(
+            title: context.t.tasks.tags,
+            icon: CupertinoIcons.tag,
+            color: getTheme(context).secondary,
+            iconContainer: true,
+            body: const TagsView(),
+            onTap: () {
+              context.read<AppCubit>().changeSelectedTabIndex(index: 2);
             },
           )
         ],
