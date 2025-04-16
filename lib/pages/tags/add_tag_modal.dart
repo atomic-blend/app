@@ -1,15 +1,20 @@
+import 'package:app/blocs/tag/tag.bloc.dart';
 import 'package:app/components/buttons/primary_button_square.dart';
 import 'package:app/components/forms/ab_color_picker.dart';
 import 'package:app/components/forms/app_text_form_field.dart';
+import 'package:app/entities/tag/tag.entity.dart';
 import 'package:app/i18n/strings.g.dart';
 import 'package:app/utils/constants.dart';
 import 'package:app/utils/shortcuts.dart';
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AddTagModal extends StatefulWidget {
-  const AddTagModal({super.key});
+  final TagEntity? tag;
+  const AddTagModal({super.key, this.tag});
 
   @override
   State<AddTagModal> createState() => _AddTagModalState();
@@ -19,6 +24,18 @@ class _AddTagModalState extends State<AddTagModal> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _nameController = TextEditingController();
   Color? _color;
+
+  @override
+  void initState() {
+    if (widget.tag != null) {
+      _nameController.text = widget.tag!.name;
+      _color =
+          widget.tag!.color != null ? hexToColor(widget.tag!.color!) : null;
+    } else {
+      _color = Colors.blue;
+    }
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +63,9 @@ class _AddTagModalState extends State<AddTagModal> {
                 Center(
                   child: AutoSizeText(
                     maxLines: 1,
-                    context.t.tags.add_modal.title,
+                    widget.tag == null
+                        ? context.t.tags.add_modal.title
+                        : context.t.tags.add_modal.edit_title,
                     style: getTextTheme(context).titleMedium!.copyWith(
                           fontWeight: FontWeight.bold,
                         ),
@@ -83,17 +102,38 @@ class _AddTagModalState extends State<AddTagModal> {
                         labelText: context.t.tags.add_modal.color,
                         labelDescription:
                             context.t.tags.add_modal.color_description,
-                            onColorChanged: (color) {
-                              setState(() {
-                                _color = color;
-                              });
-                            },
+                        onColorChanged: (color) {
+                          setState(() {
+                            _color = color;
+                          });
+                        },
                       )
                     ],
                   ),
                 ),
                 const Spacer(),
-                PrimaryButtonSquare(text: context.t.actions.add),
+                PrimaryButtonSquare(
+                  text: widget.tag == null
+                      ? context.t.actions.add
+                      : context.t.actions.save,
+                  onPressed: () {
+                    if (_formKey.currentState?.validate() != true) {
+                      return;
+                    }
+                    if (widget.tag == null) {
+                      final tag = TagEntity(
+                          name: _nameController.text, color: _color?.hexCode);
+
+                      context.read<TagBloc>().add(
+                            CreateTag(
+                              tag,
+                            ),
+                          );
+                    } else {
+                      //TODO: send the update to the backend
+                    }
+                  },
+                ),
                 SizedBox(
                   height: $constants.insets.sm,
                 ),

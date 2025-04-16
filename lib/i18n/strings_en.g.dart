@@ -817,6 +817,7 @@ class TranslationsTagsAddModalEn {
 
 	// Translations
 	String get title => 'Add a new tag';
+	String get edit_title => 'Edit tag';
 	String get name => 'Name of the tag';
 	String get name_hint => 'Work';
 	String get name_description => 'Define a name for your tag, this will help you remember what it is about and be shown in notifications.';
@@ -1122,6 +1123,7 @@ extension on Translations {
 			case 'settings.logout': return 'Logout';
 			case 'tags.title': return 'Tags';
 			case 'tags.add_modal.title': return 'Add a new tag';
+			case 'tags.add_modal.edit_title': return 'Edit tag';
 			case 'tags.add_modal.name': return 'Name of the tag';
 			case 'tags.add_modal.name_hint': return 'Work';
 			case 'tags.add_modal.name_description': return 'Define a name for your tag, this will help you remember what it is about and be shown in notifications.';

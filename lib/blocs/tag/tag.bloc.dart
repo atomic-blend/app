@@ -12,6 +12,7 @@ class TagBloc extends HydratedBloc<TagEvent, TagState> {
   final TagService _tagService = TagService();
   TagBloc() : super(const TagInitial()) {
     on<LoadTags>(_onLoadTags);
+    on<CreateTag>(_onCreateTag);
   }
 
   FutureOr<void> _onLoadTags(LoadTags event, Emitter<TagState> emit) async {
@@ -41,5 +42,17 @@ class TagBloc extends HydratedBloc<TagEvent, TagState> {
       return {"tags": state.tags!.map((e) => e.toJson()).toList()};
     }
     return null;
+  }
+
+  FutureOr<void> _onCreateTag(CreateTag event, Emitter<TagState> emit) async {
+    final prevState = state;
+    emit(TagCreateLoading(prevState.tags ?? []));
+    try {
+      await _tagService.createTag(event.tag);
+      emit(TagCreateSuccess(prevState.tags ?? []));
+      add(const LoadTags());
+    } catch (e) {
+      emit(TagError(prevState.tags ?? [], e.toString()));
+    }
   }
 }

@@ -41,7 +41,7 @@ class IconTextCard extends StatelessWidget {
                 size: iconSize ?? 20,
               ),
               SizedBox(
-                width: $constants.insets.xs,
+                width: $constants.insets.sm,
               ),
               Text(
                 title,

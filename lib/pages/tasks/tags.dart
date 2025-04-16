@@ -45,7 +45,10 @@ class _TagsViewState extends State<TagsView> {
                 ),
                 GestureDetector(
                   onTap: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => const MyTags()));
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const MyTags()));
                   },
                   child: Text(
                     context.t.actions.edit,
@@ -56,6 +59,9 @@ class _TagsViewState extends State<TagsView> {
                   ),
                 ),
               ],
+            ),
+            SizedBox(
+              height: $constants.insets.xs,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.start,

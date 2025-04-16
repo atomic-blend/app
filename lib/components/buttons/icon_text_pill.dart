@@ -22,21 +22,31 @@ class IconTextPill extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: width,
-      height: height,
-      decoration: BoxDecoration(
-        color: color ?? getTheme(context).surfaceContainerHigh,
-        borderRadius: BorderRadius.circular(
-          $constants.corners.full,
-        ),
+    return ConstrainedBox(
+      constraints: BoxConstraints(
+        minWidth: getSize(context).width * 0.15,
       ),
-      padding: EdgeInsets.all($constants.insets.sm),
-      child: AutoSizeText(
-        maxLines: 1,
-        overflow: TextOverflow.ellipsis,
-        title,
-        style: getTextTheme(context).bodyMedium!.copyWith(),
+      child: Container(
+        width: width,
+        height: height,
+        decoration: BoxDecoration(
+          color: color ?? getTheme(context).surfaceContainerHigh,
+          borderRadius: BorderRadius.circular(
+            $constants.corners.full,
+          ),
+        ),
+        padding: EdgeInsets.symmetric(
+          horizontal: $constants.insets.sm,
+          vertical: $constants.insets.xxs,
+        ),
+        child: Center(
+          child: AutoSizeText(
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            title,
+            style: getTextTheme(context).bodyMedium!.copyWith(),
+          ),
+        ),
       ),
     );
   }

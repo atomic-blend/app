@@ -30,3 +30,11 @@ class TagError extends TagState {
   @override
   List<Object?> get props => [message];
 }
+
+final class TagCreateLoading extends TagState {
+  const TagCreateLoading(List<TagEntity> super.tags);
+}
+
+final class TagCreateSuccess extends TagState {
+  const TagCreateSuccess(List<TagEntity> super.tags);
+}

@@ -7,3 +7,9 @@ sealed class TagEvent {
 final class LoadTags extends TagEvent {
   const LoadTags();
 }
+
+final class CreateTag extends TagEvent {
+  final TagEntity tag;
+
+  const CreateTag(this.tag);
+}

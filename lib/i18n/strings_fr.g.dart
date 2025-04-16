@@ -811,6 +811,7 @@ class _TranslationsTagsAddModalFr implements TranslationsTagsAddModalEn {
 
 	// Translations
 	@override String get title => 'Ajouter un nouveau tag';
+	@override String get edit_title => 'Modifier le tag';
 	@override String get name => 'Nom du tag';
 	@override String get name_hint => 'Travail';
 	@override String get name_description => 'Définissez un nom pour votre tag, cela sera affiché dans le tableau de bord et dans les notifications.';
@@ -1116,6 +1117,7 @@ extension on TranslationsFr {
 			case 'settings.logout': return 'Déconnexion';
 			case 'tags.title': return 'Tags';
 			case 'tags.add_modal.title': return 'Ajouter un nouveau tag';
+			case 'tags.add_modal.edit_title': return 'Modifier le tag';
 			case 'tags.add_modal.name': return 'Nom du tag';
 			case 'tags.add_modal.name_hint': return 'Travail';
 			case 'tags.add_modal.name_description': return 'Définissez un nom pour votre tag, cela sera affiché dans le tableau de bord et dans les notifications.';

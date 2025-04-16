@@ -1,4 +1,5 @@
 import 'package:app/entities/tag/tag.entity.dart';
+import 'package:app/services/user.service.dart';
 import 'package:app/utils/api_client.dart';
 
 class TagService {
@@ -9,11 +10,21 @@ class TagService {
     if (result.statusCode == 200) {
       final List<TagEntity> tags = [];
       for (var i = 0; i < (result.data as List).length; i++) {
-        tags.add(TagEntity.fromJson(result.data[i]));
+        tags.add(await TagEntity.decrypt(result.data[i], encryptionService!));
       }
       return tags;
     } else {
       throw Exception('tags_fetch_failed');
+    }
+  }
+
+  Future<bool> createTag(TagEntity tag) async {
+    final result = await globalApiClient.post('/tags',
+        data: await tag.encrypt(encryptionService: encryptionService!));
+    if (result.statusCode == 200) {
+      return true;
+    } else {
+      throw Exception('tag_create_failed');
     }
   }
 }
