@@ -811,6 +811,10 @@ class _TranslationsTagsAddModalFr implements TranslationsTagsAddModalEn {
 
 	// Translations
 	@override String get title => 'Ajouter un nouveau tag';
+	@override String get name => 'Nom du tag';
+	@override String get name_hint => 'Travail';
+	@override String get name_description => 'Définissez un nom pour votre tag, cela sera affiché dans le tableau de bord et dans les notifications.';
+	@override String get name_required => 'Le nom du tag est requis';
 }
 
 // Path: tasks.due_dates
@@ -1107,6 +1111,10 @@ extension on TranslationsFr {
 			case 'settings.logout': return 'Déconnexion';
 			case 'tags.title': return 'Tags';
 			case 'tags.add_modal.title': return 'Ajouter un nouveau tag';
+			case 'tags.add_modal.name': return 'Nom du tag';
+			case 'tags.add_modal.name_hint': return 'Travail';
+			case 'tags.add_modal.name_description': return 'Définissez un nom pour votre tag, cela sera affiché dans le tableau de bord et dans les notifications.';
+			case 'tags.add_modal.name_required': return 'Le nom du tag est requis';
 			case 'tasks.title': return 'Tâches';
 			case 'tasks.today': return 'Aujourd\'hui';
 			case 'tasks.tags': return 'Tags';

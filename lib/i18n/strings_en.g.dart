@@ -817,6 +817,10 @@ class TranslationsTagsAddModalEn {
 
 	// Translations
 	String get title => 'Add a new tag';
+	String get name => 'Name of the tag';
+	String get name_hint => 'Work';
+	String get name_description => 'Define a name for your tag, this will help you remember what it is about and be shown in notifications.';
+	String get name_required => 'Name is required';
 }
 
 // Path: tasks.due_dates
@@ -1113,6 +1117,10 @@ extension on Translations {
 			case 'settings.logout': return 'Logout';
 			case 'tags.title': return 'Tags';
 			case 'tags.add_modal.title': return 'Add a new tag';
+			case 'tags.add_modal.name': return 'Name of the tag';
+			case 'tags.add_modal.name_hint': return 'Work';
+			case 'tags.add_modal.name_description': return 'Define a name for your tag, this will help you remember what it is about and be shown in notifications.';
+			case 'tags.add_modal.name_required': return 'Name is required';
 			case 'tasks.title': return 'Tasks';
 			case 'tasks.today': return 'Today';
 			case 'tasks.overview': return 'Overview';

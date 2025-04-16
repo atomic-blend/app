@@ -1,3 +1,5 @@
+import 'package:app/components/buttons/primary_button_square.dart';
+import 'package:app/components/forms/app_text_form_field.dart';
 import 'package:app/i18n/strings.g.dart';
 import 'package:app/utils/constants.dart';
 import 'package:app/utils/shortcuts.dart';
@@ -13,6 +15,8 @@ class AddTagModal extends StatefulWidget {
 }
 
 class _AddTagModalState extends State<AddTagModal> {
+  final _formKey = GlobalKey<FormState>();
+  final TextEditingController _nameController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -31,41 +35,65 @@ class _AddTagModalState extends State<AddTagModal> {
           horizontal: $constants.insets.sm,
           vertical: $constants.insets.md,
         ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        child: Stack(
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                GestureDetector(
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
-                  child: const Icon(
-                    CupertinoIcons.back,
-                  ),
-                ),
-                GestureDetector(
-                  onTap: () {},
-                  child: Text(
-                    context.t.actions.save,
-                    style: getTextTheme(context).bodyMedium!.copyWith(
+                Center(
+                  child: AutoSizeText(
+                    maxLines: 1,
+                    context.t.tags.add_modal.title,
+                    style: getTextTheme(context).titleMedium!.copyWith(
                           fontWeight: FontWeight.bold,
-                          color: getTheme(context).primary,
                         ),
                   ),
-                )
+                ),
+                SizedBox(
+                  height: $constants.insets.sm,
+                ),
+                SizedBox(
+                  height: $constants.insets.sm,
+                ),
+                Form(
+                  key: _formKey,
+                  child: Column(
+                    children: [
+                      AppTextFormField(
+                        controller: _nameController,
+                        labelText: context.t.tags.add_modal.name,
+                        hintText: context.t.tags.add_modal.name_hint,
+                        labelDescription:
+                            context.t.tags.add_modal.name_description,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return context.t.tags.add_modal.name_required;
+                          }
+                          return null;
+                        },
+                      )
+                    ],
+                  ),
+                ),
+                const Spacer(),
+                PrimaryButtonSquare(text: context.t.actions.add),
+                SizedBox(
+                  height: $constants.insets.sm,
+                ),
               ],
             ),
-            SizedBox(
-              height: $constants.insets.sm,
-            ),
-            AutoSizeText(
-              maxLines: 1,
-              context.t.tags.add_modal.title,
-              style: getTextTheme(context).titleMedium!.copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
+            Positioned(
+              left: $constants.insets.xxs,
+              top: $constants.insets.xxs,
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.pop(context);
+                },
+                child: const Icon(
+                  CupertinoIcons.back,
+                  size: 30,
+                ),
+              ),
             ),
           ],
         ),

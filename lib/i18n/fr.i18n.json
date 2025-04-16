@@ -84,7 +84,11 @@
     "tags": {
         "title": "Tags",
         "add_modal": {
-            "title": "Ajouter un nouveau tag"
+            "title": "Ajouter un nouveau tag",
+            "name": "Nom du tag",
+            "name_hint": "Travail",
+            "name_description": "Définissez un nom pour votre tag, cela sera affiché dans le tableau de bord et dans les notifications.",
+            "name_required": "Le nom du tag est requis"
         }
     },
     "tasks": {
