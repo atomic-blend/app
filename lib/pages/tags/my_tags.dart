@@ -1,6 +1,7 @@
 import 'package:app/blocs/tag/tag.bloc.dart';
 import 'package:app/components/buttons/icon_text_card.dart';
 import 'package:app/i18n/strings.g.dart';
+import 'package:app/pages/tags/add_tag_modal.dart';
 import 'package:app/utils/constants.dart';
 import 'package:app/utils/shortcuts.dart';
 import 'package:flutter/cupertino.dart';
@@ -28,7 +29,12 @@ class _MyTagsState extends State<MyTags> {
               ),
         ),
         actions: [
-          IconButton(onPressed: () {}, icon: const Icon(CupertinoIcons.add)),
+          IconButton(
+              onPressed: () {
+                showModalBottomSheet(
+                    context: context, isScrollControlled: true, builder: (context) => const AddTagModal());
+              },
+              icon: const Icon(CupertinoIcons.add)),
         ],
       ),
       body: BlocBuilder<TagBloc, TagState>(builder: (context, tagState) {

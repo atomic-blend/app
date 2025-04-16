@@ -142,6 +142,7 @@ class TranslationsTagsEn {
 
 	// Translations
 	String get title => 'Tags';
+	late final TranslationsTagsAddModalEn add_modal = TranslationsTagsAddModalEn._(_root);
 }
 
 // Path: tasks
@@ -808,6 +809,16 @@ class TranslationsSettingsAppSettingsEn {
 	late final TranslationsSettingsAppSettingsSelfHostedUrlEn selfHostedUrl = TranslationsSettingsAppSettingsSelfHostedUrlEn._(_root);
 }
 
+// Path: tags.add_modal
+class TranslationsTagsAddModalEn {
+	TranslationsTagsAddModalEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	String get title => 'Add a new tag';
+}
+
 // Path: tasks.due_dates
 class TranslationsTasksDueDatesEn {
 	TranslationsTasksDueDatesEn._(this._root);
@@ -1101,6 +1112,7 @@ extension on Translations {
 			case 'settings.app_settings.selfHostedUrl.not_set': return 'Not set';
 			case 'settings.logout': return 'Logout';
 			case 'tags.title': return 'Tags';
+			case 'tags.add_modal.title': return 'Add a new tag';
 			case 'tasks.title': return 'Tasks';
 			case 'tasks.today': return 'Today';
 			case 'tasks.overview': return 'Overview';

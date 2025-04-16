@@ -139,6 +139,7 @@ class _TranslationsTagsFr implements TranslationsTagsEn {
 
 	// Translations
 	@override String get title => 'Tags';
+	@override late final _TranslationsTagsAddModalFr add_modal = _TranslationsTagsAddModalFr._(_root);
 }
 
 // Path: tasks
@@ -802,6 +803,16 @@ class _TranslationsSettingsAppSettingsFr implements TranslationsSettingsAppSetti
 	@override late final _TranslationsSettingsAppSettingsSelfHostedUrlFr selfHostedUrl = _TranslationsSettingsAppSettingsSelfHostedUrlFr._(_root);
 }
 
+// Path: tags.add_modal
+class _TranslationsTagsAddModalFr implements TranslationsTagsAddModalEn {
+	_TranslationsTagsAddModalFr._(this._root);
+
+	final TranslationsFr _root; // ignore: unused_field
+
+	// Translations
+	@override String get title => 'Ajouter un nouveau tag';
+}
+
 // Path: tasks.due_dates
 class _TranslationsTasksDueDatesFr implements TranslationsTasksDueDatesEn {
 	_TranslationsTasksDueDatesFr._(this._root);
@@ -1095,6 +1106,7 @@ extension on TranslationsFr {
 			case 'settings.app_settings.selfHostedUrl.not_set': return 'Non défini';
 			case 'settings.logout': return 'Déconnexion';
 			case 'tags.title': return 'Tags';
+			case 'tags.add_modal.title': return 'Ajouter un nouveau tag';
 			case 'tasks.title': return 'Tâches';
 			case 'tasks.today': return 'Aujourd\'hui';
 			case 'tasks.tags': return 'Tags';

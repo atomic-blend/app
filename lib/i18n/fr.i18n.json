@@ -82,7 +82,10 @@
         "logout": "Déconnexion"
     },
     "tags": {
-        "title": "Tags"
+        "title": "Tags",
+        "add_modal": {
+            "title": "Ajouter un nouveau tag"
+        }
     },
     "tasks": {
         "title": "Tâches",

@@ -82,7 +82,10 @@
         "logout": "Logout"
     },
     "tags": {
-        "title": "Tags"
+        "title": "Tags",
+        "add_modal": {
+            "title": "Add a new tag"
+        }
     },
     "tasks": {
         "title": "Tasks",
