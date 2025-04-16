@@ -143,6 +143,7 @@ class TranslationsTagsEn {
 	// Translations
 	String get title => 'Tags';
 	late final TranslationsTagsAddModalEn add_modal = TranslationsTagsAddModalEn._(_root);
+	late final TranslationsTagsDeleteEn delete = TranslationsTagsDeleteEn._(_root);
 }
 
 // Path: tasks
@@ -829,6 +830,18 @@ class TranslationsTagsAddModalEn {
 	String get wheel => 'Color wheel';
 }
 
+// Path: tags.delete
+class TranslationsTagsDeleteEn {
+	TranslationsTagsDeleteEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	String get title => 'Delete tag';
+	String get description => 'Are you sure you want to delete this tag?';
+	String get warning => 'This action cannot be undone and the tag will be removed from all tags associated.';
+}
+
 // Path: tasks.due_dates
 class TranslationsTasksDueDatesEn {
 	TranslationsTasksDueDatesEn._(this._root);
@@ -1133,6 +1146,9 @@ extension on Translations {
 			case 'tags.add_modal.primary': return 'Primary';
 			case 'tags.add_modal.accent': return 'Accent';
 			case 'tags.add_modal.wheel': return 'Color wheel';
+			case 'tags.delete.title': return 'Delete tag';
+			case 'tags.delete.description': return 'Are you sure you want to delete this tag?';
+			case 'tags.delete.warning': return 'This action cannot be undone and the tag will be removed from all tags associated.';
 			case 'tasks.title': return 'Tasks';
 			case 'tasks.today': return 'Today';
 			case 'tasks.overview': return 'Overview';

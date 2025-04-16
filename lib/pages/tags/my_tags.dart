@@ -1,5 +1,6 @@
 import 'package:app/blocs/tag/tag.bloc.dart';
 import 'package:app/components/buttons/icon_text_card.dart';
+import 'package:app/components/modals/delete_confirm_modal.dart';
 import 'package:app/i18n/strings.g.dart';
 import 'package:app/pages/tags/add_tag_modal.dart';
 import 'package:app/utils/constants.dart';
@@ -62,7 +63,18 @@ class _MyTagsState extends State<MyTags> {
                       )),
                       child: SlidableAction(
                         onPressed: (context) {
-                          // context.read<TagBloc>().add(TagDelete(tag));
+                          showDialog(
+                              context: context,
+                              builder: (context) => DeleteConfirmModal(
+                                    title: context.t.tags.delete.title,
+                                    description: context.t.tags.delete.description,
+                                    warning: context.t.tags.delete.warning,
+                                    onDelete: () {
+                                      context
+                                          .read<TagBloc>()
+                                          .add(DeleteTag(tag.id!));
+                                    },
+                                  ));
                         },
                         backgroundColor: getTheme(context).error,
                         foregroundColor: Colors.white,

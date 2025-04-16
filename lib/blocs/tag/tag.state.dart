@@ -38,3 +38,11 @@ final class TagCreateLoading extends TagState {
 final class TagCreateSuccess extends TagState {
   const TagCreateSuccess(List<TagEntity> super.tags);
 }
+
+final class TagDeleteLoading extends TagState {
+  const TagDeleteLoading(List<TagEntity> super.tags);
+}
+
+final class TagDeleteSuccess extends TagState {
+  const TagDeleteSuccess(List<TagEntity> super.tags);
+}

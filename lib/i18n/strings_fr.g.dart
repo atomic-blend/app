@@ -140,6 +140,7 @@ class _TranslationsTagsFr implements TranslationsTagsEn {
 	// Translations
 	@override String get title => 'Tags';
 	@override late final _TranslationsTagsAddModalFr add_modal = _TranslationsTagsAddModalFr._(_root);
+	@override late final _TranslationsTagsDeleteFr delete = _TranslationsTagsDeleteFr._(_root);
 }
 
 // Path: tasks
@@ -823,6 +824,18 @@ class _TranslationsTagsAddModalFr implements TranslationsTagsAddModalEn {
 	@override String get wheel => 'Roue';
 }
 
+// Path: tags.delete
+class _TranslationsTagsDeleteFr implements TranslationsTagsDeleteEn {
+	_TranslationsTagsDeleteFr._(this._root);
+
+	final TranslationsFr _root; // ignore: unused_field
+
+	// Translations
+	@override String get title => 'Supprimer le tag';
+	@override String get description => 'Êtes-vous sûr de vouloir supprimer ce tag ?';
+	@override String get warning => 'Cette action est irréversible et le tag sera supprimé de tous les éléments associés.';
+}
+
 // Path: tasks.due_dates
 class _TranslationsTasksDueDatesFr implements TranslationsTasksDueDatesEn {
 	_TranslationsTasksDueDatesFr._(this._root);
@@ -1127,6 +1140,9 @@ extension on TranslationsFr {
 			case 'tags.add_modal.primary': return 'Primaire';
 			case 'tags.add_modal.accent': return 'Accent';
 			case 'tags.add_modal.wheel': return 'Roue';
+			case 'tags.delete.title': return 'Supprimer le tag';
+			case 'tags.delete.description': return 'Êtes-vous sûr de vouloir supprimer ce tag ?';
+			case 'tags.delete.warning': return 'Cette action est irréversible et le tag sera supprimé de tous les éléments associés.';
 			case 'tasks.title': return 'Tâches';
 			case 'tasks.today': return 'Aujourd\'hui';
 			case 'tasks.tags': return 'Tags';

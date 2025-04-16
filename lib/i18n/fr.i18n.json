@@ -95,6 +95,11 @@
             "primary": "Primaire",
             "accent": "Accent",
             "wheel": "Roue"
+        },
+        "delete": {
+            "title": "Supprimer le tag",
+            "description": "Êtes-vous sûr de vouloir supprimer ce tag ?",
+            "warning": "Cette action est irréversible et le tag sera supprimé de tous les éléments associés."
         }
     },
     "tasks": {

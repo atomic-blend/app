@@ -13,6 +13,7 @@ class TagBloc extends HydratedBloc<TagEvent, TagState> {
   TagBloc() : super(const TagInitial()) {
     on<LoadTags>(_onLoadTags);
     on<CreateTag>(_onCreateTag);
+    on<DeleteTag>(_onDeleteTag);
   }
 
   FutureOr<void> _onLoadTags(LoadTags event, Emitter<TagState> emit) async {
@@ -50,6 +51,18 @@ class TagBloc extends HydratedBloc<TagEvent, TagState> {
     try {
       await _tagService.createTag(event.tag);
       emit(TagCreateSuccess(prevState.tags ?? []));
+      add(const LoadTags());
+    } catch (e) {
+      emit(TagError(prevState.tags ?? [], e.toString()));
+    }
+  }
+
+  FutureOr<void> _onDeleteTag(DeleteTag event, Emitter<TagState> emit) async {
+    final prevState = state;
+    emit(TagDeleteLoading(prevState.tags ?? []));
+    try {
+      await _tagService.deleteTag(event.tagId);
+      emit(TagDeleteSuccess(prevState.tags ?? []));
       add(const LoadTags());
     } catch (e) {
       emit(TagError(prevState.tags ?? [], e.toString()));

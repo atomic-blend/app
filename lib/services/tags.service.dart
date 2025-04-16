@@ -27,4 +27,13 @@ class TagService {
       throw Exception('tag_create_failed');
     }
   }
+
+  Future<bool> deleteTag(String tagId) async {
+    final result = await globalApiClient.delete('/tags/$tagId');
+    if (result.statusCode == 200) {
+      return true;
+    } else {
+      throw Exception('tag_delete_failed');
+    }
+  }
 }

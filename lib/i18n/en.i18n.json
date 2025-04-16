@@ -95,7 +95,13 @@
             "primary": "Primary",
             "accent": "Accent",
             "wheel": "Color wheel"
-        }
+            
+        },
+        "delete" :{
+                "title": "Delete tag",
+                "description": "Are you sure you want to delete this tag?",
+                "warning": "This action cannot be undone and the tag will be removed from all tags associated."
+            }
     },
     "tasks": {
         "title": "Tasks",
