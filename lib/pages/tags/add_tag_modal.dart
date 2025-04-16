@@ -1,4 +1,5 @@
 import 'package:app/components/buttons/primary_button_square.dart';
+import 'package:app/components/forms/ab_color_picker.dart';
 import 'package:app/components/forms/app_text_form_field.dart';
 import 'package:app/i18n/strings.g.dart';
 import 'package:app/utils/constants.dart';
@@ -17,6 +18,8 @@ class AddTagModal extends StatefulWidget {
 class _AddTagModalState extends State<AddTagModal> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _nameController = TextEditingController();
+  Color? _color;
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -71,6 +74,20 @@ class _AddTagModalState extends State<AddTagModal> {
                           }
                           return null;
                         },
+                      ),
+                      SizedBox(
+                        height: $constants.insets.sm,
+                      ),
+                      AbColorPicker(
+                        color: _color,
+                        labelText: context.t.tags.add_modal.color,
+                        labelDescription:
+                            context.t.tags.add_modal.color_description,
+                            onColorChanged: (color) {
+                              setState(() {
+                                _color = color;
+                              });
+                            },
                       )
                     ],
                   ),

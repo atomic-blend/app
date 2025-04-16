@@ -815,6 +815,11 @@ class _TranslationsTagsAddModalFr implements TranslationsTagsAddModalEn {
 	@override String get name_hint => 'Travail';
 	@override String get name_description => 'Définissez un nom pour votre tag, cela sera affiché dans le tableau de bord et dans les notifications.';
 	@override String get name_required => 'Le nom du tag est requis';
+	@override String get color => 'Couleur du tag';
+	@override String get color_description => 'Choisissez une couleur pour votre tag, cela vous aidera à le distinguer des autres.';
+	@override String get primary => 'Primaire';
+	@override String get accent => 'Accent';
+	@override String get wheel => 'Roue';
 }
 
 // Path: tasks.due_dates
@@ -1115,6 +1120,11 @@ extension on TranslationsFr {
 			case 'tags.add_modal.name_hint': return 'Travail';
 			case 'tags.add_modal.name_description': return 'Définissez un nom pour votre tag, cela sera affiché dans le tableau de bord et dans les notifications.';
 			case 'tags.add_modal.name_required': return 'Le nom du tag est requis';
+			case 'tags.add_modal.color': return 'Couleur du tag';
+			case 'tags.add_modal.color_description': return 'Choisissez une couleur pour votre tag, cela vous aidera à le distinguer des autres.';
+			case 'tags.add_modal.primary': return 'Primaire';
+			case 'tags.add_modal.accent': return 'Accent';
+			case 'tags.add_modal.wheel': return 'Roue';
 			case 'tasks.title': return 'Tâches';
 			case 'tasks.today': return 'Aujourd\'hui';
 			case 'tasks.tags': return 'Tags';

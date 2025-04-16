@@ -88,7 +88,12 @@
             "name": "Name of the tag",
             "name_hint": "Work",
             "name_description": "Define a name for your tag, this will help you remember what it is about and be shown in notifications.",
-            "name_required": "Name is required"
+            "name_required": "Name is required",
+            "color": "Color",
+            "color_description": "Choose a color for your tag, this will help you remember what it is about and be shown in notifications.",
+            "primary": "Primary",
+            "accent": "Accent",
+            "wheel": "Color wheel"
         }
     },
     "tasks": {

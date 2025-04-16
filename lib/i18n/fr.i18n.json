@@ -88,7 +88,12 @@
             "name": "Nom du tag",
             "name_hint": "Travail",
             "name_description": "Définissez un nom pour votre tag, cela sera affiché dans le tableau de bord et dans les notifications.",
-            "name_required": "Le nom du tag est requis"
+            "name_required": "Le nom du tag est requis",
+            "color": "Couleur du tag",
+            "color_description": "Choisissez une couleur pour votre tag, cela vous aidera à le distinguer des autres.",
+            "primary": "Primaire",
+            "accent": "Accent",
+            "wheel": "Roue"
         }
     },
     "tasks": {

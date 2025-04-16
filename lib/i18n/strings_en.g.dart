@@ -821,6 +821,11 @@ class TranslationsTagsAddModalEn {
 	String get name_hint => 'Work';
 	String get name_description => 'Define a name for your tag, this will help you remember what it is about and be shown in notifications.';
 	String get name_required => 'Name is required';
+	String get color => 'Color';
+	String get color_description => 'Choose a color for your tag, this will help you remember what it is about and be shown in notifications.';
+	String get primary => 'Primary';
+	String get accent => 'Accent';
+	String get wheel => 'Color wheel';
 }
 
 // Path: tasks.due_dates
@@ -1121,6 +1126,11 @@ extension on Translations {
 			case 'tags.add_modal.name_hint': return 'Work';
 			case 'tags.add_modal.name_description': return 'Define a name for your tag, this will help you remember what it is about and be shown in notifications.';
 			case 'tags.add_modal.name_required': return 'Name is required';
+			case 'tags.add_modal.color': return 'Color';
+			case 'tags.add_modal.color_description': return 'Choose a color for your tag, this will help you remember what it is about and be shown in notifications.';
+			case 'tags.add_modal.primary': return 'Primary';
+			case 'tags.add_modal.accent': return 'Accent';
+			case 'tags.add_modal.wheel': return 'Color wheel';
 			case 'tasks.title': return 'Tasks';
 			case 'tasks.today': return 'Today';
 			case 'tasks.overview': return 'Overview';
