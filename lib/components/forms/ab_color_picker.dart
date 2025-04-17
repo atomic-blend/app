@@ -57,7 +57,6 @@ class AbColorPicker extends StatelessWidget {
               ColorPickerType.wheel: context.t.tags.add_modal.wheel,
             },
             onColorChanged: (color) {
-              print(color);
               onColorChanged?.call(color);
             },
           ),

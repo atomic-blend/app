@@ -20,7 +20,7 @@ class TagsView extends StatefulWidget {
 }
 
 class _TagsViewState extends State<TagsView> {
-  List<TagEntity> _filteredTags = [];
+  final List<TagEntity> _filteredTags = [];
 
   @override
   Widget build(BuildContext context) {

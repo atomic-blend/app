@@ -70,36 +70,34 @@ class TaskItem extends StatelessWidget {
                 if (task.tags != null && task.tags!.isNotEmpty)
                   Padding(
                     padding: EdgeInsets.only(left: $constants.insets.sm),
-                    child: Container(
-                      child: Row(
-                        children: [
-                          Container(
-                            padding: EdgeInsets.symmetric(
-                                horizontal: $constants.insets.sm),
-                            decoration: BoxDecoration(
-                              color: task.tags!.first.color != null
-                                  ? hexToColor(task.tags!.first.color!)
-                                      .withValues(alpha: 0.2)
-                                  : getTheme(context).primary,
-                              borderRadius: BorderRadius.circular(
-                                $constants.corners.sm,
-                              ),
+                    child: Row(
+                      children: [
+                        Container(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: $constants.insets.sm),
+                          decoration: BoxDecoration(
+                            color: task.tags!.first.color != null
+                                ? hexToColor(task.tags!.first.color!)
+                                    .withValues(alpha: 0.2)
+                                : getTheme(context).primary,
+                            borderRadius: BorderRadius.circular(
+                              $constants.corners.sm,
                             ),
-                            child: Text(task.tags!.first.name),
                           ),
-                          if (task.tags!.length > 1) ...[
-                            SizedBox(
-                              width: $constants.insets.xs,
-                            ),
-                            Text(
-                              "+${task.tags!.length - 1}",
-                              style: getTextTheme(context)
-                                  .bodyMedium!
-                                  .copyWith(color: Colors.grey),
-                            )
-                          ]
-                        ],
-                      ),
+                          child: Text(task.tags!.first.name),
+                        ),
+                        if (task.tags!.length > 1) ...[
+                          SizedBox(
+                            width: $constants.insets.xs,
+                          ),
+                          Text(
+                            "+${task.tags!.length - 1}",
+                            style: getTextTheme(context)
+                                .bodyMedium!
+                                .copyWith(color: Colors.grey),
+                          )
+                        ]
+                      ],
                     ),
                   ),
                 const Spacer(),
