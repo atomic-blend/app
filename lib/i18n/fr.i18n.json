@@ -351,7 +351,8 @@
         "back": "Retour",
         "delete": "Supprimer",
         "add": "Ajouter",
-        "edit": "Modifier"
+        "edit": "Modifier",
+        "clear": "Effacer"
     },
     "date_modes(map)": {
         "date": "Date",

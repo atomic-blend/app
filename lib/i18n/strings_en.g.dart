@@ -447,6 +447,7 @@ class TranslationsActionsEn {
 	String get delete => 'Delete';
 	String get add => 'Add';
 	String get edit => 'Edit';
+	String get clear => 'Clear';
 }
 
 // Path: validation
@@ -1333,6 +1334,7 @@ extension on Translations {
 			case 'actions.delete': return 'Delete';
 			case 'actions.add': return 'Add';
 			case 'actions.edit': return 'Edit';
+			case 'actions.clear': return 'Clear';
 			case 'validation.required': return 'Required';
 			case 'validation.invalid_url': return 'invalid URL';
 			case 'errors.wrong_email_password': return 'Email or password incorrect';

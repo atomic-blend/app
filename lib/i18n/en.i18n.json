@@ -359,7 +359,8 @@
         "back": "Back",
         "delete": "Delete",
         "add": "Add",
-        "edit": "Edit"
+        "edit": "Edit",
+        "clear": "Clear"
     },
     "validation": {
         "required": "Required",

@@ -434,6 +434,7 @@ class _TranslationsActionsFr implements TranslationsActionsEn {
 	@override String get delete => 'Supprimer';
 	@override String get add => 'Ajouter';
 	@override String get edit => 'Modifier';
+	@override String get clear => 'Effacer';
 }
 
 // Path: loading
@@ -1324,6 +1325,7 @@ extension on TranslationsFr {
 			case 'actions.delete': return 'Supprimer';
 			case 'actions.add': return 'Ajouter';
 			case 'actions.edit': return 'Modifier';
+			case 'actions.clear': return 'Effacer';
 			case 'date_modes.date': return 'Date';
 			case 'date_modes.duration': return 'Durée';
 			case 'loading.simple': return 'Chargement en cours...';

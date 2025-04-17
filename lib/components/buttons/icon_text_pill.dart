@@ -8,6 +8,7 @@ class IconTextPill extends StatelessWidget {
   final String title;
   final IconData? icon;
   final double? height;
+  final bool? outlined;
   final double? width;
   final double? iconSize;
   final Color? color;
@@ -20,7 +21,8 @@ class IconTextPill extends StatelessWidget {
       this.height,
       this.width,
       this.color,
-      this.onDelete});
+      this.onDelete,
+      this.outlined});
 
   @override
   Widget build(BuildContext context) {
@@ -38,6 +40,12 @@ class IconTextPill extends StatelessWidget {
               borderRadius: BorderRadius.circular(
                 $constants.corners.full,
               ),
+              border: outlined == true
+                  ? Border.all(
+                      color: getTheme(context).primary,
+                      width: 1,
+                    )
+                  : null,
             ),
             padding: EdgeInsets.symmetric(
               horizontal: $constants.insets.sm,
