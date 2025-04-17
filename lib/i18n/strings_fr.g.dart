@@ -139,6 +139,7 @@ class _TranslationsTagsFr implements TranslationsTagsEn {
 
 	// Translations
 	@override String get title => 'Tags';
+	@override String get no_tags => 'Aucun tag';
 	@override late final _TranslationsTagsAddModalFr add_modal = _TranslationsTagsAddModalFr._(_root);
 	@override late final _TranslationsTagsDeleteFr delete = _TranslationsTagsDeleteFr._(_root);
 }
@@ -1129,6 +1130,7 @@ extension on TranslationsFr {
 			case 'settings.app_settings.selfHostedUrl.not_set': return 'Non défini';
 			case 'settings.logout': return 'Déconnexion';
 			case 'tags.title': return 'Tags';
+			case 'tags.no_tags': return 'Aucun tag';
 			case 'tags.add_modal.title': return 'Ajouter un nouveau tag';
 			case 'tags.add_modal.edit_title': return 'Modifier le tag';
 			case 'tags.add_modal.name': return 'Nom du tag';

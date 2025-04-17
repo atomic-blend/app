@@ -83,6 +83,7 @@
     },
     "tags": {
         "title": "Tags",
+        "no_tags": "No tags",
         "add_modal": {
             "title": "Add a new tag",
             "edit_title": "Edit tag",
@@ -95,7 +96,6 @@
             "primary": "Primary",
             "accent": "Accent",
             "wheel": "Color wheel"
-            
         },
         "delete" :{
                 "title": "Delete tag",
