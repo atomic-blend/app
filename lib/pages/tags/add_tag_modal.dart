@@ -2,6 +2,7 @@ import 'package:app/blocs/tag/tag.bloc.dart';
 import 'package:app/components/buttons/primary_button_square.dart';
 import 'package:app/components/forms/ab_color_picker.dart';
 import 'package:app/components/forms/app_text_form_field.dart';
+import 'package:app/components/modals/delete_confirm_modal.dart';
 import 'package:app/entities/tag/tag.entity.dart';
 import 'package:app/i18n/strings.g.dart';
 import 'package:app/utils/constants.dart';
@@ -112,34 +113,63 @@ class _AddTagModalState extends State<AddTagModal> {
                   ),
                 ),
                 const Spacer(),
-                PrimaryButtonSquare(
-                  text: widget.tag == null
-                      ? context.t.actions.add
-                      : context.t.actions.save,
-                  onPressed: () {
-                    if (_formKey.currentState?.validate() != true) {
-                      return;
-                    }
-                    if (widget.tag == null) {
-                      final tag = TagEntity(
-                          name: _nameController.text, color: _color?.hexCode);
+                Column(
+                  children: [
+                    if (widget.tag != null)
+                      TextButton(
+                          onPressed: () async {
+                            await showDialog(
+                                context: context,
+                                builder: (context) => DeleteConfirmModal(
+                                      title: context.t.tags.delete.title,
+                                      description:
+                                          context.t.tags.delete.description,
+                                      warning: context.t.tags.delete.warning,
+                                      onDelete: () {
+                                        context
+                                            .read<TagBloc>()
+                                            .add(DeleteTag(widget.tag!.id!));
+                                      },
+                                    ));
+                            Navigator.pop(context);
+                          },
+                          child: Text(
+                            context.t.actions.delete,
+                            style: getTextTheme(context).bodyMedium!.copyWith(
+                                fontWeight: FontWeight.bold,
+                                color: getTheme(context).error),
+                          )),
+                    PrimaryButtonSquare(
+                      text: widget.tag == null
+                          ? context.t.actions.add
+                          : context.t.actions.save,
+                      onPressed: () {
+                        if (_formKey.currentState?.validate() != true) {
+                          return;
+                        }
+                        if (widget.tag == null) {
+                          final tag = TagEntity(
+                              name: _nameController.text,
+                              color: _color?.hexCode);
 
-                      context.read<TagBloc>().add(
-                            CreateTag(
-                              tag,
-                            ),
-                          );
-                    } else {
-                      context.read<TagBloc>().add(
-                            EditTag(
-                              widget.tag!.copyWith(
-                                name: _nameController.text,
-                                color: _color?.hexCode,
-                              ),
-                            ),
-                          );
-                    }
-                  },
+                          context.read<TagBloc>().add(
+                                CreateTag(
+                                  tag,
+                                ),
+                              );
+                        } else {
+                          context.read<TagBloc>().add(
+                                EditTag(
+                                  widget.tag!.copyWith(
+                                    name: _nameController.text,
+                                    color: _color?.hexCode,
+                                  ),
+                                ),
+                              );
+                        }
+                      },
+                    ),
+                  ],
                 ),
                 SizedBox(
                   height: $constants.insets.sm,
