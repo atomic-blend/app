@@ -97,20 +97,22 @@ class Navigation {
   List<AppBar?> appbars(BuildContext context, {Widget? leading}) => [
         AppBar(
           backgroundColor: getTheme(context).surface,
-          title: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              BlocBuilder<AppCubit, AppState>(builder: (context, appState) {
-                var selectedSideItem = sideMenuItems(
-                    context)[appState.pageIndex]![appState.selectedTabIndex];
-                return Text(
-                  selectedSideItem.title,
-                  style: getTextTheme(context).headlineSmall!.copyWith(
-                        fontWeight: FontWeight.bold,
-                      ),
-                );
-              })
-            ],
+          title: Center(
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                BlocBuilder<AppCubit, AppState>(builder: (context, appState) {
+                  var selectedSideItem = sideMenuItems(
+                      context)[appState.pageIndex]![appState.selectedTabIndex];
+                  return Text(
+                    selectedSideItem.title,
+                    style: getTextTheme(context).headlineSmall!.copyWith(
+                          fontWeight: FontWeight.bold,
+                        ),
+                  );
+                })
+              ],
+            ),
           ),
           actions: [
             Padding(
@@ -121,26 +123,28 @@ class Navigation {
         ),
         AppBar(
             backgroundColor: getTheme(context).surface,
-            title: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  context.t.calendar.title,
-                  style: getTextTheme(context).headlineSmall!.copyWith(
-                        fontWeight: FontWeight.bold,
-                      ),
-                )
-              ],
+            title: Center(
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    context.t.calendar.title,
+                    style: getTextTheme(context).headlineSmall!.copyWith(
+                          fontWeight: FontWeight.bold,
+                        ),
+                  )
+                ],
+              ),
             ),
             actions: [
-              IconButton(
-                  onPressed: () {
+              GestureDetector(
+                  onTap: () {
                     showModalBottomSheet(
                         isScrollControlled: true,
                         context: context,
                         builder: (context) => const CalendarSettings());
                   },
-                  icon: const Icon(CupertinoIcons.settings)),
+                  child: const Icon(CupertinoIcons.settings)),
               SizedBox(
                 width: $constants.insets.sm,
               ),
@@ -187,16 +191,18 @@ class Navigation {
             ]),
         AppBar(
             backgroundColor: getTheme(context).surface,
-            title: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  context.t.more.title,
-                  style: getTextTheme(context).headlineSmall!.copyWith(
-                        fontWeight: FontWeight.bold,
-                      ),
-                )
-              ],
+            title: Center(
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    context.t.more.title,
+                    style: getTextTheme(context).headlineSmall!.copyWith(
+                          fontWeight: FontWeight.bold,
+                        ),
+                  )
+                ],
+              ),
             ),
             actions: [
               BlocBuilder<AuthBloc, AuthState>(builder: (context, authState) {
