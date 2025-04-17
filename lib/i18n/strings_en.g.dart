@@ -143,6 +143,7 @@ class TranslationsTagsEn {
 	// Translations
 	String get title => 'Tags';
 	String get no_tags => 'No tags';
+	String get assign_tags => 'Assign tags';
 	late final TranslationsTagsAddModalEn add_modal = TranslationsTagsAddModalEn._(_root);
 	late final TranslationsTagsDeleteEn delete = TranslationsTagsDeleteEn._(_root);
 }
@@ -1137,6 +1138,7 @@ extension on Translations {
 			case 'settings.logout': return 'Logout';
 			case 'tags.title': return 'Tags';
 			case 'tags.no_tags': return 'No tags';
+			case 'tags.assign_tags': return 'Assign tags';
 			case 'tags.add_modal.title': return 'Add a new tag';
 			case 'tags.add_modal.edit_title': return 'Edit tag';
 			case 'tags.add_modal.name': return 'Name of the tag';

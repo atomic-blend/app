@@ -6,6 +6,7 @@ import 'package:app/entities/tag/tag.entity.dart';
 import 'package:app/entities/tasks/tasks.entity.dart';
 import 'package:app/i18n/strings.g.dart';
 import 'package:app/components/forms/task_date_picker_modal/task_date_picker_modal.dart';
+import 'package:app/pages/tasks/assign_tag_modal.dart';
 import 'package:app/utils/constants.dart';
 import 'package:app/utils/exntensions/date_time_extension.dart';
 import 'package:app/utils/shortcuts.dart';
@@ -29,6 +30,7 @@ class _TaskDetailState extends State<TaskDetail> {
   DateTime? _endDate;
   DateTime? _startDate;
   List<DateTime>? _reminders;
+  List<TagEntity> _tags = [];
 
   @override
   void initState() {
@@ -36,6 +38,7 @@ class _TaskDetailState extends State<TaskDetail> {
     _endDate = widget.task.endDate;
     _startDate = widget.task.startDate;
     _reminders = widget.task.reminders;
+    _tags = widget.task.tags ?? [];
     super.initState();
   }
 
@@ -52,13 +55,6 @@ class _TaskDetailState extends State<TaskDetail> {
       ),
       backgroundColor: getTheme(context).surface,
       body: BlocBuilder<TagBloc, TagState>(builder: (context, tagState) {
-        // get the task tags from the tagState
-        List<TagEntity> taskTags = [];
-        for (var tag in (tagState.tags ?? [])) {
-          if (widget.task.tags != null && widget.task.tags!.contains(tag.id)) {
-            taskTags.add(tag.name);
-          }
-        }
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -166,9 +162,29 @@ class _TaskDetailState extends State<TaskDetail> {
                 children: [
                   Row(
                     children: [
-                      ...taskTags.map((tag) => IconTextPill(title: tag.name)),
-                      if (taskTags.isEmpty)
-                        IconTextPill(title: context.t.tags.no_tags)
+                      ..._tags.map((tag) => IconTextPill(title: tag.name)),
+                      GestureDetector(
+                        onTap: () async {
+                          await showModalBottomSheet(
+                              context: context,
+                              builder: (context) => AssignTagModal(
+                                    selectedTags: _tags,
+                                    onSelectedTagsChanged: (tags) {
+                                      setState(() {
+                                        _tags = tags;
+                                      });
+                                    },
+                                  ));
+                          widget.task.tags = _tags;
+                          if (!context.mounted) return;
+                          context.read<TasksBloc>().add(EditTask(widget.task));
+                        },
+                        child: IconTextPill(
+                          title: _tags.isEmpty
+                              ? context.t.tags.add_modal.title
+                              : context.t.tags.title,
+                        ),
+                      ),
                     ],
                   )
                 ],

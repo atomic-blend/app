@@ -43,6 +43,13 @@ class TaskEntity with _$TaskEntity {
 
   Future<Map<String, dynamic>> encrypt(
       {required EncryptionService encryptionService}) async {
+    final encryptedTags = [];
+    if (tags != null) {
+      for (var tag in tags!) {
+        encryptedTags
+            .add(await tag.encrypt(encryptionService: encryptionService));
+      }
+    }
     Map<String, dynamic> encryptedData = {
       'id': id,
       'title': await encryptionService.encryptJson(title),
@@ -51,6 +58,7 @@ class TaskEntity with _$TaskEntity {
       'updatedAt': updatedAt?.toUtc().toIso8601String(),
       'startDate': startDate?.toUtc().toIso8601String(),
       'endDate': endDate?.toUtc().toIso8601String(),
+      'tags': encryptedTags,
       'reminders': reminders?.map((e) => e.toUtc().toIso8601String()).toList(),
       'completed': completed
     };
@@ -70,6 +78,14 @@ class TaskEntity with _$TaskEntity {
       }
     }
 
-    return TaskEntity.fromJson(decryptedData);
+    final task = TaskEntity.fromJson(decryptedData);
+
+    if (decryptedData['tags'] != null) {
+      decryptedData['tags'] = await Future.wait((decryptedData['tags'] as List)
+          .map((tag) => TagEntity.decrypt(tag, encryptionService)));
+      task.tags = decryptedData['tags'];
+    }
+
+    return task;
   }
 }

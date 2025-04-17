@@ -84,6 +84,7 @@
     "tags": {
         "title": "Tags",
         "no_tags": "No tags",
+        "assign_tags": "Assign tags",
         "add_modal": {
             "title": "Add a new tag",
             "edit_title": "Edit tag",
