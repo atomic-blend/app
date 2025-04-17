@@ -41,6 +41,7 @@ class TranslationsFr implements Translations {
 	@override late final _TranslationsNavigationFr navigation = _TranslationsNavigationFr._(_root);
 	@override late final _TranslationsAuthFr auth = _TranslationsAuthFr._(_root);
 	@override late final _TranslationsSettingsFr settings = _TranslationsSettingsFr._(_root);
+	@override late final _TranslationsTagsFr tags = _TranslationsTagsFr._(_root);
 	@override late final _TranslationsTasksFr tasks = _TranslationsTasksFr._(_root);
 	@override late final _TranslationsCalendarFr calendar = _TranslationsCalendarFr._(_root);
 	@override late final _TranslationsAccountFr account = _TranslationsAccountFr._(_root);
@@ -130,6 +131,20 @@ class _TranslationsSettingsFr implements TranslationsSettingsEn {
 	@override String get logout => 'Déconnexion';
 }
 
+// Path: tags
+class _TranslationsTagsFr implements TranslationsTagsEn {
+	_TranslationsTagsFr._(this._root);
+
+	final TranslationsFr _root; // ignore: unused_field
+
+	// Translations
+	@override String get title => 'Tags';
+	@override String get no_tags => 'Aucun tag';
+	@override String get assign_tags => 'Assigner des tags';
+	@override late final _TranslationsTagsAddModalFr add_modal = _TranslationsTagsAddModalFr._(_root);
+	@override late final _TranslationsTagsDeleteFr delete = _TranslationsTagsDeleteFr._(_root);
+}
+
 // Path: tasks
 class _TranslationsTasksFr implements TranslationsTasksEn {
 	_TranslationsTasksFr._(this._root);
@@ -139,6 +154,8 @@ class _TranslationsTasksFr implements TranslationsTasksEn {
 	// Translations
 	@override String get title => 'Tâches';
 	@override String get today => 'Aujourd\'hui';
+	@override String get tags => 'Tags';
+	@override String get my_tags => 'Mes tags';
 	@override String get overview => 'Vue d\'ensemble';
 	@override String get nothing_to_do => 'Rien à faire pour le moment, vous pouvez vous détendre !';
 	@override String get day_off => 'Vous n\'avez rien de prévu pour demain, profitez-en !';
@@ -417,6 +434,7 @@ class _TranslationsActionsFr implements TranslationsActionsEn {
 	@override String get delete => 'Supprimer';
 	@override String get add => 'Ajouter';
 	@override String get edit => 'Modifier';
+	@override String get clear => 'Effacer';
 }
 
 // Path: loading
@@ -789,6 +807,38 @@ class _TranslationsSettingsAppSettingsFr implements TranslationsSettingsAppSetti
 	@override late final _TranslationsSettingsAppSettingsSelfHostedUrlFr selfHostedUrl = _TranslationsSettingsAppSettingsSelfHostedUrlFr._(_root);
 }
 
+// Path: tags.add_modal
+class _TranslationsTagsAddModalFr implements TranslationsTagsAddModalEn {
+	_TranslationsTagsAddModalFr._(this._root);
+
+	final TranslationsFr _root; // ignore: unused_field
+
+	// Translations
+	@override String get title => 'Ajouter un nouveau tag';
+	@override String get edit_title => 'Modifier le tag';
+	@override String get name => 'Nom du tag';
+	@override String get name_hint => 'Travail';
+	@override String get name_description => 'Définissez un nom pour votre tag, cela sera affiché dans le tableau de bord et dans les notifications.';
+	@override String get name_required => 'Le nom du tag est requis';
+	@override String get color => 'Couleur du tag';
+	@override String get color_description => 'Choisissez une couleur pour votre tag, cela vous aidera à le distinguer des autres.';
+	@override String get primary => 'Primaire';
+	@override String get accent => 'Accent';
+	@override String get wheel => 'Roue';
+}
+
+// Path: tags.delete
+class _TranslationsTagsDeleteFr implements TranslationsTagsDeleteEn {
+	_TranslationsTagsDeleteFr._(this._root);
+
+	final TranslationsFr _root; // ignore: unused_field
+
+	// Translations
+	@override String get title => 'Supprimer le tag';
+	@override String get description => 'Êtes-vous sûr de vouloir supprimer ce tag ?';
+	@override String get warning => 'Cette action est irréversible et le tag sera supprimé de tous les éléments associés.';
+}
+
 // Path: tasks.due_dates
 class _TranslationsTasksDueDatesFr implements TranslationsTasksDueDatesEn {
 	_TranslationsTasksDueDatesFr._(this._root);
@@ -1081,8 +1131,27 @@ extension on TranslationsFr {
 			case 'settings.app_settings.selfHostedUrl.placeholder': return 'Entrez l\'URL de votre instance';
 			case 'settings.app_settings.selfHostedUrl.not_set': return 'Non défini';
 			case 'settings.logout': return 'Déconnexion';
+			case 'tags.title': return 'Tags';
+			case 'tags.no_tags': return 'Aucun tag';
+			case 'tags.assign_tags': return 'Assigner des tags';
+			case 'tags.add_modal.title': return 'Ajouter un nouveau tag';
+			case 'tags.add_modal.edit_title': return 'Modifier le tag';
+			case 'tags.add_modal.name': return 'Nom du tag';
+			case 'tags.add_modal.name_hint': return 'Travail';
+			case 'tags.add_modal.name_description': return 'Définissez un nom pour votre tag, cela sera affiché dans le tableau de bord et dans les notifications.';
+			case 'tags.add_modal.name_required': return 'Le nom du tag est requis';
+			case 'tags.add_modal.color': return 'Couleur du tag';
+			case 'tags.add_modal.color_description': return 'Choisissez une couleur pour votre tag, cela vous aidera à le distinguer des autres.';
+			case 'tags.add_modal.primary': return 'Primaire';
+			case 'tags.add_modal.accent': return 'Accent';
+			case 'tags.add_modal.wheel': return 'Roue';
+			case 'tags.delete.title': return 'Supprimer le tag';
+			case 'tags.delete.description': return 'Êtes-vous sûr de vouloir supprimer ce tag ?';
+			case 'tags.delete.warning': return 'Cette action est irréversible et le tag sera supprimé de tous les éléments associés.';
 			case 'tasks.title': return 'Tâches';
 			case 'tasks.today': return 'Aujourd\'hui';
+			case 'tasks.tags': return 'Tags';
+			case 'tasks.my_tags': return 'Mes tags';
 			case 'tasks.overview': return 'Vue d\'ensemble';
 			case 'tasks.nothing_to_do': return 'Rien à faire pour le moment, vous pouvez vous détendre !';
 			case 'tasks.day_off': return 'Vous n\'avez rien de prévu pour demain, profitez-en !';
@@ -1256,6 +1325,7 @@ extension on TranslationsFr {
 			case 'actions.delete': return 'Supprimer';
 			case 'actions.add': return 'Ajouter';
 			case 'actions.edit': return 'Modifier';
+			case 'actions.clear': return 'Effacer';
 			case 'date_modes.date': return 'Date';
 			case 'date_modes.duration': return 'Durée';
 			case 'loading.simple': return 'Chargement en cours...';

@@ -85,6 +85,7 @@ dependencies:
   flutter_heatmap_calendar: ^1.0.5
   syncfusion_flutter_datepicker: ^29.1.37
   percent_indicator: ^4.2.5
+  flex_color_picker: ^3.7.0
 dependency_overrides:
   flutter_secure_storage: 9.2.4
   timezone: 0.10.0

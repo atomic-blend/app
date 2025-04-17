@@ -44,6 +44,7 @@ class Translations implements BaseTranslations<AppLocale, Translations> {
 	late final TranslationsNavigationEn navigation = TranslationsNavigationEn._(_root);
 	late final TranslationsAuthEn auth = TranslationsAuthEn._(_root);
 	late final TranslationsSettingsEn settings = TranslationsSettingsEn._(_root);
+	late final TranslationsTagsEn tags = TranslationsTagsEn._(_root);
 	late final TranslationsTasksEn tasks = TranslationsTasksEn._(_root);
 	late final TranslationsCalendarEn calendar = TranslationsCalendarEn._(_root);
 	late final TranslationsAccountEn account = TranslationsAccountEn._(_root);
@@ -133,6 +134,20 @@ class TranslationsSettingsEn {
 	String get logout => 'Logout';
 }
 
+// Path: tags
+class TranslationsTagsEn {
+	TranslationsTagsEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	String get title => 'Tags';
+	String get no_tags => 'No tags';
+	String get assign_tags => 'Assign tags';
+	late final TranslationsTagsAddModalEn add_modal = TranslationsTagsAddModalEn._(_root);
+	late final TranslationsTagsDeleteEn delete = TranslationsTagsDeleteEn._(_root);
+}
+
 // Path: tasks
 class TranslationsTasksEn {
 	TranslationsTasksEn._(this._root);
@@ -143,6 +158,8 @@ class TranslationsTasksEn {
 	String get title => 'Tasks';
 	String get today => 'Today';
 	String get overview => 'Overview';
+	String get tags => 'Tags';
+	String get my_tags => 'My tags';
 	String get nothing_to_do => 'Nothing to do for now, enjoy your day!';
 	String get day_off => 'You have nothing planned for tomorrow, enjoy your day!';
 	String get week_off => 'You have nothing planned for this week, try and take the time to do the stuff left behind!';
@@ -430,6 +447,7 @@ class TranslationsActionsEn {
 	String get delete => 'Delete';
 	String get add => 'Add';
 	String get edit => 'Edit';
+	String get clear => 'Clear';
 }
 
 // Path: validation
@@ -795,6 +813,38 @@ class TranslationsSettingsAppSettingsEn {
 	late final TranslationsSettingsAppSettingsSelfHostedUrlEn selfHostedUrl = TranslationsSettingsAppSettingsSelfHostedUrlEn._(_root);
 }
 
+// Path: tags.add_modal
+class TranslationsTagsAddModalEn {
+	TranslationsTagsAddModalEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	String get title => 'Add a new tag';
+	String get edit_title => 'Edit tag';
+	String get name => 'Name of the tag';
+	String get name_hint => 'Work';
+	String get name_description => 'Define a name for your tag, this will help you remember what it is about and be shown in notifications.';
+	String get name_required => 'Name is required';
+	String get color => 'Color';
+	String get color_description => 'Choose a color for your tag, this will help you remember what it is about and be shown in notifications.';
+	String get primary => 'Primary';
+	String get accent => 'Accent';
+	String get wheel => 'Color wheel';
+}
+
+// Path: tags.delete
+class TranslationsTagsDeleteEn {
+	TranslationsTagsDeleteEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	String get title => 'Delete tag';
+	String get description => 'Are you sure you want to delete this tag?';
+	String get warning => 'This action cannot be undone and the tag will be removed from all tags associated.';
+}
+
 // Path: tasks.due_dates
 class TranslationsTasksDueDatesEn {
 	TranslationsTasksDueDatesEn._(this._root);
@@ -1087,9 +1137,28 @@ extension on Translations {
 			case 'settings.app_settings.selfHostedUrl.placeholder': return 'Enter the URL of your instance';
 			case 'settings.app_settings.selfHostedUrl.not_set': return 'Not set';
 			case 'settings.logout': return 'Logout';
+			case 'tags.title': return 'Tags';
+			case 'tags.no_tags': return 'No tags';
+			case 'tags.assign_tags': return 'Assign tags';
+			case 'tags.add_modal.title': return 'Add a new tag';
+			case 'tags.add_modal.edit_title': return 'Edit tag';
+			case 'tags.add_modal.name': return 'Name of the tag';
+			case 'tags.add_modal.name_hint': return 'Work';
+			case 'tags.add_modal.name_description': return 'Define a name for your tag, this will help you remember what it is about and be shown in notifications.';
+			case 'tags.add_modal.name_required': return 'Name is required';
+			case 'tags.add_modal.color': return 'Color';
+			case 'tags.add_modal.color_description': return 'Choose a color for your tag, this will help you remember what it is about and be shown in notifications.';
+			case 'tags.add_modal.primary': return 'Primary';
+			case 'tags.add_modal.accent': return 'Accent';
+			case 'tags.add_modal.wheel': return 'Color wheel';
+			case 'tags.delete.title': return 'Delete tag';
+			case 'tags.delete.description': return 'Are you sure you want to delete this tag?';
+			case 'tags.delete.warning': return 'This action cannot be undone and the tag will be removed from all tags associated.';
 			case 'tasks.title': return 'Tasks';
 			case 'tasks.today': return 'Today';
 			case 'tasks.overview': return 'Overview';
+			case 'tasks.tags': return 'Tags';
+			case 'tasks.my_tags': return 'My tags';
 			case 'tasks.nothing_to_do': return 'Nothing to do for now, enjoy your day!';
 			case 'tasks.day_off': return 'You have nothing planned for tomorrow, enjoy your day!';
 			case 'tasks.week_off': return 'You have nothing planned for this week, try and take the time to do the stuff left behind!';
@@ -1265,6 +1334,7 @@ extension on Translations {
 			case 'actions.delete': return 'Delete';
 			case 'actions.add': return 'Add';
 			case 'actions.edit': return 'Edit';
+			case 'actions.clear': return 'Clear';
 			case 'validation.required': return 'Required';
 			case 'validation.invalid_url': return 'invalid URL';
 			case 'errors.wrong_email_password': return 'Email or password incorrect';

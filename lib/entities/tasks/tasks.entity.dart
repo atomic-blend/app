@@ -1,3 +1,4 @@
+import 'package:app/entities/tag/tag.entity.dart';
 import 'package:app/services/encryption.service.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -15,6 +16,7 @@ class TaskEntity with _$TaskEntity {
     DateTime? endDate,
     DateTime? createdAt,
     DateTime? updatedAt,
+    List<TagEntity>? tags,
     List<DateTime>? reminders,
     bool? completed,
   }) = _TaskEntity;
@@ -30,6 +32,10 @@ class TaskEntity with _$TaskEntity {
     'completed'
   ];
 
+  static final manualParseFields = [
+    'tags'
+  ];
+
   factory TaskEntity.fromJson(Map<String, dynamic> json) =>
       _$TaskEntityFromJson(json);
 
@@ -40,6 +46,13 @@ class TaskEntity with _$TaskEntity {
 
   Future<Map<String, dynamic>> encrypt(
       {required EncryptionService encryptionService}) async {
+    final encryptedTags = [];
+    if (tags != null) {
+      for (var tag in tags!) {
+        encryptedTags
+            .add(await tag.encrypt(encryptionService: encryptionService));
+      }
+    }
     Map<String, dynamic> encryptedData = {
       'id': id,
       'title': await encryptionService.encryptJson(title),
@@ -48,6 +61,7 @@ class TaskEntity with _$TaskEntity {
       'updatedAt': updatedAt?.toUtc().toIso8601String(),
       'startDate': startDate?.toUtc().toIso8601String(),
       'endDate': endDate?.toUtc().toIso8601String(),
+      'tags': encryptedTags,
       'reminders': reminders?.map((e) => e.toUtc().toIso8601String()).toList(),
       'completed': completed
     };
@@ -59,7 +73,7 @@ class TaskEntity with _$TaskEntity {
     Map<String, dynamic> decryptedData = {};
 
     for (var entry in data.entries) {
-      if (nonEncryptedFields.contains(entry.key)) {
+      if (nonEncryptedFields.contains(entry.key) || manualParseFields.contains(entry.key)) {
         decryptedData[entry.key] = entry.value;
       } else {
         decryptedData[entry.key] =
@@ -67,6 +81,14 @@ class TaskEntity with _$TaskEntity {
       }
     }
 
-    return TaskEntity.fromJson(decryptedData);
+    final task = TaskEntity.fromJson(decryptedData);
+
+    if (decryptedData['tags'] != null) {
+      decryptedData['tags'] = await Future.wait((decryptedData['tags'] as List)
+          .map((tag) => TagEntity.decrypt(tag, encryptionService)));
+      task.tags = decryptedData['tags'];
+    }
+
+    return task;
   }
 }

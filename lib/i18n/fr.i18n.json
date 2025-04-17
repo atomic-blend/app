@@ -81,9 +81,34 @@
         },
         "logout": "Déconnexion"
     },
+    "tags": {
+        "title": "Tags",
+        "no_tags": "Aucun tag",
+        "assign_tags": "Assigner des tags",
+        "add_modal": {
+            "title": "Ajouter un nouveau tag",
+            "edit_title": "Modifier le tag",
+            "name": "Nom du tag",
+            "name_hint": "Travail",
+            "name_description": "Définissez un nom pour votre tag, cela sera affiché dans le tableau de bord et dans les notifications.",
+            "name_required": "Le nom du tag est requis",
+            "color": "Couleur du tag",
+            "color_description": "Choisissez une couleur pour votre tag, cela vous aidera à le distinguer des autres.",
+            "primary": "Primaire",
+            "accent": "Accent",
+            "wheel": "Roue"
+        },
+        "delete": {
+            "title": "Supprimer le tag",
+            "description": "Êtes-vous sûr de vouloir supprimer ce tag ?",
+            "warning": "Cette action est irréversible et le tag sera supprimé de tous les éléments associés."
+        }
+    },
     "tasks": {
         "title": "Tâches",
         "today": "Aujourd'hui",
+        "tags": "Tags",
+        "my_tags": "Mes tags",
         "overview": "Vue d'ensemble",
         "nothing_to_do": "Rien à faire pour le moment, vous pouvez vous détendre !",
         "day_off": "Vous n'avez rien de prévu pour demain, profitez-en !",
@@ -326,7 +351,8 @@
         "back": "Retour",
         "delete": "Supprimer",
         "add": "Ajouter",
-        "edit": "Modifier"
+        "edit": "Modifier",
+        "clear": "Effacer"
     },
     "date_modes(map)": {
         "date": "Date",

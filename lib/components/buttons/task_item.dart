@@ -4,6 +4,7 @@ import 'package:app/entities/tasks/tasks.entity.dart';
 import 'package:app/pages/tasks/task_detail.dart';
 import 'package:app/utils/constants.dart';
 import 'package:app/utils/exntensions/date_time_extension.dart';
+import 'package:app/utils/shortcuts.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -66,6 +67,39 @@ class TaskItem extends StatelessWidget {
                     if (task.description != null) Text(task.description!)
                   ],
                 ),
+                if (task.tags != null && task.tags!.isNotEmpty)
+                  Padding(
+                    padding: EdgeInsets.only(left: $constants.insets.sm),
+                    child: Row(
+                      children: [
+                        Container(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: $constants.insets.sm),
+                          decoration: BoxDecoration(
+                            color: task.tags!.first.color != null
+                                ? hexToColor(task.tags!.first.color!)
+                                    .withValues(alpha: 0.2)
+                                : getTheme(context).primary,
+                            borderRadius: BorderRadius.circular(
+                              $constants.corners.sm,
+                            ),
+                          ),
+                          child: Text(task.tags!.first.name),
+                        ),
+                        if (task.tags!.length > 1) ...[
+                          SizedBox(
+                            width: $constants.insets.xs,
+                          ),
+                          Text(
+                            "+${task.tags!.length - 1}",
+                            style: getTextTheme(context)
+                                .bodyMedium!
+                                .copyWith(color: Colors.grey),
+                          )
+                        ]
+                      ],
+                    ),
+                  ),
                 const Spacer(),
                 if (task.startDate == null &&
                     task.endDate != null &&
