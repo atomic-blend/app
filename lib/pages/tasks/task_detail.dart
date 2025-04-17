@@ -162,7 +162,6 @@ class _TaskDetailState extends State<TaskDetail> {
                 children: [
                   Row(
                     children: [
-                      ..._tags.map((tag) => IconTextPill(title: tag.name)),
                       GestureDetector(
                         onTap: () async {
                           await showModalBottomSheet(
@@ -182,9 +181,43 @@ class _TaskDetailState extends State<TaskDetail> {
                         child: IconTextPill(
                           title: _tags.isEmpty
                               ? context.t.tags.add_modal.title
-                              : context.t.tags.title,
+                              : context.t.actions.edit,
+                          color:
+                              getTheme(context).primary.withValues(alpha: 0.1),
                         ),
                       ),
+                      SizedBox(
+                        width: $constants.insets.xs,
+                      ),
+                      Container(
+                        height: $constants.insets.md, // Adjust height as needed
+                        width: 1,
+                        color: Colors.grey[300],
+                      ),
+                      SizedBox(
+                        width: $constants.insets.xs,
+                      ),
+                      ..._tags.map((tag) => Padding(
+                            padding:
+                                EdgeInsets.only(right: $constants.insets.xs),
+                            child: IconTextPill(
+                              title: tag.name,
+                              color: tag.color != null
+                                  ? hexToColor(tag.color!)
+                                      .withValues(alpha: 0.2)
+                                  : null,
+                              onDelete: () {
+                                setState(() {
+                                  _tags.removeWhere((e) => e.id == tag.id);
+                                });
+                                widget.task.tags = _tags;
+                                if (!context.mounted) return;
+                                context
+                                    .read<TasksBloc>()
+                                    .add(EditTask(widget.task));
+                              },
+                            ),
+                          )),
                     ],
                   )
                 ],
