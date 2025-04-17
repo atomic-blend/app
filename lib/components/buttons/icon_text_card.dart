@@ -8,6 +8,7 @@ class IconTextCard extends StatelessWidget {
   final String title;
   final String? value;
   final double? width;
+  final Color? color;
   final IconData icon;
   final double? iconSize;
   const IconTextCard(
@@ -16,14 +17,15 @@ class IconTextCard extends StatelessWidget {
       this.value,
       required this.icon,
       this.iconSize,
-      this.width});
+      this.width,
+      this.color});
 
   @override
   Widget build(BuildContext context) {
     return Container(
       width: width,
       decoration: BoxDecoration(
-        color: getTheme(context).surfaceContainerHigh,
+        color: color ?? getTheme(context).surfaceContainerHigh,
         borderRadius: BorderRadius.circular(
           $constants.corners.sm,
         ),

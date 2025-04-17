@@ -66,8 +66,13 @@ class _TagsViewState extends State<TagsView> {
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                ...(tagState.tags ?? [])
-                    .map((tag) => IconTextPill(title: tag.name, icon: null))
+                ...(tagState.tags ?? []).map((tag) => IconTextPill(
+                      title: tag.name,
+                      icon: null,
+                      color: tag.color != null
+                          ? hexToColor(tag.color!).withValues(alpha: 0.2)
+                          : null,
+                    ))
               ],
             )
           ],

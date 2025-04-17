@@ -114,6 +114,9 @@ class _MyTagsState extends State<MyTags> {
                     width: double.infinity,
                     title: tag.name,
                     icon: CupertinoIcons.tag,
+                    color: tag.color != null
+                        ? hexToColor(tag.color!).withValues(alpha: 0.2)
+                        : null,
                   ),
                 ),
               ),
