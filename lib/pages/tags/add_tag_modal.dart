@@ -40,156 +40,164 @@ class _AddTagModalState extends State<AddTagModal> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      height: MediaQuery.of(context).viewInsets.bottom +
-          getSize(context).height * 0.88,
-      decoration: BoxDecoration(
-        color: Theme.of(context).scaffoldBackgroundColor,
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular($constants.corners.lg),
-          topRight: Radius.circular($constants.corners.lg),
+    return BlocListener<TagBloc, TagState>(
+      listener: (BuildContext context, TagState state) {
+        if (state is TagCreateSuccess || state is TagEditSuccess) {
+          Navigator.pop(context);
+        }
+      },
+      child: Container(
+        width: double.infinity,
+        height: MediaQuery.of(context).viewInsets.bottom +
+            getSize(context).height * 0.88,
+        decoration: BoxDecoration(
+          color: Theme.of(context).scaffoldBackgroundColor,
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular($constants.corners.lg),
+            topRight: Radius.circular($constants.corners.lg),
+          ),
         ),
-      ),
-      child: Padding(
-        padding: EdgeInsets.symmetric(
-          horizontal: $constants.insets.sm,
-          vertical: $constants.insets.md,
-        ),
-        child: Stack(
-          children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Center(
-                  child: AutoSizeText(
-                    maxLines: 1,
-                    widget.tag == null
-                        ? context.t.tags.add_modal.title
-                        : context.t.tags.add_modal.edit_title,
-                    style: getTextTheme(context).titleMedium!.copyWith(
-                          fontWeight: FontWeight.bold,
-                        ),
+        child: Padding(
+          padding: EdgeInsets.symmetric(
+            horizontal: $constants.insets.sm,
+            vertical: $constants.insets.md,
+          ),
+          child: Stack(
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Center(
+                    child: AutoSizeText(
+                      maxLines: 1,
+                      widget.tag == null
+                          ? context.t.tags.add_modal.title
+                          : context.t.tags.add_modal.edit_title,
+                      style: getTextTheme(context).titleMedium!.copyWith(
+                            fontWeight: FontWeight.bold,
+                          ),
+                    ),
                   ),
-                ),
-                SizedBox(
-                  height: $constants.insets.sm,
-                ),
-                SizedBox(
-                  height: $constants.insets.sm,
-                ),
-                Form(
-                  key: _formKey,
-                  child: Column(
+                  SizedBox(
+                    height: $constants.insets.sm,
+                  ),
+                  SizedBox(
+                    height: $constants.insets.sm,
+                  ),
+                  Form(
+                    key: _formKey,
+                    child: Column(
+                      children: [
+                        AppTextFormField(
+                          controller: _nameController,
+                          labelText: context.t.tags.add_modal.name,
+                          hintText: context.t.tags.add_modal.name_hint,
+                          labelDescription:
+                              context.t.tags.add_modal.name_description,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return context.t.tags.add_modal.name_required;
+                            }
+                            return null;
+                          },
+                        ),
+                        SizedBox(
+                          height: $constants.insets.sm,
+                        ),
+                        AbColorPicker(
+                          color: _color,
+                          labelText: context.t.tags.add_modal.color,
+                          labelDescription:
+                              context.t.tags.add_modal.color_description,
+                          onColorChanged: (color) {
+                            setState(() {
+                              _color = color;
+                            });
+                          },
+                        )
+                      ],
+                    ),
+                  ),
+                  const Spacer(),
+                  Column(
                     children: [
-                      AppTextFormField(
-                        controller: _nameController,
-                        labelText: context.t.tags.add_modal.name,
-                        hintText: context.t.tags.add_modal.name_hint,
-                        labelDescription:
-                            context.t.tags.add_modal.name_description,
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return context.t.tags.add_modal.name_required;
+                      if (widget.tag != null)
+                        TextButton(
+                            onPressed: () async {
+                              await showDialog(
+                                  context: context,
+                                  builder: (context) => DeleteConfirmModal(
+                                        title: context.t.tags.delete.title,
+                                        description:
+                                            context.t.tags.delete.description,
+                                        warning: context.t.tags.delete.warning,
+                                        onDelete: () {
+                                          context
+                                              .read<TagBloc>()
+                                              .add(DeleteTag(widget.tag!.id!));
+                                        },
+                                      ));
+                              if (!context.mounted) return;
+                              Navigator.pop(context);
+                            },
+                            child: Text(
+                              context.t.actions.delete,
+                              style: getTextTheme(context).bodyMedium!.copyWith(
+                                  fontWeight: FontWeight.bold,
+                                  color: getTheme(context).error),
+                            )),
+                      PrimaryButtonSquare(
+                        text: widget.tag == null
+                            ? context.t.actions.add
+                            : context.t.actions.save,
+                        onPressed: () {
+                          if (_formKey.currentState?.validate() != true) {
+                            return;
                           }
-                          return null;
+                          if (widget.tag == null) {
+                            final tag = TagEntity(
+                                name: _nameController.text,
+                                color: _color?.hexCode);
+
+                            context.read<TagBloc>().add(
+                                  CreateTag(
+                                    tag,
+                                  ),
+                                );
+                          } else {
+                            context.read<TagBloc>().add(
+                                  EditTag(
+                                    widget.tag!.copyWith(
+                                      name: _nameController.text,
+                                      color: _color?.hexCode,
+                                    ),
+                                  ),
+                                );
+                          }
                         },
                       ),
-                      SizedBox(
-                        height: $constants.insets.sm,
-                      ),
-                      AbColorPicker(
-                        color: _color,
-                        labelText: context.t.tags.add_modal.color,
-                        labelDescription:
-                            context.t.tags.add_modal.color_description,
-                        onColorChanged: (color) {
-                          setState(() {
-                            _color = color;
-                          });
-                        },
-                      )
                     ],
                   ),
-                ),
-                const Spacer(),
-                Column(
-                  children: [
-                    if (widget.tag != null)
-                      TextButton(
-                          onPressed: () async {
-                            await showDialog(
-                                context: context,
-                                builder: (context) => DeleteConfirmModal(
-                                      title: context.t.tags.delete.title,
-                                      description:
-                                          context.t.tags.delete.description,
-                                      warning: context.t.tags.delete.warning,
-                                      onDelete: () {
-                                        context
-                                            .read<TagBloc>()
-                                            .add(DeleteTag(widget.tag!.id!));
-                                      },
-                                    ));
-                            Navigator.pop(context);
-                          },
-                          child: Text(
-                            context.t.actions.delete,
-                            style: getTextTheme(context).bodyMedium!.copyWith(
-                                fontWeight: FontWeight.bold,
-                                color: getTheme(context).error),
-                          )),
-                    PrimaryButtonSquare(
-                      text: widget.tag == null
-                          ? context.t.actions.add
-                          : context.t.actions.save,
-                      onPressed: () {
-                        if (_formKey.currentState?.validate() != true) {
-                          return;
-                        }
-                        if (widget.tag == null) {
-                          final tag = TagEntity(
-                              name: _nameController.text,
-                              color: _color?.hexCode);
-
-                          context.read<TagBloc>().add(
-                                CreateTag(
-                                  tag,
-                                ),
-                              );
-                        } else {
-                          context.read<TagBloc>().add(
-                                EditTag(
-                                  widget.tag!.copyWith(
-                                    name: _nameController.text,
-                                    color: _color?.hexCode,
-                                  ),
-                                ),
-                              );
-                        }
-                      },
-                    ),
-                  ],
-                ),
-                SizedBox(
-                  height: $constants.insets.sm,
-                ),
-              ],
-            ),
-            Positioned(
-              left: $constants.insets.xxs,
-              top: $constants.insets.xxs,
-              child: GestureDetector(
-                onTap: () {
-                  Navigator.pop(context);
-                },
-                child: const Icon(
-                  CupertinoIcons.back,
-                  size: 30,
+                  SizedBox(
+                    height: $constants.insets.sm,
+                  ),
+                ],
+              ),
+              Positioned(
+                left: $constants.insets.xxs,
+                top: $constants.insets.xxs,
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
+                  child: const Icon(
+                    CupertinoIcons.back,
+                    size: 30,
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

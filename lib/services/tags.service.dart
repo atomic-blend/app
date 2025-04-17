@@ -21,7 +21,7 @@ class TagService {
   Future<bool> createTag(TagEntity tag) async {
     final result = await globalApiClient.post('/tags',
         data: await tag.encrypt(encryptionService: encryptionService!));
-    if (result.statusCode == 200) {
+    if (result.statusCode == 201) {
       return true;
     } else {
       throw Exception('tag_create_failed');

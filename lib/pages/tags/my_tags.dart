@@ -48,84 +48,90 @@ class _MyTagsState extends State<MyTags> {
           child: Column(
             children: [
               ...(tagState.tags ?? []).map(
-                (tag) => GestureDetector(
-                  onTap: () {
-                    showModalBottomSheet(
-                        context: context,
-                        isScrollControlled: true,
-                        builder: (context) => AddTagModal(tag: tag));
-                  },
-                  child: Slidable(
-                    endActionPane:
-                        ActionPane(motion: const ScrollMotion(), children: [
-                      SizedBox(
-                        width: $constants.insets.xs,
-                      ),
-                      Theme(
-                        data: Theme.of(context).copyWith(
-                            outlinedButtonTheme: const OutlinedButtonThemeData(
-                          style: ButtonStyle(
-                              iconColor: WidgetStatePropertyAll(Colors.white),
-                              iconSize: WidgetStatePropertyAll(25)),
-                        )),
-                        child: SlidableAction(
-                          onPressed: (context) {
-                            showDialog(
-                                context: context,
-                                builder: (context) => DeleteConfirmModal(
-                                      title: context.t.tags.delete.title,
-                                      description:
-                                          context.t.tags.delete.description,
-                                      warning: context.t.tags.delete.warning,
-                                      onDelete: () {
-                                        context
-                                            .read<TagBloc>()
-                                            .add(DeleteTag(tag.id!));
-                                        Navigator.of(context).pop();
-                                      },
-                                    ));
-                          },
-                          backgroundColor: getTheme(context).error,
-                          foregroundColor: Colors.white,
-                          icon: CupertinoIcons.delete,
-                          borderRadius: BorderRadius.circular(
-                            $constants.corners.sm,
+                (tag) => Padding(
+                  padding: EdgeInsets.only(
+                    bottom: $constants.insets.xs,
+                  ),
+                  child: GestureDetector(
+                    onTap: () {
+                      showModalBottomSheet(
+                          context: context,
+                          isScrollControlled: true,
+                          builder: (context) => AddTagModal(tag: tag));
+                    },
+                    child: Slidable(
+                      endActionPane:
+                          ActionPane(motion: const ScrollMotion(), children: [
+                        SizedBox(
+                          width: $constants.insets.xs,
+                        ),
+                        Theme(
+                          data: Theme.of(context).copyWith(
+                              outlinedButtonTheme:
+                                  const OutlinedButtonThemeData(
+                            style: ButtonStyle(
+                                iconColor: WidgetStatePropertyAll(Colors.white),
+                                iconSize: WidgetStatePropertyAll(25)),
+                          )),
+                          child: SlidableAction(
+                            onPressed: (context) {
+                              showDialog(
+                                  context: context,
+                                  builder: (context) => DeleteConfirmModal(
+                                        title: context.t.tags.delete.title,
+                                        description:
+                                            context.t.tags.delete.description,
+                                        warning: context.t.tags.delete.warning,
+                                        onDelete: () {
+                                          context
+                                              .read<TagBloc>()
+                                              .add(DeleteTag(tag.id!));
+                                        },
+                                      ));
+                            },
+                            backgroundColor: getTheme(context).error,
+                            foregroundColor: Colors.white,
+                            icon: CupertinoIcons.delete,
+                            borderRadius: BorderRadius.circular(
+                              $constants.corners.sm,
+                            ),
                           ),
                         ),
-                      ),
-                      SizedBox(
-                        width: $constants.insets.xs,
-                      ),
-                      Theme(
-                        data: Theme.of(context).copyWith(
-                            outlinedButtonTheme: const OutlinedButtonThemeData(
-                          style: ButtonStyle(
-                              iconColor: WidgetStatePropertyAll(Colors.white),
-                              iconSize: WidgetStatePropertyAll(30)),
-                        )),
-                        child: SlidableAction(
-                          onPressed: (context) {
-                            showModalBottomSheet(
-                                context: context,
-                                isScrollControlled: true,
-                                builder: (context) => AddTagModal(tag: tag));
-                          },
-                          backgroundColor: getTheme(context).surfaceContainer,
-                          foregroundColor: getTheme(context).onSurface,
-                          icon: CupertinoIcons.pencil,
-                          borderRadius: BorderRadius.circular(
-                            $constants.corners.sm,
+                        SizedBox(
+                          width: $constants.insets.xs,
+                        ),
+                        Theme(
+                          data: Theme.of(context).copyWith(
+                              outlinedButtonTheme:
+                                  const OutlinedButtonThemeData(
+                            style: ButtonStyle(
+                                iconColor: WidgetStatePropertyAll(Colors.white),
+                                iconSize: WidgetStatePropertyAll(30)),
+                          )),
+                          child: SlidableAction(
+                            onPressed: (context) {
+                              showModalBottomSheet(
+                                  context: context,
+                                  isScrollControlled: true,
+                                  builder: (context) => AddTagModal(tag: tag));
+                            },
+                            backgroundColor: getTheme(context).surfaceContainer,
+                            foregroundColor: getTheme(context).onSurface,
+                            icon: CupertinoIcons.pencil,
+                            borderRadius: BorderRadius.circular(
+                              $constants.corners.sm,
+                            ),
                           ),
                         ),
+                      ]),
+                      child: IconTextCard(
+                        width: double.infinity,
+                        title: tag.name,
+                        icon: CupertinoIcons.tag,
+                        color: tag.color != null
+                            ? hexToColor(tag.color!).withValues(alpha: 0.2)
+                            : null,
                       ),
-                    ]),
-                    child: IconTextCard(
-                      width: double.infinity,
-                      title: tag.name,
-                      icon: CupertinoIcons.tag,
-                      color: tag.color != null
-                          ? hexToColor(tag.color!).withValues(alpha: 0.2)
-                          : null,
                     ),
                   ),
                 ),
