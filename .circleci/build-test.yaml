@@ -1,0 +1,53 @@
+version: 2.1
+
+# Import required orbs
+orbs:
+  codecov: codecov/codecov@5.3.0 # Codecov orb for uploading coverage reports
+  flutter: circleci/flutter@2.1.0
+
+parameters:
+  flutter_version:
+    type: string
+    default: "3.29.2" # Set your desired default version here
+
+jobs:
+  test-coverage:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: medium
+    working_directory: ~/project
+    parameters:
+      flutter_version:
+        type: string
+        default: << pipeline.parameters.flutter_version >>
+    steps:
+      - checkout:
+          path: ~/project
+
+      - flutter/install_sdk_and_pub:
+          channel: stable
+          version: << parameters.flutter_version >>
+
+      - run:
+          name: Lint
+          command: |
+            dart analyze --fatal-infos
+      # - run:
+      #     name: Test
+      #     command: |
+      #       dart test --coverage=coverage
+      #       dart pub global activate coverage
+      #       ~/.pub-cache/bin/format_coverage --lcov --in=coverage --out=coverage.lcov --report-on=lib
+      # - store_artifacts:
+      #     path: coverage.lcov
+      #     destination: coverage-report
+
+      # - codecov/upload:
+      #     files: "coverage.lcov"
+      #     slug: atomic-blend/app
+
+workflows:
+  version: 2
+  test:
+    jobs:
+      - test-coverage
