@@ -102,16 +102,19 @@ class _AppWrapperState extends State<AppWrapper> {
           scrolledUnderElevation: 0,
           title: appBarconfig!.title,
           actions: appBarconfig.actions,
-          leading: IconButton(
-            icon: appState.pageIndex == appbars.length - 1
-                ? Container()
-                : const Icon(Icons.menu),
-            onPressed: () {
-              setState(() {
-                _isSideMenuOpened = !_isSideMenuOpened;
-              });
-            },
-          ),
+          leading: menuItems[appState.pageIndex] != null &&
+                  menuItems[appState.pageIndex]?.isNotEmpty == true
+              ? IconButton(
+                  icon: appState.pageIndex == appbars.length - 1
+                      ? Container()
+                      : const Icon(Icons.menu),
+                  onPressed: () {
+                    setState(() {
+                      _isSideMenuOpened = !_isSideMenuOpened;
+                    });
+                  },
+                )
+              : Container(),
         );
 
         return Stack(
