@@ -28,9 +28,12 @@ class TaskEntity with _$TaskEntity {
     'user',
     'reminders',
     'startDate',
-    'tags',
     'endDate',
     'completed'
+  ];
+
+  static final manualParseFields = [
+    'tags'
   ];
 
   factory TaskEntity.fromJson(Map<String, dynamic> json) =>
@@ -70,7 +73,7 @@ class TaskEntity with _$TaskEntity {
     Map<String, dynamic> decryptedData = {};
 
     for (var entry in data.entries) {
-      if (nonEncryptedFields.contains(entry.key)) {
+      if (nonEncryptedFields.contains(entry.key) || manualParseFields.contains(entry.key)) {
         decryptedData[entry.key] = entry.value;
       } else {
         decryptedData[entry.key] =
