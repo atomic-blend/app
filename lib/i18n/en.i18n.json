@@ -188,6 +188,20 @@
             "my_profile": "My Profile",
             "email": "Email",
             "undefined": "Undefined"
+        },
+        "security_and_privacy": {
+            "title": "Security & Privacy",
+            "change_password": {
+                "title": "Change Password",
+                "old_password": "Old Password",
+                "new_password": "New Password",
+                "confirm_password": "Confirm Password",
+                "old_password_required": "Old password is required",
+                "new_password_required": "New password is required",
+                "confirm_password_required": "Confirm password is required",
+                "password_mismatch": "Passwords do not match",
+                "password_hint": "SuperSecure123!"
+            }
         }
     },
     "habits": {

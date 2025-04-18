@@ -188,6 +188,20 @@
             "my_profile": "Mon profil",
             "email": "Adresse e-mail",
             "undefined": "Non défini"
+        },
+        "security_and_privacy": {
+            "title": "Sécurité et confidentialité",
+            "change_password": {
+                "title": "Changer le mot de passe",
+                "old_password": "Ancien mot de passe",
+                "new_password": "Nouveau mot de passe",
+                "confirm_password": "Confirmer le mot de passe",
+                "old_password_required": "Ancien mot de passe requis",
+                "new_password_required": "Nouveau mot de passe requis",
+                "confirm_password_required": "Confirmer le mot de passe requis",
+                "password_mismatch": "Les mots de passe ne correspondent pas",
+                "password_hint": "SuperSecure123!"
+            }
         }
     },
     "habits": {

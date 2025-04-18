@@ -167,8 +167,8 @@ class EncryptionService {
       String currentPassword,
       String newPassword) async {
     //////////// DECRYPT USER KEY WITH CURRENT ////////////
-    //generate user salt
-    final userSalt = generateRandomBytes(32);
+    // parse the salt from the keySet
+    final userSalt = base64.decode(keySet.salt);
 
     // init argon2 key derivation
     final argon2 = Argon2BytesGenerator();
@@ -235,16 +235,17 @@ class EncryptionService {
     newEncryptedDataKey.setAll(newCipherResult.length + newTag.length, newIv);
 
     return {
-      "salt": base64.encode(newUserSalt),
-      "userKey": base64.encode(newUKey),
-      "newDataKey": base64.encode(newEncryptedDataKey),
+      // to later persist in the app
+      "rawUserKey": base64.encode(newUKey),
+      // to send to the backend to update the KeySet with new password
+      "newEncryptedDataKey": base64.encode(newEncryptedDataKey),
+      "newUserSalt": base64.encode(newUserSalt),
     };
   }
 
-  static Future<bool?> persistNewUserKey(
-      Uint8List userKey, Uint8List newDataKey) async {
+  static Future<bool?> persistNewUserKey(Uint8List userKey) async {
     userKey = userKey;
-    return await prefs?.setString("key", base64.encode(newDataKey));
+    return await prefs?.setString("key", base64.encode(userKey));
   }
 
   static Uint8List generateRandomBytes(int numBytes) {

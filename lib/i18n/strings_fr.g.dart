@@ -194,6 +194,7 @@ class _TranslationsAccountFr implements TranslationsAccountEn {
 	@override late final _TranslationsAccountSectionsFr sections = _TranslationsAccountSectionsFr._(_root);
 	@override late final _TranslationsAccountActionsFr actions = _TranslationsAccountActionsFr._(_root);
 	@override late final _TranslationsAccountProfileFr profile = _TranslationsAccountProfileFr._(_root);
+	@override late final _TranslationsAccountSecurityAndPrivacyFr security_and_privacy = _TranslationsAccountSecurityAndPrivacyFr._(_root);
 }
 
 // Path: habits
@@ -951,6 +952,17 @@ class _TranslationsAccountProfileFr implements TranslationsAccountProfileEn {
 	@override String get undefined => 'Non défini';
 }
 
+// Path: account.security_and_privacy
+class _TranslationsAccountSecurityAndPrivacyFr implements TranslationsAccountSecurityAndPrivacyEn {
+	_TranslationsAccountSecurityAndPrivacyFr._(this._root);
+
+	final TranslationsFr _root; // ignore: unused_field
+
+	// Translations
+	@override String get title => 'Sécurité et confidentialité';
+	@override late final _TranslationsAccountSecurityAndPrivacyChangePasswordFr change_password = _TranslationsAccountSecurityAndPrivacyChangePasswordFr._(_root);
+}
+
 // Path: habits.add
 class _TranslationsHabitsAddFr implements TranslationsHabitsAddEn {
 	_TranslationsHabitsAddFr._(this._root);
@@ -1064,6 +1076,24 @@ class _TranslationsSettingsAppSettingsSelfHostedUrlFr implements TranslationsSet
 	@override String get description => 'Si vous utilisez une instance auto-hébergée d\'Atomic Blend, vous pouvez saisir l\'URL ici.';
 	@override String get placeholder => 'Entrez l\'URL de votre instance';
 	@override String get not_set => 'Non défini';
+}
+
+// Path: account.security_and_privacy.change_password
+class _TranslationsAccountSecurityAndPrivacyChangePasswordFr implements TranslationsAccountSecurityAndPrivacyChangePasswordEn {
+	_TranslationsAccountSecurityAndPrivacyChangePasswordFr._(this._root);
+
+	final TranslationsFr _root; // ignore: unused_field
+
+	// Translations
+	@override String get title => 'Changer le mot de passe';
+	@override String get old_password => 'Ancien mot de passe';
+	@override String get new_password => 'Nouveau mot de passe';
+	@override String get confirm_password => 'Confirmer le mot de passe';
+	@override String get old_password_required => 'Ancien mot de passe requis';
+	@override String get new_password_required => 'Nouveau mot de passe requis';
+	@override String get confirm_password_required => 'Confirmer le mot de passe requis';
+	@override String get password_mismatch => 'Les mots de passe ne correspondent pas';
+	@override String get password_hint => 'SuperSecure123!';
 }
 
 /// Flat map(s) containing all translations.
@@ -1214,6 +1244,16 @@ extension on TranslationsFr {
 			case 'account.profile.my_profile': return 'Mon profil';
 			case 'account.profile.email': return 'Adresse e-mail';
 			case 'account.profile.undefined': return 'Non défini';
+			case 'account.security_and_privacy.title': return 'Sécurité et confidentialité';
+			case 'account.security_and_privacy.change_password.title': return 'Changer le mot de passe';
+			case 'account.security_and_privacy.change_password.old_password': return 'Ancien mot de passe';
+			case 'account.security_and_privacy.change_password.new_password': return 'Nouveau mot de passe';
+			case 'account.security_and_privacy.change_password.confirm_password': return 'Confirmer le mot de passe';
+			case 'account.security_and_privacy.change_password.old_password_required': return 'Ancien mot de passe requis';
+			case 'account.security_and_privacy.change_password.new_password_required': return 'Nouveau mot de passe requis';
+			case 'account.security_and_privacy.change_password.confirm_password_required': return 'Confirmer le mot de passe requis';
+			case 'account.security_and_privacy.change_password.password_mismatch': return 'Les mots de passe ne correspondent pas';
+			case 'account.security_and_privacy.change_password.password_hint': return 'SuperSecure123!';
 			case 'habits.title': return 'Habitudes';
 			case 'habits.no_habits': return 'Aucune habitude';
 			case 'habits.get_started_now': return 'Ajoutez votre première habitude pour commencer !';
