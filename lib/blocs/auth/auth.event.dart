@@ -38,3 +38,13 @@ final class UpdateUserProfile extends AuthEvent {
   final UserEntity user;
   const UpdateUserProfile(this.user);
 }
+
+final class ChangePassword extends AuthEvent {
+  final String oldPassword;
+  final String newPassword;
+  final String newUserKey;
+  final String newEncryptedDataKey;
+  final String newSalt;
+  const ChangePassword(this.oldPassword, this.newPassword, this.newUserKey,
+      this.newEncryptedDataKey, this.newSalt);
+}

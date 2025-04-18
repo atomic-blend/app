@@ -68,3 +68,17 @@ class UserUpdateProfileSuccess extends AuthState {
   @override
   String toString() => 'UserUpdateProfileSuccess { user: $user }';
 }
+
+class UserChangePasswordLoading extends AuthState {
+  const UserChangePasswordLoading() : super(null);
+
+  @override
+  String toString() => 'UserChangePasswordLoading { }';
+}
+
+class UserChangePasswordSuccess extends AuthState {
+  const UserChangePasswordSuccess(UserEntity super.user);
+
+  @override
+  String toString() => 'UserChangePasswordSuccess { user: $user }';
+}

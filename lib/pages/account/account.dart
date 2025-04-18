@@ -4,6 +4,7 @@ import 'package:app/components/buttons/primary_button_round.dart';
 import 'package:app/components/modals/delete_account_modal.dart';
 import 'package:app/i18n/strings.g.dart';
 import 'package:app/pages/account/profile.dart';
+import 'package:app/pages/account/security.dart';
 import 'package:app/utils/constants.dart';
 import 'package:app/utils/name_generator.dart';
 import 'package:app/utils/shortcuts.dart';
@@ -109,6 +110,13 @@ class _AccountState extends State<Account> {
                 iconSize: 20,
                 iconColor: Colors.grey[700],
                 text: context.t.account.actions.security,
+                onTap: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => const Security(),
+                    ),
+                  );
+                },
               ),
               SizedBox(
                 height: $constants.insets.sm,

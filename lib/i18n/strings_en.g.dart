@@ -197,6 +197,7 @@ class TranslationsAccountEn {
 	late final TranslationsAccountSectionsEn sections = TranslationsAccountSectionsEn._(_root);
 	late final TranslationsAccountActionsEn actions = TranslationsAccountActionsEn._(_root);
 	late final TranslationsAccountProfileEn profile = TranslationsAccountProfileEn._(_root);
+	late final TranslationsAccountSecurityAndPrivacyEn security_and_privacy = TranslationsAccountSecurityAndPrivacyEn._(_root);
 }
 
 // Path: habits
@@ -957,6 +958,17 @@ class TranslationsAccountProfileEn {
 	String get undefined => 'Undefined';
 }
 
+// Path: account.security_and_privacy
+class TranslationsAccountSecurityAndPrivacyEn {
+	TranslationsAccountSecurityAndPrivacyEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	String get title => 'Security & Privacy';
+	late final TranslationsAccountSecurityAndPrivacyChangePasswordEn change_password = TranslationsAccountSecurityAndPrivacyChangePasswordEn._(_root);
+}
+
 // Path: habits.add
 class TranslationsHabitsAddEn {
 	TranslationsHabitsAddEn._(this._root);
@@ -1070,6 +1082,25 @@ class TranslationsSettingsAppSettingsSelfHostedUrlEn {
 	String get description => 'If you are using a self-hosted instance of Atomic Blend, you can enter the URL here.';
 	String get placeholder => 'Enter the URL of your instance';
 	String get not_set => 'Not set';
+}
+
+// Path: account.security_and_privacy.change_password
+class TranslationsAccountSecurityAndPrivacyChangePasswordEn {
+	TranslationsAccountSecurityAndPrivacyChangePasswordEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	String get title => 'Change Password';
+	String get old_password => 'Old Password';
+	String get new_password => 'New Password';
+	String get confirm_password => 'Confirm Password';
+	String get old_password_required => 'Old password is required';
+	String get new_password_required => 'New password is required';
+	String get confirm_password_required => 'Confirm password is required';
+	String get password_mismatch => 'Passwords do not match';
+	String get password_hint => 'SuperSecure123!';
+	String get warning_changing_pws_will_log_you_out => 'Changing your password will log you out of the app.';
 }
 
 /// Flat map(s) containing all translations.
@@ -1220,6 +1251,17 @@ extension on Translations {
 			case 'account.profile.my_profile': return 'My Profile';
 			case 'account.profile.email': return 'Email';
 			case 'account.profile.undefined': return 'Undefined';
+			case 'account.security_and_privacy.title': return 'Security & Privacy';
+			case 'account.security_and_privacy.change_password.title': return 'Change Password';
+			case 'account.security_and_privacy.change_password.old_password': return 'Old Password';
+			case 'account.security_and_privacy.change_password.new_password': return 'New Password';
+			case 'account.security_and_privacy.change_password.confirm_password': return 'Confirm Password';
+			case 'account.security_and_privacy.change_password.old_password_required': return 'Old password is required';
+			case 'account.security_and_privacy.change_password.new_password_required': return 'New password is required';
+			case 'account.security_and_privacy.change_password.confirm_password_required': return 'Confirm password is required';
+			case 'account.security_and_privacy.change_password.password_mismatch': return 'Passwords do not match';
+			case 'account.security_and_privacy.change_password.password_hint': return 'SuperSecure123!';
+			case 'account.security_and_privacy.change_password.warning_changing_pws_will_log_you_out': return 'Changing your password will log you out of the app.';
 			case 'habits.title': return 'Habits';
 			case 'habits.no_habits': return 'No habits for now';
 			case 'habits.get_started_now': return 'Add your first habit to get started!';

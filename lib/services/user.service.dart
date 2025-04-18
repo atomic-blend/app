@@ -179,4 +179,20 @@ class UserService {
       throw Exception('user_update_failed');
     }
   }
+
+  changePassword({required String oldPassword, required String newPassword,
+      required String newEncryptedDataKey, required String newUserKey, required String newUserSalt,}) async {
+    final result = await globalApiClient.put('/users/password', data: {
+      'old_password': oldPassword,
+      'new_password': newPassword,
+      'user_key': newEncryptedDataKey,
+      'salt': newUserSalt,
+    });
+    if (result.statusCode == 200) {
+      await EncryptionService.persistNewUserKey(base64.decode(newUserKey));
+      return true;
+    } else {
+      throw Exception('password_change_failed');
+    }
+  }
 }
