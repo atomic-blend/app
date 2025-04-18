@@ -1094,6 +1094,7 @@ class _TranslationsAccountSecurityAndPrivacyChangePasswordFr implements Translat
 	@override String get confirm_password_required => 'Confirmer le mot de passe requis';
 	@override String get password_mismatch => 'Les mots de passe ne correspondent pas';
 	@override String get password_hint => 'SuperSecure123!';
+	@override String get warning_changing_pws_will_log_you_out => 'Changer le mot de passe vous déconnectera de l\'application.';
 }
 
 /// Flat map(s) containing all translations.
@@ -1254,6 +1255,7 @@ extension on TranslationsFr {
 			case 'account.security_and_privacy.change_password.confirm_password_required': return 'Confirmer le mot de passe requis';
 			case 'account.security_and_privacy.change_password.password_mismatch': return 'Les mots de passe ne correspondent pas';
 			case 'account.security_and_privacy.change_password.password_hint': return 'SuperSecure123!';
+			case 'account.security_and_privacy.change_password.warning_changing_pws_will_log_you_out': return 'Changer le mot de passe vous déconnectera de l\'application.';
 			case 'habits.title': return 'Habitudes';
 			case 'habits.no_habits': return 'Aucune habitude';
 			case 'habits.get_started_now': return 'Ajoutez votre première habitude pour commencer !';

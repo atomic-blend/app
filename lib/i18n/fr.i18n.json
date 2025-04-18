@@ -200,7 +200,8 @@
                 "new_password_required": "Nouveau mot de passe requis",
                 "confirm_password_required": "Confirmer le mot de passe requis",
                 "password_mismatch": "Les mots de passe ne correspondent pas",
-                "password_hint": "SuperSecure123!"
+                "password_hint": "SuperSecure123!",
+                "warning_changing_pws_will_log_you_out": "Changer le mot de passe vous déconnectera de l'application."
             }
         }
     },

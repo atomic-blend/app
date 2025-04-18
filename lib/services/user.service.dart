@@ -180,18 +180,19 @@ class UserService {
     }
   }
 
-  changePassword(String oldPassword, String newPassword) {
-    //TODO: encrypt datakey with new password
-    final result = globalApiClient.put('/users/password', data: {
-      'oldPassword': oldPassword,
-      'newPassword': newPassword,
+  changePassword({required String oldPassword, required String newPassword,
+      required String newEncryptedDataKey, required String newUserKey, required String newUserSalt,}) async {
+    final result = await globalApiClient.put('/users/password', data: {
+      'old_password': oldPassword,
+      'new_password': newPassword,
+      'user_key': newEncryptedDataKey,
+      'salt': newUserSalt,
     });
     if (result.statusCode == 200) {
-      //TOOD: persist the new data key on the device
+      await EncryptionService.persistNewUserKey(base64.decode(newUserKey));
       return true;
     } else {
       throw Exception('password_change_failed');
     }
-
   }
 }

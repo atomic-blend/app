@@ -8,6 +8,7 @@ import 'package:app/utils/constants.dart';
 import 'package:app/utils/shortcuts.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -52,7 +53,19 @@ class _ChangePwdModalState extends State<ChangePwdModal> {
                       ),
                     ),
                     SizedBox(
-                      height: $constants.insets.md,
+                      height: $constants.insets.sm,
+                    ),
+                    AutoSizeText(
+                      context.t.account.security_and_privacy.change_password
+                          .warning_changing_pws_will_log_you_out,
+                      style: getTextTheme(context).bodyMedium!.copyWith(
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                            color: getTheme(context).error,
+                          ),
+                    ),
+                    SizedBox(
+                      height: $constants.insets.sm,
                     ),
                     AppTextFormField(
                       controller: _oldPasswordController,
@@ -117,16 +130,27 @@ class _ChangePwdModalState extends State<ChangePwdModal> {
                           return;
                         }
 
-                        final refreshedKey =
-                            await EncryptionService.refreshUserDataKey(
-                          authState.user!.keySet,
-                          _oldPasswordController.text,
-                          _newPasswordController.text,
-                        );
+                        try {
+                          final refreshedKey =
+                              await EncryptionService.refreshUserDataKey(
+                            authState.user!.keySet,
+                            _oldPasswordController.text,
+                            _newPasswordController.text,
+                          );
 
-                        print(refreshedKey);
-
-                        //TODO: send to backend + listen on success to persist the updated key in app
+                          if (!context.mounted) return;
+                          context.read<AuthBloc>().add(ChangePassword(
+                                _oldPasswordController.text,
+                                _newPasswordController.text,
+                                refreshedKey["rawUserKey"]!,
+                                refreshedKey["newEncryptedDataKey"]!,
+                                refreshedKey["newUserSalt"]!,
+                              ));
+                        } on Exception catch (e) {
+                          if (kDebugMode) {
+                            print(e);
+                          }
+                        }
                       },
                     ),
                     SizedBox(

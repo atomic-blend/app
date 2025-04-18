@@ -1100,6 +1100,7 @@ class TranslationsAccountSecurityAndPrivacyChangePasswordEn {
 	String get confirm_password_required => 'Confirm password is required';
 	String get password_mismatch => 'Passwords do not match';
 	String get password_hint => 'SuperSecure123!';
+	String get warning_changing_pws_will_log_you_out => 'Changing your password will log you out of the app.';
 }
 
 /// Flat map(s) containing all translations.
@@ -1260,6 +1261,7 @@ extension on Translations {
 			case 'account.security_and_privacy.change_password.confirm_password_required': return 'Confirm password is required';
 			case 'account.security_and_privacy.change_password.password_mismatch': return 'Passwords do not match';
 			case 'account.security_and_privacy.change_password.password_hint': return 'SuperSecure123!';
+			case 'account.security_and_privacy.change_password.warning_changing_pws_will_log_you_out': return 'Changing your password will log you out of the app.';
 			case 'habits.title': return 'Habits';
 			case 'habits.no_habits': return 'No habits for now';
 			case 'habits.get_started_now': return 'Add your first habit to get started!';
