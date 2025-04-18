@@ -79,6 +79,7 @@ class _SingleDatePickerState extends State<SingleDatePicker> {
                       day: value[0].day,
                     );
                   }
+                  widget.onEndDateChanged?.call(endDate!);
                 });
               },
             ),
