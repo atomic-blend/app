@@ -179,4 +179,19 @@ class UserService {
       throw Exception('user_update_failed');
     }
   }
+
+  changePassword(String oldPassword, String newPassword) {
+    //TODO: encrypt datakey with new password
+    final result = globalApiClient.put('/users/password', data: {
+      'oldPassword': oldPassword,
+      'newPassword': newPassword,
+    });
+    if (result.statusCode == 200) {
+      //TOOD: persist the new data key on the device
+      return true;
+    } else {
+      throw Exception('password_change_failed');
+    }
+
+  }
 }
