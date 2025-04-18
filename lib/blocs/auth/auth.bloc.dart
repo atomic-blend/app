@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:app/entities/user/user.entity.dart';
 import 'package:app/entities/user_device/user_device.dart';
-import 'package:app/main.dart';
 import 'package:app/services/user.service.dart';
 import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
@@ -127,7 +126,7 @@ class AuthBloc extends HydratedBloc<AuthEvent, AuthState> {
     }
     final user = state.user!;
     emit(const UserChangePasswordLoading());
-    final updatedUser = await _userService.changePassword(
+    await _userService.changePassword(
       oldPassword:  event.oldPassword,
       newPassword:  event.newPassword,
       newEncryptedDataKey: event.newEncryptedDataKey,

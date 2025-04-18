@@ -1,5 +1,4 @@
 import 'package:app/components/buttons/icon_text_button.dart';
-import 'package:app/components/buttons/icon_text_card.dart';
 import 'package:app/i18n/strings.g.dart';
 import 'package:app/pages/account/change_pwd_modal.dart';
 import 'package:app/utils/constants.dart';
