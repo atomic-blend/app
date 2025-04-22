@@ -66,6 +66,17 @@
             "mnemonic_hint": "Entrez votre clé de récupération",
             "mnemonic_error": "Clé de récupération invalide",
             "copy_success": "Clé copiée dans le presse-papiers"
+        },
+        "reset_password": {
+            "title": "Reset your password",
+            "subtitle": "Vous ne vous souvenez pas de votre mot de passe ?",
+            "description": "Enter your email address to receive a password reset link.",
+            "warning": "Vous allez recevoir un code par email pour réinitialiser votre mot de passe, puis vous devrez entrer votre clé de récupération pour accéder à vos données.",
+            "no_mnemonic_data_loss": "Si vous ne vous rappelez pas de votre clé de récupération, vous perdrez accès à toutes vos précédentes données.",
+            "email": "Email",
+            "email_description": "L'adresse e-mail utilisée pour vous inscrire.",
+            "email_hint": "atomicblend@gmail.com",
+            "email_required": "L'adresse e-mail est requise"
         }
     },
     "settings": {

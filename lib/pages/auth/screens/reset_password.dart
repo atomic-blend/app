@@ -1,0 +1,56 @@
+import 'package:app/i18n/strings.g.dart';
+import 'package:app/pages/auth/screens/reset_password_intro.dart';
+import 'package:app/utils/constants.dart';
+import 'package:app/utils/shortcuts.dart';
+import 'package:flutter/material.dart';
+
+class ResetPassword extends StatefulWidget {
+  final String? email;
+  const ResetPassword({super.key, this.email});
+
+  @override
+  State<ResetPassword> createState() => _ResetPasswordState();
+}
+
+class _ResetPasswordState extends State<ResetPassword> {
+  int _currentStep = 0;
+  final TextEditingController _emailController = TextEditingController();
+
+  @override
+  void initState() {
+    if (widget.email != null) {
+      _emailController.text = widget.email!;
+    }
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          context.t.auth.reset_password.title,
+          style: getTextTheme(context).bodyLarge!.copyWith(
+                fontWeight: FontWeight.bold,
+              ),
+        ),
+      ),
+      body: Padding(
+        padding: EdgeInsets.symmetric(horizontal: $constants.insets.md),
+        child: Column(
+          children: [
+            if (_currentStep == 0)
+              ResetPasswordIntro.ResetPasswordIntroduction(
+                emailController: _emailController,
+                onNextCallback: () {
+                  setState(() {
+                    _currentStep = 1;
+                  });
+                },
+              )
+          ],
+        ),
+      ),
+    );
+  }
+}

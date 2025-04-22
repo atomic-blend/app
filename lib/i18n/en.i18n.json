@@ -66,6 +66,17 @@
             "mnemonic_hint": "Enter your recovery key",
             "mnemonic_error": "Invalid recovery key",
             "copy_success": "Recovery key copied to clipboard"
+        },
+        "reset_password": {
+            "title": "Reset your password",
+            "subtitle": "You don't remember your password?",
+            "description": "Enter your email address to initiate the password reset process.",
+            "warning": "You will receive an email with a code to confirm your identity, then you'll need your mnemonic key to get access to your data.",
+            "no_mnemonic_data_loss": "If you don't have your mnemonic key, you will lose access to your previous data.",
+            "email": "Email",
+            "email_description": "The email address you used to register.",
+            "email_hint": "atomicblend@gmail.com",
+            "email_required": "Email is required"
         }
     },
     "settings": {

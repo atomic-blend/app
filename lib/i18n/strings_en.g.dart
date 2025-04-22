@@ -120,6 +120,7 @@ class TranslationsAuthEn {
 	late final TranslationsAuthRegisterEn register = TranslationsAuthRegisterEn._(_root);
 	late final TranslationsAuthDeleteAccountEn delete_account = TranslationsAuthDeleteAccountEn._(_root);
 	late final TranslationsAuthMnemonicKeyEn mnemonic_key = TranslationsAuthMnemonicKeyEn._(_root);
+	late final TranslationsAuthResetPasswordEn reset_password = TranslationsAuthResetPasswordEn._(_root);
 }
 
 // Path: settings
@@ -803,6 +804,24 @@ class TranslationsAuthMnemonicKeyEn {
 	String get copy_success => 'Recovery key copied to clipboard';
 }
 
+// Path: auth.reset_password
+class TranslationsAuthResetPasswordEn {
+	TranslationsAuthResetPasswordEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	String get title => 'Reset your password';
+	String get subtitle => 'You don\'t remember your password?';
+	String get description => 'Enter your email address to initiate the password reset process.';
+	String get warning => 'You will receive an email with a code to confirm your identity, then you\'ll need your mnemonic key to get access to your data.';
+	String get no_mnemonic_data_loss => 'If you don\'t have your mnemonic key, you will lose access to your previous data.';
+	String get email => 'Email';
+	String get email_description => 'The email address you used to register.';
+	String get email_hint => 'atomicblend@gmail.com';
+	String get email_required => 'Email is required';
+}
+
 // Path: settings.app_settings
 class TranslationsSettingsAppSettingsEn {
 	TranslationsSettingsAppSettingsEn._(this._root);
@@ -1161,6 +1180,15 @@ extension on Translations {
 			case 'auth.mnemonic_key.mnemonic_hint': return 'Enter your recovery key';
 			case 'auth.mnemonic_key.mnemonic_error': return 'Invalid recovery key';
 			case 'auth.mnemonic_key.copy_success': return 'Recovery key copied to clipboard';
+			case 'auth.reset_password.title': return 'Reset your password';
+			case 'auth.reset_password.subtitle': return 'You don\'t remember your password?';
+			case 'auth.reset_password.description': return 'Enter your email address to initiate the password reset process.';
+			case 'auth.reset_password.warning': return 'You will receive an email with a code to confirm your identity, then you\'ll need your mnemonic key to get access to your data.';
+			case 'auth.reset_password.no_mnemonic_data_loss': return 'If you don\'t have your mnemonic key, you will lose access to your previous data.';
+			case 'auth.reset_password.email': return 'Email';
+			case 'auth.reset_password.email_description': return 'The email address you used to register.';
+			case 'auth.reset_password.email_hint': return 'atomicblend@gmail.com';
+			case 'auth.reset_password.email_required': return 'Email is required';
 			case 'settings.title': return 'Settings';
 			case 'settings.app_settings.title': return 'App Settings';
 			case 'settings.app_settings.selfHostedUrl.title': return 'Self-Hosted URL';

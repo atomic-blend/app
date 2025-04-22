@@ -117,6 +117,7 @@ class _TranslationsAuthFr implements TranslationsAuthEn {
 	@override late final _TranslationsAuthRegisterFr register = _TranslationsAuthRegisterFr._(_root);
 	@override late final _TranslationsAuthDeleteAccountFr delete_account = _TranslationsAuthDeleteAccountFr._(_root);
 	@override late final _TranslationsAuthMnemonicKeyFr mnemonic_key = _TranslationsAuthMnemonicKeyFr._(_root);
+	@override late final _TranslationsAuthResetPasswordFr reset_password = _TranslationsAuthResetPasswordFr._(_root);
 }
 
 // Path: settings
@@ -797,6 +798,24 @@ class _TranslationsAuthMnemonicKeyFr implements TranslationsAuthMnemonicKeyEn {
 	@override String get copy_success => 'Clé copiée dans le presse-papiers';
 }
 
+// Path: auth.reset_password
+class _TranslationsAuthResetPasswordFr implements TranslationsAuthResetPasswordEn {
+	_TranslationsAuthResetPasswordFr._(this._root);
+
+	final TranslationsFr _root; // ignore: unused_field
+
+	// Translations
+	@override String get title => 'Reset your password';
+	@override String get subtitle => 'Vous ne vous souvenez pas de votre mot de passe ?';
+	@override String get description => 'Enter your email address to receive a password reset link.';
+	@override String get warning => 'Vous allez recevoir un code par email pour réinitialiser votre mot de passe, puis vous devrez entrer votre clé de récupération pour accéder à vos données.';
+	@override String get no_mnemonic_data_loss => 'Si vous ne vous rappelez pas de votre clé de récupération, vous perdrez accès à toutes vos précédentes données.';
+	@override String get email => 'Email';
+	@override String get email_description => 'L\'adresse e-mail utilisée pour vous inscrire.';
+	@override String get email_hint => 'atomicblend@gmail.com';
+	@override String get email_required => 'L\'adresse e-mail est requise';
+}
+
 // Path: settings.app_settings
 class _TranslationsSettingsAppSettingsFr implements TranslationsSettingsAppSettingsEn {
 	_TranslationsSettingsAppSettingsFr._(this._root);
@@ -1155,6 +1174,15 @@ extension on TranslationsFr {
 			case 'auth.mnemonic_key.mnemonic_hint': return 'Entrez votre clé de récupération';
 			case 'auth.mnemonic_key.mnemonic_error': return 'Clé de récupération invalide';
 			case 'auth.mnemonic_key.copy_success': return 'Clé copiée dans le presse-papiers';
+			case 'auth.reset_password.title': return 'Reset your password';
+			case 'auth.reset_password.subtitle': return 'Vous ne vous souvenez pas de votre mot de passe ?';
+			case 'auth.reset_password.description': return 'Enter your email address to receive a password reset link.';
+			case 'auth.reset_password.warning': return 'Vous allez recevoir un code par email pour réinitialiser votre mot de passe, puis vous devrez entrer votre clé de récupération pour accéder à vos données.';
+			case 'auth.reset_password.no_mnemonic_data_loss': return 'Si vous ne vous rappelez pas de votre clé de récupération, vous perdrez accès à toutes vos précédentes données.';
+			case 'auth.reset_password.email': return 'Email';
+			case 'auth.reset_password.email_description': return 'L\'adresse e-mail utilisée pour vous inscrire.';
+			case 'auth.reset_password.email_hint': return 'atomicblend@gmail.com';
+			case 'auth.reset_password.email_required': return 'L\'adresse e-mail est requise';
 			case 'settings.title': return 'Paramètres';
 			case 'settings.app_settings.title': return 'Paramètres de l\'application';
 			case 'settings.app_settings.selfHostedUrl.title': return 'URL auto-hébergée';
