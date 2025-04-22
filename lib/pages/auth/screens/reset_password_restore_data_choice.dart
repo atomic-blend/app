@@ -1,6 +1,5 @@
 import 'package:app/components/buttons/primary_button_square.dart';
 import 'package:app/components/forms/app_text_form_field.dart';
-import 'package:app/components/modals/delete_confirm_modal.dart';
 import 'package:app/i18n/strings.g.dart';
 import 'package:app/utils/constants.dart';
 import 'package:app/utils/shortcuts.dart';
@@ -182,7 +181,7 @@ class _ResetPasswordRestoreDataChoiceState
                 ),
             ],
           ),
-          Spacer(),
+          const Spacer(),
           const Divider(),
           Animate(
             controller: _animationController,

@@ -830,6 +830,16 @@ class _TranslationsAuthResetPasswordFr implements TranslationsAuthResetPasswordE
 	@override String get mnemonic_key_description => 'Saisis votre clé de récupération pour accéder à vos données.';
 	@override String get mnemonic_key_hint => 'business theme rotate together surprise wisdom powder knee view border local runway';
 	@override String get mnemonic_key_required => 'La clé de récupération est requise';
+	@override String get select_your_new_password => 'Sélectionnez votre nouveau mot de passe';
+	@override String get select_your_new_password_description => 'Entrez un mot de passe fort pour protéger votre compte.';
+	@override String get new_password => 'Nouveau mot de passe';
+	@override String get new_password_description => 'Entrez un nouveau mot de passe pour votre compte.';
+	@override String get new_password_hint => 'SuperSecure123!';
+	@override String get new_password_required => 'Nouveau mot de passe requis';
+	@override String get confirm_new_password => 'Confirmer le mot de passe';
+	@override String get confirm_new_password_description => 'Entrez à nouveau votre mot de passe pour le confirmer.';
+	@override String get confirm_new_password_required => 'Confirmer le mot de passe requis';
+	@override String get password_mismatch => 'Les mots de passe ne correspondent pas';
 }
 
 // Path: settings.app_settings
@@ -1215,6 +1225,16 @@ extension on TranslationsFr {
 			case 'auth.reset_password.mnemonic_key_description': return 'Saisis votre clé de récupération pour accéder à vos données.';
 			case 'auth.reset_password.mnemonic_key_hint': return 'business theme rotate together surprise wisdom powder knee view border local runway';
 			case 'auth.reset_password.mnemonic_key_required': return 'La clé de récupération est requise';
+			case 'auth.reset_password.select_your_new_password': return 'Sélectionnez votre nouveau mot de passe';
+			case 'auth.reset_password.select_your_new_password_description': return 'Entrez un mot de passe fort pour protéger votre compte.';
+			case 'auth.reset_password.new_password': return 'Nouveau mot de passe';
+			case 'auth.reset_password.new_password_description': return 'Entrez un nouveau mot de passe pour votre compte.';
+			case 'auth.reset_password.new_password_hint': return 'SuperSecure123!';
+			case 'auth.reset_password.new_password_required': return 'Nouveau mot de passe requis';
+			case 'auth.reset_password.confirm_new_password': return 'Confirmer le mot de passe';
+			case 'auth.reset_password.confirm_new_password_description': return 'Entrez à nouveau votre mot de passe pour le confirmer.';
+			case 'auth.reset_password.confirm_new_password_required': return 'Confirmer le mot de passe requis';
+			case 'auth.reset_password.password_mismatch': return 'Les mots de passe ne correspondent pas';
 			case 'settings.title': return 'Paramètres';
 			case 'settings.app_settings.title': return 'Paramètres de l\'application';
 			case 'settings.app_settings.selfHostedUrl.title': return 'URL auto-hébergée';

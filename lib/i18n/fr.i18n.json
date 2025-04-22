@@ -92,7 +92,17 @@
             "mnemonic_key": "Clé de récupération",
             "mnemonic_key_description": "Saisis votre clé de récupération pour accéder à vos données.",
             "mnemonic_key_hint": "business theme rotate together surprise wisdom powder knee view border local runway",
-            "mnemonic_key_required": "La clé de récupération est requise"
+            "mnemonic_key_required": "La clé de récupération est requise",
+            "select_your_new_password": "Sélectionnez votre nouveau mot de passe",
+            "select_your_new_password_description": "Entrez un mot de passe fort pour protéger votre compte.",
+            "new_password": "Nouveau mot de passe",
+            "new_password_description": "Entrez un nouveau mot de passe pour votre compte.",
+            "new_password_hint": "SuperSecure123!",
+            "new_password_required": "Nouveau mot de passe requis",
+            "confirm_new_password": "Confirmer le mot de passe",
+            "confirm_new_password_description": "Entrez à nouveau votre mot de passe pour le confirmer.",
+            "confirm_new_password_required": "Confirmer le mot de passe requis",
+            "password_mismatch": "Les mots de passe ne correspondent pas"
         }
     },
     "settings": {

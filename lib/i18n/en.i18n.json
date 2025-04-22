@@ -92,7 +92,17 @@
             "mnemonic_key": "Mnemonic key",
             "mnemonic_key_description": "Enter the backup key you received when you registered.",
             "mnemonic_key_hint": "business theme rotate together surprise wisdom powder knee view border local runway",
-            "mnemonic_key_required": "Mnemonic key is required"
+            "mnemonic_key_required": "Mnemonic key is required",
+            "select_your_new_password": "Select your new password",
+            "select_your_new_password_description": "Enter a new password to later access your account.",
+            "new_password": "New password",
+            "new_password_description": "Enter a new password to access your account.",
+            "new_password_hint": "SuperSecure123!",
+            "new_password_required": "New password is required",
+            "confirm_new_password": "Confirm new password",
+            "confirm_new_password_description": "Confirm your new password.",
+            "confirm_new_password_required": "Confirm new password is required",
+            "password_mismatch": "Passwords do not match"
         }
     },
     "settings": {

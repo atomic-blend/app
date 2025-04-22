@@ -140,7 +140,7 @@ class _ResetPasswordIntroState extends State<ResetPasswordIntro>
                 ],
               ),
             ),
-            Spacer(),
+            const Spacer(),
             const Divider(),
             Animate(
               controller: _animationController,

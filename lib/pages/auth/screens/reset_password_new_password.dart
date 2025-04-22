@@ -8,18 +8,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:lottie/lottie.dart';
 
-class ResetPasswordCode extends StatefulWidget {
-  final TextEditingController emailCodeController;
+class ResetPasswordNewPwd extends StatefulWidget {
+  final TextEditingController passwordController;
   final VoidCallback? onNextCallback;
-  const ResetPasswordCode(
-      {super.key, required this.emailCodeController, this.onNextCallback});
+  const ResetPasswordNewPwd(
+      {super.key, required this.passwordController, this.onNextCallback});
 
   @override
-  State<ResetPasswordCode> createState() => _ResetPasswordCodeState();
+  State<ResetPasswordNewPwd> createState() => _ResetPasswordNewPwdState();
 }
 
-class _ResetPasswordCodeState extends State<ResetPasswordCode>
+class _ResetPasswordNewPwdState extends State<ResetPasswordNewPwd>
     with TickerProviderStateMixin {
+  final TextEditingController _confirmationController = TextEditingController();
   late AnimationController _animationController;
   late AnimationController _lottieController;
   final _animationDuration = const Duration(milliseconds: 250);
@@ -65,11 +66,10 @@ class _ResetPasswordCodeState extends State<ResetPasswordCode>
               ),
             ],
             onPlay: (controller) => controller.forward(),
-            child: Lottie.asset(
-              controller: _lottieController,
-              onLoaded: (p0) => _lottieController.forward(),
-              'assets/animations/email.json',
-              width: getSize(context).width * 0.5,
+            child: Image.asset(
+              'assets/images/authentication.png',
+              fit: BoxFit.cover,
+              width: getSize(context).width * 0.6,
             ),
           ),
           SizedBox(
@@ -82,7 +82,7 @@ class _ResetPasswordCodeState extends State<ResetPasswordCode>
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 AutoSizeText(
-                  context.t.auth.reset_password.enter_the_confirmation_code,
+                  context.t.auth.reset_password.select_your_new_password,
                   style: getTextTheme(context).titleMedium!.copyWith(
                         fontWeight: FontWeight.bold,
                       ),
@@ -90,13 +90,9 @@ class _ResetPasswordCodeState extends State<ResetPasswordCode>
                 SizedBox(
                   height: $constants.insets.xs,
                 ),
-                Text(context.t.auth.reset_password.confirmation_code_sent),
-                SizedBox(
-                  height: $constants.insets.sm,
-                ),
                 Text(
-                  context
-                      .t.auth.reset_password.confirmation_code_sent_description,
+                  context.t.auth.reset_password
+                      .select_your_new_password_description,
                   style: getTextTheme(context).bodyMedium!.copyWith(
                         fontWeight: FontWeight.bold,
                       ),
@@ -112,19 +108,40 @@ class _ResetPasswordCodeState extends State<ResetPasswordCode>
             child: Column(
               children: [
                 AppTextFormField(
-                  controller: widget.emailCodeController,
-                  labelText: context.t.auth.reset_password.confirmation_code,
-                  labelDescription: context
-                      .t.auth.reset_password.confirmation_code_description,
-                  hintText:
-                      context.t.auth.reset_password.confirmation_code_hint,
+                  controller: widget.passwordController,
+                  labelText: context.t.auth.reset_password.new_password,
+                  labelDescription:
+                      context.t.auth.reset_password.new_password_description,
+                  hintText: context.t.auth.reset_password.new_password_hint,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return context
-                          .t.auth.reset_password.confirmation_code_required;
+                          .t.auth.reset_password.new_password_required;
                     }
                     return null;
                   },
+                  obscureText: true,
+                ),
+                SizedBox(
+                  height: $constants.insets.sm,
+                ),
+                AppTextFormField(
+                  controller: _confirmationController,
+                  labelText: context.t.auth.reset_password.confirm_new_password,
+                  labelDescription: context
+                      .t.auth.reset_password.confirm_new_password_description,
+                  hintText: context.t.auth.reset_password.new_password_hint,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return context
+                          .t.auth.reset_password.confirm_new_password_required;
+                    }
+                    if (value != widget.passwordController.text) {
+                      return context.t.auth.reset_password.password_mismatch;
+                    }
+                    return null;
+                  },
+                  obscureText: true,
                 ),
               ],
             ),

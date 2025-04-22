@@ -836,6 +836,16 @@ class TranslationsAuthResetPasswordEn {
 	String get mnemonic_key_description => 'Enter the backup key you received when you registered.';
 	String get mnemonic_key_hint => 'business theme rotate together surprise wisdom powder knee view border local runway';
 	String get mnemonic_key_required => 'Mnemonic key is required';
+	String get select_your_new_password => 'Select your new password';
+	String get select_your_new_password_description => 'Enter a new password to later access your account.';
+	String get new_password => 'New password';
+	String get new_password_description => 'Enter a new password to access your account.';
+	String get new_password_hint => 'SuperSecure123!';
+	String get new_password_required => 'New password is required';
+	String get confirm_new_password => 'Confirm new password';
+	String get confirm_new_password_description => 'Confirm your new password.';
+	String get confirm_new_password_required => 'Confirm new password is required';
+	String get password_mismatch => 'Passwords do not match';
 }
 
 // Path: settings.app_settings
@@ -1221,6 +1231,16 @@ extension on Translations {
 			case 'auth.reset_password.mnemonic_key_description': return 'Enter the backup key you received when you registered.';
 			case 'auth.reset_password.mnemonic_key_hint': return 'business theme rotate together surprise wisdom powder knee view border local runway';
 			case 'auth.reset_password.mnemonic_key_required': return 'Mnemonic key is required';
+			case 'auth.reset_password.select_your_new_password': return 'Select your new password';
+			case 'auth.reset_password.select_your_new_password_description': return 'Enter a new password to later access your account.';
+			case 'auth.reset_password.new_password': return 'New password';
+			case 'auth.reset_password.new_password_description': return 'Enter a new password to access your account.';
+			case 'auth.reset_password.new_password_hint': return 'SuperSecure123!';
+			case 'auth.reset_password.new_password_required': return 'New password is required';
+			case 'auth.reset_password.confirm_new_password': return 'Confirm new password';
+			case 'auth.reset_password.confirm_new_password_description': return 'Confirm your new password.';
+			case 'auth.reset_password.confirm_new_password_required': return 'Confirm new password is required';
+			case 'auth.reset_password.password_mismatch': return 'Passwords do not match';
 			case 'settings.title': return 'Settings';
 			case 'settings.app_settings.title': return 'App Settings';
 			case 'settings.app_settings.selfHostedUrl.title': return 'Self-Hosted URL';
