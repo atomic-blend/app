@@ -827,6 +827,15 @@ class TranslationsAuthResetPasswordEn {
 	String get enter_the_confirmation_code => 'Enter the confirmation code';
 	String get confirmation_code_sent => 'A confirmation code has been sent to your email address.';
 	String get confirmation_code_sent_description => 'Please check your inbox and enter the code below.';
+	String get do_you_have_your_mnemonic_key => 'Do you have your backup key?';
+	String get backup_key_description => 'This is a 12-word key that you received when you registered. It is used as a backup for your data and is required to recover your account.';
+	String get yes_i_have => 'Yes, I have it, restore my data';
+	String get no_i_dont => 'No, I don\'t have it, delete my data';
+	String get reset_data_warning => 'I understand by selecting this option that all my previous data will be deleted and I will not be able to recover it.';
+	String get mnemonic_key => 'Mnemonic key';
+	String get mnemonic_key_description => 'Enter the backup key you received when you registered.';
+	String get mnemonic_key_hint => 'business theme rotate together surprise wisdom powder knee view border local runway';
+	String get mnemonic_key_required => 'Mnemonic key is required';
 }
 
 // Path: settings.app_settings
@@ -1203,6 +1212,15 @@ extension on Translations {
 			case 'auth.reset_password.enter_the_confirmation_code': return 'Enter the confirmation code';
 			case 'auth.reset_password.confirmation_code_sent': return 'A confirmation code has been sent to your email address.';
 			case 'auth.reset_password.confirmation_code_sent_description': return 'Please check your inbox and enter the code below.';
+			case 'auth.reset_password.do_you_have_your_mnemonic_key': return 'Do you have your backup key?';
+			case 'auth.reset_password.backup_key_description': return 'This is a 12-word key that you received when you registered. It is used as a backup for your data and is required to recover your account.';
+			case 'auth.reset_password.yes_i_have': return 'Yes, I have it, restore my data';
+			case 'auth.reset_password.no_i_dont': return 'No, I don\'t have it, delete my data';
+			case 'auth.reset_password.reset_data_warning': return 'I understand by selecting this option that all my previous data will be deleted and I will not be able to recover it.';
+			case 'auth.reset_password.mnemonic_key': return 'Mnemonic key';
+			case 'auth.reset_password.mnemonic_key_description': return 'Enter the backup key you received when you registered.';
+			case 'auth.reset_password.mnemonic_key_hint': return 'business theme rotate together surprise wisdom powder knee view border local runway';
+			case 'auth.reset_password.mnemonic_key_required': return 'Mnemonic key is required';
 			case 'settings.title': return 'Settings';
 			case 'settings.app_settings.title': return 'App Settings';
 			case 'settings.app_settings.selfHostedUrl.title': return 'Self-Hosted URL';

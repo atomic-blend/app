@@ -821,6 +821,15 @@ class _TranslationsAuthResetPasswordFr implements TranslationsAuthResetPasswordE
 	@override String get enter_the_confirmation_code => 'Entrez le code de confirmation';
 	@override String get confirmation_code_sent => 'Un code de confirmation a été envoyé à votre adresse e-mail.';
 	@override String get confirmation_code_sent_description => 'Vérifiez votre boîte de réception et entrez le code ci-dessous.';
+	@override String get do_you_have_your_mnemonic_key => 'Avez-vous votre clé de récupération ?';
+	@override String get backup_key_description => 'C\'est une phrase de 12 mots qui vous a été fournie lors de votre inscription. Vous en aurez besoin pour récupérer vos données.';
+	@override String get yes_i_have => 'Oui, je l\'ai et je veux récupérer mes données';
+	@override String get no_i_dont => 'Non, je ne l\'ai pas et je veux supprimer mes données';
+	@override String get reset_data_warning => 'Je suis conscient qu\'en sélectionnant cette option, toutes mes données seront éffacées sans aucune possibilité de récupération.';
+	@override String get mnemonic_key => 'Clé de récupération';
+	@override String get mnemonic_key_description => 'Saisis votre clé de récupération pour accéder à vos données.';
+	@override String get mnemonic_key_hint => 'business theme rotate together surprise wisdom powder knee view border local runway';
+	@override String get mnemonic_key_required => 'La clé de récupération est requise';
 }
 
 // Path: settings.app_settings
@@ -1197,6 +1206,15 @@ extension on TranslationsFr {
 			case 'auth.reset_password.enter_the_confirmation_code': return 'Entrez le code de confirmation';
 			case 'auth.reset_password.confirmation_code_sent': return 'Un code de confirmation a été envoyé à votre adresse e-mail.';
 			case 'auth.reset_password.confirmation_code_sent_description': return 'Vérifiez votre boîte de réception et entrez le code ci-dessous.';
+			case 'auth.reset_password.do_you_have_your_mnemonic_key': return 'Avez-vous votre clé de récupération ?';
+			case 'auth.reset_password.backup_key_description': return 'C\'est une phrase de 12 mots qui vous a été fournie lors de votre inscription. Vous en aurez besoin pour récupérer vos données.';
+			case 'auth.reset_password.yes_i_have': return 'Oui, je l\'ai et je veux récupérer mes données';
+			case 'auth.reset_password.no_i_dont': return 'Non, je ne l\'ai pas et je veux supprimer mes données';
+			case 'auth.reset_password.reset_data_warning': return 'Je suis conscient qu\'en sélectionnant cette option, toutes mes données seront éffacées sans aucune possibilité de récupération.';
+			case 'auth.reset_password.mnemonic_key': return 'Clé de récupération';
+			case 'auth.reset_password.mnemonic_key_description': return 'Saisis votre clé de récupération pour accéder à vos données.';
+			case 'auth.reset_password.mnemonic_key_hint': return 'business theme rotate together surprise wisdom powder knee view border local runway';
+			case 'auth.reset_password.mnemonic_key_required': return 'La clé de récupération est requise';
 			case 'settings.title': return 'Paramètres';
 			case 'settings.app_settings.title': return 'Paramètres de l\'application';
 			case 'settings.app_settings.selfHostedUrl.title': return 'URL auto-hébergée';

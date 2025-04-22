@@ -1,6 +1,7 @@
 import 'package:app/i18n/strings.g.dart';
 import 'package:app/pages/auth/screens/reset_password_code.dart';
 import 'package:app/pages/auth/screens/reset_password_intro.dart';
+import 'package:app/pages/auth/screens/reset_password_restore_data_choice.dart';
 import 'package:app/utils/constants.dart';
 import 'package:app/utils/shortcuts.dart';
 import 'package:flutter/material.dart';
@@ -17,6 +18,8 @@ class _ResetPasswordState extends State<ResetPassword> {
   int _currentStep = 0;
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _emailCodeController = TextEditingController();
+  bool _restoreData = true;
+  String? _mnemonicKey;
 
   @override
   void initState() {
@@ -59,6 +62,14 @@ class _ResetPasswordState extends State<ResetPassword> {
                   });
                 },
               ),
+            if (_currentStep == 2)
+            ResetPasswordRestoreDataChoice(restoreDataChoiceCallback: (reset, mnemonicKey){
+              setState(() {
+                _restoreData = reset;
+                _mnemonicKey = mnemonicKey;
+                _currentStep = 3;
+              });
+            },),
           ],
         ),
       ),
