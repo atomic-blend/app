@@ -82,3 +82,25 @@ class UserChangePasswordSuccess extends AuthState {
   @override
   String toString() => 'UserChangePasswordSuccess { user: $user }';
 }
+
+class UserStartResetPasswordLoading extends AuthState {
+  const UserStartResetPasswordLoading() : super(null);
+
+  @override
+  String toString() => 'UserStartResetPasswordLoading { }';
+}
+
+class UserStartResetPasswordSuccess extends AuthState {
+  const UserStartResetPasswordSuccess() : super(null);
+
+  @override
+  String toString() => 'UserStartResetPasswordSuccess { }';
+}
+
+class UserStartResetPasswordError extends AuthState {
+  final String message;
+  const UserStartResetPasswordError(this.message) : super(null);
+
+  @override
+  String toString() => 'UserStartResetPasswordError { $message }';
+}

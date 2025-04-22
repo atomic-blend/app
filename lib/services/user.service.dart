@@ -195,4 +195,15 @@ class UserService {
       throw Exception('password_change_failed');
     }
   }
+
+  Future<bool> startResetPassword(String email) async {
+    final result = await globalApiClient.post('/auth/reset-password', data: {
+      'email': email,
+    });
+    if (result.statusCode == 200) {
+      return true;
+    } else {
+      throw Exception('reset_password_failed');
+    }
+  }
 }

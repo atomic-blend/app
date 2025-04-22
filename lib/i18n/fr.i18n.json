@@ -76,7 +76,14 @@
             "email": "Email",
             "email_description": "L'adresse e-mail utilisée pour vous inscrire.",
             "email_hint": "atomicblend@gmail.com",
-            "email_required": "L'adresse e-mail est requise"
+            "email_required": "L'adresse e-mail est requise",
+            "confirmation_code": "Code de confirmation",
+            "confirmation_code_description": "Entrez le code que vous avez reçu par e-mail.",
+            "confirmation_code_hint": "a1b5c3d4",
+            "confirmation_code_required": "Le code de confirmation est requis",
+            "enter_the_confirmation_code": "Entrez le code de confirmation",
+            "confirmation_code_sent": "Un code de confirmation a été envoyé à votre adresse e-mail.",
+            "confirmation_code_sent_description": "Vérifiez votre boîte de réception et entrez le code ci-dessous."
         }
     },
     "settings": {

@@ -48,3 +48,9 @@ final class ChangePassword extends AuthEvent {
   const ChangePassword(this.oldPassword, this.newPassword, this.newUserKey,
       this.newEncryptedDataKey, this.newSalt);
 }
+
+
+final class StartResetPassword extends AuthEvent {
+  final String email;
+  const StartResetPassword(this.email);
+}

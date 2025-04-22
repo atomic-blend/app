@@ -820,6 +820,13 @@ class TranslationsAuthResetPasswordEn {
 	String get email_description => 'The email address you used to register.';
 	String get email_hint => 'atomicblend@gmail.com';
 	String get email_required => 'Email is required';
+	String get confirmation_code => 'Confirmation code';
+	String get confirmation_code_description => 'Enter the code you received by email.';
+	String get confirmation_code_hint => 'a1b5c3d4';
+	String get confirmation_code_required => 'Confirmation code is required';
+	String get enter_the_confirmation_code => 'Enter the confirmation code';
+	String get confirmation_code_sent => 'A confirmation code has been sent to your email address.';
+	String get confirmation_code_sent_description => 'Please check your inbox and enter the code below.';
 }
 
 // Path: settings.app_settings
@@ -1189,6 +1196,13 @@ extension on Translations {
 			case 'auth.reset_password.email_description': return 'The email address you used to register.';
 			case 'auth.reset_password.email_hint': return 'atomicblend@gmail.com';
 			case 'auth.reset_password.email_required': return 'Email is required';
+			case 'auth.reset_password.confirmation_code': return 'Confirmation code';
+			case 'auth.reset_password.confirmation_code_description': return 'Enter the code you received by email.';
+			case 'auth.reset_password.confirmation_code_hint': return 'a1b5c3d4';
+			case 'auth.reset_password.confirmation_code_required': return 'Confirmation code is required';
+			case 'auth.reset_password.enter_the_confirmation_code': return 'Enter the confirmation code';
+			case 'auth.reset_password.confirmation_code_sent': return 'A confirmation code has been sent to your email address.';
+			case 'auth.reset_password.confirmation_code_sent_description': return 'Please check your inbox and enter the code below.';
 			case 'settings.title': return 'Settings';
 			case 'settings.app_settings.title': return 'App Settings';
 			case 'settings.app_settings.selfHostedUrl.title': return 'Self-Hosted URL';

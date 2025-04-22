@@ -814,6 +814,13 @@ class _TranslationsAuthResetPasswordFr implements TranslationsAuthResetPasswordE
 	@override String get email_description => 'L\'adresse e-mail utilisée pour vous inscrire.';
 	@override String get email_hint => 'atomicblend@gmail.com';
 	@override String get email_required => 'L\'adresse e-mail est requise';
+	@override String get confirmation_code => 'Code de confirmation';
+	@override String get confirmation_code_description => 'Entrez le code que vous avez reçu par e-mail.';
+	@override String get confirmation_code_hint => 'a1b5c3d4';
+	@override String get confirmation_code_required => 'Le code de confirmation est requis';
+	@override String get enter_the_confirmation_code => 'Entrez le code de confirmation';
+	@override String get confirmation_code_sent => 'Un code de confirmation a été envoyé à votre adresse e-mail.';
+	@override String get confirmation_code_sent_description => 'Vérifiez votre boîte de réception et entrez le code ci-dessous.';
 }
 
 // Path: settings.app_settings
@@ -1183,6 +1190,13 @@ extension on TranslationsFr {
 			case 'auth.reset_password.email_description': return 'L\'adresse e-mail utilisée pour vous inscrire.';
 			case 'auth.reset_password.email_hint': return 'atomicblend@gmail.com';
 			case 'auth.reset_password.email_required': return 'L\'adresse e-mail est requise';
+			case 'auth.reset_password.confirmation_code': return 'Code de confirmation';
+			case 'auth.reset_password.confirmation_code_description': return 'Entrez le code que vous avez reçu par e-mail.';
+			case 'auth.reset_password.confirmation_code_hint': return 'a1b5c3d4';
+			case 'auth.reset_password.confirmation_code_required': return 'Le code de confirmation est requis';
+			case 'auth.reset_password.enter_the_confirmation_code': return 'Entrez le code de confirmation';
+			case 'auth.reset_password.confirmation_code_sent': return 'Un code de confirmation a été envoyé à votre adresse e-mail.';
+			case 'auth.reset_password.confirmation_code_sent_description': return 'Vérifiez votre boîte de réception et entrez le code ci-dessous.';
 			case 'settings.title': return 'Paramètres';
 			case 'settings.app_settings.title': return 'Paramètres de l\'application';
 			case 'settings.app_settings.selfHostedUrl.title': return 'URL auto-hébergée';

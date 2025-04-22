@@ -1,4 +1,5 @@
 import 'package:app/i18n/strings.g.dart';
+import 'package:app/pages/auth/screens/reset_password_code.dart';
 import 'package:app/pages/auth/screens/reset_password_intro.dart';
 import 'package:app/utils/constants.dart';
 import 'package:app/utils/shortcuts.dart';
@@ -15,6 +16,7 @@ class ResetPassword extends StatefulWidget {
 class _ResetPasswordState extends State<ResetPassword> {
   int _currentStep = 0;
   final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _emailCodeController = TextEditingController();
 
   @override
   void initState() {
@@ -47,7 +49,16 @@ class _ResetPasswordState extends State<ResetPassword> {
                     _currentStep = 1;
                   });
                 },
-              )
+              ),
+            if (_currentStep == 1)
+              ResetPasswordCode(
+                emailCodeController: _emailCodeController,
+                onNextCallback: () {
+                  setState(() {
+                    _currentStep = 2;
+                  });
+                },
+              ),
           ],
         ),
       ),

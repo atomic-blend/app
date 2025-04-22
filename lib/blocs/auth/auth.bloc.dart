@@ -22,6 +22,7 @@ class AuthBloc extends HydratedBloc<AuthEvent, AuthState> {
     on<UpdateUserDevice>(_onUpdateUserDevice);
     on<UpdateUserProfile>(_onUpdateUserProfile);
     on<ChangePassword>(_onChangePassword);
+    on<StartResetPassword>(_onStartResetPassword);
   }
 
   void _onLogOut(Logout event, Emitter<AuthState> emit) async {
@@ -127,13 +128,24 @@ class AuthBloc extends HydratedBloc<AuthEvent, AuthState> {
     final user = state.user!;
     emit(const UserChangePasswordLoading());
     await _userService.changePassword(
-      oldPassword:  event.oldPassword,
-      newPassword:  event.newPassword,
+      oldPassword: event.oldPassword,
+      newPassword: event.newPassword,
       newEncryptedDataKey: event.newEncryptedDataKey,
-      newUserKey : event.newUserKey,
+      newUserKey: event.newUserKey,
       newUserSalt: event.newSalt,
     );
     emit(UserChangePasswordSuccess(user));
     add(const RefreshUser());
+  }
+
+  FutureOr<void> _onStartResetPassword(
+      StartResetPassword event, Emitter<AuthState> emit) async {
+    emit(const UserStartResetPasswordLoading());
+    try {
+      await _userService.startResetPassword(event.email);
+    } on Exception catch (e) {
+      emit(UserStartResetPasswordError(e.toString()));
+    }
+    emit(const UserStartResetPasswordSuccess());
   }
 }
