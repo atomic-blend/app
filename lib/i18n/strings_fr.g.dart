@@ -840,6 +840,10 @@ class _TranslationsAuthResetPasswordFr implements TranslationsAuthResetPasswordE
 	@override String get confirm_new_password_description => 'Entrez à nouveau votre mot de passe pour le confirmer.';
 	@override String get confirm_new_password_required => 'Confirmer le mot de passe requis';
 	@override String get password_mismatch => 'Les mots de passe ne correspondent pas';
+	@override String get recap_subtitle => 'Récapitulatif de la réinitialisation';
+	@override String get yes => 'Oui';
+	@override String get no => 'Non';
+	@override String get confirm_reset => 'Confirmer la réinitialisation';
 }
 
 // Path: settings.app_settings
@@ -1235,6 +1239,10 @@ extension on TranslationsFr {
 			case 'auth.reset_password.confirm_new_password_description': return 'Entrez à nouveau votre mot de passe pour le confirmer.';
 			case 'auth.reset_password.confirm_new_password_required': return 'Confirmer le mot de passe requis';
 			case 'auth.reset_password.password_mismatch': return 'Les mots de passe ne correspondent pas';
+			case 'auth.reset_password.recap_subtitle': return 'Récapitulatif de la réinitialisation';
+			case 'auth.reset_password.yes': return 'Oui';
+			case 'auth.reset_password.no': return 'Non';
+			case 'auth.reset_password.confirm_reset': return 'Confirmer la réinitialisation';
 			case 'settings.title': return 'Paramètres';
 			case 'settings.app_settings.title': return 'Paramètres de l\'application';
 			case 'settings.app_settings.selfHostedUrl.title': return 'URL auto-hébergée';

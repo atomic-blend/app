@@ -102,7 +102,11 @@
             "confirm_new_password": "Confirmer le mot de passe",
             "confirm_new_password_description": "Entrez à nouveau votre mot de passe pour le confirmer.",
             "confirm_new_password_required": "Confirmer le mot de passe requis",
-            "password_mismatch": "Les mots de passe ne correspondent pas"
+            "password_mismatch": "Les mots de passe ne correspondent pas",
+            "recap_subtitle": "Récapitulatif de la réinitialisation",
+            "yes": "Oui",
+            "no": "Non",
+            "confirm_reset": "Confirmer la réinitialisation"
         }
     },
     "settings": {

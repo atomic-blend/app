@@ -846,6 +846,10 @@ class TranslationsAuthResetPasswordEn {
 	String get confirm_new_password_description => 'Confirm your new password.';
 	String get confirm_new_password_required => 'Confirm new password is required';
 	String get password_mismatch => 'Passwords do not match';
+	String get recap_subtitle => 'Recap of the process';
+	String get yes => 'Yes';
+	String get no => 'No';
+	String get confirm_reset => 'Confirm reset';
 }
 
 // Path: settings.app_settings
@@ -1241,6 +1245,10 @@ extension on Translations {
 			case 'auth.reset_password.confirm_new_password_description': return 'Confirm your new password.';
 			case 'auth.reset_password.confirm_new_password_required': return 'Confirm new password is required';
 			case 'auth.reset_password.password_mismatch': return 'Passwords do not match';
+			case 'auth.reset_password.recap_subtitle': return 'Recap of the process';
+			case 'auth.reset_password.yes': return 'Yes';
+			case 'auth.reset_password.no': return 'No';
+			case 'auth.reset_password.confirm_reset': return 'Confirm reset';
 			case 'settings.title': return 'Settings';
 			case 'settings.app_settings.title': return 'App Settings';
 			case 'settings.app_settings.selfHostedUrl.title': return 'Self-Hosted URL';

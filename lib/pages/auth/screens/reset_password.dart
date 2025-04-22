@@ -2,6 +2,7 @@ import 'package:app/i18n/strings.g.dart';
 import 'package:app/pages/auth/screens/reset_password_code.dart';
 import 'package:app/pages/auth/screens/reset_password_intro.dart';
 import 'package:app/pages/auth/screens/reset_password_new_password.dart';
+import 'package:app/pages/auth/screens/reset_password_recap.dart';
 import 'package:app/pages/auth/screens/reset_password_restore_data_choice.dart';
 import 'package:app/utils/constants.dart';
 import 'package:app/utils/shortcuts.dart';
@@ -83,6 +84,14 @@ class _ResetPasswordState extends State<ResetPassword> {
                   });
                 },
               ),
+            if (_currentStep == 4)
+              ResetPasswordRecap(
+                email: _emailController.text,
+                code: _emailCodeController.text,
+                newPassword: _passwordController.text,
+                mnemonicKey: _mnemonicKey,
+                restoreData: _restoreData,
+              )
           ],
         ),
       ),

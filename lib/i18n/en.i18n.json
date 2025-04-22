@@ -102,7 +102,12 @@
             "confirm_new_password": "Confirm new password",
             "confirm_new_password_description": "Confirm your new password.",
             "confirm_new_password_required": "Confirm new password is required",
-            "password_mismatch": "Passwords do not match"
+            "password_mismatch": "Passwords do not match",
+            "recap_subtitle": "Recap of the process",
+            "yes": "Yes",
+            "no": "No",
+            "confirm_reset": "Confirm reset"
+
         }
     },
     "settings": {
