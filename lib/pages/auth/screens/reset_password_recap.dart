@@ -1,7 +1,9 @@
 import 'package:app/blocs/auth/auth.bloc.dart';
 import 'package:app/components/buttons/primary_button_square.dart';
 import 'package:app/components/forms/app_text_form_field.dart';
+import 'package:app/entities/encryption/encryption_key.dart';
 import 'package:app/i18n/strings.g.dart';
+import 'package:app/services/encryption.service.dart';
 import 'package:app/utils/constants.dart';
 import 'package:app/utils/shortcuts.dart';
 import 'package:flutter/material.dart';
@@ -244,18 +246,31 @@ class _ResetPasswordRecapState extends State<ResetPasswordRecap>
                         return;
                       }
 
-                      //TODO: if restoreData is true, use mnemonicKey to decrypt the existing backup key, then generate a new keySet from an existing data key
-                      //TODO: if restoreData is false, generate a new keySet from the new password
+                      EncryptionKeyEntity? keySet;
+                      if (widget.restoreData) {
+                        //TODO: if restoreData is true, use mnemonicKey to decrypt the existing backup key, then generate a new keySet from an existing data key
+                      } else {
+                        // generate a new keySet from the new password
+                        keySet = await EncryptionService.generateKeySet(
+                          widget.newPassword,
+                        );
+                      }
+
+                      if (keySet == null) {
+                        return;
+                      }
+                      
+                      //TODO: on catch success, display mnemonic + confirm mnemonic, then pop the page to return to login
 
                       context.read<AuthBloc>().add(
                             ConfirmResetPassword(
                               resetCode: widget.code,
-                              resetData: widget.restoreData,
+                              resetData: !widget.restoreData,
                               newPassword: widget.newPassword,
-                              userKey: "",
-                              userSalt: "",
-                              backupKey: "",
-                              backupSalt: "",
+                              userKey: keySet.userKey,
+                              userSalt: keySet.salt,
+                              backupKey: keySet.backupKey,
+                              backupSalt: keySet.mnemonicSalt,
                             ),
                           );
                     },
