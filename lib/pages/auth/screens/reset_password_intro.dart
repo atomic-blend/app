@@ -50,7 +50,7 @@ class _ResetPasswordIntroState extends State<ResetPasswordIntro>
   Widget build(BuildContext context) {
     return BlocListener<AuthBloc, AuthState>(
       listener: (BuildContext context, AuthState authState) {
-        if (authState is UserStartResetPasswordSuccess) {
+        if (authState is StartResetPasswordSuccess) {
           widget.onNextCallback?.call();
         }
       },

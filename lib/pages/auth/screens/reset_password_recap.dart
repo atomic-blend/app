@@ -244,7 +244,20 @@ class _ResetPasswordRecapState extends State<ResetPasswordRecap>
                         return;
                       }
 
-                      //TODO: send the confirm request to the backend
+                      //TODO: if restoreData is true, use mnemonicKey to decrypt the existing backup key, then generate a new keySet from an existing data key
+                      //TODO: if restoreData is false, generate a new keySet from the new password
+
+                      context.read<AuthBloc>().add(
+                            ConfirmResetPassword(
+                              resetCode: widget.code,
+                              resetData: widget.restoreData,
+                              newPassword: widget.newPassword,
+                              userKey: "",
+                              userSalt: "",
+                              backupKey: "",
+                              backupSalt: "",
+                            ),
+                          );
                     },
                   )
                 ],

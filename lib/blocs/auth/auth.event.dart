@@ -49,8 +49,27 @@ final class ChangePassword extends AuthEvent {
       this.newEncryptedDataKey, this.newSalt);
 }
 
-
 final class StartResetPassword extends AuthEvent {
   final String email;
   const StartResetPassword(this.email);
+}
+
+final class ConfirmResetPassword extends AuthEvent {
+  final String resetCode;
+  final bool resetData;
+  final String newPassword;
+  final String userKey;
+  final String userSalt;
+  final String backupKey;
+  final String backupSalt;
+
+  const ConfirmResetPassword({
+    required this.resetCode,
+    required this.resetData,
+    required this.newPassword,
+    required this.userKey,
+    required this.userSalt,
+    required this.backupKey,
+    required this.backupSalt,
+  });
 }

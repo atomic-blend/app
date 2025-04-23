@@ -206,4 +206,30 @@ class UserService {
       throw Exception('reset_password_failed');
     }
   }
+
+  Future<bool> confirmResetPassword({
+    required String resetCode,
+    required bool resetData,
+    required String newPassword,
+    required String userKey,
+    required String userSalt,
+    required String backupKey,
+    required String backupSalt,
+  }) async {
+    final result = await globalApiClient.post('/auth/reset-password/confirm',
+        data: {
+          'reset_code': resetCode,
+          'reset_data': resetData,
+          'new_password': newPassword,
+          'user_key': userKey,
+          'salt': userSalt,
+          'backup_key': backupKey,
+          'backup_salt': backupSalt,
+        });
+    if (result.statusCode == 200) {
+      return true;
+    } else {
+      throw Exception('reset_password_failed');
+    }
+  }
 }
