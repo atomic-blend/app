@@ -5,6 +5,7 @@ import 'package:app/entities/user_device/user_device.dart';
 import 'package:app/services/user.service.dart';
 import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/foundation.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 
 part 'auth.event.dart';
@@ -42,7 +43,9 @@ class AuthBloc extends HydratedBloc<AuthEvent, AuthState> {
       }
       emit(LoggedIn(updatedUser, false));
     } on DioException catch (e) {
-      // TODO
+      if (kDebugMode) {
+        print(e);
+      }
       if (e.response?.statusCode == 401) {
         emit(const AuthError("wrong_email_password"));
       } else if (e.response?.statusCode == 400) {

@@ -1,6 +1,5 @@
 import 'package:app/blocs/auth/auth.bloc.dart';
 import 'package:app/components/buttons/primary_button_square.dart';
-import 'package:app/components/forms/app_text_form_field.dart';
 import 'package:app/entities/encryption/encryption_key.dart';
 import 'package:app/i18n/strings.g.dart';
 import 'package:app/services/encryption.service.dart';
@@ -37,7 +36,6 @@ class _ResetPasswordRecapState extends State<ResetPasswordRecap>
   late AnimationController _animationController;
   late AnimationController _lottieController;
   final _animationDuration = const Duration(milliseconds: 250);
-  final _formKey = GlobalKey<FormState>();
 
   // user original backup key, from the backend
   String? _backupKey;
@@ -281,7 +279,6 @@ class _ResetPasswordRecapState extends State<ResetPasswordRecap>
                             return;
                           }
 
-                          //TODO: on catch success, display mnemonic + confirm mnemonic, then pop the page to return to login
                           if (!context.mounted) {
                             return;
                           }

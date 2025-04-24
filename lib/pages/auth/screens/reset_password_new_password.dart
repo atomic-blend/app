@@ -6,7 +6,6 @@ import 'package:app/utils/shortcuts.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:lottie/lottie.dart';
 
 class ResetPasswordNewPwd extends StatefulWidget {
   final TextEditingController passwordController;
