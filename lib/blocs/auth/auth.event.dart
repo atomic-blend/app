@@ -73,3 +73,8 @@ final class ConfirmResetPassword extends AuthEvent {
     required this.backupSalt,
   });
 }
+
+final class GetBackupKeyForResetPassword extends AuthEvent {
+  final String resetCode;
+  const GetBackupKeyForResetPassword(this.resetCode);
+}

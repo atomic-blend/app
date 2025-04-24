@@ -1,4 +1,7 @@
+import 'package:app/blocs/auth/auth.bloc.dart';
+import 'package:app/entities/encryption/encryption_key.dart';
 import 'package:app/i18n/strings.g.dart';
+import 'package:app/pages/auth/screens/mnemonic_key.dart';
 import 'package:app/pages/auth/screens/reset_password_code.dart';
 import 'package:app/pages/auth/screens/reset_password_intro.dart';
 import 'package:app/pages/auth/screens/reset_password_new_password.dart';
@@ -7,6 +10,7 @@ import 'package:app/pages/auth/screens/reset_password_restore_data_choice.dart';
 import 'package:app/utils/constants.dart';
 import 'package:app/utils/shortcuts.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ResetPassword extends StatefulWidget {
   final String? email;
@@ -23,6 +27,7 @@ class _ResetPasswordState extends State<ResetPassword> {
   final TextEditingController _passwordController = TextEditingController();
   bool _restoreData = true;
   String? _mnemonicKey;
+  EncryptionKeyEntity? _newKeySet;
 
   @override
   void initState() {
@@ -63,6 +68,9 @@ class _ResetPasswordState extends State<ResetPassword> {
                   setState(() {
                     _currentStep = 2;
                   });
+                  context
+                      .read<AuthBloc>()
+                      .add(GetBackupKeyForResetPassword(_emailCodeController.text));
                 },
               ),
             if (_currentStep == 2)
@@ -91,6 +99,20 @@ class _ResetPasswordState extends State<ResetPassword> {
                 newPassword: _passwordController.text,
                 mnemonicKey: _mnemonicKey,
                 restoreData: _restoreData,
+                onKeySetChanged: (newEncryptionKey) {
+                  setState(() {
+                    _newKeySet = newEncryptionKey;
+                    _currentStep = 5;
+                  });
+                },
+              ),
+            if (_currentStep == 5 && _newKeySet?.backupPhrase != null)
+              MnemonicKey(
+                widgetMode: true,
+                mnemonic: _newKeySet!.backupPhrase!,
+                onSuccess: () {
+                  Navigator.pop(context);
+                },
               )
           ],
         ),

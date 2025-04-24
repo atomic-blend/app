@@ -126,3 +126,31 @@ class ConfirmResetPasswordError extends AuthState {
   @override
   String toString() => 'UserConfirmResetPasswordError { $message }';
 }
+
+class GetBackupKeyForResetPasswordLoading extends AuthState {
+  const GetBackupKeyForResetPasswordLoading() : super(null);
+
+  @override
+  String toString() => 'GetBackupKeyForResetPasswordLoading { }';
+}
+
+class GetBackupKeyForResetPasswordSuccess extends AuthState {
+  final String? backupKey;
+  final String? backupSalt;
+
+  const GetBackupKeyForResetPasswordSuccess(
+    this.backupKey,
+    this.backupSalt,
+  ) : super(null);
+
+  @override
+  String toString() => 'GetBackupKeyForResetPasswordSuccess { $backupKey, $backupSalt }';
+}
+
+final class GetBackupKeyForResetPasswordError extends AuthState {
+  final String message;
+  const GetBackupKeyForResetPasswordError(this.message) : super(null);
+
+  @override
+  String toString() => 'GetBackupKeyForResetPasswordError { $message }';
+}

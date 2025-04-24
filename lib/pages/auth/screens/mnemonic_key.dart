@@ -18,7 +18,9 @@ class MnemonicKey extends StatefulWidget {
       {super.key,
       this.cancelCallback,
       required this.onSuccess,
-      required this.mnemonic});
+      required this.mnemonic,
+      this.widgetMode});
+  final bool? widgetMode;
   final String mnemonic;
   final VoidCallback? cancelCallback;
   final VoidCallback onSuccess;
@@ -59,7 +61,9 @@ class _MnemonicKeyState extends State<MnemonicKey>
         children: [
           SizedBox(
             width: double.infinity,
-            height: getSize(context).height * 0.92,
+            height: widget.widgetMode != true
+                ? getSize(context).height * 0.92
+                : getSize(context).height * 0.875,
             child: Column(
               children: [
                 SizedBox(
@@ -76,7 +80,7 @@ class _MnemonicKeyState extends State<MnemonicKey>
                   onPlay: (controller) => controller.forward(),
                   child: Padding(
                     padding:
-                        EdgeInsets.symmetric(horizontal: $constants.insets.md),
+                        EdgeInsets.symmetric(horizontal: widget.widgetMode != true ? $constants.insets.md : 0),
                     child: Form(
                       key: _formKey,
                       child: Column(
@@ -241,31 +245,32 @@ class _MnemonicKeyState extends State<MnemonicKey>
               ],
             ),
           ),
-          Positioned(
-            left: $constants.insets.sm,
-            top: $constants.insets.md,
-            child: GestureDetector(
-              onTap: widget.cancelCallback,
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  const Icon(
-                    OctIcons.arrow_left,
-                    size: 18,
-                  ),
-                  SizedBox(
-                    width: $constants.insets.xxs,
-                  ),
-                  Text(
-                    context.t.actions.back,
-                    style: getTextTheme(context)
-                        .bodyMedium!
-                        .copyWith(fontWeight: FontWeight.bold),
-                  ),
-                ],
+          if (widget.widgetMode != true)
+            Positioned(
+              left: $constants.insets.sm,
+              top: $constants.insets.md,
+              child: GestureDetector(
+                onTap: widget.cancelCallback,
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const Icon(
+                      OctIcons.arrow_left,
+                      size: 18,
+                    ),
+                    SizedBox(
+                      width: $constants.insets.xxs,
+                    ),
+                    Text(
+                      context.t.actions.back,
+                      style: getTextTheme(context)
+                          .bodyMedium!
+                          .copyWith(fontWeight: FontWeight.bold),
+                    ),
+                  ],
+                ),
               ),
             ),
-          ),
         ],
       ),
     );

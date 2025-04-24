@@ -17,6 +17,7 @@ class ResetPasswordRecap extends StatefulWidget {
   final String newPassword;
   final String? mnemonicKey;
   final bool restoreData;
+  final Function(EncryptionKeyEntity?) onKeySetChanged;
 
   const ResetPasswordRecap(
       {super.key,
@@ -24,7 +25,8 @@ class ResetPasswordRecap extends StatefulWidget {
       required this.code,
       this.mnemonicKey,
       required this.restoreData,
-      required this.newPassword});
+      required this.newPassword,
+      required this.onKeySetChanged});
 
   @override
   State<ResetPasswordRecap> createState() => _ResetPasswordRecapState();
@@ -36,6 +38,13 @@ class _ResetPasswordRecapState extends State<ResetPasswordRecap>
   late AnimationController _lottieController;
   final _animationDuration = const Duration(milliseconds: 250);
   final _formKey = GlobalKey<FormState>();
+
+  // user original backup key, from the backend
+  String? _backupKey;
+  String? _mnemonicSalt;
+
+  // updated keySet, from the backup data key
+  EncryptionKeyEntity? _newKeySet;
 
   @override
   void initState() {
@@ -59,8 +68,17 @@ class _ResetPasswordRecapState extends State<ResetPasswordRecap>
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<AuthBloc, AuthState>(
-      builder: (context, authState) {
+    return BlocListener<AuthBloc, AuthState>(
+      listener: (BuildContext context, AuthState authState) {
+        if (authState is ConfirmResetPasswordSuccess) {
+          widget.onKeySetChanged.call(_newKeySet);
+        }
+      },
+      child: BlocBuilder<AuthBloc, AuthState>(builder: (context, authState) {
+        if (authState is GetBackupKeyForResetPasswordSuccess) {
+          _backupKey = authState.backupKey;
+          _mnemonicSalt = authState.backupSalt;
+        }
         return SizedBox(
           width: double.infinity,
           height: getSize(context).height * 0.86,
@@ -182,8 +200,8 @@ class _ResetPasswordRecapState extends State<ResetPasswordRecap>
                     Row(
                       children: [
                         Text(
-                          context
-                              .t.auth.reset_password.do_you_have_your_mnemonic_key,
+                          context.t.auth.reset_password
+                              .do_you_have_your_mnemonic_key,
                           style: getTextTheme(context).bodyMedium,
                         ),
                         const Spacer(),
@@ -228,7 +246,8 @@ class _ResetPasswordRecapState extends State<ResetPasswordRecap>
                 ],
                 onPlay: (controller) => controller.forward(),
                 child: Container(
-                  padding: EdgeInsets.symmetric(horizontal: $constants.insets.md),
+                  padding:
+                      EdgeInsets.symmetric(horizontal: $constants.insets.md),
                   height: getSize(context).height * 0.1,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -238,36 +257,30 @@ class _ResetPasswordRecapState extends State<ResetPasswordRecap>
                         text: context.t.auth.reset_password.confirm_reset,
                         backgroundColor: getTheme(context).primary,
                         onPressed: () async {
-                          if (!_formKey.currentState!.validate()) {
-                            return;
-                          }
                           _animationController.reverseDuration =
                               const Duration(milliseconds: 500);
                           _animationController.reverse();
-                          if (!context.mounted) {
-                            return;
-                          }
-        
-                          EncryptionKeyEntity? keySet;
+
                           if (widget.restoreData) {
                             // if restoreData is true, use mnemonicKey to decrypt the existing backup key, then generate a new keySet from an existing data key
-                            keySet = await EncryptionService.generateKeySetFromBackupKey(
-                              backupKey: authState.user!.keySet.backupKey,
-                              backupSalt: authState.user!.keySet.mnemonicSalt,
+                            _newKeySet = await EncryptionService
+                                .generateKeySetFromBackupKey(
+                              backupKey: _backupKey!,
+                              backupSalt: _mnemonicSalt!,
                               mnemonic: widget.mnemonicKey!,
                               newPassword: widget.newPassword,
                             );
                           } else {
                             // generate a new keySet from the new password
-                            keySet = await EncryptionService.generateKeySet(
+                            _newKeySet = await EncryptionService.generateKeySet(
                               widget.newPassword,
                             );
                           }
-        
-                          if (keySet == null) {
+
+                          if (_newKeySet == null) {
                             return;
                           }
-                          
+
                           //TODO: on catch success, display mnemonic + confirm mnemonic, then pop the page to return to login
                           if (!context.mounted) {
                             return;
@@ -277,10 +290,10 @@ class _ResetPasswordRecapState extends State<ResetPasswordRecap>
                                   resetCode: widget.code,
                                   resetData: !widget.restoreData,
                                   newPassword: widget.newPassword,
-                                  userKey: keySet.userKey,
-                                  userSalt: keySet.salt,
-                                  backupKey: keySet.backupKey,
-                                  backupSalt: keySet.mnemonicSalt,
+                                  userKey: _newKeySet!.userKey,
+                                  userSalt: _newKeySet!.salt,
+                                  backupKey: _newKeySet!.backupKey,
+                                  backupSalt: _newKeySet!.mnemonicSalt,
                                 ),
                               );
                         },
@@ -292,7 +305,7 @@ class _ResetPasswordRecapState extends State<ResetPasswordRecap>
             ],
           ),
         );
-      }
+      }),
     );
   }
 }

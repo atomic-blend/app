@@ -24,6 +24,7 @@ class AuthBloc extends HydratedBloc<AuthEvent, AuthState> {
     on<ChangePassword>(_onChangePassword);
     on<StartResetPassword>(_onStartResetPassword);
     on<ConfirmResetPassword>(_onConfirmResetPassword);
+    on<GetBackupKeyForResetPassword>(_onGetBackupKeyForPasswordReset);
   }
 
   void _onLogOut(Logout event, Emitter<AuthState> emit) async {
@@ -150,7 +151,8 @@ class AuthBloc extends HydratedBloc<AuthEvent, AuthState> {
     emit(const StartResetPasswordSuccess());
   }
 
-  FutureOr<void> _onConfirmResetPassword(ConfirmResetPassword event, Emitter<AuthState> emit) async {
+  FutureOr<void> _onConfirmResetPassword(
+      ConfirmResetPassword event, Emitter<AuthState> emit) async {
     emit(const ConfirmResetPasswordLoading());
     try {
       await _userService.confirmResetPassword(
@@ -162,8 +164,22 @@ class AuthBloc extends HydratedBloc<AuthEvent, AuthState> {
         backupKey: event.backupKey,
         backupSalt: event.backupSalt,
       );
+      emit(const ConfirmResetPasswordSuccess());
     } on Exception catch (e) {
       emit(StartResetPasswordError(e.toString()));
+    }
+  }
+
+  FutureOr<void> _onGetBackupKeyForPasswordReset(
+      GetBackupKeyForResetPassword event, Emitter<AuthState> emit) async {
+    emit(const GetBackupKeyForResetPasswordLoading());
+    try {
+      final result =
+          await _userService.getBackupKeyForPasswordReset(event.resetCode);
+      emit(GetBackupKeyForResetPasswordSuccess(
+          result['backup_key'], result['backup_salt']));
+    } on Exception catch (e) {
+      emit(GetBackupKeyForResetPasswordError(e.toString()));
     }
   }
 }
