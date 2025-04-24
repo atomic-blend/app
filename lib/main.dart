@@ -14,6 +14,7 @@ import 'package:app/i18n/strings.g.dart';
 import 'package:app/services/notifications/background_notification_processor.dart';
 import 'package:app/services/notifications/fcm_service.dart';
 import 'package:app/services/notifications/processors/processors.dart';
+import 'package:app/services/revenue_cat_service.dart';
 import 'package:app/utils/env/env.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -85,11 +86,13 @@ FutureOr<void> main() async {
       });
     }
 
-    HydratedBloc.storage = await HydratedStorage.build(
-      storageDirectory: kIsWeb
-          ? HydratedStorage.webStorageDirectory
-          : await getApplicationDocumentsDirectory(),
-    );
+  HydratedBloc.storage = await HydratedStorage.build(
+    storageDirectory: kIsWeb
+        ? HydratedStorage.webStorageDirectory
+        : await getApplicationDocumentsDirectory(),
+  );
+
+  await RevenueCatService.initPlatformState();
 
     await LocaleSettings.useDeviceLocale();
     Jiffy.setLocale(LocaleSettings.currentLocale.languageCode);

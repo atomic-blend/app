@@ -6,6 +6,7 @@ import 'package:app/entities/user_device/user_device.dart';
 import 'package:app/main.dart';
 import 'package:app/services/device_info.service.dart';
 import 'package:app/services/encryption.service.dart';
+import 'package:app/services/revenue_cat_service.dart';
 import 'package:app/utils/api_client.dart';
 import 'package:dio/dio.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
@@ -25,6 +26,7 @@ class UserService {
         (scope) => scope
             .setUser(SentryUser(id: null)),
       );
+    await RevenueCatService.logOut();
     encryptionService = null;
     deviceInfoService = null;
   }
@@ -54,6 +56,7 @@ class UserService {
     final result = await globalApiClient.put('/users/device', data: device);
     if (result.statusCode == 200) {
       final user = UserEntity.fromJson(result.data["data"]);
+      await RevenueCatService.logIn(user.id!);
       prefs?.setString('user', json.encode(user.toJson()));
       return user;
     } else {
@@ -71,12 +74,8 @@ class UserService {
       }
       return null;
     } on DioException catch (e) {
-      if (e.type == DioExceptionType.badResponse &&
-          e.response?.statusCode == 404) {
-        return await createUser(user);
-      }
+      return null;
     }
-    return null;
   }
 
   Future<UserEntity?> checkForLoggedInUser() async {
@@ -110,6 +109,7 @@ class UserService {
     if (result.statusCode == 200) {
       final userData = result.data['user'];
       final user = UserEntity.fromJson(userData);
+      await RevenueCatService.logIn(user.id!);
       await prefs?.setString('user', json.encode(user.toJson()));
       await prefs?.setString('accessToken', result.data["accessToken"]);
       await prefs?.setString('refreshToken', result.data["refreshToken"]);
@@ -146,6 +146,7 @@ class UserService {
       userData!['accessToken'] = result.data['accessToken'];
       userData!['refreshToken'] = result.data['refreshToken'];
       final user = UserEntity.fromJson(userData!);
+      await RevenueCatService.logIn(user.id!);
       prefs?.setString('user', json.encode(user.toJson()));
       user.keySet = keySet!;
 
@@ -180,6 +181,7 @@ class UserService {
     final accessToken = result.data['accessToken'];
     user.accessToken = accessToken;
     user.refreshToken = result.data['refreshToken'];
+    await RevenueCatService.logIn(user.id!);
     prefs?.setString('user', json.encode(user.toJson()));
     globalApiClient.setIdToken(accessToken);
 
@@ -191,6 +193,7 @@ class UserService {
         await globalApiClient.put('/users/profile', data: userPayload);
     if (result.statusCode == 200) {
       final user = UserEntity.fromJson(result.data["data"]);
+      await RevenueCatService.logIn(user.id!);
       prefs?.setString('user', json.encode(user.toJson()));
       return user;
     } else {
