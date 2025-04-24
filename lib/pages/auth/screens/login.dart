@@ -2,6 +2,7 @@ import 'package:app/blocs/auth/auth.bloc.dart';
 import 'package:app/components/buttons/primary_button_square.dart';
 import 'package:app/components/forms/app_text_form_field.dart';
 import 'package:app/i18n/strings.g.dart';
+import 'package:app/pages/auth/screens/reset_password.dart';
 import 'package:app/utils/constants.dart';
 import 'package:app/utils/shortcuts.dart';
 import 'package:auto_size_text/auto_size_text.dart';
@@ -183,6 +184,24 @@ class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
+                        TextButton(
+                          onPressed: () {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) => ResetPassword(
+                                  email: _emailController.text,
+                                ),
+                              ),
+                            );
+                          },
+                          child: Text(
+                            context.t.auth.reset_password.title,
+                            style: getTextTheme(context).bodyMedium!.copyWith(
+                                  fontWeight: FontWeight.bold,
+                                  color: getTheme(context).primary,
+                                ),
+                          ),
+                        ),
                         const Spacer(),
                         PrimaryButtonSquare(
                           text: context.t.auth.login.login,

@@ -180,8 +180,13 @@ class UserService {
     }
   }
 
-  changePassword({required String oldPassword, required String newPassword,
-      required String newEncryptedDataKey, required String newUserKey, required String newUserSalt,}) async {
+  changePassword({
+    required String oldPassword,
+    required String newPassword,
+    required String newEncryptedDataKey,
+    required String newUserKey,
+    required String newUserSalt,
+  }) async {
     final result = await globalApiClient.put('/users/password', data: {
       'old_password': oldPassword,
       'new_password': newPassword,
@@ -193,6 +198,56 @@ class UserService {
       return true;
     } else {
       throw Exception('password_change_failed');
+    }
+  }
+
+  Future<bool> startResetPassword(String email) async {
+    final result = await globalApiClient.post('/auth/reset-password', data: {
+      'email': email,
+    });
+    if (result.statusCode == 200) {
+      return true;
+    } else {
+      throw Exception('reset_password_failed');
+    }
+  }
+
+  Future<bool> confirmResetPassword({
+    required String resetCode,
+    required bool resetData,
+    required String newPassword,
+    required String userKey,
+    required String userSalt,
+    required String backupKey,
+    required String backupSalt,
+  }) async {
+    final result =
+        await globalApiClient.post('/auth/reset-password/confirm', data: {
+      'reset_code': resetCode,
+      'reset_data': resetData,
+      'new_password': newPassword,
+      'user_key': userKey,
+      'user_salt': userSalt,
+      'backup_key': backupKey,
+      'backup_salt': backupSalt,
+    });
+    if (result.statusCode == 200) {
+      return true;
+    } else {
+      throw Exception('reset_password_failed');
+    }
+  }
+
+  Future<Map<String, dynamic>> getBackupKeyForPasswordReset(
+      String resetCode) async {
+    final result =
+        await globalApiClient.post('/auth/reset-password/backup-key', data: {
+      'reset_code': resetCode,
+    });
+    if (result.statusCode == 200) {
+      return result.data;
+    } else {
+      throw Exception('reset_password_failed');
     }
   }
 }

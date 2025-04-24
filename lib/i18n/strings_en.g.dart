@@ -120,6 +120,7 @@ class TranslationsAuthEn {
 	late final TranslationsAuthRegisterEn register = TranslationsAuthRegisterEn._(_root);
 	late final TranslationsAuthDeleteAccountEn delete_account = TranslationsAuthDeleteAccountEn._(_root);
 	late final TranslationsAuthMnemonicKeyEn mnemonic_key = TranslationsAuthMnemonicKeyEn._(_root);
+	late final TranslationsAuthResetPasswordEn reset_password = TranslationsAuthResetPasswordEn._(_root);
 }
 
 // Path: settings
@@ -803,6 +804,54 @@ class TranslationsAuthMnemonicKeyEn {
 	String get copy_success => 'Recovery key copied to clipboard';
 }
 
+// Path: auth.reset_password
+class TranslationsAuthResetPasswordEn {
+	TranslationsAuthResetPasswordEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	String get title => 'Reset your password';
+	String get subtitle => 'You don\'t remember your password?';
+	String get description => 'Enter your email address to initiate the password reset process.';
+	String get warning => 'You will receive an email with a code to confirm your identity, then you\'ll need your mnemonic key to get access to your data.';
+	String get no_mnemonic_data_loss => 'If you don\'t have your mnemonic key, you will lose access to your previous data.';
+	String get email => 'Email';
+	String get email_description => 'The email address you used to register.';
+	String get email_hint => 'atomicblend@gmail.com';
+	String get email_required => 'Email is required';
+	String get confirmation_code => 'Confirmation code';
+	String get confirmation_code_description => 'Enter the code you received by email.';
+	String get confirmation_code_hint => 'a1b5c3d4';
+	String get confirmation_code_required => 'Confirmation code is required';
+	String get enter_the_confirmation_code => 'Enter the confirmation code';
+	String get confirmation_code_sent => 'A confirmation code has been sent to your email address.';
+	String get confirmation_code_sent_description => 'Please check your inbox and enter the code below.';
+	String get do_you_have_your_mnemonic_key => 'Do you have your backup key?';
+	String get backup_key_description => 'This is a 12-word key that you received when you registered. It is used as a backup for your data and is required to recover your account.';
+	String get yes_i_have => 'Yes, I have it, restore my data';
+	String get no_i_dont => 'No, I don\'t have it, delete my data';
+	String get reset_data_warning => 'I understand by selecting this option that all my previous data will be deleted and I will not be able to recover it.';
+	String get mnemonic_key => 'Mnemonic key';
+	String get mnemonic_key_description => 'Enter the backup key you received when you registered.';
+	String get mnemonic_key_hint => 'business theme rotate together surprise wisdom powder knee view border local runway';
+	String get mnemonic_key_required => 'Mnemonic key is required';
+	String get select_your_new_password => 'Select your new password';
+	String get select_your_new_password_description => 'Enter a new password to later access your account.';
+	String get new_password => 'New password';
+	String get new_password_description => 'Enter a new password to access your account.';
+	String get new_password_hint => 'SuperSecure123!';
+	String get new_password_required => 'New password is required';
+	String get confirm_new_password => 'Confirm new password';
+	String get confirm_new_password_description => 'Confirm your new password.';
+	String get confirm_new_password_required => 'Confirm new password is required';
+	String get password_mismatch => 'Passwords do not match';
+	String get recap_subtitle => 'Recap of the process';
+	String get yes => 'Yes';
+	String get no => 'No';
+	String get confirm_reset => 'Confirm reset';
+}
+
 // Path: settings.app_settings
 class TranslationsSettingsAppSettingsEn {
 	TranslationsSettingsAppSettingsEn._(this._root);
@@ -1161,6 +1210,45 @@ extension on Translations {
 			case 'auth.mnemonic_key.mnemonic_hint': return 'Enter your recovery key';
 			case 'auth.mnemonic_key.mnemonic_error': return 'Invalid recovery key';
 			case 'auth.mnemonic_key.copy_success': return 'Recovery key copied to clipboard';
+			case 'auth.reset_password.title': return 'Reset your password';
+			case 'auth.reset_password.subtitle': return 'You don\'t remember your password?';
+			case 'auth.reset_password.description': return 'Enter your email address to initiate the password reset process.';
+			case 'auth.reset_password.warning': return 'You will receive an email with a code to confirm your identity, then you\'ll need your mnemonic key to get access to your data.';
+			case 'auth.reset_password.no_mnemonic_data_loss': return 'If you don\'t have your mnemonic key, you will lose access to your previous data.';
+			case 'auth.reset_password.email': return 'Email';
+			case 'auth.reset_password.email_description': return 'The email address you used to register.';
+			case 'auth.reset_password.email_hint': return 'atomicblend@gmail.com';
+			case 'auth.reset_password.email_required': return 'Email is required';
+			case 'auth.reset_password.confirmation_code': return 'Confirmation code';
+			case 'auth.reset_password.confirmation_code_description': return 'Enter the code you received by email.';
+			case 'auth.reset_password.confirmation_code_hint': return 'a1b5c3d4';
+			case 'auth.reset_password.confirmation_code_required': return 'Confirmation code is required';
+			case 'auth.reset_password.enter_the_confirmation_code': return 'Enter the confirmation code';
+			case 'auth.reset_password.confirmation_code_sent': return 'A confirmation code has been sent to your email address.';
+			case 'auth.reset_password.confirmation_code_sent_description': return 'Please check your inbox and enter the code below.';
+			case 'auth.reset_password.do_you_have_your_mnemonic_key': return 'Do you have your backup key?';
+			case 'auth.reset_password.backup_key_description': return 'This is a 12-word key that you received when you registered. It is used as a backup for your data and is required to recover your account.';
+			case 'auth.reset_password.yes_i_have': return 'Yes, I have it, restore my data';
+			case 'auth.reset_password.no_i_dont': return 'No, I don\'t have it, delete my data';
+			case 'auth.reset_password.reset_data_warning': return 'I understand by selecting this option that all my previous data will be deleted and I will not be able to recover it.';
+			case 'auth.reset_password.mnemonic_key': return 'Mnemonic key';
+			case 'auth.reset_password.mnemonic_key_description': return 'Enter the backup key you received when you registered.';
+			case 'auth.reset_password.mnemonic_key_hint': return 'business theme rotate together surprise wisdom powder knee view border local runway';
+			case 'auth.reset_password.mnemonic_key_required': return 'Mnemonic key is required';
+			case 'auth.reset_password.select_your_new_password': return 'Select your new password';
+			case 'auth.reset_password.select_your_new_password_description': return 'Enter a new password to later access your account.';
+			case 'auth.reset_password.new_password': return 'New password';
+			case 'auth.reset_password.new_password_description': return 'Enter a new password to access your account.';
+			case 'auth.reset_password.new_password_hint': return 'SuperSecure123!';
+			case 'auth.reset_password.new_password_required': return 'New password is required';
+			case 'auth.reset_password.confirm_new_password': return 'Confirm new password';
+			case 'auth.reset_password.confirm_new_password_description': return 'Confirm your new password.';
+			case 'auth.reset_password.confirm_new_password_required': return 'Confirm new password is required';
+			case 'auth.reset_password.password_mismatch': return 'Passwords do not match';
+			case 'auth.reset_password.recap_subtitle': return 'Recap of the process';
+			case 'auth.reset_password.yes': return 'Yes';
+			case 'auth.reset_password.no': return 'No';
+			case 'auth.reset_password.confirm_reset': return 'Confirm reset';
 			case 'settings.title': return 'Settings';
 			case 'settings.app_settings.title': return 'App Settings';
 			case 'settings.app_settings.selfHostedUrl.title': return 'Self-Hosted URL';

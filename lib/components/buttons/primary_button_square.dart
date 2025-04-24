@@ -34,7 +34,8 @@ class PrimaryButtonSquare extends StatelessWidget {
         Container(
           decoration: BoxDecoration(
             border: outlined == true
-                ? Border.all(color: getTheme(context).primary)
+                ? Border.all(
+                    color: backgroundColor ?? getTheme(context).primary)
                 : border,
             borderRadius: BorderRadius.circular($constants.corners.md),
           ),
@@ -68,7 +69,7 @@ class PrimaryButtonSquare extends StatelessWidget {
                   text,
                   style: getTextTheme(context).bodyMedium!.copyWith(
                         color: outlined == true
-                            ? getTheme(context).primary
+                            ? backgroundColor ?? getTheme(context).primary
                             : textColor ?? Colors.white,
                         fontWeight: FontWeight.bold,
                         fontSize: 16,

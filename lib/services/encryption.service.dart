@@ -68,7 +68,68 @@ class EncryptionService {
     prefs?.setString("key", base64.encode(decrypted));
   }
 
-  static Future<EncryptionKeyEntity?> generateKeySet(String password) async {
+  static Future<EncryptionKeyEntity?> generateKeySetFromBackupKey({
+    required String backupKey,
+    required String backupSalt,
+    required String mnemonic,
+    required String newPassword,
+  }) async {
+    //check mnemonic validity with bip39
+
+    // parse salt and backup key
+    Uint8List mnemonicSalt = base64.decode(backupSalt);
+    Uint8List mnemonicKey = Uint8List(32);
+
+    // Initialize Argon2 with the old mnemonic salt
+    final mnemonicArgon2 = Argon2BytesGenerator();
+    final mnemonicArgon2parameters = Argon2Parameters(
+        Argon2Parameters.ARGON2_id, mnemonicSalt,
+        desiredKeyLength: 32);
+    mnemonicArgon2.init(mnemonicArgon2parameters);
+
+    mnemonicArgon2.deriveKey(
+        Uint8List.fromList(mnemonic.codeUnits),
+        mnemonic.codeUnits.length,
+        mnemonicKey,
+        0);
+
+        final encryptedMnemonicDataKey = base64.decode(backupKey);
+    final iv = encryptedMnemonicDataKey.sublist(
+        encryptedMnemonicDataKey.length - 12);
+    final tag = encryptedMnemonicDataKey.sublist(
+        encryptedMnemonicDataKey.length - 28,
+        encryptedMnemonicDataKey.length - 12);
+    final cipherText = encryptedMnemonicDataKey.sublist(  
+        0, encryptedMnemonicDataKey.length - 28);
+
+    final mnemonicCipher = GCMBlockCipher(AESEngine())
+      ..init(false, ParametersWithIV(KeyParameter(mnemonicKey), iv));
+    final decryptedDataKey = mnemonicCipher.process(cipherText);
+
+    // Verify the authentication tag
+    if (tag.length != mnemonicCipher.mac.length) {
+      throw Exception("Authentication failed");
+    }
+
+    for (var i = 0; i < tag.length; i++) {
+      if (tag[i] != mnemonicCipher.mac[i]) {
+        throw Exception("Authentication failed");
+      }
+    }
+
+    // Generate a new user key from the new password
+    final newKeySet = await generateKeySet(
+      newPassword,
+      existingDataKey: decryptedDataKey,
+    );
+
+    return newKeySet;
+  }
+
+  static Future<EncryptionKeyEntity?> generateKeySet(
+    String password, {
+    Uint8List? existingDataKey,
+  }) async {
     //generate user salt
     final userSalt = generateRandomBytes(32);
 
@@ -91,8 +152,13 @@ class EncryptionService {
     final Uint8List uKey = Uint8List(32);
     argon2.deriveKey(passwordBytes, passwordBytes.length, uKey, 0);
 
-    // generate random data key
-    final dataKey = generateRandomBytes(32);
+    // generate random data key or use existing one
+    Uint8List dataKey;
+    if (existingDataKey != null) {
+      dataKey = existingDataKey;
+    } else {
+      dataKey = generateRandomBytes(32);
+    }
 
     // encrypt data key with user key
     final iv = generateRandomBytes(12);

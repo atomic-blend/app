@@ -5,6 +5,7 @@ import 'package:app/entities/user_device/user_device.dart';
 import 'package:app/services/user.service.dart';
 import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/foundation.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 
 part 'auth.event.dart';
@@ -22,6 +23,9 @@ class AuthBloc extends HydratedBloc<AuthEvent, AuthState> {
     on<UpdateUserDevice>(_onUpdateUserDevice);
     on<UpdateUserProfile>(_onUpdateUserProfile);
     on<ChangePassword>(_onChangePassword);
+    on<StartResetPassword>(_onStartResetPassword);
+    on<ConfirmResetPassword>(_onConfirmResetPassword);
+    on<GetBackupKeyForResetPassword>(_onGetBackupKeyForPasswordReset);
   }
 
   void _onLogOut(Logout event, Emitter<AuthState> emit) async {
@@ -39,7 +43,9 @@ class AuthBloc extends HydratedBloc<AuthEvent, AuthState> {
       }
       emit(LoggedIn(updatedUser, false));
     } on DioException catch (e) {
-      // TODO
+      if (kDebugMode) {
+        print(e);
+      }
       if (e.response?.statusCode == 401) {
         emit(const AuthError("wrong_email_password"));
       } else if (e.response?.statusCode == 400) {
@@ -127,13 +133,56 @@ class AuthBloc extends HydratedBloc<AuthEvent, AuthState> {
     final user = state.user!;
     emit(const UserChangePasswordLoading());
     await _userService.changePassword(
-      oldPassword:  event.oldPassword,
-      newPassword:  event.newPassword,
+      oldPassword: event.oldPassword,
+      newPassword: event.newPassword,
       newEncryptedDataKey: event.newEncryptedDataKey,
-      newUserKey : event.newUserKey,
+      newUserKey: event.newUserKey,
       newUserSalt: event.newSalt,
     );
     emit(UserChangePasswordSuccess(user));
     add(const RefreshUser());
+  }
+
+  FutureOr<void> _onStartResetPassword(
+      StartResetPassword event, Emitter<AuthState> emit) async {
+    emit(const StartResetPasswordLoading());
+    try {
+      await _userService.startResetPassword(event.email);
+    } on Exception catch (e) {
+      emit(StartResetPasswordError(e.toString()));
+    }
+    emit(const StartResetPasswordSuccess());
+  }
+
+  FutureOr<void> _onConfirmResetPassword(
+      ConfirmResetPassword event, Emitter<AuthState> emit) async {
+    emit(const ConfirmResetPasswordLoading());
+    try {
+      await _userService.confirmResetPassword(
+        resetCode: event.resetCode,
+        resetData: event.resetData,
+        newPassword: event.newPassword,
+        userKey: event.userKey,
+        userSalt: event.userSalt,
+        backupKey: event.backupKey,
+        backupSalt: event.backupSalt,
+      );
+      emit(const ConfirmResetPasswordSuccess());
+    } on Exception catch (e) {
+      emit(StartResetPasswordError(e.toString()));
+    }
+  }
+
+  FutureOr<void> _onGetBackupKeyForPasswordReset(
+      GetBackupKeyForResetPassword event, Emitter<AuthState> emit) async {
+    emit(const GetBackupKeyForResetPasswordLoading());
+    try {
+      final result =
+          await _userService.getBackupKeyForPasswordReset(event.resetCode);
+      emit(GetBackupKeyForResetPasswordSuccess(
+          result['backup_key'], result['backup_salt']));
+    } on Exception catch (e) {
+      emit(GetBackupKeyForResetPasswordError(e.toString()));
+    }
   }
 }
