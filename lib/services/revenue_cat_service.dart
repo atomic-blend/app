@@ -1,5 +1,6 @@
 import 'dart:io' show Platform;
 
+import 'package:app/main.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 import 'package:purchases_ui_flutter/purchases_ui_flutter.dart';
 
@@ -9,14 +10,14 @@ class RevenueCatService {
 
     PurchasesConfiguration? configuration;
     if (Platform.isAndroid) {
-      configuration = PurchasesConfiguration("revenuecat_project_google_api_key");
+      configuration = PurchasesConfiguration(env!.googleRevenueCatApiKey);
       // if (buildingForAmazon) {
       //   // use your preferred way to determine if this build is for Amazon store
       //   // checkout our MagicWeather sample for a suggestion
       //   configuration = AmazonConfiguration("");
       // }
     } else if (Platform.isIOS) {
-      configuration = PurchasesConfiguration("");
+      configuration = PurchasesConfiguration(env!.appleRevenueCatApiKey);
     } else {
       throw Exception("Unsupported platform");
     }
@@ -26,6 +27,15 @@ class RevenueCatService {
   static Future<bool> logIn(String userId) async {
     try {
       await Purchases.logIn(userId);
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  static Future<bool> logOut() async {
+    try {
+      await Purchases.logOut();
       return true;
     } catch (e) {
       return false;
