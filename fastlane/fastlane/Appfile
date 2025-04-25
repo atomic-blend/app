@@ -1,8 +1,0 @@
-app_identifier("fr.atomicblend.app") # The bundle identifier of your app
-apple_id("pro@brandonguigo.com") # Your Apple Developer Portal username
-json_key_file("/Users/brandonguigo/playstore_key.json")
-
-
-
-# For more information about the Appfile, see:
-#     https://docs.fastlane.tools/advanced/#appfile
