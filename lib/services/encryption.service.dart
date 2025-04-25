@@ -39,7 +39,7 @@ class EncryptionService {
     final Uint8List uKey = Uint8List(32);
     restoreArgon2.deriveKey(passwordBytes, passwordBytes.length, uKey, 0);
 
-    // Decrypt data key with user key : 
+    // Decrypt data key with user key :
     // concat: encrypted data + tag + iv
     final encryptedDataKey = base64.decode(keySet.userKey);
     final iv = encryptedDataKey.sublist(encryptedDataKey.length - 12);
@@ -68,7 +68,68 @@ class EncryptionService {
     prefs?.setString("key", base64.encode(decrypted));
   }
 
-  static Future<EncryptionKeyEntity?> generateKeySet(String password) async {
+  static Future<EncryptionKeyEntity?> generateKeySetFromBackupKey({
+    required String backupKey,
+    required String backupSalt,
+    required String mnemonic,
+    required String newPassword,
+  }) async {
+    //check mnemonic validity with bip39
+
+    // parse salt and backup key
+    Uint8List mnemonicSalt = base64.decode(backupSalt);
+    Uint8List mnemonicKey = Uint8List(32);
+
+    // Initialize Argon2 with the old mnemonic salt
+    final mnemonicArgon2 = Argon2BytesGenerator();
+    final mnemonicArgon2parameters = Argon2Parameters(
+        Argon2Parameters.ARGON2_id, mnemonicSalt,
+        desiredKeyLength: 32);
+    mnemonicArgon2.init(mnemonicArgon2parameters);
+
+    mnemonicArgon2.deriveKey(
+        Uint8List.fromList(mnemonic.codeUnits),
+        mnemonic.codeUnits.length,
+        mnemonicKey,
+        0);
+
+        final encryptedMnemonicDataKey = base64.decode(backupKey);
+    final iv = encryptedMnemonicDataKey.sublist(
+        encryptedMnemonicDataKey.length - 12);
+    final tag = encryptedMnemonicDataKey.sublist(
+        encryptedMnemonicDataKey.length - 28,
+        encryptedMnemonicDataKey.length - 12);
+    final cipherText = encryptedMnemonicDataKey.sublist(  
+        0, encryptedMnemonicDataKey.length - 28);
+
+    final mnemonicCipher = GCMBlockCipher(AESEngine())
+      ..init(false, ParametersWithIV(KeyParameter(mnemonicKey), iv));
+    final decryptedDataKey = mnemonicCipher.process(cipherText);
+
+    // Verify the authentication tag
+    if (tag.length != mnemonicCipher.mac.length) {
+      throw Exception("Authentication failed");
+    }
+
+    for (var i = 0; i < tag.length; i++) {
+      if (tag[i] != mnemonicCipher.mac[i]) {
+        throw Exception("Authentication failed");
+      }
+    }
+
+    // Generate a new user key from the new password
+    final newKeySet = await generateKeySet(
+      newPassword,
+      existingDataKey: decryptedDataKey,
+    );
+
+    return newKeySet;
+  }
+
+  static Future<EncryptionKeyEntity?> generateKeySet(
+    String password, {
+    Uint8List? existingDataKey,
+  }) async {
     //generate user salt
     final userSalt = generateRandomBytes(32);
 
@@ -91,8 +152,13 @@ class EncryptionService {
     final Uint8List uKey = Uint8List(32);
     argon2.deriveKey(passwordBytes, passwordBytes.length, uKey, 0);
 
-    // generate random data key
-    final dataKey = generateRandomBytes(32);
+    // generate random data key or use existing one
+    Uint8List dataKey;
+    if (existingDataKey != null) {
+      dataKey = existingDataKey;
+    } else {
+      dataKey = generateRandomBytes(32);
+    }
 
     // encrypt data key with user key
     final iv = generateRandomBytes(12);
@@ -150,7 +216,7 @@ class EncryptionService {
 
     // store the data key in the secure storage
     userKey = base64.encode(uKey);
-    await prefs?.setString("key", base64.encode(dataKey));
+    await prefs?.setString("key", base64.encode(uKey));
 
     return encryptionKey;
   }
@@ -160,6 +226,92 @@ class EncryptionService {
       return base64.decode(userKey!);
     }
     return null;
+  }
+
+  static Future<Map<String, String>> refreshUserDataKey(
+      EncryptionKeyEntity keySet,
+      String currentPassword,
+      String newPassword) async {
+    //////////// DECRYPT USER KEY WITH CURRENT ////////////
+    // parse the salt from the keySet
+    final userSalt = base64.decode(keySet.salt);
+
+    // init argon2 key derivation
+    final argon2 = Argon2BytesGenerator();
+    final argon2parameters = Argon2Parameters(
+        Argon2Parameters.ARGON2_id, userSalt,
+        desiredKeyLength: 32);
+    argon2.init(argon2parameters);
+
+    // generate user key from password
+    final passwordBytes = Uint8List.fromList(currentPassword.codeUnits);
+    final Uint8List uKey = Uint8List(32);
+    argon2.deriveKey(passwordBytes, passwordBytes.length, uKey, 0);
+
+    final encryptedDataKey = base64.decode(keySet.userKey);
+    final iv = encryptedDataKey.sublist(encryptedDataKey.length - 12);
+    final tag = encryptedDataKey.sublist(
+        encryptedDataKey.length - 28, encryptedDataKey.length - 12);
+    final cipherText =
+        encryptedDataKey.sublist(0, encryptedDataKey.length - 28);
+
+    final cipher = GCMBlockCipher(AESEngine())
+      ..init(false, ParametersWithIV(KeyParameter(uKey), iv));
+
+    final decryptedDataKey = cipher.process(cipherText);
+
+    // Verify the authentication tag
+    if (tag.length != cipher.mac.length) {
+      throw Exception("Authentication failed");
+    }
+    for (var i = 0; i < tag.length; i++) {
+      if (tag[i] != cipher.mac[i]) {
+        throw Exception("Authentication failed");
+      }
+    }
+
+    //////////// ENCRYPT USER KEY WITH NEW PASSWORD ////////////
+    //generate user salt
+    final newUserSalt = generateRandomBytes(32);
+
+    // init argon2 key derivation
+    final newArgon2 = Argon2BytesGenerator();
+    final newArgon2parameters = Argon2Parameters(
+        Argon2Parameters.ARGON2_id, newUserSalt,
+        desiredKeyLength: 32);
+    newArgon2.init(newArgon2parameters);
+
+    // generate user key from password
+    final newPasswordBytes = Uint8List.fromList(newPassword.codeUnits);
+    final Uint8List newUKey = Uint8List(32);
+    newArgon2.deriveKey(newPasswordBytes, newPasswordBytes.length, newUKey, 0);
+
+    // encrypt data key with user key
+    final newIv = generateRandomBytes(12);
+    final newCipher = GCMBlockCipher(AESEngine())
+      ..init(true, ParametersWithIV(KeyParameter(newUKey), newIv));
+    final newCipherResult = newCipher.process(decryptedDataKey);
+    final newTag = newCipher.mac;
+
+    // concat: encrypted data + tag + iv
+    final newEncryptedDataKey =
+        Uint8List(newCipherResult.length + newTag.length + newIv.length);
+    newEncryptedDataKey.setAll(0, newCipherResult);
+    newEncryptedDataKey.setAll(newCipherResult.length, newTag);
+    newEncryptedDataKey.setAll(newCipherResult.length + newTag.length, newIv);
+
+    return {
+      // to later persist in the app
+      "rawUserKey": base64.encode(newUKey),
+      // to send to the backend to update the KeySet with new password
+      "newEncryptedDataKey": base64.encode(newEncryptedDataKey),
+      "newUserSalt": base64.encode(newUserSalt),
+    };
+  }
+
+  static Future<bool?> persistNewUserKey(Uint8List userKey) async {
+    userKey = userKey;
+    return await prefs?.setString("key", base64.encode(userKey));
   }
 
   static Uint8List generateRandomBytes(int numBytes) {
@@ -216,7 +368,9 @@ class EncryptionService {
     return base64.encode(result);
   }
 
-  Future<String> decryptString({required String data,}) async {
+  Future<String> decryptString({
+    required String data,
+  }) async {
     final key = await hydrateKey();
     if (key == null) {
       throw Exception("Key not found");

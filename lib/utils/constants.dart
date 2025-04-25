@@ -15,6 +15,7 @@ import 'package:app/pages/more_apps/more_apps.dart';
 import 'package:app/pages/tasks/add_task_modal.dart';
 import 'package:app/pages/tasks/filtered_view.dart';
 import 'package:app/pages/tasks/overview.dart';
+import 'package:app/pages/tasks/tags.dart';
 import 'package:app/utils/exntensions/date_time_extension.dart';
 import 'package:app/utils/shortcuts.dart';
 import 'package:flutter/cupertino.dart';
@@ -96,20 +97,22 @@ class Navigation {
   List<AppBar?> appbars(BuildContext context, {Widget? leading}) => [
         AppBar(
           backgroundColor: getTheme(context).surface,
-          title: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              BlocBuilder<AppCubit, AppState>(builder: (context, appState) {
-                var selectedSideItem = sideMenuItems(
-                    context)[appState.pageIndex]![appState.selectedTabIndex];
-                return Text(
-                  selectedSideItem.title,
-                  style: getTextTheme(context).headlineSmall!.copyWith(
-                        fontWeight: FontWeight.bold,
-                      ),
-                );
-              })
-            ],
+          title: Center(
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                BlocBuilder<AppCubit, AppState>(builder: (context, appState) {
+                  var selectedSideItem = sideMenuItems(
+                      context)[appState.pageIndex]![appState.selectedTabIndex];
+                  return Text(
+                    selectedSideItem.title,
+                    style: getTextTheme(context).headlineSmall!.copyWith(
+                          fontWeight: FontWeight.bold,
+                        ),
+                  );
+                })
+              ],
+            ),
           ),
           actions: [
             Padding(
@@ -120,26 +123,28 @@ class Navigation {
         ),
         AppBar(
             backgroundColor: getTheme(context).surface,
-            title: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  context.t.calendar.title,
-                  style: getTextTheme(context).headlineSmall!.copyWith(
-                        fontWeight: FontWeight.bold,
-                      ),
-                )
-              ],
+            title: Center(
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    context.t.calendar.title,
+                    style: getTextTheme(context).headlineSmall!.copyWith(
+                          fontWeight: FontWeight.bold,
+                        ),
+                  )
+                ],
+              ),
             ),
             actions: [
-              IconButton(
-                  onPressed: () {
+              GestureDetector(
+                  onTap: () {
                     showModalBottomSheet(
                         isScrollControlled: true,
                         context: context,
                         builder: (context) => const CalendarSettings());
                   },
-                  icon: const Icon(CupertinoIcons.settings)),
+                  child: const Icon(CupertinoIcons.settings)),
               SizedBox(
                 width: $constants.insets.sm,
               ),
@@ -186,16 +191,18 @@ class Navigation {
             ]),
         AppBar(
             backgroundColor: getTheme(context).surface,
-            title: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  context.t.more.title,
-                  style: getTextTheme(context).headlineSmall!.copyWith(
-                        fontWeight: FontWeight.bold,
-                      ),
-                )
-              ],
+            title: Center(
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    context.t.more.title,
+                    style: getTextTheme(context).headlineSmall!.copyWith(
+                          fontWeight: FontWeight.bold,
+                        ),
+                  )
+                ],
+              ),
             ),
             actions: [
               BlocBuilder<AuthBloc, AuthState>(builder: (context, authState) {
@@ -275,6 +282,16 @@ class Navigation {
             ),
             onTap: () {
               context.read<AppCubit>().changeSelectedTabIndex(index: 1);
+            },
+          ),
+          SideMenuItem(
+            title: context.t.tasks.tags,
+            icon: CupertinoIcons.tag,
+            color: getTheme(context).secondary,
+            iconContainer: true,
+            body: const TagsView(),
+            onTap: () {
+              context.read<AppCubit>().changeSelectedTabIndex(index: 2);
             },
           )
         ],

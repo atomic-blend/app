@@ -41,6 +41,7 @@ class TranslationsFr implements Translations {
 	@override late final _TranslationsNavigationFr navigation = _TranslationsNavigationFr._(_root);
 	@override late final _TranslationsAuthFr auth = _TranslationsAuthFr._(_root);
 	@override late final _TranslationsSettingsFr settings = _TranslationsSettingsFr._(_root);
+	@override late final _TranslationsTagsFr tags = _TranslationsTagsFr._(_root);
 	@override late final _TranslationsTasksFr tasks = _TranslationsTasksFr._(_root);
 	@override late final _TranslationsCalendarFr calendar = _TranslationsCalendarFr._(_root);
 	@override late final _TranslationsAccountFr account = _TranslationsAccountFr._(_root);
@@ -116,6 +117,7 @@ class _TranslationsAuthFr implements TranslationsAuthEn {
 	@override late final _TranslationsAuthRegisterFr register = _TranslationsAuthRegisterFr._(_root);
 	@override late final _TranslationsAuthDeleteAccountFr delete_account = _TranslationsAuthDeleteAccountFr._(_root);
 	@override late final _TranslationsAuthMnemonicKeyFr mnemonic_key = _TranslationsAuthMnemonicKeyFr._(_root);
+	@override late final _TranslationsAuthResetPasswordFr reset_password = _TranslationsAuthResetPasswordFr._(_root);
 }
 
 // Path: settings
@@ -130,6 +132,20 @@ class _TranslationsSettingsFr implements TranslationsSettingsEn {
 	@override String get logout => 'Déconnexion';
 }
 
+// Path: tags
+class _TranslationsTagsFr implements TranslationsTagsEn {
+	_TranslationsTagsFr._(this._root);
+
+	final TranslationsFr _root; // ignore: unused_field
+
+	// Translations
+	@override String get title => 'Tags';
+	@override String get no_tags => 'Aucun tag';
+	@override String get assign_tags => 'Assigner des tags';
+	@override late final _TranslationsTagsAddModalFr add_modal = _TranslationsTagsAddModalFr._(_root);
+	@override late final _TranslationsTagsDeleteFr delete = _TranslationsTagsDeleteFr._(_root);
+}
+
 // Path: tasks
 class _TranslationsTasksFr implements TranslationsTasksEn {
 	_TranslationsTasksFr._(this._root);
@@ -139,6 +155,8 @@ class _TranslationsTasksFr implements TranslationsTasksEn {
 	// Translations
 	@override String get title => 'Tâches';
 	@override String get today => 'Aujourd\'hui';
+	@override String get tags => 'Tags';
+	@override String get my_tags => 'Mes tags';
 	@override String get overview => 'Vue d\'ensemble';
 	@override String get nothing_to_do => 'Rien à faire pour le moment, vous pouvez vous détendre !';
 	@override String get day_off => 'Vous n\'avez rien de prévu pour demain, profitez-en !';
@@ -177,6 +195,7 @@ class _TranslationsAccountFr implements TranslationsAccountEn {
 	@override late final _TranslationsAccountSectionsFr sections = _TranslationsAccountSectionsFr._(_root);
 	@override late final _TranslationsAccountActionsFr actions = _TranslationsAccountActionsFr._(_root);
 	@override late final _TranslationsAccountProfileFr profile = _TranslationsAccountProfileFr._(_root);
+	@override late final _TranslationsAccountSecurityAndPrivacyFr security_and_privacy = _TranslationsAccountSecurityAndPrivacyFr._(_root);
 }
 
 // Path: habits
@@ -417,6 +436,7 @@ class _TranslationsActionsFr implements TranslationsActionsEn {
 	@override String get delete => 'Supprimer';
 	@override String get add => 'Ajouter';
 	@override String get edit => 'Modifier';
+	@override String get clear => 'Effacer';
 }
 
 // Path: loading
@@ -778,6 +798,54 @@ class _TranslationsAuthMnemonicKeyFr implements TranslationsAuthMnemonicKeyEn {
 	@override String get copy_success => 'Clé copiée dans le presse-papiers';
 }
 
+// Path: auth.reset_password
+class _TranslationsAuthResetPasswordFr implements TranslationsAuthResetPasswordEn {
+	_TranslationsAuthResetPasswordFr._(this._root);
+
+	final TranslationsFr _root; // ignore: unused_field
+
+	// Translations
+	@override String get title => 'Reset your password';
+	@override String get subtitle => 'Vous ne vous souvenez pas de votre mot de passe ?';
+	@override String get description => 'Enter your email address to receive a password reset link.';
+	@override String get warning => 'Vous allez recevoir un code par email pour réinitialiser votre mot de passe, puis vous devrez entrer votre clé de récupération pour accéder à vos données.';
+	@override String get no_mnemonic_data_loss => 'Si vous ne vous rappelez pas de votre clé de récupération, vous perdrez accès à toutes vos précédentes données.';
+	@override String get email => 'Email';
+	@override String get email_description => 'L\'adresse e-mail utilisée pour vous inscrire.';
+	@override String get email_hint => 'atomicblend@gmail.com';
+	@override String get email_required => 'L\'adresse e-mail est requise';
+	@override String get confirmation_code => 'Code de confirmation';
+	@override String get confirmation_code_description => 'Entrez le code que vous avez reçu par e-mail.';
+	@override String get confirmation_code_hint => 'a1b5c3d4';
+	@override String get confirmation_code_required => 'Le code de confirmation est requis';
+	@override String get enter_the_confirmation_code => 'Entrez le code de confirmation';
+	@override String get confirmation_code_sent => 'Un code de confirmation a été envoyé à votre adresse e-mail.';
+	@override String get confirmation_code_sent_description => 'Vérifiez votre boîte de réception et entrez le code ci-dessous.';
+	@override String get do_you_have_your_mnemonic_key => 'Avez-vous votre clé de récupération ?';
+	@override String get backup_key_description => 'C\'est une phrase de 12 mots qui vous a été fournie lors de votre inscription. Vous en aurez besoin pour récupérer vos données.';
+	@override String get yes_i_have => 'Oui, je l\'ai et je veux récupérer mes données';
+	@override String get no_i_dont => 'Non, je ne l\'ai pas et je veux supprimer mes données';
+	@override String get reset_data_warning => 'Je suis conscient qu\'en sélectionnant cette option, toutes mes données seront éffacées sans aucune possibilité de récupération.';
+	@override String get mnemonic_key => 'Clé de récupération';
+	@override String get mnemonic_key_description => 'Saisis votre clé de récupération pour accéder à vos données.';
+	@override String get mnemonic_key_hint => 'business theme rotate together surprise wisdom powder knee view border local runway';
+	@override String get mnemonic_key_required => 'La clé de récupération est requise';
+	@override String get select_your_new_password => 'Sélectionnez votre nouveau mot de passe';
+	@override String get select_your_new_password_description => 'Entrez un mot de passe fort pour protéger votre compte.';
+	@override String get new_password => 'Nouveau mot de passe';
+	@override String get new_password_description => 'Entrez un nouveau mot de passe pour votre compte.';
+	@override String get new_password_hint => 'SuperSecure123!';
+	@override String get new_password_required => 'Nouveau mot de passe requis';
+	@override String get confirm_new_password => 'Confirmer le mot de passe';
+	@override String get confirm_new_password_description => 'Entrez à nouveau votre mot de passe pour le confirmer.';
+	@override String get confirm_new_password_required => 'Confirmer le mot de passe requis';
+	@override String get password_mismatch => 'Les mots de passe ne correspondent pas';
+	@override String get recap_subtitle => 'Récapitulatif de la réinitialisation';
+	@override String get yes => 'Oui';
+	@override String get no => 'Non';
+	@override String get confirm_reset => 'Confirmer la réinitialisation';
+}
+
 // Path: settings.app_settings
 class _TranslationsSettingsAppSettingsFr implements TranslationsSettingsAppSettingsEn {
 	_TranslationsSettingsAppSettingsFr._(this._root);
@@ -787,6 +855,38 @@ class _TranslationsSettingsAppSettingsFr implements TranslationsSettingsAppSetti
 	// Translations
 	@override String get title => 'Paramètres de l\'application';
 	@override late final _TranslationsSettingsAppSettingsSelfHostedUrlFr selfHostedUrl = _TranslationsSettingsAppSettingsSelfHostedUrlFr._(_root);
+}
+
+// Path: tags.add_modal
+class _TranslationsTagsAddModalFr implements TranslationsTagsAddModalEn {
+	_TranslationsTagsAddModalFr._(this._root);
+
+	final TranslationsFr _root; // ignore: unused_field
+
+	// Translations
+	@override String get title => 'Ajouter un nouveau tag';
+	@override String get edit_title => 'Modifier le tag';
+	@override String get name => 'Nom du tag';
+	@override String get name_hint => 'Travail';
+	@override String get name_description => 'Définissez un nom pour votre tag, cela sera affiché dans le tableau de bord et dans les notifications.';
+	@override String get name_required => 'Le nom du tag est requis';
+	@override String get color => 'Couleur du tag';
+	@override String get color_description => 'Choisissez une couleur pour votre tag, cela vous aidera à le distinguer des autres.';
+	@override String get primary => 'Primaire';
+	@override String get accent => 'Accent';
+	@override String get wheel => 'Roue';
+}
+
+// Path: tags.delete
+class _TranslationsTagsDeleteFr implements TranslationsTagsDeleteEn {
+	_TranslationsTagsDeleteFr._(this._root);
+
+	final TranslationsFr _root; // ignore: unused_field
+
+	// Translations
+	@override String get title => 'Supprimer le tag';
+	@override String get description => 'Êtes-vous sûr de vouloir supprimer ce tag ?';
+	@override String get warning => 'Cette action est irréversible et le tag sera supprimé de tous les éléments associés.';
 }
 
 // Path: tasks.due_dates
@@ -899,6 +999,17 @@ class _TranslationsAccountProfileFr implements TranslationsAccountProfileEn {
 	@override String get my_profile => 'Mon profil';
 	@override String get email => 'Adresse e-mail';
 	@override String get undefined => 'Non défini';
+}
+
+// Path: account.security_and_privacy
+class _TranslationsAccountSecurityAndPrivacyFr implements TranslationsAccountSecurityAndPrivacyEn {
+	_TranslationsAccountSecurityAndPrivacyFr._(this._root);
+
+	final TranslationsFr _root; // ignore: unused_field
+
+	// Translations
+	@override String get title => 'Sécurité et confidentialité';
+	@override late final _TranslationsAccountSecurityAndPrivacyChangePasswordFr change_password = _TranslationsAccountSecurityAndPrivacyChangePasswordFr._(_root);
 }
 
 // Path: habits.add
@@ -1016,6 +1127,25 @@ class _TranslationsSettingsAppSettingsSelfHostedUrlFr implements TranslationsSet
 	@override String get not_set => 'Non défini';
 }
 
+// Path: account.security_and_privacy.change_password
+class _TranslationsAccountSecurityAndPrivacyChangePasswordFr implements TranslationsAccountSecurityAndPrivacyChangePasswordEn {
+	_TranslationsAccountSecurityAndPrivacyChangePasswordFr._(this._root);
+
+	final TranslationsFr _root; // ignore: unused_field
+
+	// Translations
+	@override String get title => 'Changer le mot de passe';
+	@override String get old_password => 'Ancien mot de passe';
+	@override String get new_password => 'Nouveau mot de passe';
+	@override String get confirm_password => 'Confirmer le mot de passe';
+	@override String get old_password_required => 'Ancien mot de passe requis';
+	@override String get new_password_required => 'Nouveau mot de passe requis';
+	@override String get confirm_password_required => 'Confirmer le mot de passe requis';
+	@override String get password_mismatch => 'Les mots de passe ne correspondent pas';
+	@override String get password_hint => 'SuperSecure123!';
+	@override String get warning_changing_pws_will_log_you_out => 'Changer le mot de passe vous déconnectera de l\'application.';
+}
+
 /// Flat map(s) containing all translations.
 /// Only for edge cases! For simple maps, use the map function of this library.
 extension on TranslationsFr {
@@ -1074,6 +1204,45 @@ extension on TranslationsFr {
 			case 'auth.mnemonic_key.mnemonic_hint': return 'Entrez votre clé de récupération';
 			case 'auth.mnemonic_key.mnemonic_error': return 'Clé de récupération invalide';
 			case 'auth.mnemonic_key.copy_success': return 'Clé copiée dans le presse-papiers';
+			case 'auth.reset_password.title': return 'Reset your password';
+			case 'auth.reset_password.subtitle': return 'Vous ne vous souvenez pas de votre mot de passe ?';
+			case 'auth.reset_password.description': return 'Enter your email address to receive a password reset link.';
+			case 'auth.reset_password.warning': return 'Vous allez recevoir un code par email pour réinitialiser votre mot de passe, puis vous devrez entrer votre clé de récupération pour accéder à vos données.';
+			case 'auth.reset_password.no_mnemonic_data_loss': return 'Si vous ne vous rappelez pas de votre clé de récupération, vous perdrez accès à toutes vos précédentes données.';
+			case 'auth.reset_password.email': return 'Email';
+			case 'auth.reset_password.email_description': return 'L\'adresse e-mail utilisée pour vous inscrire.';
+			case 'auth.reset_password.email_hint': return 'atomicblend@gmail.com';
+			case 'auth.reset_password.email_required': return 'L\'adresse e-mail est requise';
+			case 'auth.reset_password.confirmation_code': return 'Code de confirmation';
+			case 'auth.reset_password.confirmation_code_description': return 'Entrez le code que vous avez reçu par e-mail.';
+			case 'auth.reset_password.confirmation_code_hint': return 'a1b5c3d4';
+			case 'auth.reset_password.confirmation_code_required': return 'Le code de confirmation est requis';
+			case 'auth.reset_password.enter_the_confirmation_code': return 'Entrez le code de confirmation';
+			case 'auth.reset_password.confirmation_code_sent': return 'Un code de confirmation a été envoyé à votre adresse e-mail.';
+			case 'auth.reset_password.confirmation_code_sent_description': return 'Vérifiez votre boîte de réception et entrez le code ci-dessous.';
+			case 'auth.reset_password.do_you_have_your_mnemonic_key': return 'Avez-vous votre clé de récupération ?';
+			case 'auth.reset_password.backup_key_description': return 'C\'est une phrase de 12 mots qui vous a été fournie lors de votre inscription. Vous en aurez besoin pour récupérer vos données.';
+			case 'auth.reset_password.yes_i_have': return 'Oui, je l\'ai et je veux récupérer mes données';
+			case 'auth.reset_password.no_i_dont': return 'Non, je ne l\'ai pas et je veux supprimer mes données';
+			case 'auth.reset_password.reset_data_warning': return 'Je suis conscient qu\'en sélectionnant cette option, toutes mes données seront éffacées sans aucune possibilité de récupération.';
+			case 'auth.reset_password.mnemonic_key': return 'Clé de récupération';
+			case 'auth.reset_password.mnemonic_key_description': return 'Saisis votre clé de récupération pour accéder à vos données.';
+			case 'auth.reset_password.mnemonic_key_hint': return 'business theme rotate together surprise wisdom powder knee view border local runway';
+			case 'auth.reset_password.mnemonic_key_required': return 'La clé de récupération est requise';
+			case 'auth.reset_password.select_your_new_password': return 'Sélectionnez votre nouveau mot de passe';
+			case 'auth.reset_password.select_your_new_password_description': return 'Entrez un mot de passe fort pour protéger votre compte.';
+			case 'auth.reset_password.new_password': return 'Nouveau mot de passe';
+			case 'auth.reset_password.new_password_description': return 'Entrez un nouveau mot de passe pour votre compte.';
+			case 'auth.reset_password.new_password_hint': return 'SuperSecure123!';
+			case 'auth.reset_password.new_password_required': return 'Nouveau mot de passe requis';
+			case 'auth.reset_password.confirm_new_password': return 'Confirmer le mot de passe';
+			case 'auth.reset_password.confirm_new_password_description': return 'Entrez à nouveau votre mot de passe pour le confirmer.';
+			case 'auth.reset_password.confirm_new_password_required': return 'Confirmer le mot de passe requis';
+			case 'auth.reset_password.password_mismatch': return 'Les mots de passe ne correspondent pas';
+			case 'auth.reset_password.recap_subtitle': return 'Récapitulatif de la réinitialisation';
+			case 'auth.reset_password.yes': return 'Oui';
+			case 'auth.reset_password.no': return 'Non';
+			case 'auth.reset_password.confirm_reset': return 'Confirmer la réinitialisation';
 			case 'settings.title': return 'Paramètres';
 			case 'settings.app_settings.title': return 'Paramètres de l\'application';
 			case 'settings.app_settings.selfHostedUrl.title': return 'URL auto-hébergée';
@@ -1081,8 +1250,27 @@ extension on TranslationsFr {
 			case 'settings.app_settings.selfHostedUrl.placeholder': return 'Entrez l\'URL de votre instance';
 			case 'settings.app_settings.selfHostedUrl.not_set': return 'Non défini';
 			case 'settings.logout': return 'Déconnexion';
+			case 'tags.title': return 'Tags';
+			case 'tags.no_tags': return 'Aucun tag';
+			case 'tags.assign_tags': return 'Assigner des tags';
+			case 'tags.add_modal.title': return 'Ajouter un nouveau tag';
+			case 'tags.add_modal.edit_title': return 'Modifier le tag';
+			case 'tags.add_modal.name': return 'Nom du tag';
+			case 'tags.add_modal.name_hint': return 'Travail';
+			case 'tags.add_modal.name_description': return 'Définissez un nom pour votre tag, cela sera affiché dans le tableau de bord et dans les notifications.';
+			case 'tags.add_modal.name_required': return 'Le nom du tag est requis';
+			case 'tags.add_modal.color': return 'Couleur du tag';
+			case 'tags.add_modal.color_description': return 'Choisissez une couleur pour votre tag, cela vous aidera à le distinguer des autres.';
+			case 'tags.add_modal.primary': return 'Primaire';
+			case 'tags.add_modal.accent': return 'Accent';
+			case 'tags.add_modal.wheel': return 'Roue';
+			case 'tags.delete.title': return 'Supprimer le tag';
+			case 'tags.delete.description': return 'Êtes-vous sûr de vouloir supprimer ce tag ?';
+			case 'tags.delete.warning': return 'Cette action est irréversible et le tag sera supprimé de tous les éléments associés.';
 			case 'tasks.title': return 'Tâches';
 			case 'tasks.today': return 'Aujourd\'hui';
+			case 'tasks.tags': return 'Tags';
+			case 'tasks.my_tags': return 'Mes tags';
 			case 'tasks.overview': return 'Vue d\'ensemble';
 			case 'tasks.nothing_to_do': return 'Rien à faire pour le moment, vous pouvez vous détendre !';
 			case 'tasks.day_off': return 'Vous n\'avez rien de prévu pour demain, profitez-en !';
@@ -1145,6 +1333,17 @@ extension on TranslationsFr {
 			case 'account.profile.my_profile': return 'Mon profil';
 			case 'account.profile.email': return 'Adresse e-mail';
 			case 'account.profile.undefined': return 'Non défini';
+			case 'account.security_and_privacy.title': return 'Sécurité et confidentialité';
+			case 'account.security_and_privacy.change_password.title': return 'Changer le mot de passe';
+			case 'account.security_and_privacy.change_password.old_password': return 'Ancien mot de passe';
+			case 'account.security_and_privacy.change_password.new_password': return 'Nouveau mot de passe';
+			case 'account.security_and_privacy.change_password.confirm_password': return 'Confirmer le mot de passe';
+			case 'account.security_and_privacy.change_password.old_password_required': return 'Ancien mot de passe requis';
+			case 'account.security_and_privacy.change_password.new_password_required': return 'Nouveau mot de passe requis';
+			case 'account.security_and_privacy.change_password.confirm_password_required': return 'Confirmer le mot de passe requis';
+			case 'account.security_and_privacy.change_password.password_mismatch': return 'Les mots de passe ne correspondent pas';
+			case 'account.security_and_privacy.change_password.password_hint': return 'SuperSecure123!';
+			case 'account.security_and_privacy.change_password.warning_changing_pws_will_log_you_out': return 'Changer le mot de passe vous déconnectera de l\'application.';
 			case 'habits.title': return 'Habitudes';
 			case 'habits.no_habits': return 'Aucune habitude';
 			case 'habits.get_started_now': return 'Ajoutez votre première habitude pour commencer !';
@@ -1256,6 +1455,7 @@ extension on TranslationsFr {
 			case 'actions.delete': return 'Supprimer';
 			case 'actions.add': return 'Ajouter';
 			case 'actions.edit': return 'Modifier';
+			case 'actions.clear': return 'Effacer';
 			case 'date_modes.date': return 'Date';
 			case 'date_modes.duration': return 'Durée';
 			case 'loading.simple': return 'Chargement en cours...';

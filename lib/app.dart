@@ -28,7 +28,7 @@ class App extends StatelessWidget {
       title: F.title,
       home: _flavorBanner(
         child: const Scaffold(body: AppWrapper()),
-        show: kDebugMode,
+        show: kDebugMode && env!.debugShowCheckedModeBanner,
       ),
     );
   }

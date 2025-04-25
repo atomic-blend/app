@@ -66,6 +66,48 @@
             "mnemonic_hint": "Enter your recovery key",
             "mnemonic_error": "Invalid recovery key",
             "copy_success": "Recovery key copied to clipboard"
+        },
+        "reset_password": {
+            "title": "Reset your password",
+            "subtitle": "You don't remember your password?",
+            "description": "Enter your email address to initiate the password reset process.",
+            "warning": "You will receive an email with a code to confirm your identity, then you'll need your mnemonic key to get access to your data.",
+            "no_mnemonic_data_loss": "If you don't have your mnemonic key, you will lose access to your previous data.",
+            "email": "Email",
+            "email_description": "The email address you used to register.",
+            "email_hint": "atomicblend@gmail.com",
+            "email_required": "Email is required",
+            "confirmation_code": "Confirmation code",
+            "confirmation_code_description": "Enter the code you received by email.",
+            "confirmation_code_hint": "a1b5c3d4",
+            "confirmation_code_required": "Confirmation code is required",
+            "enter_the_confirmation_code": "Enter the confirmation code",
+            "confirmation_code_sent": "A confirmation code has been sent to your email address.",
+            "confirmation_code_sent_description": "Please check your inbox and enter the code below.",
+            "do_you_have_your_mnemonic_key": "Do you have your backup key?",
+            "backup_key_description": "This is a 12-word key that you received when you registered. It is used as a backup for your data and is required to recover your account.",
+            "yes_i_have": "Yes, I have it, restore my data",
+            "no_i_dont": "No, I don't have it, delete my data",
+            "reset_data_warning": "I understand by selecting this option that all my previous data will be deleted and I will not be able to recover it.",
+            "mnemonic_key": "Mnemonic key",
+            "mnemonic_key_description": "Enter the backup key you received when you registered.",
+            "mnemonic_key_hint": "business theme rotate together surprise wisdom powder knee view border local runway",
+            "mnemonic_key_required": "Mnemonic key is required",
+            "select_your_new_password": "Select your new password",
+            "select_your_new_password_description": "Enter a new password to later access your account.",
+            "new_password": "New password",
+            "new_password_description": "Enter a new password to access your account.",
+            "new_password_hint": "SuperSecure123!",
+            "new_password_required": "New password is required",
+            "confirm_new_password": "Confirm new password",
+            "confirm_new_password_description": "Confirm your new password.",
+            "confirm_new_password_required": "Confirm new password is required",
+            "password_mismatch": "Passwords do not match",
+            "recap_subtitle": "Recap of the process",
+            "yes": "Yes",
+            "no": "No",
+            "confirm_reset": "Confirm reset"
+
         }
     },
     "settings": {
@@ -81,10 +123,35 @@
         },
         "logout": "Logout"
     },
+    "tags": {
+        "title": "Tags",
+        "no_tags": "No tags",
+        "assign_tags": "Assign tags",
+        "add_modal": {
+            "title": "Add a new tag",
+            "edit_title": "Edit tag",
+            "name": "Name of the tag",
+            "name_hint": "Work",
+            "name_description": "Define a name for your tag, this will help you remember what it is about and be shown in notifications.",
+            "name_required": "Name is required",
+            "color": "Color",
+            "color_description": "Choose a color for your tag, this will help you remember what it is about and be shown in notifications.",
+            "primary": "Primary",
+            "accent": "Accent",
+            "wheel": "Color wheel"
+        },
+        "delete" :{
+                "title": "Delete tag",
+                "description": "Are you sure you want to delete this tag?",
+                "warning": "This action cannot be undone and the tag will be removed from all tags associated."
+            }
+    },
     "tasks": {
         "title": "Tasks",
         "today": "Today",
         "overview": "Overview",
+        "tags": "Tags",
+        "my_tags": "My tags",
         "nothing_to_do": "Nothing to do for now, enjoy your day!",
         "day_off": "You have nothing planned for tomorrow, enjoy your day!",
         "week_off": "You have nothing planned for this week, try and take the time to do the stuff left behind!",
@@ -163,6 +230,21 @@
             "my_profile": "My Profile",
             "email": "Email",
             "undefined": "Undefined"
+        },
+        "security_and_privacy": {
+            "title": "Security & Privacy",
+            "change_password": {
+                "title": "Change Password",
+                "old_password": "Old Password",
+                "new_password": "New Password",
+                "confirm_password": "Confirm Password",
+                "old_password_required": "Old password is required",
+                "new_password_required": "New password is required",
+                "confirm_password_required": "Confirm password is required",
+                "password_mismatch": "Passwords do not match",
+                "password_hint": "SuperSecure123!",
+                "warning_changing_pws_will_log_you_out": "Changing your password will log you out of the app."
+            }
         }
     },
     "habits": {
@@ -334,7 +416,8 @@
         "back": "Back",
         "delete": "Delete",
         "add": "Add",
-        "edit": "Edit"
+        "edit": "Edit",
+        "clear": "Clear"
     },
     "validation": {
         "required": "Required",

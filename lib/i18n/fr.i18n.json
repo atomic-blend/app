@@ -66,6 +66,47 @@
             "mnemonic_hint": "Entrez votre clé de récupération",
             "mnemonic_error": "Clé de récupération invalide",
             "copy_success": "Clé copiée dans le presse-papiers"
+        },
+        "reset_password": {
+            "title": "Reset your password",
+            "subtitle": "Vous ne vous souvenez pas de votre mot de passe ?",
+            "description": "Enter your email address to receive a password reset link.",
+            "warning": "Vous allez recevoir un code par email pour réinitialiser votre mot de passe, puis vous devrez entrer votre clé de récupération pour accéder à vos données.",
+            "no_mnemonic_data_loss": "Si vous ne vous rappelez pas de votre clé de récupération, vous perdrez accès à toutes vos précédentes données.",
+            "email": "Email",
+            "email_description": "L'adresse e-mail utilisée pour vous inscrire.",
+            "email_hint": "atomicblend@gmail.com",
+            "email_required": "L'adresse e-mail est requise",
+            "confirmation_code": "Code de confirmation",
+            "confirmation_code_description": "Entrez le code que vous avez reçu par e-mail.",
+            "confirmation_code_hint": "a1b5c3d4",
+            "confirmation_code_required": "Le code de confirmation est requis",
+            "enter_the_confirmation_code": "Entrez le code de confirmation",
+            "confirmation_code_sent": "Un code de confirmation a été envoyé à votre adresse e-mail.",
+            "confirmation_code_sent_description": "Vérifiez votre boîte de réception et entrez le code ci-dessous.",
+            "do_you_have_your_mnemonic_key": "Avez-vous votre clé de récupération ?",
+            "backup_key_description": "C'est une phrase de 12 mots qui vous a été fournie lors de votre inscription. Vous en aurez besoin pour récupérer vos données.",
+            "yes_i_have": "Oui, je l'ai et je veux récupérer mes données",
+            "no_i_dont": "Non, je ne l'ai pas et je veux supprimer mes données",
+            "reset_data_warning": "Je suis conscient qu'en sélectionnant cette option, toutes mes données seront éffacées sans aucune possibilité de récupération.",
+            "mnemonic_key": "Clé de récupération",
+            "mnemonic_key_description": "Saisis votre clé de récupération pour accéder à vos données.",
+            "mnemonic_key_hint": "business theme rotate together surprise wisdom powder knee view border local runway",
+            "mnemonic_key_required": "La clé de récupération est requise",
+            "select_your_new_password": "Sélectionnez votre nouveau mot de passe",
+            "select_your_new_password_description": "Entrez un mot de passe fort pour protéger votre compte.",
+            "new_password": "Nouveau mot de passe",
+            "new_password_description": "Entrez un nouveau mot de passe pour votre compte.",
+            "new_password_hint": "SuperSecure123!",
+            "new_password_required": "Nouveau mot de passe requis",
+            "confirm_new_password": "Confirmer le mot de passe",
+            "confirm_new_password_description": "Entrez à nouveau votre mot de passe pour le confirmer.",
+            "confirm_new_password_required": "Confirmer le mot de passe requis",
+            "password_mismatch": "Les mots de passe ne correspondent pas",
+            "recap_subtitle": "Récapitulatif de la réinitialisation",
+            "yes": "Oui",
+            "no": "Non",
+            "confirm_reset": "Confirmer la réinitialisation"
         }
     },
     "settings": {
@@ -81,9 +122,34 @@
         },
         "logout": "Déconnexion"
     },
+    "tags": {
+        "title": "Tags",
+        "no_tags": "Aucun tag",
+        "assign_tags": "Assigner des tags",
+        "add_modal": {
+            "title": "Ajouter un nouveau tag",
+            "edit_title": "Modifier le tag",
+            "name": "Nom du tag",
+            "name_hint": "Travail",
+            "name_description": "Définissez un nom pour votre tag, cela sera affiché dans le tableau de bord et dans les notifications.",
+            "name_required": "Le nom du tag est requis",
+            "color": "Couleur du tag",
+            "color_description": "Choisissez une couleur pour votre tag, cela vous aidera à le distinguer des autres.",
+            "primary": "Primaire",
+            "accent": "Accent",
+            "wheel": "Roue"
+        },
+        "delete": {
+            "title": "Supprimer le tag",
+            "description": "Êtes-vous sûr de vouloir supprimer ce tag ?",
+            "warning": "Cette action est irréversible et le tag sera supprimé de tous les éléments associés."
+        }
+    },
     "tasks": {
         "title": "Tâches",
         "today": "Aujourd'hui",
+        "tags": "Tags",
+        "my_tags": "Mes tags",
         "overview": "Vue d'ensemble",
         "nothing_to_do": "Rien à faire pour le moment, vous pouvez vous détendre !",
         "day_off": "Vous n'avez rien de prévu pour demain, profitez-en !",
@@ -163,6 +229,21 @@
             "my_profile": "Mon profil",
             "email": "Adresse e-mail",
             "undefined": "Non défini"
+        },
+        "security_and_privacy": {
+            "title": "Sécurité et confidentialité",
+            "change_password": {
+                "title": "Changer le mot de passe",
+                "old_password": "Ancien mot de passe",
+                "new_password": "Nouveau mot de passe",
+                "confirm_password": "Confirmer le mot de passe",
+                "old_password_required": "Ancien mot de passe requis",
+                "new_password_required": "Nouveau mot de passe requis",
+                "confirm_password_required": "Confirmer le mot de passe requis",
+                "password_mismatch": "Les mots de passe ne correspondent pas",
+                "password_hint": "SuperSecure123!",
+                "warning_changing_pws_will_log_you_out": "Changer le mot de passe vous déconnectera de l'application."
+            }
         }
     },
     "habits": {
@@ -326,7 +407,8 @@
         "back": "Retour",
         "delete": "Supprimer",
         "add": "Ajouter",
-        "edit": "Modifier"
+        "edit": "Modifier",
+        "clear": "Effacer"
     },
     "date_modes(map)": {
         "date": "Date",

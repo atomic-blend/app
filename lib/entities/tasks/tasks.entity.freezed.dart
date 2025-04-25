@@ -34,6 +34,8 @@ mixin _$TaskEntity {
   set createdAt(DateTime? value) => throw _privateConstructorUsedError;
   DateTime? get updatedAt => throw _privateConstructorUsedError;
   set updatedAt(DateTime? value) => throw _privateConstructorUsedError;
+  List<TagEntity>? get tags => throw _privateConstructorUsedError;
+  set tags(List<TagEntity>? value) => throw _privateConstructorUsedError;
   List<DateTime>? get reminders => throw _privateConstructorUsedError;
   set reminders(List<DateTime>? value) => throw _privateConstructorUsedError;
   bool? get completed => throw _privateConstructorUsedError;
@@ -63,6 +65,7 @@ abstract class $TaskEntityCopyWith<$Res> {
       DateTime? endDate,
       DateTime? createdAt,
       DateTime? updatedAt,
+      List<TagEntity>? tags,
       List<DateTime>? reminders,
       bool? completed});
 }
@@ -89,6 +92,7 @@ class _$TaskEntityCopyWithImpl<$Res, $Val extends TaskEntity>
     Object? endDate = freezed,
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
+    Object? tags = freezed,
     Object? reminders = freezed,
     Object? completed = freezed,
   }) {
@@ -121,6 +125,10 @@ class _$TaskEntityCopyWithImpl<$Res, $Val extends TaskEntity>
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
               as DateTime?,
+      tags: freezed == tags
+          ? _value.tags
+          : tags // ignore: cast_nullable_to_non_nullable
+              as List<TagEntity>?,
       reminders: freezed == reminders
           ? _value.reminders
           : reminders // ignore: cast_nullable_to_non_nullable
@@ -149,6 +157,7 @@ abstract class _$$TaskEntityImplCopyWith<$Res>
       DateTime? endDate,
       DateTime? createdAt,
       DateTime? updatedAt,
+      List<TagEntity>? tags,
       List<DateTime>? reminders,
       bool? completed});
 }
@@ -173,6 +182,7 @@ class __$$TaskEntityImplCopyWithImpl<$Res>
     Object? endDate = freezed,
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
+    Object? tags = freezed,
     Object? reminders = freezed,
     Object? completed = freezed,
   }) {
@@ -205,6 +215,10 @@ class __$$TaskEntityImplCopyWithImpl<$Res>
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
               as DateTime?,
+      tags: freezed == tags
+          ? _value.tags
+          : tags // ignore: cast_nullable_to_non_nullable
+              as List<TagEntity>?,
       reminders: freezed == reminders
           ? _value.reminders
           : reminders // ignore: cast_nullable_to_non_nullable
@@ -228,6 +242,7 @@ class _$TaskEntityImpl extends _TaskEntity {
       this.endDate,
       this.createdAt,
       this.updatedAt,
+      this.tags,
       this.reminders,
       this.completed})
       : super._();
@@ -249,6 +264,8 @@ class _$TaskEntityImpl extends _TaskEntity {
   DateTime? createdAt;
   @override
   DateTime? updatedAt;
+  @override
+  List<TagEntity>? tags;
   @override
   List<DateTime>? reminders;
   @override
@@ -279,6 +296,7 @@ abstract class _TaskEntity extends TaskEntity {
       DateTime? endDate,
       DateTime? createdAt,
       DateTime? updatedAt,
+      List<TagEntity>? tags,
       List<DateTime>? reminders,
       bool? completed}) = _$TaskEntityImpl;
   _TaskEntity._() : super._();
@@ -307,6 +325,9 @@ abstract class _TaskEntity extends TaskEntity {
   @override
   DateTime? get updatedAt;
   set updatedAt(DateTime? value);
+  @override
+  List<TagEntity>? get tags;
+  set tags(List<TagEntity>? value);
   @override
   List<DateTime>? get reminders;
   set reminders(List<DateTime>? value);

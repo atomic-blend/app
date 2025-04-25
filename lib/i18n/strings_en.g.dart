@@ -44,6 +44,7 @@ class Translations implements BaseTranslations<AppLocale, Translations> {
 	late final TranslationsNavigationEn navigation = TranslationsNavigationEn._(_root);
 	late final TranslationsAuthEn auth = TranslationsAuthEn._(_root);
 	late final TranslationsSettingsEn settings = TranslationsSettingsEn._(_root);
+	late final TranslationsTagsEn tags = TranslationsTagsEn._(_root);
 	late final TranslationsTasksEn tasks = TranslationsTasksEn._(_root);
 	late final TranslationsCalendarEn calendar = TranslationsCalendarEn._(_root);
 	late final TranslationsAccountEn account = TranslationsAccountEn._(_root);
@@ -119,6 +120,7 @@ class TranslationsAuthEn {
 	late final TranslationsAuthRegisterEn register = TranslationsAuthRegisterEn._(_root);
 	late final TranslationsAuthDeleteAccountEn delete_account = TranslationsAuthDeleteAccountEn._(_root);
 	late final TranslationsAuthMnemonicKeyEn mnemonic_key = TranslationsAuthMnemonicKeyEn._(_root);
+	late final TranslationsAuthResetPasswordEn reset_password = TranslationsAuthResetPasswordEn._(_root);
 }
 
 // Path: settings
@@ -133,6 +135,20 @@ class TranslationsSettingsEn {
 	String get logout => 'Logout';
 }
 
+// Path: tags
+class TranslationsTagsEn {
+	TranslationsTagsEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	String get title => 'Tags';
+	String get no_tags => 'No tags';
+	String get assign_tags => 'Assign tags';
+	late final TranslationsTagsAddModalEn add_modal = TranslationsTagsAddModalEn._(_root);
+	late final TranslationsTagsDeleteEn delete = TranslationsTagsDeleteEn._(_root);
+}
+
 // Path: tasks
 class TranslationsTasksEn {
 	TranslationsTasksEn._(this._root);
@@ -143,6 +159,8 @@ class TranslationsTasksEn {
 	String get title => 'Tasks';
 	String get today => 'Today';
 	String get overview => 'Overview';
+	String get tags => 'Tags';
+	String get my_tags => 'My tags';
 	String get nothing_to_do => 'Nothing to do for now, enjoy your day!';
 	String get day_off => 'You have nothing planned for tomorrow, enjoy your day!';
 	String get week_off => 'You have nothing planned for this week, try and take the time to do the stuff left behind!';
@@ -180,6 +198,7 @@ class TranslationsAccountEn {
 	late final TranslationsAccountSectionsEn sections = TranslationsAccountSectionsEn._(_root);
 	late final TranslationsAccountActionsEn actions = TranslationsAccountActionsEn._(_root);
 	late final TranslationsAccountProfileEn profile = TranslationsAccountProfileEn._(_root);
+	late final TranslationsAccountSecurityAndPrivacyEn security_and_privacy = TranslationsAccountSecurityAndPrivacyEn._(_root);
 }
 
 // Path: habits
@@ -430,6 +449,7 @@ class TranslationsActionsEn {
 	String get delete => 'Delete';
 	String get add => 'Add';
 	String get edit => 'Edit';
+	String get clear => 'Clear';
 }
 
 // Path: validation
@@ -784,6 +804,54 @@ class TranslationsAuthMnemonicKeyEn {
 	String get copy_success => 'Recovery key copied to clipboard';
 }
 
+// Path: auth.reset_password
+class TranslationsAuthResetPasswordEn {
+	TranslationsAuthResetPasswordEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	String get title => 'Reset your password';
+	String get subtitle => 'You don\'t remember your password?';
+	String get description => 'Enter your email address to initiate the password reset process.';
+	String get warning => 'You will receive an email with a code to confirm your identity, then you\'ll need your mnemonic key to get access to your data.';
+	String get no_mnemonic_data_loss => 'If you don\'t have your mnemonic key, you will lose access to your previous data.';
+	String get email => 'Email';
+	String get email_description => 'The email address you used to register.';
+	String get email_hint => 'atomicblend@gmail.com';
+	String get email_required => 'Email is required';
+	String get confirmation_code => 'Confirmation code';
+	String get confirmation_code_description => 'Enter the code you received by email.';
+	String get confirmation_code_hint => 'a1b5c3d4';
+	String get confirmation_code_required => 'Confirmation code is required';
+	String get enter_the_confirmation_code => 'Enter the confirmation code';
+	String get confirmation_code_sent => 'A confirmation code has been sent to your email address.';
+	String get confirmation_code_sent_description => 'Please check your inbox and enter the code below.';
+	String get do_you_have_your_mnemonic_key => 'Do you have your backup key?';
+	String get backup_key_description => 'This is a 12-word key that you received when you registered. It is used as a backup for your data and is required to recover your account.';
+	String get yes_i_have => 'Yes, I have it, restore my data';
+	String get no_i_dont => 'No, I don\'t have it, delete my data';
+	String get reset_data_warning => 'I understand by selecting this option that all my previous data will be deleted and I will not be able to recover it.';
+	String get mnemonic_key => 'Mnemonic key';
+	String get mnemonic_key_description => 'Enter the backup key you received when you registered.';
+	String get mnemonic_key_hint => 'business theme rotate together surprise wisdom powder knee view border local runway';
+	String get mnemonic_key_required => 'Mnemonic key is required';
+	String get select_your_new_password => 'Select your new password';
+	String get select_your_new_password_description => 'Enter a new password to later access your account.';
+	String get new_password => 'New password';
+	String get new_password_description => 'Enter a new password to access your account.';
+	String get new_password_hint => 'SuperSecure123!';
+	String get new_password_required => 'New password is required';
+	String get confirm_new_password => 'Confirm new password';
+	String get confirm_new_password_description => 'Confirm your new password.';
+	String get confirm_new_password_required => 'Confirm new password is required';
+	String get password_mismatch => 'Passwords do not match';
+	String get recap_subtitle => 'Recap of the process';
+	String get yes => 'Yes';
+	String get no => 'No';
+	String get confirm_reset => 'Confirm reset';
+}
+
 // Path: settings.app_settings
 class TranslationsSettingsAppSettingsEn {
 	TranslationsSettingsAppSettingsEn._(this._root);
@@ -793,6 +861,38 @@ class TranslationsSettingsAppSettingsEn {
 	// Translations
 	String get title => 'App Settings';
 	late final TranslationsSettingsAppSettingsSelfHostedUrlEn selfHostedUrl = TranslationsSettingsAppSettingsSelfHostedUrlEn._(_root);
+}
+
+// Path: tags.add_modal
+class TranslationsTagsAddModalEn {
+	TranslationsTagsAddModalEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	String get title => 'Add a new tag';
+	String get edit_title => 'Edit tag';
+	String get name => 'Name of the tag';
+	String get name_hint => 'Work';
+	String get name_description => 'Define a name for your tag, this will help you remember what it is about and be shown in notifications.';
+	String get name_required => 'Name is required';
+	String get color => 'Color';
+	String get color_description => 'Choose a color for your tag, this will help you remember what it is about and be shown in notifications.';
+	String get primary => 'Primary';
+	String get accent => 'Accent';
+	String get wheel => 'Color wheel';
+}
+
+// Path: tags.delete
+class TranslationsTagsDeleteEn {
+	TranslationsTagsDeleteEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	String get title => 'Delete tag';
+	String get description => 'Are you sure you want to delete this tag?';
+	String get warning => 'This action cannot be undone and the tag will be removed from all tags associated.';
 }
 
 // Path: tasks.due_dates
@@ -905,6 +1005,17 @@ class TranslationsAccountProfileEn {
 	String get my_profile => 'My Profile';
 	String get email => 'Email';
 	String get undefined => 'Undefined';
+}
+
+// Path: account.security_and_privacy
+class TranslationsAccountSecurityAndPrivacyEn {
+	TranslationsAccountSecurityAndPrivacyEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	String get title => 'Security & Privacy';
+	late final TranslationsAccountSecurityAndPrivacyChangePasswordEn change_password = TranslationsAccountSecurityAndPrivacyChangePasswordEn._(_root);
 }
 
 // Path: habits.add
@@ -1022,6 +1133,25 @@ class TranslationsSettingsAppSettingsSelfHostedUrlEn {
 	String get not_set => 'Not set';
 }
 
+// Path: account.security_and_privacy.change_password
+class TranslationsAccountSecurityAndPrivacyChangePasswordEn {
+	TranslationsAccountSecurityAndPrivacyChangePasswordEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	String get title => 'Change Password';
+	String get old_password => 'Old Password';
+	String get new_password => 'New Password';
+	String get confirm_password => 'Confirm Password';
+	String get old_password_required => 'Old password is required';
+	String get new_password_required => 'New password is required';
+	String get confirm_password_required => 'Confirm password is required';
+	String get password_mismatch => 'Passwords do not match';
+	String get password_hint => 'SuperSecure123!';
+	String get warning_changing_pws_will_log_you_out => 'Changing your password will log you out of the app.';
+}
+
 /// Flat map(s) containing all translations.
 /// Only for edge cases! For simple maps, use the map function of this library.
 extension on Translations {
@@ -1080,6 +1210,45 @@ extension on Translations {
 			case 'auth.mnemonic_key.mnemonic_hint': return 'Enter your recovery key';
 			case 'auth.mnemonic_key.mnemonic_error': return 'Invalid recovery key';
 			case 'auth.mnemonic_key.copy_success': return 'Recovery key copied to clipboard';
+			case 'auth.reset_password.title': return 'Reset your password';
+			case 'auth.reset_password.subtitle': return 'You don\'t remember your password?';
+			case 'auth.reset_password.description': return 'Enter your email address to initiate the password reset process.';
+			case 'auth.reset_password.warning': return 'You will receive an email with a code to confirm your identity, then you\'ll need your mnemonic key to get access to your data.';
+			case 'auth.reset_password.no_mnemonic_data_loss': return 'If you don\'t have your mnemonic key, you will lose access to your previous data.';
+			case 'auth.reset_password.email': return 'Email';
+			case 'auth.reset_password.email_description': return 'The email address you used to register.';
+			case 'auth.reset_password.email_hint': return 'atomicblend@gmail.com';
+			case 'auth.reset_password.email_required': return 'Email is required';
+			case 'auth.reset_password.confirmation_code': return 'Confirmation code';
+			case 'auth.reset_password.confirmation_code_description': return 'Enter the code you received by email.';
+			case 'auth.reset_password.confirmation_code_hint': return 'a1b5c3d4';
+			case 'auth.reset_password.confirmation_code_required': return 'Confirmation code is required';
+			case 'auth.reset_password.enter_the_confirmation_code': return 'Enter the confirmation code';
+			case 'auth.reset_password.confirmation_code_sent': return 'A confirmation code has been sent to your email address.';
+			case 'auth.reset_password.confirmation_code_sent_description': return 'Please check your inbox and enter the code below.';
+			case 'auth.reset_password.do_you_have_your_mnemonic_key': return 'Do you have your backup key?';
+			case 'auth.reset_password.backup_key_description': return 'This is a 12-word key that you received when you registered. It is used as a backup for your data and is required to recover your account.';
+			case 'auth.reset_password.yes_i_have': return 'Yes, I have it, restore my data';
+			case 'auth.reset_password.no_i_dont': return 'No, I don\'t have it, delete my data';
+			case 'auth.reset_password.reset_data_warning': return 'I understand by selecting this option that all my previous data will be deleted and I will not be able to recover it.';
+			case 'auth.reset_password.mnemonic_key': return 'Mnemonic key';
+			case 'auth.reset_password.mnemonic_key_description': return 'Enter the backup key you received when you registered.';
+			case 'auth.reset_password.mnemonic_key_hint': return 'business theme rotate together surprise wisdom powder knee view border local runway';
+			case 'auth.reset_password.mnemonic_key_required': return 'Mnemonic key is required';
+			case 'auth.reset_password.select_your_new_password': return 'Select your new password';
+			case 'auth.reset_password.select_your_new_password_description': return 'Enter a new password to later access your account.';
+			case 'auth.reset_password.new_password': return 'New password';
+			case 'auth.reset_password.new_password_description': return 'Enter a new password to access your account.';
+			case 'auth.reset_password.new_password_hint': return 'SuperSecure123!';
+			case 'auth.reset_password.new_password_required': return 'New password is required';
+			case 'auth.reset_password.confirm_new_password': return 'Confirm new password';
+			case 'auth.reset_password.confirm_new_password_description': return 'Confirm your new password.';
+			case 'auth.reset_password.confirm_new_password_required': return 'Confirm new password is required';
+			case 'auth.reset_password.password_mismatch': return 'Passwords do not match';
+			case 'auth.reset_password.recap_subtitle': return 'Recap of the process';
+			case 'auth.reset_password.yes': return 'Yes';
+			case 'auth.reset_password.no': return 'No';
+			case 'auth.reset_password.confirm_reset': return 'Confirm reset';
 			case 'settings.title': return 'Settings';
 			case 'settings.app_settings.title': return 'App Settings';
 			case 'settings.app_settings.selfHostedUrl.title': return 'Self-Hosted URL';
@@ -1087,9 +1256,28 @@ extension on Translations {
 			case 'settings.app_settings.selfHostedUrl.placeholder': return 'Enter the URL of your instance';
 			case 'settings.app_settings.selfHostedUrl.not_set': return 'Not set';
 			case 'settings.logout': return 'Logout';
+			case 'tags.title': return 'Tags';
+			case 'tags.no_tags': return 'No tags';
+			case 'tags.assign_tags': return 'Assign tags';
+			case 'tags.add_modal.title': return 'Add a new tag';
+			case 'tags.add_modal.edit_title': return 'Edit tag';
+			case 'tags.add_modal.name': return 'Name of the tag';
+			case 'tags.add_modal.name_hint': return 'Work';
+			case 'tags.add_modal.name_description': return 'Define a name for your tag, this will help you remember what it is about and be shown in notifications.';
+			case 'tags.add_modal.name_required': return 'Name is required';
+			case 'tags.add_modal.color': return 'Color';
+			case 'tags.add_modal.color_description': return 'Choose a color for your tag, this will help you remember what it is about and be shown in notifications.';
+			case 'tags.add_modal.primary': return 'Primary';
+			case 'tags.add_modal.accent': return 'Accent';
+			case 'tags.add_modal.wheel': return 'Color wheel';
+			case 'tags.delete.title': return 'Delete tag';
+			case 'tags.delete.description': return 'Are you sure you want to delete this tag?';
+			case 'tags.delete.warning': return 'This action cannot be undone and the tag will be removed from all tags associated.';
 			case 'tasks.title': return 'Tasks';
 			case 'tasks.today': return 'Today';
 			case 'tasks.overview': return 'Overview';
+			case 'tasks.tags': return 'Tags';
+			case 'tasks.my_tags': return 'My tags';
 			case 'tasks.nothing_to_do': return 'Nothing to do for now, enjoy your day!';
 			case 'tasks.day_off': return 'You have nothing planned for tomorrow, enjoy your day!';
 			case 'tasks.week_off': return 'You have nothing planned for this week, try and take the time to do the stuff left behind!';
@@ -1151,6 +1339,17 @@ extension on Translations {
 			case 'account.profile.my_profile': return 'My Profile';
 			case 'account.profile.email': return 'Email';
 			case 'account.profile.undefined': return 'Undefined';
+			case 'account.security_and_privacy.title': return 'Security & Privacy';
+			case 'account.security_and_privacy.change_password.title': return 'Change Password';
+			case 'account.security_and_privacy.change_password.old_password': return 'Old Password';
+			case 'account.security_and_privacy.change_password.new_password': return 'New Password';
+			case 'account.security_and_privacy.change_password.confirm_password': return 'Confirm Password';
+			case 'account.security_and_privacy.change_password.old_password_required': return 'Old password is required';
+			case 'account.security_and_privacy.change_password.new_password_required': return 'New password is required';
+			case 'account.security_and_privacy.change_password.confirm_password_required': return 'Confirm password is required';
+			case 'account.security_and_privacy.change_password.password_mismatch': return 'Passwords do not match';
+			case 'account.security_and_privacy.change_password.password_hint': return 'SuperSecure123!';
+			case 'account.security_and_privacy.change_password.warning_changing_pws_will_log_you_out': return 'Changing your password will log you out of the app.';
 			case 'habits.title': return 'Habits';
 			case 'habits.no_habits': return 'No habits for now';
 			case 'habits.get_started_now': return 'Add your first habit to get started!';
@@ -1265,6 +1464,7 @@ extension on Translations {
 			case 'actions.delete': return 'Delete';
 			case 'actions.add': return 'Add';
 			case 'actions.edit': return 'Edit';
+			case 'actions.clear': return 'Clear';
 			case 'validation.required': return 'Required';
 			case 'validation.invalid_url': return 'invalid URL';
 			case 'errors.wrong_email_password': return 'Email or password incorrect';
