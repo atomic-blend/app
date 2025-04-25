@@ -36,3 +36,4 @@ Atomic Blend is licensed under the AGPL v3 License – ensuring freedom and open
 ---
 
 👥 **Join the movement!** Let's build a secure, all-in-one everything app together. 🚀 
+
