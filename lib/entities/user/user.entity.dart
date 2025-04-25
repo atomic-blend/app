@@ -1,4 +1,5 @@
 import 'package:app/entities/encryption/encryption_key.dart';
+import 'package:app/entities/purchase/purchase.dart';
 import 'package:app/entities/user_device/user_device.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -14,11 +15,11 @@ class UserEntity with _$UserEntity {
     String? firebase_id,
     required String? email,
     required List<dynamic> roles,
-    List<dynamic>? purchases,
     String? firstname,
     String? lastname,
     required EncryptionKeyEntity keySet,
     List<UserDeviceEntity>? devices,
+    List<Purchase>? purchases,
     String? accessToken,
     String? refreshToken,
     DateTime? createdAt,
