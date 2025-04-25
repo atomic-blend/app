@@ -28,8 +28,6 @@ mixin _$UserEntity {
   set email(String? value) => throw _privateConstructorUsedError;
   List<dynamic> get roles => throw _privateConstructorUsedError;
   set roles(List<dynamic> value) => throw _privateConstructorUsedError;
-  List<dynamic>? get purchases => throw _privateConstructorUsedError;
-  set purchases(List<dynamic>? value) => throw _privateConstructorUsedError;
   String? get firstname => throw _privateConstructorUsedError;
   set firstname(String? value) => throw _privateConstructorUsedError;
   String? get lastname => throw _privateConstructorUsedError;
@@ -39,6 +37,8 @@ mixin _$UserEntity {
   List<UserDeviceEntity>? get devices => throw _privateConstructorUsedError;
   set devices(List<UserDeviceEntity>? value) =>
       throw _privateConstructorUsedError;
+  List<Purchase>? get purchases => throw _privateConstructorUsedError;
+  set purchases(List<Purchase>? value) => throw _privateConstructorUsedError;
   String? get accessToken => throw _privateConstructorUsedError;
   set accessToken(String? value) => throw _privateConstructorUsedError;
   String? get refreshToken => throw _privateConstructorUsedError;
@@ -69,11 +69,11 @@ abstract class $UserEntityCopyWith<$Res> {
       String? firebase_id,
       String? email,
       List<dynamic> roles,
-      List<dynamic>? purchases,
       String? firstname,
       String? lastname,
       EncryptionKeyEntity keySet,
       List<UserDeviceEntity>? devices,
+      List<Purchase>? purchases,
       String? accessToken,
       String? refreshToken,
       DateTime? createdAt,
@@ -101,11 +101,11 @@ class _$UserEntityCopyWithImpl<$Res, $Val extends UserEntity>
     Object? firebase_id = freezed,
     Object? email = freezed,
     Object? roles = null,
-    Object? purchases = freezed,
     Object? firstname = freezed,
     Object? lastname = freezed,
     Object? keySet = null,
     Object? devices = freezed,
+    Object? purchases = freezed,
     Object? accessToken = freezed,
     Object? refreshToken = freezed,
     Object? createdAt = freezed,
@@ -128,10 +128,6 @@ class _$UserEntityCopyWithImpl<$Res, $Val extends UserEntity>
           ? _value.roles
           : roles // ignore: cast_nullable_to_non_nullable
               as List<dynamic>,
-      purchases: freezed == purchases
-          ? _value.purchases
-          : purchases // ignore: cast_nullable_to_non_nullable
-              as List<dynamic>?,
       firstname: freezed == firstname
           ? _value.firstname
           : firstname // ignore: cast_nullable_to_non_nullable
@@ -148,6 +144,10 @@ class _$UserEntityCopyWithImpl<$Res, $Val extends UserEntity>
           ? _value.devices
           : devices // ignore: cast_nullable_to_non_nullable
               as List<UserDeviceEntity>?,
+      purchases: freezed == purchases
+          ? _value.purchases
+          : purchases // ignore: cast_nullable_to_non_nullable
+              as List<Purchase>?,
       accessToken: freezed == accessToken
           ? _value.accessToken
           : accessToken // ignore: cast_nullable_to_non_nullable
@@ -191,11 +191,11 @@ abstract class _$$UserEntityImplCopyWith<$Res>
       String? firebase_id,
       String? email,
       List<dynamic> roles,
-      List<dynamic>? purchases,
       String? firstname,
       String? lastname,
       EncryptionKeyEntity keySet,
       List<UserDeviceEntity>? devices,
+      List<Purchase>? purchases,
       String? accessToken,
       String? refreshToken,
       DateTime? createdAt,
@@ -222,11 +222,11 @@ class __$$UserEntityImplCopyWithImpl<$Res>
     Object? firebase_id = freezed,
     Object? email = freezed,
     Object? roles = null,
-    Object? purchases = freezed,
     Object? firstname = freezed,
     Object? lastname = freezed,
     Object? keySet = null,
     Object? devices = freezed,
+    Object? purchases = freezed,
     Object? accessToken = freezed,
     Object? refreshToken = freezed,
     Object? createdAt = freezed,
@@ -249,10 +249,6 @@ class __$$UserEntityImplCopyWithImpl<$Res>
           ? _value.roles
           : roles // ignore: cast_nullable_to_non_nullable
               as List<dynamic>,
-      purchases: freezed == purchases
-          ? _value.purchases
-          : purchases // ignore: cast_nullable_to_non_nullable
-              as List<dynamic>?,
       firstname: freezed == firstname
           ? _value.firstname
           : firstname // ignore: cast_nullable_to_non_nullable
@@ -269,6 +265,10 @@ class __$$UserEntityImplCopyWithImpl<$Res>
           ? _value.devices
           : devices // ignore: cast_nullable_to_non_nullable
               as List<UserDeviceEntity>?,
+      purchases: freezed == purchases
+          ? _value.purchases
+          : purchases // ignore: cast_nullable_to_non_nullable
+              as List<Purchase>?,
       accessToken: freezed == accessToken
           ? _value.accessToken
           : accessToken // ignore: cast_nullable_to_non_nullable
@@ -297,11 +297,11 @@ class _$UserEntityImpl extends _UserEntity {
       this.firebase_id,
       required this.email,
       required this.roles,
-      this.purchases,
       this.firstname,
       this.lastname,
       required this.keySet,
       this.devices,
+      this.purchases,
       this.accessToken,
       this.refreshToken,
       this.createdAt,
@@ -320,8 +320,6 @@ class _$UserEntityImpl extends _UserEntity {
   @override
   List<dynamic> roles;
   @override
-  List<dynamic>? purchases;
-  @override
   String? firstname;
   @override
   String? lastname;
@@ -329,6 +327,8 @@ class _$UserEntityImpl extends _UserEntity {
   EncryptionKeyEntity keySet;
   @override
   List<UserDeviceEntity>? devices;
+  @override
+  List<Purchase>? purchases;
   @override
   String? accessToken;
   @override
@@ -360,11 +360,11 @@ abstract class _UserEntity extends UserEntity {
       String? firebase_id,
       required String? email,
       required List<dynamic> roles,
-      List<dynamic>? purchases,
       String? firstname,
       String? lastname,
       required EncryptionKeyEntity keySet,
       List<UserDeviceEntity>? devices,
+      List<Purchase>? purchases,
       String? accessToken,
       String? refreshToken,
       DateTime? createdAt,
@@ -387,9 +387,6 @@ abstract class _UserEntity extends UserEntity {
   List<dynamic> get roles;
   set roles(List<dynamic> value);
   @override
-  List<dynamic>? get purchases;
-  set purchases(List<dynamic>? value);
-  @override
   String? get firstname;
   set firstname(String? value);
   @override
@@ -401,6 +398,9 @@ abstract class _UserEntity extends UserEntity {
   @override
   List<UserDeviceEntity>? get devices;
   set devices(List<UserDeviceEntity>? value);
+  @override
+  List<Purchase>? get purchases;
+  set purchases(List<Purchase>? value);
   @override
   String? get accessToken;
   set accessToken(String? value);
