@@ -2,6 +2,33 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## 0.7.0 - 2025-04-25
+#### Bug Fixes
+- trigger cicd - (0d401bf) - Brandon Guigo
+- linter issues - (3760622) - Brandon Guigo
+- display of the single date picker time - (60198c3) - Brandon Guigo
+- display a red container over due date when task is overdue - (0bc55e0) - Brandon Guigo
+- be able to set an endTime without a precise time (day task) - (a816427) - Brandon Guigo
+- linter issues - (fce3a60) - Brandon Guigo
+- hide sidebar when there's no side item in it - (6d23958) - Brandon Guigo
+#### Features
+- finish the reset password with mnemonic restore - (ca7aa9b) - Brandon Guigo
+- decrypt data key with mnemonic and generate a new keyset from existing data key - (e6f24a8) - Brandon Guigo
+- generate the new keyset + use keyset in payload when restoreData is false - (8da22b6) - Brandon Guigo
+- add bloc event to confirm pwd reset - (f0d42ff) - Brandon Guigo
+- add the recap of the reset password request - (8e709c3) - Brandon Guigo
+- add set the new password step - (e58a505) - Brandon Guigo
+- add user choice for backup key restore or new data - (51d9197) - Brandon Guigo
+- add reset password intro screen with email + send req to backend + enter confirmation code screen - (10b5658) - Brandon Guigo
+- add reset password intro screen - (ab94e5d) - Brandon Guigo
+- change password working - (3c95605) - Brandon Guigo
+- generate the new encryption key before sending to backend - (c8fbb5c) - Brandon Guigo
+- add a refreshUserDataKey method - (50c26ac) - Brandon Guigo
+#### Miscellaneous Chores
+- add dev pipeline [skip ci] - (cc5e9c5) - Brandon Guigo
+
+- - -
+
 ## 0.4.5 - 2025-04-16
 #### Bug Fixes
 - restore the changelog in the create gh release job - (6a19889) - Brandon Guigo
