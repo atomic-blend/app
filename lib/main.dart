@@ -56,9 +56,6 @@ FutureOr<void> main() async {
     Processors.processAndNotify(message);
   });
 
-  final deviceCalendarPlugin = DeviceCalendarPlugin();
-  await deviceCalendarPlugin.requestPermissions();
-
   HydratedBloc.storage = await HydratedStorage.build(
     storageDirectory: kIsWeb
         ? HydratedStorage.webStorageDirectory
