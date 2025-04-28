@@ -142,11 +142,16 @@ class _CalendarState extends State<Calendar> {
                 Event? event;
                 for (DeviceCalendar calendar
                     in deviceCalendarState.deviceCalendar ?? []) {
-                  event = calendar.events.firstWhereOrNull((element) =>
+                  var findedEvent = calendar.events.firstWhereOrNull((element) =>
                       element.eventId ==
                       calendarTapDetails.appointments?.first.itemId);
+                  if (findedEvent != null) {
+                    event = findedEvent;
+                    break;
+                  }
                 }
-                showModalBottomSheet(
+                if (event != null) {
+                  showModalBottomSheet(
                     context: context,
                     isScrollControlled: true,
                     builder: (context) => SizedBox(
@@ -159,6 +164,7 @@ class _CalendarState extends State<Calendar> {
                             ),
                           ),
                         ));
+                }
               }
             },
           );

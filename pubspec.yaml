@@ -86,6 +86,7 @@ dependencies:
   syncfusion_flutter_datepicker: ^29.1.37
   percent_indicator: ^4.2.5
   flex_color_picker: ^3.7.0
+  sentry_flutter: ^8.14.2
 dependency_overrides:
   flutter_secure_storage: 9.2.4
   timezone: 0.10.0
