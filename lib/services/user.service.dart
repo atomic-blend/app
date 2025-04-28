@@ -8,6 +8,7 @@ import 'package:app/services/device_info.service.dart';
 import 'package:app/services/encryption.service.dart';
 import 'package:app/utils/api_client.dart';
 import 'package:dio/dio.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 
 EncryptionService? encryptionService;
 DeviceInfoService? deviceInfoService;
@@ -20,6 +21,10 @@ class UserService {
     userData = null;
     await prefs?.clear();
     globalApiClient.setIdToken(null);
+    Sentry.configureScope(
+        (scope) => scope
+            .setUser(SentryUser(id: null)),
+      );
     encryptionService = null;
     deviceInfoService = null;
   }
@@ -35,6 +40,9 @@ class UserService {
       }).toList() as List<UserRoleEntity>;
 
       prefs?.setString('user', json.encode(user.toJson()));
+      Sentry.configureScope(
+        (scope) => scope.setUser(SentryUser(id: '${user.id}')),
+      );
       return user;
     } else {
       throw Exception('user_creation_failed');
@@ -111,6 +119,11 @@ class UserService {
       // restore data key from password
       encryptionService ??= EncryptionService(userSalt: user.keySet.salt);
       await encryptionService?.restoreDataKey(password, user.keySet);
+
+      Sentry.configureScope(
+        (scope) => scope.setUser(SentryUser(id: '${user.id}')),
+      );
+
       return user;
     } else if (result.statusCode == 401) {
       throw Exception("wrong_email_password");
@@ -137,6 +150,11 @@ class UserService {
       user.keySet = keySet!;
 
       globalApiClient.setIdToken(user.accessToken!);
+
+      Sentry.configureScope(
+        (scope) => scope.setUser(SentryUser(id: '${user.id}')),
+      );
+
       return user;
     } else {
       throw Exception('registration_failed');
