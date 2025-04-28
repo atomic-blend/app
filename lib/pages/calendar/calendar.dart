@@ -33,13 +33,21 @@ class _CalendarState extends State<Calendar> {
   final calendarEndDate = DateTime.now().add(const Duration(days: 3650));
   @override
   void initState() {
+    final deviceCalendarPlugin = DeviceCalendarPlugin();
+    deviceCalendarPlugin.requestPermissions().then((_) {
+      if (!context.mounted) return;
+      _refreshCalendarEvents();
+    });
+    super.initState();
+  }
+
+  _refreshCalendarEvents() {
     context.read<DeviceCalendarBloc>().add(
           GetDeviceCalendar(
             DateTime.now().subtract(const Duration(days: 30)),
             DateTime.now().add(const Duration(days: 30)),
           ),
         );
-    super.initState();
   }
 
   @override
@@ -142,23 +150,30 @@ class _CalendarState extends State<Calendar> {
                 Event? event;
                 for (DeviceCalendar calendar
                     in deviceCalendarState.deviceCalendar ?? []) {
-                  event = calendar.events.firstWhereOrNull((element) =>
-                      element.eventId ==
-                      calendarTapDetails.appointments?.first.itemId);
+                  var findedEvent = calendar.events.firstWhereOrNull(
+                      (element) =>
+                          element.eventId ==
+                          calendarTapDetails.appointments?.first.itemId);
+                  if (findedEvent != null) {
+                    event = findedEvent;
+                    break;
+                  }
                 }
-                showModalBottomSheet(
-                    context: context,
-                    isScrollControlled: true,
-                    builder: (context) => SizedBox(
-                          height: getSize(context).height * 0.83,
-                          child: ClipRRect(
-                            borderRadius:
-                                BorderRadius.circular($constants.corners.md),
-                            child: DeviceEventDetail(
-                              event: event!,
+                if (event != null) {
+                  showModalBottomSheet(
+                      context: context,
+                      isScrollControlled: true,
+                      builder: (context) => SizedBox(
+                            height: getSize(context).height * 0.83,
+                            child: ClipRRect(
+                              borderRadius:
+                                  BorderRadius.circular($constants.corners.md),
+                              child: DeviceEventDetail(
+                                event: event!,
+                              ),
                             ),
-                          ),
-                        ));
+                          ));
+                }
               }
             },
           );
@@ -208,7 +223,9 @@ class _CalendarState extends State<Calendar> {
         appointments.add(
           CustomAppointment(
             startTime: event.start!.toLocal(),
-            endTime: event.allDay == true ? event.start!.toLocal() : event.end!.toLocal(),
+            endTime: event.allDay == true
+                ? event.start!.toLocal()
+                : event.end!.toLocal(),
             subject: event.title ?? "No title",
             color: calendar.calendar.color != null
                 ? Color(calendar.calendar.color!).withValues(alpha: 0.5)

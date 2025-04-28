@@ -11,7 +11,6 @@ import 'package:app/services/notifications/background_notification_processor.dar
 import 'package:app/services/notifications/fcm_service.dart';
 import 'package:app/services/notifications/processors/processors.dart';
 import 'package:app/utils/env/env.dart';
-import 'package:device_calendar/device_calendar.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
@@ -20,6 +19,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:jiffy/jiffy.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:toastification/toastification.dart';
 import 'app.dart';
@@ -55,9 +55,6 @@ FutureOr<void> main() async {
     Processors.processAndNotify(message);
   });
 
-  final deviceCalendarPlugin = DeviceCalendarPlugin();
-  await deviceCalendarPlugin.requestPermissions();
-
   HydratedBloc.storage = await HydratedStorage.build(
     storageDirectory: kIsWeb
         ? HydratedStorage.webStorageDirectory
@@ -67,15 +64,29 @@ FutureOr<void> main() async {
   await LocaleSettings.useDeviceLocale();
   Jiffy.setLocale(LocaleSettings.currentLocale.languageCode);
 
-  runApp(MultiBlocProvider(
-      providers: [
-        BlocProvider(create: (context) => AppCubit()),
-        BlocProvider(create: (context) => AuthBloc()),
-        BlocProvider(create: (context) => TasksBloc()),
-        BlocProvider(create: (context) => DeviceCalendarBloc()),
-        BlocProvider(create: (context) => HabitBloc()),
-        BlocProvider(create: (context) => TagBloc()),
-      ],
-      child: TranslationProvider(
-          child: const ToastificationWrapper(child: App()))));
+  await SentryFlutter.init((options) {
+    String? dsn = const String.fromEnvironment(
+      'SENTRY_DSN',
+    );
+
+    options.dsn = dsn;
+    options.environment = env!.env;
+
+    // Adds request headers and IP for users,
+    // visit: https://docs.sentry.io/platforms/dart/data-management/data-collected/ for more info
+    options.sendDefaultPii = true;
+  },
+      appRunner: () => runApp(SentryWidget(
+            child: MultiBlocProvider(
+                providers: [
+                  BlocProvider(create: (context) => AppCubit()),
+                  BlocProvider(create: (context) => AuthBloc()),
+                  BlocProvider(create: (context) => TasksBloc()),
+                  BlocProvider(create: (context) => DeviceCalendarBloc()),
+                  BlocProvider(create: (context) => HabitBloc()),
+                  BlocProvider(create: (context) => TagBloc()),
+                ],
+                child: TranslationProvider(
+                    child: const ToastificationWrapper(child: App()))),
+          )));
 }

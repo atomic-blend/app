@@ -112,12 +112,13 @@ class _DeviceEventDetailState extends State<DeviceEventDetail> {
                         SizedBox(
                           height: $constants.insets.sm,
                         ),
-                        AutoSizeText(
-                          Jiffy.parseFromDateTime(
-                            widget.event.start!.toLocal(),
-                          ).yMMMMd.toString(),
-                          style: getTextTheme(context).bodyLarge,
-                        ),
+                        if (widget.event.start != null)
+                          AutoSizeText(
+                            Jiffy.parseFromDateTime(
+                              widget.event.start!.toLocal(),
+                            ).yMMMMd.toString(),
+                            style: getTextTheme(context).bodyLarge,
+                          ),
                       ],
                     ),
                   ),
@@ -146,14 +147,16 @@ class _DeviceEventDetailState extends State<DeviceEventDetail> {
                         SizedBox(
                           height: $constants.insets.sm,
                         ),
-                        AutoSizeText(
-                          "${Jiffy.parseFromDateTime(
-                            widget.event.start!.toLocal(),
-                          ).Hm.toString()} - ${Jiffy.parseFromDateTime(
-                            widget.event.end!.toLocal(),
-                          ).Hm.toString()}",
-                          style: getTextTheme(context).bodyLarge,
-                        ),
+                        if (widget.event.start != null &&
+                            widget.event.end != null)
+                          AutoSizeText(
+                            "${Jiffy.parseFromDateTime(
+                              widget.event.start!.toLocal(),
+                            ).Hm.toString()} - ${Jiffy.parseFromDateTime(
+                              widget.event.end!.toLocal(),
+                            ).Hm.toString()}",
+                            style: getTextTheme(context).bodyLarge,
+                          ),
                       ],
                     ),
                   ),
@@ -234,7 +237,7 @@ class _DeviceEventDetailState extends State<DeviceEventDetail> {
                           widget.event.reminders?.isEmpty == true
                               ? context.t.calendar.event_detail.no_reminders
                               : widget.event.reminders?.map((e) {
-                                    return "${e.minutes} ${context.t.time_units.long.minute}";
+                                    return "${e.minutes} ${context.t.time_units.long.minute(n: e.minutes ?? 0)}";
                                   }).join(", ") ??
                                   "",
                           style: getTextTheme(context).bodyLarge,

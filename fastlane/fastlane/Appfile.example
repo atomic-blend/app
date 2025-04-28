@@ -2,6 +2,7 @@ app_identifier("") # The bundle identifier of your app
 apple_id("") # Your Apple Developer Portal username
 json_key_file("") # playstore key path
 ENV["APPLE_REVENUE_CAT_API_KEY"] = "" # revenue cat api key for apple
+ENV["SENTRY_DSN"] = ""
 
 
 
