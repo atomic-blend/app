@@ -35,7 +35,7 @@ platform :ios do
      upload_to_testflight(
      api_key_path: "/Users/brandonguigo/appstore_connect_api_key.json",
      app_identifier: "fr.atomicblend.app",
-     ipa: "../build/ios/ipa/Atomic Blend.ipa",
+     ipa: "../build/ios/ipa/Atomic Task.ipa",
      distribute_external: true,
      notify_external_testers: true,
      submit_beta_review: true,
