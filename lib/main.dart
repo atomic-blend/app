@@ -11,7 +11,6 @@ import 'package:app/services/notifications/background_notification_processor.dar
 import 'package:app/services/notifications/fcm_service.dart';
 import 'package:app/services/notifications/processors/processors.dart';
 import 'package:app/utils/env/env.dart';
-import 'package:device_calendar/device_calendar.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
@@ -69,10 +68,10 @@ FutureOr<void> main() async {
     String? dsn = const String.fromEnvironment(
       'SENTRY_DSN',
     );
-    
+
     options.dsn = dsn;
     options.environment = env!.env;
-    
+
     // Adds request headers and IP for users,
     // visit: https://docs.sentry.io/platforms/dart/data-management/data-collected/ for more info
     options.sendDefaultPii = true;
