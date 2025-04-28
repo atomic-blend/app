@@ -2,6 +2,21 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## 0.7.1 - 2025-04-28
+#### Bug Fixes
+- linter - (0904340) - Brandon Guigo
+- wrong app name - (8b2e000) - Brandon Guigo
+- request calendar permission in calendar page initState - (a3dd6ec) - Brandon Guigo
+- change name, icon and splash - (f611107) - Brandon Guigo
+- login / out user in Sentry also - (f138c15) - Brandon Guigo
+- configure sentry so future bugs are reported - (4c210f9) - Brandon Guigo
+- null check on a null value error + internationalization error - (5dcf29d) - Brandon Guigo
+#### Miscellaneous Chores
+- **(release)** 0.7.0 [skip ci] - (129aa9e) - CircleCI
+- fix fastfile and appfile to have env var in fastlane [skip ci] - (3b7363d) - Brandon Guigo
+
+- - -
+
 ## 0.7.0 - 2025-04-25
 #### Bug Fixes
 - trigger cicd - (0d401bf) - Brandon Guigo
