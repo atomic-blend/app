@@ -118,6 +118,7 @@ class _SingleDatePickerState extends State<SingleDatePicker> {
                           height: getSize(context).height * 0.25,
                           child: CupertinoDatePicker(
                             use24hFormat: true,
+                            backgroundColor: getTheme(context).surface,
                             initialDateTime:
                                 endDate?.toLocal() ?? DateTime.now(),
                             mode: CupertinoDatePickerMode.time,
