@@ -31,7 +31,7 @@ class _AddTaskModalState extends State<AddTaskModal> {
     return BlocBuilder<AuthBloc, AuthState>(builder: (context, authState) {
       return Container(
         width: double.infinity,
-        height: MediaQuery.of(context).viewInsets.bottom +
+        height: MediaQuery.of(context).viewInsets.bottom + getBottomBarHeight() +
             getSize(context).height * 0.12,
         decoration: BoxDecoration(
           color: Theme.of(context).scaffoldBackgroundColor,
