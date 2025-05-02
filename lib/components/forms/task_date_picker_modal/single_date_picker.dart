@@ -114,6 +114,7 @@ class _SingleDatePickerState extends State<SingleDatePicker> {
                       ),
                       CustomPopup(
                         content: SizedBox(
+                          backgroundColor: getTheme(context).surface,
                           width: getSize(context).width * 0.5,
                           height: getSize(context).height * 0.25,
                           child: CupertinoDatePicker(
