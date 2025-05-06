@@ -101,6 +101,7 @@ class _DurationPickerState extends State<DurationPicker> {
                     horizontal: $constants.insets.sm,
                   ),
                   child: CustomPopup(
+                    backgroundColor: getTheme(context).surface,
                     content: SizedBox(
                       width: getSize(context).width * 0.75,
                       child: ReminderPicker(
