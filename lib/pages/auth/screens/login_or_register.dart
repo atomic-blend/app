@@ -258,7 +258,9 @@ class _LoginOrRegisterState extends State<LoginOrRegister>
         height: $constants.insets.xxs,
       ),
       PrimaryButtonRound(
-        width: isDesktop(context) ? null : double.infinity,
+        width: isDesktop(context)
+            ? getSize(context).width * 0.15
+            : double.infinity,
         text: context.t.auth.login_or_register.login,
         textColor: getTheme(context).primary,
         backgroundColor: getTheme(context).primaryContainer,
@@ -273,7 +275,9 @@ class _LoginOrRegisterState extends State<LoginOrRegister>
       if (!isDesktop(context)) SizedBox(height: $constants.insets.xs),
       if (isDesktop(context)) const Spacer(),
       PrimaryButtonRound(
-        width: isDesktop(context) ? null : double.infinity,
+        width: isDesktop(context)
+            ? getSize(context).width * 0.15
+            : double.infinity,
         text: context.t.auth.login_or_register.register,
         fontWeight: FontWeight.w800,
         onPressed: () {
