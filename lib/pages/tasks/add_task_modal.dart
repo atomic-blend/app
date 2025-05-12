@@ -31,8 +31,8 @@ class _AddTaskModalState extends State<AddTaskModal> {
     return BlocBuilder<AuthBloc, AuthState>(builder: (context, authState) {
       return Container(
         width: double.infinity,
-        padding: EdgeInsets.fromLTRB(0, 0, 0, MediaQuery.viewInsetsOf(context).bottom),
-        //height: MediaQuery.of(context).viewInsets.bottom + getSize(context).height * 0.12,
+        padding: EdgeInsets.fromLTRB(0, 0, 0,
+            MediaQuery.viewInsetsOf(context).bottom + $constants.insets.xs),
         decoration: BoxDecoration(
           color: Theme.of(context).scaffoldBackgroundColor,
           borderRadius: BorderRadius.only(
