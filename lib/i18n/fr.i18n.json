@@ -103,6 +103,8 @@
             "confirm_new_password_description": "Entrez à nouveau votre mot de passe pour le confirmer.",
             "confirm_new_password_required": "Confirmer le mot de passe requis",
             "password_mismatch": "Les mots de passe ne correspondent pas",
+            "password_missing": "Mot de passe manquant",
+            "password_too_short": "Le mot de passe doit contenir au moins 8 caractères",
             "recap_subtitle": "Récapitulatif de la réinitialisation",
             "yes": "Oui",
             "no": "Non",
