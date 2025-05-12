@@ -86,7 +86,9 @@ class _RegisterPasswordState extends State<RegisterPassword>
                           child: Image.asset(
                             'assets/images/authentication.png',
                             fit: BoxFit.cover,
-                            width: getSize(context).width * 0.6,
+                            width: isDesktop(context)
+                                ? getSize(context).width * 0.2
+                                : getSize(context).width * 0.5,
                           ),
                         ),
                         AutoSizeText(
@@ -138,7 +140,8 @@ class _RegisterPasswordState extends State<RegisterPassword>
                                       .t.auth.reset_password.password_missing;
                                 }
                                 if (value.length < 8) {
-                                  return context.t.auth.reset_password.password_too_short;
+                                  return context
+                                      .t.auth.reset_password.password_too_short;
                                 }
                                 return null;
                               },
@@ -223,12 +226,11 @@ class _RegisterPasswordState extends State<RegisterPassword>
                           if (!_formKey.currentState!.validate()) {
                             return;
                           }
-                          _animationController.reverseDuration =
-                              const Duration(
+                          _animationController.reverseDuration = const Duration(
                             milliseconds: 500,
                           );
                           await _animationController.reverse(from: 1.0);
-    
+
                           if (widget.email.isNotEmpty &&
                               _passwordController.text.isNotEmpty) {
                             if (!context.mounted) return;
