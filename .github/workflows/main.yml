@@ -1,0 +1,178 @@
+name: Main Workflow
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+env:
+  FLUTTER_VERSION: "3.29.2"
+  COCOGITTO_VERSION: "6.2.0"
+
+jobs:
+  test-coverage:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          channel: "stable"
+          cache: true
+
+      - name: Install Dependencies
+        run: flutter pub get
+
+      - name: Lint
+        run: dart analyze --fatal-infos
+
+      # - name: Run Tests with Coverage
+      #   run: |
+      #     dart test --coverage=coverage
+      #     dart pub global activate coverage
+      #     dart pub global run coverage:format_coverage --lcov --in=coverage --out=coverage.lcov --report-on=lib
+
+      # - name: Upload Coverage Reports
+      #   uses: codecov/codecov-action@v3
+      #   with:
+      #     files: ./coverage.lcov
+      #     fail_ci_if_error: true
+      #     verbose: true
+
+  bump-version:
+    needs: test-coverage
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Configure Git
+        run: |
+          git config user.email "pro@brandonguigo.com"
+          git config user.name "GitHub Actions"
+
+      - name: Setup Rust
+        uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: nightly
+          override: true
+
+      - name: Cache Cocogitto
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.cargo/bin/cog
+            ~/.cargo/registry
+            ~/.cargo/bin/cargo-install-update
+            ~/.cargo/bin/cargo-update
+          key: cocogitto-${{ env.COCOGITTO_VERSION }}
+
+      - name: Install Cocogitto
+        run: |
+          if [ ! -f "$HOME/.cargo/bin/cog" ]; then
+            cargo install cocogitto --version ${{ env.COCOGITTO_VERSION }}
+          fi
+        env:
+          RUSTFLAGS: --cfg procmacro2_semver_exempt
+
+      - name: Check Conventional Commits Validity
+        run: |
+          $HOME/.cargo/bin/cog check
+
+      - name: Bump Version
+        run: |
+          $HOME/.cargo/bin/cog bump --auto
+
+      - name: Commit and Push Changes
+        run: |
+          TAG=$(git describe --abbrev=0 --tags)
+          # Check if there are changes to commit
+          if git diff --quiet HEAD; then
+            echo "No changes to commit"
+          else
+            ./cog_bump.sh $TAG
+            git add pubspec.yaml
+            git add CHANGELOG.md
+            git commit -m "chore(release): $(git describe --abbrev=0 --tags) [skip ci]"
+          fi
+          git push https://${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git main
+          git push https://${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git tag $(git describe --abbrev=0 --tags)
+
+      - name: Upload Changelog
+        uses: actions/upload-artifact@v3
+        with:
+          name: changelog
+          path: CHANGELOG.md
+
+  create-github-release:
+    needs: bump-version
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Download Changelog
+        uses: actions/download-artifact@v3
+        with:
+          name: changelog
+          path: ./
+
+      - name: Setup Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: "stable"
+
+      - name: Install ghr
+        run: |
+          go install github.com/tcnksm/ghr@latest
+
+      - name: Create GitHub Release
+        run: |
+          echo "Creating GitHub release"
+          TAG=$(git describe --abbrev=0 --tags)
+          echo "Release tag: $TAG"
+
+          # Extract changelog for the current version - improved approach
+          # Handle tags with or without 'v' prefix
+          CLEAN_TAG=$(echo "$TAG" | sed 's/^v//')
+          echo "Clean tag for changelog matching: $CLEAN_TAG"
+
+          CHANGELOG=""
+          if [ -f "CHANGELOG.md" ]; then
+            # First try exact match with the tag format in the file
+            CHANGELOG=$(sed -n "/^## $TAG - /,/^## /p" CHANGELOG.md | sed '1d;$d')
+            
+            # If nothing found, try without the 'v' prefix
+            if [ -z "$CHANGELOG" ]; then
+              CHANGELOG=$(sed -n "/^## $CLEAN_TAG - /,/^## /p" CHANGELOG.md | sed '1d;$d')
+            fi
+            
+            # If still nothing, look for formats like [x.y.z]
+            if [ -z "$CHANGELOG" ]; then
+              CHANGELOG=$(sed -n "/^## \[$CLEAN_TAG\] - /,/^## /p" CHANGELOG.md | sed '1d;$d')
+            fi
+          fi
+
+          echo "CHANGELOG content:"
+          echo "$CHANGELOG"
+
+          echo "$CHANGELOG" >> release_notes.md
+
+          echo "Release notes: $(cat release_notes.md)"
+
+          # Use GitHub's built-in release creation
+          gh release create $TAG \
+            --title "v$TAG" \
+            --notes "$(cat release_notes.md)" \
+            --target ${{ github.sha }}
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
