@@ -1007,6 +1007,8 @@ class TranslationsAccountProfileEn {
 	String get my_profile => 'My Profile';
 	String get email => 'Email';
 	String get undefined => 'Undefined';
+	String get email_missing => 'Email is required';
+	String get email_same => 'Email must be different from the current email';
 }
 
 // Path: account.security_and_privacy
@@ -1343,6 +1345,8 @@ extension on Translations {
 			case 'account.profile.my_profile': return 'My Profile';
 			case 'account.profile.email': return 'Email';
 			case 'account.profile.undefined': return 'Undefined';
+			case 'account.profile.email_missing': return 'Email is required';
+			case 'account.profile.email_same': return 'Email must be different from the current email';
 			case 'account.security_and_privacy.title': return 'Security & Privacy';
 			case 'account.security_and_privacy.change_password.title': return 'Change Password';
 			case 'account.security_and_privacy.change_password.old_password': return 'Old Password';

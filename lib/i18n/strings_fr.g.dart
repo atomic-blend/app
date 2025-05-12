@@ -1001,6 +1001,8 @@ class _TranslationsAccountProfileFr implements TranslationsAccountProfileEn {
 	@override String get my_profile => 'Mon profil';
 	@override String get email => 'Adresse e-mail';
 	@override String get undefined => 'Non défini';
+	@override String get email_missing => 'Adresse e-mail manquante';
+	@override String get email_same => 'L\'adresse e-mail doit être différente de l\'adresse e-mail actuelle';
 }
 
 // Path: account.security_and_privacy
@@ -1337,6 +1339,8 @@ extension on TranslationsFr {
 			case 'account.profile.my_profile': return 'Mon profil';
 			case 'account.profile.email': return 'Adresse e-mail';
 			case 'account.profile.undefined': return 'Non défini';
+			case 'account.profile.email_missing': return 'Adresse e-mail manquante';
+			case 'account.profile.email_same': return 'L\'adresse e-mail doit être différente de l\'adresse e-mail actuelle';
 			case 'account.security_and_privacy.title': return 'Sécurité et confidentialité';
 			case 'account.security_and_privacy.change_password.title': return 'Changer le mot de passe';
 			case 'account.security_and_privacy.change_password.old_password': return 'Ancien mot de passe';
