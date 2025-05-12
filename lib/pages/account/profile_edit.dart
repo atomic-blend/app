@@ -44,6 +44,16 @@ class _UserProfileEditState extends State<UserProfileEdit> {
                   AppTextFormField(
                     controller: _emailController,
                     labelText: context.t.account.profile.email,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return context.t.account.profile.email_missing;
+                      }
+
+                      if (value == authState.user?.email) {
+                        return context.t.account.profile.email_same;
+                      }
+                      return null;
+                    },
                   ),
                 ],
               ),

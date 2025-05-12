@@ -103,6 +103,8 @@
             "confirm_new_password_description": "Confirm your new password.",
             "confirm_new_password_required": "Confirm new password is required",
             "password_mismatch": "Passwords do not match",
+            "password_missing": "Password is required",
+            "password_too_short": "Password is too short",
             "recap_subtitle": "Recap of the process",
             "yes": "Yes",
             "no": "No",
@@ -229,7 +231,9 @@
         "profile": {
             "my_profile": "My Profile",
             "email": "Email",
-            "undefined": "Undefined"
+            "undefined": "Undefined",
+            "email_missing": "Email is required",
+            "email_same": "Email must be different from the current email"
         },
         "security_and_privacy": {
             "title": "Security & Privacy",

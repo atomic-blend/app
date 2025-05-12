@@ -1,0 +1,54 @@
+name: Build and Test
+
+on:
+  push:
+    branches:
+      - dev
+  pull_request:
+    branches:
+      - main
+      - dev
+  workflow_dispatch:
+
+env:
+  FLUTTER_VERSION: "3.29.2"
+
+jobs:
+  test-coverage:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          channel: "stable"
+          cache: true
+
+      - name: Install Dependencies
+        run: flutter pub get
+
+      - name: Lint
+        run: dart analyze --fatal-infos
+
+      # - name: Run Tests with Coverage
+      #   run: |
+      #     dart test --coverage=coverage
+      #     dart pub global activate coverage
+      #     dart pub global run coverage:format_coverage --lcov --in=coverage --out=coverage.lcov --report-on=lib
+
+      # - name: Upload Coverage Reports
+      #   uses: codecov/codecov-action@v3
+      #   with:
+      #     files: ./coverage.lcov
+      #     fail_ci_if_error: true
+      #     verbose: true
+
+      # - name: Archive Coverage Report
+      #   uses: actions/upload-artifact@v3
+      #   with:
+      #     name: coverage-report
+      #     path: coverage.lcov

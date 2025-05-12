@@ -846,6 +846,8 @@ class TranslationsAuthResetPasswordEn {
 	String get confirm_new_password_description => 'Confirm your new password.';
 	String get confirm_new_password_required => 'Confirm new password is required';
 	String get password_mismatch => 'Passwords do not match';
+	String get password_missing => 'Password is required';
+	String get password_too_short => 'Password is too short';
 	String get recap_subtitle => 'Recap of the process';
 	String get yes => 'Yes';
 	String get no => 'No';
@@ -1005,6 +1007,8 @@ class TranslationsAccountProfileEn {
 	String get my_profile => 'My Profile';
 	String get email => 'Email';
 	String get undefined => 'Undefined';
+	String get email_missing => 'Email is required';
+	String get email_same => 'Email must be different from the current email';
 }
 
 // Path: account.security_and_privacy
@@ -1245,6 +1249,8 @@ extension on Translations {
 			case 'auth.reset_password.confirm_new_password_description': return 'Confirm your new password.';
 			case 'auth.reset_password.confirm_new_password_required': return 'Confirm new password is required';
 			case 'auth.reset_password.password_mismatch': return 'Passwords do not match';
+			case 'auth.reset_password.password_missing': return 'Password is required';
+			case 'auth.reset_password.password_too_short': return 'Password is too short';
 			case 'auth.reset_password.recap_subtitle': return 'Recap of the process';
 			case 'auth.reset_password.yes': return 'Yes';
 			case 'auth.reset_password.no': return 'No';
@@ -1339,6 +1345,8 @@ extension on Translations {
 			case 'account.profile.my_profile': return 'My Profile';
 			case 'account.profile.email': return 'Email';
 			case 'account.profile.undefined': return 'Undefined';
+			case 'account.profile.email_missing': return 'Email is required';
+			case 'account.profile.email_same': return 'Email must be different from the current email';
 			case 'account.security_and_privacy.title': return 'Security & Privacy';
 			case 'account.security_and_privacy.change_password.title': return 'Change Password';
 			case 'account.security_and_privacy.change_password.old_password': return 'Old Password';

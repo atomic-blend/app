@@ -113,6 +113,7 @@ class _SingleDatePickerState extends State<SingleDatePicker> {
                         ],
                       ),
                       CustomPopup(
+                        backgroundColor: getTheme(context).surface,
                         content: SizedBox(
                           width: getSize(context).width * 0.5,
                           height: getSize(context).height * 0.25,

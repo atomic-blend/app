@@ -132,6 +132,16 @@ class _RegisterPasswordState extends State<RegisterPassword>
                               controller: _passwordController,
                               hintText: context.t.auth.register.password_hint,
                               obscureText: true,
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return context
+                                      .t.auth.reset_password.password_missing;
+                                }
+                                if (value.length < 8) {
+                                  return context.t.auth.reset_password.password_too_short;
+                                }
+                                return null;
+                              },
                               onChange: () {
                                 if (widget.onPasswordUpdate != null) {
                                   widget.onPasswordUpdate!(
