@@ -231,7 +231,9 @@
         "profile": {
             "my_profile": "My Profile",
             "email": "Email",
-            "undefined": "Undefined"
+            "undefined": "Undefined",
+            "email_missing": "Email is required",
+            "email_same": "Email must be different from the current email"
         },
         "security_and_privacy": {
             "title": "Security & Privacy",

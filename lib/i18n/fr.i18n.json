@@ -230,7 +230,9 @@
         "profile": {
             "my_profile": "Mon profil",
             "email": "Adresse e-mail",
-            "undefined": "Non défini"
+            "undefined": "Non défini",
+            "email_missing": "Adresse e-mail manquante",
+            "email_same": "L'adresse e-mail doit être différente de l'adresse e-mail actuelle"
         },
         "security_and_privacy": {
             "title": "Sécurité et confidentialité",
