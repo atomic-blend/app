@@ -32,6 +32,7 @@ class Constants {
   late final Insets insets = Insets();
   late final Palette palette = Palette();
   late final Navigation navigation = Navigation();
+  late final ScreenSize screenSize = ScreenSize();
   late final Ads ads = Ads();
 }
 
@@ -58,6 +59,14 @@ class Insets {
   late final double xl = 48;
   late final double xxl = 56;
   late final double offset = 80;
+}
+
+@immutable
+class ScreenSize {
+  final double sm = 600;
+  final double md = 900;
+  final double lg = 1200;
+  final double xl = 1536;
 }
 
 @immutable

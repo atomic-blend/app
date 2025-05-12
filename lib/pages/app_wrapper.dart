@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:app/blocs/app/app.bloc.dart';
 import 'package:app/blocs/auth/auth.bloc.dart';
 import 'package:app/components/app/bottom_navigation.dart';
@@ -80,19 +82,7 @@ class _AppWrapperState extends State<AppWrapper> {
         }
         if (state is LoggedOut && !_isLoginModalVisible) {
           WidgetsBinding.instance.addPostFrameCallback((_) {
-            showModalBottomSheet(
-              isDismissible: false,
-              isScrollControlled: true,
-              context: context,
-              builder: (context) => LoginOrRegisterModal(
-                onAuthSuccess: () => setState(() {
-                  _isLoginModalVisible = false;
-                }),
-              ),
-            );
-            setState(() {
-              _isLoginModalVisible = true;
-            });
+            _showLoginModal(context);
           });
         }
         final appBarconfig = appbars.elementAt(appState.pageIndex);
@@ -244,6 +234,35 @@ class _AppWrapperState extends State<AppWrapper> {
           ],
         );
       });
+    });
+  }
+
+  void _showLoginModal(BuildContext context) {
+    if (Platform.isMacOS || Platform.isWindows || Platform.isLinux) {
+      showDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: (context) => Dialog(
+                child: LoginOrRegisterModal(
+                  onAuthSuccess: () => setState(() {
+                    _isLoginModalVisible = false;
+                  }),
+                ),
+              ));
+    } else {
+      showModalBottomSheet(
+        isDismissible: false,
+        isScrollControlled: true,
+        context: context,
+        builder: (context) => LoginOrRegisterModal(
+          onAuthSuccess: () => setState(() {
+            _isLoginModalVisible = false;
+          }),
+        ),
+      );
+    }
+    setState(() {
+      _isLoginModalVisible = true;
     });
   }
 }

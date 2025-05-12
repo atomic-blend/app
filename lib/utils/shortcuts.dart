@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 
@@ -65,4 +67,8 @@ LinearGradient colorsToGradient(List<Color> colors, {double opacity = 1}) {
     end: Alignment.bottomCenter,
     colors: colors.map((c) => c.withValues(alpha: opacity)).toList(),
   );
+}
+
+bool isDesktop(BuildContext context) {
+  return Platform.isMacOS || Platform.isWindows || Platform.isLinux;
 }
