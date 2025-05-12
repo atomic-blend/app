@@ -2,6 +2,25 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## 0.7.2 - 2025-05-12
+#### Bug Fixes
+- email validation - (b5ecdb7) - Brandon Guigo
+- add validation on password length in register - (3b4658e) - Brandon Guigo
+- add margin - (5ee521a) - Brandon Guigo
+- android samsung phones keyboard problem - (8a6db22) - muhsinkutay
+- test commit for ci in a forked branch - (a0b6746) - Brandon Guigo
+- for the text becoming invisible when using app in dark mode in Android - (f0d877b) - muhsinkutay
+- for the text becoming invisible when using phone in dark mode in Android - (db3fbdc) - muhsinkutay
+- for the text becoming invisible when using phone in dark mode in Android - (2df71a5) - muhsinkutay
+#### Miscellaneous Chores
+- **(release)** 0.7.1 [skip ci] - (b37104b) - CircleCI
+- fix ci - (04251b2) - Brandon Guigo
+- add main.yml pipeline - (985631c) - Brandon Guigo
+- gh action workflow test - (217c436) - Brandon Guigo
+- fastfile [skip ci] - (14c6af1) - Brandon Guigo
+
+- - -
+
 ## 0.7.1 - 2025-04-28
 #### Bug Fixes
 - linter - (0904340) - Brandon Guigo
