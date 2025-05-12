@@ -59,182 +59,169 @@ class _LoginOrRegisterState extends State<LoginOrRegister>
       children: [
         SizedBox(
             width: double.infinity,
-            height: getSize(context).height * 0.92,
-            child: Column(
-              children: [
-                Padding(
-                  padding:
-                      EdgeInsets.symmetric(horizontal: $constants.insets.md),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      SizedBox(
-                        height: getSize(context).height * 0.08,
-                      ),
-                      Animate(
-                        controller: _animationController,
-                        effects: [
-                          FadeEffect(
-                            duration: _animationDuration,
-                            delay: const Duration(milliseconds: 0),
-                          ),
-                        ],
-                        onPlay: (controller) => controller.forward(),
-                        child: Transform.scale(
-                          scale: 1.3,
-                          child: Lottie.asset(
-                            controller: _lottieController,
-                            onLoaded: (p0) => _lottieController.loop(),
-                            'assets/animations/login.json',
-                            width: getSize(context).width * 0.5,
-                          ),
-                        ),
-                      ),
-                      Animate(
-                        controller: _animationController,
-                        effects: [
-                          FadeEffect(
-                            duration: _animationDuration,
-                            delay: const Duration(milliseconds: 0),
-                          ),
-                        ],
-                        onPlay: (controller) => controller.forward(),
-                        child: AutoSizeText(
-                          maxLines: 1,
-                          context.t.auth.not_logged_in.time_to_set_things_up,
-                          textAlign: TextAlign.center,
-                          style: getTextTheme(context)
-                              .displaySmall!
-                              .copyWith(fontWeight: FontWeight.bold),
-                        ),
-                      ),
-                      SizedBox(
-                        height: $constants.insets.md,
-                      ),
-                      Animate(
-                        controller: _animationController,
-                        onPlay: (controller) => controller.forward(),
-                        effects: [
-                          FadeEffect(
-                            duration: _animationDuration,
-                            delay: const Duration(milliseconds: 300),
-                          ),
-                        ],
-                        child: Text.rich(
-                          textAlign: TextAlign.center,
-                          TextSpan(
-                              text: context.t.auth.not_logged_in.set_up_start,
-                              style: getTextTheme(context).bodyMedium,
-                              children: [
-                                TextSpan(
-                                    text:
-                                        " ${context.t.auth.not_logged_in.e2e_app}",
-                                    style: const TextStyle(
-                                        fontWeight: FontWeight.bold)),
-                                TextSpan(
-                                    text:
-                                        " ${context.t.auth.not_logged_in.set_up_middle}"),
-                                TextSpan(
-                                  text:
-                                      " ${context.t.auth.not_logged_in.set_up_end}",
-                                ),
-                                TextSpan(
-                                    text:
-                                        " ${context.t.auth.not_logged_in.set_up_end_bold}",
-                                    style: const TextStyle(
-                                        fontWeight: FontWeight.bold)),
-                              ]),
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-                const Spacer(),
-                Animate(
-                  controller: _animationController,
-                  effects: [
-                    FadeEffect(
-                      duration: _animationDuration,
-                      delay: const Duration(milliseconds: 500),
-                    ),
-                  ],
-                  onPlay: (controller) => controller.forward(),
-                  child: Padding(
+            height: isDesktop(context) ? null : getSize(context).height * 0.92,
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Padding(
                     padding:
                         EdgeInsets.symmetric(horizontal: $constants.insets.md),
                     child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        GestureDetector(
-                          onTap: () async {
-                            String? selfHostedUrl =
-                                prefs?.getString("self_hosted_rest_api_url");
-                            if (selfHostedUrl == null ||
-                                selfHostedUrl.isEmpty) {
-                              selfHostedUrl = env?.restApiUrl;
-                            }
-                            await showDialog(
-                                context: context,
-                                builder: (context) => EditSelfHostedUrlModal(
-                                      selfHostedUrl: selfHostedUrl,
-                                    ));
-                          },
-                          child: Text.rich(
+                        SizedBox(
+                          height: getSize(context).height * 0.08,
+                        ),
+                        Animate(
+                          controller: _animationController,
+                          effects: [
+                            FadeEffect(
+                              duration: _animationDuration,
+                              delay: const Duration(milliseconds: 0),
+                            ),
+                          ],
+                          onPlay: (controller) => controller.forward(),
+                          child: Transform.scale(
+                            scale: 1.3,
+                            child: Lottie.asset(
+                              controller: _lottieController,
+                              onLoaded: (p0) => _lottieController.loop(),
+                              'assets/animations/login.json',
+                              width: isDesktop(context)
+                                  ? getSize(context).width * 0.2
+                                  : getSize(context).width * 0.5,
+                            ),
+                          ),
+                        ),
+                        Animate(
+                          controller: _animationController,
+                          effects: [
+                            FadeEffect(
+                              duration: _animationDuration,
+                              delay: const Duration(milliseconds: 0),
+                            ),
+                          ],
+                          onPlay: (controller) => controller.forward(),
+                          child: AutoSizeText(
+                            maxLines: 1,
+                            context.t.auth.not_logged_in.time_to_set_things_up,
                             textAlign: TextAlign.center,
-                            TextSpan(
-                                text: context
-                                    .t.auth.login_or_register.connecting_to,
-                                children: [
-                                  TextSpan(
-                                      text: selfHostedUrl != null && selfHostedUrl != "" ?  Uri.parse(ApiClient
-                                              .getSelfHostedRestApiUrl()!).host : context.t.app_name_saas 
-                                          ,
-                                      style: const TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        decoration: TextDecoration.underline,
-                                      )),
-                                ]),
-                            style: getTextTheme(context).bodyMedium!.copyWith(
-                                  color: Colors.grey,
-                                ),
+                            style: getTextTheme(context)
+                                .displaySmall!
+                                .copyWith(fontWeight: FontWeight.bold),
                           ),
                         ),
                         SizedBox(
-                          height: $constants.insets.xxs,
+                          height: $constants.insets.md,
                         ),
-                        PrimaryButtonRound(
-                          width: double.infinity,
-                          text: context.t.auth.login_or_register.login,
-                          textColor: getTheme(context).primary,
-                          backgroundColor: getTheme(context).primaryContainer,
-                          border: Border.all(
-                              color: getTheme(context).primary, width: 2),
-                          onPressed: () {
-                            _animationController.reverseDuration =
-                                const Duration(milliseconds: 500);
-                            _animationController.reverse();
-                            widget.loginCallback?.call();
-                          },
-                        ),
-                        SizedBox(height: $constants.insets.xs),
-                        PrimaryButtonRound(
-                          width: double.infinity,
-                          text: context.t.auth.login_or_register.register,
-                          fontWeight: FontWeight.w800,
-                          onPressed: () {
-                            _animationController.reverseDuration =
-                                const Duration(milliseconds: 500);
-                            _animationController.reverse();
-                            widget.registerCallback?.call();
-                          },
+                        Animate(
+                          controller: _animationController,
+                          onPlay: (controller) => controller.forward(),
+                          effects: [
+                            FadeEffect(
+                              duration: _animationDuration,
+                              delay: const Duration(milliseconds: 300),
+                            ),
+                          ],
+                          child: Text.rich(
+                            textAlign: TextAlign.center,
+                            TextSpan(
+                                text: context.t.auth.not_logged_in.set_up_start,
+                                style: getTextTheme(context).bodyMedium,
+                                children: [
+                                  TextSpan(
+                                      text:
+                                          " ${context.t.auth.not_logged_in.e2e_app}",
+                                      style: const TextStyle(
+                                          fontWeight: FontWeight.bold)),
+                                  TextSpan(
+                                      text:
+                                          " ${context.t.auth.not_logged_in.set_up_middle}"),
+                                  TextSpan(
+                                    text:
+                                        " ${context.t.auth.not_logged_in.set_up_end}",
+                                  ),
+                                  TextSpan(
+                                      text:
+                                          " ${context.t.auth.not_logged_in.set_up_end_bold}",
+                                      style: const TextStyle(
+                                          fontWeight: FontWeight.bold)),
+                                ]),
+                          ),
                         )
                       ],
                     ),
                   ),
-                ),
-                SizedBox(
-                  height: getSize(context).height * 0.08,
-                )
-              ],
+                  SizedBox(
+                    height: isDesktop(context)
+                        ? $constants.insets.lg
+                        : getSize(context).height * 0.23,
+                  ),
+                  GestureDetector(
+                    onTap: () async {
+                      String? selfHostedUrl =
+                          prefs?.getString("self_hosted_rest_api_url");
+                      if (selfHostedUrl == null || selfHostedUrl.isEmpty) {
+                        selfHostedUrl = env?.restApiUrl;
+                      }
+                      await showDialog(
+                          context: context,
+                          builder: (context) => EditSelfHostedUrlModal(
+                                selfHostedUrl: selfHostedUrl,
+                              ));
+                    },
+                    child: Text.rich(
+                      textAlign: TextAlign.center,
+                      TextSpan(
+                          text: context.t.auth.login_or_register.connecting_to,
+                          children: [
+                            TextSpan(
+                                text:
+                                    selfHostedUrl != null && selfHostedUrl != ""
+                                        ? Uri.parse(ApiClient
+                                                .getSelfHostedRestApiUrl()!)
+                                            .host
+                                        : context.t.app_name_saas,
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  decoration: TextDecoration.underline,
+                                )),
+                          ]),
+                      style: getTextTheme(context).bodyMedium!.copyWith(
+                            color: Colors.grey,
+                          ),
+                    ),
+                  ),
+                  const Divider(),
+                  Animate(
+                    controller: _animationController,
+                    effects: [
+                      FadeEffect(
+                        duration: _animationDuration,
+                        delay: const Duration(milliseconds: 500),
+                      ),
+                    ],
+                    onPlay: (controller) => controller.forward(),
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: $constants.insets.md),
+                      child: isDesktop(context)
+                          ? Row(
+                              children: _buildButtons(context, selfHostedUrl),
+                            )
+                          : Column(
+                              children: _buildButtons(context, selfHostedUrl),
+                            ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: isDesktop(context)
+                        ? $constants.insets.sm
+                        : getSize(context).height * 0.08,
+                  )
+                ],
+              ),
             )),
         Positioned(
           left: $constants.insets.sm,
@@ -263,5 +250,39 @@ class _LoginOrRegisterState extends State<LoginOrRegister>
         ),
       ],
     );
+  }
+
+  List<Widget> _buildButtons(BuildContext context, String? selfHostedUrl) {
+    return [
+      SizedBox(
+        height: $constants.insets.xxs,
+      ),
+      PrimaryButtonRound(
+        width: isDesktop(context) ? null : double.infinity,
+        text: context.t.auth.login_or_register.login,
+        textColor: getTheme(context).primary,
+        backgroundColor: getTheme(context).primaryContainer,
+        border: Border.all(color: getTheme(context).primary, width: 2),
+        onPressed: () {
+          _animationController.reverseDuration =
+              const Duration(milliseconds: 500);
+          _animationController.reverse();
+          widget.loginCallback?.call();
+        },
+      ),
+      if (!isDesktop(context)) SizedBox(height: $constants.insets.xs),
+      if (isDesktop(context)) const Spacer(),
+      PrimaryButtonRound(
+        width: isDesktop(context) ? null : double.infinity,
+        text: context.t.auth.login_or_register.register,
+        fontWeight: FontWeight.w800,
+        onPressed: () {
+          _animationController.reverseDuration =
+              const Duration(milliseconds: 500);
+          _animationController.reverse();
+          widget.registerCallback?.call();
+        },
+      )
+    ];
   }
 }
