@@ -6,7 +6,5 @@
 	<string>development</string>
 	<key>com.apple.developer.usernotifications.time-sensitive</key>
 	<true/>
-	<key>com.apple.security.app-sandbox</key>
-	<true/>
 </dict>
 </plist>
