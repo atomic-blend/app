@@ -108,6 +108,7 @@ class AppWrapperState extends ResponsiveState<AppWrapper> {
             context: context,
             appState: appState,
             state: state,
+            appbars: appbars,
             navItems: navItems,
             floattingActionsButtons: floattingActionsButtons,
             menuItems: menuItems,
@@ -282,36 +283,61 @@ class AppWrapperState extends ResponsiveState<AppWrapper> {
     required BuildContext context,
     required AppState appState,
     required AuthState state,
+    required List<AppBar?> appbars,
     required List<Widget> navItems,
     required List<Widget?> floattingActionsButtons,
     required List<List<SideMenuItem>?> menuItems,
     required Widget? body,
   }) {
-    return Scaffold(
-      floatingActionButton: state.user != null
-          ? floattingActionsButtons.elementAt(appState.pageIndex)
-          : null,
-      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+    final appBarconfig = appbars.elementAt(appState.pageIndex);
+    final appBar = AppBar(
       backgroundColor: getTheme(context).surface,
-      body: Padding(
-        padding: EdgeInsets.symmetric(
-          vertical: $constants.insets.sm,
-        ),
-        child: Column(
-          children: [
-            Expanded(
-              child: Row(
-                children: [
-                  SizedBox(
-                      width: getSize(context).width * 0.1,
-                      child:
-                          SideMenu(items: menuItems[appState.pageIndex] ?? [])),
-                  Expanded(child: body!),
-                ],
-              ),
+      elevation: 0,
+      scrolledUnderElevation: 0,
+      title: appBarconfig!.title,
+      actions: appBarconfig.actions,
+    );
+    return Container(
+      color: getTheme(context).surface,
+      child: Column(
+        children: [
+          Expanded(
+            child: Row(
+              children: [
+                SizedBox(
+                    width: getSize(context).width * 0.06,
+                    child:
+                        SideMenu(items: menuItems[appState.pageIndex] ?? [])),
+                Expanded(
+                  child: Scaffold(
+                    floatingActionButton: state.user != null
+                        ? floattingActionsButtons.elementAt(appState.pageIndex)
+                        : null,
+                    floatingActionButtonLocation:
+                        FloatingActionButtonLocation.endFloat,
+                    backgroundColor: getTheme(context).surface,
+                    appBar: appBar,
+                    body: Padding(
+                      padding: EdgeInsets.symmetric(
+                        vertical: $constants.insets.sm,
+                      ),
+                      child: Column(
+                        children: [
+                          Expanded(
+                            child: body!,
+                          ),
+                          // bottom navbar for desktop
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ],
             ),
-            // bottom navbar for desktop
-            Material(
+          ),
+          Padding(
+            padding: EdgeInsets.only(bottom: $constants.insets.xs),
+            child: Material(
               elevation: 1,
               borderRadius: BorderRadius.circular($constants.corners.sm),
               child: Container(
@@ -336,9 +362,9 @@ class AppWrapperState extends ResponsiveState<AppWrapper> {
                   )),
                 ),
               ),
-            )
-          ],
-        ),
+            ),
+          )
+        ],
       ),
     );
   }
