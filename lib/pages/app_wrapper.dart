@@ -5,6 +5,7 @@ import 'package:app/blocs/auth/auth.bloc.dart';
 import 'package:app/components/app/bottom_navigation.dart';
 import 'package:app/components/app/side_menu.dart';
 import 'package:app/components/app/side_menu_item.dart';
+import 'package:app/components/app/side_navigation.dart';
 import 'package:app/components/responsive_stateful_widget.dart';
 import 'package:app/pages/auth/login_or_register_modal.dart';
 import 'package:app/services/device_info.service.dart';
@@ -294,13 +295,36 @@ class AppWrapperState extends ResponsiveState<AppWrapper> {
       backgroundColor: getTheme(context).surface,
       elevation: 0,
       scrolledUnderElevation: 0,
-      title: appBarconfig!.title,
-      actions: appBarconfig.actions,
+      title: appBarconfig?.title,
+      actions: appBarconfig?.actions,
     );
     return Container(
       color: getTheme(context).surface,
-      child: Column(
+      child: Row(
         children: [
+          Material(
+            elevation: 1,
+            borderRadius: BorderRadius.circular($constants.corners.sm),
+            child: Container(
+              decoration: BoxDecoration(
+                color: getTheme(context).surfaceContainerLow,
+                borderRadius: BorderRadius.circular($constants.corners.sm),
+              ),
+              child: Padding(
+                padding: EdgeInsets.symmetric(
+                  vertical: $constants.insets.xxs,
+                ),
+                child: SideNavigation(
+                  backgroundColor: Colors.transparent,
+                  destinations: navItems,
+                  currentPageIndex: appState.pageIndex,
+                  onTap: (index) {
+                    context.read<AppCubit>().changePageIndex(index: index);
+                  },
+                ),
+              ),
+            ),
+          ),
           Expanded(
             child: Row(
               children: [
@@ -321,49 +345,13 @@ class AppWrapperState extends ResponsiveState<AppWrapper> {
                       padding: EdgeInsets.symmetric(
                         vertical: $constants.insets.sm,
                       ),
-                      child: Column(
-                        children: [
-                          Expanded(
-                            child: body!,
-                          ),
-                          // bottom navbar for desktop
-                        ],
-                      ),
+                      child: body ?? Container(),
                     ),
                   ),
                 ),
               ],
             ),
           ),
-          Padding(
-            padding: EdgeInsets.only(bottom: $constants.insets.xs),
-            child: Material(
-              elevation: 1,
-              borderRadius: BorderRadius.circular($constants.corners.sm),
-              child: Container(
-                height: getSize(context).height * 0.1,
-                width: getSize(context).width * 0.5,
-                decoration: BoxDecoration(
-                  color: getTheme(context).surfaceContainerLow,
-                  borderRadius: BorderRadius.circular($constants.corners.sm),
-                ),
-                child: Padding(
-                  padding: EdgeInsets.symmetric(
-                    vertical: $constants.insets.xxs,
-                  ),
-                  child: Expanded(
-                      child: BottomNavigation(
-                    backgroundColor: Colors.transparent,
-                    destinations: navItems,
-                    currentPageIndex: appState.pageIndex,
-                    onTap: (index) {
-                      context.read<AppCubit>().changePageIndex(index: index);
-                    },
-                  )),
-                ),
-              ),
-            ),
-          )
         ],
       ),
     );

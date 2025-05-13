@@ -355,7 +355,7 @@ class Navigation {
       ];
 
   List<Widget> bottomNavigationItems(BuildContext context) => [
-        BottomNavigationItem(
+        NavigationItem(
           key: const Key("today"),
           icon: const Icon(
             LineAwesome.home_solid,
@@ -367,7 +367,7 @@ class Navigation {
           ),
           label: context.t.tasks.title,
         ),
-        BottomNavigationItem(
+        NavigationItem(
           key: const Key("calendar"),
           icon: const Icon(
             LineAwesome.calendar,
@@ -379,7 +379,7 @@ class Navigation {
           ),
           label: context.t.calendar.title,
         ),
-        BottomNavigationItem(
+        NavigationItem(
           icon: Icon(
             LineAwesome.plus_solid,
             color: getTheme(context).primary,
@@ -396,7 +396,7 @@ class Navigation {
                 builder: (context) => const AddTaskModal());
           },
         ),
-        BottomNavigationItem(
+        NavigationItem(
           key: const Key("habits"),
           icon: const Icon(
             LineAwesome.bolt_solid,
@@ -408,7 +408,7 @@ class Navigation {
           ),
           label: context.t.habits.title,
         ),
-        BottomNavigationItem(
+        NavigationItem(
           key: const Key("more"),
           icon: const Icon(
             CupertinoIcons.ellipsis_circle_fill,
