@@ -53,6 +53,7 @@ class AppWrapperState extends ResponsiveState<AppWrapper> {
     }
     super.initState();
   }
+
   @override
   Widget buildMobile(BuildContext context) {
     return _buildAppStructure(context, isMobile: true);
@@ -107,6 +108,7 @@ class AppWrapperState extends ResponsiveState<AppWrapper> {
             context: context,
             appState: appState,
             state: state,
+            navItems: navItems,
             floattingActionsButtons: floattingActionsButtons,
             menuItems: menuItems,
             body: body,
@@ -280,6 +282,7 @@ class AppWrapperState extends ResponsiveState<AppWrapper> {
     required BuildContext context,
     required AppState appState,
     required AuthState state,
+    required List<Widget> navItems,
     required List<Widget?> floattingActionsButtons,
     required List<List<SideMenuItem>?> menuItems,
     required Widget? body,
@@ -294,12 +297,46 @@ class AppWrapperState extends ResponsiveState<AppWrapper> {
         padding: EdgeInsets.symmetric(
           vertical: $constants.insets.sm,
         ),
-        child: Row(
+        child: Column(
           children: [
-            SizedBox(
-                width: getSize(context).width * 0.1,
-                child: SideMenu(items: menuItems[appState.pageIndex] ?? [])),
-            Expanded(child: body!),
+            Expanded(
+              child: Row(
+                children: [
+                  SizedBox(
+                      width: getSize(context).width * 0.1,
+                      child:
+                          SideMenu(items: menuItems[appState.pageIndex] ?? [])),
+                  Expanded(child: body!),
+                ],
+              ),
+            ),
+            // bottom navbar for desktop
+            Material(
+              elevation: 1,
+              borderRadius: BorderRadius.circular($constants.corners.sm),
+              child: Container(
+                height: getSize(context).height * 0.1,
+                width: getSize(context).width * 0.5,
+                decoration: BoxDecoration(
+                  color: getTheme(context).surfaceContainerLow,
+                  borderRadius: BorderRadius.circular($constants.corners.sm),
+                ),
+                child: Padding(
+                  padding: EdgeInsets.symmetric(
+                    vertical: $constants.insets.xxs,
+                  ),
+                  child: Expanded(
+                      child: BottomNavigation(
+                    backgroundColor: Colors.transparent,
+                    destinations: navItems,
+                    currentPageIndex: appState.pageIndex,
+                    onTap: (index) {
+                      context.read<AppCubit>().changePageIndex(index: index);
+                    },
+                  )),
+                ),
+              ),
+            )
           ],
         ),
       ),

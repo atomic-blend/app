@@ -66,11 +66,13 @@ class BottomNavigation extends StatelessWidget {
     super.key,
     required this.destinations,
     required this.currentPageIndex,
+    this.backgroundColor,
     this.onTap,
   });
 
   final List<Widget> destinations;
   final int currentPageIndex;
+  final Color? backgroundColor;
   final Function(int)? onTap;
 
   @override
@@ -94,6 +96,13 @@ class BottomNavigation extends StatelessWidget {
       }).toList();
 
       return CupertinoTabBar(
+        backgroundColor: backgroundColor,
+        border: isDesktop(context) ? null : Border(
+          top: BorderSide(
+            color: getTheme(context).primaryContainer,
+            width: 0.5,
+          ),
+        ),
         currentIndex: currentPageIndex,
         onTap: (index) {
           // Check if the tapped item has its own onTap handler
