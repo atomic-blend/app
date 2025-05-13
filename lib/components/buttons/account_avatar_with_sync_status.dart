@@ -38,7 +38,9 @@ class AccountAvatarWithSyncStatus extends StatelessWidget {
                     color: getTheme(context).primary,
                     borderRadius: BorderRadius.circular(50),
                   ),
-                  padding: EdgeInsets.all($constants.insets.xs),
+                  padding: isDesktop(context)
+                      ? EdgeInsets.all($constants.insets.xs)
+                      : const EdgeInsets.all(3),
                   child: Center(
                       child: AutoSizeText(
                     maxLines: 1,
