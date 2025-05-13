@@ -349,15 +349,17 @@ class AppWrapperState extends ResponsiveState<AppWrapper> {
             Expanded(
               child: Row(
                 children: [
-                  Container(
-                      width: getSize(context).width * 0.12,
-                      padding: EdgeInsets.only(left: $constants.insets.xxs),
-                      child: SideMenu(
-                        paddingTop: $constants.insets.sm,
-                        items: menuItems[appState.pageIndex] ?? [],
-                        displayLabel: true,
-                      )),
-                  const VerticalDivider(),
+                  if ((menuItems[appState.pageIndex] ?? []).isNotEmpty) ...[
+                    Container(
+                        width: getSize(context).width * 0.12,
+                        padding: EdgeInsets.only(left: $constants.insets.xxs),
+                        child: SideMenu(
+                          paddingTop: $constants.insets.sm,
+                          items: menuItems[appState.pageIndex] ?? [],
+                          displayLabel: true,
+                        )),
+                    const VerticalDivider(),
+                  ],
                   Expanded(
                     child: Scaffold(
                       floatingActionButton: state.user != null

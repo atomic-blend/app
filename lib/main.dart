@@ -46,7 +46,7 @@ FutureOr<void> main() async {
     options.sendDefaultPii = true;
   }, appRunner: () async {
     WidgetsFlutterBinding.ensureInitialized();
-
+    
     await WindowManipulator.initialize();
     WindowManipulator.makeTitlebarTransparent();
     WindowManipulator.enableFullSizeContentView();

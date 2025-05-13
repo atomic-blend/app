@@ -37,7 +37,9 @@ class _HabitsState extends State<Habits> {
                 scale: 1.3,
                 child: Lottie.asset(
                   'assets/animations/getting-started.json',
-                  width: getSize(context).width * 0.7,
+                  width: isDesktop(context)
+                      ? getSize(context).width * 0.2
+                      : getSize(context).width * 0.7,
                 ),
               ),
             ),
