@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
 import 'package:app/blocs/app/app.bloc.dart';
 import 'package:app/blocs/auth/auth.bloc.dart';
 import 'package:app/blocs/device_calendar/device_calendar.bloc.dart';
@@ -46,10 +47,12 @@ FutureOr<void> main() async {
     options.sendDefaultPii = true;
   }, appRunner: () async {
     WidgetsFlutterBinding.ensureInitialized();
-    
-    await WindowManipulator.initialize();
-    WindowManipulator.makeTitlebarTransparent();
-    WindowManipulator.enableFullSizeContentView();
+
+    if (Platform.isMacOS) {
+      await WindowManipulator.initialize();
+      WindowManipulator.makeTitlebarTransparent();
+      WindowManipulator.enableFullSizeContentView();
+    }
 
     env = await EnvModel.create();
     prefs = await SharedPreferences.getInstance();
