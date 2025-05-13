@@ -106,6 +106,20 @@ platform :mac do
             sh('fvm flutter build macos --flavor prod --release -t lib/main_prod.dart --dart-define APP_ENV=prod')
         end
     end
+
+    lane :package_dmg do
+        Dir.chdir("..") do
+           sh("npm install -g appdmg")
+           sh("appdmg macos_dmg/config.json macos_dmg/AtomicTask.dmg")
+        end
+    end
+
+    lane :release_prod do
+        Dir.chdir("..") do
+           build_prod
+           package_dmg
+        end
+    end
 end
 
 platform :linux do

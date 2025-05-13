@@ -121,6 +121,22 @@ Description of what the lane does
 
 
 
+### mac package_dmg
+
+```sh
+[bundle exec] fastlane mac package_dmg
+```
+
+
+
+### mac release_prod
+
+```sh
+[bundle exec] fastlane mac release_prod
+```
+
+
+
 ----
 
 
