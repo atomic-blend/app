@@ -93,3 +93,45 @@ platform :android do
         upload_beta
     end
 end
+
+platform :mac do
+    lane :test do
+        Dir.chdir("../..") do
+            sh("fvm flutter test")
+        end
+    end
+
+    lane :build_prod do
+        Dir.chdir("..") do
+            sh('fvm flutter build macos --flavor prod --release -t lib/main_prod.dart --dart-define APP_ENV=prod')
+        end
+    end
+end
+
+platform :linux do
+    lane :test do
+        Dir.chdir("../..") do
+            sh("fvm flutter test")
+        end
+    end
+
+    lane :build_prod do
+        Dir.chdir("..") do
+            sh('fvm flutter build linux --release -t lib/main_prod.dart --dart-define APP_ENV=prod')
+        end
+    end
+end
+
+platform :web do
+    lane :test do
+        Dir.chdir("../..") do
+            sh("fvm flutter test")
+        end
+    end
+
+    lane :build_prod do
+        Dir.chdir("..") do
+            sh('fvm flutter build web  --release -t lib/main_prod.dart --dart-define APP_ENV=prod')
+        end
+    end
+end
