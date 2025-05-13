@@ -140,20 +140,36 @@ Description of what the lane does
 ----
 
 
-## linux
+## debian
 
-### linux test
+### debian test
 
 ```sh
-[bundle exec] fastlane linux test
+[bundle exec] fastlane debian test
 ```
 
 
 
-### linux build_prod
+### debian build_prod
 
 ```sh
-[bundle exec] fastlane linux build_prod
+[bundle exec] fastlane debian build_prod
+```
+
+
+
+### debian package_deb
+
+```sh
+[bundle exec] fastlane debian package_deb
+```
+
+
+
+### debian release_prod
+
+```sh
+[bundle exec] fastlane debian release_prod
 ```
 
 

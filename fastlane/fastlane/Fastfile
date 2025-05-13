@@ -109,6 +109,7 @@ platform :mac do
 
     lane :package_dmg do
         Dir.chdir("..") do
+           sh("rm -rf macos_dmg/AtomicTask.dmg")
            sh("npm install -g appdmg")
            sh("appdmg macos_dmg/config.json macos_dmg/AtomicTask.dmg")
         end
@@ -122,7 +123,7 @@ platform :mac do
     end
 end
 
-platform :linux do
+platform :debian do
     lane :test do
         Dir.chdir("../..") do
             sh("fvm flutter test")
@@ -132,6 +133,21 @@ platform :linux do
     lane :build_prod do
         Dir.chdir("..") do
             sh('fvm flutter build linux --release -t lib/main_prod.dart --dart-define APP_ENV=prod')
+        end
+    end
+
+    lane :package_deb do
+        Dir.chdir("..") do
+            sh("./debian/update_version.sh")
+            sh("fvm dart pub global activate flutter_to_debian")
+            sh("fvm flutter_to_debian")
+        end
+    end
+
+    lane :release_prod do
+        Dir.chdir("..") do
+            build_prod
+            package_deb
         end
     end
 end
@@ -146,6 +162,33 @@ platform :web do
     lane :build_prod do
         Dir.chdir("..") do
             sh('fvm flutter build web  --release -t lib/main_prod.dart --dart-define APP_ENV=prod')
+        end
+    end
+end
+
+platform :windows do
+    lane :test do
+        Dir.chdir("../..") do
+            sh("fvm flutter test")
+        end
+    end
+
+    lane :build_prod do
+        Dir.chdir("..") do
+            sh('fvm flutter build windows --release -t lib/main_prod.dart --dart-define APP_ENV=prod')
+        end
+    end
+
+    lane :package_deb do
+        Dir.chdir("..") do
+
+        end
+    end
+
+    lane :release_prod do
+        Dir.chdir("..") do
+            build_prod
+            package_deb
         end
     end
 end
