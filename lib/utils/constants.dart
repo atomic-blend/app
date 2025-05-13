@@ -124,10 +124,15 @@ class Navigation {
             ),
           ),
           actions: [
-            Padding(
-              padding: EdgeInsets.only(right: $constants.insets.sm),
-              child: const AccountAvatarWithSyncStatus(),
-            )
+            BlocBuilder<AuthBloc, AuthState>(builder: (context, authState) {
+                if (authState is LoggedIn && !isDesktop(context)) {
+                  return Padding(
+                    padding: EdgeInsets.only(right: $constants.insets.sm),
+                    child: const AccountAvatarWithSyncStatus(),
+                  );
+                }
+                return Container();
+              }),
           ],
         ),
         AppBar(
@@ -158,7 +163,7 @@ class Navigation {
                 width: $constants.insets.sm,
               ),
               BlocBuilder<AuthBloc, AuthState>(builder: (context, authState) {
-                if (authState is LoggedIn) {
+                if (authState is LoggedIn && !isDesktop(context)) {
                   return Padding(
                     padding: EdgeInsets.only(right: $constants.insets.sm),
                     child: const AccountAvatarWithSyncStatus(),
@@ -189,7 +194,7 @@ class Navigation {
                 },
               ),
               BlocBuilder<AuthBloc, AuthState>(builder: (context, authState) {
-                if (authState is LoggedIn) {
+                if (authState is LoggedIn && !isDesktop(context)) {
                   return Padding(
                     padding: EdgeInsets.only(right: $constants.insets.sm),
                     child: const AccountAvatarWithSyncStatus(),
@@ -215,7 +220,7 @@ class Navigation {
             ),
             actions: [
               BlocBuilder<AuthBloc, AuthState>(builder: (context, authState) {
-                if (authState is LoggedIn) {
+                if (authState is LoggedIn && !isDesktop(context)) {
                   return Padding(
                     padding: EdgeInsets.only(right: $constants.insets.sm),
                     child: const AccountAvatarWithSyncStatus(),

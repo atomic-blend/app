@@ -6,6 +6,7 @@ import 'package:app/components/app/bottom_navigation.dart';
 import 'package:app/components/app/side_menu.dart';
 import 'package:app/components/app/side_menu_item.dart';
 import 'package:app/components/app/side_navigation.dart';
+import 'package:app/components/buttons/account_avatar_with_sync_status.dart';
 import 'package:app/components/responsive_stateful_widget.dart';
 import 'package:app/pages/auth/login_or_register_modal.dart';
 import 'package:app/services/device_info.service.dart';
@@ -302,36 +303,57 @@ class AppWrapperState extends ResponsiveState<AppWrapper> {
       color: getTheme(context).surface,
       child: Row(
         children: [
-          Material(
-            elevation: 1,
-            borderRadius: BorderRadius.circular($constants.corners.sm),
-            child: Container(
-              decoration: BoxDecoration(
-                color: getTheme(context).surfaceContainerLow,
-                borderRadius: BorderRadius.circular($constants.corners.sm),
+          Container(
+            decoration: BoxDecoration(
+              color: getTheme(context).surfaceContainerLow,
+              borderRadius: BorderRadius.circular($constants.corners.sm),
+            ),
+            child: Padding(
+              padding: EdgeInsets.symmetric(
+                vertical: $constants.insets.xxs,
               ),
-              child: Padding(
-                padding: EdgeInsets.symmetric(
-                  vertical: $constants.insets.xxs,
-                ),
-                child: SideNavigation(
-                  backgroundColor: Colors.transparent,
-                  destinations: navItems,
-                  currentPageIndex: appState.pageIndex,
-                  onTap: (index) {
-                    context.read<AppCubit>().changePageIndex(index: index);
-                  },
-                ),
+              child: Column(
+                children: [
+                  BlocBuilder<AuthBloc, AuthState>(
+                      builder: (context, authState) {
+                    if (authState is LoggedIn && isDesktop(context)) {
+                      return Padding(
+                        padding: EdgeInsets.only(
+                            top: $constants.insets.sm,
+                            bottom: $constants.insets.sm),
+                        child: const AccountAvatarWithSyncStatus(
+                          avatarSize: 35,
+                        ),
+                      );
+                    }
+                    return Container();
+                  }),
+                  Expanded(
+                    child: SideNavigation(
+                      backgroundColor: Colors.transparent,
+                      destinations: navItems,
+                      currentPageIndex: appState.pageIndex,
+                      onTap: (index) {
+                        context.read<AppCubit>().changePageIndex(index: index);
+                      },
+                    ),
+                  ),
+                ],
               ),
             ),
           ),
           Expanded(
             child: Row(
               children: [
-                SizedBox(
-                    width: getSize(context).width * 0.06,
-                    child:
-                        SideMenu(items: menuItems[appState.pageIndex] ?? [])),
+                Container(
+                    width: getSize(context).width * 0.12,
+                    padding: EdgeInsets.only(left: $constants.insets.xxs),
+                    child: SideMenu(
+                      paddingTop: $constants.insets.sm,
+                      items: menuItems[appState.pageIndex] ?? [],
+                      displayLabel: true,
+                    )),
+                const VerticalDivider(),
                 Expanded(
                   child: Scaffold(
                     floatingActionButton: state.user != null

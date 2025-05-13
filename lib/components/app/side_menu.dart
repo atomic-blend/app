@@ -10,12 +10,14 @@ class SideMenu extends StatelessWidget {
   final List<SideMenuItem> items;
   final VoidCallback? onItemSelected;
   final double? paddingTop;
+  final bool? displayLabel;
 
   const SideMenu({
     super.key,
     required this.items,
     this.onItemSelected,
     this.paddingTop,
+    this.displayLabel,
   });
 
   @override
@@ -28,17 +30,35 @@ class SideMenu extends StatelessWidget {
         } else {
           element.isSelected = false;
         }
-        sideItems.add(Padding(
-          padding: EdgeInsets.only(bottom: $constants.insets.xs),
-          child: GestureDetector(
-            onTap: () {
-              if (onItemSelected != null) {
-                onItemSelected!();
-              }
-              element.onTap();
-            },
-            child: element,
-          ),
+        sideItems.add(Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            SizedBox(
+              width: displayLabel == true
+                  ? getSize(context).width * 0.04
+                  : double.infinity,
+              child: Padding(
+                padding: EdgeInsets.only(bottom: $constants.insets.xs),
+                child: GestureDetector(
+                  onTap: () {
+                    if (onItemSelected != null) {
+                      onItemSelected!();
+                    }
+                    element.onTap();
+                  },
+                  child: element,
+                ),
+              ),
+            ),
+            if (displayLabel == true)
+              Padding(
+                padding: EdgeInsets.only(left: $constants.insets.xs),
+                child: Text(
+                  element.title,
+                  style: getTextTheme(context).bodyMedium!.copyWith(),
+                ),
+              ),
+          ],
         ));
       });
 
