@@ -348,7 +348,7 @@ class AppWrapperState extends ResponsiveState<AppWrapper> {
               children: [
                 if ((menuItems[appState.pageIndex] ?? []).isNotEmpty) ...[
                   Container(
-                      width: getSize(context).width * 0.12,
+                      width: 150,
                       padding: EdgeInsets.only(left: $constants.insets.xxs),
                       child: SideMenu(
                         paddingTop: $constants.insets.sm,

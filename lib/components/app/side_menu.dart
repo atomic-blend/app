@@ -35,7 +35,7 @@ class SideMenu extends StatelessWidget {
           children: [
             SizedBox(
               width: displayLabel == true
-                  ? getSize(context).width * 0.04
+                  ? 50
                   : getSize(context).width * 0.135,
               child: Padding(
                 padding: EdgeInsets.only(bottom: $constants.insets.xs),
@@ -51,11 +51,13 @@ class SideMenu extends StatelessWidget {
               ),
             ),
             if (displayLabel == true)
-              Padding(
-                padding: EdgeInsets.only(left: $constants.insets.xs),
-                child: Text(
-                  element.title,
-                  style: getTextTheme(context).bodyMedium!.copyWith(),
+              Expanded(
+                child: Padding(
+                  padding: EdgeInsets.only(left: $constants.insets.xs),
+                  child: Text(
+                    element.title,
+                    style: getTextTheme(context).bodyMedium!.copyWith(),
+                  ),
                 ),
               ),
           ],
