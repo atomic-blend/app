@@ -10,6 +10,7 @@ import 'package:app/services/encryption.service.dart';
 import 'package:app/services/user.service.dart';
 import 'package:app/utils/constants.dart';
 import 'package:app/utils/shortcuts.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -150,13 +151,17 @@ class _AppWrapperState extends State<AppWrapper> {
                   backgroundColor: getTheme(context).surface,
                   appBar: appBar,
                   body: body!,
-                  bottomNavigationBar: BottomNavigation(
-                    destinations: navItems,
-                    currentPageIndex: appState.pageIndex,
-                    onTap: (index) {
-                      context.read<AppCubit>().changePageIndex(index: index);
-                    },
-                  ),
+                  bottomNavigationBar: kIsWeb
+                      ? null
+                      : BottomNavigation(
+                          destinations: navItems,
+                          currentPageIndex: appState.pageIndex,
+                          onTap: (index) {
+                            context
+                                .read<AppCubit>()
+                                .changePageIndex(index: index);
+                          },
+                        ),
                 ),
               ),
             ),
@@ -238,7 +243,8 @@ class _AppWrapperState extends State<AppWrapper> {
   }
 
   void _showLoginModal(BuildContext context) {
-    if (Platform.isMacOS || Platform.isWindows || Platform.isLinux) {
+    if (kIsWeb 
+        || Platform.isMacOS || Platform.isWindows || Platform.isLinux) {
       showDialog(
           context: context,
           barrierDismissible: false,

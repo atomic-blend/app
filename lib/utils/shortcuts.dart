@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flex_color_scheme/flex_color_scheme.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 Size getSize(BuildContext context) {
@@ -70,5 +71,5 @@ LinearGradient colorsToGradient(List<Color> colors, {double opacity = 1}) {
 }
 
 bool isDesktop(BuildContext context) {
-  return Platform.isMacOS || Platform.isWindows || Platform.isLinux;
+  return kIsWeb || Platform.isMacOS || Platform.isWindows || Platform.isLinux;
 }

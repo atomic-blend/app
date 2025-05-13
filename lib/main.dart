@@ -32,61 +32,62 @@ Map<String, dynamic>? userData;
 String? userKey;
 
 FutureOr<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-
-  env = await EnvModel.create();
-  prefs = await SharedPreferences.getInstance();
-
-  final rawUserData = prefs?.getString("user");
-  userData = rawUserData != null ? json.decode(rawUserData) : null;
-  userKey = prefs?.getString("key");
-
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
-  fcmService = FcmService();
-  await fcmService!.initFCM();
-
-  // Register background handler
-  FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
-
-  // Foreground message handler
-  FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-    Processors.processAndNotify(message);
-  });
-
-  HydratedBloc.storage = await HydratedStorage.build(
-    storageDirectory: kIsWeb
-        ? HydratedStorage.webStorageDirectory
-        : await getApplicationDocumentsDirectory(),
-  );
-
-  await LocaleSettings.useDeviceLocale();
-  Jiffy.setLocale(LocaleSettings.currentLocale.languageCode);
-
   await SentryFlutter.init((options) {
     String? dsn = const String.fromEnvironment(
       'SENTRY_DSN',
     );
 
     options.dsn = dsn;
-    options.environment = env!.env;
+    options.environment = env?.env;
 
     // Adds request headers and IP for users,
     // visit: https://docs.sentry.io/platforms/dart/data-management/data-collected/ for more info
     options.sendDefaultPii = true;
-  },
-      appRunner: () => runApp(SentryWidget(
-            child: MultiBlocProvider(
-                providers: [
-                  BlocProvider(create: (context) => AppCubit()),
-                  BlocProvider(create: (context) => AuthBloc()),
-                  BlocProvider(create: (context) => TasksBloc()),
-                  BlocProvider(create: (context) => DeviceCalendarBloc()),
-                  BlocProvider(create: (context) => HabitBloc()),
-                  BlocProvider(create: (context) => TagBloc()),
-                ],
-                child: TranslationProvider(
-                    child: const ToastificationWrapper(child: App()))),
-          )));
+  }, appRunner: () async {
+    WidgetsFlutterBinding.ensureInitialized();
+
+    env = await EnvModel.create();
+    prefs = await SharedPreferences.getInstance();
+
+    final rawUserData = prefs?.getString("user");
+    userData = rawUserData != null ? json.decode(rawUserData) : null;
+    userKey = prefs?.getString("key");
+
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
+    fcmService = FcmService();
+    await fcmService!.initFCM();
+
+    // Register background handler
+    FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
+
+    // Foreground message handler
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      Processors.processAndNotify(message);
+    });
+
+    HydratedBloc.storage = await HydratedStorage.build(
+      storageDirectory: kIsWeb
+          ? HydratedStorage.webStorageDirectory
+          : await getApplicationDocumentsDirectory(),
+    );
+
+    await LocaleSettings.useDeviceLocale();
+    Jiffy.setLocale(LocaleSettings.currentLocale.languageCode);
+
+    runApp(SentryWidget(
+      child: MultiBlocProvider(
+          providers: [
+            BlocProvider(create: (context) => AppCubit()),
+            BlocProvider(create: (context) => AuthBloc()),
+            BlocProvider(create: (context) => TasksBloc()),
+            BlocProvider(create: (context) => DeviceCalendarBloc()),
+            BlocProvider(create: (context) => HabitBloc()),
+            BlocProvider(create: (context) => TagBloc()),
+          ],
+          child: TranslationProvider(
+              child: const ToastificationWrapper(child: App()))),
+    ));
+  });
 }
