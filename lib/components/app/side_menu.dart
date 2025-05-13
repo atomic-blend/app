@@ -29,8 +29,7 @@ class SideMenu extends StatelessWidget {
           element.isSelected = false;
         }
         sideItems.add(Padding(
-          padding: EdgeInsets.only(
-              bottom: $constants.insets.xs, right: $constants.insets.xs),
+          padding: EdgeInsets.only(bottom: $constants.insets.xs),
           child: GestureDetector(
             onTap: () {
               if (onItemSelected != null) {
