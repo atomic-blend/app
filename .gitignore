@@ -160,4 +160,4 @@ app.*.symbols
 .gclient_previous_custom_vars
 .gclient_previous_sync_commits
 /fastlane/fastlane/Appfile
-/macos_dmg/AtomicTask.dmg
+/macos_dmg/AtomicTask-latest.dmg
