@@ -17,6 +17,7 @@ import 'package:app/utils/shortcuts.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:macos_window_utils/widgets/titlebar_safe_area.dart';
 
 class AppWrapper extends ResponsiveStatefulWidget {
   const AppWrapper({super.key});
@@ -299,82 +300,87 @@ class AppWrapperState extends ResponsiveState<AppWrapper> {
       title: appBarconfig?.title,
       actions: appBarconfig?.actions,
     );
-    return Container(
-      color: getTheme(context).surface,
-      child: Row(
-        children: [
-          Container(
-            decoration: BoxDecoration(
-              color: getTheme(context).surfaceContainerLow,
-              borderRadius: BorderRadius.circular($constants.corners.sm),
-            ),
-            child: Padding(
-              padding: EdgeInsets.symmetric(
-                vertical: $constants.insets.xxs,
+    return TitlebarSafeArea(
+      child: Container(
+        color: getTheme(context).surface,
+        child: Row(
+          children: [
+            Container(
+              decoration: BoxDecoration(
+                color: getTheme(context).surfaceContainerLow,
+                borderRadius: BorderRadius.circular($constants.corners.sm),
               ),
-              child: Column(
+              child: Padding(
+                padding: EdgeInsets.symmetric(
+                  vertical: $constants.insets.xxs,
+                ),
+                child: Column(
+                  children: [
+                    BlocBuilder<AuthBloc, AuthState>(
+                        builder: (context, authState) {
+                      if (authState is LoggedIn && isDesktop(context)) {
+                        return Padding(
+                          padding: EdgeInsets.only(
+                              top: $constants.insets.sm,
+                              bottom: $constants.insets.sm),
+                          child: const AccountAvatarWithSyncStatus(
+                            avatarSize: 35,
+                          ),
+                        );
+                      }
+                      return Container();
+                    }),
+                    Expanded(
+                      child: SideNavigation(
+                        backgroundColor: Colors.transparent,
+                        destinations: navItems,
+                        currentPageIndex: appState.pageIndex,
+                        onTap: (index) {
+                          context
+                              .read<AppCubit>()
+                              .changePageIndex(index: index);
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            Expanded(
+              child: Row(
                 children: [
-                  BlocBuilder<AuthBloc, AuthState>(
-                      builder: (context, authState) {
-                    if (authState is LoggedIn && isDesktop(context)) {
-                      return Padding(
-                        padding: EdgeInsets.only(
-                            top: $constants.insets.sm,
-                            bottom: $constants.insets.sm),
-                        child: const AccountAvatarWithSyncStatus(
-                          avatarSize: 35,
-                        ),
-                      );
-                    }
-                    return Container();
-                  }),
+                  Container(
+                      width: getSize(context).width * 0.12,
+                      padding: EdgeInsets.only(left: $constants.insets.xxs),
+                      child: SideMenu(
+                        paddingTop: $constants.insets.sm,
+                        items: menuItems[appState.pageIndex] ?? [],
+                        displayLabel: true,
+                      )),
+                  const VerticalDivider(),
                   Expanded(
-                    child: SideNavigation(
-                      backgroundColor: Colors.transparent,
-                      destinations: navItems,
-                      currentPageIndex: appState.pageIndex,
-                      onTap: (index) {
-                        context.read<AppCubit>().changePageIndex(index: index);
-                      },
+                    child: Scaffold(
+                      floatingActionButton: state.user != null
+                          ? floattingActionsButtons
+                              .elementAt(appState.pageIndex)
+                          : null,
+                      floatingActionButtonLocation:
+                          FloatingActionButtonLocation.endFloat,
+                      backgroundColor: getTheme(context).surface,
+                      appBar: appBar,
+                      body: Padding(
+                        padding: EdgeInsets.symmetric(
+                          vertical: $constants.insets.sm,
+                        ),
+                        child: body ?? Container(),
+                      ),
                     ),
                   ),
                 ],
               ),
             ),
-          ),
-          Expanded(
-            child: Row(
-              children: [
-                Container(
-                    width: getSize(context).width * 0.12,
-                    padding: EdgeInsets.only(left: $constants.insets.xxs),
-                    child: SideMenu(
-                      paddingTop: $constants.insets.sm,
-                      items: menuItems[appState.pageIndex] ?? [],
-                      displayLabel: true,
-                    )),
-                const VerticalDivider(),
-                Expanded(
-                  child: Scaffold(
-                    floatingActionButton: state.user != null
-                        ? floattingActionsButtons.elementAt(appState.pageIndex)
-                        : null,
-                    floatingActionButtonLocation:
-                        FloatingActionButtonLocation.endFloat,
-                    backgroundColor: getTheme(context).surface,
-                    appBar: appBar,
-                    body: Padding(
-                      padding: EdgeInsets.symmetric(
-                        vertical: $constants.insets.sm,
-                      ),
-                      child: body ?? Container(),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

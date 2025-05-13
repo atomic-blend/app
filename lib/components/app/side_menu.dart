@@ -36,7 +36,7 @@ class SideMenu extends StatelessWidget {
             SizedBox(
               width: displayLabel == true
                   ? getSize(context).width * 0.04
-                  : double.infinity,
+                  : getSize(context).width * 0.135,
               child: Padding(
                 padding: EdgeInsets.only(bottom: $constants.insets.xs),
                 child: GestureDetector(

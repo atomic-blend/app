@@ -18,6 +18,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:jiffy/jiffy.dart';
+import 'package:macos_window_utils/window_manipulator.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -45,6 +46,10 @@ FutureOr<void> main() async {
     options.sendDefaultPii = true;
   }, appRunner: () async {
     WidgetsFlutterBinding.ensureInitialized();
+
+    await WindowManipulator.initialize();
+    WindowManipulator.makeTitlebarTransparent();
+    WindowManipulator.enableFullSizeContentView();
 
     env = await EnvModel.create();
     prefs = await SharedPreferences.getInstance();
