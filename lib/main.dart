@@ -48,7 +48,7 @@ FutureOr<void> main() async {
   }, appRunner: () async {
     WidgetsFlutterBinding.ensureInitialized();
 
-    if (Platform.isMacOS) {
+    if (!kIsWeb && Platform.isMacOS) {
       await WindowManipulator.initialize();
       WindowManipulator.makeTitlebarTransparent();
       WindowManipulator.enableFullSizeContentView();
