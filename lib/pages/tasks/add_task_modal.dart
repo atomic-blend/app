@@ -80,28 +80,38 @@ class _AddTaskModalState extends State<AddTaskModal> {
                         ),
                         child: GestureDetector(
                             onTap: () async {
-                              await showModalBottomSheet(
+                              var selector = TaskDatePickerModal(
+                                onStartDateChanged: (date) {
+                                  setState(() {
+                                    _startDate = date;
+                                  });
+                                },
+                                onRemindersChanged: (newRem) {
+                                  setState(() {
+                                    _reminders = newRem;
+                                  });
+                                },
+                                onEndDateChanged: (date) {
+                                  setState(() {
+                                    _endDate = date;
+                                  });
+                                },
+                                firstDate: DateTime(2000),
+                                lastDate: DateTime(2100),
+                              );
+                              if (isDesktop(context)) {
+                                await showDialog(
                                   context: context,
-                                  isScrollControlled: true,
-                                  builder: (context) => TaskDatePickerModal(
-                                        onStartDateChanged: (date) {
-                                          setState(() {
-                                            _startDate = date;
-                                          });
-                                        },
-                                        onRemindersChanged: (newRem) {
-                                          setState(() {
-                                            _reminders = newRem;
-                                          });
-                                        },
-                                        onEndDateChanged: (date) {
-                                          setState(() {
-                                            _endDate = date;
-                                          });
-                                        },
-                                        firstDate: DateTime(2000),
-                                        lastDate: DateTime(2100),
-                                      ));
+                                  builder: (context) => Dialog(
+                                    child: selector,
+                                  ),
+                                );
+                              } else {
+                                await showModalBottomSheet(
+                                    context: context,
+                                    isScrollControlled: true,
+                                    builder: (context) => selector);
+                              }
                             },
                             child: Row(
                               children: [
