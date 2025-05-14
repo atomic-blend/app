@@ -2,6 +2,50 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## 0.7.3 - 2025-05-14
+#### Bug Fixes
+- fastfile - (41939ae) - Brandon Guigo
+- comment web release in cicd since pointy castle argon2 is not web compatible - (79f3156) - Brandon Guigo
+- github pipeline + html quotes - (6019641) - Brandon Guigo
+- html error - (1a6fd6d) - Brandon Guigo
+- linter - (a1b448c) - Brandon Guigo
+- add cicd for web build and deployment to ecs - (4d85fa1) - Brandon Guigo
+- add habit in a dialog on desktop - (eea83c3) - Brandon Guigo
+- date picker desktop ui better - (68671ce) - Brandon Guigo
+- overflow of task date picker - (2e90414) - Brandon Guigo
+- add task modal in dialog - (f757b0e) - Brandon Guigo
+- update mac os app name - (b394b24) - Brandon Guigo
+- mac os dmg generator working - (43016e2) - Brandon Guigo
+- update mac app name + add debian script to refresh release version config - (b5fb204) - Brandon Guigo
+- add mac os dmg generation - (1d88d14) - Brandon Guigo
+- add support for iPad - (800134e) - Brandon Guigo
+- configure fastlane for web linux and macos - (3c19e22) - Brandon Guigo
+- min mac os window size + side menu fixed size - (6448de0) - Brandon Guigo
+- errors for web - (9df8280) - Brandon Guigo
+- avatar text on mobile - (b18f729) - Brandon Guigo
+- mac os utils only for mac - (d4e92a1) - Brandon Guigo
+- habit image size - (c6b1c40) - Brandon Guigo
+- make mac os window transparent - (a094d10) - Brandon Guigo
+- various desktop enhancements - (a5b970d) - Brandon Guigo
+- use a double side rail in desktop - (20ddb57) - Brandon Guigo
+- add appbar - (211589e) - Brandon Guigo
+- desktop bottom nav bar - (b41c4e6) - Brandon Guigo
+- make 2 rendering logic for app_wrapper depending on desktop or mobile - (b40c8bd) - Brandon Guigo
+- web deprecations - (b143616) - Brandon Guigo
+- platform errors for web - (76f4e11) - Brandon Guigo
+- loading screen - (9407440) - Brandon Guigo
+- mnemonic key - (2b24d4c) - Brandon Guigo
+- register password screen - (0421be9) - Brandon Guigo
+- login screen - (50f4dd7) - Brandon Guigo
+- login or register step - (ebef5ae) - Brandon Guigo
+- adapt welcome screen to desktop - (f0b6baa) - Brandon Guigo
+- mac os app icon - (45ad92a) - Brandon Guigo
+- be able to run on mac OS with firebase messaging - (f99035e) - Brandon Guigo
+#### Miscellaneous Chores
+- **(release)** 0.7.2 [skip ci] - (8d42a6e) - GitHub Actions
+
+- - -
+
 ## 0.7.2 - 2025-05-12
 #### Bug Fixes
 - email validation - (b5ecdb7) - Brandon Guigo
