@@ -164,56 +164,31 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_REGION }}
 
-      - name: Update ECS service
+      - name: Download task definition
         run: |
-          aws ecs update-service \
-            --cluster prod \
-            --service app \
-            --force-new-deployment \
-            --region ${{ secrets.AWS_REGION }}
+          aws ecs describe-task-definition \
+          --task-definition prod-task \
+          --query "taskDefinition" \
+          --output json > task-definition.json
 
-          # Wait for service to stabilize
-          aws ecs wait services-stable \
-            --cluster prod \
-            --services app \
-            --region ${{ secrets.AWS_REGION }}
-
-  verify-deployment:
-    needs: deploy-to-ecs
-    runs-on: ubuntu-22.04
-    steps:
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v2
+      - name: Replace image in task definition
+        uses: aws-actions/amazon-ecs-render-task-definition@v1
+        id: render
         with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ secrets.AWS_REGION }}
+          task-definition: task-definition.json
+          container-name: task
+          image: ghcr.io/atomic-blend/app:${{ steps.get-tag.outputs.tag }}
 
-      - name: Verify deployment
-        run: |
-          # Get the latest task definition
-          TASK_DEFINITION_ARN=$(aws ecs describe-task-definition \
-            --task-definition prod \
-            --output text \
-            --query 'taskDefinition.taskDefinitionArn')
-
-          # Check if tasks are running with the latest task definition
-          RUNNING_TASK_COUNT=$(aws ecs list-tasks \
-            --cluster prod \
-            --service app \
-            --output json \
-            --query 'length(taskArns)' \
-          )
-
-          if [ "$RUNNING_TASK_COUNT" -gt 0 ]; then
-            echo "Deployment successful: $RUNNING_TASK_COUNT tasks running"
-          else
-            echo "Deployment verification failed: No tasks running"
-            exit 1
-          fi
+      - name: Deploy to ECS service
+        uses: aws-actions/amazon-ecs-deploy-task-definition@v1
+        with:
+          task-definition: ${{ steps.render.outputs.task-definition }}
+          service: prod-task
+          cluster: prod
+          wait-for-service-stability: true
 
   create-github-release:
-    needs: bump-version
+    needs: deploy-to-ecs
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
