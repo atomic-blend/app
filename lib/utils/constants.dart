@@ -32,6 +32,7 @@ class Constants {
   late final Insets insets = Insets();
   late final Palette palette = Palette();
   late final Navigation navigation = Navigation();
+  late final ScreenSize screenSize = ScreenSize();
   late final Ads ads = Ads();
 }
 
@@ -58,6 +59,14 @@ class Insets {
   late final double xl = 48;
   late final double xxl = 56;
   late final double offset = 80;
+}
+
+@immutable
+class ScreenSize {
+  final double sm = 600;
+  final double md = 900;
+  final double lg = 1200;
+  final double xl = 1536;
 }
 
 @immutable
@@ -115,10 +124,15 @@ class Navigation {
             ),
           ),
           actions: [
-            Padding(
-              padding: EdgeInsets.only(right: $constants.insets.sm),
-              child: const AccountAvatarWithSyncStatus(),
-            )
+            BlocBuilder<AuthBloc, AuthState>(builder: (context, authState) {
+              if (authState is LoggedIn && !isDesktop(context)) {
+                return Padding(
+                  padding: EdgeInsets.only(right: $constants.insets.sm),
+                  child: const AccountAvatarWithSyncStatus(),
+                );
+              }
+              return Container();
+            }),
           ],
         ),
         AppBar(
@@ -149,7 +163,7 @@ class Navigation {
                 width: $constants.insets.sm,
               ),
               BlocBuilder<AuthBloc, AuthState>(builder: (context, authState) {
-                if (authState is LoggedIn) {
+                if (authState is LoggedIn && !isDesktop(context)) {
                   return Padding(
                     padding: EdgeInsets.only(right: $constants.insets.sm),
                     child: const AccountAvatarWithSyncStatus(),
@@ -173,14 +187,25 @@ class Navigation {
               IconButton(
                 icon: const Icon(CupertinoIcons.add),
                 onPressed: () {
-                  showModalBottomSheet(
-                      isScrollControlled: true,
+                  var modal = const AddHabitModal();
+                  if (isDesktop(context)) {
+                    showDialog(
                       context: context,
-                      builder: (context) => const AddHabitModal());
+                      builder: (context) => Dialog(
+                        backgroundColor: getTheme(context).surface,
+                        child: modal,
+                      ),
+                    );
+                  } else {
+                    showModalBottomSheet(
+                        isScrollControlled: true,
+                        context: context,
+                        builder: (context) => modal);
+                  }
                 },
               ),
               BlocBuilder<AuthBloc, AuthState>(builder: (context, authState) {
-                if (authState is LoggedIn) {
+                if (authState is LoggedIn && !isDesktop(context)) {
                   return Padding(
                     padding: EdgeInsets.only(right: $constants.insets.sm),
                     child: const AccountAvatarWithSyncStatus(),
@@ -206,7 +231,7 @@ class Navigation {
             ),
             actions: [
               BlocBuilder<AuthBloc, AuthState>(builder: (context, authState) {
-                if (authState is LoggedIn) {
+                if (authState is LoggedIn && !isDesktop(context)) {
                   return Padding(
                     padding: EdgeInsets.only(right: $constants.insets.sm),
                     child: const AccountAvatarWithSyncStatus(),
@@ -346,7 +371,7 @@ class Navigation {
       ];
 
   List<Widget> bottomNavigationItems(BuildContext context) => [
-        BottomNavigationItem(
+        NavigationItem(
           key: const Key("today"),
           icon: const Icon(
             LineAwesome.home_solid,
@@ -358,7 +383,7 @@ class Navigation {
           ),
           label: context.t.tasks.title,
         ),
-        BottomNavigationItem(
+        NavigationItem(
           key: const Key("calendar"),
           icon: const Icon(
             LineAwesome.calendar,
@@ -370,7 +395,7 @@ class Navigation {
           ),
           label: context.t.calendar.title,
         ),
-        BottomNavigationItem(
+        NavigationItem(
           icon: Icon(
             LineAwesome.plus_solid,
             color: getTheme(context).primary,
@@ -381,13 +406,19 @@ class Navigation {
           ),
           label: "Add",
           onTap: (index) {
-            showModalBottomSheet(
-                isScrollControlled: true,
-                context: context,
-                builder: (context) => const AddTaskModal());
+            if (isDesktop(context)) {
+              showDialog(
+                  context: context,
+                  builder: (context) => const Dialog(child: AddTaskModal()));
+            } else {
+              showModalBottomSheet(
+                  isScrollControlled: true,
+                  context: context,
+                  builder: (context) => const AddTaskModal());
+            }
           },
         ),
-        BottomNavigationItem(
+        NavigationItem(
           key: const Key("habits"),
           icon: const Icon(
             LineAwesome.bolt_solid,
@@ -399,7 +430,7 @@ class Navigation {
           ),
           label: context.t.habits.title,
         ),
-        BottomNavigationItem(
+        NavigationItem(
           key: const Key("more"),
           icon: const Icon(
             CupertinoIcons.ellipsis_circle_fill,

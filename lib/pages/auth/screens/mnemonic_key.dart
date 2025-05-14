@@ -79,8 +79,10 @@ class _MnemonicKeyState extends State<MnemonicKey>
                   ],
                   onPlay: (controller) => controller.forward(),
                   child: Padding(
-                    padding:
-                        EdgeInsets.symmetric(horizontal: widget.widgetMode != true ? $constants.insets.md : 0),
+                    padding: EdgeInsets.symmetric(
+                        horizontal: widget.widgetMode != true
+                            ? $constants.insets.md
+                            : 0),
                     child: Form(
                       key: _formKey,
                       child: Column(
@@ -91,7 +93,9 @@ class _MnemonicKeyState extends State<MnemonicKey>
                             child: Lottie.asset(
                               'assets/animations/computer_lock.json',
                               fit: BoxFit.cover,
-                              width: getSize(context).width * 0.6,
+                              width: isDesktop(context)
+                                  ? getSize(context).width * 0.2
+                                  : getSize(context).width * 0.5,
                             ),
                           ),
                           AutoSizeText(
@@ -188,9 +192,8 @@ class _MnemonicKeyState extends State<MnemonicKey>
                   ),
                 ),
                 SizedBox(
-                  height: $constants.insets.sm,
+                  height: getSize(context).height * 0.23,
                 ),
-                const Spacer(),
                 const Divider(),
                 Animate(
                   controller: _animationController,

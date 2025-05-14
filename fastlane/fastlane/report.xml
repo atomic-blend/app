@@ -5,32 +5,12 @@
     
     
       
-      <testcase classname="fastlane.lanes" name="0: default_platform" time="0.000154">
+      <testcase classname="fastlane.lanes" name="0: default_platform" time="0.000159">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="1: Switch to android build_beta lane" time="6.0e-05">
-        
-      </testcase>
-    
-      
-      <testcase classname="fastlane.lanes" name="2: fvm flutter build appbundle --flavor prod --release -t lib/main_prod.dart --dart-define APP_ENV=prod" time="74.719996">
-        
-      </testcase>
-    
-      
-      <testcase classname="fastlane.lanes" name="3: zip -r build/app/outputs/bundle/prodRelease/native-debug-symbols.zip build/app/intermediates/merged_native_libs/prodRelease/out/lib/*" time="2.411789">
-        
-      </testcase>
-    
-      
-      <testcase classname="fastlane.lanes" name="4: Switch to android upload_beta lane" time="9.9e-05">
-        
-      </testcase>
-    
-      
-      <testcase classname="fastlane.lanes" name="5: upload_to_play_store" time="31.190049">
+      <testcase classname="fastlane.lanes" name="1: fvm flutter build macos --flavor prod --release -t lib/main_prod.dart --dart-define APP_ENV=prod" time="20.7546">
         
       </testcase>
     

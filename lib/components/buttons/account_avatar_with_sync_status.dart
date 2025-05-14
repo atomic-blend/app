@@ -2,12 +2,16 @@ import 'package:app/blocs/auth/auth.bloc.dart';
 import 'package:app/blocs/tasks/tasks.bloc.dart';
 import 'package:app/pages/account/account.dart';
 import 'package:app/services/sync.service.dart';
+import 'package:app/utils/constants.dart';
 import 'package:app/utils/shortcuts.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AccountAvatarWithSyncStatus extends StatelessWidget {
-  const AccountAvatarWithSyncStatus({super.key});
+  const AccountAvatarWithSyncStatus({super.key, this.avatarSize});
+
+  final double? avatarSize;
 
   @override
   Widget build(BuildContext context) {
@@ -28,16 +32,20 @@ class AccountAvatarWithSyncStatus extends StatelessWidget {
             child: Stack(
               children: [
                 Container(
-                  width: 25,
-                  height: 25,
+                  width: avatarSize ?? 25,
+                  height: avatarSize ?? 25,
                   decoration: BoxDecoration(
                     color: getTheme(context).primary,
                     borderRadius: BorderRadius.circular(50),
                   ),
+                  padding: isDesktop(context)
+                      ? EdgeInsets.all($constants.insets.xs)
+                      : const EdgeInsets.all(3),
                   child: Center(
-                      child: Text(
+                      child: AutoSizeText(
+                    maxLines: 1,
                     "${authState.user?.firstname?[0] ?? "A"}${authState.user?.lastname?[0] ?? "B"}",
-                    style: getTextTheme(context).labelSmall!.copyWith(
+                    style: getTextTheme(context).labelLarge!.copyWith(
                           color: Colors.white,
                           fontWeight: FontWeight.w700,
                         ),

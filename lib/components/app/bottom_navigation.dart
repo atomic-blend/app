@@ -10,8 +10,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 ///
 /// This widget wraps the Material [NavigationDestination] to provide additional
 /// functionality like an optional onTap callback for individual items.
-class BottomNavigationItem extends StatelessWidget {
-  const BottomNavigationItem({
+class NavigationItem extends StatelessWidget {
+  const NavigationItem({
     super.key,
     required this.icon,
     required this.cupertinoIcon,
@@ -19,7 +19,7 @@ class BottomNavigationItem extends StatelessWidget {
     this.selectedIcon,
     this.onTap,
     this.tooltip,
-    this.enabled = true,
+    this.enabled = true, this.body, this.color,
   });
 
   /// The icon displayed by the destination.
@@ -36,6 +36,13 @@ class BottomNavigationItem extends StatelessWidget {
 
   /// Optional tooltip for the destination.
   final String? tooltip;
+
+  /// Optional body 
+  final Widget? body;
+
+  /// Optional color
+  final Color? color;
+
 
   /// Whether this destination is interactive.
   final bool enabled;
@@ -66,11 +73,13 @@ class BottomNavigation extends StatelessWidget {
     super.key,
     required this.destinations,
     required this.currentPageIndex,
+    this.backgroundColor,
     this.onTap,
   });
 
   final List<Widget> destinations;
   final int currentPageIndex;
+  final Color? backgroundColor;
   final Function(int)? onTap;
 
   @override
@@ -79,7 +88,7 @@ class BottomNavigation extends StatelessWidget {
     if (Platform.isIOS || Platform.isMacOS) {
       // Convert destinations to BottomNavigationBarItems for Cupertino
       final cupertinoItems = destinations.map((dest) {
-        if (dest is BottomNavigationItem) {
+        if (dest is NavigationItem) {
           return BottomNavigationBarItem(
             icon: dest.cupertinoIcon,
             activeIcon: dest.selectedIcon ?? dest.cupertinoIcon,
@@ -94,13 +103,22 @@ class BottomNavigation extends StatelessWidget {
       }).toList();
 
       return CupertinoTabBar(
+        backgroundColor: backgroundColor,
+        border: isDesktop(context)
+            ? null
+            : Border(
+                top: BorderSide(
+                  color: getTheme(context).primaryContainer,
+                  width: 0.5,
+                ),
+              ),
         currentIndex: currentPageIndex,
         onTap: (index) {
           // Check if the tapped item has its own onTap handler
           if (destinations.length > index &&
-              destinations[index] is BottomNavigationItem &&
-              (destinations[index] as BottomNavigationItem).onTap != null) {
-            (destinations[index] as BottomNavigationItem).onTap!(index);
+              destinations[index] is NavigationItem &&
+              (destinations[index] as NavigationItem).onTap != null) {
+            (destinations[index] as NavigationItem).onTap!(index);
           }
           // Otherwise use the default handler
           else if (onTap != null) {
@@ -121,9 +139,9 @@ class BottomNavigation extends StatelessWidget {
       onDestinationSelected: (index) {
         // Check if the tapped item has its own onTap handler
         if (destinations.length > index &&
-            destinations[index] is BottomNavigationItem &&
-            (destinations[index] as BottomNavigationItem).onTap != null) {
-          (destinations[index] as BottomNavigationItem).onTap!(index);
+            destinations[index] is NavigationItem &&
+            (destinations[index] as NavigationItem).onTap != null) {
+          (destinations[index] as NavigationItem).onTap!(index);
         }
         // Otherwise use the default handler
         else if (onTap != null) {

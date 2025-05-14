@@ -93,3 +93,104 @@ platform :android do
         upload_beta
     end
 end
+
+platform :mac do
+    lane :test do
+        Dir.chdir("../..") do
+            sh("fvm flutter test")
+        end
+    end
+
+    lane :build_prod do
+        Dir.chdir("..") do
+            sh('fvm flutter build macos --flavor prod --release -t lib/main_prod.dart --dart-define APP_ENV=prod')
+        end
+    end
+
+    lane :package_dmg do
+        Dir.chdir("..") do
+           sh("rm -rf macos_dmg/AtomicTask-latest.dmg")
+           sh("TAG=$(git describe --abbrev=0 --tags) rm -rf macos_dmg/AtomicTask-$TAG.dmg")
+           sh("npm install -g appdmg")
+           sh("TAG=$(git describe --abbrev=0 --tags) appdmg macos_dmg/config.json macos_dmg/AtomicTask-$TAG.dmg")
+           sh("appdmg macos_dmg/config.json macos_dmg/AtomicTask-latest.dmg")
+        end
+    end
+
+    lane :release_prod do
+        Dir.chdir("..") do
+           build_prod
+           package_dmg
+        end
+    end
+end
+
+platform :debian do
+    lane :test do
+        Dir.chdir("../..") do
+            sh("fvm flutter test")
+        end
+    end
+
+    lane :build_prod do
+        Dir.chdir("..") do
+            sh('fvm flutter build linux --release -t lib/main_prod.dart --dart-define APP_ENV=prod')
+        end
+    end
+
+    lane :package_deb do
+        Dir.chdir("..") do
+            sh("./debian/update_version.sh")
+            sh("fvm dart pub global activate flutter_to_debian")
+            sh("fvm flutter_to_debian")
+        end
+    end
+
+    lane :release_prod do
+        Dir.chdir("..") do
+            build_prod
+            package_deb
+        end
+    end
+end
+
+platform :web do
+    lane :test do
+        Dir.chdir("../..") do
+            sh("fvm flutter test")
+        end
+    end
+
+    lane :build_prod do
+        Dir.chdir("..") do
+            sh('fvm flutter build web  --release -t lib/main_prod.dart --dart-define APP_ENV=prod')
+        end
+    end
+end
+
+platform :windows do
+    lane :test do
+        Dir.chdir("../..") do
+            sh("fvm flutter test")
+        end
+    end
+
+    lane :build_prod do
+        Dir.chdir("..") do
+            sh('fvm flutter build windows --release -t lib/main_prod.dart --dart-define APP_ENV=prod')
+        end
+    end
+
+    lane :package_deb do
+        Dir.chdir("..") do
+
+        end
+    end
+
+    lane :release_prod do
+        Dir.chdir("..") do
+            build_prod
+            package_deb
+        end
+    end
+end
