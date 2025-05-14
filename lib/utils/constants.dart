@@ -125,14 +125,14 @@ class Navigation {
           ),
           actions: [
             BlocBuilder<AuthBloc, AuthState>(builder: (context, authState) {
-                if (authState is LoggedIn && !isDesktop(context)) {
-                  return Padding(
-                    padding: EdgeInsets.only(right: $constants.insets.sm),
-                    child: const AccountAvatarWithSyncStatus(),
-                  );
-                }
-                return Container();
-              }),
+              if (authState is LoggedIn && !isDesktop(context)) {
+                return Padding(
+                  padding: EdgeInsets.only(right: $constants.insets.sm),
+                  child: const AccountAvatarWithSyncStatus(),
+                );
+              }
+              return Container();
+            }),
           ],
         ),
         AppBar(
@@ -187,10 +187,21 @@ class Navigation {
               IconButton(
                 icon: const Icon(CupertinoIcons.add),
                 onPressed: () {
-                  showModalBottomSheet(
-                      isScrollControlled: true,
+                  var modal = const AddHabitModal();
+                  if (isDesktop(context)) {
+                    showDialog(
                       context: context,
-                      builder: (context) => const AddHabitModal());
+                      builder: (context) => Dialog(
+                        backgroundColor: getTheme(context).surface,
+                        child: modal,
+                      ),
+                    );
+                  } else {
+                    showModalBottomSheet(
+                        isScrollControlled: true,
+                        context: context,
+                        builder: (context) => modal);
+                  }
                 },
               ),
               BlocBuilder<AuthBloc, AuthState>(builder: (context, authState) {
@@ -396,7 +407,9 @@ class Navigation {
           label: "Add",
           onTap: (index) {
             if (isDesktop(context)) {
-              showDialog(context: context, builder: (context) => Dialog(child: const AddTaskModal()));
+              showDialog(
+                  context: context,
+                  builder: (context) => Dialog(child: const AddTaskModal()));
             } else {
               showModalBottomSheet(
                   isScrollControlled: true,
