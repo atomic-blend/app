@@ -111,6 +111,107 @@ jobs:
           name: changelog
           path: CHANGELOG.md
 
+  build-docker-images:
+    needs: bump-version
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Get tag
+        id: get-tag
+        run: |
+          TAG=$(git describe --abbrev=0 --tags)
+          echo "tag=$TAG" >> $GITHUB_OUTPUT
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          file: Dockerfile-prod
+          push: true
+          tags: |
+            ghcr.io/${{ github.repository }}:${{ steps.get-tag.outputs.tag }}
+
+  deploy-to-ecs:
+    needs: build-docker-images
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Get tag
+        id: get-tag
+        run: |
+          TAG=$(git describe --abbrev=0 --tags)
+          echo "tag=$TAG" >> $GITHUB_OUTPUT
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Update ECS service
+        run: |
+          aws ecs update-service \
+            --cluster prod \
+            --service app \
+            --force-new-deployment \
+            --region ${{ secrets.AWS_REGION }}
+
+          # Wait for service to stabilize
+          aws ecs wait services-stable \
+            --cluster prod \
+            --services app \
+            --region ${{ secrets.AWS_REGION }}
+
+  verify-deployment:
+    needs: deploy-to-ecs
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Verify deployment
+        run: |
+          # Get the latest task definition
+          TASK_DEFINITION_ARN=$(aws ecs describe-task-definition \
+            --task-definition prod \
+            --output text \
+            --query 'taskDefinition.taskDefinitionArn')
+
+          # Check if tasks are running with the latest task definition
+          RUNNING_TASK_COUNT=$(aws ecs list-tasks \
+            --cluster prod \
+            --service app \
+            --output json \
+            --query 'length(taskArns)' \
+          )
+
+          if [ "$RUNNING_TASK_COUNT" -gt 0 ]; then
+            echo "Deployment successful: $RUNNING_TASK_COUNT tasks running"
+          else
+            echo "Deployment verification failed: No tasks running"
+            exit 1
+          fi
+
   create-github-release:
     needs: bump-version
     runs-on: ubuntu-latest
@@ -150,12 +251,12 @@ jobs:
           if [ -f "CHANGELOG.md" ]; then
             # First try exact match with the tag format in the file
             CHANGELOG=$(sed -n "/^## $TAG - /,/^## /p" CHANGELOG.md | sed '1d;$d')
-            
+          
             # If nothing found, try without the 'v' prefix
             if [ -z "$CHANGELOG" ]; then
               CHANGELOG=$(sed -n "/^## $CLEAN_TAG - /,/^## /p" CHANGELOG.md | sed '1d;$d')
             fi
-            
+          
             # If still nothing, look for formats like [x.y.z]
             if [ -z "$CHANGELOG" ]; then
               CHANGELOG=$(sed -n "/^## \[$CLEAN_TAG\] - /,/^## /p" CHANGELOG.md | sed '1d;$d')
@@ -176,3 +277,4 @@ jobs:
             --target ${{ github.sha }}
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+

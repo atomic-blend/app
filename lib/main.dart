@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
+
 import 'package:app/blocs/app/app.bloc.dart';
 import 'package:app/blocs/auth/auth.bloc.dart';
 import 'package:app/blocs/device_calendar/device_calendar.bloc.dart';
@@ -24,6 +25,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:toastification/toastification.dart';
+
 import 'app.dart';
 import 'firebase_options.dart';
 
@@ -65,7 +67,7 @@ FutureOr<void> main() async {
       options: DefaultFirebaseOptions.currentPlatform,
     );
     fcmService = FcmService();
-    await fcmService!.initFCM();
+    fcmService!.initFCM();
 
     // Register background handler
     FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
