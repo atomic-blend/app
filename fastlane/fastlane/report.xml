@@ -5,37 +5,12 @@
     
     
       
-      <testcase classname="fastlane.lanes" name="0: default_platform" time="0.000171">
+      <testcase classname="fastlane.lanes" name="0: default_platform" time="0.000159">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="1: Switch to mac build_prod lane" time="6.6e-05">
-        
-      </testcase>
-    
-      
-      <testcase classname="fastlane.lanes" name="2: fvm flutter build macos --flavor prod --release -t lib/main_prod.dart --dart-define APP_ENV=prod" time="20.928602">
-        
-      </testcase>
-    
-      
-      <testcase classname="fastlane.lanes" name="3: Switch to mac package_dmg lane" time="0.000127">
-        
-      </testcase>
-    
-      
-      <testcase classname="fastlane.lanes" name="4: rm -rf macos_dmg/AtomicTask.dmg" time="0.00681">
-        
-      </testcase>
-    
-      
-      <testcase classname="fastlane.lanes" name="5: npm install -g appdmg" time="1.379916">
-        
-      </testcase>
-    
-      
-      <testcase classname="fastlane.lanes" name="6: appdmg macos_dmg/config.json macos_dmg/AtomicTask.dmg" time="18.371335">
+      <testcase classname="fastlane.lanes" name="1: fvm flutter build macos --flavor prod --release -t lib/main_prod.dart --dart-define APP_ENV=prod" time="20.7546">
         
       </testcase>
     

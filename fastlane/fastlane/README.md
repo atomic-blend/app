@@ -197,6 +197,43 @@ Description of what the lane does
 
 ----
 
+
+## windows
+
+### windows test
+
+```sh
+[bundle exec] fastlane windows test
+```
+
+
+
+### windows build_prod
+
+```sh
+[bundle exec] fastlane windows build_prod
+```
+
+
+
+### windows package_deb
+
+```sh
+[bundle exec] fastlane windows package_deb
+```
+
+
+
+### windows release_prod
+
+```sh
+[bundle exec] fastlane windows release_prod
+```
+
+
+
+----
+
 This README.md is auto-generated and will be re-generated every time [_fastlane_](https://fastlane.tools) is run.
 
 More information about _fastlane_ can be found on [fastlane.tools](https://fastlane.tools).

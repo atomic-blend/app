@@ -170,6 +170,7 @@
             "description": "Description",
             "due_date": "Date d'échéance",
             "start_date": "Date de début",
+            "dates": "Dates",
             "end_date": "Date de fin",
             "cancel": "Annuler",
             "save": "Enregistrer",

@@ -914,6 +914,7 @@ class _TranslationsTasksAddTaskModalFr implements TranslationsTasksAddTaskModalE
 	@override String get description => 'Description';
 	@override String get due_date => 'Date d\'échéance';
 	@override String get start_date => 'Date de début';
+	@override String get dates => 'Dates';
 	@override String get end_date => 'Date de fin';
 	@override String get cancel => 'Annuler';
 	@override String get save => 'Enregistrer';
@@ -1292,6 +1293,7 @@ extension on TranslationsFr {
 			case 'tasks.add_task_modal.description': return 'Description';
 			case 'tasks.add_task_modal.due_date': return 'Date d\'échéance';
 			case 'tasks.add_task_modal.start_date': return 'Date de début';
+			case 'tasks.add_task_modal.dates': return 'Dates';
 			case 'tasks.add_task_modal.end_date': return 'Date de fin';
 			case 'tasks.add_task_modal.cancel': return 'Annuler';
 			case 'tasks.add_task_modal.save': return 'Enregistrer';

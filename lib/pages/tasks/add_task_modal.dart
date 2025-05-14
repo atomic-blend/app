@@ -1,9 +1,9 @@
 import 'package:app/blocs/auth/auth.bloc.dart';
 import 'package:app/blocs/tasks/tasks.bloc.dart';
 import 'package:app/components/forms/app_text_form_field.dart';
+import 'package:app/components/forms/task_date_picker_modal/task_date_picker_modal.dart';
 import 'package:app/entities/tasks/tasks.entity.dart';
 import 'package:app/i18n/strings.g.dart';
-import 'package:app/components/forms/task_date_picker_modal/task_date_picker_modal.dart';
 import 'package:app/utils/constants.dart';
 import 'package:app/utils/exntensions/date_time_extension.dart';
 import 'package:app/utils/shortcuts.dart';
@@ -30,15 +30,17 @@ class _AddTaskModalState extends State<AddTaskModal> {
   Widget build(BuildContext context) {
     return BlocBuilder<AuthBloc, AuthState>(builder: (context, authState) {
       return Container(
-        width: double.infinity,
-        padding: EdgeInsets.fromLTRB(0, 0, 0,
-            MediaQuery.viewInsetsOf(context).bottom + $constants.insets.xs),
+        width:
+            isDesktop(context) ? getSize(context).width * 0.7 : double.infinity,
+        padding: EdgeInsets.fromLTRB(
+          isDesktop(context) ? $constants.insets.xxs : 0,
+          isDesktop(context) ? $constants.insets.xxs : 0,
+          isDesktop(context) ? $constants.insets.xxs : 0,
+          MediaQuery.viewInsetsOf(context).bottom + $constants.insets.xs,
+        ),
         decoration: BoxDecoration(
           color: Theme.of(context).scaffoldBackgroundColor,
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular($constants.corners.xs),
-            topRight: Radius.circular($constants.corners.xs),
-          ),
+          borderRadius: BorderRadius.circular($constants.corners.md),
         ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -55,7 +57,7 @@ class _AddTaskModalState extends State<AddTaskModal> {
               controller: _descriptionController,
               hintText: context.t.tasks.add_task_modal.description,
               autofocus: true,
-              height: 20,
+              height: isDesktop(context) ? 50 : 20,
             ),
             Padding(
               padding:
@@ -72,7 +74,7 @@ class _AddTaskModalState extends State<AddTaskModal> {
                         decoration: BoxDecoration(
                           color: _endDate != null
                               ? getTheme(context).primaryContainer
-                              : null,
+                              : getTheme(context).surfaceContainer,
                           borderRadius:
                               BorderRadius.circular($constants.corners.full),
                         ),
@@ -107,12 +109,15 @@ class _AddTaskModalState extends State<AddTaskModal> {
                                     color: _endDate != null
                                         ? getTheme(context).primary
                                         : null),
-                                if (_endDate != null)
+                                if (_endDate != null || isDesktop(context))
                                   Padding(
                                     padding: EdgeInsets.only(
                                         left: $constants.insets.xxs),
                                     child: Text(
-                                      _endDate!.formatDueDate(context),
+                                      _endDate != null
+                                          ? _endDate!.formatDueDate(context)
+                                          : context
+                                              .t.tasks.add_task_modal.dates,
                                       style: getTextTheme(context)
                                           .bodySmall!
                                           .copyWith(

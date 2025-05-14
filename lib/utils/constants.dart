@@ -395,10 +395,14 @@ class Navigation {
           ),
           label: "Add",
           onTap: (index) {
-            showModalBottomSheet(
-                isScrollControlled: true,
-                context: context,
-                builder: (context) => const AddTaskModal());
+            if (isDesktop(context)) {
+              showDialog(context: context, builder: (context) => Dialog(child: const AddTaskModal()));
+            } else {
+              showModalBottomSheet(
+                  isScrollControlled: true,
+                  context: context,
+                  builder: (context) => const AddTaskModal());
+            }
           },
         ),
         NavigationItem(
