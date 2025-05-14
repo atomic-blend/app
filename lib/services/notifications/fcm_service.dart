@@ -12,12 +12,10 @@ class FcmService {
       announcement: false,
       badge: true,
       carPlay: false,
-      criticalAlert: true,
+      criticalAlert: false,
       provisional: false,
       sound: true,
     );
-
-    
 
     // Initialize local notifications
     const AndroidInitializationSettings androidInitSettings =
@@ -30,12 +28,13 @@ class FcmService {
       requestBadgePermission: true,
       requestSoundPermission: true,
       requestProvisionalPermission: false,
-      requestCriticalPermission: true,
+      requestCriticalPermission: false,
     );
 
     const InitializationSettings initSettings = InitializationSettings(
       android: androidInitSettings,
       iOS: iosInitSettings,
+      macOS: iosInitSettings,
     );
 
     await localNotificationsPlugin.initialize(initSettings);

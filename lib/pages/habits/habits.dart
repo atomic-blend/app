@@ -25,6 +25,7 @@ class Habits extends StatefulWidget {
 
 class _HabitsState extends State<Habits> {
   int? mode = 0;
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<HabitBloc, HabitState>(builder: (context, habitState) {
@@ -37,7 +38,9 @@ class _HabitsState extends State<Habits> {
                 scale: 1.3,
                 child: Lottie.asset(
                   'assets/animations/getting-started.json',
-                  width: getSize(context).width * 0.7,
+                  width: isDesktop(context)
+                      ? getSize(context).width * 0.2
+                      : getSize(context).width * 0.7,
                 ),
               ),
             ),
@@ -115,13 +118,20 @@ class _HabitsState extends State<Habits> {
                       ),
                       GestureDetector(
                         onTap: () {
-                          showModalBottomSheet(
-                              context: context,
-                              isScrollControlled: true,
-                              builder: (context) => ViewOrEditHabitModal(
-                                    habit: habits[index],
-                                    isEdit: true,
-                                  ));
+                          var selector = ViewOrEditHabitModal(
+                            habit: habits[index],
+                            isEdit: true,
+                          );
+                          if (isDesktop(context)) {
+                            showDialog(
+                                context: context,
+                                builder: (context) => selector);
+                          } else {
+                            showModalBottomSheet(
+                                context: context,
+                                isScrollControlled: true,
+                                builder: (context) => selector);
+                          }
                         },
                         child: Container(
                           height: double.infinity,
@@ -140,12 +150,19 @@ class _HabitsState extends State<Habits> {
                     ]),
                 child: GestureDetector(
                   onTap: () {
-                    showModalBottomSheet(
-                        context: context,
-                        isScrollControlled: true,
-                        builder: (context) => ViewOrEditHabitModal(
-                              habit: habits[index],
-                            ));
+                    var selector = ViewOrEditHabitModal(
+                      habit: habits[index],
+                      isEdit: true,
+                    );
+                    if (isDesktop(context)) {
+                      showDialog(
+                          context: context, builder: (context) => selector);
+                    } else {
+                      showModalBottomSheet(
+                          context: context,
+                          isScrollControlled: true,
+                          builder: (context) => selector);
+                    }
                   },
                   child: Container(
                     decoration: BoxDecoration(

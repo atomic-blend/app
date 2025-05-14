@@ -1,0 +1,17 @@
+flutter_app:
+  command: atomic-task
+  arch: x64
+  parent: /usr/local/lib
+  nonInteractive: false
+
+control:
+  Package: atomic-task
+  Version: 0.7.2
+  Architecture: amd64
+  Priority: optional
+  Depends:
+  Maintainer: Atomic Blend
+  Description: End-to-end encrypted todo list & habits
+
+options:
+  exec_out_dir: debian/packages

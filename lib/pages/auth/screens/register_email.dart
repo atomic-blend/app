@@ -84,7 +84,9 @@ class _RegisterEmailState extends State<RegisterEmail>
                           child: Image.asset(
                             'assets/images/authentication.png',
                             fit: BoxFit.cover,
-                            width: getSize(context).width * 0.6,
+                            width: isDesktop(context)
+                                ? getSize(context).width * 0.2
+                                : getSize(context).width * 0.5,
                           ),
                         ),
                         AutoSizeText(

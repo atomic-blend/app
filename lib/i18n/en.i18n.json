@@ -170,6 +170,7 @@
             "task_title": "What do you need to do?",
             "description": "Description",
             "due_date": "Due Date",
+            "dates": "Dates",
             "start_date": "Start Date",
             "end_date": "End Date",
             "cancel": "Cancel",

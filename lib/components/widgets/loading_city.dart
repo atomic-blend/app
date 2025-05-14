@@ -8,13 +8,14 @@ class LoadingAnimated extends StatelessWidget {
   final double? imageWidth;
   final String? title;
   final String? animationPath;
-  const LoadingAnimated({super.key, this.imageWidth, this.title, this.animationPath});
+  const LoadingAnimated(
+      {super.key, this.imageWidth, this.title, this.animationPath});
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       width: double.infinity,
-      height: getSize(context).height * 0.92,
+      height: isDesktop(context) ? null : getSize(context).height * 0.92,
       child: Padding(
         padding: EdgeInsets.symmetric(vertical: getSize(context).height * 0.15),
         child: Column(

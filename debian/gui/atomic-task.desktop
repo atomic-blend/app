@@ -1,0 +1,9 @@
+[Desktop Entry]
+Version=0.7.2
+Name=Atomic Task
+GenericName=Atomic Task
+Comment=End-to-end encrypted task & habit manager
+Terminal=false
+Type=Application
+Categories=Utility
+Keywords=Flutter;todo;calendar;task;habit;manager;
