@@ -109,9 +109,11 @@ platform :mac do
 
     lane :package_dmg do
         Dir.chdir("..") do
-           sh("rm -rf macos_dmg/AtomicTask.dmg")
+           sh("rm -rf macos_dmg/AtomicTask-latest.dmg")
+           sh("TAG=$(git describe --abbrev=0 --tags) rm -rf macos_dmg/AtomicTask-$TAG.dmg")
            sh("npm install -g appdmg")
-           sh("appdmg macos_dmg/config.json macos_dmg/AtomicTask.dmg")
+           sh("TAG=$(git describe --abbrev=0 --tags) appdmg macos_dmg/config.json macos_dmg/AtomicTask-$TAG.dmg")
+           sh("appdmg macos_dmg/config.json macos_dmg/AtomicTask-latest.dmg")
         end
     end
 
