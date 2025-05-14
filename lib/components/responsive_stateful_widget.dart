@@ -2,7 +2,7 @@ import 'package:app/utils/shortcuts.dart';
 import 'package:flutter/material.dart';
 
 abstract class ResponsiveStatefulWidget extends StatefulWidget {
-  const ResponsiveStatefulWidget({Key? key}) : super(key: key);
+  const ResponsiveStatefulWidget({super.key});
 
   @override
   ResponsiveState createState();

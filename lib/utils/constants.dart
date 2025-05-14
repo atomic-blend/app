@@ -409,7 +409,7 @@ class Navigation {
             if (isDesktop(context)) {
               showDialog(
                   context: context,
-                  builder: (context) => Dialog(child: const AddTaskModal()));
+                  builder: (context) => const Dialog(child: AddTaskModal()));
             } else {
               showModalBottomSheet(
                   isScrollControlled: true,
