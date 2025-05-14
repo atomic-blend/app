@@ -33,7 +33,7 @@ WORKDIR $APP
 RUN flutter clean
 RUN flutter pub get
 RUN flutter pub run build_runner build --delete-conflicting-outputs
-RUN flutter build web --release --release -t lib/main_prod.dart --dart-define APP_ENV=prod
+RUN flutter build web --release -t lib/main_prod.dart --dart-define APP_ENV=prod
 
 # once heare the app will be compiled and ready to deploy
 
