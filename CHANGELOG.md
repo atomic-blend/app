@@ -2,6 +2,14 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## 0.7.5 - 2025-05-15
+#### Bug Fixes
+- support mac designed for iPad - (0323455) - Brandon Guigo
+#### Miscellaneous Chores
+- **(release)** 0.7.4 [skip ci] - (dbdac0c) - GitHub Actions
+
+- - -
+
 ## 0.7.4 - 2025-05-15
 #### Bug Fixes
 - add safe area - (b54b310) - Brandon Guigo
