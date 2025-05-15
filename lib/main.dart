@@ -64,19 +64,22 @@ FutureOr<void> main() async {
     userData = rawUserData != null ? json.decode(rawUserData) : null;
     userKey = prefs?.getString("key");
 
-    await Firebase.initializeApp(
-      options: DefaultFirebaseOptions.currentPlatform,
-    );
-    fcmService = FcmService();
-    fcmService!.initFCM();
+    if (!Platform.isLinux) {
+      await Firebase.initializeApp(
+        options: DefaultFirebaseOptions.currentPlatform,
+      );
+      fcmService = FcmService();
+      fcmService!.initFCM();
 
-    // Register background handler
-    FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
 
-    // Foreground message handler
-    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-      Processors.processAndNotify(message);
-    });
+      // Register background handler
+      FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
+
+      // Foreground message handler
+      FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+        Processors.processAndNotify(message);
+      });
+    }
 
     HydratedBloc.storage = await HydratedStorage.build(
       storageDirectory: kIsWeb
