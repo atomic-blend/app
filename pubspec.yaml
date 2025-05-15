@@ -88,6 +88,7 @@ dependencies:
   flex_color_picker: ^3.7.0
   sentry_flutter: ^8.14.2
   macos_window_utils: ^1.7.1
+  sizer: ^3.0.0
 dependency_overrides:
   flutter_secure_storage: 9.2.4
   timezone: 0.10.0

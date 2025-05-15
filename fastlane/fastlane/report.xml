@@ -10,7 +10,12 @@
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="1: fvm flutter build macos --flavor prod --release -t lib/main_prod.dart --dart-define APP_ENV=prod" time="20.7546">
+      <testcase classname="fastlane.lanes" name="1: Switch to ios build_beta lane" time="0.000104">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="2: fvm flutter build ipa --flavor prod --release -t lib/main_prod.dart --release --dart-define APP_ENV=prod --dart-define APPLE_REVENUE_CAT_API_KEY=appl_yCuFMftyWhvKRDUXvyfaAUIMmiI" time="26.455672">
         
       </testcase>
     
