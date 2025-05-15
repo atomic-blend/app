@@ -2,6 +2,15 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## 0.7.6 - 2025-05-15
+#### Bug Fixes
+- add support for Windows - (be25472) - Brandon Guigo
+- disable firebase messaging for linux app since not compatible - (46cec8c) - brandonguigo
+#### Miscellaneous Chores
+- **(release)** 0.7.5 [skip ci] - (2cfd160) - GitHub Actions
+
+- - -
+
 ## 0.7.5 - 2025-05-15
 #### Bug Fixes
 - support mac designed for iPad - (0323455) - Brandon Guigo
