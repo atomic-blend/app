@@ -151,14 +151,16 @@ class TaskItem extends StatelessWidget {
           padding: EdgeInsets.symmetric(
             horizontal: $constants.insets.xs,
           ),
-          decoration: BoxDecoration(
-            color: task.endDate?.isBefore(DateTime.now()) == true
-                ? getTheme(context).error.withValues(alpha: 0.2)
-                : null,
-            borderRadius: BorderRadius.circular(
-              $constants.corners.sm,
-            ),
-          ),
+          decoration: collapsed == true
+              ? null
+              : BoxDecoration(
+                  color: task.endDate?.isBefore(DateTime.now()) == true
+                      ? getTheme(context).error.withValues(alpha: 0.2)
+                      : null,
+                  borderRadius: BorderRadius.circular(
+                    $constants.corners.sm,
+                  ),
+                ),
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -182,14 +184,16 @@ class TaskItem extends StatelessWidget {
           padding: EdgeInsets.symmetric(
             horizontal: $constants.insets.xs,
           ),
-          decoration: BoxDecoration(
-            color: task.endDate?.isBefore(DateTime.now()) == true
-                ? getTheme(context).error.withValues(alpha: 0.2)
-                : null,
-            borderRadius: BorderRadius.circular(
-              $constants.corners.sm,
-            ),
-          ),
+          decoration: collapsed == true
+              ? null
+              : BoxDecoration(
+                  color: task.endDate?.isBefore(DateTime.now()) == true
+                      ? getTheme(context).error.withValues(alpha: 0.2)
+                      : null,
+                  borderRadius: BorderRadius.circular(
+                    $constants.corners.sm,
+                  ),
+                ),
           child: Column(
             children: [
               Row(
@@ -216,33 +220,45 @@ class TaskItem extends StatelessWidget {
       if (task.startDate != null && task.endDate != null)
         Container(
           width: getSize(context).width * 0.3,
-          padding: EdgeInsets.symmetric(
-            horizontal: $constants.insets.xs,
-          ),
-          decoration: BoxDecoration(
-            color: task.endDate?.isBefore(DateTime.now()) == true
-                ? getTheme(context).error.withValues(alpha: 0.2)
-                : null,
-            borderRadius: BorderRadius.circular(
-              $constants.corners.sm,
-            ),
-          ),
+          padding: collapsed == true
+              ? null
+              : EdgeInsets.symmetric(
+                  horizontal: $constants.insets.xs,
+                ),
+          decoration: collapsed == true
+              ? null
+              : BoxDecoration(
+                  color: task.endDate?.isBefore(DateTime.now()) == true
+                      ? getTheme(context).error.withValues(alpha: 0.2)
+                      : null,
+                  borderRadius: BorderRadius.circular(
+                    $constants.corners.sm,
+                  ),
+                ),
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              const Icon(
-                CupertinoIcons.alarm,
-                size: 16,
-              ),
-              SizedBox(
-                width: $constants.insets.xs,
-              ),
+              if (collapsed != true) ...[
+                const Icon(
+                  CupertinoIcons.alarm,
+                  size: 16,
+                ),
+                SizedBox(
+                  width: $constants.insets.xs,
+                ),
+              ],
               Flexible(
                 child: Text(
                   task.endDate?.isBefore(DateTime.now()) == true
                       ? "${Jiffy.parseFromDateTime(task.startDate!).toLocal().MMMMd}, ${Jiffy.parseFromDateTime(task.startDate!).toLocal().Hm} - ${Jiffy.parseFromDateTime(task.endDate!).toLocal().Hm}"
                       : "${Jiffy.parseFromDateTime(task.startDate!).toLocal().Hm} - ${Jiffy.parseFromDateTime(task.endDate!).toLocal().Hm}",
                   softWrap: true,
+                  style: collapsed == true
+                      ? getTextTheme(context).bodySmall!.copyWith(
+                            color: getTheme(context).error,
+                            fontWeight: FontWeight.bold,
+                          ),
+                      : null,
                 ),
               ),
             ],
