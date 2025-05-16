@@ -92,6 +92,7 @@ class TranslationsFr implements Translations {
 	@override late final _TranslationsNotificationsFr notifications = _TranslationsNotificationsFr._(_root);
 	@override late final _TranslationsTimeUnitsFr time_units = _TranslationsTimeUnitsFr._(_root);
 	@override late final _TranslationsNameGeneratorFr name_generator = _TranslationsNameGeneratorFr._(_root);
+	@override late final _TranslationsEisenhowerFr eisenhower = _TranslationsEisenhowerFr._(_root);
 }
 
 // Path: navigation
@@ -699,6 +700,17 @@ class _TranslationsNameGeneratorFr implements TranslationsNameGeneratorEn {
 		'exubérant',
 		'raffiné',
 	];
+}
+
+// Path: eisenhower
+class _TranslationsEisenhowerFr implements TranslationsEisenhowerEn {
+	_TranslationsEisenhowerFr._(this._root);
+
+	final TranslationsFr _root; // ignore: unused_field
+
+	// Translations
+	@override String get small_title => 'Eisenhower';
+	@override String get title => 'Matrice d\'Eisenhower';
 }
 
 // Path: auth.not_logged_in
@@ -1705,6 +1717,8 @@ extension on TranslationsFr {
 			case 'name_generator.adjectives.96': return 'rose';
 			case 'name_generator.adjectives.97': return 'exubérant';
 			case 'name_generator.adjectives.98': return 'raffiné';
+			case 'eisenhower.small_title': return 'Eisenhower';
+			case 'eisenhower.title': return 'Matrice d\'Eisenhower';
 			default: return null;
 		}
 	}

@@ -673,5 +673,9 @@
       "spunky",
       "fancy"
     ]
+  },
+  "eisenhower": {
+    "small_title": "Eisenhower",
+    "title": "Eisenhower Matrix"
   }
 }

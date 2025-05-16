@@ -78,3 +78,7 @@ bool isDesktop(BuildContext context) {
       Platform.isLinux ||
       Device.screenType == ScreenType.tablet;
 }
+
+bool isApple(BuildContext context) {
+  return !kIsWeb && (Platform.isIOS || Platform.isMacOS);
+}
