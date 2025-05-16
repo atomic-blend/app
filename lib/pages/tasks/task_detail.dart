@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:app/blocs/tag/tag.bloc.dart';
 import 'package:app/blocs/tasks/tasks.bloc.dart';
 import 'package:app/components/buttons/icon_text_pill.dart';
@@ -16,6 +18,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_popup/flutter_popup.dart';
 import 'package:jiffy/jiffy.dart';
+import 'package:macos_window_utils/macos_window_utils.dart';
 
 import '../../components/forms/ab_checkbox.dart';
 
@@ -49,7 +52,13 @@ class _TaskDetailState extends State<TaskDetail> {
 
   @override
   Widget build(BuildContext context) {
-    print(widget.task.priority);
+    if (isDesktop(context) && Platform.isMacOS) {
+      return TitlebarSafeArea(child: buildBody(context));
+    }
+    return buildBody(context);
+  }
+
+  Widget buildBody(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(

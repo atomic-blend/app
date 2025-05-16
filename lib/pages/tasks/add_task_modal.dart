@@ -223,7 +223,7 @@ class _AddTaskModalState extends State<AddTaskModal> {
                                   child: Text(
                                     _endDate != null
                                         ? _endDate!.formatDueDate(context)
-                                        : context.t.tasks.add_task_modal.dates,
+                                        : context.t.tasks.priority,
                                     style: getTextTheme(context)
                                         .bodySmall!
                                         .copyWith(
