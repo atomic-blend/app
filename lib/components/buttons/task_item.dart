@@ -106,22 +106,16 @@ class TaskItem extends StatelessWidget {
                 if (task.priority != null && task.priority! > 0) ...[
                   Container(
                     padding: EdgeInsets.only(left: $constants.insets.sm),
-                    child: Row(
-                      children: List.generate(
-                        task.priority!,
-                        (index) => SizedBox(
-                          width: 6,
-                          child: Icon(
-                            CupertinoIcons.exclamationmark,
-                            color: task.priority == 1
-                                ? Colors.blueAccent
-                                : task.priority == 2
-                                    ? Colors.deepOrangeAccent
-                                    : Colors.red,
-                            size: 16,
-                          ),
-                        ),
-                      ),
+                    child: Icon(
+                      CupertinoIcons.flag,
+                      size: 16,
+                      color: task.priority == null || task.priority == 0
+                          ? Colors.grey
+                          : task.priority == 1
+                              ? Colors.blueAccent
+                              : task.priority == 2
+                                  ? Colors.deepOrangeAccent
+                                  : Colors.red,
                     ),
                   ),
                   SizedBox(

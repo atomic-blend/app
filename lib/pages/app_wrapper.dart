@@ -198,7 +198,7 @@ class AppWrapperState extends ResponsiveState<AppWrapper> {
               appBar: appBar,
               body: body!,
               bottomNavigationBar: BottomNavigation(
-                destinations: navItems,
+                destinations: navItems.take(5).toList(),
                 currentPageIndex: appState.pageIndex,
                 onTap: (index) {
                   context.read<AppCubit>().changePageIndex(index: index);
