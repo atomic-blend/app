@@ -31,6 +31,7 @@ class TaskEntity with _$TaskEntity {
     'reminders',
     'startDate',
     'endDate',
+    'priority',
     'completed'
   ];
 
