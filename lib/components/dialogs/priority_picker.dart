@@ -69,12 +69,15 @@ class PriorityPicker extends StatelessWidget {
                                   width: 24,
                                   child: index == 0
                                       ? const Icon(
-                                          CupertinoIcons.flag,
+                                          CupertinoIcons.flag_fill,
                                           color: Colors.grey,
                                         )
                                       : SizedBox(
                                           width: 6,
-                                          child: Icon(CupertinoIcons.flag,
+                                          child: Icon(
+                                              index == 0
+                                                  ? CupertinoIcons.flag_fill
+                                                  : CupertinoIcons.flag,
                                               color: index == 0
                                                   ? Colors.grey
                                                   : index == 1

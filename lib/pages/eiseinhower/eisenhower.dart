@@ -1,9 +1,12 @@
+import 'package:app/blocs/tasks/tasks.bloc.dart';
+import 'package:app/components/buttons/task_item.dart';
 import 'package:app/entities/tasks/tasks.entity.dart';
 import 'package:app/i18n/strings.g.dart';
 import 'package:app/utils/constants.dart';
 import 'package:app/utils/shortcuts.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class EisenhowerMatrix extends StatelessWidget {
   const EisenhowerMatrix({super.key});
@@ -20,70 +23,82 @@ class EisenhowerMatrix extends StatelessWidget {
         ),
       ),
       body: SafeArea(
-        child: Container(
-          padding: EdgeInsets.symmetric(
-            horizontal: $constants.insets.xs,
-          ),
-          child: Column(
-            spacing: $constants.insets.xs,
-            children: [
-              Expanded(
-                child: Row(
-                  spacing: $constants.insets.xs,
-                  children: [
-                    buildEisenhowerCard(
-                        context: context,
-                        priority: 3,
-                        title: "Urgent & Important",
-                        filter: (task) {
-                          return task.where((element) => element.priority == 3);
-                        }),
-                    buildEisenhowerCard(
-                        context: context,
-                        priority: 2,
-                        title: "Not Urgent & Important",
-                        filter: (task) {
-                          return task.where((element) => element.priority == 2);
-                        }),
-                  ],
+        child:
+            BlocBuilder<TasksBloc, TasksState>(builder: (context, taskState) {
+          return Container(
+            padding: EdgeInsets.symmetric(
+              horizontal: $constants.insets.xs,
+            ),
+            child: Column(
+              spacing: $constants.insets.xs,
+              children: [
+                Expanded(
+                  child: Row(
+                    spacing: $constants.insets.xs,
+                    children: [
+                      buildEisenhowerCard(
+                          context: context,
+                          tasks: taskState.tasks ?? [],
+                          priority: 3,
+                          title: "Urgent & Important",
+                          filter: (task) {
+                            return task
+                                .where((element) => element.priority == 3);
+                          }),
+                      buildEisenhowerCard(
+                          context: context,
+                          tasks: taskState.tasks ?? [],
+                          priority: 2,
+                          title: "Not Urgent & Important",
+                          filter: (task) {
+                            return task
+                                .where((element) => element.priority == 2);
+                          }),
+                    ],
+                  ),
                 ),
-              ),
-              Expanded(
-                child: Row(
-                  spacing: $constants.insets.xs,
-                  children: [
-                    buildEisenhowerCard(
-                        context: context,
-                        priority: 1,
-                        title: "Urgent & Unimportant",
-                        filter: (task) {
-                          //TODO: add filter for overdue tasks
-                          return task.where((element) => element.priority == 1);
-                        }),
-                    buildEisenhowerCard(
-                        context: context,
-                        priority: null,
-                        title: "Not Urgent & Unimportant",
-                        filter: (task) {
-                          return task
-                              .where((element) => element.priority == null);
-                        }),
-                  ],
-                ),
-              )
-            ],
-          ),
-        ),
+                Expanded(
+                  child: Row(
+                    spacing: $constants.insets.xs,
+                    children: [
+                      buildEisenhowerCard(
+                          context: context,
+                          tasks: taskState.tasks ?? [],
+                          priority: 1,
+                          title: "Urgent & Unimportant",
+                          filter: (task) {
+                            //TODO: add filter for overdue tasks
+                            return task
+                                .where((element) => element.priority == 1);
+                          }),
+                      buildEisenhowerCard(
+                          context: context,
+                          tasks: taskState.tasks ?? [],
+                          priority: null,
+                          title: "Not Urgent & Unimportant",
+                          filter: (task) {
+                            return task
+                                .where((element) => element.priority == null);
+                          }),
+                    ],
+                  ),
+                )
+              ],
+            ),
+          );
+        }),
       ),
     );
   }
 
   Widget buildEisenhowerCard({
     required BuildContext context,
+    required List<TaskEntity> tasks,
     required String title,
     required int? priority,
     required Function(List<TaskEntity>) filter,
   }) {
+    final filteredTasks = filter(tasks).toList();
     return Expanded(
       child: Container(
         padding: EdgeInsets.all($constants.insets.xs),
@@ -130,6 +145,23 @@ class EisenhowerMatrix extends StatelessWidget {
                   ),
                 ),
               ],
+            ),
+            SizedBox(
+              height: $constants.insets.xs,
+            ),
+            Expanded(
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    ...filteredTasks.map((task) {
+                      return TaskItem(
+                        task: task,
+                        collapsed: true,
+                      );
+                    }).toList(),
+                  ],
+                ),
+              ),
             )
           ],
         ),

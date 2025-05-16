@@ -171,7 +171,9 @@ class _TaskDetailState extends State<TaskDetail> {
                         child: SizedBox(
                           width: 20,
                           child: Icon(
-                            CupertinoIcons.flag,
+                            _priority == null
+                                ? CupertinoIcons.flag
+                                : CupertinoIcons.flag_fill,
                             color: _priority == null || _priority == 0
                                 ? Colors.grey
                                 : _priority == 1
