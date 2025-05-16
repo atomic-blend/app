@@ -14,6 +14,7 @@ import 'package:jiffy/jiffy.dart';
 
 class TaskItem extends StatelessWidget {
   final TaskEntity task;
+
   const TaskItem({super.key, required this.task});
 
   @override
@@ -63,6 +64,7 @@ class TaskItem extends StatelessWidget {
                   children: [
                     Text(
                       task.title,
+                      style: getTextTheme(context).headlineSmall!.copyWith(),
                     ),
                     if (task.description != null) Text(task.description!)
                   ],
@@ -101,6 +103,31 @@ class TaskItem extends StatelessWidget {
                     ),
                   ),
                 const Spacer(),
+                if (task.priority != null && task.priority! > 0) ...[
+                  Container(
+                    padding: EdgeInsets.only(left: $constants.insets.sm),
+                    child: Row(
+                      children: List.generate(
+                        task.priority!,
+                        (index) => SizedBox(
+                          width: 6,
+                          child: Icon(
+                            CupertinoIcons.exclamationmark,
+                            color: task.priority == 1
+                                ? Colors.blueAccent
+                                : task.priority == 2
+                                    ? Colors.deepOrangeAccent
+                                    : Colors.red,
+                            size: 16,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    width: $constants.insets.sm,
+                  ),
+                ],
                 // day task
                 if (task.startDate == null &&
                     task.endDate != null &&

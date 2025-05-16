@@ -34,6 +34,8 @@ mixin _$TaskEntity {
   set createdAt(DateTime? value) => throw _privateConstructorUsedError;
   DateTime? get updatedAt => throw _privateConstructorUsedError;
   set updatedAt(DateTime? value) => throw _privateConstructorUsedError;
+  int? get priority => throw _privateConstructorUsedError;
+  set priority(int? value) => throw _privateConstructorUsedError;
   List<TagEntity>? get tags => throw _privateConstructorUsedError;
   set tags(List<TagEntity>? value) => throw _privateConstructorUsedError;
   List<DateTime>? get reminders => throw _privateConstructorUsedError;
@@ -65,6 +67,7 @@ abstract class $TaskEntityCopyWith<$Res> {
       DateTime? endDate,
       DateTime? createdAt,
       DateTime? updatedAt,
+      int? priority,
       List<TagEntity>? tags,
       List<DateTime>? reminders,
       bool? completed});
@@ -92,6 +95,7 @@ class _$TaskEntityCopyWithImpl<$Res, $Val extends TaskEntity>
     Object? endDate = freezed,
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
+    Object? priority = freezed,
     Object? tags = freezed,
     Object? reminders = freezed,
     Object? completed = freezed,
@@ -125,6 +129,10 @@ class _$TaskEntityCopyWithImpl<$Res, $Val extends TaskEntity>
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
               as DateTime?,
+      priority: freezed == priority
+          ? _value.priority
+          : priority // ignore: cast_nullable_to_non_nullable
+              as int?,
       tags: freezed == tags
           ? _value.tags
           : tags // ignore: cast_nullable_to_non_nullable
@@ -157,6 +165,7 @@ abstract class _$$TaskEntityImplCopyWith<$Res>
       DateTime? endDate,
       DateTime? createdAt,
       DateTime? updatedAt,
+      int? priority,
       List<TagEntity>? tags,
       List<DateTime>? reminders,
       bool? completed});
@@ -182,6 +191,7 @@ class __$$TaskEntityImplCopyWithImpl<$Res>
     Object? endDate = freezed,
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
+    Object? priority = freezed,
     Object? tags = freezed,
     Object? reminders = freezed,
     Object? completed = freezed,
@@ -215,6 +225,10 @@ class __$$TaskEntityImplCopyWithImpl<$Res>
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
               as DateTime?,
+      priority: freezed == priority
+          ? _value.priority
+          : priority // ignore: cast_nullable_to_non_nullable
+              as int?,
       tags: freezed == tags
           ? _value.tags
           : tags // ignore: cast_nullable_to_non_nullable
@@ -242,6 +256,7 @@ class _$TaskEntityImpl extends _TaskEntity {
       this.endDate,
       this.createdAt,
       this.updatedAt,
+      this.priority,
       this.tags,
       this.reminders,
       this.completed})
@@ -264,6 +279,8 @@ class _$TaskEntityImpl extends _TaskEntity {
   DateTime? createdAt;
   @override
   DateTime? updatedAt;
+  @override
+  int? priority;
   @override
   List<TagEntity>? tags;
   @override
@@ -296,6 +313,7 @@ abstract class _TaskEntity extends TaskEntity {
       DateTime? endDate,
       DateTime? createdAt,
       DateTime? updatedAt,
+      int? priority,
       List<TagEntity>? tags,
       List<DateTime>? reminders,
       bool? completed}) = _$TaskEntityImpl;
@@ -325,6 +343,9 @@ abstract class _TaskEntity extends TaskEntity {
   @override
   DateTime? get updatedAt;
   set updatedAt(DateTime? value);
+  @override
+  int? get priority;
+  set priority(int? value);
   @override
   List<TagEntity>? get tags;
   set tags(List<TagEntity>? value);

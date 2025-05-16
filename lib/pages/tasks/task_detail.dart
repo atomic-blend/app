@@ -1,23 +1,30 @@
+import 'dart:io';
+
 import 'package:app/blocs/tag/tag.bloc.dart';
 import 'package:app/blocs/tasks/tasks.bloc.dart';
 import 'package:app/components/buttons/icon_text_pill.dart';
+import 'package:app/components/dialogs/priority_picker.dart';
 import 'package:app/components/forms/app_text_form_field.dart';
+import 'package:app/components/forms/task_date_picker_modal/task_date_picker_modal.dart';
 import 'package:app/entities/tag/tag.entity.dart';
 import 'package:app/entities/tasks/tasks.entity.dart';
 import 'package:app/i18n/strings.g.dart';
-import 'package:app/components/forms/task_date_picker_modal/task_date_picker_modal.dart';
 import 'package:app/pages/tasks/assign_tag_modal.dart';
 import 'package:app/utils/constants.dart';
 import 'package:app/utils/exntensions/date_time_extension.dart';
 import 'package:app/utils/shortcuts.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_popup/flutter_popup.dart';
 import 'package:jiffy/jiffy.dart';
+import 'package:macos_window_utils/macos_window_utils.dart';
 
 import '../../components/forms/ab_checkbox.dart';
 
 class TaskDetail extends StatefulWidget {
   final TaskEntity task;
+
   const TaskDetail({super.key, required this.task});
 
   @override
@@ -30,6 +37,7 @@ class _TaskDetailState extends State<TaskDetail> {
   DateTime? _startDate;
   List<DateTime>? _reminders;
   List<TagEntity> _tags = [];
+  int? _priority;
 
   @override
   void initState() {
@@ -38,11 +46,19 @@ class _TaskDetailState extends State<TaskDetail> {
     _startDate = widget.task.startDate;
     _reminders = widget.task.reminders;
     _tags = widget.task.tags ?? [];
+    _priority = widget.task.priority;
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    if (isDesktop(context) && Platform.isMacOS) {
+      return TitlebarSafeArea(child: buildBody(context));
+    }
+    return buildBody(context);
+  }
+
+  Widget buildBody(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -130,9 +146,53 @@ class _TaskDetailState extends State<TaskDetail> {
                                 ),
                     ),
                   ),
-                  Container(
-                    width: 50,
-                  ),
+                  SizedBox(
+                    width: 20,
+                    child: CustomPopup(
+                      content: PriorityPicker(
+                        priority: _priority,
+                        onChanged: (newValue) {
+                          if (newValue == 0) {
+                            setState(() {
+                              _priority = null;
+                            });
+                          } else {
+                            setState(() {
+                              _priority = newValue;
+                            });
+                          }
+                          widget.task.priority = _priority;
+                          if (!context.mounted) return;
+                          context.read<TasksBloc>().add(EditTask(widget.task));
+                        },
+                      ),
+                      child: _priority == null
+                          ? const SizedBox(
+                              width: 20,
+                              child: Icon(
+                                CupertinoIcons.exclamationmark,
+                                color: Colors.grey,
+                              ),
+                            )
+                          : Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: List.generate(
+                                _priority!,
+                                (_) => SizedBox(
+                                  width: 6,
+                                  child: Icon(
+                                    CupertinoIcons.exclamationmark,
+                                    color: _priority == 1
+                                        ? Colors.blueAccent
+                                        : _priority == 2
+                                            ? Colors.deepOrangeAccent
+                                            : Colors.red,
+                                  ),
+                                ),
+                              ),
+                            ),
+                    ),
+                  )
                 ],
               ),
             ),

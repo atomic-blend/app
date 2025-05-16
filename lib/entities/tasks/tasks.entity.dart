@@ -8,6 +8,7 @@ part 'tasks.entity.g.dart';
 @unfreezed
 class TaskEntity with _$TaskEntity {
   TaskEntity._();
+
   factory TaskEntity({
     String? id,
     required String title,
@@ -16,6 +17,7 @@ class TaskEntity with _$TaskEntity {
     DateTime? endDate,
     DateTime? createdAt,
     DateTime? updatedAt,
+    int? priority,
     List<TagEntity>? tags,
     List<DateTime>? reminders,
     bool? completed,
@@ -29,12 +31,11 @@ class TaskEntity with _$TaskEntity {
     'reminders',
     'startDate',
     'endDate',
+    'priority',
     'completed'
   ];
 
-  static final manualParseFields = [
-    'tags'
-  ];
+  static final manualParseFields = ['tags'];
 
   factory TaskEntity.fromJson(Map<String, dynamic> json) =>
       _$TaskEntityFromJson(json);
@@ -62,6 +63,7 @@ class TaskEntity with _$TaskEntity {
       'startDate': startDate?.toUtc().toIso8601String(),
       'endDate': endDate?.toUtc().toIso8601String(),
       'tags': encryptedTags,
+      'priority': priority,
       'reminders': reminders?.map((e) => e.toUtc().toIso8601String()).toList(),
       'completed': completed
     };
@@ -73,7 +75,8 @@ class TaskEntity with _$TaskEntity {
     Map<String, dynamic> decryptedData = {};
 
     for (var entry in data.entries) {
-      if (nonEncryptedFields.contains(entry.key) || manualParseFields.contains(entry.key)) {
+      if (nonEncryptedFields.contains(entry.key) ||
+          manualParseFields.contains(entry.key)) {
         decryptedData[entry.key] = entry.value;
       } else {
         decryptedData[entry.key] =

@@ -168,6 +168,13 @@ class TranslationsTasksEn {
 	String get task_details => 'Task Details';
 	String get from => 'From';
 	String get to => 'To';
+	String get priority => 'Priority';
+	Map<String, String> get priorities => {
+		'none': 'None',
+		'low': 'Low',
+		'medium': 'Medium',
+		'high': 'High',
+	};
 	late final TranslationsTasksDueDatesEn due_dates = TranslationsTasksDueDatesEn._(_root);
 	late final TranslationsTasksAddTaskModalEn add_task_modal = TranslationsTasksAddTaskModalEn._(_root);
 }
@@ -1292,6 +1299,11 @@ extension on Translations {
 			case 'tasks.task_details': return 'Task Details';
 			case 'tasks.from': return 'From';
 			case 'tasks.to': return 'To';
+			case 'tasks.priority': return 'Priority';
+			case 'tasks.priorities.none': return 'None';
+			case 'tasks.priorities.low': return 'Low';
+			case 'tasks.priorities.medium': return 'Medium';
+			case 'tasks.priorities.high': return 'High';
 			case 'tasks.due_dates.today': return 'Today';
 			case 'tasks.due_dates.tomorrow': return 'Tomorrow';
 			case 'tasks.due_dates.no_due_date': return 'No due date';

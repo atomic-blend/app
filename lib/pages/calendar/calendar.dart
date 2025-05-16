@@ -23,6 +23,7 @@ import 'package:syncfusion_flutter_calendar/calendar.dart';
 class Calendar extends StatefulWidget {
   final CalendarView view;
   final int? numberOfDays;
+
   const Calendar({super.key, required this.view, this.numberOfDays});
 
   @override
@@ -31,6 +32,7 @@ class Calendar extends StatefulWidget {
 
 class _CalendarState extends State<Calendar> {
   final calendarEndDate = DateTime.now().add(const Duration(days: 3650));
+
   @override
   void initState() {
     final deviceCalendarPlugin = DeviceCalendarPlugin();
@@ -191,7 +193,16 @@ class _CalendarState extends State<Calendar> {
             startTime: task.startDate!.toLocal(),
             endTime: task.endDate!.toLocal(),
             subject: task.title,
-            color: getTheme(context).primary.withValues(alpha: 0.2),
+            color: task.priority == null
+                ? getTheme(context).primary.withValues(alpha: 0.2)
+                : (task.priority == 1
+                        ? Colors.blueAccent
+                        : task.priority == 2
+                            ? Colors.deepOrangeAccent
+                            : Colors.red)
+                    .withValues(
+                    alpha: 0.2,
+                  ),
             notes: task.description,
             isAllDay: false,
             itemType: CustomAppointmentType.task,

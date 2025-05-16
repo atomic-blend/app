@@ -1,5 +1,6 @@
 import 'package:app/blocs/auth/auth.bloc.dart';
 import 'package:app/blocs/tasks/tasks.bloc.dart';
+import 'package:app/components/dialogs/priority_picker.dart';
 import 'package:app/components/forms/app_text_form_field.dart';
 import 'package:app/components/forms/task_date_picker_modal/task_date_picker_modal.dart';
 import 'package:app/entities/tasks/tasks.entity.dart';
@@ -25,6 +26,7 @@ class _AddTaskModalState extends State<AddTaskModal> {
   DateTime? _endDate;
   DateTime? _startDate;
   List<DateTime>? _reminders;
+  int? _priority;
 
   @override
   Widget build(BuildContext context) {
@@ -141,6 +143,101 @@ class _AddTaskModalState extends State<AddTaskModal> {
                               ],
                             )),
                       ),
+                      SizedBox(
+                        width: $constants.insets.xs,
+                      ),
+                      GestureDetector(
+                        onTap: () async {
+                          var selector = PriorityPicker(
+                            displayCard: true,
+                            priority: _priority,
+                            onChanged: (value) {
+                              if (value == 0) {
+                                _priority = null;
+                              } else {
+                                _priority = value;
+                              }
+                            },
+                          );
+                          if (isDesktop(context)) {
+                            await showDialog(
+                              context: context,
+                              builder: (context) => Dialog(
+                                child: selector,
+                              ),
+                            );
+                          } else {
+                            await showModalBottomSheet(
+                              context: context,
+                              isScrollControlled: true,
+                              builder: (context) => Container(
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.only(
+                                    topLeft:
+                                        Radius.circular($constants.corners.md),
+                                    topRight:
+                                        Radius.circular($constants.corners.md),
+                                  ),
+                                ),
+                                width: double.infinity,
+                                height: getSize(context).height * 0.5,
+                                padding: EdgeInsets.all($constants.insets.xs),
+                                child: selector,
+                              ),
+                            );
+                          }
+                        },
+                        child: Container(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: $constants.insets.xs + 4,
+                              vertical: 2),
+                          decoration: BoxDecoration(
+                            color: _priority != null
+                                ? (_priority == 1
+                                        ? Colors.blueAccent
+                                        : _priority == 2
+                                            ? Colors.deepOrangeAccent
+                                            : Colors.red)
+                                    .withValues(
+                                    alpha: 0.2,
+                                  )
+                                : getTheme(context).surfaceContainer,
+                            borderRadius:
+                                BorderRadius.circular($constants.corners.full),
+                          ),
+                          child: Row(
+                            children: [
+                              Icon(CupertinoIcons.flag,
+                                  color: _priority != null
+                                      ? _priority == 1
+                                          ? Colors.blueAccent
+                                          : _priority == 2
+                                              ? Colors.deepOrangeAccent
+                                              : Colors.red
+                                      : null),
+                              if (_endDate != null || isDesktop(context))
+                                Padding(
+                                  padding: EdgeInsets.only(
+                                      left: $constants.insets.xxs),
+                                  child: Text(
+                                    _endDate != null
+                                        ? _endDate!.formatDueDate(context)
+                                        : context.t.tasks.priority,
+                                    style: getTextTheme(context)
+                                        .bodySmall!
+                                        .copyWith(
+                                          fontWeight: FontWeight.bold,
+                                          color: _endDate != null
+                                              ? getTheme(context).primary
+                                              : null,
+                                        ),
+                                  ),
+                                ),
+                            ],
+                          ),
+                        ),
+                      )
                     ],
                   ),
                   GestureDetector(
@@ -160,6 +257,7 @@ class _AddTaskModalState extends State<AddTaskModal> {
                             endDate: _endDate,
                             reminders: _reminders,
                             completed: false,
+                            priority: _priority,
                             createdAt: DateTime.now(),
                             updatedAt: DateTime.now());
                         if (_descriptionController.text.isNotEmpty) {
