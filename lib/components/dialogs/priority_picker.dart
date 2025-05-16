@@ -2,7 +2,8 @@ import 'package:app/utils/constants.dart';
 import 'package:app/utils/shortcuts.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_popup/flutter_popup.dart';
+
+import '../../i18n/strings.g.dart';
 
 class PriorityPicker extends StatelessWidget {
   final int? priority;
@@ -12,118 +13,84 @@ class PriorityPicker extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CustomPopup(
-      content: Container(
-        width: getSize(context).width * 0.35,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text(
-              'Priority',
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-              ),
+    return Container(
+      width: getSize(context).width * 0.35,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(
+            'Priority',
+            style: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
             ),
-            const SizedBox(height: 10),
-            Column(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: List.generate(
-                  4,
-                  (index) => GestureDetector(
-                        onTap: () {
-                          onChanged?.call(index);
-                          Navigator.of(context).pop();
-                        },
-                        child: Padding(
-                          padding:
-                              EdgeInsets.only(bottom: $constants.insets.xs),
-                          child: Row(children: [
-                            SizedBox(
-                              width: 24,
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: index == 0
-                                    ? [
-                                        const Icon(
-                                          CupertinoIcons.exclamationmark,
-                                          color: Colors.grey,
-                                        ),
-                                      ]
-                                    : List.generate(
-                                        index,
-                                        (_) => SizedBox(
-                                            width: 6,
-                                            child: Icon(
-                                                CupertinoIcons.exclamationmark,
-                                                color: index == 0
-                                                    ? Colors.grey
-                                                    : index == 1
-                                                        ? Colors.blueAccent
-                                                        : index == 2
-                                                            ? Colors
-                                                                .deepOrangeAccent
-                                                            : Colors.red)),
+          ),
+          const SizedBox(height: 10),
+          Column(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: List.generate(
+                4,
+                (index) => GestureDetector(
+                      onTap: () {
+                        onChanged?.call(index);
+                        Navigator.of(context).pop();
+                      },
+                      child: Padding(
+                        padding: EdgeInsets.only(bottom: $constants.insets.xs),
+                        child: Row(children: [
+                          SizedBox(
+                            width: 24,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: index == 0
+                                  ? [
+                                      const Icon(
+                                        CupertinoIcons.exclamationmark,
+                                        color: Colors.grey,
                                       ),
-                              ),
+                                    ]
+                                  : List.generate(
+                                      index,
+                                      (_) => SizedBox(
+                                          width: 6,
+                                          child: Icon(
+                                              CupertinoIcons.exclamationmark,
+                                              color: index == 0
+                                                  ? Colors.grey
+                                                  : index == 1
+                                                      ? Colors.blueAccent
+                                                      : index == 2
+                                                          ? Colors
+                                                              .deepOrangeAccent
+                                                          : Colors.red)),
+                                    ),
                             ),
-                            SizedBox(
-                              width: $constants.insets.xs,
+                          ),
+                          SizedBox(
+                            width: $constants.insets.xs,
+                          ),
+                          Text(
+                            context.t.tasks.priorities.values.toList()[index],
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w500,
                             ),
-                            Text(
-                              index == 0
-                                  ? 'No Priority'
-                                  : index == 1
-                                      ? 'Low'
-                                      : index == 2
-                                          ? 'Medium'
-                                          : 'High',
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                            if (index == priority ||
-                                index == 0 && priority == null) ...[
-                              Spacer(),
-                              const Icon(
-                                CupertinoIcons.check_mark,
-                                color: Colors.blueAccent,
-                              )
-                            ]
-                          ]),
-                        ),
-                      )),
-            )
-          ],
-        ),
+                          ),
+                          if (index == priority ||
+                              index == 0 && priority == null) ...[
+                            Spacer(),
+                            const Icon(
+                              CupertinoIcons.check_mark,
+                              color: Colors.blueAccent,
+                            )
+                          ]
+                        ]),
+                      ),
+                    )),
+          )
+        ],
       ),
-      child: priority == null
-          ? const SizedBox(
-              width: 20,
-              child: Icon(
-                CupertinoIcons.exclamationmark,
-                color: Colors.grey,
-              ),
-            )
-          : Row(
-              mainAxisSize: MainAxisSize.min,
-              children: List.generate(
-                priority!,
-                (_) => SizedBox(
-                  width: 6,
-                  child: Icon(
-                    CupertinoIcons.exclamationmark,
-                    color: priority == 1
-                        ? Colors.blueAccent
-                        : priority == 2
-                            ? Colors.deepOrangeAccent
-                            : Colors.red,
-                  ),
-                ),
-              ),
-            ),
     );
   }
 }

@@ -11,8 +11,10 @@ import 'package:app/pages/tasks/assign_tag_modal.dart';
 import 'package:app/utils/constants.dart';
 import 'package:app/utils/exntensions/date_time_extension.dart';
 import 'package:app/utils/shortcuts.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_popup/flutter_popup.dart';
 import 'package:jiffy/jiffy.dart';
 
 import '../../components/forms/ab_checkbox.dart';
@@ -137,22 +139,49 @@ class _TaskDetailState extends State<TaskDetail> {
                   ),
                   SizedBox(
                     width: 20,
-                    child: PriorityPicker(
-                      priority: _priority,
-                      onChanged: (newValue) {
-                        if (newValue == 0) {
-                          setState(() {
-                            _priority = null;
-                          });
-                        } else {
-                          setState(() {
-                            _priority = newValue;
-                          });
-                        }
-                        widget.task.priority = _priority;
-                        if (!context.mounted) return;
-                        context.read<TasksBloc>().add(EditTask(widget.task));
-                      },
+                    child: CustomPopup(
+                      content: PriorityPicker(
+                        priority: _priority,
+                        onChanged: (newValue) {
+                          if (newValue == 0) {
+                            setState(() {
+                              _priority = null;
+                            });
+                          } else {
+                            setState(() {
+                              _priority = newValue;
+                            });
+                          }
+                          widget.task.priority = _priority;
+                          if (!context.mounted) return;
+                          context.read<TasksBloc>().add(EditTask(widget.task));
+                        },
+                      ),
+                      child: _priority == null
+                          ? const SizedBox(
+                              width: 20,
+                              child: Icon(
+                                CupertinoIcons.exclamationmark,
+                                color: Colors.grey,
+                              ),
+                            )
+                          : Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: List.generate(
+                                _priority!,
+                                (_) => SizedBox(
+                                  width: 6,
+                                  child: Icon(
+                                    CupertinoIcons.exclamationmark,
+                                    color: _priority == 1
+                                        ? Colors.blueAccent
+                                        : _priority == 2
+                                            ? Colors.deepOrangeAccent
+                                            : Colors.red,
+                                  ),
+                                ),
+                              ),
+                            ),
                     ),
                   )
                 ],

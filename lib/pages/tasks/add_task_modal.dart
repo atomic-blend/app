@@ -1,5 +1,6 @@
 import 'package:app/blocs/auth/auth.bloc.dart';
 import 'package:app/blocs/tasks/tasks.bloc.dart';
+import 'package:app/components/dialogs/priority_picker.dart';
 import 'package:app/components/forms/app_text_form_field.dart';
 import 'package:app/components/forms/task_date_picker_modal/task_date_picker_modal.dart';
 import 'package:app/entities/tasks/tasks.entity.dart';
@@ -25,6 +26,7 @@ class _AddTaskModalState extends State<AddTaskModal> {
   DateTime? _endDate;
   DateTime? _startDate;
   List<DateTime>? _reminders;
+  int? _priority;
 
   @override
   Widget build(BuildContext context) {
@@ -141,6 +143,82 @@ class _AddTaskModalState extends State<AddTaskModal> {
                               ],
                             )),
                       ),
+                      SizedBox(
+                        width: $constants.insets.xs,
+                      ),
+                      Container(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: $constants.insets.xs + 4, vertical: 2),
+                        decoration: BoxDecoration(
+                          color: _priority != null
+                              ? _priority == 1
+                                  ? Colors.blueAccent
+                                  : _priority == 2
+                                      ? Colors.deepOrangeAccent
+                                      : Colors.red
+                              : getTheme(context).surfaceContainer,
+                          borderRadius:
+                              BorderRadius.circular($constants.corners.full),
+                        ),
+                        child: GestureDetector(
+                            onTap: () async {
+                              var selector = PriorityPicker(
+                                priority: _priority,
+                                onChanged: (value) {
+                                  setState(() {
+                                    _priority = value;
+                                  });
+                                },
+                              );
+                              if (isDesktop(context)) {
+                                await showDialog(
+                                  context: context,
+                                  builder: (context) => Dialog(
+                                    child: selector,
+                                  ),
+                                );
+                              } else {
+                                await showModalBottomSheet(
+                                  context: context,
+                                  isScrollControlled: true,
+                                  builder: (context) => Container(
+                                    width: double.infinity,
+                                    height: getSize(context).height * 0.4,
+                                    padding:
+                                        EdgeInsets.all($constants.insets.xs),
+                                    child: selector,
+                                  ),
+                                );
+                              }
+                            },
+                            child: Row(
+                              children: [
+                                Icon(CupertinoIcons.flag,
+                                    color: _priority != null
+                                        ? getTheme(context).primary
+                                        : null),
+                                if (_endDate != null || isDesktop(context))
+                                  Padding(
+                                    padding: EdgeInsets.only(
+                                        left: $constants.insets.xxs),
+                                    child: Text(
+                                      _endDate != null
+                                          ? _endDate!.formatDueDate(context)
+                                          : context
+                                              .t.tasks.add_task_modal.dates,
+                                      style: getTextTheme(context)
+                                          .bodySmall!
+                                          .copyWith(
+                                            fontWeight: FontWeight.bold,
+                                            color: _endDate != null
+                                                ? getTheme(context).primary
+                                                : null,
+                                          ),
+                                    ),
+                                  ),
+                              ],
+                            )),
+                      )
                     ],
                   ),
                   GestureDetector(
