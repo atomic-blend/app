@@ -19,7 +19,7 @@ class PriorityPicker extends StatelessWidget {
   }
 
   Widget buildList(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: getSize(context).width * 0.35,
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -92,14 +92,13 @@ class PriorityPicker extends StatelessWidget {
                                 Text(
                                   context.t.tasks.priorities.values
                                       .toList()[index],
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w500,
-                                  ),
+                                  style: getTextTheme(context)
+                                      .bodyLarge!
+                                      .copyWith(),
                                 ),
                                 if (index == priority ||
                                     index == 0 && priority == null) ...[
-                                  Spacer(),
+                                  const Spacer(),
                                   const Icon(
                                     CupertinoIcons.check_mark,
                                     color: Colors.blueAccent,
