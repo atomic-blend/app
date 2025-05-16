@@ -160,6 +160,7 @@
     "task_details": "Détail de la tâche",
     "from": "De",
     "to": "À",
+    "priority": "Priorité",
     "priorities(map)": {
       "none": "Aucune",
       "low": "Faible",

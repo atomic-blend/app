@@ -8,22 +8,31 @@ import '../../i18n/strings.g.dart';
 class PriorityPicker extends StatelessWidget {
   final int? priority;
   final Function(int?)? onChanged;
+  final bool? displayCard;
 
-  const PriorityPicker({super.key, this.priority, this.onChanged});
+  const PriorityPicker(
+      {super.key, this.priority, this.onChanged, this.displayCard});
 
   @override
   Widget build(BuildContext context) {
+    return buildList(context);
+  }
+
+  Widget buildList(BuildContext context) {
     return Container(
       width: getSize(context).width * 0.35,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
           Text(
-            'Priority',
-            style: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.bold,
-            ),
+            context.t.tasks.priority,
+            style: displayCard == true
+                ? getTextTheme(context).titleMedium!.copyWith(
+                      fontWeight: FontWeight.bold,
+                    )
+                : getTextTheme(context).headlineMedium!.copyWith(
+                      fontWeight: FontWeight.bold,
+                    ),
           ),
           const SizedBox(height: 10),
           Column(
@@ -31,31 +40,41 @@ class PriorityPicker extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: List.generate(
                 4,
-                (index) => GestureDetector(
-                      onTap: () {
-                        onChanged?.call(index);
-                        Navigator.of(context).pop();
-                      },
-                      child: Padding(
-                        padding: EdgeInsets.only(bottom: $constants.insets.xs),
-                        child: Row(children: [
-                          SizedBox(
-                            width: 24,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: index == 0
-                                  ? [
-                                      const Icon(
-                                        CupertinoIcons.exclamationmark,
-                                        color: Colors.grey,
-                                      ),
-                                    ]
-                                  : List.generate(
-                                      index,
-                                      (_) => SizedBox(
+                (index) => Padding(
+                      padding: EdgeInsets.only(bottom: $constants.insets.sm),
+                      child: GestureDetector(
+                        onTap: () {
+                          onChanged?.call(index);
+                          Navigator.of(context).pop();
+                        },
+                        child: Material(
+                          color: getTheme(context).surface,
+                          elevation: displayCard == true ? 1 : 0,
+                          borderRadius: BorderRadius.circular(8),
+                          child: Container(
+                            decoration: displayCard == true
+                                ? BoxDecoration(
+                                    color: getTheme(context).surfaceContainer,
+                                    borderRadius: BorderRadius.circular(8),
+                                  )
+                                : null,
+                            child: Padding(
+                              padding: EdgeInsets.all(
+                                displayCard == true
+                                    ? $constants.insets.md
+                                    : $constants.insets.xs,
+                              ),
+                              child: Row(children: [
+                                SizedBox(
+                                  width: 24,
+                                  child: index == 0
+                                      ? const Icon(
+                                          CupertinoIcons.flag,
+                                          color: Colors.grey,
+                                        )
+                                      : SizedBox(
                                           width: 6,
-                                          child: Icon(
-                                              CupertinoIcons.exclamationmark,
+                                          child: Icon(CupertinoIcons.flag,
                                               color: index == 0
                                                   ? Colors.grey
                                                   : index == 1
@@ -64,28 +83,32 @@ class PriorityPicker extends StatelessWidget {
                                                           ? Colors
                                                               .deepOrangeAccent
                                                           : Colors.red)),
-                                    ),
+                                ),
+                                SizedBox(
+                                  width: displayCard == true
+                                      ? $constants.insets.md
+                                      : $constants.insets.xs,
+                                ),
+                                Text(
+                                  context.t.tasks.priorities.values
+                                      .toList()[index],
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                                if (index == priority ||
+                                    index == 0 && priority == null) ...[
+                                  Spacer(),
+                                  const Icon(
+                                    CupertinoIcons.check_mark,
+                                    color: Colors.blueAccent,
+                                  )
+                                ]
+                              ]),
                             ),
                           ),
-                          SizedBox(
-                            width: $constants.insets.xs,
-                          ),
-                          Text(
-                            context.t.tasks.priorities.values.toList()[index],
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                          if (index == priority ||
-                              index == 0 && priority == null) ...[
-                            Spacer(),
-                            const Icon(
-                              CupertinoIcons.check_mark,
-                              color: Colors.blueAccent,
-                            )
-                          ]
-                        ]),
+                        ),
                       ),
                     )),
           )

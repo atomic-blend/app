@@ -165,6 +165,7 @@ class _TranslationsTasksFr implements TranslationsTasksEn {
 	@override String get task_details => 'Détail de la tâche';
 	@override String get from => 'De';
 	@override String get to => 'À';
+	@override String get priority => 'Priorité';
 	@override Map<String, String> get priorities => {
 		'none': 'Aucune',
 		'low': 'Faible',
@@ -1292,6 +1293,7 @@ extension on TranslationsFr {
 			case 'tasks.task_details': return 'Détail de la tâche';
 			case 'tasks.from': return 'De';
 			case 'tasks.to': return 'À';
+			case 'tasks.priority': return 'Priorité';
 			case 'tasks.priorities.none': return 'Aucune';
 			case 'tasks.priorities.low': return 'Faible';
 			case 'tasks.priorities.medium': return 'Moyenne';

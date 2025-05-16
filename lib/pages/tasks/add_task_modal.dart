@@ -146,78 +146,97 @@ class _AddTaskModalState extends State<AddTaskModal> {
                       SizedBox(
                         width: $constants.insets.xs,
                       ),
-                      Container(
-                        padding: EdgeInsets.symmetric(
-                            horizontal: $constants.insets.xs + 4, vertical: 2),
-                        decoration: BoxDecoration(
-                          color: _priority != null
-                              ? _priority == 1
-                                  ? Colors.blueAccent
-                                  : _priority == 2
-                                      ? Colors.deepOrangeAccent
-                                      : Colors.red
-                              : getTheme(context).surfaceContainer,
-                          borderRadius:
-                              BorderRadius.circular($constants.corners.full),
-                        ),
-                        child: GestureDetector(
-                            onTap: () async {
-                              var selector = PriorityPicker(
-                                priority: _priority,
-                                onChanged: (value) {
-                                  setState(() {
-                                    _priority = value;
-                                  });
-                                },
-                              );
-                              if (isDesktop(context)) {
-                                await showDialog(
-                                  context: context,
-                                  builder: (context) => Dialog(
-                                    child: selector,
-                                  ),
-                                );
+                      GestureDetector(
+                        onTap: () async {
+                          var selector = PriorityPicker(
+                            displayCard: true,
+                            priority: _priority,
+                            onChanged: (value) {
+                              if (value == 0) {
+                                _priority = null;
                               } else {
-                                await showModalBottomSheet(
-                                  context: context,
-                                  isScrollControlled: true,
-                                  builder: (context) => Container(
-                                    width: double.infinity,
-                                    height: getSize(context).height * 0.4,
-                                    padding:
-                                        EdgeInsets.all($constants.insets.xs),
-                                    child: selector,
-                                  ),
-                                );
+                                _priority = value;
                               }
                             },
-                            child: Row(
-                              children: [
-                                Icon(CupertinoIcons.flag,
-                                    color: _priority != null
-                                        ? getTheme(context).primary
-                                        : null),
-                                if (_endDate != null || isDesktop(context))
-                                  Padding(
-                                    padding: EdgeInsets.only(
-                                        left: $constants.insets.xxs),
-                                    child: Text(
-                                      _endDate != null
-                                          ? _endDate!.formatDueDate(context)
-                                          : context
-                                              .t.tasks.add_task_modal.dates,
-                                      style: getTextTheme(context)
-                                          .bodySmall!
-                                          .copyWith(
-                                            fontWeight: FontWeight.bold,
-                                            color: _endDate != null
-                                                ? getTheme(context).primary
-                                                : null,
-                                          ),
-                                    ),
+                          );
+                          if (isDesktop(context)) {
+                            await showDialog(
+                              context: context,
+                              builder: (context) => Dialog(
+                                child: selector,
+                              ),
+                            );
+                          } else {
+                            await showModalBottomSheet(
+                              context: context,
+                              isScrollControlled: true,
+                              builder: (context) => Container(
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.only(
+                                    topLeft:
+                                        Radius.circular($constants.corners.md),
+                                    topRight:
+                                        Radius.circular($constants.corners.md),
                                   ),
-                              ],
-                            )),
+                                ),
+                                width: double.infinity,
+                                height: getSize(context).height * 0.5,
+                                padding: EdgeInsets.all($constants.insets.xs),
+                                child: selector,
+                              ),
+                            );
+                          }
+                        },
+                        child: Container(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: $constants.insets.xs + 4,
+                              vertical: 2),
+                          decoration: BoxDecoration(
+                            color: _priority != null
+                                ? (_priority == 1
+                                        ? Colors.blueAccent
+                                        : _priority == 2
+                                            ? Colors.deepOrangeAccent
+                                            : Colors.red)
+                                    .withValues(
+                                    alpha: 0.2,
+                                  )
+                                : getTheme(context).surfaceContainer,
+                            borderRadius:
+                                BorderRadius.circular($constants.corners.full),
+                          ),
+                          child: Row(
+                            children: [
+                              Icon(CupertinoIcons.flag,
+                                  color: _priority != null
+                                      ? _priority == 1
+                                          ? Colors.blueAccent
+                                          : _priority == 2
+                                              ? Colors.deepOrangeAccent
+                                              : Colors.red
+                                      : null),
+                              if (_endDate != null || isDesktop(context))
+                                Padding(
+                                  padding: EdgeInsets.only(
+                                      left: $constants.insets.xxs),
+                                  child: Text(
+                                    _endDate != null
+                                        ? _endDate!.formatDueDate(context)
+                                        : context.t.tasks.add_task_modal.dates,
+                                    style: getTextTheme(context)
+                                        .bodySmall!
+                                        .copyWith(
+                                          fontWeight: FontWeight.bold,
+                                          color: _endDate != null
+                                              ? getTheme(context).primary
+                                              : null,
+                                        ),
+                                  ),
+                                ),
+                            ],
+                          ),
+                        ),
                       )
                     ],
                   ),
@@ -238,6 +257,7 @@ class _AddTaskModalState extends State<AddTaskModal> {
                             endDate: _endDate,
                             reminders: _reminders,
                             completed: false,
+                            priority: _priority,
                             createdAt: DateTime.now(),
                             updatedAt: DateTime.now());
                         if (_descriptionController.text.isNotEmpty) {

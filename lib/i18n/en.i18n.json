@@ -160,6 +160,7 @@
     "task_details": "Task Details",
     "from": "From",
     "to": "To",
+    "priority": "Priority",
     "priorities(map)": {
       "none": "None",
       "low": "Low",

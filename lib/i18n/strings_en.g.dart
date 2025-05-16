@@ -168,6 +168,7 @@ class TranslationsTasksEn {
 	String get task_details => 'Task Details';
 	String get from => 'From';
 	String get to => 'To';
+	String get priority => 'Priority';
 	Map<String, String> get priorities => {
 		'none': 'None',
 		'low': 'Low',
@@ -1298,6 +1299,7 @@ extension on Translations {
 			case 'tasks.task_details': return 'Task Details';
 			case 'tasks.from': return 'From';
 			case 'tasks.to': return 'To';
+			case 'tasks.priority': return 'Priority';
 			case 'tasks.priorities.none': return 'None';
 			case 'tasks.priorities.low': return 'Low';
 			case 'tasks.priorities.medium': return 'Medium';
