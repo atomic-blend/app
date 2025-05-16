@@ -64,6 +64,7 @@ class TaskItem extends StatelessWidget {
                   children: [
                     Text(
                       task.title,
+                      style: getTextTheme(context).headlineSmall!.copyWith(),
                     ),
                     if (task.description != null) Text(task.description!)
                   ],
