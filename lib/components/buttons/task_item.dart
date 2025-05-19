@@ -20,6 +20,15 @@ class TaskItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return Draggable<TaskEntity>(
+      data: task,
+      feedback: buildContent(context),
+      childWhenDragging: Container(),
+      child: buildContent(context),
+    );
+  }
+
+  Widget buildContent(BuildContext context) {
     return GestureDetector(
       onTap: () {
         Navigator.of(context).push(
@@ -257,7 +266,7 @@ class TaskItem extends StatelessWidget {
                       ? getTextTheme(context).bodySmall!.copyWith(
                             color: getTheme(context).error,
                             fontWeight: FontWeight.bold,
-                          ),
+                          )
                       : null,
                 ),
               ),
