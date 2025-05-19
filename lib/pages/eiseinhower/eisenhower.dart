@@ -16,14 +16,16 @@ class EisenhowerMatrix extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          context.t.eisenhower.title,
-          style: getTextTheme(context).bodyLarge!.copyWith(
-                fontWeight: FontWeight.bold,
+      appBar: isDesktop(context)
+          ? null
+          : AppBar(
+              title: Text(
+                context.t.eisenhower.title,
+                style: getTextTheme(context).bodyLarge!.copyWith(
+                      fontWeight: FontWeight.bold,
+                    ),
               ),
-        ),
-      ),
+            ),
       body: SafeArea(
         child:
             BlocBuilder<TasksBloc, TasksState>(builder: (context, taskState) {

@@ -178,7 +178,8 @@ class TaskItem extends StatelessWidget {
                 ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.start,
-            mainAxisSize: MainAxisSize.max,
+            mainAxisSize:
+                collapsed == true ? MainAxisSize.max : MainAxisSize.min,
             children: [
               const Icon(
                 CupertinoIcons.calendar,
@@ -196,7 +197,6 @@ class TaskItem extends StatelessWidget {
           task.endDate != null &&
           !task.endDate!.isDayDate())
         Container(
-          width: getSize(context).width * 0.3,
           padding: collapsed == true
               ? null
               : EdgeInsets.symmetric(
@@ -216,7 +216,8 @@ class TaskItem extends StatelessWidget {
             children: [
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
-                mainAxisSize: MainAxisSize.max,
+                mainAxisSize:
+                    collapsed == true ? MainAxisSize.max : MainAxisSize.min,
                 children: [
                   const Icon(
                     CupertinoIcons.time,
@@ -238,7 +239,6 @@ class TaskItem extends StatelessWidget {
       // precise time task (end and start define, like a calendar event)
       if (task.startDate != null && task.endDate != null)
         Container(
-          width: getSize(context).width * 0.3,
           padding: collapsed == true
               ? null
               : EdgeInsets.symmetric(
@@ -256,7 +256,8 @@ class TaskItem extends StatelessWidget {
                 ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.start,
-            mainAxisSize: MainAxisSize.max,
+            mainAxisSize:
+                collapsed == true ? MainAxisSize.max : MainAxisSize.min,
             children: [
               if (collapsed != true) ...[
                 const Icon(
