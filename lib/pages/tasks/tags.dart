@@ -162,6 +162,7 @@ class _TagsViewState extends State<TagsView> {
     if (tasks == null) {
       return [];
     }
+    tasks = tasks.where((task) => task.completed != true).toList();
     if (_filteredTags.isEmpty) {
       return tasks;
     }
