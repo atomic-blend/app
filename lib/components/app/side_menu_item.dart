@@ -12,6 +12,7 @@ class SideMenuItem extends StatelessWidget {
   final bool? iconContainer;
   final IconData icon;
   final bool? initialOnly;
+  final bool? separatorBefore;
 
   SideMenuItem({
     super.key,
@@ -23,6 +24,7 @@ class SideMenuItem extends StatelessWidget {
     required this.onTap,
     this.isSelected,
     this.initialOnly,
+    this.separatorBefore,
   });
 
   @override

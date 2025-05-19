@@ -314,6 +314,7 @@ class Navigation {
           ),
           SideMenuItem(
             title: context.t.tasks.all_tasks,
+            separatorBefore: true,
             icon: CupertinoIcons.square_stack_3d_down_right,
             color: Colors.grey[800]!,
             iconContainer: true,
