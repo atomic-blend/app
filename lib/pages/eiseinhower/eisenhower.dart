@@ -149,7 +149,7 @@ class EisenhowerMatrix extends StatelessWidget {
                         borderRadius:
                             BorderRadius.circular($constants.insets.sm),
                       ),
-                      child: Icon(
+                      child: const Icon(
                         CupertinoIcons.flag_fill,
                         size: 16,
                         color: Colors.white,
@@ -192,7 +192,7 @@ class EisenhowerMatrix extends StatelessWidget {
                                   ));
                         }
                       },
-                      child: Icon(
+                      child: const Icon(
                         CupertinoIcons.plus,
                         size: 20,
                       ),

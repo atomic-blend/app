@@ -26,7 +26,7 @@ class _MoreAppsState extends State<MoreApps> {
         padding: EdgeInsets.symmetric(horizontal: $constants.insets.md),
         child: Column(
           children: [
-            if (!isDesktop(context) && restOfNavigation.length != 0) ...[
+            if (!isDesktop(context) && restOfNavigation.isNotEmpty) ...[
               StaggeredGrid.count(
                 crossAxisCount: 2,
                 mainAxisSpacing: $constants.insets.sm,
