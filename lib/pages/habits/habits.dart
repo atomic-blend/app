@@ -5,6 +5,7 @@ import 'package:app/entities/habit/habit_entry/habit_entry.entity.dart';
 import 'package:app/i18n/strings.g.dart';
 import 'package:app/pages/habits/add_or_edit_habit_modal.dart';
 import 'package:app/pages/habits/habit_heatmap.dart';
+import 'package:app/services/sync.service.dart';
 import 'package:app/utils/constants.dart';
 import 'package:app/utils/shortcuts.dart';
 import 'package:auto_size_text/auto_size_text.dart';
@@ -30,67 +31,83 @@ class _HabitsState extends State<Habits> {
   Widget build(BuildContext context) {
     return BlocBuilder<HabitBloc, HabitState>(builder: (context, habitState) {
       if (habitState.habits == null || habitState.habits!.isEmpty) {
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
+        return RefreshIndicator(
+          onRefresh: () {
+            SyncService.sync(context);
+            return Future.delayed(const Duration(seconds: 1));
+          },
+          child: ListView(
+            padding: EdgeInsets.zero,
+            children: [
+              Center(
+                child: Transform.scale(
+                  scale: 1.3,
+                  child: Lottie.asset(
+                    'assets/animations/getting-started.json',
+                    width: isDesktop(context)
+                        ? getSize(context).width * 0.2
+                        : getSize(context).width * 0.7,
+                  ),
+                ),
+              ),
+              Center(
+                child: Text(
+                  context.t.habits.no_habits,
+                  style: getTextTheme(context).headlineLarge!.copyWith(
+                        fontWeight: FontWeight.bold,
+                      ),
+                ),
+              ),
+              Center(child: Text(context.t.habits.get_started_now))
+            ],
+          ),
+        );
+      }
+      return RefreshIndicator(
+        onRefresh: () {
+          SyncService.sync(context);
+          return Future.delayed(const Duration(seconds: 1));
+        },
+        child: ListView(
+          padding: EdgeInsets.zero,
           children: [
             Center(
-              child: Transform.scale(
-                scale: 1.3,
-                child: Lottie.asset(
-                  'assets/animations/getting-started.json',
-                  width: isDesktop(context)
-                      ? getSize(context).width * 0.2
-                      : getSize(context).width * 0.7,
+              child: SizedBox(
+                width: getSize(context).width * 0.8,
+                height: 30,
+                child: AnimatedToggleSwitch<int?>.rolling(
+                  current: mode,
+                  indicatorSize:
+                      Size.fromWidth(getSize(context).width * 0.8 / 2),
+                  values: const [0, 1],
+                  iconBuilder: (value, foreground) {
+                    return AutoSizeText(
+                        maxLines: 1,
+                        [context.t.habits.list, context.t.habits.overview]
+                            .elementAt(value!),
+                        style: getTextTheme(context).bodyMedium!.copyWith());
+                  },
+                  styleBuilder: (value) {
+                    return ToggleStyle(
+                      borderColor: Colors.transparent,
+                      indicatorColor: value == mode
+                          ? getTheme(context).surface
+                          : getTheme(context).surfaceContainer,
+                      backgroundColor: getTheme(context).surfaceContainer,
+                    );
+                  },
+                  onChanged: (value) {
+                    setState(() {
+                      mode = value;
+                    });
+                  },
                 ),
               ),
             ),
-            Text(
-              context.t.habits.no_habits,
-              style: getTextTheme(context).headlineLarge!.copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
-            ),
-            Text(context.t.habits.get_started_now)
+            if (mode == 0) _listView(context, habitState.habits!),
+            if (mode == 1) _heatMapView(context, habitState.habits!),
           ],
-        );
-      }
-      return Column(
-        children: [
-          Center(
-            child: SizedBox(
-              width: getSize(context).width * 0.8,
-              height: 30,
-              child: AnimatedToggleSwitch<int?>.rolling(
-                current: mode,
-                indicatorSize: Size.fromWidth(getSize(context).width * 0.8 / 2),
-                values: const [0, 1],
-                iconBuilder: (value, foreground) {
-                  return AutoSizeText(
-                      maxLines: 1,
-                      [context.t.habits.list, context.t.habits.overview]
-                          .elementAt(value!),
-                      style: getTextTheme(context).bodyMedium!.copyWith());
-                },
-                styleBuilder: (value) {
-                  return ToggleStyle(
-                    borderColor: Colors.transparent,
-                    indicatorColor: value == mode
-                        ? getTheme(context).surface
-                        : getTheme(context).surfaceContainer,
-                    backgroundColor: getTheme(context).surfaceContainer,
-                  );
-                },
-                onChanged: (value) {
-                  setState(() {
-                    mode = value;
-                  });
-                },
-              ),
-            ),
-          ),
-          if (mode == 0) _listView(context, habitState.habits!),
-          if (mode == 1) _heatMapView(context, habitState.habits!),
-        ],
+        ),
       );
     });
   }
