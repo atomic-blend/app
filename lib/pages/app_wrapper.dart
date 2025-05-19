@@ -107,6 +107,10 @@ class AppWrapperState extends ResponsiveState<AppWrapper> {
             body: body,
           );
         } else {
+          if (screens.length > 5) {
+            var moreScreen = screens.removeAt(4);
+            screens.add(moreScreen);
+          }
           return _buildDesktopLayout(
             context: context,
             appState: appState,
@@ -115,7 +119,7 @@ class AppWrapperState extends ResponsiveState<AppWrapper> {
             navItems: navItems,
             floattingActionsButtons: floattingActionsButtons,
             menuItems: menuItems,
-            body: body,
+            body: screens[appState.pageIndex],
           );
         }
       });
@@ -300,6 +304,7 @@ class AppWrapperState extends ResponsiveState<AppWrapper> {
       title: appBarconfig?.title,
       actions: appBarconfig?.actions,
     );
+    // move the more screen at the end
     var bodyToReturn = SafeArea(
       child: Container(
         color: getTheme(context).surface,

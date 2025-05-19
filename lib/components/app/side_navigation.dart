@@ -41,10 +41,10 @@ class SideNavigation extends StatelessWidget {
       backgroundColor: backgroundColor,
       onDestinationSelected: (index) {
         // Check if the tapped item has its own onTap handler
-        if (destinations.length > index &&
-            destinations[index] is NavigationItem &&
-            (destinations[index] as NavigationItem).onTap != null) {
-          (destinations[index] as NavigationItem).onTap!(index);
+        if (this.destinations.length > index &&
+            this.destinations[index] is NavigationItem &&
+            (this.destinations[index] as NavigationItem).onTap != null) {
+          (this.destinations[index] as NavigationItem).onTap!(index);
         }
         // Otherwise use the default handler
         else if (onTap != null) {

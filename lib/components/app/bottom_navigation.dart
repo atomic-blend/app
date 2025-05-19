@@ -2,8 +2,8 @@ import 'dart:io';
 
 import 'package:app/blocs/app/app.bloc.dart';
 import 'package:app/utils/shortcuts.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 /// A customizable bottom navigation item for use with [BottomNavigation].
@@ -19,7 +19,9 @@ class NavigationItem extends StatelessWidget {
     this.selectedIcon,
     this.onTap,
     this.tooltip,
-    this.enabled = true, this.body, this.color,
+    this.enabled = true,
+    this.body,
+    this.color,
   });
 
   /// The icon displayed by the destination.
@@ -37,12 +39,11 @@ class NavigationItem extends StatelessWidget {
   /// Optional tooltip for the destination.
   final String? tooltip;
 
-  /// Optional body 
+  /// Optional body
   final Widget? body;
 
   /// Optional color
   final Color? color;
-
 
   /// Whether this destination is interactive.
   final bool enabled;
