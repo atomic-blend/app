@@ -157,7 +157,10 @@ class _TranslationsTasksFr implements TranslationsTasksEn {
 	@override String get title => 'Tâches';
 	@override String get today => 'Aujourd\'hui';
 	@override String get tags => 'Tags';
+	@override String get all_tasks => 'Toutes les tâches';
+	@override String get completed_tasks => 'Tâches terminées';
 	@override String get my_tags => 'Mes tags';
+	@override String get no_tags_for_now => 'Pas de tags pour le moment';
 	@override String get overview => 'Vue d\'ensemble';
 	@override String get nothing_to_do => 'Rien à faire pour le moment, vous pouvez vous détendre !';
 	@override String get day_off => 'Vous n\'avez rien de prévu pour demain, profitez-en !';
@@ -1296,7 +1299,10 @@ extension on TranslationsFr {
 			case 'tasks.title': return 'Tâches';
 			case 'tasks.today': return 'Aujourd\'hui';
 			case 'tasks.tags': return 'Tags';
+			case 'tasks.all_tasks': return 'Toutes les tâches';
+			case 'tasks.completed_tasks': return 'Tâches terminées';
 			case 'tasks.my_tags': return 'Mes tags';
+			case 'tasks.no_tags_for_now': return 'Pas de tags pour le moment';
 			case 'tasks.overview': return 'Vue d\'ensemble';
 			case 'tasks.nothing_to_do': return 'Rien à faire pour le moment, vous pouvez vous détendre !';
 			case 'tasks.day_off': return 'Vous n\'avez rien de prévu pour demain, profitez-en !';

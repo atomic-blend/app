@@ -116,7 +116,26 @@ class _TagsViewState extends State<TagsView> {
                                   : null,
                             ),
                           ),
-                        ))
+                        )),
+                    if (tagState.tags == null || tagState.tags!.isEmpty)
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const MyTags()));
+                        },
+                        child: Padding(
+                          padding: EdgeInsets.only(
+                            right: $constants.insets.xxs,
+                            left: $constants.insets.xxs,
+                          ),
+                          child: AutoSizeText(
+                            context.t.tasks.no_tags_for_now,
+                            style: getTextTheme(context).bodyMedium!.copyWith(),
+                          ),
+                        ),
+                      ),
                   ],
                 ),
                 SizedBox(
