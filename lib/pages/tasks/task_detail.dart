@@ -18,6 +18,7 @@ import 'package:fleather/fleather.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:flutter_popup/flutter_popup.dart';
 import 'package:jiffy/jiffy.dart';
 import 'package:macos_window_utils/macos_window_utils.dart';
@@ -301,10 +302,22 @@ class _TaskDetailState extends State<TaskDetail> {
                   SizedBox(
                     height: $constants.insets.xs,
                   ),
+                  Text(
+                    context.t.tasks.add_task_modal.notes,
+                    style: getTextTheme(context).labelMedium!.copyWith(),
+                  ),
                   FleatherToolbar.basic(controller: _controller!),
-                  SizedBox(
-                      height: getSize(context).height * 0.6,
-                      child: FleatherEditor(controller: _controller!)),
+                  KeyboardVisibilityBuilder(
+                      builder: (context, isKeyboardVisible) {
+                    return SizedBox(
+                      height: isKeyboardVisible
+                          ? getSize(context).height * 0.3
+                          : getSize(context).height * 0.62,
+                      child: FleatherEditor(
+                        controller: _controller!,
+                      ),
+                    );
+                  }),
                 ],
               ),
             )

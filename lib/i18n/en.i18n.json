@@ -180,6 +180,7 @@
       "description": "Description",
       "due_date": "Due Date",
       "dates": "Dates",
+      "notes": "Notes",
       "start_date": "Start Date",
       "end_date": "End Date",
       "cancel": "Cancel",
