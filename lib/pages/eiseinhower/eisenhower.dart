@@ -8,6 +8,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../tasks/add_task_modal.dart';
+
 class EisenhowerMatrix extends StatelessWidget {
   const EisenhowerMatrix({super.key});
 
@@ -120,7 +122,9 @@ class EisenhowerMatrix extends StatelessWidget {
         builder: (BuildContext context, List<TaskEntity?> candidateData,
             List<dynamic> rejectedData) {
           return Container(
-            padding: EdgeInsets.all($constants.insets.xs),
+            padding: EdgeInsets.symmetric(
+                vertical: $constants.insets.xs,
+                horizontal: $constants.insets.xs),
             decoration: BoxDecoration(
               color: getTheme(context).surfaceContainer,
               borderRadius: BorderRadius.circular($constants.insets.sm),
@@ -129,9 +133,6 @@ class EisenhowerMatrix extends StatelessWidget {
               children: [
                 Row(
                   children: [
-                    SizedBox(
-                      width: $constants.insets.xs,
-                    ),
                     Container(
                       width: 25,
                       height: 25,
@@ -155,7 +156,7 @@ class EisenhowerMatrix extends StatelessWidget {
                     SizedBox(
                       width: $constants.insets.xs,
                     ),
-                    Flexible(
+                    Expanded(
                       child: Text(
                         title,
                         style: getTextTheme(context).bodyMedium!.copyWith(
@@ -164,10 +165,40 @@ class EisenhowerMatrix extends StatelessWidget {
                         overflow: TextOverflow.ellipsis,
                       ),
                     ),
+                    SizedBox(
+                      width: $constants.insets.xs,
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        final date =
+                            _updateDateTimeWithPriority(priority, null);
+                        if (isDesktop(context)) {
+                          showDialog(
+                              context: context,
+                              builder: (context) => Dialog(
+                                      child: AddTaskModal(
+                                    endDate: date,
+                                    priority: priority,
+                                  )));
+                        } else {
+                          showModalBottomSheet(
+                              isScrollControlled: true,
+                              context: context,
+                              builder: (context) => AddTaskModal(
+                                    endDate: date,
+                                    priority: priority,
+                                  ));
+                        }
+                      },
+                      child: Icon(
+                        CupertinoIcons.plus,
+                        size: 20,
+                      ),
+                    )
                   ],
                 ),
                 SizedBox(
-                  height: $constants.insets.xs,
+                  height: $constants.insets.xxs,
                 ),
                 SingleChildScrollView(
                   child: Column(
@@ -214,7 +245,14 @@ class EisenhowerMatrix extends StatelessWidget {
             day: today.day, month: today.month, year: today.year);
       case null:
         // start next week, same hour
-        return date.add(const Duration(days: 3));
+        final now = DateTime.now();
+        final daysUntilMonday = now.weekday == 1 ? 7 : (8 - now.weekday) % 7;
+        final nextMonday = now.add(Duration(days: daysUntilMonday));
+        return date.copyWith(
+          day: nextMonday.day,
+          month: nextMonday.month,
+          year: nextMonday.year,
+        );
       default:
         return date;
     }
