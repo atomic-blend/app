@@ -46,8 +46,9 @@ class EisenhowerMatrix extends StatelessWidget {
                           priority: 3,
                           title: "Urgent & Important",
                           filter: (task) {
-                            return task
-                                .where((element) => element.priority == 3);
+                            return task.where((element) =>
+                                element.priority == 3 &&
+                                element.completed != true);
                           }),
                       buildEisenhowerCard(
                           context: context,
@@ -55,8 +56,9 @@ class EisenhowerMatrix extends StatelessWidget {
                           priority: 2,
                           title: "Not Urgent & Important",
                           filter: (task) {
-                            return task
-                                .where((element) => element.priority == 2);
+                            return task.where((element) =>
+                                element.priority == 2 &&
+                                element.completed != true);
                           }),
                     ],
                   ),
@@ -72,8 +74,9 @@ class EisenhowerMatrix extends StatelessWidget {
                           title: "Urgent & Unimportant",
                           filter: (task) {
                             //TODO: add filter for overdue tasks
-                            return task
-                                .where((element) => element.priority == 1);
+                            return task.where((element) =>
+                                element.priority == 1 &&
+                                element.completed != true);
                           }),
                       buildEisenhowerCard(
                           context: context,
@@ -81,8 +84,9 @@ class EisenhowerMatrix extends StatelessWidget {
                           priority: null,
                           title: "Not Urgent & Unimportant",
                           filter: (task) {
-                            return task
-                                .where((element) => element.priority == null);
+                            return task.where((element) =>
+                                element.priority == null &&
+                                element.completed != true);
                           }),
                     ],
                   ),
