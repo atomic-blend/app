@@ -1,5 +1,6 @@
 import 'package:app/blocs/app/app.bloc.dart';
 import 'package:app/components/app/bottom_navigation.dart';
+import 'package:app/utils/shortcuts.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -18,18 +19,24 @@ class SideNavigation extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final destinations = this.destinations.map((dest) {
+      if (dest is NavigationItem) {
+        return NavigationRailDestination(
+          icon: dest.icon,
+          selectedIcon: dest.selectedIcon,
+          label: Text(dest.label),
+        );
+      } else {
+        throw Exception('Invalid destination type');
+      }
+    }).toList();
+    if (isDesktop(context)) {
+      // move the 5th item to the bottom (the more button)
+      final moreItem = destinations.removeAt(4);
+      destinations.add(moreItem);
+    }
     return NavigationRail(
-      destinations: destinations.map((dest) {
-        if (dest is NavigationItem) {
-          return NavigationRailDestination(
-            icon: dest.icon,
-            selectedIcon: dest.selectedIcon,
-            label: Text(dest.label),
-          );
-        } else {
-          throw Exception('Invalid destination type');
-        }
-      }).toList(),
+      destinations: destinations,
       selectedIndex: currentPageIndex,
       backgroundColor: backgroundColor,
       onDestinationSelected: (index) {

@@ -19,6 +19,7 @@ class OverviewTasks extends StatefulWidget {
 
 class _OverviewTasksState extends State<OverviewTasks> {
   final TextEditingController _searchController = TextEditingController();
+
   @override
   void initState() {
     SyncService.sync(context);
@@ -34,51 +35,57 @@ class _OverviewTasksState extends State<OverviewTasks> {
         final thisWeekTasks = _thisWeekTasks(taskState.tasks ?? []);
         return Padding(
           padding: EdgeInsets.symmetric(horizontal: $constants.insets.sm),
-          child: ListView(
-            padding: EdgeInsets.zero,
-            children: [
-              ABSearchBar(
-                  controller: _searchController, onSubmitted: (value) {}),
-              SizedBox(height: $constants.insets.xs),
-              Text(
-                context.t.times.today,
-                style: getTextTheme(context).titleMedium!.copyWith(
-                      fontWeight: FontWeight.bold,
-                    ),
-              ),
-              if (todayTasks.isEmpty)
+          child: RefreshIndicator(
+            onRefresh: () {
+              SyncService.sync(context);
+              return Future.delayed(const Duration(seconds: 1));
+            },
+            child: ListView(
+              padding: EdgeInsets.zero,
+              children: [
+                ABSearchBar(
+                    controller: _searchController, onSubmitted: (value) {}),
+                SizedBox(height: $constants.insets.xs),
                 Text(
-                  context.t.tasks.nothing_to_do,
-                  style: getTextTheme(context).labelSmall!,
+                  context.t.times.today,
+                  style: getTextTheme(context).titleMedium!.copyWith(
+                        fontWeight: FontWeight.bold,
+                      ),
                 ),
-              if (todayTasks.isNotEmpty) ...todayTasks,
-              SizedBox(height: $constants.insets.xxs),
-              Text(
-                context.t.times.tomorrow,
-                style: getTextTheme(context).titleMedium!.copyWith(
-                      fontWeight: FontWeight.bold,
-                    ),
-              ),
-              if (tomorrowTasks.isEmpty)
+                if (todayTasks.isEmpty)
+                  Text(
+                    context.t.tasks.nothing_to_do,
+                    style: getTextTheme(context).labelSmall!,
+                  ),
+                if (todayTasks.isNotEmpty) ...todayTasks,
+                SizedBox(height: $constants.insets.xxs),
                 Text(
-                  context.t.tasks.day_off,
-                  style: getTextTheme(context).labelSmall!,
+                  context.t.times.tomorrow,
+                  style: getTextTheme(context).titleMedium!.copyWith(
+                        fontWeight: FontWeight.bold,
+                      ),
                 ),
-              if (tomorrowTasks.isNotEmpty) ...tomorrowTasks,
-              SizedBox(height: $constants.insets.xxs),
-              Text(
-                context.t.times.this_week,
-                style: getTextTheme(context).titleMedium!.copyWith(
-                      fontWeight: FontWeight.bold,
-                    ),
-              ),
-              if (thisWeekTasks.isEmpty)
+                if (tomorrowTasks.isEmpty)
+                  Text(
+                    context.t.tasks.day_off,
+                    style: getTextTheme(context).labelSmall!,
+                  ),
+                if (tomorrowTasks.isNotEmpty) ...tomorrowTasks,
+                SizedBox(height: $constants.insets.xxs),
                 Text(
-                  context.t.tasks.nothing_to_do,
-                  style: getTextTheme(context).labelSmall!,
+                  context.t.times.this_week,
+                  style: getTextTheme(context).titleMedium!.copyWith(
+                        fontWeight: FontWeight.bold,
+                      ),
                 ),
-              if (thisWeekTasks.isNotEmpty) ...thisWeekTasks,
-            ],
+                if (thisWeekTasks.isEmpty)
+                  Text(
+                    context.t.tasks.nothing_to_do,
+                    style: getTextTheme(context).labelSmall!,
+                  ),
+                if (thisWeekTasks.isNotEmpty) ...thisWeekTasks,
+              ],
+            ),
           ),
         );
       }),

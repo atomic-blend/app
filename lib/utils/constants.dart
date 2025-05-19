@@ -24,6 +24,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:icons_plus/icons_plus.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 
+import '../pages/eiseinhower/eisenhower.dart';
+
 final $constants = Constants();
 
 @immutable
@@ -240,6 +242,15 @@ class Navigation {
                 return Container();
               })
             ]),
+        AppBar(
+          backgroundColor: getTheme(context).surface,
+          title: Text(
+            context.t.eisenhower.title,
+            style: getTextTheme(context).headlineSmall!.copyWith(
+                  fontWeight: FontWeight.bold,
+                ),
+          ),
+        )
       ];
 
   /// Bottom navigation configuration.
@@ -251,29 +262,11 @@ class Navigation {
         null,
         const Habits(),
         const MoreApps(),
+        const EisenhowerMatrix(),
       ];
 
-  List<Widget?> floatingActionButtons(BuildContext context) => [
-        // FloatingActionButton(
-        //   onPressed: () {
-        //     showModalBottomSheet(
-        //         isScrollControlled: true,
-        //         context: context,
-        //         builder: (context) => const AddTaskModal());
-        //   },
-        //   shape: RoundedRectangleBorder(
-        //     borderRadius: BorderRadius.circular($constants.corners.xxl),
-        //   ),
-        //   elevation: 1,
-        //   backgroundColor: getTheme(context).surfaceContainerHighest,
-        //   child: const Icon(LineAwesome.plus_solid),
-        // ),
-        null,
-        null,
-        null,
-        null,
-        null
-      ];
+  List<Widget?> floatingActionButtons(BuildContext context) =>
+      [null, null, null, null, null, null];
 
   List<List<SideMenuItem>?> sideMenuItems(BuildContext context) => [
         [
@@ -367,7 +360,8 @@ class Navigation {
         ],
         null,
         null,
-        null
+        null,
+        null,
       ];
 
   List<Widget> bottomNavigationItems(BuildContext context) => [
@@ -441,6 +435,18 @@ class Navigation {
             size: 25,
           ),
           label: context.t.more.title,
+        ),
+        NavigationItem(
+          key: const Key("eisenhower"),
+          icon: const Icon(
+            CupertinoIcons.grid,
+            size: 25,
+          ),
+          cupertinoIcon: const Icon(
+            CupertinoIcons.grid,
+            size: 25,
+          ),
+          label: context.t.eisenhower.small_title,
         ),
       ];
 }

@@ -14,7 +14,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AddTaskModal extends StatefulWidget {
-  const AddTaskModal({super.key});
+  final DateTime? endDate;
+  final int? priority;
+
+  const AddTaskModal({super.key, this.endDate, this.priority});
 
   @override
   State<AddTaskModal> createState() => _AddTaskModalState();
@@ -27,6 +30,18 @@ class _AddTaskModalState extends State<AddTaskModal> {
   DateTime? _startDate;
   List<DateTime>? _reminders;
   int? _priority;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    if (widget.endDate != null) {
+      _endDate = widget.endDate;
+    }
+    if (widget.priority != null) {
+      _priority = widget.priority;
+    }
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -72,7 +87,7 @@ class _AddTaskModalState extends State<AddTaskModal> {
                     children: [
                       Container(
                         padding: EdgeInsets.symmetric(
-                            horizontal: $constants.insets.xs + 4, vertical: 2),
+                            horizontal: $constants.insets.xs, vertical: 2),
                         decoration: BoxDecoration(
                           color: _endDate != null
                               ? getTheme(context).primaryContainer
@@ -117,10 +132,15 @@ class _AddTaskModalState extends State<AddTaskModal> {
                             },
                             child: Row(
                               children: [
-                                Icon(CupertinoIcons.calendar,
-                                    color: _endDate != null
-                                        ? getTheme(context).primary
-                                        : null),
+                                SizedBox(
+                                  width: 25,
+                                  height: 25,
+                                  child: Icon(CupertinoIcons.calendar,
+                                      size: 18,
+                                      color: _endDate != null
+                                          ? getTheme(context).primary
+                                          : null),
+                                ),
                                 if (_endDate != null || isDesktop(context))
                                   Padding(
                                     padding: EdgeInsets.only(
@@ -208,28 +228,38 @@ class _AddTaskModalState extends State<AddTaskModal> {
                           ),
                           child: Row(
                             children: [
-                              Icon(CupertinoIcons.flag,
-                                  color: _priority != null
-                                      ? _priority == 1
-                                          ? Colors.blueAccent
-                                          : _priority == 2
-                                              ? Colors.deepOrangeAccent
-                                              : Colors.red
-                                      : null),
-                              if (_endDate != null || isDesktop(context))
+                              SizedBox(
+                                width: 25,
+                                height: 25,
+                                child: Icon(CupertinoIcons.flag,
+                                    size: 18,
+                                    color: _priority != null
+                                        ? _priority == 1
+                                            ? Colors.blueAccent
+                                            : _priority == 2
+                                                ? Colors.deepOrangeAccent
+                                                : Colors.red
+                                        : null),
+                              ),
+                              if (_priority != null || isDesktop(context))
                                 Padding(
                                   padding: EdgeInsets.only(
                                       left: $constants.insets.xxs),
                                   child: Text(
-                                    _endDate != null
-                                        ? _endDate!.formatDueDate(context)
+                                    _priority != null
+                                        ? context.t.tasks.priorities.values
+                                            .toList()[_priority!]
                                         : context.t.tasks.priority,
                                     style: getTextTheme(context)
                                         .bodySmall!
                                         .copyWith(
                                           fontWeight: FontWeight.bold,
-                                          color: _endDate != null
-                                              ? getTheme(context).primary
+                                          color: _priority != null
+                                              ? _priority == 1
+                                                  ? Colors.blueAccent
+                                                  : _priority == 2
+                                                      ? Colors.deepOrangeAccent
+                                                      : Colors.red
                                               : null,
                                         ),
                                   ),

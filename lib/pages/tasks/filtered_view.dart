@@ -11,6 +11,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class FilteredTaskView extends StatefulWidget {
   final List<TaskItem> Function(List<TaskEntity> tasks) filter;
+
   const FilteredTaskView({super.key, required this.filter});
 
   @override
@@ -19,6 +20,7 @@ class FilteredTaskView extends StatefulWidget {
 
 class _FilteredTaskViewState extends State<FilteredTaskView> {
   final TextEditingController _searchController = TextEditingController();
+
   @override
   void initState() {
     SyncService.sync(context);
@@ -31,20 +33,26 @@ class _FilteredTaskViewState extends State<FilteredTaskView> {
       child: BlocBuilder<TasksBloc, TasksState>(builder: (context, taskState) {
         return Padding(
           padding: EdgeInsets.symmetric(horizontal: $constants.insets.sm),
-          child: ListView(
-            padding: EdgeInsets.zero,
-            children: [
-              ABSearchBar(
-                  controller: _searchController, onSubmitted: (value) {}),
-              SizedBox(height: $constants.insets.sm),
-              if (widget.filter(taskState.tasks ?? []).isEmpty)
-                Text(
-                  context.t.tasks.nothing_to_do,
-                  style: getTextTheme(context).labelSmall!,
-                ),
-              if (widget.filter(taskState.tasks ?? []).isNotEmpty)
-                ...widget.filter(taskState.tasks ?? []),
-            ],
+          child: RefreshIndicator(
+            onRefresh: () {
+              SyncService.sync(context);
+              return Future.delayed(const Duration(seconds: 1));
+            },
+            child: ListView(
+              padding: EdgeInsets.zero,
+              children: [
+                ABSearchBar(
+                    controller: _searchController, onSubmitted: (value) {}),
+                SizedBox(height: $constants.insets.sm),
+                if (widget.filter(taskState.tasks ?? []).isEmpty)
+                  Text(
+                    context.t.tasks.nothing_to_do,
+                    style: getTextTheme(context).labelSmall!,
+                  ),
+                if (widget.filter(taskState.tasks ?? []).isNotEmpty)
+                  ...widget.filter(taskState.tasks ?? []),
+              ],
+            ),
           ),
         );
       }),

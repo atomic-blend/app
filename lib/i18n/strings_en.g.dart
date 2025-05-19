@@ -95,6 +95,7 @@ class Translations implements BaseTranslations<AppLocale, Translations> {
 	late final TranslationsNotificationsEn notifications = TranslationsNotificationsEn._(_root);
 	late final TranslationsTimeUnitsEn time_units = TranslationsTimeUnitsEn._(_root);
 	late final TranslationsNameGeneratorEn name_generator = TranslationsNameGeneratorEn._(_root);
+	late final TranslationsEisenhowerEn eisenhower = TranslationsEisenhowerEn._(_root);
 }
 
 // Path: navigation
@@ -705,6 +706,17 @@ class TranslationsNameGeneratorEn {
 		'spunky',
 		'fancy',
 	];
+}
+
+// Path: eisenhower
+class TranslationsEisenhowerEn {
+	TranslationsEisenhowerEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	String get small_title => 'Eisenhower';
+	String get title => 'Eisenhower Matrix';
 }
 
 // Path: auth.not_logged_in
@@ -1714,6 +1726,8 @@ extension on Translations {
 			case 'name_generator.adjectives.97': return 'pinky';
 			case 'name_generator.adjectives.98': return 'spunky';
 			case 'name_generator.adjectives.99': return 'fancy';
+			case 'eisenhower.small_title': return 'Eisenhower';
+			case 'eisenhower.title': return 'Eisenhower Matrix';
 			default: return null;
 		}
 	}
