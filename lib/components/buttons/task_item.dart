@@ -80,8 +80,6 @@ class TaskItem extends StatelessWidget {
                       task.title,
                       style: getTextTheme(context).headlineSmall!.copyWith(),
                     ),
-                    if (collapsed != true && task.description != null)
-                      Text(task.description!),
                     if (collapsed == true) ...[
                       SizedBox(
                         height: $constants.insets.xxs,

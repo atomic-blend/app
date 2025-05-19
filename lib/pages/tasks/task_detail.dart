@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:app/blocs/tag/tag.bloc.dart';
@@ -13,6 +14,7 @@ import 'package:app/pages/tasks/assign_tag_modal.dart';
 import 'package:app/utils/constants.dart';
 import 'package:app/utils/exntensions/date_time_extension.dart';
 import 'package:app/utils/shortcuts.dart';
+import 'package:fleather/fleather.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -39,6 +41,8 @@ class _TaskDetailState extends State<TaskDetail> {
   List<TagEntity> _tags = [];
   int? _priority;
 
+  FleatherController? _controller;
+
   @override
   void initState() {
     _titleController.text = widget.task.title;
@@ -47,6 +51,14 @@ class _TaskDetailState extends State<TaskDetail> {
     _reminders = widget.task.reminders;
     _tags = widget.task.tags ?? [];
     _priority = widget.task.priority;
+    if (widget.task.description != null) {
+      final json = jsonDecode(widget.task.description!);
+      _controller = FleatherController(
+        document: ParchmentDocument.fromJson(json),
+      );
+    } else {
+      _controller = FleatherController();
+    }
     super.initState();
   }
 
@@ -66,6 +78,16 @@ class _TaskDetailState extends State<TaskDetail> {
           style: getTextTheme(context).bodyLarge!.copyWith(
                 fontWeight: FontWeight.bold,
               ),
+        ),
+        leading: IconButton(
+          icon: Icon(
+            CupertinoIcons.back,
+            color: getTheme(context).primary,
+          ),
+          onPressed: () {
+            _updateTask(context);
+            Navigator.of(context).pop();
+          },
         ),
       ),
       backgroundColor: getTheme(context).surface,
@@ -269,7 +291,20 @@ class _TaskDetailState extends State<TaskDetail> {
                             ),
                           )),
                     ],
-                  )
+                  ),
+                  SizedBox(
+                    height: $constants.insets.xs,
+                  ),
+                  const Divider(
+                    height: 1,
+                  ),
+                  SizedBox(
+                    height: $constants.insets.xs,
+                  ),
+                  FleatherToolbar.basic(controller: _controller!),
+                  SizedBox(
+                      height: getSize(context).height * 0.6,
+                      child: FleatherEditor(controller: _controller!)),
                 ],
               ),
             )
@@ -277,5 +312,16 @@ class _TaskDetailState extends State<TaskDetail> {
         );
       }),
     );
+  }
+
+  _updateTask(BuildContext context) {
+    widget.task.title = _titleController.text;
+    widget.task.description = jsonEncode(_controller!.document.toJson());
+    widget.task.endDate = _endDate;
+    widget.task.startDate = _startDate;
+    widget.task.reminders = _reminders;
+    widget.task.tags = _tags;
+    widget.task.priority = _priority;
+    context.read<TasksBloc>().add(EditTask(widget.task));
   }
 }
