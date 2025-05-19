@@ -306,7 +306,8 @@ class _TaskDetailState extends State<TaskDetail> {
                     context.t.tasks.add_task_modal.notes,
                     style: getTextTheme(context).labelMedium!.copyWith(),
                   ),
-                  FleatherToolbar.basic(controller: _controller!),
+                  if (isDesktop(context))
+                    FleatherToolbar.basic(controller: _controller!),
                   KeyboardVisibilityBuilder(
                       builder: (context, isKeyboardVisible) {
                     return SizedBox(
@@ -318,6 +319,8 @@ class _TaskDetailState extends State<TaskDetail> {
                       ),
                     );
                   }),
+                  if (!isDesktop(context))
+                    FleatherToolbar.basic(controller: _controller!),
                 ],
               ),
             )
