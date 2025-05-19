@@ -311,7 +311,38 @@ class Navigation {
             onTap: () {
               context.read<AppCubit>().changeSelectedTabIndex(index: 2);
             },
-          )
+          ),
+          SideMenuItem(
+            title: context.t.tasks.all_tasks,
+            separatorBefore: true,
+            icon: CupertinoIcons.square_stack_3d_down_right,
+            color: Colors.grey[800]!,
+            iconContainer: true,
+            body: FilteredTaskView(filter: (tasks) {
+              return tasks
+                  .where((task) => task.completed != true)
+                  .map((task) => TaskItem(task: task))
+                  .toList();
+            }),
+            onTap: () {
+              context.read<AppCubit>().changeSelectedTabIndex(index: 3);
+            },
+          ),
+          SideMenuItem(
+            title: context.t.tasks.completed_tasks,
+            icon: CupertinoIcons.checkmark_circle_fill,
+            color: Colors.grey[800]!,
+            iconContainer: true,
+            body: FilteredTaskView(filter: (tasks) {
+              return tasks
+                  .where((task) => task.completed == true)
+                  .map((task) => TaskItem(task: task))
+                  .toList();
+            }),
+            onTap: () {
+              context.read<AppCubit>().changeSelectedTabIndex(index: 4);
+            },
+          ),
         ],
         [
           SideMenuItem(

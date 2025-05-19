@@ -30,36 +30,50 @@ class SideMenu extends StatelessWidget {
         } else {
           element.isSelected = false;
         }
-        sideItems.add(Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
+        sideItems.add(Column(
           children: [
-            SizedBox(
-              width: displayLabel == true
-                  ? 50
-                  : getSize(context).width * 0.135,
-              child: Padding(
-                padding: EdgeInsets.only(bottom: $constants.insets.xs),
-                child: GestureDetector(
-                  onTap: () {
-                    if (onItemSelected != null) {
-                      onItemSelected!();
-                    }
-                    element.onTap();
-                  },
-                  child: element,
+            if (element.separatorBefore == true) ...[
+              Padding(
+                padding: EdgeInsets.only(left: $constants.insets.xs),
+                child: Container(
+                  height: 1,
+                  color: Colors.grey.shade300,
                 ),
               ),
-            ),
-            if (displayLabel == true)
-              Expanded(
-                child: Padding(
-                  padding: EdgeInsets.only(left: $constants.insets.xs),
-                  child: Text(
-                    element.title,
-                    style: getTextTheme(context).bodyMedium!.copyWith(),
+              SizedBox(height: $constants.insets.xs),
+            ],
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                SizedBox(
+                  width: displayLabel == true
+                      ? 50
+                      : getSize(context).width * 0.135,
+                  child: Padding(
+                    padding: EdgeInsets.only(bottom: $constants.insets.xs),
+                    child: GestureDetector(
+                      onTap: () {
+                        if (onItemSelected != null) {
+                          onItemSelected!();
+                        }
+                        element.onTap();
+                      },
+                      child: element,
+                    ),
                   ),
                 ),
-              ),
+                if (displayLabel == true)
+                  Expanded(
+                    child: Padding(
+                      padding: EdgeInsets.only(left: $constants.insets.xs),
+                      child: Text(
+                        element.title,
+                        style: getTextTheme(context).bodyMedium!.copyWith(),
+                      ),
+                    ),
+                  ),
+              ],
+            ),
           ],
         ));
       });

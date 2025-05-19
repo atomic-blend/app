@@ -161,7 +161,10 @@ class TranslationsTasksEn {
 	String get today => 'Today';
 	String get overview => 'Overview';
 	String get tags => 'Tags';
+	String get all_tasks => 'All tasks';
+	String get completed_tasks => 'Completed tasks';
 	String get my_tags => 'My tags';
+	String get no_tags_for_now => 'No tags for now';
 	String get nothing_to_do => 'Nothing to do for now, enjoy your day!';
 	String get day_off => 'You have nothing planned for tomorrow, enjoy your day!';
 	String get week_off => 'You have nothing planned for this week, try and take the time to do the stuff left behind!';
@@ -1303,7 +1306,10 @@ extension on Translations {
 			case 'tasks.today': return 'Today';
 			case 'tasks.overview': return 'Overview';
 			case 'tasks.tags': return 'Tags';
+			case 'tasks.all_tasks': return 'All tasks';
+			case 'tasks.completed_tasks': return 'Completed tasks';
 			case 'tasks.my_tags': return 'My tags';
+			case 'tasks.no_tags_for_now': return 'No tags for now';
 			case 'tasks.nothing_to_do': return 'Nothing to do for now, enjoy your day!';
 			case 'tasks.day_off': return 'You have nothing planned for tomorrow, enjoy your day!';
 			case 'tasks.week_off': return 'You have nothing planned for this week, try and take the time to do the stuff left behind!';
