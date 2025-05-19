@@ -16,8 +16,10 @@ import 'package:jiffy/jiffy.dart';
 class TaskItem extends StatelessWidget {
   final TaskEntity task;
   final bool? collapsed;
+  final bool? slideable;
 
-  const TaskItem({super.key, required this.task, this.collapsed});
+  const TaskItem(
+      {super.key, required this.task, this.collapsed, this.slideable});
 
   @override
   Widget build(BuildContext context) {
@@ -36,6 +38,7 @@ class TaskItem extends StatelessWidget {
             MaterialPageRoute(builder: (context) => TaskDetail(task: task)));
       },
       child: Slidable(
+        enabled: slideable ?? true,
         key: ValueKey(task.id),
         endActionPane: ActionPane(motion: const ScrollMotion(), children: [
           Theme(

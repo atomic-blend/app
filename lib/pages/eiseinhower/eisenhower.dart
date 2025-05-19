@@ -207,6 +207,7 @@ class EisenhowerMatrix extends StatelessWidget {
                         return TaskItem(
                           task: task,
                           collapsed: true,
+                          slideable: false,
                         );
                       }).toList(),
                     ],
