@@ -110,6 +110,8 @@ class AppWrapperState extends ResponsiveState<AppWrapper> {
           if (screens.length > 5) {
             var moreScreen = screens.removeAt(4);
             screens.add(moreScreen);
+            var appBar = appbars.removeAt(4);
+            appbars.add(appBar);
           }
           return _buildDesktopLayout(
             context: context,
