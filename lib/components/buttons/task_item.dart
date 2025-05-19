@@ -5,6 +5,7 @@ import 'package:app/pages/tasks/task_detail.dart';
 import 'package:app/utils/constants.dart';
 import 'package:app/utils/exntensions/date_time_extension.dart';
 import 'package:app/utils/shortcuts.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -157,9 +158,11 @@ class TaskItem extends StatelessWidget {
           task.endDate != null &&
           task.endDate!.isDayDate())
         Container(
-          padding: EdgeInsets.symmetric(
-            horizontal: $constants.insets.xs,
-          ),
+          padding: collapsed == true
+              ? null
+              : EdgeInsets.symmetric(
+                  horizontal: $constants.insets.xs,
+                ),
           decoration: collapsed == true
               ? null
               : BoxDecoration(
@@ -171,7 +174,8 @@ class TaskItem extends StatelessWidget {
                   ),
                 ),
           child: Row(
-            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisSize: MainAxisSize.max,
             children: [
               const Icon(
                 CupertinoIcons.calendar,
@@ -190,9 +194,11 @@ class TaskItem extends StatelessWidget {
           !task.endDate!.isDayDate())
         Container(
           width: getSize(context).width * 0.3,
-          padding: EdgeInsets.symmetric(
-            horizontal: $constants.insets.xs,
-          ),
+          padding: collapsed == true
+              ? null
+              : EdgeInsets.symmetric(
+                  horizontal: $constants.insets.xs,
+                ),
           decoration: collapsed == true
               ? null
               : BoxDecoration(
@@ -206,7 +212,8 @@ class TaskItem extends StatelessWidget {
           child: Column(
             children: [
               Row(
-                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.start,
+                mainAxisSize: MainAxisSize.max,
                 children: [
                   const Icon(
                     CupertinoIcons.time,
@@ -215,10 +222,10 @@ class TaskItem extends StatelessWidget {
                   SizedBox(
                     width: $constants.insets.xxs,
                   ),
-                  Flexible(
-                    child: Text(task.endDate?.isBefore(DateTime.now()) == true
-                        ? "${Jiffy.parseFromDateTime(task.endDate!).toLocal().MMMMd}, ${Jiffy.parseFromDateTime(task.endDate!).toLocal().Hm}"
-                        : Jiffy.parseFromDateTime(task.endDate!).toLocal().jm),
+                  AutoSizeText(
+                    maxLines: 1,
+                    "${Jiffy.parseFromDateTime(task.endDate!).toLocal().MMMMd}, ${Jiffy.parseFromDateTime(task.endDate!).toLocal().Hm}",
+                    style: getTextTheme(context).bodyMedium,
                   ),
                 ],
               ),
@@ -245,7 +252,8 @@ class TaskItem extends StatelessWidget {
                   ),
                 ),
           child: Row(
-            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisSize: MainAxisSize.max,
             children: [
               if (collapsed != true) ...[
                 const Icon(

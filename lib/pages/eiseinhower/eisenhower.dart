@@ -108,7 +108,12 @@ class EisenhowerMatrix extends StatelessWidget {
           final task = details.data;
           context.read<TasksBloc>().add(
                 EditTask(
-                  task.copyWith(priority: priority),
+                  task.copyWith(
+                    priority: priority,
+                    startDate: null,
+                    endDate:
+                        _updateDateTimeWithPriority(priority, task.endDate),
+                  ),
                 ),
               );
         },
@@ -164,18 +169,16 @@ class EisenhowerMatrix extends StatelessWidget {
                 SizedBox(
                   height: $constants.insets.xs,
                 ),
-                Expanded(
-                  child: SingleChildScrollView(
-                    child: Column(
-                      children: [
-                        ...filteredTasks.map((task) {
-                          return TaskItem(
-                            task: task,
-                            collapsed: true,
-                          );
-                        }).toList(),
-                      ],
-                    ),
+                SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      ...filteredTasks.map((task) {
+                        return TaskItem(
+                          task: task,
+                          collapsed: true,
+                        );
+                      }).toList(),
+                    ],
                   ),
                 )
               ],
@@ -184,5 +187,36 @@ class EisenhowerMatrix extends StatelessWidget {
         },
       ),
     );
+  }
+
+  DateTime _updateDateTimeWithPriority(int? priority, DateTime? date) {
+    date ??= DateTime.now();
+    switch (priority) {
+      case 1:
+        final today = DateTime.now();
+        // same hour, today
+        return date.copyWith(
+            day: today.day, month: today.month, year: today.year);
+      case 2:
+        // start next week, same hour
+        final now = DateTime.now();
+        final daysUntilMonday = now.weekday == 1 ? 7 : (8 - now.weekday) % 7;
+        final nextMonday = now.add(Duration(days: daysUntilMonday));
+        return date.copyWith(
+          day: nextMonday.day,
+          month: nextMonday.month,
+          year: nextMonday.year,
+        );
+      case 3:
+        // same hour, today
+        final today = DateTime.now();
+        return date.copyWith(
+            day: today.day, month: today.month, year: today.year);
+      case null:
+        // start next week, same hour
+        return date.add(const Duration(days: 3));
+      default:
+        return date;
+    }
   }
 }
