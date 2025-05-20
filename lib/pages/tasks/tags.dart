@@ -158,27 +158,29 @@ class _TagsViewState extends State<TagsView> {
                 SizedBox(
                   height: $constants.insets.xs,
                 ),
-                Container(
-                  decoration: BoxDecoration(
-                    color: getTheme(context).surfaceContainer,
-                    borderRadius: BorderRadius.circular($constants.insets.sm),
-                  ),
-                  padding: EdgeInsets.symmetric(
-                    horizontal: $constants.insets.xs,
-                    vertical: $constants.insets.xs,
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      // AutoSizeText(
-                      //   context.t.tasks.title,
-                      //   style: getTextTheme(context).titleMedium!.copyWith(
-                      //         fontWeight: FontWeight.bold,
-                      //       ),
-                      // ),
-                      ..._getFilteredTasks(context, taskState.tasks)
-                          .map((task) => TaskItem(task: task)),
-                    ],
+                Expanded(
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: getTheme(context).surfaceContainer,
+                      borderRadius: BorderRadius.circular($constants.insets.sm),
+                    ),
+                    padding: EdgeInsets.symmetric(
+                      horizontal: $constants.insets.xs,
+                      vertical: $constants.insets.xs,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        // AutoSizeText(
+                        //   context.t.tasks.title,
+                        //   style: getTextTheme(context).titleMedium!.copyWith(
+                        //         fontWeight: FontWeight.bold,
+                        //       ),
+                        // ),
+                        ..._getFilteredTasks(context, taskState.tasks)
+                            .map((task) => TaskItem(task: task)),
+                      ],
+                    ),
                   ),
                 ),
               ],

@@ -121,7 +121,7 @@ class AppWrapperState extends ResponsiveState<AppWrapper> {
             navItems: navItems,
             floattingActionsButtons: floattingActionsButtons,
             menuItems: menuItems,
-            body: screens[appState.pageIndex],
+            body: body,
           );
         }
       });
