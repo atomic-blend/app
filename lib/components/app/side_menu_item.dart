@@ -43,7 +43,8 @@ class SideMenuItem extends StatelessWidget {
                   ? BoxDecoration(
                       color: color.withValues(alpha: .1),
                       border: isSelected == true
-                          ? Border.all(color: color, width: 1)
+                          ? Border.all(
+                              color: color.withValues(alpha: 0.4), width: 1)
                           : null,
                       borderRadius:
                           BorderRadius.circular($constants.corners.md),
