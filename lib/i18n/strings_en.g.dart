@@ -96,6 +96,7 @@ class Translations implements BaseTranslations<AppLocale, Translations> {
 	late final TranslationsTimeUnitsEn time_units = TranslationsTimeUnitsEn._(_root);
 	late final TranslationsNameGeneratorEn name_generator = TranslationsNameGeneratorEn._(_root);
 	late final TranslationsEisenhowerEn eisenhower = TranslationsEisenhowerEn._(_root);
+	late final TranslationsFeatureUnderConstructionEn feature_under_construction = TranslationsFeatureUnderConstructionEn._(_root);
 }
 
 // Path: navigation
@@ -170,6 +171,10 @@ class TranslationsTasksEn {
 	String get week_off => 'You have nothing planned for this week, try and take the time to do the stuff left behind!';
 	String get no_tasks_for_now => 'No tasks for now';
 	String get task_details => 'Task Details';
+	String get time_log => 'Time Log';
+	String get log_session => 'Log session';
+	String get timer => 'Timer';
+	String get pomodoro => 'Pomodoro';
 	String get from => 'From';
 	String get to => 'To';
 	String get priority => 'Priority';
@@ -723,6 +728,17 @@ class TranslationsEisenhowerEn {
 	// Translations
 	String get small_title => 'Eisenhower';
 	String get title => 'Eisenhower Matrix';
+}
+
+// Path: feature_under_construction
+class TranslationsFeatureUnderConstructionEn {
+	TranslationsFeatureUnderConstructionEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	String get title => 'Feature under construction';
+	String get description => 'This feature is not yet available, but we\'re working hard to bring it to you soon.\n\nStay tuned!';
 }
 
 // Path: auth.not_logged_in
@@ -1334,6 +1350,10 @@ extension on Translations {
 			case 'tasks.week_off': return 'You have nothing planned for this week, try and take the time to do the stuff left behind!';
 			case 'tasks.no_tasks_for_now': return 'No tasks for now';
 			case 'tasks.task_details': return 'Task Details';
+			case 'tasks.time_log': return 'Time Log';
+			case 'tasks.log_session': return 'Log session';
+			case 'tasks.timer': return 'Timer';
+			case 'tasks.pomodoro': return 'Pomodoro';
 			case 'tasks.from': return 'From';
 			case 'tasks.to': return 'To';
 			case 'tasks.priority': return 'Priority';
@@ -1762,6 +1782,8 @@ extension on Translations {
 			case 'name_generator.adjectives.99': return 'fancy';
 			case 'eisenhower.small_title': return 'Eisenhower';
 			case 'eisenhower.title': return 'Eisenhower Matrix';
+			case 'feature_under_construction.title': return 'Feature under construction';
+			case 'feature_under_construction.description': return 'This feature is not yet available, but we\'re working hard to bring it to you soon.\n\nStay tuned!';
 			default: return null;
 		}
 	}

@@ -161,6 +161,10 @@
     "week_off": "Vous n'avez rien de prévu pour cette semaine, essayez de prendre le temps de faire les choses laissées de côté !",
     "no_tasks_for_now": "Pas de tâches pour le moment",
     "task_details": "Détail de la tâche",
+    "time_log": "Journal",
+    "log_session": "Journaliser une session",
+    "timer": "Chronomètre",
+    "pomodoro": "Pomodoro",
     "from": "De",
     "to": "À",
     "priority": "Priorité",
@@ -688,5 +692,9 @@
   "eisenhower": {
     "small_title": "Eisenhower",
     "title": "Matrice d'Eisenhower"
+  },
+  "feature_under_construction": {
+    "title": "Fonctionnalité en construction",
+    "description": "Cette fonctionnalité n'est pas encore disponible, mais nous travaillons dur pour vous l'apporter bientôt.\n\nRestez à l'écoute !"
   }
 }

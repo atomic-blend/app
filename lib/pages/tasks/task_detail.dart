@@ -356,7 +356,7 @@ class _TaskDetailState extends State<TaskDetail> {
                             mainAxisCellCount: isDesktop(context) ? 0.4 : 0.8,
                             child: _buildCard(
                                 context: context,
-                                title: "Time log",
+                                title: context.t.tasks.time_log,
                                 icon: CupertinoIcons.arrow_counterclockwise,
                                 onTap: () {
                                   if (isDesktop(context)) {
@@ -386,7 +386,7 @@ class _TaskDetailState extends State<TaskDetail> {
                               mainAxisCellCount: isDesktop(context) ? 0.4 : 0.8,
                               child: _buildCard(
                                   context: context,
-                                  title: "Log time",
+                                  title: context.t.tasks.log_session,
                                   icon: CupertinoIcons.plus_app,
                                   onTap: () {
                                     if (isDesktop(context)) {
@@ -416,14 +416,15 @@ class _TaskDetailState extends State<TaskDetail> {
                             mainAxisCellCount: isDesktop(context) ? 0.4 : 0.8,
                             child: _buildCard(
                                 context: context,
-                                title: "Timer",
+                                title: context.t.tasks.timer,
                                 icon: CupertinoIcons.stopwatch,
                                 onTap: () {
                                   ToastHelper.showWarning(
                                     context: context,
-                                    title: "Timer not available yet",
-                                    description:
-                                        "Timer is not available yet. Please check back later.",
+                                    title: context
+                                        .t.feature_under_construction.title,
+                                    description: context.t
+                                        .feature_under_construction.description,
                                   );
                                 }),
                           ),
@@ -432,14 +433,15 @@ class _TaskDetailState extends State<TaskDetail> {
                             mainAxisCellCount: isDesktop(context) ? 0.4 : 0.8,
                             child: _buildCard(
                                 context: context,
-                                title: "Pomodoro",
+                                title: context.t.tasks.pomodoro,
                                 icon: CupertinoIcons.timer,
                                 onTap: () {
                                   ToastHelper.showWarning(
                                     context: context,
-                                    title: "Pomodoro not available yet",
-                                    description:
-                                        "Pomodoro is not available yet. Please check back later.",
+                                    title: context
+                                        .t.feature_under_construction.title,
+                                    description: context.t
+                                        .feature_under_construction.description,
                                   );
                                 }),
                           )

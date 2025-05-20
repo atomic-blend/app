@@ -93,6 +93,7 @@ class TranslationsFr implements Translations {
 	@override late final _TranslationsTimeUnitsFr time_units = _TranslationsTimeUnitsFr._(_root);
 	@override late final _TranslationsNameGeneratorFr name_generator = _TranslationsNameGeneratorFr._(_root);
 	@override late final _TranslationsEisenhowerFr eisenhower = _TranslationsEisenhowerFr._(_root);
+	@override late final _TranslationsFeatureUnderConstructionFr feature_under_construction = _TranslationsFeatureUnderConstructionFr._(_root);
 }
 
 // Path: navigation
@@ -167,6 +168,10 @@ class _TranslationsTasksFr implements TranslationsTasksEn {
 	@override String get week_off => 'Vous n\'avez rien de prévu pour cette semaine, essayez de prendre le temps de faire les choses laissées de côté !';
 	@override String get no_tasks_for_now => 'Pas de tâches pour le moment';
 	@override String get task_details => 'Détail de la tâche';
+	@override String get time_log => 'Journal';
+	@override String get log_session => 'Journaliser une session';
+	@override String get timer => 'Chronomètre';
+	@override String get pomodoro => 'Pomodoro';
 	@override String get from => 'De';
 	@override String get to => 'À';
 	@override String get priority => 'Priorité';
@@ -717,6 +722,17 @@ class _TranslationsEisenhowerFr implements TranslationsEisenhowerEn {
 	// Translations
 	@override String get small_title => 'Eisenhower';
 	@override String get title => 'Matrice d\'Eisenhower';
+}
+
+// Path: feature_under_construction
+class _TranslationsFeatureUnderConstructionFr implements TranslationsFeatureUnderConstructionEn {
+	_TranslationsFeatureUnderConstructionFr._(this._root);
+
+	final TranslationsFr _root; // ignore: unused_field
+
+	// Translations
+	@override String get title => 'Fonctionnalité en construction';
+	@override String get description => 'Cette fonctionnalité n\'est pas encore disponible, mais nous travaillons dur pour vous l\'apporter bientôt.\n\nRestez à l\'écoute !';
 }
 
 // Path: auth.not_logged_in
@@ -1328,6 +1344,10 @@ extension on TranslationsFr {
 			case 'tasks.week_off': return 'Vous n\'avez rien de prévu pour cette semaine, essayez de prendre le temps de faire les choses laissées de côté !';
 			case 'tasks.no_tasks_for_now': return 'Pas de tâches pour le moment';
 			case 'tasks.task_details': return 'Détail de la tâche';
+			case 'tasks.time_log': return 'Journal';
+			case 'tasks.log_session': return 'Journaliser une session';
+			case 'tasks.timer': return 'Chronomètre';
+			case 'tasks.pomodoro': return 'Pomodoro';
 			case 'tasks.from': return 'De';
 			case 'tasks.to': return 'À';
 			case 'tasks.priority': return 'Priorité';
@@ -1753,6 +1773,8 @@ extension on TranslationsFr {
 			case 'name_generator.adjectives.98': return 'raffiné';
 			case 'eisenhower.small_title': return 'Eisenhower';
 			case 'eisenhower.title': return 'Matrice d\'Eisenhower';
+			case 'feature_under_construction.title': return 'Fonctionnalité en construction';
+			case 'feature_under_construction.description': return 'Cette fonctionnalité n\'est pas encore disponible, mais nous travaillons dur pour vous l\'apporter bientôt.\n\nRestez à l\'écoute !';
 			default: return null;
 		}
 	}

@@ -161,6 +161,10 @@
     "week_off": "You have nothing planned for this week, try and take the time to do the stuff left behind!",
     "no_tasks_for_now": "No tasks for now",
     "task_details": "Task Details",
+    "time_log": "Time Log",
+    "log_session": "Log session",
+    "timer": "Timer",
+    "pomodoro": "Pomodoro",
     "from": "From",
     "to": "To",
     "priority": "Priority",
@@ -691,5 +695,9 @@
   "eisenhower": {
     "small_title": "Eisenhower",
     "title": "Eisenhower Matrix"
+  },
+  "feature_under_construction": {
+    "title": "Feature under construction",
+    "description": "This feature is not yet available, but we're working hard to bring it to you soon.\n\nStay tuned!"
   }
 }
