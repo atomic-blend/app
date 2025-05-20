@@ -976,6 +976,10 @@ class TranslationsTasksAddTimeEntryEn {
 	// Translations
 	String get title => 'Add a time entry';
 	String get description => 'Manually add a time entry for this task.';
+	String get start_time => 'Start time';
+	String get end_time => 'End time';
+	String get not_defined => 'Not defined';
+	String get date_required => 'Date is required';
 }
 
 // Path: calendar.event_detail
@@ -1368,6 +1372,10 @@ extension on Translations {
 			case 'tasks.no_time_entries': return 'No time entries for now';
 			case 'tasks.add_time_entry.title': return 'Add a time entry';
 			case 'tasks.add_time_entry.description': return 'Manually add a time entry for this task.';
+			case 'tasks.add_time_entry.start_time': return 'Start time';
+			case 'tasks.add_time_entry.end_time': return 'End time';
+			case 'tasks.add_time_entry.not_defined': return 'Not defined';
+			case 'tasks.add_time_entry.date_required': return 'Date is required';
 			case 'calendar.title': return 'Calendar';
 			case 'calendar.month': return 'Month';
 			case 'calendar.day': return 'Day';

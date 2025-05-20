@@ -205,7 +205,11 @@
     "no_time_entries": "Pas d'entrées de temps",
     "add_time_entry": {
       "title": "Ajouter une entrée de temps",
-      "description": "Manually add a time entry for this task."
+      "description": "Manually add a time entry for this task.",
+      "start_time": "Heure de début",
+      "end_time": "Heure de fin",
+      "not_defined": "Non défini",
+      "date_required": "Date requise"
     }
   },
   "calendar": {

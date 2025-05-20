@@ -970,6 +970,10 @@ class _TranslationsTasksAddTimeEntryFr implements TranslationsTasksAddTimeEntryE
 	// Translations
 	@override String get title => 'Ajouter une entrée de temps';
 	@override String get description => 'Manually add a time entry for this task.';
+	@override String get start_time => 'Heure de début';
+	@override String get end_time => 'Heure de fin';
+	@override String get not_defined => 'Non défini';
+	@override String get date_required => 'Date requise';
 }
 
 // Path: calendar.event_detail
@@ -1362,6 +1366,10 @@ extension on TranslationsFr {
 			case 'tasks.no_time_entries': return 'Pas d\'entrées de temps';
 			case 'tasks.add_time_entry.title': return 'Ajouter une entrée de temps';
 			case 'tasks.add_time_entry.description': return 'Manually add a time entry for this task.';
+			case 'tasks.add_time_entry.start_time': return 'Heure de début';
+			case 'tasks.add_time_entry.end_time': return 'Heure de fin';
+			case 'tasks.add_time_entry.not_defined': return 'Non défini';
+			case 'tasks.add_time_entry.date_required': return 'Date requise';
 			case 'calendar.title': return 'Calendrier';
 			case 'calendar.month': return 'Mois';
 			case 'calendar.day': return 'Jour';

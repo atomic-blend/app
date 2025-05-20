@@ -363,7 +363,7 @@ class _TaskDetailState extends State<TaskDetail> {
                                 context: context,
                                 isScrollControlled: true,
                                 builder: (context) => SizedBox(
-                                    height: getSize(context).height * 0.8,
+                                    height: getSize(context).height * 0.4,
                                     width: double.infinity,
                                     child: const AddTimeEntry()),
                               );

@@ -205,7 +205,11 @@
     "no_time_entries": "No time entries for now",
     "add_time_entry": {
       "title": "Add a time entry",
-      "description": "Manually add a time entry for this task."
+      "description": "Manually add a time entry for this task.",
+      "start_time": "Start time",
+      "end_time": "End time",
+      "not_defined": "Not defined",
+      "date_required": "Date is required"
     }
   },
   "calendar": {
