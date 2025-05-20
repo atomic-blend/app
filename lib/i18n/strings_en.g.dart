@@ -942,6 +942,7 @@ class TranslationsTasksAddTaskModalEn {
 	String get description => 'Description';
 	String get due_date => 'Due Date';
 	String get dates => 'Dates';
+	String get notes => 'Notes';
 	String get start_date => 'Start Date';
 	String get end_date => 'End Date';
 	String get cancel => 'Cancel';
@@ -1329,6 +1330,7 @@ extension on Translations {
 			case 'tasks.add_task_modal.description': return 'Description';
 			case 'tasks.add_task_modal.due_date': return 'Due Date';
 			case 'tasks.add_task_modal.dates': return 'Dates';
+			case 'tasks.add_task_modal.notes': return 'Notes';
 			case 'tasks.add_task_modal.start_date': return 'Start Date';
 			case 'tasks.add_task_modal.end_date': return 'End Date';
 			case 'tasks.add_task_modal.cancel': return 'Cancel';
