@@ -313,14 +313,22 @@ class _TaskDetailState extends State<TaskDetail> {
                     return SizedBox(
                       height: isKeyboardVisible
                           ? getSize(context).height * 0.3
-                          : getSize(context).height * 0.62,
+                          : isDesktop(context)
+                              ? getSize(context).height * 0.5
+                              : getSize(context).height * 0.62,
                       child: FleatherEditor(
                         controller: _controller!,
                       ),
                     );
                   }),
                   if (!isDesktop(context))
-                    FleatherToolbar.basic(controller: _controller!),
+                    KeyboardVisibilityBuilder(
+                        builder: (context, isKeyboardVisible) {
+                      if (isKeyboardVisible) {
+                        return FleatherToolbar.basic(controller: _controller!);
+                      }
+                      return Container();
+                    }),
                 ],
               ),
             )
