@@ -96,6 +96,7 @@ class Translations implements BaseTranslations<AppLocale, Translations> {
 	late final TranslationsTimeUnitsEn time_units = TranslationsTimeUnitsEn._(_root);
 	late final TranslationsNameGeneratorEn name_generator = TranslationsNameGeneratorEn._(_root);
 	late final TranslationsEisenhowerEn eisenhower = TranslationsEisenhowerEn._(_root);
+	late final TranslationsFeatureUnderConstructionEn feature_under_construction = TranslationsFeatureUnderConstructionEn._(_root);
 }
 
 // Path: navigation
@@ -170,6 +171,10 @@ class TranslationsTasksEn {
 	String get week_off => 'You have nothing planned for this week, try and take the time to do the stuff left behind!';
 	String get no_tasks_for_now => 'No tasks for now';
 	String get task_details => 'Task Details';
+	String get time_log => 'Time Log';
+	String get log_session => 'Log session';
+	String get timer => 'Timer';
+	String get pomodoro => 'Pomodoro';
 	String get from => 'From';
 	String get to => 'To';
 	String get priority => 'Priority';
@@ -181,6 +186,9 @@ class TranslationsTasksEn {
 	};
 	late final TranslationsTasksDueDatesEn due_dates = TranslationsTasksDueDatesEn._(_root);
 	late final TranslationsTasksAddTaskModalEn add_task_modal = TranslationsTasksAddTaskModalEn._(_root);
+	String get time_spent => 'Time spent';
+	String get no_time_entries => 'No time entries for now';
+	late final TranslationsTasksAddTimeEntryEn add_time_entry = TranslationsTasksAddTimeEntryEn._(_root);
 }
 
 // Path: calendar
@@ -722,6 +730,17 @@ class TranslationsEisenhowerEn {
 	String get title => 'Eisenhower Matrix';
 }
 
+// Path: feature_under_construction
+class TranslationsFeatureUnderConstructionEn {
+	TranslationsFeatureUnderConstructionEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	String get title => 'Feature under construction';
+	String get description => 'This feature is not yet available, but we\'re working hard to bring it to you soon.\n\nStay tuned!';
+}
+
 // Path: auth.not_logged_in
 class TranslationsAuthNotLoggedInEn {
 	TranslationsAuthNotLoggedInEn._(this._root);
@@ -962,6 +981,21 @@ class TranslationsTasksAddTaskModalEn {
 	String get when_would_you_like_to_be_reminded => 'When would you like to be reminded?';
 	String get when_would_you_like_the_task_to_start => 'When would you like the task to start?';
 	String get when_would_you_like_the_task_to_end => 'When would you like the task to end?';
+}
+
+// Path: tasks.add_time_entry
+class TranslationsTasksAddTimeEntryEn {
+	TranslationsTasksAddTimeEntryEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	String get title => 'Add a time entry';
+	String get description => 'Manually add a time entry for this task.';
+	String get start_time => 'Start time';
+	String get end_time => 'End time';
+	String get not_defined => 'Not defined';
+	String get date_required => 'Date is required';
 }
 
 // Path: calendar.event_detail
@@ -1316,6 +1350,10 @@ extension on Translations {
 			case 'tasks.week_off': return 'You have nothing planned for this week, try and take the time to do the stuff left behind!';
 			case 'tasks.no_tasks_for_now': return 'No tasks for now';
 			case 'tasks.task_details': return 'Task Details';
+			case 'tasks.time_log': return 'Time Log';
+			case 'tasks.log_session': return 'Log session';
+			case 'tasks.timer': return 'Timer';
+			case 'tasks.pomodoro': return 'Pomodoro';
 			case 'tasks.from': return 'From';
 			case 'tasks.to': return 'To';
 			case 'tasks.priority': return 'Priority';
@@ -1350,6 +1388,14 @@ extension on Translations {
 			case 'tasks.add_task_modal.when_would_you_like_to_be_reminded': return 'When would you like to be reminded?';
 			case 'tasks.add_task_modal.when_would_you_like_the_task_to_start': return 'When would you like the task to start?';
 			case 'tasks.add_task_modal.when_would_you_like_the_task_to_end': return 'When would you like the task to end?';
+			case 'tasks.time_spent': return 'Time spent';
+			case 'tasks.no_time_entries': return 'No time entries for now';
+			case 'tasks.add_time_entry.title': return 'Add a time entry';
+			case 'tasks.add_time_entry.description': return 'Manually add a time entry for this task.';
+			case 'tasks.add_time_entry.start_time': return 'Start time';
+			case 'tasks.add_time_entry.end_time': return 'End time';
+			case 'tasks.add_time_entry.not_defined': return 'Not defined';
+			case 'tasks.add_time_entry.date_required': return 'Date is required';
 			case 'calendar.title': return 'Calendar';
 			case 'calendar.month': return 'Month';
 			case 'calendar.day': return 'Day';
@@ -1736,6 +1782,8 @@ extension on Translations {
 			case 'name_generator.adjectives.99': return 'fancy';
 			case 'eisenhower.small_title': return 'Eisenhower';
 			case 'eisenhower.title': return 'Eisenhower Matrix';
+			case 'feature_under_construction.title': return 'Feature under construction';
+			case 'feature_under_construction.description': return 'This feature is not yet available, but we\'re working hard to bring it to you soon.\n\nStay tuned!';
 			default: return null;
 		}
 	}

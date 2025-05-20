@@ -42,3 +42,27 @@ class TaskDeleteLoading extends TasksState {
 class TaskEditLoading extends TasksState {
   const TaskEditLoading(List<TaskEntity> super.tasks);
 }
+
+class TaskAddTimeEntryLoading extends TasksState {
+  const TaskAddTimeEntryLoading(List<TaskEntity> super.tasks);
+}
+
+class TaskRemoveTimeEntryLoading extends TasksState {
+  const TaskRemoveTimeEntryLoading(List<TaskEntity> super.tasks);
+}
+
+class TaskUpdateTimeEntryLoading extends TasksState {
+  const TaskUpdateTimeEntryLoading(List<TaskEntity> super.tasks);
+}
+
+class TaskAddTimeEntrySuccess extends TasksState {
+  const TaskAddTimeEntrySuccess(List<TaskEntity> super.tasks);
+}
+
+class TaskRemoveTimeEntrySuccess extends TasksState {
+  const TaskRemoveTimeEntrySuccess(List<TaskEntity> super.tasks);
+}
+
+class TaskUpdateTimeEntrySuccess extends TasksState {
+  const TaskUpdateTimeEntrySuccess(List<TaskEntity> super.tasks);
+}

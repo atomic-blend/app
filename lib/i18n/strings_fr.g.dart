@@ -93,6 +93,7 @@ class TranslationsFr implements Translations {
 	@override late final _TranslationsTimeUnitsFr time_units = _TranslationsTimeUnitsFr._(_root);
 	@override late final _TranslationsNameGeneratorFr name_generator = _TranslationsNameGeneratorFr._(_root);
 	@override late final _TranslationsEisenhowerFr eisenhower = _TranslationsEisenhowerFr._(_root);
+	@override late final _TranslationsFeatureUnderConstructionFr feature_under_construction = _TranslationsFeatureUnderConstructionFr._(_root);
 }
 
 // Path: navigation
@@ -167,6 +168,10 @@ class _TranslationsTasksFr implements TranslationsTasksEn {
 	@override String get week_off => 'Vous n\'avez rien de prévu pour cette semaine, essayez de prendre le temps de faire les choses laissées de côté !';
 	@override String get no_tasks_for_now => 'Pas de tâches pour le moment';
 	@override String get task_details => 'Détail de la tâche';
+	@override String get time_log => 'Journal';
+	@override String get log_session => 'Journaliser une session';
+	@override String get timer => 'Chronomètre';
+	@override String get pomodoro => 'Pomodoro';
 	@override String get from => 'De';
 	@override String get to => 'À';
 	@override String get priority => 'Priorité';
@@ -178,6 +183,9 @@ class _TranslationsTasksFr implements TranslationsTasksEn {
 	};
 	@override late final _TranslationsTasksDueDatesFr due_dates = _TranslationsTasksDueDatesFr._(_root);
 	@override late final _TranslationsTasksAddTaskModalFr add_task_modal = _TranslationsTasksAddTaskModalFr._(_root);
+	@override String get time_spent => 'Temps passé';
+	@override String get no_time_entries => 'Pas d\'entrées de temps';
+	@override late final _TranslationsTasksAddTimeEntryFr add_time_entry = _TranslationsTasksAddTimeEntryFr._(_root);
 }
 
 // Path: calendar
@@ -716,6 +724,17 @@ class _TranslationsEisenhowerFr implements TranslationsEisenhowerEn {
 	@override String get title => 'Matrice d\'Eisenhower';
 }
 
+// Path: feature_under_construction
+class _TranslationsFeatureUnderConstructionFr implements TranslationsFeatureUnderConstructionEn {
+	_TranslationsFeatureUnderConstructionFr._(this._root);
+
+	final TranslationsFr _root; // ignore: unused_field
+
+	// Translations
+	@override String get title => 'Fonctionnalité en construction';
+	@override String get description => 'Cette fonctionnalité n\'est pas encore disponible, mais nous travaillons dur pour vous l\'apporter bientôt.\n\nRestez à l\'écoute !';
+}
+
 // Path: auth.not_logged_in
 class _TranslationsAuthNotLoggedInFr implements TranslationsAuthNotLoggedInEn {
 	_TranslationsAuthNotLoggedInFr._(this._root);
@@ -956,6 +975,21 @@ class _TranslationsTasksAddTaskModalFr implements TranslationsTasksAddTaskModalE
 	@override String get when_would_you_like_to_be_reminded => 'Quand aimeriez-vous être rappelé ?';
 	@override String get when_would_you_like_the_task_to_start => 'Quand aimeriez-vous que la tâche commence ?';
 	@override String get when_would_you_like_the_task_to_end => 'Quand aimeriez-vous que la tâche se termine ?';
+}
+
+// Path: tasks.add_time_entry
+class _TranslationsTasksAddTimeEntryFr implements TranslationsTasksAddTimeEntryEn {
+	_TranslationsTasksAddTimeEntryFr._(this._root);
+
+	final TranslationsFr _root; // ignore: unused_field
+
+	// Translations
+	@override String get title => 'Ajouter une entrée de temps';
+	@override String get description => 'Manually add a time entry for this task.';
+	@override String get start_time => 'Heure de début';
+	@override String get end_time => 'Heure de fin';
+	@override String get not_defined => 'Non défini';
+	@override String get date_required => 'Date requise';
 }
 
 // Path: calendar.event_detail
@@ -1310,6 +1344,10 @@ extension on TranslationsFr {
 			case 'tasks.week_off': return 'Vous n\'avez rien de prévu pour cette semaine, essayez de prendre le temps de faire les choses laissées de côté !';
 			case 'tasks.no_tasks_for_now': return 'Pas de tâches pour le moment';
 			case 'tasks.task_details': return 'Détail de la tâche';
+			case 'tasks.time_log': return 'Journal';
+			case 'tasks.log_session': return 'Journaliser une session';
+			case 'tasks.timer': return 'Chronomètre';
+			case 'tasks.pomodoro': return 'Pomodoro';
 			case 'tasks.from': return 'De';
 			case 'tasks.to': return 'À';
 			case 'tasks.priority': return 'Priorité';
@@ -1344,6 +1382,14 @@ extension on TranslationsFr {
 			case 'tasks.add_task_modal.when_would_you_like_to_be_reminded': return 'Quand aimeriez-vous être rappelé ?';
 			case 'tasks.add_task_modal.when_would_you_like_the_task_to_start': return 'Quand aimeriez-vous que la tâche commence ?';
 			case 'tasks.add_task_modal.when_would_you_like_the_task_to_end': return 'Quand aimeriez-vous que la tâche se termine ?';
+			case 'tasks.time_spent': return 'Temps passé';
+			case 'tasks.no_time_entries': return 'Pas d\'entrées de temps';
+			case 'tasks.add_time_entry.title': return 'Ajouter une entrée de temps';
+			case 'tasks.add_time_entry.description': return 'Manually add a time entry for this task.';
+			case 'tasks.add_time_entry.start_time': return 'Heure de début';
+			case 'tasks.add_time_entry.end_time': return 'Heure de fin';
+			case 'tasks.add_time_entry.not_defined': return 'Non défini';
+			case 'tasks.add_time_entry.date_required': return 'Date requise';
 			case 'calendar.title': return 'Calendrier';
 			case 'calendar.month': return 'Mois';
 			case 'calendar.day': return 'Jour';
@@ -1727,6 +1773,8 @@ extension on TranslationsFr {
 			case 'name_generator.adjectives.98': return 'raffiné';
 			case 'eisenhower.small_title': return 'Eisenhower';
 			case 'eisenhower.title': return 'Matrice d\'Eisenhower';
+			case 'feature_under_construction.title': return 'Fonctionnalité en construction';
+			case 'feature_under_construction.description': return 'Cette fonctionnalité n\'est pas encore disponible, mais nous travaillons dur pour vous l\'apporter bientôt.\n\nRestez à l\'écoute !';
 			default: return null;
 		}
 	}

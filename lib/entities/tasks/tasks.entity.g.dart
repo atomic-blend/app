@@ -30,6 +30,9 @@ _$TaskEntityImpl _$$TaskEntityImplFromJson(Map<String, dynamic> json) =>
       reminders: (json['reminders'] as List<dynamic>?)
           ?.map((e) => DateTime.parse(e as String))
           .toList(),
+      timeEntries: (json['timeEntries'] as List<dynamic>?)
+          ?.map((e) => TimeEntry.fromJson(e as Map<String, dynamic>))
+          .toList(),
       completed: json['completed'] as bool?,
     );
 
@@ -45,5 +48,6 @@ Map<String, dynamic> _$$TaskEntityImplToJson(_$TaskEntityImpl instance) =>
       'priority': instance.priority,
       'tags': instance.tags,
       'reminders': instance.reminders?.map((e) => e.toIso8601String()).toList(),
+      'timeEntries': instance.timeEntries,
       'completed': instance.completed,
     };

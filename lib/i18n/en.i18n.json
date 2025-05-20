@@ -161,6 +161,10 @@
     "week_off": "You have nothing planned for this week, try and take the time to do the stuff left behind!",
     "no_tasks_for_now": "No tasks for now",
     "task_details": "Task Details",
+    "time_log": "Time Log",
+    "log_session": "Log session",
+    "timer": "Timer",
+    "pomodoro": "Pomodoro",
     "from": "From",
     "to": "To",
     "priority": "Priority",
@@ -200,6 +204,16 @@
       "when_would_you_like_to_be_reminded": "When would you like to be reminded?",
       "when_would_you_like_the_task_to_start": "When would you like the task to start?",
       "when_would_you_like_the_task_to_end": "When would you like the task to end?"
+    },
+    "time_spent": "Time spent",
+    "no_time_entries": "No time entries for now",
+    "add_time_entry": {
+      "title": "Add a time entry",
+      "description": "Manually add a time entry for this task.",
+      "start_time": "Start time",
+      "end_time": "End time",
+      "not_defined": "Not defined",
+      "date_required": "Date is required"
     }
   },
   "calendar": {
@@ -681,5 +695,9 @@
   "eisenhower": {
     "small_title": "Eisenhower",
     "title": "Eisenhower Matrix"
+  },
+  "feature_under_construction": {
+    "title": "Feature under construction",
+    "description": "This feature is not yet available, but we're working hard to bring it to you soon.\n\nStay tuned!"
   }
 }
