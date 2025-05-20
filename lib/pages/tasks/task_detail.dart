@@ -365,7 +365,7 @@ class _TaskDetailState extends State<TaskDetail> {
                                             context: context,
                                             builder: (context) => Dialog(
                                                   child: TaskTimeEntryLog(
-                                                    timeEntries: _timeEntries,
+                                                    task: widget.task,
                                                   ),
                                                 ));
                                       } else {
@@ -377,7 +377,7 @@ class _TaskDetailState extends State<TaskDetail> {
                                                   getSize(context).height * 0.4,
                                               width: double.infinity,
                                               child: TaskTimeEntryLog(
-                                                timeEntries: _timeEntries,
+                                                task: widget.task,
                                               )),
                                         );
                                       }
@@ -391,7 +391,9 @@ class _TaskDetailState extends State<TaskDetail> {
                                         showDialog(
                                             context: context,
                                             builder: (context) => Dialog(
-                                                  child: AddTimeEntry(),
+                                                  child: AddTimeEntry(
+                                                    task: widget.task,
+                                                  ),
                                                 ));
                                       } else {
                                         showModalBottomSheet(
@@ -401,7 +403,9 @@ class _TaskDetailState extends State<TaskDetail> {
                                               height:
                                                   getSize(context).height * 0.4,
                                               width: double.infinity,
-                                              child: AddTimeEntry()),
+                                              child: AddTimeEntry(
+                                                task: widget.task,
+                                              )),
                                         );
                                       }
                                     }),
@@ -420,7 +424,7 @@ class _TaskDetailState extends State<TaskDetail> {
                                             context: context,
                                             builder: (context) => Dialog(
                                                   child: TaskTimeEntryLog(
-                                                    timeEntries: _timeEntries,
+                                                    task: widget.task,
                                                   ),
                                                 ));
                                       } else {
@@ -432,7 +436,7 @@ class _TaskDetailState extends State<TaskDetail> {
                                                   getSize(context).height * 0.4,
                                               width: double.infinity,
                                               child: TaskTimeEntryLog(
-                                                timeEntries: _timeEntries,
+                                                task: widget.task,
                                               )),
                                         );
                                       }
@@ -447,7 +451,7 @@ class _TaskDetailState extends State<TaskDetail> {
                                             context: context,
                                             builder: (context) => Dialog(
                                                   child: TaskTimeEntryLog(
-                                                    timeEntries: _timeEntries,
+                                                    task: widget.task,
                                                   ),
                                                 ));
                                       } else {
@@ -459,7 +463,7 @@ class _TaskDetailState extends State<TaskDetail> {
                                                   getSize(context).height * 0.4,
                                               width: double.infinity,
                                               child: TaskTimeEntryLog(
-                                                timeEntries: _timeEntries,
+                                                task: widget.task,
                                               )),
                                         );
                                       }

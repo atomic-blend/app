@@ -1,3 +1,4 @@
+import 'package:app/blocs/tasks/tasks.bloc.dart';
 import 'package:app/components/buttons/primary_button_square.dart';
 import 'package:app/entities/tasks/tasks.entity.dart';
 import 'package:app/entities/time_entry/time_entry.entity.dart';
@@ -7,13 +8,14 @@ import 'package:app/utils/shortcuts.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_popup/flutter_popup.dart';
 import 'package:jiffy/jiffy.dart';
 
 class AddTimeEntry extends StatefulWidget {
-  final TaskEntity? task;
+  final TaskEntity task;
 
-  const AddTimeEntry({super.key, this.task});
+  const AddTimeEntry({super.key, required this.task});
 
   @override
   State<AddTimeEntry> createState() => _AddTimeEntryState();
@@ -173,7 +175,7 @@ class _AddTimeEntryState extends State<AddTimeEntry> {
                             SizedBox(
                               width: $constants.insets.sm,
                             ),
-                            Icon(
+                            const Icon(
                               CupertinoIcons.calendar_today,
                             ),
                             SizedBox(
@@ -203,6 +205,13 @@ class _AddTimeEntryState extends State<AddTimeEntry> {
                       startDate: _startDate!,
                       endDate: _endDate!,
                     );
+
+                    if (!context.mounted) {
+                      return;
+                    }
+
+                    context.read<TasksBloc>().add(AddTimeEntryToTask(
+                        task: widget.task!, timeEntry: timeEntry));
                   },
                 )
               ],

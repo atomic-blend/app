@@ -1,3 +1,6 @@
+import 'package:app/blocs/tasks/tasks.bloc.dart';
+import 'package:app/components/modals/delete_confirm_modal.dart';
+import 'package:app/entities/tasks/tasks.entity.dart';
 import 'package:app/entities/time_entry/time_entry.entity.dart';
 import 'package:app/i18n/strings.g.dart';
 import 'package:app/pages/tasks/add_time_entry.dart';
@@ -5,11 +8,15 @@ import 'package:app/utils/constants.dart';
 import 'package:app/utils/shortcuts.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:icons_plus/icons_plus.dart';
+import 'package:jiffy/jiffy.dart';
 
 class TaskTimeEntryLog extends StatelessWidget {
-  final List<TimeEntry>? timeEntries;
+  final TaskEntity task;
 
-  const TaskTimeEntryLog({super.key, this.timeEntries});
+  const TaskTimeEntryLog({super.key, required this.task});
 
   @override
   Widget build(BuildContext context) {
@@ -54,8 +61,10 @@ class TaskTimeEntryLog extends StatelessWidget {
                   if (isDesktop(context)) {
                     showDialog(
                         context: context,
-                        builder: (context) => const Dialog(
-                              child: AddTimeEntry(),
+                        builder: (context) => Dialog(
+                              child: AddTimeEntry(
+                                task: task,
+                              ),
                             ));
                   } else {
                     showModalBottomSheet(
@@ -64,7 +73,9 @@ class TaskTimeEntryLog extends StatelessWidget {
                       builder: (context) => SizedBox(
                           height: getSize(context).height * 0.4,
                           width: double.infinity,
-                          child: const AddTimeEntry()),
+                          child: AddTimeEntry(
+                            task: task,
+                          )),
                     );
                   }
                 },
@@ -81,25 +92,130 @@ class TaskTimeEntryLog extends StatelessWidget {
           SizedBox(
             height: $constants.insets.xs,
           ),
-          if (timeEntries == null || timeEntries!.isEmpty)
+          if (task.timeEntries == null || task.timeEntries!.isEmpty)
             Text(
               context.t.tasks.no_time_entries,
               style: getTextTheme(context)
                   .bodyMedium!
                   .copyWith(color: Colors.grey),
             ),
-          if (timeEntries != null && timeEntries!.isNotEmpty)
+          if (task.timeEntries != null && task.timeEntries!.isNotEmpty)
             SingleChildScrollView(
               child: Column(
                 children: [
-                  ...?timeEntries?.map((timeEntry) => Container(
-                        child: Text("entry"),
-                      ))
+                  ...?task.timeEntries?.map(
+                      (timeEntry) => _buildTimeEntryCard(context, timeEntry)),
                 ],
               ),
             )
         ],
       ),
     );
+  }
+
+  _buildTimeEntryCard(BuildContext context, TimeEntry timeEntry) {
+    return Slidable(
+      endActionPane: ActionPane(
+        motion: const ScrollMotion(),
+        children: [
+          SizedBox(
+            width: $constants.insets.xs,
+          ),
+          Theme(
+            data: Theme.of(context).copyWith(
+                outlinedButtonTheme: const OutlinedButtonThemeData(
+              style: ButtonStyle(
+                iconColor: WidgetStatePropertyAll(Colors.white),
+                iconSize: WidgetStatePropertyAll(25),
+              ),
+            )),
+            child: Expanded(
+              child: GestureDetector(
+                onTap: () {
+                  if (!context.mounted) return;
+                  showDialog(
+                    context: context,
+                    builder: (context) => DeleteConfirmModal(
+                      title: context.t.habits.habit_detail.delete_entry,
+                      description: context
+                          .t.habits.habit_detail.delete_entry_description,
+                      warning:
+                          context.t.habits.habit_detail.delete_entry_warning,
+                      onDelete: () {
+                        if (!context.mounted) {
+                          return;
+                        }
+                        context.read<TasksBloc>().add(
+                              RemoveTimeEntryFromTask(
+                                task: task,
+                                timeEntry: timeEntry,
+                              ),
+                            );
+                        ;
+                      },
+                    ),
+                  );
+                },
+                child: Container(
+                  height: double.infinity,
+                  decoration: BoxDecoration(
+                    color: Colors.red,
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: const Icon(
+                    CupertinoIcons.trash,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            ),
+          )
+        ],
+      ),
+      child: Container(
+        width: double.infinity,
+        decoration: BoxDecoration(
+          color: getTheme(context).surfaceContainer,
+          borderRadius: BorderRadius.circular(10),
+        ),
+        padding: EdgeInsets.all($constants.insets.xs),
+        child: Padding(
+          padding: EdgeInsets.all($constants.insets.xs),
+          child: Row(
+            children: [
+              const Icon(
+                CupertinoIcons.clock,
+              ),
+              SizedBox(
+                width: $constants.insets.md,
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "Manual Entry",
+                    style: getTextTheme(context).labelLarge!.copyWith(
+                          fontWeight: FontWeight.bold,
+                        ),
+                  ),
+                  Text(_getDurationBetweenDates(
+                      timeEntry.startDate, timeEntry.endDate)),
+                ],
+              ),
+              const Spacer(),
+              Text(Jiffy.parseFromDateTime(timeEntry.startDate).yMMMEd),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  _getDurationBetweenDates(
+    DateTime startDate,
+    DateTime endDate,
+  ) {
+    final difference = endDate.difference(startDate);
+    return "${difference.inHours}h ${difference.inMinutes.remainder(60)}m";
   }
 }

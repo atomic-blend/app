@@ -83,6 +83,7 @@ class TaskEntity with _$TaskEntity {
   static Future<TaskEntity> decrypt(
       Map<String, dynamic> data, EncryptionService encryptionService) async {
     Map<String, dynamic> decryptedData = {};
+    List<dynamic>? encryptedTimeEntries = [];
 
     for (var entry in data.entries) {
       if (nonEncryptedFields.contains(entry.key) ||
@@ -94,6 +95,9 @@ class TaskEntity with _$TaskEntity {
       }
     }
 
+    encryptedTimeEntries = decryptedData['timeEntries'];
+    decryptedData['timeEntries'] = null;
+
     final task = TaskEntity.fromJson(decryptedData);
 
     if (decryptedData['tags'] != null) {
@@ -102,11 +106,10 @@ class TaskEntity with _$TaskEntity {
       task.tags = decryptedData['tags'];
     }
 
-    if (decryptedData['timeEntries'] != null) {
-      decryptedData['timeEntries'] = await Future.wait(
-          (decryptedData['timeEntries'] as List).map((timeEntry) =>
-              TimeEntry.decrypt(
-                  data: timeEntry, encryptionService: encryptionService)));
+    if (encryptedTimeEntries != null) {
+      decryptedData['timeEntries'] = await Future.wait(encryptedTimeEntries.map(
+          (timeEntry) => TimeEntry.decrypt(
+              data: timeEntry, encryptionService: encryptionService)));
       task.timeEntries = decryptedData['timeEntries'];
     }
 
