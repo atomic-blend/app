@@ -141,8 +141,8 @@ class TaskItem extends StatelessWidget {
                     SizedBox(
                       width: $constants.insets.xs,
                     ),
-                    ...buildTaskDateInfos(context),
                   ],
+                    ...buildTaskDateInfos(context),
                 ]
               ],
             ),
