@@ -114,15 +114,11 @@ class _CalendarState extends State<Calendar> {
                           maxLines: 3,
                           overflow: TextOverflow.ellipsis,
                           appointment.subject,
-                          style: getTextTheme(context).bodyMedium!.copyWith(
-                                fontWeight: FontWeight.bold,
-                              ),
+                          style: getTextTheme(context)
+                              .bodyMedium!
+                              .copyWith(fontWeight: FontWeight.w400),
                         ),
                       ),
-                      // Text(
-                      //   "${Jiffy.parseFromDateTime(details.appointments.first.startTime).Hm.toString()} - ${Jiffy.parseFromDateTime(details.appointments.first.endTime).Hm.toString()}",
-                      //   style: getTextTheme(context).bodySmall!,
-                      // ),
                     ],
                   ),
                 );
@@ -215,7 +211,7 @@ class _CalendarState extends State<Calendar> {
             startTime: task.endDate!,
             endTime: task.endDate!.add(const Duration(minutes: 30)),
             subject: task.title,
-            color: getTheme(context).primary,
+            color: getTheme(context).primary.withValues(alpha: 0.2),
             notes: task.description,
             isAllDay: false,
             itemType: CustomAppointmentType.task,
