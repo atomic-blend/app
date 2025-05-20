@@ -8,7 +8,7 @@ part of 'time_entry.entity.dart';
 
 _$TimeEntryImpl _$$TimeEntryImplFromJson(Map<String, dynamic> json) =>
     _$TimeEntryImpl(
-      id: json['id'] as String,
+      id: json['id'] as String?,
       startDate: DateTime.parse(json['startDate'] as String),
       endDate: DateTime.parse(json['endDate'] as String),
       createdAt: json['createdAt'] == null

@@ -11,8 +11,9 @@ import 'package:app/entities/tag/tag.entity.dart';
 import 'package:app/entities/tasks/tasks.entity.dart';
 import 'package:app/entities/time_entry/time_entry.entity.dart';
 import 'package:app/i18n/strings.g.dart';
+import 'package:app/pages/tasks/add_time_entry.dart';
 import 'package:app/pages/tasks/assign_tag_modal.dart';
-import 'package:app/pages/tasks/task_time_entry.dart' show TaskTimeEntries;
+import 'package:app/pages/tasks/task_time_entry_log.dart' show TaskTimeEntryLog;
 import 'package:app/utils/constants.dart';
 import 'package:app/utils/exntensions/date_time_extension.dart';
 import 'package:app/utils/shortcuts.dart';
@@ -343,19 +344,11 @@ class _TaskDetailState extends State<TaskDetail> {
                     SizedBox(
                       height: $constants.insets.sm,
                     ),
-                    Text(
-                      "Actions",
-                      style: getTextTheme(context).headlineMedium!.copyWith(
-                            fontWeight: FontWeight.bold,
-                          ),
-                    ),
                     SizedBox(
-                      height: $constants.insets.xxs,
-                    ),
-                    SizedBox(
-                      height: getSize(context).height * 0.1,
+                      height: getSize(context).height * 0.2,
                       child: SingleChildScrollView(
                         child: Column(
+                          mainAxisAlignment: MainAxisAlignment.end,
                           spacing: $constants.insets.xs,
                           mainAxisSize: MainAxisSize.min,
                           children: [
@@ -371,7 +364,7 @@ class _TaskDetailState extends State<TaskDetail> {
                                         showDialog(
                                             context: context,
                                             builder: (context) => Dialog(
-                                                  child: TaskTimeEntries(
+                                                  child: TaskTimeEntryLog(
                                                     timeEntries: _timeEntries,
                                                   ),
                                                 ));
@@ -383,14 +376,96 @@ class _TaskDetailState extends State<TaskDetail> {
                                               height:
                                                   getSize(context).height * 0.4,
                                               width: double.infinity,
-                                              child: TaskTimeEntries(
+                                              child: TaskTimeEntryLog(
+                                                timeEntries: _timeEntries,
+                                              )),
+                                        );
+                                      }
+                                    }),
+                                _buildCard(
+                                    context: context,
+                                    title: "Log time",
+                                    icon: CupertinoIcons.plus_app,
+                                    onTap: () {
+                                      if (isDesktop(context)) {
+                                        showDialog(
+                                            context: context,
+                                            builder: (context) => Dialog(
+                                                  child: AddTimeEntry(),
+                                                ));
+                                      } else {
+                                        showModalBottomSheet(
+                                          context: context,
+                                          isScrollControlled: true,
+                                          builder: (context) => SizedBox(
+                                              height:
+                                                  getSize(context).height * 0.4,
+                                              width: double.infinity,
+                                              child: AddTimeEntry()),
+                                        );
+                                      }
+                                    }),
+                              ],
+                            ),
+                            Row(
+                              spacing: $constants.insets.xs,
+                              children: [
+                                _buildCard(
+                                    context: context,
+                                    title: "Timer",
+                                    icon: CupertinoIcons.stopwatch,
+                                    onTap: () {
+                                      if (isDesktop(context)) {
+                                        showDialog(
+                                            context: context,
+                                            builder: (context) => Dialog(
+                                                  child: TaskTimeEntryLog(
+                                                    timeEntries: _timeEntries,
+                                                  ),
+                                                ));
+                                      } else {
+                                        showModalBottomSheet(
+                                          context: context,
+                                          isScrollControlled: true,
+                                          builder: (context) => SizedBox(
+                                              height:
+                                                  getSize(context).height * 0.4,
+                                              width: double.infinity,
+                                              child: TaskTimeEntryLog(
+                                                timeEntries: _timeEntries,
+                                              )),
+                                        );
+                                      }
+                                    }),
+                                _buildCard(
+                                    context: context,
+                                    title: "Pomodoro",
+                                    icon: CupertinoIcons.timer,
+                                    onTap: () {
+                                      if (isDesktop(context)) {
+                                        showDialog(
+                                            context: context,
+                                            builder: (context) => Dialog(
+                                                  child: TaskTimeEntryLog(
+                                                    timeEntries: _timeEntries,
+                                                  ),
+                                                ));
+                                      } else {
+                                        showModalBottomSheet(
+                                          context: context,
+                                          isScrollControlled: true,
+                                          builder: (context) => SizedBox(
+                                              height:
+                                                  getSize(context).height * 0.4,
+                                              width: double.infinity,
+                                              child: TaskTimeEntryLog(
                                                 timeEntries: _timeEntries,
                                               )),
                                         );
                                       }
                                     }),
                               ],
-                            ),
+                            )
                           ],
                         ),
                       ),

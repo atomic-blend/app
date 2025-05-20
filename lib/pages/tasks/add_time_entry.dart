@@ -1,4 +1,6 @@
 import 'package:app/components/buttons/primary_button_square.dart';
+import 'package:app/entities/tasks/tasks.entity.dart';
+import 'package:app/entities/time_entry/time_entry.entity.dart';
 import 'package:app/i18n/strings.g.dart';
 import 'package:app/utils/constants.dart';
 import 'package:app/utils/shortcuts.dart';
@@ -9,7 +11,9 @@ import 'package:flutter_popup/flutter_popup.dart';
 import 'package:jiffy/jiffy.dart';
 
 class AddTimeEntry extends StatefulWidget {
-  const AddTimeEntry({super.key});
+  final TaskEntity? task;
+
+  const AddTimeEntry({super.key, this.task});
 
   @override
   State<AddTimeEntry> createState() => _AddTimeEntryState();
@@ -45,11 +49,18 @@ class _AddTimeEntryState extends State<AddTimeEntry> {
                     Navigator.pop(context);
                   },
                   icon: Container(
-                      padding: EdgeInsets.all($constants.insets.xxs),
-                      decoration: BoxDecoration(
-                          color: Colors.grey.shade300,
-                          borderRadius: BorderRadius.circular(100)),
-                      child: const Icon(CupertinoIcons.xmark))),
+                    width: 30,
+                    height: 30,
+                    padding: EdgeInsets.all($constants.insets.xxs),
+                    decoration: BoxDecoration(
+                      color: Colors.grey.shade300,
+                      borderRadius: BorderRadius.circular(100),
+                    ),
+                    child: const Icon(
+                      CupertinoIcons.xmark,
+                      size: 18,
+                    ),
+                  )),
               SizedBox(
                 width: $constants.insets.xs,
               ),
@@ -184,7 +195,15 @@ class _AddTimeEntryState extends State<AddTimeEntry> {
                 ),
                 PrimaryButtonSquare(
                   text: context.t.actions.save,
-                  onPressed: () {},
+                  onPressed: () {
+                    if (_startDate == null || _endDate == null) {
+                      return;
+                    }
+                    final timeEntry = TimeEntry(
+                      startDate: _startDate!,
+                      endDate: _endDate!,
+                    );
+                  },
                 )
               ],
             ),

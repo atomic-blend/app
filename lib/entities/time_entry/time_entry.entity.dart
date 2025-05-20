@@ -9,7 +9,7 @@ class TimeEntry with _$TimeEntry {
   TimeEntry._();
 
   factory TimeEntry({
-    required String id,
+    String? id,
     required DateTime startDate,
     required DateTime endDate,
     DateTime? createdAt,

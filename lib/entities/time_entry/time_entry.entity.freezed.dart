@@ -20,8 +20,8 @@ TimeEntry _$TimeEntryFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$TimeEntry {
-  String get id => throw _privateConstructorUsedError;
-  set id(String value) => throw _privateConstructorUsedError;
+  String? get id => throw _privateConstructorUsedError;
+  set id(String? value) => throw _privateConstructorUsedError;
   DateTime get startDate => throw _privateConstructorUsedError;
   set startDate(DateTime value) => throw _privateConstructorUsedError;
   DateTime get endDate => throw _privateConstructorUsedError;
@@ -47,7 +47,7 @@ abstract class $TimeEntryCopyWith<$Res> {
       _$TimeEntryCopyWithImpl<$Res, TimeEntry>;
   @useResult
   $Res call(
-      {String id,
+      {String? id,
       DateTime startDate,
       DateTime endDate,
       DateTime? createdAt,
@@ -69,17 +69,17 @@ class _$TimeEntryCopyWithImpl<$Res, $Val extends TimeEntry>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
+    Object? id = freezed,
     Object? startDate = null,
     Object? endDate = null,
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
   }) {
     return _then(_value.copyWith(
-      id: null == id
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       startDate: null == startDate
           ? _value.startDate
           : startDate // ignore: cast_nullable_to_non_nullable
@@ -109,7 +109,7 @@ abstract class _$$TimeEntryImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String id,
+      {String? id,
       DateTime startDate,
       DateTime endDate,
       DateTime? createdAt,
@@ -129,17 +129,17 @@ class __$$TimeEntryImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
+    Object? id = freezed,
     Object? startDate = null,
     Object? endDate = null,
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
   }) {
     return _then(_$TimeEntryImpl(
-      id: null == id
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       startDate: null == startDate
           ? _value.startDate
           : startDate // ignore: cast_nullable_to_non_nullable
@@ -164,7 +164,7 @@ class __$$TimeEntryImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$TimeEntryImpl extends _TimeEntry {
   _$TimeEntryImpl(
-      {required this.id,
+      {this.id,
       required this.startDate,
       required this.endDate,
       this.createdAt,
@@ -175,7 +175,7 @@ class _$TimeEntryImpl extends _TimeEntry {
       _$$TimeEntryImplFromJson(json);
 
   @override
-  String id;
+  String? id;
   @override
   DateTime startDate;
   @override
@@ -203,7 +203,7 @@ class _$TimeEntryImpl extends _TimeEntry {
 
 abstract class _TimeEntry extends TimeEntry {
   factory _TimeEntry(
-      {required String id,
+      {String? id,
       required DateTime startDate,
       required DateTime endDate,
       DateTime? createdAt,
@@ -214,8 +214,8 @@ abstract class _TimeEntry extends TimeEntry {
       _$TimeEntryImpl.fromJson;
 
   @override
-  String get id;
-  set id(String value);
+  String? get id;
+  set id(String? value);
   @override
   DateTime get startDate;
   set startDate(DateTime value);
