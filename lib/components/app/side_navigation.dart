@@ -22,7 +22,7 @@ class SideNavigation extends StatelessWidget {
     final destinations = this.destinations.map((dest) {
       if (dest is NavigationItem) {
         return NavigationRailDestination(
-          icon: dest.icon,
+          icon: isApple(context) ? dest.cupertinoIcon : dest.icon,
           selectedIcon: dest.selectedIcon,
           label: Text(dest.label),
         );
@@ -39,6 +39,7 @@ class SideNavigation extends StatelessWidget {
       destinations: destinations,
       selectedIndex: currentPageIndex,
       backgroundColor: backgroundColor,
+      indicatorColor: getTheme(context).primary.withValues(alpha: 0.05),
       onDestinationSelected: (index) {
         // Check if the tapped item has its own onTap handler
         if (this.destinations.length > index &&
