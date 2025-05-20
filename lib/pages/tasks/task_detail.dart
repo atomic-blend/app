@@ -17,6 +17,7 @@ import 'package:app/pages/tasks/task_time_entry_log.dart' show TaskTimeEntryLog;
 import 'package:app/utils/constants.dart';
 import 'package:app/utils/exntensions/date_time_extension.dart';
 import 'package:app/utils/shortcuts.dart';
+import 'package:app/utils/toast_helper.dart';
 import 'package:fleather/fleather.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -418,26 +419,12 @@ class _TaskDetailState extends State<TaskDetail> {
                                 title: "Timer",
                                 icon: CupertinoIcons.stopwatch,
                                 onTap: () {
-                                  if (isDesktop(context)) {
-                                    showDialog(
-                                        context: context,
-                                        builder: (context) => Dialog(
-                                              child: TaskTimeEntryLog(
-                                                task: widget.task,
-                                              ),
-                                            ));
-                                  } else {
-                                    showModalBottomSheet(
-                                      context: context,
-                                      isScrollControlled: true,
-                                      builder: (context) => SizedBox(
-                                          height: getSize(context).height * 0.4,
-                                          width: double.infinity,
-                                          child: TaskTimeEntryLog(
-                                            task: widget.task,
-                                          )),
-                                    );
-                                  }
+                                  ToastHelper.showWarning(
+                                    context: context,
+                                    title: "Timer not available yet",
+                                    description:
+                                        "Timer is not available yet. Please check back later.",
+                                  );
                                 }),
                           ),
                           StaggeredGridTile.count(
@@ -448,26 +435,12 @@ class _TaskDetailState extends State<TaskDetail> {
                                 title: "Pomodoro",
                                 icon: CupertinoIcons.timer,
                                 onTap: () {
-                                  if (isDesktop(context)) {
-                                    showDialog(
-                                        context: context,
-                                        builder: (context) => Dialog(
-                                              child: TaskTimeEntryLog(
-                                                task: widget.task,
-                                              ),
-                                            ));
-                                  } else {
-                                    showModalBottomSheet(
-                                      context: context,
-                                      isScrollControlled: true,
-                                      builder: (context) => SizedBox(
-                                          height: getSize(context).height * 0.4,
-                                          width: double.infinity,
-                                          child: TaskTimeEntryLog(
-                                            task: widget.task,
-                                          )),
-                                    );
-                                  }
+                                  ToastHelper.showWarning(
+                                    context: context,
+                                    title: "Pomodoro not available yet",
+                                    description:
+                                        "Pomodoro is not available yet. Please check back later.",
+                                  );
                                 }),
                           )
                         ]),
