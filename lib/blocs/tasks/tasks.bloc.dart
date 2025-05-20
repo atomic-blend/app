@@ -93,6 +93,7 @@ class TasksBloc extends HydratedBloc<TasksEvent, TasksState> {
     emit(TasksLoading(prevState.tasks ?? []));
     try {
       await _tasksService.addTimeEntryToTask(event.task, event.timeEntry);
+      emit(TaskAddTimeEntrySuccess(prevState.tasks ?? []));
       add(const LoadTasks());
     } catch (e) {
       emit(TaskLoadingError(prevState.tasks ?? [], e.toString()));
@@ -105,6 +106,7 @@ class TasksBloc extends HydratedBloc<TasksEvent, TasksState> {
     emit(TasksLoading(prevState.tasks ?? []));
     try {
       await _tasksService.removeTimeEntryFromTask(event.task, event.timeEntry);
+      emit(TaskRemoveTimeEntrySuccess(prevState.tasks ?? []));
       add(const LoadTasks());
     } catch (e) {
       emit(TaskLoadingError(prevState.tasks ?? [], e.toString()));
@@ -117,6 +119,7 @@ class TasksBloc extends HydratedBloc<TasksEvent, TasksState> {
     emit(TasksLoading(prevState.tasks ?? []));
     try {
       await _tasksService.updateTimeEntryInTask(event.task, event.timeEntry);
+      emit(TaskUpdateTimeEntrySuccess(prevState.tasks ?? []));
       add(const LoadTasks());
     } catch (e) {
       emit(TaskLoadingError(prevState.tasks ?? [], e.toString()));

@@ -20,100 +20,115 @@ class TaskTimeEntryLog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.all($constants.insets.md),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              GestureDetector(
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
-                  child: Container(
-                    width: 30,
-                    height: 30,
-                    padding: EdgeInsets.all($constants.insets.xxs),
-                    decoration: BoxDecoration(
-                      color: Colors.grey.shade300,
-                      borderRadius: BorderRadius.circular(100),
+    return BlocListener<TasksBloc, TasksState>(
+      listener: (context, state) {
+        if (state is TaskRemoveTimeEntrySuccess) {
+          Navigator.pop(context);
+        }
+      },
+      child: BlocBuilder<TasksBloc, TasksState>(
+        builder: (context, taskState) {
+          final TaskEntity _task = taskState.tasks?.firstWhere(
+            (task) => task.id == this.task.id,
+            orElse: () => task,
+          ) ?? task;
+          return Padding(
+            padding: EdgeInsets.all($constants.insets.md),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    GestureDetector(
+                        onTap: () {
+                          Navigator.pop(context);
+                        },
+                        child: Container(
+                          width: 30,
+                          height: 30,
+                          padding: EdgeInsets.all($constants.insets.xxs),
+                          decoration: BoxDecoration(
+                            color: Colors.grey.shade300,
+                            borderRadius: BorderRadius.circular(100),
+                          ),
+                          child: const Icon(
+                            CupertinoIcons.xmark,
+                            size: 18,
+                          ),
+                        )),
+                    SizedBox(
+                      width: $constants.insets.xs,
                     ),
-                    child: const Icon(
-                      CupertinoIcons.xmark,
-                      size: 18,
+                    Text(
+                      context.t.tasks.time_spent,
+                      style: getTextTheme(context).headlineLarge!.copyWith(
+                            fontWeight: FontWeight.bold,
+                          ),
                     ),
-                  )),
-              SizedBox(
-                width: $constants.insets.xs,
-              ),
-              Text(
-                context.t.tasks.time_spent,
-                style: getTextTheme(context).headlineLarge!.copyWith(
-                      fontWeight: FontWeight.bold,
-                    ),
-              ),
-              const Spacer(),
-              GestureDetector(
-                onTap: () {
-                  if (isDesktop(context)) {
-                    showDialog(
-                        context: context,
-                        builder: (context) => Dialog(
-                              child: AddTimeEntry(
-                                task: task,
-                              ),
-                            ));
-                  } else {
-                    showModalBottomSheet(
-                      context: context,
-                      isScrollControlled: true,
-                      builder: (context) => SizedBox(
-                          height: getSize(context).height * 0.4,
-                          width: double.infinity,
-                          child: AddTimeEntry(
-                            task: task,
-                          )),
-                    );
-                  }
-                },
-                child: Text(
-                  context.t.actions.add,
-                  style: getTextTheme(context).labelMedium!.copyWith(
-                        color: getTheme(context).primary,
-                        fontWeight: FontWeight.bold,
+                    const Spacer(),
+                    GestureDetector(
+                      onTap: () {
+                        if (isDesktop(context)) {
+                          showDialog(
+                              context: context,
+                              builder: (context) => Dialog(
+                                    child: AddTimeEntry(
+                                      task: _task,
+                                    ),
+                                  ));
+                        } else {
+                          showModalBottomSheet(
+                            context: context,
+                            isScrollControlled: true,
+                            builder: (context) => SizedBox(
+                                height: getSize(context).height * 0.4,
+                                width: double.infinity,
+                                child: AddTimeEntry(
+                                  task: _task,
+                                )),
+                          );
+                        }
+                      },
+                      child: Text(
+                        context.t.actions.add,
+                        style: getTextTheme(context).labelMedium!.copyWith(
+                              color: getTheme(context).primary,
+                              fontWeight: FontWeight.bold,
+                            ),
                       ),
+                    )
+                  ],
                 ),
-              )
-            ],
-          ),
-          SizedBox(
-            height: $constants.insets.xs,
-          ),
-          if (task.timeEntries == null || task.timeEntries!.isEmpty)
-            Text(
-              context.t.tasks.no_time_entries,
-              style: getTextTheme(context)
-                  .bodyMedium!
-                  .copyWith(color: Colors.grey),
+                SizedBox(
+                  height: $constants.insets.xs,
+                ),
+                if (_task.timeEntries == null || _task.timeEntries!.isEmpty)
+                  Text(
+                    context.t.tasks.no_time_entries,
+                    style: getTextTheme(context)
+                        .bodyMedium!
+                        .copyWith(color: Colors.grey),
+                  ),
+                if (_task.timeEntries != null && _task.timeEntries!.isNotEmpty)
+                  SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        ...?_task.timeEntries?.map(
+                            (timeEntry) => _buildTimeEntryCard(context, _task, timeEntry)),
+                      ],
+                    ),
+                  )
+              ],
             ),
-          if (task.timeEntries != null && task.timeEntries!.isNotEmpty)
-            SingleChildScrollView(
-              child: Column(
-                children: [
-                  ...?task.timeEntries?.map(
-                      (timeEntry) => _buildTimeEntryCard(context, timeEntry)),
-                ],
-              ),
-            )
-        ],
+          );
+        }
       ),
     );
   }
 
-  _buildTimeEntryCard(BuildContext context, TimeEntry timeEntry) {
+  _buildTimeEntryCard(BuildContext context, TaskEntity task, TimeEntry timeEntry) {
     return Slidable(
       endActionPane: ActionPane(
         motion: const ScrollMotion(),
@@ -151,7 +166,7 @@ class TaskTimeEntryLog extends StatelessWidget {
                                 timeEntry: timeEntry,
                               ),
                             );
-                        ;
+                      
                       },
                     ),
                   );

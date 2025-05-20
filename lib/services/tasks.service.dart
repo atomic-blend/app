@@ -64,7 +64,7 @@ class TasksService {
       data: encryptedTimeEntry,
     );
 
-    if (result.statusCode == 201) {
+    if (result.statusCode == 200) {
       return true;
     } else {
       throw Exception('task_add_time_entry_failed');
