@@ -183,6 +183,7 @@ class TranslationsTasksEn {
 	late final TranslationsTasksAddTaskModalEn add_task_modal = TranslationsTasksAddTaskModalEn._(_root);
 	String get time_spent => 'Time spent';
 	String get no_time_entries => 'No time entries for now';
+	late final TranslationsTasksAddTimeEntryEn add_time_entry = TranslationsTasksAddTimeEntryEn._(_root);
 }
 
 // Path: calendar
@@ -966,6 +967,17 @@ class TranslationsTasksAddTaskModalEn {
 	String get when_would_you_like_the_task_to_end => 'When would you like the task to end?';
 }
 
+// Path: tasks.add_time_entry
+class TranslationsTasksAddTimeEntryEn {
+	TranslationsTasksAddTimeEntryEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	String get title => 'Add a time entry';
+	String get description => 'Manually add a time entry for this task.';
+}
+
 // Path: calendar.event_detail
 class TranslationsCalendarEventDetailEn {
 	TranslationsCalendarEventDetailEn._(this._root);
@@ -1354,6 +1366,8 @@ extension on Translations {
 			case 'tasks.add_task_modal.when_would_you_like_the_task_to_end': return 'When would you like the task to end?';
 			case 'tasks.time_spent': return 'Time spent';
 			case 'tasks.no_time_entries': return 'No time entries for now';
+			case 'tasks.add_time_entry.title': return 'Add a time entry';
+			case 'tasks.add_time_entry.description': return 'Manually add a time entry for this task.';
 			case 'calendar.title': return 'Calendar';
 			case 'calendar.month': return 'Month';
 			case 'calendar.day': return 'Day';

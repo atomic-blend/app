@@ -202,7 +202,11 @@
       "when_would_you_like_the_task_to_end": "When would you like the task to end?"
     },
     "time_spent": "Time spent",
-    "no_time_entries": "No time entries for now"
+    "no_time_entries": "No time entries for now",
+    "add_time_entry": {
+      "title": "Add a time entry",
+      "description": "Manually add a time entry for this task."
+    }
   },
   "calendar": {
     "title": "Calendar",

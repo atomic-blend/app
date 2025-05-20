@@ -25,6 +25,7 @@ import 'package:jiffy/jiffy.dart';
 import 'package:macos_window_utils/macos_window_utils.dart';
 
 import '../../components/forms/ab_checkbox.dart';
+import 'add_time_entry.dart';
 
 class TaskDetail extends StatefulWidget {
   final TaskEntity task;
@@ -349,12 +350,32 @@ class _TaskDetailState extends State<TaskDetail> {
                         SizedBox(
                           width: $constants.insets.xs,
                         ),
-                        Text(
-                          context.t.actions.add,
-                          style: getTextTheme(context).labelMedium!.copyWith(
-                                color: getTheme(context).primary,
-                                fontWeight: FontWeight.bold,
-                              ),
+                        GestureDetector(
+                          onTap: () {
+                            if (isDesktop(context)) {
+                              showDialog(
+                                  context: context,
+                                  builder: (context) => const Dialog(
+                                        child: AddTimeEntry(),
+                                      ));
+                            } else {
+                              showModalBottomSheet(
+                                context: context,
+                                isScrollControlled: true,
+                                builder: (context) => SizedBox(
+                                    height: getSize(context).height * 0.8,
+                                    width: double.infinity,
+                                    child: const AddTimeEntry()),
+                              );
+                            }
+                          },
+                          child: Text(
+                            context.t.actions.add,
+                            style: getTextTheme(context).labelMedium!.copyWith(
+                                  color: getTheme(context).primary,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                          ),
                         )
                       ],
                     ),

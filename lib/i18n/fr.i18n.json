@@ -202,7 +202,11 @@
       "when_would_you_like_the_task_to_end": "Quand aimeriez-vous que la tâche se termine ?"
     },
     "time_spent": "Temps passé",
-    "no_time_entries": "Pas d'entrées de temps"
+    "no_time_entries": "Pas d'entrées de temps",
+    "add_time_entry": {
+      "title": "Ajouter une entrée de temps",
+      "description": "Manually add a time entry for this task."
+    }
   },
   "calendar": {
     "title": "Calendrier",

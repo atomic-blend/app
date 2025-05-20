@@ -180,6 +180,7 @@ class _TranslationsTasksFr implements TranslationsTasksEn {
 	@override late final _TranslationsTasksAddTaskModalFr add_task_modal = _TranslationsTasksAddTaskModalFr._(_root);
 	@override String get time_spent => 'Temps passé';
 	@override String get no_time_entries => 'Pas d\'entrées de temps';
+	@override late final _TranslationsTasksAddTimeEntryFr add_time_entry = _TranslationsTasksAddTimeEntryFr._(_root);
 }
 
 // Path: calendar
@@ -960,6 +961,17 @@ class _TranslationsTasksAddTaskModalFr implements TranslationsTasksAddTaskModalE
 	@override String get when_would_you_like_the_task_to_end => 'Quand aimeriez-vous que la tâche se termine ?';
 }
 
+// Path: tasks.add_time_entry
+class _TranslationsTasksAddTimeEntryFr implements TranslationsTasksAddTimeEntryEn {
+	_TranslationsTasksAddTimeEntryFr._(this._root);
+
+	final TranslationsFr _root; // ignore: unused_field
+
+	// Translations
+	@override String get title => 'Ajouter une entrée de temps';
+	@override String get description => 'Manually add a time entry for this task.';
+}
+
 // Path: calendar.event_detail
 class _TranslationsCalendarEventDetailFr implements TranslationsCalendarEventDetailEn {
 	_TranslationsCalendarEventDetailFr._(this._root);
@@ -1348,6 +1360,8 @@ extension on TranslationsFr {
 			case 'tasks.add_task_modal.when_would_you_like_the_task_to_end': return 'Quand aimeriez-vous que la tâche se termine ?';
 			case 'tasks.time_spent': return 'Temps passé';
 			case 'tasks.no_time_entries': return 'Pas d\'entrées de temps';
+			case 'tasks.add_time_entry.title': return 'Ajouter une entrée de temps';
+			case 'tasks.add_time_entry.description': return 'Manually add a time entry for this task.';
 			case 'calendar.title': return 'Calendrier';
 			case 'calendar.month': return 'Mois';
 			case 'calendar.day': return 'Jour';
