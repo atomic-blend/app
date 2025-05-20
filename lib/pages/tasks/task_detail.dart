@@ -23,6 +23,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:flutter_popup/flutter_popup.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:jiffy/jiffy.dart';
 import 'package:macos_window_utils/macos_window_utils.dart';
 
@@ -344,136 +345,132 @@ class _TaskDetailState extends State<TaskDetail> {
                     SizedBox(
                       height: $constants.insets.sm,
                     ),
-                    SizedBox(
-                      height: getSize(context).height * 0.2,
-                      child: SingleChildScrollView(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          spacing: $constants.insets.xs,
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Row(
-                              spacing: $constants.insets.xs,
-                              children: [
-                                _buildCard(
-                                    context: context,
-                                    title: "Time log",
-                                    icon: CupertinoIcons.arrow_counterclockwise,
-                                    onTap: () {
-                                      if (isDesktop(context)) {
-                                        showDialog(
-                                            context: context,
-                                            builder: (context) => Dialog(
-                                                  child: TaskTimeEntryLog(
-                                                    task: widget.task,
-                                                  ),
-                                                ));
-                                      } else {
-                                        showModalBottomSheet(
-                                          context: context,
-                                          isScrollControlled: true,
-                                          builder: (context) => SizedBox(
-                                              height:
-                                                  getSize(context).height * 0.4,
-                                              width: double.infinity,
+                    StaggeredGrid.count(
+                        crossAxisCount: 4,
+                        mainAxisSpacing: $constants.insets.xs,
+                        crossAxisSpacing: $constants.insets.xs,
+                        children: [
+                          StaggeredGridTile.count(
+                            crossAxisCellCount: isDesktop(context) ? 1 : 2,
+                            mainAxisCellCount: isDesktop(context) ? 0.4 : 0.8,
+                            child: _buildCard(
+                                context: context,
+                                title: "Time log",
+                                icon: CupertinoIcons.arrow_counterclockwise,
+                                onTap: () {
+                                  if (isDesktop(context)) {
+                                    showDialog(
+                                        context: context,
+                                        builder: (context) => Dialog(
                                               child: TaskTimeEntryLog(
                                                 task: widget.task,
-                                              )),
-                                        );
-                                      }
-                                    }),
-                                _buildCard(
-                                    context: context,
-                                    title: "Log time",
-                                    icon: CupertinoIcons.plus_app,
-                                    onTap: () {
-                                      if (isDesktop(context)) {
-                                        showDialog(
-                                            context: context,
-                                            builder: (context) => Dialog(
-                                                  child: AddTimeEntry(
-                                                    task: widget.task,
-                                                  ),
-                                                ));
-                                      } else {
-                                        showModalBottomSheet(
+                                              ),
+                                            ));
+                                  } else {
+                                    showModalBottomSheet(
+                                      context: context,
+                                      isScrollControlled: true,
+                                      builder: (context) => SizedBox(
+                                          height: getSize(context).height * 0.4,
+                                          width: double.infinity,
+                                          child: TaskTimeEntryLog(
+                                            task: widget.task,
+                                          )),
+                                    );
+                                  }
+                                }),
+                          ),
+                          StaggeredGridTile.count(
+                              crossAxisCellCount: isDesktop(context) ? 1 : 2,
+                              mainAxisCellCount: isDesktop(context) ? 0.4 : 0.8,
+                              child: _buildCard(
+                                  context: context,
+                                  title: "Log time",
+                                  icon: CupertinoIcons.plus_app,
+                                  onTap: () {
+                                    if (isDesktop(context)) {
+                                      showDialog(
                                           context: context,
-                                          isScrollControlled: true,
-                                          builder: (context) => SizedBox(
-                                              height:
-                                                  getSize(context).height * 0.4,
-                                              width: double.infinity,
-                                              child: AddTimeEntry(
-                                                task: widget.task,
-                                              )),
-                                        );
-                                      }
-                                    }),
-                              ],
-                            ),
-                            Row(
-                              spacing: $constants.insets.xs,
-                              children: [
-                                _buildCard(
-                                    context: context,
-                                    title: "Timer",
-                                    icon: CupertinoIcons.stopwatch,
-                                    onTap: () {
-                                      if (isDesktop(context)) {
-                                        showDialog(
-                                            context: context,
-                                            builder: (context) => Dialog(
-                                                  child: TaskTimeEntryLog(
-                                                    task: widget.task,
-                                                  ),
-                                                ));
-                                      } else {
-                                        showModalBottomSheet(
-                                          context: context,
-                                          isScrollControlled: true,
-                                          builder: (context) => SizedBox(
-                                              height:
-                                                  getSize(context).height * 0.4,
-                                              width: double.infinity,
+                                          builder: (context) => Dialog(
+                                                child: AddTimeEntry(
+                                                  task: widget.task,
+                                                ),
+                                              ));
+                                    } else {
+                                      showModalBottomSheet(
+                                        context: context,
+                                        isScrollControlled: true,
+                                        builder: (context) => SizedBox(
+                                            height:
+                                                getSize(context).height * 0.4,
+                                            width: double.infinity,
+                                            child: AddTimeEntry(
+                                              task: widget.task,
+                                            )),
+                                      );
+                                    }
+                                  })),
+                          StaggeredGridTile.count(
+                            crossAxisCellCount: isDesktop(context) ? 1 : 2,
+                            mainAxisCellCount: isDesktop(context) ? 0.4 : 0.8,
+                            child: _buildCard(
+                                context: context,
+                                title: "Timer",
+                                icon: CupertinoIcons.stopwatch,
+                                onTap: () {
+                                  if (isDesktop(context)) {
+                                    showDialog(
+                                        context: context,
+                                        builder: (context) => Dialog(
                                               child: TaskTimeEntryLog(
                                                 task: widget.task,
-                                              )),
-                                        );
-                                      }
-                                    }),
-                                _buildCard(
-                                    context: context,
-                                    title: "Pomodoro",
-                                    icon: CupertinoIcons.timer,
-                                    onTap: () {
-                                      if (isDesktop(context)) {
-                                        showDialog(
-                                            context: context,
-                                            builder: (context) => Dialog(
-                                                  child: TaskTimeEntryLog(
-                                                    task: widget.task,
-                                                  ),
-                                                ));
-                                      } else {
-                                        showModalBottomSheet(
-                                          context: context,
-                                          isScrollControlled: true,
-                                          builder: (context) => SizedBox(
-                                              height:
-                                                  getSize(context).height * 0.4,
-                                              width: double.infinity,
+                                              ),
+                                            ));
+                                  } else {
+                                    showModalBottomSheet(
+                                      context: context,
+                                      isScrollControlled: true,
+                                      builder: (context) => SizedBox(
+                                          height: getSize(context).height * 0.4,
+                                          width: double.infinity,
+                                          child: TaskTimeEntryLog(
+                                            task: widget.task,
+                                          )),
+                                    );
+                                  }
+                                }),
+                          ),
+                          StaggeredGridTile.count(
+                            crossAxisCellCount: isDesktop(context) ? 1 : 2,
+                            mainAxisCellCount: isDesktop(context) ? 0.4 : 0.8,
+                            child: _buildCard(
+                                context: context,
+                                title: "Pomodoro",
+                                icon: CupertinoIcons.timer,
+                                onTap: () {
+                                  if (isDesktop(context)) {
+                                    showDialog(
+                                        context: context,
+                                        builder: (context) => Dialog(
                                               child: TaskTimeEntryLog(
                                                 task: widget.task,
-                                              )),
-                                        );
-                                      }
-                                    }),
-                              ],
-                            )
-                          ],
-                        ),
-                      ),
-                    )
+                                              ),
+                                            ));
+                                  } else {
+                                    showModalBottomSheet(
+                                      context: context,
+                                      isScrollControlled: true,
+                                      builder: (context) => SizedBox(
+                                          height: getSize(context).height * 0.4,
+                                          width: double.infinity,
+                                          child: TaskTimeEntryLog(
+                                            task: widget.task,
+                                          )),
+                                    );
+                                  }
+                                }),
+                          )
+                        ]),
                   ],
                 ),
               )
@@ -490,8 +487,7 @@ class _TaskDetailState extends State<TaskDetail> {
     required IconData icon,
     required Function()? onTap,
   }) {
-    return Expanded(
-        child: GestureDetector(
+    return GestureDetector(
       onTap: onTap,
       child: Container(
         decoration: BoxDecoration(
@@ -503,9 +499,6 @@ class _TaskDetailState extends State<TaskDetail> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            SizedBox(
-              height: $constants.insets.sm,
-            ),
             Icon(
               icon,
               size: 30,
@@ -516,13 +509,10 @@ class _TaskDetailState extends State<TaskDetail> {
                     fontWeight: FontWeight.bold,
                   ),
             ),
-            SizedBox(
-              height: $constants.insets.sm,
-            ),
           ],
         ),
       ),
-    ));
+    );
   }
 
   _updateTask(BuildContext context) {
