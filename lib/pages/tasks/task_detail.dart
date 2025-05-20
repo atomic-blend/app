@@ -12,6 +12,7 @@ import 'package:app/entities/tasks/tasks.entity.dart';
 import 'package:app/entities/time_entry/time_entry.entity.dart';
 import 'package:app/i18n/strings.g.dart';
 import 'package:app/pages/tasks/assign_tag_modal.dart';
+import 'package:app/pages/tasks/task_time_entry.dart' show TaskTimeEntries;
 import 'package:app/utils/constants.dart';
 import 'package:app/utils/exntensions/date_time_extension.dart';
 import 'package:app/utils/shortcuts.dart';
@@ -25,7 +26,6 @@ import 'package:jiffy/jiffy.dart';
 import 'package:macos_window_utils/macos_window_utils.dart';
 
 import '../../components/forms/ab_checkbox.dart';
-import 'add_time_entry.dart';
 
 class TaskDetail extends StatefulWidget {
   final TaskEntity task;
@@ -340,65 +340,61 @@ class _TaskDetailState extends State<TaskDetail> {
                         }
                         return Container();
                       }),
-                    Row(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Text(
-                          context.t.tasks.time_spent,
-                        ),
-                        SizedBox(
-                          width: $constants.insets.xs,
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            if (isDesktop(context)) {
-                              showDialog(
-                                  context: context,
-                                  builder: (context) => const Dialog(
-                                        child: AddTimeEntry(),
-                                      ));
-                            } else {
-                              showModalBottomSheet(
-                                context: context,
-                                isScrollControlled: true,
-                                builder: (context) => SizedBox(
-                                    height: getSize(context).height * 0.4,
-                                    width: double.infinity,
-                                    child: const AddTimeEntry()),
-                              );
-                            }
-                          },
-                          child: Text(
-                            context.t.actions.add,
-                            style: getTextTheme(context).labelMedium!.copyWith(
-                                  color: getTheme(context).primary,
-                                  fontWeight: FontWeight.bold,
-                                ),
+                    SizedBox(
+                      height: $constants.insets.sm,
+                    ),
+                    Text(
+                      "Actions",
+                      style: getTextTheme(context).headlineMedium!.copyWith(
+                            fontWeight: FontWeight.bold,
                           ),
-                        )
-                      ],
                     ),
                     SizedBox(
-                      height: $constants.insets.xs,
+                      height: $constants.insets.xxs,
                     ),
-                    if (_timeEntries == null || _timeEntries!.isEmpty)
-                      Text(
-                        context.t.tasks.no_time_entries,
-                        style: getTextTheme(context)
-                            .bodyMedium!
-                            .copyWith(color: Colors.grey),
-                      ),
-                    if (_timeEntries != null && _timeEntries!.isNotEmpty)
-                      SingleChildScrollView(
+                    SizedBox(
+                      height: getSize(context).height * 0.1,
+                      child: SingleChildScrollView(
                         child: Column(
+                          spacing: $constants.insets.xs,
+                          mainAxisSize: MainAxisSize.min,
                           children: [
-                            ...?_timeEntries?.map((timeEntry) => Container(
-                                  child: Text("entry"),
-                                ))
+                            Row(
+                              spacing: $constants.insets.xs,
+                              children: [
+                                _buildCard(
+                                    context: context,
+                                    title: "Time log",
+                                    icon: CupertinoIcons.arrow_counterclockwise,
+                                    onTap: () {
+                                      if (isDesktop(context)) {
+                                        showDialog(
+                                            context: context,
+                                            builder: (context) => Dialog(
+                                                  child: TaskTimeEntries(
+                                                    timeEntries: _timeEntries,
+                                                  ),
+                                                ));
+                                      } else {
+                                        showModalBottomSheet(
+                                          context: context,
+                                          isScrollControlled: true,
+                                          builder: (context) => SizedBox(
+                                              height:
+                                                  getSize(context).height * 0.4,
+                                              width: double.infinity,
+                                              child: TaskTimeEntries(
+                                                timeEntries: _timeEntries,
+                                              )),
+                                        );
+                                      }
+                                    }),
+                              ],
+                            ),
                           ],
                         ),
-                      )
+                      ),
+                    )
                   ],
                 ),
               )
@@ -407,6 +403,47 @@ class _TaskDetailState extends State<TaskDetail> {
         );
       }),
     );
+  }
+
+  _buildCard({
+    required BuildContext context,
+    required String title,
+    required IconData icon,
+    required Function()? onTap,
+  }) {
+    return Expanded(
+        child: GestureDetector(
+      onTap: onTap,
+      child: Container(
+        decoration: BoxDecoration(
+          color: getTheme(context).surfaceContainer,
+          borderRadius: BorderRadius.circular(
+            $constants.corners.sm,
+          ),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SizedBox(
+              height: $constants.insets.sm,
+            ),
+            Icon(
+              icon,
+              size: 30,
+            ),
+            Text(
+              title,
+              style: getTextTheme(context).bodyMedium!.copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
+            ),
+            SizedBox(
+              height: $constants.insets.sm,
+            ),
+          ],
+        ),
+      ),
+    ));
   }
 
   _updateTask(BuildContext context) {
