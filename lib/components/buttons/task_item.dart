@@ -34,8 +34,20 @@ class TaskItem extends StatelessWidget {
   Widget buildContent(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.of(context).push(
-            MaterialPageRoute(builder: (context) => TaskDetail(task: task)));
+        if (isDesktop(context)) {
+          showDialog(
+            context: context,
+            builder: (context) => Dialog(
+              backgroundColor: Colors.transparent,
+              child: TaskDetail(
+                task: task,
+              ),
+            ),
+          );
+        } else {
+          Navigator.of(context).push(
+              MaterialPageRoute(builder: (context) => TaskDetail(task: task)));
+        }
       },
       child: Slidable(
         enabled: slideable ?? true,
@@ -142,7 +154,7 @@ class TaskItem extends StatelessWidget {
                       width: $constants.insets.xs,
                     ),
                   ],
-                    ...buildTaskDateInfos(context),
+                  ...buildTaskDateInfos(context),
                 ]
               ],
             ),

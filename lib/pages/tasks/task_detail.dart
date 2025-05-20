@@ -69,8 +69,18 @@ class _TaskDetailState extends State<TaskDetail> {
 
   @override
   Widget build(BuildContext context) {
-    if (isDesktop(context) && Platform.isMacOS) {
-      return TitlebarSafeArea(child: buildBody(context));
+    if (isDesktop(context)) {
+      final body = ClipRRect(
+        borderRadius: BorderRadius.circular($constants.corners.sm),
+        child: buildBody(context),
+      );
+      if (Platform.isMacOS) {
+        return TitlebarSafeArea(
+          child: body,
+        );
+      } else {
+        return body;
+      }
     }
     return buildBody(context);
   }
