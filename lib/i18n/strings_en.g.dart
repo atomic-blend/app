@@ -181,6 +181,8 @@ class TranslationsTasksEn {
 	};
 	late final TranslationsTasksDueDatesEn due_dates = TranslationsTasksDueDatesEn._(_root);
 	late final TranslationsTasksAddTaskModalEn add_task_modal = TranslationsTasksAddTaskModalEn._(_root);
+	String get time_spent => 'Time spent';
+	String get no_time_entries => 'No time entries for now';
 }
 
 // Path: calendar
@@ -1350,6 +1352,8 @@ extension on Translations {
 			case 'tasks.add_task_modal.when_would_you_like_to_be_reminded': return 'When would you like to be reminded?';
 			case 'tasks.add_task_modal.when_would_you_like_the_task_to_start': return 'When would you like the task to start?';
 			case 'tasks.add_task_modal.when_would_you_like_the_task_to_end': return 'When would you like the task to end?';
+			case 'tasks.time_spent': return 'Time spent';
+			case 'tasks.no_time_entries': return 'No time entries for now';
 			case 'calendar.title': return 'Calendar';
 			case 'calendar.month': return 'Month';
 			case 'calendar.day': return 'Day';

@@ -200,7 +200,9 @@
       "when_would_you_like_to_be_reminded": "Quand aimeriez-vous être rappelé ?",
       "when_would_you_like_the_task_to_start": "Quand aimeriez-vous que la tâche commence ?",
       "when_would_you_like_the_task_to_end": "Quand aimeriez-vous que la tâche se termine ?"
-    }
+    },
+    "time_spent": "Temps passé",
+    "no_time_entries": "Pas d'entrées de temps"
   },
   "calendar": {
     "title": "Calendrier",

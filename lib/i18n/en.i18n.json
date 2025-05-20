@@ -200,7 +200,9 @@
       "when_would_you_like_to_be_reminded": "When would you like to be reminded?",
       "when_would_you_like_the_task_to_start": "When would you like the task to start?",
       "when_would_you_like_the_task_to_end": "When would you like the task to end?"
-    }
+    },
+    "time_spent": "Time spent",
+    "no_time_entries": "No time entries for now"
   },
   "calendar": {
     "title": "Calendar",

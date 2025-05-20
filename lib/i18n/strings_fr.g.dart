@@ -178,6 +178,8 @@ class _TranslationsTasksFr implements TranslationsTasksEn {
 	};
 	@override late final _TranslationsTasksDueDatesFr due_dates = _TranslationsTasksDueDatesFr._(_root);
 	@override late final _TranslationsTasksAddTaskModalFr add_task_modal = _TranslationsTasksAddTaskModalFr._(_root);
+	@override String get time_spent => 'Temps passé';
+	@override String get no_time_entries => 'Pas d\'entrées de temps';
 }
 
 // Path: calendar
@@ -1344,6 +1346,8 @@ extension on TranslationsFr {
 			case 'tasks.add_task_modal.when_would_you_like_to_be_reminded': return 'Quand aimeriez-vous être rappelé ?';
 			case 'tasks.add_task_modal.when_would_you_like_the_task_to_start': return 'Quand aimeriez-vous que la tâche commence ?';
 			case 'tasks.add_task_modal.when_would_you_like_the_task_to_end': return 'Quand aimeriez-vous que la tâche se termine ?';
+			case 'tasks.time_spent': return 'Temps passé';
+			case 'tasks.no_time_entries': return 'Pas d\'entrées de temps';
 			case 'calendar.title': return 'Calendrier';
 			case 'calendar.month': return 'Mois';
 			case 'calendar.day': return 'Jour';
