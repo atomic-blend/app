@@ -27,7 +27,7 @@ class _AddTimeEntryState extends State<AddTimeEntry> {
 
   @override
   void initState() {
-    _startDate = DateTime.now().subtract(Duration(minutes: 30));
+    _startDate = DateTime.now().subtract(const Duration(minutes: 30));
     _endDate = DateTime.now();
     super.initState();
   }
@@ -101,7 +101,7 @@ class _AddTimeEntryState extends State<AddTimeEntry> {
                         child: CupertinoDatePicker(
                             use24hFormat: true,
                             initialDateTime:
-                                DateTime.now().subtract(Duration(minutes: 30)),
+                                DateTime.now().subtract(const Duration(minutes: 30)),
                             onDateTimeChanged: (DateTime dateTime) {
                               setState(() {
                                 _startDate = dateTime;
@@ -155,7 +155,7 @@ class _AddTimeEntryState extends State<AddTimeEntry> {
                       child: CupertinoDatePicker(
                           use24hFormat: true,
                           initialDateTime:
-                              DateTime.now().subtract(Duration(minutes: 30)),
+                              DateTime.now().subtract(const Duration(minutes: 30)),
                           onDateTimeChanged: (DateTime dateTime) {
                             setState(() {
                               _endDate = dateTime;
@@ -217,7 +217,7 @@ class _AddTimeEntryState extends State<AddTimeEntry> {
                       }
       
                       context.read<TasksBloc>().add(AddTimeEntryToTask(
-                          task: widget.task!, timeEntry: timeEntry));
+                          task: widget.task, timeEntry: timeEntry));
                     },
                   )
                 ],

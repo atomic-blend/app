@@ -9,7 +9,6 @@ import 'package:app/components/forms/app_text_form_field.dart';
 import 'package:app/components/forms/task_date_picker_modal/task_date_picker_modal.dart';
 import 'package:app/entities/tag/tag.entity.dart';
 import 'package:app/entities/tasks/tasks.entity.dart';
-import 'package:app/entities/time_entry/time_entry.entity.dart';
 import 'package:app/i18n/strings.g.dart';
 import 'package:app/pages/tasks/add_time_entry.dart';
 import 'package:app/pages/tasks/assign_tag_modal.dart';
@@ -46,7 +45,6 @@ class _TaskDetailState extends State<TaskDetail> {
   List<DateTime>? _reminders;
   List<TagEntity> _tags = [];
   int? _priority;
-  List<TimeEntry>? _timeEntries;
 
   FleatherController? _controller;
 
@@ -58,7 +56,6 @@ class _TaskDetailState extends State<TaskDetail> {
     _reminders = widget.task.reminders;
     _tags = widget.task.tags ?? [];
     _priority = widget.task.priority;
-    _timeEntries = widget.task.timeEntries;
     if (widget.task.description != null) {
       final json = jsonDecode(widget.task.description!);
       _controller = FleatherController(

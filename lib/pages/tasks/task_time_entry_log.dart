@@ -10,7 +10,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:icons_plus/icons_plus.dart';
 import 'package:jiffy/jiffy.dart';
 
 class TaskTimeEntryLog extends StatelessWidget {
@@ -28,7 +27,7 @@ class TaskTimeEntryLog extends StatelessWidget {
       },
       child: BlocBuilder<TasksBloc, TasksState>(
         builder: (context, taskState) {
-          final TaskEntity _task = taskState.tasks?.firstWhere(
+          final TaskEntity latestTask = taskState.tasks?.firstWhere(
             (task) => task.id == this.task.id,
             orElse: () => task,
           ) ?? task;
@@ -75,7 +74,7 @@ class TaskTimeEntryLog extends StatelessWidget {
                               context: context,
                               builder: (context) => Dialog(
                                     child: AddTimeEntry(
-                                      task: _task,
+                                      task: latestTask,
                                     ),
                                   ));
                         } else {
@@ -86,7 +85,7 @@ class TaskTimeEntryLog extends StatelessWidget {
                                 height: getSize(context).height * 0.4,
                                 width: double.infinity,
                                 child: AddTimeEntry(
-                                  task: _task,
+                                  task: latestTask,
                                 )),
                           );
                         }
@@ -104,19 +103,19 @@ class TaskTimeEntryLog extends StatelessWidget {
                 SizedBox(
                   height: $constants.insets.xs,
                 ),
-                if (_task.timeEntries == null || _task.timeEntries!.isEmpty)
+                if (latestTask.timeEntries == null || latestTask.timeEntries!.isEmpty)
                   Text(
                     context.t.tasks.no_time_entries,
                     style: getTextTheme(context)
                         .bodyMedium!
                         .copyWith(color: Colors.grey),
                   ),
-                if (_task.timeEntries != null && _task.timeEntries!.isNotEmpty)
+                if (latestTask.timeEntries != null && latestTask.timeEntries!.isNotEmpty)
                   SingleChildScrollView(
                     child: Column(
                       children: [
-                        ...?_task.timeEntries?.map(
-                            (timeEntry) => _buildTimeEntryCard(context, _task, timeEntry)),
+                        ...?latestTask.timeEntries?.map(
+                            (timeEntry) => _buildTimeEntryCard(context, latestTask, timeEntry)),
                       ],
                     ),
                   )
