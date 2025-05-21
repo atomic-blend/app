@@ -65,6 +65,7 @@ class _CalendarState extends State<Calendar> {
             maxDate: calendarEndDate,
             backgroundColor: getTheme(context).surface,
             showTodayButton: true,
+            cellBorderColor: isDarkMode(context) ? Colors.grey.shade800 : Colors.grey.shade400,
             todayHighlightColor: getTheme(context).primary,
             timeSlotViewSettings: TimeSlotViewSettings(
                 minimumAppointmentDuration: const Duration(minutes: 27),
