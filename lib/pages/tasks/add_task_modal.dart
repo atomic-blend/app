@@ -182,6 +182,7 @@ class _AddTaskModalState extends State<AddTaskModal> {
                             await showDialog(
                               context: context,
                               builder: (context) => Dialog(
+                                backgroundColor: getTheme(context).surface,
                                 child: selector,
                               ),
                             );
@@ -191,7 +192,7 @@ class _AddTaskModalState extends State<AddTaskModal> {
                               isScrollControlled: true,
                               builder: (context) => Container(
                                 decoration: BoxDecoration(
-                                  color: Colors.white,
+                                  color: getTheme(context).surface,
                                   borderRadius: BorderRadius.only(
                                     topLeft:
                                         Radius.circular($constants.corners.md),
