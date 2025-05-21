@@ -155,10 +155,23 @@ class Navigation {
             actions: [
               GestureDetector(
                   onTap: () {
-                    showModalBottomSheet(
-                        isScrollControlled: true,
+                    if (isDesktop(context)) {
+                      showDialog(
                         context: context,
-                        builder: (context) => const CalendarSettings());
+                        builder: (context) => Dialog(
+                          child: SizedBox(
+                            width: getSize(context).width * 0.5,
+                            height: getSize(context).height * 0.5,
+                            child: const CalendarSettings(),
+                          ),
+                        ),
+                      );
+                    } else {
+                      showModalBottomSheet(
+                          isScrollControlled: true,
+                          context: context,
+                          builder: (context) => const CalendarSettings());
+                    }
                   },
                   child: const Icon(CupertinoIcons.settings)),
               SizedBox(

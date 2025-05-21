@@ -97,8 +97,7 @@ class _TaskDetailState extends State<TaskDetail> {
         ),
         leading: IconButton(
           icon: Icon(
-            CupertinoIcons.back,
-            color: getTheme(context).primary,
+            isDesktop(context) ? CupertinoIcons.xmark :CupertinoIcons.back,
           ),
           onPressed: () {
             _updateTask(context);
@@ -490,6 +489,9 @@ class _TaskDetailState extends State<TaskDetail> {
                             }),
                       )
                     ]),
+                    if (isDesktop(context)) SizedBox(
+                      height: $constants.insets.xs,
+                    ),
               ],
             ),
           ),
