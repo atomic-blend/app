@@ -427,9 +427,9 @@ class Navigation {
           ),
           cupertinoIcon: Icon(
             CupertinoIcons.plus_circle_fill,
-            color: getTheme(context).secondary,
+            color: getTheme(context).tertiary,
           ),
-          label: "Add",
+          label: context.t.actions.add,
           onTap: (index) {
             if (isDesktop(context)) {
               showDialog(
