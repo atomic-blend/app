@@ -46,29 +46,37 @@ class TaskItem extends StatelessWidget {
           );
         } else {
           Navigator.of(context).push(
-              MaterialPageRoute(builder: (context) => TaskDetail(task: task)));
+            MaterialPageRoute(
+              builder: (context) => TaskDetail(
+                task: task,
+              ),
+            ),
+          );
         }
       },
       child: Slidable(
         enabled: slideable ?? true,
         key: ValueKey(task.id),
-        endActionPane: ActionPane(motion: const ScrollMotion(), children: [
-          Theme(
-            data: Theme.of(context).copyWith(
-                outlinedButtonTheme: const OutlinedButtonThemeData(
-              style: ButtonStyle(
-                  iconColor: WidgetStatePropertyAll(Colors.white),
-                  iconSize: WidgetStatePropertyAll(25)),
-            )),
-            child: SlidableAction(
-              onPressed: (context) {
-                context.read<TasksBloc>().add(DeleteTask(task));
-              },
-              backgroundColor: Colors.red,
-              icon: LineAwesome.trash_alt,
-            ),
-          )
-        ]),
+        endActionPane: ActionPane(
+          motion: const ScrollMotion(),
+          children: [
+            Theme(
+              data: Theme.of(context).copyWith(
+                  outlinedButtonTheme: const OutlinedButtonThemeData(
+                style: ButtonStyle(
+                    iconColor: WidgetStatePropertyAll(Colors.white),
+                    iconSize: WidgetStatePropertyAll(25)),
+              )),
+              child: SlidableAction(
+                onPressed: (context) {
+                  context.read<TasksBloc>().add(DeleteTask(task));
+                },
+                backgroundColor: Colors.red,
+                icon: LineAwesome.trash_alt,
+              ),
+            )
+          ],
+        ),
         child: Padding(
           padding: EdgeInsets.symmetric(vertical: $constants.insets.xxs),
           child: GestureDetector(
@@ -96,14 +104,16 @@ class TaskItem extends StatelessWidget {
                       SizedBox(
                         height: $constants.insets.xxs,
                       ),
-                      ...buildTaskDateInfos(context)
+                      ...buildTaskDateInfos(context),
                     ]
                   ],
                 ),
                 if (collapsed != true) ...[
                   if (task.tags != null && task.tags!.isNotEmpty)
                     Container(
-                      padding: EdgeInsets.only(left: $constants.insets.sm),
+                      padding: EdgeInsets.only(
+                        left: $constants.insets.sm,
+                      ),
                       child: Row(
                         children: [
                           Container(
