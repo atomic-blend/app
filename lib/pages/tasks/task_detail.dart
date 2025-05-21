@@ -31,8 +31,9 @@ import '../../components/forms/ab_checkbox.dart';
 
 class TaskDetail extends StatefulWidget {
   final TaskEntity task;
+  final bool? smallNotes;
 
-  const TaskDetail({super.key, required this.task});
+  const TaskDetail({super.key, required this.task, this.smallNotes});
 
   @override
   State<TaskDetail> createState() => _TaskDetailState();
@@ -357,11 +358,13 @@ class _TaskDetailState extends State<TaskDetail> {
                             KeyboardVisibilityBuilder(
                                 builder: (context, isKeyboardVisible) {
                               return SizedBox(
-                                height: isKeyboardVisible
-                                    ? getSize(context).height * 0.3
-                                    : isDesktop(context)
-                                        ? getSize(context).height * 0.4
-                                        : getSize(context).height * 0.45,
+                                height: widget.smallNotes == true
+                                    ? getSize(context).height * 0.25
+                                    : isKeyboardVisible
+                                        ? getSize(context).height * 0.3
+                                        : isDesktop(context)
+                                            ? getSize(context).height * 0.4
+                                            : getSize(context).height * 0.45,
                                 child: FleatherEditor(
                                   controller: _controller!,
                                 ),

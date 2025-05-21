@@ -1021,6 +1021,8 @@ class TranslationsCalendarEventDetailEn {
 		one: 'Attendee',
 		other: 'Attendees',
 	);
+	String get no_attendees => 'No attendees';
+	String get no_notes => 'No notes';
 }
 
 // Path: calendar.settings
@@ -1416,6 +1418,8 @@ extension on Translations {
 				one: 'Attendee',
 				other: 'Attendees',
 			);
+			case 'calendar.event_detail.no_attendees': return 'No attendees';
+			case 'calendar.event_detail.no_notes': return 'No notes';
 			case 'calendar.settings.title': return 'Calendar Settings';
 			case 'calendar.settings.display_habits': return 'Display habits';
 			case 'account.edit_profile': return 'Edit Profile';

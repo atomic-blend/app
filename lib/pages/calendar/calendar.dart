@@ -127,19 +127,24 @@ class _CalendarState extends State<Calendar> {
             onTap: (calendarTapDetails) {
               if (calendarTapDetails.appointments?.first.itemType ==
                   CustomAppointmentType.task) {
-                showModalBottomSheet(
+                showDialog(
                     context: context,
-                    isScrollControlled: true,
-                    builder: (context) => SizedBox(
-                          height: getSize(context).height * 0.8,
-                          child: ClipRRect(
-                            borderRadius:
-                                BorderRadius.circular($constants.corners.md),
-                            child: TaskDetail(
-                              task: taskState.tasks!.firstWhere((element) =>
-                                  element.id ==
-                                  calendarTapDetails
-                                      .appointments?.first.itemId),
+                    builder: (context) => Dialog(
+                          insetPadding: EdgeInsets.symmetric(
+                              horizontal: $constants.insets.xs),
+                          child: SizedBox(
+                            height: getSize(context).height * 0.7,
+                            width: getSize(context).width,
+                            child: ClipRRect(
+                              borderRadius:
+                                  BorderRadius.circular($constants.corners.md),
+                              child: TaskDetail(
+                                smallNotes: true,
+                                task: taskState.tasks!.firstWhere((element) =>
+                                    element.id ==
+                                    calendarTapDetails
+                                        .appointments?.first.itemId),
+                              ),
                             ),
                           ),
                         ));
@@ -158,19 +163,24 @@ class _CalendarState extends State<Calendar> {
                   }
                 }
                 if (event != null) {
-                  showModalBottomSheet(
-                      context: context,
-                      isScrollControlled: true,
-                      builder: (context) => SizedBox(
-                            height: getSize(context).height * 0.83,
-                            child: ClipRRect(
-                              borderRadius:
-                                  BorderRadius.circular($constants.corners.md),
-                              child: DeviceEventDetail(
-                                event: event!,
-                              ),
-                            ),
-                          ));
+                  showDialog(
+                    context: context,
+                    builder: (context) => Dialog(
+                      insetPadding: EdgeInsets.symmetric(
+                          horizontal: $constants.insets.xs),
+                      child: SizedBox(
+                        height: getSize(context).height * 0.7,
+                        width: getSize(context).width,
+                        child: ClipRRect(
+                          borderRadius:
+                              BorderRadius.circular($constants.corners.md),
+                          child: DeviceEventDetail(
+                            event: event!,
+                          ),
+                        ),
+                      ),
+                    ),
+                  );
                 }
               }
             },

@@ -237,7 +237,9 @@
         "zero": "Participant",
         "one": "Participant",
         "other": "Participants"
-      }
+      },
+      "no_attendees": "Pas de participants",
+      "no_notes": "Pas de notes"
     },
     "settings": {
       "title": "Paramètres du calendrier",

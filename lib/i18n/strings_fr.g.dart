@@ -1015,6 +1015,8 @@ class _TranslationsCalendarEventDetailFr implements TranslationsCalendarEventDet
 		one: 'Participant',
 		other: 'Participants',
 	);
+	@override String get no_attendees => 'Pas de participants';
+	@override String get no_notes => 'Pas de notes';
 }
 
 // Path: calendar.settings
@@ -1410,6 +1412,8 @@ extension on TranslationsFr {
 				one: 'Participant',
 				other: 'Participants',
 			);
+			case 'calendar.event_detail.no_attendees': return 'Pas de participants';
+			case 'calendar.event_detail.no_notes': return 'Pas de notes';
 			case 'calendar.settings.title': return 'Paramètres du calendrier';
 			case 'calendar.settings.display_habits': return 'Afficher les habitudes';
 			case 'account.edit_profile': return 'Modifier le profil';
