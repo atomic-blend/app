@@ -1,6 +1,7 @@
 import 'package:app/blocs/tasks/tasks.bloc.dart';
 import 'package:app/components/buttons/task_item.dart';
 import 'package:app/components/forms/search_bar.dart';
+import 'package:app/components/widgets/elevated_container.dart';
 import 'package:app/entities/tasks/tasks.entity.dart';
 import 'package:app/i18n/strings.g.dart';
 import 'package:app/services/sync.service.dart';
@@ -35,8 +36,15 @@ class _OverviewTasksState extends State<OverviewTasks> {
         final thisWeekTasks = _thisWeekTasks(taskState.tasks ?? []);
         return Padding(
           padding: isDesktop(context)
-              ? EdgeInsets.only(right: $constants.insets.xs)
-              : EdgeInsets.symmetric(horizontal: $constants.insets.xs),
+              ? EdgeInsets.only(
+                  right: $constants.insets.md,
+                  left: $constants.insets.sm,
+                )
+              : EdgeInsets.only(
+                  right: $constants.insets.sm,
+                  left: $constants.insets.sm,
+                  bottom: $constants.insets.sm,
+                ),
           child: RefreshIndicator(
             onRefresh: () {
               SyncService.sync(context);
@@ -45,16 +53,17 @@ class _OverviewTasksState extends State<OverviewTasks> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                ABSearchBar(
-                    controller: _searchController, onSubmitted: (value) {}),
-                SizedBox(height: $constants.insets.xs),
+                Padding(
+                  padding: EdgeInsets.only(top: $constants.insets.xs),
+                  child: ElevatedContainer(
+                    child: ABSearchBar(
+                        controller: _searchController, onSubmitted: (value) {}),
+                  ),
+                ),
+                SizedBox(height: $constants.insets.sm),
                 Expanded(
-                  child: Container(
+                  child: ElevatedContainer(
                     width: double.infinity,
-                    decoration: BoxDecoration(
-                      color: getTheme(context).surfaceContainer,
-                      borderRadius: BorderRadius.circular($constants.insets.sm),
-                    ),
                     padding: EdgeInsets.symmetric(
                       horizontal: $constants.insets.sm,
                       vertical: $constants.insets.xs,
@@ -80,14 +89,10 @@ class _OverviewTasksState extends State<OverviewTasks> {
                     ),
                   ),
                 ),
-                SizedBox(height: $constants.insets.xs),
+                SizedBox(height: $constants.insets.sm),
                 Expanded(
-                  child: Container(
+                  child: ElevatedContainer(
                     width: double.infinity,
-                    decoration: BoxDecoration(
-                      color: getTheme(context).surfaceContainer,
-                      borderRadius: BorderRadius.circular($constants.insets.sm),
-                    ),
                     padding: EdgeInsets.symmetric(
                       horizontal: $constants.insets.sm,
                       vertical: $constants.insets.xs,
@@ -117,14 +122,10 @@ class _OverviewTasksState extends State<OverviewTasks> {
                     ),
                   ),
                 ),
-                SizedBox(height: $constants.insets.xs),
+                SizedBox(height: $constants.insets.sm),
                 Expanded(
-                  child: Container(
+                  child: ElevatedContainer(
                     width: double.infinity,
-                    decoration: BoxDecoration(
-                      color: getTheme(context).surfaceContainer,
-                      borderRadius: BorderRadius.circular($constants.insets.sm),
-                    ),
                     padding: EdgeInsets.symmetric(
                       horizontal: $constants.insets.sm,
                       vertical: $constants.insets.xs,
@@ -154,7 +155,6 @@ class _OverviewTasksState extends State<OverviewTasks> {
                     ),
                   ),
                 ),
-                if (!isDesktop(context)) SizedBox(height: $constants.insets.xs),
               ],
             ),
           ),

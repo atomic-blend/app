@@ -1,5 +1,6 @@
 import 'package:app/components/app/bottom_navigation.dart';
 import 'package:app/components/buttons/icon_text_button.dart';
+import 'package:app/components/widgets/elevated_container.dart';
 import 'package:app/i18n/strings.g.dart';
 import 'package:app/pages/account/account.dart';
 import 'package:app/pages/eiseinhower/eisenhower.dart';
@@ -23,93 +24,101 @@ class _MoreAppsState extends State<MoreApps> {
     final restOfNavigation =
         $constants.navigation.bottomNavigationItems(context).sublist(5);
     return SafeArea(
-      child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: $constants.insets.xs),
-        child: Column(
-          children: [
-            if (!isDesktop(context) && restOfNavigation.isNotEmpty) ...[
-              StaggeredGrid.count(
-                crossAxisCount: 2,
-                mainAxisSpacing: $constants.insets.sm,
-                crossAxisSpacing: $constants.insets.sm,
-                children: restOfNavigation.map((e) {
-                  if (e is NavigationItem) {
-                    return GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const EisenhowerMatrix(),
+      child: Column(
+        children: [
+          if (!isDesktop(context) && restOfNavigation.isNotEmpty) ...[
+            StaggeredGrid.count(
+              crossAxisCount: 2,
+              mainAxisSpacing: $constants.insets.sm,
+              crossAxisSpacing: $constants.insets.sm,
+              children: restOfNavigation.map((e) {
+                if (e is NavigationItem) {
+                  return StaggeredGridTile.count(
+                    crossAxisCellCount: 1,
+                    mainAxisCellCount: 0.6,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const EisenhowerMatrix(),
+                            ),
+                          );
+                        },
+                        child: ElevatedContainer(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              SizedBox(
+                                height: $constants.insets.sm,
+                              ),
+                              const Icon(
+                                CupertinoIcons.square_grid_2x2_fill,
+                                size: 35,
+                              ),
+                              SizedBox(
+                                height: $constants.insets.xxs,
+                              ),
+                              Text(
+                                e.label,
+                                style: getTextTheme(context).labelMedium,
+                              ),
+                              SizedBox(
+                                height: $constants.insets.sm,
+                              ),
+                            ],
                           ),
-                        );
-                      },
-                      child: Container(
-                        height: 100,
-                        decoration: BoxDecoration(
-                          color: getTheme(context).surfaceContainer,
-                          borderRadius:
-                              BorderRadius.circular($constants.insets.sm),
-                        ),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            const Icon(
-                              CupertinoIcons.square_grid_2x2_fill,
-                              size: 35,
-                            ),
-                            SizedBox(
-                              height: $constants.insets.xxs,
-                            ),
-                            Text(
-                              e.label,
-                              style: getTextTheme(context).labelMedium,
-                            )
-                          ],
                         ),
                       ),
-                    );
-                  }
-                  return Container();
-                }).toList(),
-              ),
-              SizedBox(
-                height: $constants.insets.md,
-              )
-            ],
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: $constants.insets.sm),
-              child: Column(
-                children: [
-                  IconTextButton(
-                    text: context.t.account.sections.account,
-                    icon: CupertinoIcons.person,
-                    iconSize: 25,
-                    onTap: () {
-                      showModalBottomSheet(
-                        context: context,
-                        isScrollControlled: true,
-                        builder: (context) => const Account(),
-                      );
-                    },
-                  ),
-                  SizedBox(
-                    height: $constants.insets.sm,
-                  ),
-                  IconTextButton(
-                    text: context.t.settings.title,
-                    icon: CupertinoIcons.gear,
-                    iconSize: 25,
-                    onTap: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => const Settings()));
-                    },
-                  ),
-                ],
-              ),
+                    ),
+                  );
+                }
+                return Container();
+              }).toList(),
             ),
           ],
-        ),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: $constants.insets.xs),
+            child: ElevatedContainer(
+              child: Padding(
+                padding: EdgeInsets.symmetric(
+                    horizontal: $constants.insets.sm,
+                    vertical: $constants.insets.sm),
+                child: Column(
+                  children: [
+                    IconTextButton(
+                      text: context.t.account.sections.account,
+                      icon: CupertinoIcons.person,
+                      iconSize: 25,
+                      onTap: () {
+                        showModalBottomSheet(
+                          context: context,
+                          isScrollControlled: true,
+                          builder: (context) => const Account(),
+                        );
+                      },
+                    ),
+                    SizedBox(
+                      height: $constants.insets.sm,
+                    ),
+                    IconTextButton(
+                      text: context.t.settings.title,
+                      icon: CupertinoIcons.gear,
+                      iconSize: 25,
+                      onTap: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => const Settings()));
+                      },
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
