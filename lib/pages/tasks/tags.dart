@@ -29,10 +29,9 @@ class _TagsViewState extends State<TagsView> {
     return BlocBuilder<TasksBloc, TasksState>(builder: (context, taskState) {
       return BlocBuilder<TagBloc, TagState>(builder: (context, tagState) {
         return Padding(
-          padding: EdgeInsets.symmetric(
-            horizontal: $constants.insets.xs,
-            vertical: $constants.insets.xs,
-          ),
+          padding: isDesktop(context)
+              ? EdgeInsets.only(right: $constants.insets.xs)
+              : EdgeInsets.symmetric(horizontal: $constants.insets.xs),
           child: RefreshIndicator(
             onRefresh: () {
               SyncService.sync(context);

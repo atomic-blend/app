@@ -34,7 +34,9 @@ class _OverviewTasksState extends State<OverviewTasks> {
         final tomorrowTasks = _tomorrowTasks(taskState.tasks ?? []);
         final thisWeekTasks = _thisWeekTasks(taskState.tasks ?? []);
         return Padding(
-          padding: EdgeInsets.symmetric(horizontal: $constants.insets.xs),
+          padding: isDesktop(context)
+              ? EdgeInsets.only(right: $constants.insets.xs)
+              : EdgeInsets.symmetric(horizontal: $constants.insets.xs),
           child: RefreshIndicator(
             onRefresh: () {
               SyncService.sync(context);
@@ -152,7 +154,7 @@ class _OverviewTasksState extends State<OverviewTasks> {
                     ),
                   ),
                 ),
-                SizedBox(height: $constants.insets.xs),
+                if (!isDesktop(context)) SizedBox(height: $constants.insets.xs),
               ],
             ),
           ),

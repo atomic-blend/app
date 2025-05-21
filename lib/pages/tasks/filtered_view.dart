@@ -32,7 +32,9 @@ class _FilteredTaskViewState extends State<FilteredTaskView> {
     return SafeArea(
       child: BlocBuilder<TasksBloc, TasksState>(builder: (context, taskState) {
         return Padding(
-          padding: EdgeInsets.symmetric(horizontal: $constants.insets.xs),
+          padding: isDesktop(context)
+              ? EdgeInsets.only(right: $constants.insets.xs)
+              : EdgeInsets.symmetric(horizontal: $constants.insets.xs),
           child: RefreshIndicator(
             onRefresh: () {
               SyncService.sync(context);
