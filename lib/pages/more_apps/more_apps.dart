@@ -99,8 +99,13 @@ class _MoreAppsState extends State<MoreApps> {
               child: ElevatedContainer(
                 child: Padding(
                   padding: EdgeInsets.symmetric(
-                      horizontal: $constants.insets.sm,
-                      vertical: $constants.insets.sm),
+                    horizontal: isDesktop(context)
+                        ? $constants.insets.lg
+                        : $constants.insets.sm,
+                    vertical: isDesktop(context)
+                        ? $constants.insets.lg
+                        : $constants.insets.sm,
+                  ),
                   child: Column(
                     children: [
                       IconTextButton(
@@ -116,7 +121,9 @@ class _MoreAppsState extends State<MoreApps> {
                         },
                       ),
                       SizedBox(
-                        height: $constants.insets.sm,
+                        height: isDesktop(context)
+                            ? $constants.insets.md
+                            : $constants.insets.sm,
                       ),
                       IconTextButton(
                         text: context.t.settings.title,
