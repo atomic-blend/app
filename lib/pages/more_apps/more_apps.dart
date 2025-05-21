@@ -73,13 +73,13 @@ class _MoreAppsState extends State<MoreApps> {
                 }).toList(),
               ),
               SizedBox(
-                height: $constants.insets.sm,
+                height: $constants.insets.md,
               )
             ],
             IconTextButton(
               text: context.t.settings.title,
               icon: CupertinoIcons.gear,
-              iconSize: 20,
+              iconSize: 25,
               onTap: () {
                 Navigator.of(context).push(
                     MaterialPageRoute(builder: (context) => const Settings()));
