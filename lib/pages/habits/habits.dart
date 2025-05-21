@@ -1,5 +1,6 @@
 import 'package:animated_toggle_switch/animated_toggle_switch.dart';
 import 'package:app/blocs/habit/habit.bloc.dart';
+import 'package:app/components/widgets/elevated_container.dart';
 import 'package:app/entities/habit/habit.entity.dart';
 import 'package:app/entities/habit/habit_entry/habit_entry.entity.dart';
 import 'package:app/i18n/strings.g.dart';
@@ -29,254 +30,284 @@ class _HabitsState extends State<Habits> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<HabitBloc, HabitState>(builder: (context, habitState) {
-      if (habitState.habits == null || habitState.habits!.isEmpty) {
-        return RefreshIndicator(
-          onRefresh: () {
-            SyncService.sync(context);
-            return Future.delayed(const Duration(seconds: 1));
-          },
-          child: ListView(
-            padding: EdgeInsets.zero,
-            children: [
-              Center(
-                child: Transform.scale(
-                  scale: 1.3,
-                  child: Lottie.asset(
-                    'assets/animations/getting-started.json',
-                    width: isDesktop(context)
-                        ? getSize(context).width * 0.2
-                        : getSize(context).width * 0.7,
-                  ),
-                ),
-              ),
-              Center(
-                child: Text(
-                  context.t.habits.no_habits,
-                  style: getTextTheme(context).headlineLarge!.copyWith(
-                        fontWeight: FontWeight.bold,
+    return Padding(
+      padding: isDesktop(context)
+          ? EdgeInsets.only(
+              right: $constants.insets.md,
+              left: $constants.insets.sm,
+              bottom: $constants.insets.sm,
+            )
+          : EdgeInsets.only(
+              right: $constants.insets.sm,
+              left: $constants.insets.sm,
+              bottom: $constants.insets.sm,
+            ),
+      child: ElevatedContainer(
+        child:
+            BlocBuilder<HabitBloc, HabitState>(builder: (context, habitState) {
+          if (habitState.habits == null || habitState.habits!.isEmpty) {
+            return RefreshIndicator(
+              onRefresh: () {
+                SyncService.sync(context);
+                return Future.delayed(const Duration(seconds: 1));
+              },
+              child: ListView(
+                padding: EdgeInsets.zero,
+                children: [
+                  Center(
+                    child: Transform.scale(
+                      scale: 1.3,
+                      child: Lottie.asset(
+                        'assets/animations/getting-started.json',
+                        width: isDesktop(context)
+                            ? getSize(context).width * 0.2
+                            : getSize(context).width * 0.7,
                       ),
-                ),
+                    ),
+                  ),
+                  Center(
+                    child: Text(
+                      context.t.habits.no_habits,
+                      style: getTextTheme(context).headlineLarge!.copyWith(
+                            fontWeight: FontWeight.bold,
+                          ),
+                    ),
+                  ),
+                  Center(child: Text(context.t.habits.get_started_now))
+                ],
               ),
-              Center(child: Text(context.t.habits.get_started_now))
-            ],
-          ),
-        );
-      }
-      return RefreshIndicator(
-        onRefresh: () {
-          SyncService.sync(context);
-          return Future.delayed(const Duration(seconds: 1));
-        },
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: [
-            Center(
-              child: SizedBox(
-                width: getSize(context).width * 0.8,
-                height: 30,
-                child: AnimatedToggleSwitch<int?>.rolling(
-                  current: mode,
-                  indicatorSize:
-                      Size.fromWidth(getSize(context).width * 0.8 / 2),
-                  values: const [0, 1],
-                  iconBuilder: (value, foreground) {
-                    return AutoSizeText(
-                        maxLines: 1,
-                        [context.t.habits.list, context.t.habits.overview]
-                            .elementAt(value!),
-                        style: getTextTheme(context).bodyMedium!.copyWith());
-                  },
-                  styleBuilder: (value) {
-                    return ToggleStyle(
-                      borderColor: Colors.transparent,
-                      indicatorColor: value == mode
-                          ? getTheme(context).surface
-                          : getTheme(context).surfaceContainer,
-                      backgroundColor: getTheme(context).surfaceContainer,
-                    );
-                  },
-                  onChanged: (value) {
-                    setState(() {
-                      mode = value;
-                    });
-                  },
-                ),
+            );
+          }
+          return RefreshIndicator(
+            onRefresh: () {
+              SyncService.sync(context);
+              return Future.delayed(const Duration(seconds: 1));
+            },
+            child: Padding(
+              padding: EdgeInsets.symmetric(
+                  horizontal: $constants.insets.sm,
+                  vertical: $constants.insets.xs),
+              child: ListView(
+                padding: EdgeInsets.zero,
+                children: [
+                  SizedBox(
+                    height: $constants.insets.xs,
+                  ),
+                  Center(
+                    child: SizedBox(
+                      height: 30,
+                      width: double.infinity,
+                      child: AnimatedToggleSwitch<int?>.rolling(
+                        current: mode,
+                        indicatorSize:
+                            Size.fromWidth(getSize(context).width * 0.8 / 2),
+                        values: const [0, 1],
+                        iconBuilder: (value, foreground) {
+                          return AutoSizeText(
+                              maxLines: 1,
+                              [context.t.habits.list, context.t.habits.overview]
+                                  .elementAt(value!),
+                              style:
+                                  getTextTheme(context).bodyMedium!.copyWith());
+                        },
+                        styleBuilder: (value) {
+                          return ToggleStyle(
+                            borderColor: Colors.transparent,
+                            indicatorColor: value == mode
+                                ? getTheme(context).surfaceContainer
+                                : getTheme(context).surface,
+                            backgroundColor: getTheme(context).surface,
+                          );
+                        },
+                        onChanged: (value) {
+                          setState(() {
+                            mode = value;
+                          });
+                        },
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: $constants.insets.xs,
+                  ),
+                  if (mode == 0)
+                    SizedBox(
+                      height: getSize(context).height * 0.75,
+                      child: _listView(
+                        context,
+                        habitState.habits!,
+                      ),
+                    ),
+                  if (mode == 1)
+                    SizedBox(
+                      height: getSize(context).height * 0.75,
+                      child: _heatMapView(
+                        context,
+                        habitState.habits!,
+                      ),
+                    ),
+                ],
               ),
             ),
-            if (mode == 0) _listView(context, habitState.habits!),
-            if (mode == 1) _heatMapView(context, habitState.habits!),
-          ],
-        ),
-      );
-    });
+          );
+        }),
+      ),
+    );
   }
 
   _listView(BuildContext context, List<Habit> habits) {
-    return Expanded(
-      child: Padding(
-        padding: EdgeInsets.symmetric(
-            horizontal: $constants.insets.sm, vertical: $constants.insets.sm),
-        child: ListView.builder(
-          itemCount: habits.length,
-          itemBuilder: (context, index) {
-            final habit = habits[index];
-            final habitProgress = _computeDailyProgress(habit);
-            return Padding(
-              padding: EdgeInsets.only(bottom: $constants.insets.xs),
-              child: Slidable(
-                key: ValueKey(habits[index].id),
-                endActionPane: ActionPane(
-                    motion: const ScrollMotion(),
-                    extentRatio: 0.25,
-                    children: [
-                      SizedBox(
-                        width: $constants.insets.xs,
+    return ListView.builder(
+      itemCount: habits.length,
+      itemBuilder: (context, index) {
+        final habit = habits[index];
+        final habitProgress = _computeDailyProgress(habit);
+        return Padding(
+          padding: EdgeInsets.only(bottom: $constants.insets.xs),
+          child: Slidable(
+            key: ValueKey(habits[index].id),
+            endActionPane: ActionPane(
+                motion: const ScrollMotion(),
+                extentRatio: 0.25,
+                children: [
+                  SizedBox(
+                    width: $constants.insets.xs,
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      var selector = ViewOrEditHabitModal(
+                        habit: habits[index],
+                        isEdit: true,
+                      );
+                      if (isDesktop(context)) {
+                        showDialog(
+                            context: context, builder: (context) => selector);
+                      } else {
+                        showModalBottomSheet(
+                            context: context,
+                            isScrollControlled: true,
+                            builder: (context) => selector);
+                      }
+                    },
+                    child: Container(
+                      height: double.infinity,
+                      width: getSize(context).width * 0.2,
+                      decoration: BoxDecoration(
+                        color: getTheme(context).surfaceContainer,
+                        borderRadius:
+                            BorderRadius.circular($constants.corners.sm),
                       ),
-                      GestureDetector(
-                        onTap: () {
-                          var selector = ViewOrEditHabitModal(
-                            habit: habits[index],
-                            isEdit: true,
-                          );
-                          if (isDesktop(context)) {
-                            showDialog(
-                                context: context,
-                                builder: (context) => selector);
-                          } else {
-                            showModalBottomSheet(
-                                context: context,
-                                isScrollControlled: true,
-                                builder: (context) => selector);
-                          }
-                        },
-                        child: Container(
-                          height: double.infinity,
-                          width: getSize(context).width * 0.2,
-                          decoration: BoxDecoration(
-                            color: getTheme(context).surfaceContainer,
-                            borderRadius:
-                                BorderRadius.circular($constants.corners.sm),
-                          ),
-                          child: const Icon(
-                            CupertinoIcons.pencil,
-                            size: 30,
-                          ),
-                        ),
+                      child: const Icon(
+                        CupertinoIcons.pencil,
+                        size: 30,
                       ),
-                    ]),
-                child: GestureDetector(
-                  onTap: () {
-                    var selector = ViewOrEditHabitModal(
-                      habit: habits[index],
-                      isEdit: true,
-                    );
-                    if (isDesktop(context)) {
-                      showDialog(
-                          context: context, builder: (context) => selector);
-                    } else {
-                      showModalBottomSheet(
-                          context: context,
-                          isScrollControlled: true,
-                          builder: (context) => selector);
-                    }
-                  },
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: getTheme(context).surfaceContainer,
-                      borderRadius:
-                          BorderRadius.circular($constants.corners.sm),
-                    ),
-                    padding: EdgeInsets.all($constants.insets.sm),
-                    child: Row(
-                      children: [
-                        Container(
-                          width: 50,
-                          height: 50,
-                          decoration: BoxDecoration(
-                            color: getTheme(context).surface,
-                            borderRadius:
-                                BorderRadius.circular($constants.corners.full),
-                          ),
-                          child: Center(
-                            child: AutoSizeText(
-                              habits[index].emoji != null &&
-                                      habits[index].emoji != ""
-                                  ? habits[index].emoji!
-                                  : "📋",
-                              maxLines: 1,
-                              style:
-                                  getTextTheme(context).headlineLarge!.copyWith(
-                                        color: getTheme(context).onPrimary,
-                                      ),
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          width: $constants.insets.sm,
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Text(
-                              habits[index].name!,
-                              style: getTextTheme(context).titleSmall!.copyWith(
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                            ),
-                            Text(
-                              habits[index].getHabitShortDescription(context),
-                              style: getTextTheme(context).bodyMedium,
-                            ),
-                          ],
-                        ),
-                        const Spacer(),
-                        if (habitProgress != null && habitProgress < 1)
-                          GestureDetector(
-                            onTap: () {
-                              context.read<HabitBloc>().add(
-                                    AddHabitEntry(
-                                      HabitEntry(
-                                        entryDate: DateTime.now().toUtc(),
-                                        habitId: habit.id!,
-                                      ),
-                                    ),
-                                  );
-                            },
-                            child: CircularPercentIndicator(
-                              progressColor: getTheme(context).primary,
-                              circularStrokeCap: CircularStrokeCap.round,
-                              center: Text(
-                                "${(habitProgress * 100).toStringAsFixed(0)} %",
-                                style:
-                                    getTextTheme(context).bodySmall!.copyWith(
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                              ),
-                              radius: 23,
-                              percent: habitProgress,
-                            ),
-                          ),
-                        if (habitProgress != null && habitProgress == 1)
-                          Padding(
-                            padding:
-                                EdgeInsets.only(right: $constants.insets.xs),
-                            child: Icon(
-                              CupertinoIcons.check_mark_circled_solid,
-                              color: getTheme(context).primary,
-                              size: 30,
-                            ),
-                          ),
-                      ],
                     ),
                   ),
+                ]),
+            child: GestureDetector(
+              onTap: () {
+                var selector = ViewOrEditHabitModal(
+                  habit: habits[index],
+                  isEdit: true,
+                );
+                if (isDesktop(context)) {
+                  showDialog(context: context, builder: (context) => selector);
+                } else {
+                  showModalBottomSheet(
+                      context: context,
+                      isScrollControlled: true,
+                      builder: (context) => selector);
+                }
+              },
+              child: Container(
+                decoration: BoxDecoration(
+                  color: getTheme(context).surface,
+                  borderRadius: BorderRadius.circular($constants.corners.sm),
+                ),
+                padding: EdgeInsets.all($constants.insets.sm),
+                child: Row(
+                  children: [
+                    Container(
+                      width: 50,
+                      height: 50,
+                      decoration: BoxDecoration(
+                        color: getTheme(context).surface,
+                        borderRadius:
+                            BorderRadius.circular($constants.corners.full),
+                      ),
+                      child: Center(
+                        child: AutoSizeText(
+                          habits[index].emoji != null &&
+                                  habits[index].emoji != ""
+                              ? habits[index].emoji!
+                              : "📋",
+                          maxLines: 1,
+                          style: getTextTheme(context).headlineLarge!.copyWith(
+                                color: getTheme(context).onPrimary,
+                              ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      width: $constants.insets.sm,
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(
+                          habits[index].name!,
+                          style: getTextTheme(context).titleSmall!.copyWith(
+                                fontWeight: FontWeight.bold,
+                              ),
+                        ),
+                        Text(
+                          habits[index].getHabitShortDescription(context),
+                          style: getTextTheme(context).bodyMedium,
+                        ),
+                      ],
+                    ),
+                    const Spacer(),
+                    if (habitProgress != null && habitProgress < 1)
+                      GestureDetector(
+                        onTap: () {
+                          context.read<HabitBloc>().add(
+                                AddHabitEntry(
+                                  HabitEntry(
+                                    entryDate: DateTime.now().toUtc(),
+                                    habitId: habit.id!,
+                                  ),
+                                ),
+                              );
+                        },
+                        child: CircularPercentIndicator(
+                          progressColor: getTheme(context).primary,
+                          circularStrokeCap: CircularStrokeCap.round,
+                          center: Text(
+                            "${(habitProgress * 100).toStringAsFixed(0)} %",
+                            style: getTextTheme(context).bodySmall!.copyWith(
+                                  fontWeight: FontWeight.bold,
+                                ),
+                          ),
+                          radius: 23,
+                          percent: habitProgress,
+                        ),
+                      ),
+                    if (habitProgress != null && habitProgress == 1)
+                      Padding(
+                        padding: EdgeInsets.only(right: $constants.insets.xs),
+                        child: Icon(
+                          CupertinoIcons.check_mark_circled_solid,
+                          color: getTheme(context).primary,
+                          size: 30,
+                        ),
+                      ),
+                  ],
                 ),
               ),
-            );
-          },
-        ),
-      ),
+            ),
+          ),
+        );
+      },
     );
   }
 
@@ -316,17 +347,11 @@ class _HabitsState extends State<Habits> {
   }
 
   _heatMapView(BuildContext context, List<Habit> habits) {
-    return Expanded(
-      child: Padding(
-        padding: EdgeInsets.symmetric(
-            horizontal: $constants.insets.sm, vertical: $constants.insets.sm),
-        child: ListView.builder(
-            itemCount: habits.length,
-            itemBuilder: (context, index) {
-              final habit = habits[index];
-              return HabitHeatmap(habit: habit);
-            }),
-      ),
-    );
+    return ListView.builder(
+        itemCount: habits.length,
+        itemBuilder: (context, index) {
+          final habit = habits[index];
+          return HabitHeatmap(habit: habit);
+        });
   }
 }
