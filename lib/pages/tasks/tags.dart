@@ -49,32 +49,91 @@ class _TagsViewState extends State<TagsView> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Padding(
-                  padding: EdgeInsets.only(top: $constants.insets.xs),
-                  child: ElevatedContainer(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: $constants.insets.sm,
-                      vertical: $constants.insets.sm,
-                    ),
-                    child: Column(
-                      children: [
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Padding(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: $constants.insets.xxs),
-                              child: AutoSizeText(
-                                context.t.tasks.my_tags,
+                ElevatedContainer(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: $constants.insets.sm,
+                    vertical: $constants.insets.sm,
+                  ),
+                  child: Column(
+                    children: [
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: $constants.insets.xxs),
+                            child: AutoSizeText(
+                              context.t.tasks.my_tags,
+                              style: getTextTheme(context).titleSmall!.copyWith(
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                            ),
+                          ),
+                          SizedBox(
+                            width: $constants.insets.sm,
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => const MyTags()));
+                            },
+                            child: Text(
+                              context.t.actions.edit,
+                              style: getTextTheme(context).bodyMedium!.copyWith(
+                                    fontWeight: FontWeight.bold,
+                                    color: getTheme(context).primary,
+                                  ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: $constants.insets.xxs,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          if (_filteredTags.isNotEmpty)
+                            TextButton(
+                              onPressed: () {
+                                setState(() {
+                                  _filteredTags.clear();
+                                });
+                              },
+                              child: Text(
+                                context.t.actions.clear,
                                 style:
-                                    getTextTheme(context).titleSmall!.copyWith(
+                                    getTextTheme(context).bodyMedium!.copyWith(
                                           fontWeight: FontWeight.bold,
+                                          color: Colors.grey.shade800,
                                         ),
                               ),
                             ),
-                            SizedBox(
-                              width: $constants.insets.sm,
-                            ),
+                          ...(tagState.tags ?? []).map((tag) => GestureDetector(
+                                onTap: () {
+                                  setState(() {
+                                    _filteredTags.add(tag);
+                                  });
+                                },
+                                child: Padding(
+                                  padding: EdgeInsets.only(
+                                      right: $constants.insets.xs),
+                                  child: IconTextPill(
+                                    outlined: _filteredTags
+                                        .map((e) => e.id)
+                                        .contains(tag.id),
+                                    title: tag.name,
+                                    icon: null,
+                                    color: tag.color != null
+                                        ? hexToColor(tag.color!)
+                                            .withValues(alpha: 0.2)
+                                        : null,
+                                  ),
+                                ),
+                              )),
+                          if (tagState.tags == null || tagState.tags!.isEmpty)
                             GestureDetector(
                               onTap: () {
                                 Navigator.push(
@@ -82,89 +141,22 @@ class _TagsViewState extends State<TagsView> {
                                     MaterialPageRoute(
                                         builder: (context) => const MyTags()));
                               },
-                              child: Text(
-                                context.t.actions.edit,
-                                style:
-                                    getTextTheme(context).bodyMedium!.copyWith(
-                                          fontWeight: FontWeight.bold,
-                                          color: getTheme(context).primary,
-                                        ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: $constants.insets.xs,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            if (_filteredTags.isNotEmpty)
-                              TextButton(
-                                onPressed: () {
-                                  setState(() {
-                                    _filteredTags.clear();
-                                  });
-                                },
-                                child: Text(
-                                  context.t.actions.clear,
+                              child: Padding(
+                                padding: EdgeInsets.only(
+                                  right: $constants.insets.xxs,
+                                  left: $constants.insets.xxs,
+                                ),
+                                child: AutoSizeText(
+                                  context.t.tasks.no_tags_for_now,
                                   style: getTextTheme(context)
                                       .bodyMedium!
-                                      .copyWith(
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.grey.shade800,
-                                      ),
+                                      .copyWith(),
                                 ),
                               ),
-                            ...(tagState.tags ?? [])
-                                .map((tag) => GestureDetector(
-                                      onTap: () {
-                                        setState(() {
-                                          _filteredTags.add(tag);
-                                        });
-                                      },
-                                      child: Padding(
-                                        padding: EdgeInsets.only(
-                                            right: $constants.insets.xs),
-                                        child: IconTextPill(
-                                          outlined: _filteredTags
-                                              .map((e) => e.id)
-                                              .contains(tag.id),
-                                          title: tag.name,
-                                          icon: null,
-                                          color: tag.color != null
-                                              ? hexToColor(tag.color!)
-                                                  .withValues(alpha: 0.2)
-                                              : null,
-                                        ),
-                                      ),
-                                    )),
-                            if (tagState.tags == null || tagState.tags!.isEmpty)
-                              GestureDetector(
-                                onTap: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              const MyTags()));
-                                },
-                                child: Padding(
-                                  padding: EdgeInsets.only(
-                                    right: $constants.insets.xxs,
-                                    left: $constants.insets.xxs,
-                                  ),
-                                  child: AutoSizeText(
-                                    context.t.tasks.no_tags_for_now,
-                                    style: getTextTheme(context)
-                                        .bodyMedium!
-                                        .copyWith(),
-                                  ),
-                                ),
-                              ),
-                          ],
-                        ),
-                      ],
-                    ),
+                            ),
+                        ],
+                      ),
+                    ],
                   ),
                 ),
                 SizedBox(

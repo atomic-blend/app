@@ -54,14 +54,11 @@ class _OverviewTasksState extends State<OverviewTasks> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Padding(
-                  padding: EdgeInsets.only(top: $constants.insets.xs),
-                  child: ElevatedContainer(
-                    child: ABSearchBar(
-                        controller: _searchController, onSubmitted: (value) {}),
-                  ),
+                ElevatedContainer(
+                  child: ABSearchBar(
+                      controller: _searchController, onSubmitted: (value) {}),
                 ),
-                SizedBox(height: $constants.insets.sm),
+                SizedBox(height: $constants.insets.xxs),
                 Expanded(
                   child: ElevatedContainer(
                     width: double.infinity,
@@ -90,7 +87,7 @@ class _OverviewTasksState extends State<OverviewTasks> {
                     ),
                   ),
                 ),
-                SizedBox(height: $constants.insets.sm),
+                SizedBox(height: $constants.insets.xxs),
                 Expanded(
                   child: ElevatedContainer(
                     width: double.infinity,
@@ -123,7 +120,7 @@ class _OverviewTasksState extends State<OverviewTasks> {
                     ),
                   ),
                 ),
-                SizedBox(height: $constants.insets.sm),
+                SizedBox(height: $constants.insets.xxs),
                 Expanded(
                   child: ElevatedContainer(
                     width: double.infinity,

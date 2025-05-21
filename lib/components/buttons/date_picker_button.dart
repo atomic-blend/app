@@ -58,7 +58,7 @@ class DatePickerButton extends StatelessWidget {
               height: height ?? 80,
               width: double.infinity,
               decoration: BoxDecoration(
-                color: getTheme(context).surfaceContainerHigh,
+                color: getTheme(context).surfaceContainer,
                 borderRadius: BorderRadius.circular($constants.corners.md),
               ),
               padding: EdgeInsets.all($constants.insets.sm),

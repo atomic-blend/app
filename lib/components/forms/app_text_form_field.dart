@@ -126,9 +126,11 @@ class _AppTextFormFieldState extends State<AppTextFormField> {
                   keyboardType: widget.keyboardType,
                   style: widget.textStyle ??
                       getTextTheme(context).bodyMedium!.copyWith(
-                          color: widget.textColor ?? getTheme(context).primary),
+                          color:
+                              widget.textColor ?? getTheme(context).onSurface),
                   decoration: InputDecoration(
-                    fillColor: widget.backgroundColor,
+                    fillColor: widget.backgroundColor ??
+                        getTheme(context).surfaceContainer,
                     hintText: widget.hintText,
                     hintStyle: getTextTheme(context).bodyMedium!.copyWith(
                           color: Colors.grey[700],
