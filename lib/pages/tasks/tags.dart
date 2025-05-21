@@ -31,7 +31,7 @@ class _TagsViewState extends State<TagsView> {
         return Padding(
           padding: isDesktop(context)
               ? EdgeInsets.only(right: $constants.insets.xs)
-              : EdgeInsets.symmetric(horizontal: $constants.insets.xs),
+              : EdgeInsets.only(left: $constants.insets.xs, bottom: $constants.insets.xs, right: $constants.insets.xs),
           child: RefreshIndicator(
             onRefresh: () {
               SyncService.sync(context);

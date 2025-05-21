@@ -24,7 +24,7 @@ class _MoreAppsState extends State<MoreApps> {
         $constants.navigation.bottomNavigationItems(context).sublist(5);
     return SafeArea(
       child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: $constants.insets.md),
+        padding: EdgeInsets.symmetric(horizontal: $constants.insets.xs),
         child: Column(
           children: [
             if (!isDesktop(context) && restOfNavigation.isNotEmpty) ...[
@@ -77,29 +77,36 @@ class _MoreAppsState extends State<MoreApps> {
                 height: $constants.insets.md,
               )
             ],
-            IconTextButton(
-              text: context.t.account.sections.account,
-              icon: CupertinoIcons.person,
-              iconSize: 25,
-              onTap: () {
-                showModalBottomSheet(
-                  context: context,
-                  isScrollControlled: true,
-                  builder: (context) => const Account(),
-                );
-              },
-            ),
-            SizedBox(
-              height: $constants.insets.sm,
-            ),
-            IconTextButton(
-              text: context.t.settings.title,
-              icon: CupertinoIcons.gear,
-              iconSize: 25,
-              onTap: () {
-                Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) => const Settings()));
-              },
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: $constants.insets.sm),
+              child: Column(
+                children: [
+                  IconTextButton(
+                    text: context.t.account.sections.account,
+                    icon: CupertinoIcons.person,
+                    iconSize: 25,
+                    onTap: () {
+                      showModalBottomSheet(
+                        context: context,
+                        isScrollControlled: true,
+                        builder: (context) => const Account(),
+                      );
+                    },
+                  ),
+                  SizedBox(
+                    height: $constants.insets.sm,
+                  ),
+                  IconTextButton(
+                    text: context.t.settings.title,
+                    icon: CupertinoIcons.gear,
+                    iconSize: 25,
+                    onTap: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => const Settings()));
+                    },
+                  ),
+                ],
+              ),
             ),
           ],
         ),
