@@ -33,7 +33,6 @@ class _AddTaskModalState extends State<AddTaskModal> {
 
   @override
   void initState() {
-    // TODO: implement initState
     if (widget.endDate != null) {
       _endDate = widget.endDate;
     }
