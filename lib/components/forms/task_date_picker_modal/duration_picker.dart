@@ -88,7 +88,7 @@ class _DurationPickerState extends State<DurationPicker> {
           SizedBox(height: $constants.insets.sm),
           Container(
             decoration: BoxDecoration(
-              color: getTheme(context).surface,
+              color: getTheme(context).surfaceContainer,
               borderRadius: BorderRadius.circular($constants.corners.md),
             ),
             padding: EdgeInsets.symmetric(

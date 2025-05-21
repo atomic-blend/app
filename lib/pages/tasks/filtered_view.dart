@@ -51,14 +51,11 @@ class _FilteredTaskViewState extends State<FilteredTaskView> {
             },
             child: Column(
               children: [
-                Padding(
-                  padding: EdgeInsets.only(top: $constants.insets.xs),
-                  child: ElevatedContainer(
-                    child: ABSearchBar(
-                        controller: _searchController, onSubmitted: (value) {}),
-                  ),
+                ElevatedContainer(
+                  child: ABSearchBar(
+                      controller: _searchController, onSubmitted: (value) {}),
                 ),
-                SizedBox(height: $constants.insets.sm),
+                SizedBox(height: $constants.insets.xxs),
                 Expanded(
                   child: ElevatedContainer(
                     padding: EdgeInsets.symmetric(

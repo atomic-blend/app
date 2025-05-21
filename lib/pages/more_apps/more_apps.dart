@@ -48,41 +48,38 @@ class _MoreAppsState extends State<MoreApps> {
                     return StaggeredGridTile.count(
                       crossAxisCellCount: 1,
                       mainAxisCellCount: 0.6,
-                      child: Padding(
-                        padding: const EdgeInsets.only(top: 8.0),
-                        child: GestureDetector(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const EisenhowerMatrix(),
-                              ),
-                            );
-                          },
-                          child: ElevatedContainer(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                SizedBox(
-                                  height: $constants.insets.sm,
-                                ),
-                                const Icon(
-                                  CupertinoIcons.square_grid_2x2_fill,
-                                  size: 35,
-                                ),
-                                SizedBox(
-                                  height: $constants.insets.xxs,
-                                ),
-                                Text(
-                                  e.label,
-                                  style: getTextTheme(context).labelMedium,
-                                ),
-                                SizedBox(
-                                  height: $constants.insets.sm,
-                                ),
-                              ],
+                      child: GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const EisenhowerMatrix(),
                             ),
+                          );
+                        },
+                        child: ElevatedContainer(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              SizedBox(
+                                height: $constants.insets.sm,
+                              ),
+                              const Icon(
+                                CupertinoIcons.square_grid_2x2_fill,
+                                size: 35,
+                              ),
+                              SizedBox(
+                                height: $constants.insets.xxs,
+                              ),
+                              Text(
+                                e.label,
+                                style: getTextTheme(context).labelMedium,
+                              ),
+                              SizedBox(
+                                height: $constants.insets.sm,
+                              ),
+                            ],
                           ),
                         ),
                       ),
@@ -93,7 +90,7 @@ class _MoreAppsState extends State<MoreApps> {
               ),
             ],
             SizedBox(
-              height: $constants.insets.sm,
+              height: $constants.insets.xxs,
             ),
             Expanded(
               child: ElevatedContainer(
