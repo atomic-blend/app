@@ -24,101 +24,116 @@ class _MoreAppsState extends State<MoreApps> {
     final restOfNavigation =
         $constants.navigation.bottomNavigationItems(context).sublist(5);
     return SafeArea(
-      child: Column(
-        children: [
-          if (!isDesktop(context) && restOfNavigation.isNotEmpty) ...[
-            StaggeredGrid.count(
-              crossAxisCount: 2,
-              mainAxisSpacing: $constants.insets.sm,
-              crossAxisSpacing: $constants.insets.sm,
-              children: restOfNavigation.map((e) {
-                if (e is NavigationItem) {
-                  return StaggeredGridTile.count(
-                    crossAxisCellCount: 1,
-                    mainAxisCellCount: 0.6,
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const EisenhowerMatrix(),
+      child: Padding(
+        padding: isDesktop(context)
+            ? EdgeInsets.only(
+                right: $constants.insets.md,
+                left: $constants.insets.sm,
+                bottom: $constants.insets.sm,
+              )
+            : EdgeInsets.only(
+                right: $constants.insets.sm,
+                left: $constants.insets.sm,
+                bottom: $constants.insets.sm,
+              ),
+        child: Column(
+          children: [
+            if (!isDesktop(context) && restOfNavigation.isNotEmpty) ...[
+              StaggeredGrid.count(
+                crossAxisCount: 2,
+                mainAxisSpacing: $constants.insets.sm,
+                crossAxisSpacing: $constants.insets.sm,
+                children: restOfNavigation.map((e) {
+                  if (e is NavigationItem) {
+                    return StaggeredGridTile.count(
+                      crossAxisCellCount: 1,
+                      mainAxisCellCount: 0.6,
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 8.0),
+                        child: GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const EisenhowerMatrix(),
+                              ),
+                            );
+                          },
+                          child: ElevatedContainer(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                SizedBox(
+                                  height: $constants.insets.sm,
+                                ),
+                                const Icon(
+                                  CupertinoIcons.square_grid_2x2_fill,
+                                  size: 35,
+                                ),
+                                SizedBox(
+                                  height: $constants.insets.xxs,
+                                ),
+                                Text(
+                                  e.label,
+                                  style: getTextTheme(context).labelMedium,
+                                ),
+                                SizedBox(
+                                  height: $constants.insets.sm,
+                                ),
+                              ],
                             ),
-                          );
-                        },
-                        child: ElevatedContainer(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              SizedBox(
-                                height: $constants.insets.sm,
-                              ),
-                              const Icon(
-                                CupertinoIcons.square_grid_2x2_fill,
-                                size: 35,
-                              ),
-                              SizedBox(
-                                height: $constants.insets.xxs,
-                              ),
-                              Text(
-                                e.label,
-                                style: getTextTheme(context).labelMedium,
-                              ),
-                              SizedBox(
-                                height: $constants.insets.sm,
-                              ),
-                            ],
                           ),
                         ),
                       ),
-                    ),
-                  );
-                }
-                return Container();
-              }).toList(),
+                    );
+                  }
+                  return Container();
+                }).toList(),
+              ),
+            ],
+            SizedBox(
+              height: $constants.insets.sm,
             ),
-          ],
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: $constants.insets.xs),
-            child: ElevatedContainer(
-              child: Padding(
-                padding: EdgeInsets.symmetric(
-                    horizontal: $constants.insets.sm,
-                    vertical: $constants.insets.sm),
-                child: Column(
-                  children: [
-                    IconTextButton(
-                      text: context.t.account.sections.account,
-                      icon: CupertinoIcons.person,
-                      iconSize: 25,
-                      onTap: () {
-                        showModalBottomSheet(
-                          context: context,
-                          isScrollControlled: true,
-                          builder: (context) => const Account(),
-                        );
-                      },
-                    ),
-                    SizedBox(
-                      height: $constants.insets.sm,
-                    ),
-                    IconTextButton(
-                      text: context.t.settings.title,
-                      icon: CupertinoIcons.gear,
-                      iconSize: 25,
-                      onTap: () {
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => const Settings()));
-                      },
-                    ),
-                  ],
+            Expanded(
+              child: ElevatedContainer(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(
+                      horizontal: $constants.insets.sm,
+                      vertical: $constants.insets.sm),
+                  child: Column(
+                    children: [
+                      IconTextButton(
+                        text: context.t.account.sections.account,
+                        icon: CupertinoIcons.person,
+                        iconSize: 25,
+                        onTap: () {
+                          showModalBottomSheet(
+                            context: context,
+                            isScrollControlled: true,
+                            builder: (context) => const Account(),
+                          );
+                        },
+                      ),
+                      SizedBox(
+                        height: $constants.insets.sm,
+                      ),
+                      IconTextButton(
+                        text: context.t.settings.title,
+                        icon: CupertinoIcons.gear,
+                        iconSize: 25,
+                        onTap: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => const Settings()));
+                        },
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
