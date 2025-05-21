@@ -77,96 +77,103 @@ class TaskItem extends StatelessWidget {
             )
           ],
         ),
-        child: Padding(
-          padding: EdgeInsets.symmetric(vertical: $constants.insets.xxs),
-          child: GestureDetector(
-            child: Row(
-              mainAxisSize: MainAxisSize.max,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                ABCheckbox(
-                    value: task.completed ?? false,
-                    onChanged: (value) {
-                      task.completed = value!;
-                      context.read<TasksBloc>().add(EditTask(task));
-                    }),
-                SizedBox(
-                  width: $constants.insets.xs,
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+        child: Material(
+          color: Colors.transparent,
+          child: Theme(
+            data: Theme.of(context),
+            child: Padding(
+              padding: EdgeInsets.symmetric(vertical: $constants.insets.xxs),
+              child: GestureDetector(
+                child: Row(
+                  mainAxisSize: MainAxisSize.max,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Text(
-                      task.title,
-                      style: getTextTheme(context).headlineSmall!.copyWith(),
+                    ABCheckbox(
+                        value: task.completed ?? false,
+                        onChanged: (value) {
+                          task.completed = value!;
+                          context.read<TasksBloc>().add(EditTask(task));
+                        }),
+                    SizedBox(
+                      width: $constants.insets.xs,
                     ),
-                    if (collapsed == true) ...[
-                      SizedBox(
-                        height: $constants.insets.xxs,
-                      ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          task.title,
+                          style:
+                              getTextTheme(context).headlineSmall!.copyWith(),
+                        ),
+                        if (collapsed == true) ...[
+                          SizedBox(
+                            height: $constants.insets.xxs,
+                          ),
+                          ...buildTaskDateInfos(context),
+                        ]
+                      ],
+                    ),
+                    if (collapsed != true) ...[
+                      if (task.tags != null && task.tags!.isNotEmpty)
+                        Container(
+                          padding: EdgeInsets.only(
+                            left: $constants.insets.sm,
+                          ),
+                          child: Row(
+                            children: [
+                              Container(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: $constants.insets.sm),
+                                decoration: BoxDecoration(
+                                  color: task.tags!.first.color != null
+                                      ? hexToColor(task.tags!.first.color!)
+                                          .withValues(alpha: 0.2)
+                                      : getTheme(context).primary,
+                                  borderRadius: BorderRadius.circular(
+                                    $constants.corners.sm,
+                                  ),
+                                ),
+                                child: Text(task.tags!.first.name),
+                              ),
+                              if (task.tags!.length > 1) ...[
+                                SizedBox(
+                                  width: $constants.insets.xs,
+                                ),
+                                Text(
+                                  "+${task.tags!.length - 1}",
+                                  style: getTextTheme(context)
+                                      .bodyMedium!
+                                      .copyWith(color: Colors.grey),
+                                )
+                              ]
+                            ],
+                          ),
+                        ),
+                      const Spacer(),
+                      if (task.priority != null && task.priority! > 0) ...[
+                        Container(
+                          padding: EdgeInsets.only(left: $constants.insets.sm),
+                          child: Icon(
+                            CupertinoIcons.flag_fill,
+                            size: 16,
+                            color: task.priority == null || task.priority == 0
+                                ? Colors.grey
+                                : task.priority == 1
+                                    ? Colors.blueAccent
+                                    : task.priority == 2
+                                        ? Colors.deepOrangeAccent
+                                        : Colors.red,
+                          ),
+                        ),
+                        SizedBox(
+                          width: $constants.insets.xs,
+                        ),
+                      ],
                       ...buildTaskDateInfos(context),
                     ]
                   ],
                 ),
-                if (collapsed != true) ...[
-                  if (task.tags != null && task.tags!.isNotEmpty)
-                    Container(
-                      padding: EdgeInsets.only(
-                        left: $constants.insets.sm,
-                      ),
-                      child: Row(
-                        children: [
-                          Container(
-                            padding: EdgeInsets.symmetric(
-                                horizontal: $constants.insets.sm),
-                            decoration: BoxDecoration(
-                              color: task.tags!.first.color != null
-                                  ? hexToColor(task.tags!.first.color!)
-                                      .withValues(alpha: 0.2)
-                                  : getTheme(context).primary,
-                              borderRadius: BorderRadius.circular(
-                                $constants.corners.sm,
-                              ),
-                            ),
-                            child: Text(task.tags!.first.name),
-                          ),
-                          if (task.tags!.length > 1) ...[
-                            SizedBox(
-                              width: $constants.insets.xs,
-                            ),
-                            Text(
-                              "+${task.tags!.length - 1}",
-                              style: getTextTheme(context)
-                                  .bodyMedium!
-                                  .copyWith(color: Colors.grey),
-                            )
-                          ]
-                        ],
-                      ),
-                    ),
-                  const Spacer(),
-                  if (task.priority != null && task.priority! > 0) ...[
-                    Container(
-                      padding: EdgeInsets.only(left: $constants.insets.sm),
-                      child: Icon(
-                        CupertinoIcons.flag_fill,
-                        size: 16,
-                        color: task.priority == null || task.priority == 0
-                            ? Colors.grey
-                            : task.priority == 1
-                                ? Colors.blueAccent
-                                : task.priority == 2
-                                    ? Colors.deepOrangeAccent
-                                    : Colors.red,
-                      ),
-                    ),
-                    SizedBox(
-                      width: $constants.insets.xs,
-                    ),
-                  ],
-                  ...buildTaskDateInfos(context),
-                ]
-              ],
+              ),
             ),
           ),
         ),

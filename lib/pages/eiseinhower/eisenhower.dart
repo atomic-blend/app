@@ -31,9 +31,10 @@ class EisenhowerMatrix extends StatelessWidget {
         child:
             BlocBuilder<TasksBloc, TasksState>(builder: (context, taskState) {
           return Container(
-            padding: EdgeInsets.symmetric(
-              horizontal: $constants.insets.sm,
-              vertical: $constants.insets.sm,
+            padding: EdgeInsets.only(
+              left: $constants.insets.sm,
+              right: $constants.insets.sm,
+              bottom: isDesktop(context) ? $constants.insets.sm : 0,
             ),
             child: Column(
               spacing: isDesktop(context)

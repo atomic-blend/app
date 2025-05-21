@@ -39,6 +39,7 @@ class _OverviewTasksState extends State<OverviewTasks> {
               ? EdgeInsets.only(
                   right: $constants.insets.md,
                   left: $constants.insets.sm,
+                  bottom: $constants.insets.sm,
                 )
               : EdgeInsets.only(
                   right: $constants.insets.sm,
