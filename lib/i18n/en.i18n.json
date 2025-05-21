@@ -237,7 +237,9 @@
         "zero": "Attendee",
         "one": "Attendee",
         "other": "Attendees"
-      }
+      },
+      "no_attendees": "No attendees",
+      "no_notes": "No notes"
     },
     "settings": {
       "title": "Calendar Settings",

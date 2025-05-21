@@ -1,6 +1,7 @@
 import 'package:app/blocs/tasks/tasks.bloc.dart';
 import 'package:app/components/buttons/task_item.dart';
 import 'package:app/components/forms/search_bar.dart';
+import 'package:app/components/widgets/elevated_container.dart';
 import 'package:app/entities/tasks/tasks.entity.dart';
 import 'package:app/i18n/strings.g.dart';
 import 'package:app/services/sync.service.dart';
@@ -32,25 +33,52 @@ class _FilteredTaskViewState extends State<FilteredTaskView> {
     return SafeArea(
       child: BlocBuilder<TasksBloc, TasksState>(builder: (context, taskState) {
         return Padding(
-          padding: EdgeInsets.symmetric(horizontal: $constants.insets.sm),
+          padding: isDesktop(context)
+              ? EdgeInsets.only(
+                  right: $constants.insets.md,
+                  left: $constants.insets.sm,
+                  bottom: $constants.insets.sm,
+                )
+              : EdgeInsets.only(
+                  right: $constants.insets.sm,
+                  left: $constants.insets.sm,
+                  bottom: $constants.insets.sm,
+                ),
           child: RefreshIndicator(
             onRefresh: () {
               SyncService.sync(context);
               return Future.delayed(const Duration(seconds: 1));
             },
-            child: ListView(
-              padding: EdgeInsets.zero,
+            child: Column(
               children: [
-                ABSearchBar(
-                    controller: _searchController, onSubmitted: (value) {}),
-                SizedBox(height: $constants.insets.sm),
-                if (widget.filter(taskState.tasks ?? []).isEmpty)
-                  Text(
-                    context.t.tasks.nothing_to_do,
-                    style: getTextTheme(context).labelSmall!,
+                Padding(
+                  padding: EdgeInsets.only(top: $constants.insets.xs),
+                  child: ElevatedContainer(
+                    child: ABSearchBar(
+                        controller: _searchController, onSubmitted: (value) {}),
                   ),
-                if (widget.filter(taskState.tasks ?? []).isNotEmpty)
-                  ...widget.filter(taskState.tasks ?? []),
+                ),
+                SizedBox(height: $constants.insets.sm),
+                Expanded(
+                  child: ElevatedContainer(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: $constants.insets.sm,
+                      vertical: $constants.insets.sm,
+                    ),
+                    child: ListView(
+                      padding: EdgeInsets.zero,
+                      children: [
+                        if (widget.filter(taskState.tasks ?? []).isEmpty)
+                          Text(
+                            context.t.tasks.nothing_to_do,
+                            style: getTextTheme(context).labelSmall!,
+                          ),
+                        if (widget.filter(taskState.tasks ?? []).isNotEmpty)
+                          ...widget.filter(taskState.tasks ?? []),
+                      ],
+                    ),
+                  ),
+                ),
               ],
             ),
           ),

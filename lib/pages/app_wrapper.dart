@@ -113,6 +113,11 @@ class AppWrapperState extends ResponsiveState<AppWrapper> {
             var appBar = appbars.removeAt(4);
             appbars.add(appBar);
           }
+          body = screens.elementAt(appState.pageIndex);
+          if (menuItems.isNotEmpty && menuItems[appState.pageIndex] != null) {
+            body =
+                menuItems[appState.pageIndex]![appState.selectedTabIndex].body;
+          }
           return _buildDesktopLayout(
             context: context,
             appState: appState,
@@ -121,7 +126,7 @@ class AppWrapperState extends ResponsiveState<AppWrapper> {
             navItems: navItems,
             floattingActionsButtons: floattingActionsButtons,
             menuItems: menuItems,
-            body: screens[appState.pageIndex],
+            body: body,
           );
         }
       });
@@ -378,9 +383,11 @@ class AppWrapperState extends ResponsiveState<AppWrapper> {
                       backgroundColor: getTheme(context).surface,
                       appBar: appBar,
                       body: Padding(
-                        padding: EdgeInsets.symmetric(
-                          vertical: $constants.insets.sm,
-                        ),
+                        padding: isDesktop(context)
+                            ? EdgeInsets.only(bottom: $constants.insets.xs)
+                            : EdgeInsets.symmetric(
+                                vertical: $constants.insets.sm,
+                              ),
                         child: body ?? Container(),
                       ),
                     ),

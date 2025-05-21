@@ -155,10 +155,23 @@ class Navigation {
             actions: [
               GestureDetector(
                   onTap: () {
-                    showModalBottomSheet(
-                        isScrollControlled: true,
+                    if (isDesktop(context)) {
+                      showDialog(
                         context: context,
-                        builder: (context) => const CalendarSettings());
+                        builder: (context) => Dialog(
+                          child: SizedBox(
+                            width: getSize(context).width * 0.5,
+                            height: getSize(context).height * 0.5,
+                            child: const CalendarSettings(),
+                          ),
+                        ),
+                      );
+                    } else {
+                      showModalBottomSheet(
+                          isScrollControlled: true,
+                          context: context,
+                          builder: (context) => const CalendarSettings());
+                    }
                   },
                   child: const Icon(CupertinoIcons.settings)),
               SizedBox(
@@ -273,7 +286,9 @@ class Navigation {
           SideMenuItem(
             title: context.t.tasks.overview,
             icon: CupertinoIcons.collections,
-            color: Colors.grey[800]!,
+            color: getTheme(context).brightness == Brightness.dark
+                ? Colors.white
+                : Colors.grey[800]!,
             iconContainer: true,
             body: const OverviewTasks(),
             onTap: () {
@@ -316,7 +331,9 @@ class Navigation {
             title: context.t.tasks.all_tasks,
             separatorBefore: true,
             icon: CupertinoIcons.square_stack_3d_down_right,
-            color: Colors.grey[800]!,
+            color: getTheme(context).brightness == Brightness.dark
+                ? Colors.white
+                : Colors.grey[800]!,
             iconContainer: true,
             body: FilteredTaskView(filter: (tasks) {
               return tasks
@@ -331,7 +348,9 @@ class Navigation {
           SideMenuItem(
             title: context.t.tasks.completed_tasks,
             icon: CupertinoIcons.checkmark_circle_fill,
-            color: Colors.grey[800]!,
+            color: getTheme(context).brightness == Brightness.dark
+                ? Colors.white
+                : Colors.grey[800]!,
             iconContainer: true,
             body: FilteredTaskView(filter: (tasks) {
               return tasks
@@ -349,7 +368,9 @@ class Navigation {
             title: context.t.calendar.threeDays,
             initialOnly: true,
             icon: CupertinoIcons.book,
-            color: Colors.grey[800]!,
+            color: getTheme(context).brightness == Brightness.dark
+                ? Colors.white
+                : Colors.grey[800]!,
             iconContainer: true,
             body: Calendar(
               key: UniqueKey(),
@@ -364,7 +385,9 @@ class Navigation {
             title: context.t.calendar.month,
             initialOnly: true,
             icon: CupertinoIcons.collections,
-            color: Colors.grey[800]!,
+            color: getTheme(context).brightness == Brightness.dark
+                ? Colors.white
+                : Colors.grey[800]!,
             iconContainer: true,
             body: Calendar(
               key: UniqueKey(),
@@ -378,7 +401,9 @@ class Navigation {
             title: context.t.calendar.day,
             initialOnly: true,
             icon: CupertinoIcons.calendar_today,
-            color: Colors.grey[800]!,
+            color: getTheme(context).brightness == Brightness.dark
+                ? Colors.white
+                : Colors.grey[800]!,
             iconContainer: true,
             body: Calendar(
               key: UniqueKey(),
@@ -423,13 +448,13 @@ class Navigation {
         NavigationItem(
           icon: Icon(
             LineAwesome.plus_solid,
-            color: getTheme(context).primary,
+            color: getTheme(context).tertiary,
           ),
           cupertinoIcon: Icon(
             CupertinoIcons.plus_circle_fill,
-            color: getTheme(context).secondary,
+            color: getTheme(context).tertiary,
           ),
-          label: "Add",
+          label: context.t.actions.add,
           onTap: (index) {
             if (isDesktop(context)) {
               showDialog(

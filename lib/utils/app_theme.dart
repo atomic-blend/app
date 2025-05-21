@@ -19,6 +19,18 @@ import 'package:flutter/material.dart';
 abstract final class AppTheme {
   // The defined light theme.
   static ThemeData light = FlexThemeData.light(
+    colorScheme: const ColorScheme(
+      brightness: Brightness.light,
+      primary: Color(0xFF004881),
+      onPrimary: Color(0xFFE8F3FF),
+      secondary: Color(0xFF006875),
+      onSecondary: Color(0xFFEDFCFF),
+      error: Color(0xFFBA1A1A),
+      onError: Color(0xFFFFDAD6),
+      surface: Color(0xFFF2F2F2),
+      surfaceContainer: Colors.white,
+      onSurface: Colors.black,
+    ),
     colors: const FlexSchemeColor(
       // Custom colors
       primary: Color(0xFF004881),
@@ -90,6 +102,18 @@ abstract final class AppTheme {
   );
   // The defined dark theme.
   static ThemeData dark = FlexThemeData.dark(
+    colorScheme: const ColorScheme(
+      brightness: Brightness.dark,
+      primary: Color(0xFF004881),
+      onPrimary: Color(0xFFE8F3FF),
+      secondary: Color(0xFF673AB7),
+      onSecondary: Color(0xFFF5EFFF),
+      error: Color(0xFFBA1A1A),
+      onError: Color(0xFFFFDAD6),
+      surface: Color(0xFF181818),
+      surfaceContainer: Colors.black,
+      onSurface: Colors.white,
+    ),
     colors: const FlexSchemeColor(
       // Custom colors
       primary: Color(0xFF9FC9FF),

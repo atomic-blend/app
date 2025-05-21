@@ -1,5 +1,6 @@
 import 'package:app/blocs/tasks/tasks.bloc.dart';
 import 'package:app/components/buttons/task_item.dart';
+import 'package:app/components/widgets/elevated_container.dart';
 import 'package:app/entities/tasks/tasks.entity.dart';
 import 'package:app/i18n/strings.g.dart';
 import 'package:app/utils/constants.dart';
@@ -30,42 +31,53 @@ class EisenhowerMatrix extends StatelessWidget {
         child:
             BlocBuilder<TasksBloc, TasksState>(builder: (context, taskState) {
           return Container(
-            padding: EdgeInsets.symmetric(
-              horizontal: $constants.insets.xs,
+            padding: EdgeInsets.only(
+              left: $constants.insets.sm,
+              right: $constants.insets.sm,
+              bottom: isDesktop(context) ? $constants.insets.sm : 0,
             ),
             child: Column(
-              spacing: $constants.insets.xs,
+              spacing: isDesktop(context)
+                  ? $constants.insets.sm
+                  : $constants.insets.xs,
               children: [
                 Expanded(
-                  child: Row(
-                    spacing: $constants.insets.xs,
-                    children: [
-                      buildEisenhowerCard(
-                          context: context,
-                          tasks: taskState.tasks ?? [],
-                          priority: 3,
-                          title: "Urgent & Important",
-                          filter: (task) {
-                            return task.where((element) =>
-                                element.priority == 3 &&
-                                element.completed != true);
-                          }),
-                      buildEisenhowerCard(
-                          context: context,
-                          tasks: taskState.tasks ?? [],
-                          priority: 2,
-                          title: "Not Urgent & Important",
-                          filter: (task) {
-                            return task.where((element) =>
-                                element.priority == 2 &&
-                                element.completed != true);
-                          }),
-                    ],
+                  child: Padding(
+                    padding: EdgeInsets.only(top: $constants.insets.xs),
+                    child: Row(
+                      spacing: isDesktop(context)
+                          ? $constants.insets.sm
+                          : $constants.insets.xs,
+                      children: [
+                        buildEisenhowerCard(
+                            context: context,
+                            tasks: taskState.tasks ?? [],
+                            priority: 3,
+                            title: "Urgent & Important",
+                            filter: (task) {
+                              return task.where((element) =>
+                                  element.priority == 3 &&
+                                  element.completed != true);
+                            }),
+                        buildEisenhowerCard(
+                            context: context,
+                            tasks: taskState.tasks ?? [],
+                            priority: 2,
+                            title: "Not Urgent & Important",
+                            filter: (task) {
+                              return task.where((element) =>
+                                  element.priority == 2 &&
+                                  element.completed != true);
+                            }),
+                      ],
+                    ),
                   ),
                 ),
                 Expanded(
                   child: Row(
-                    spacing: $constants.insets.xs,
+                    spacing: isDesktop(context)
+                        ? $constants.insets.sm
+                        : $constants.insets.xs,
                     children: [
                       buildEisenhowerCard(
                           context: context,
@@ -127,14 +139,10 @@ class EisenhowerMatrix extends StatelessWidget {
         },
         builder: (BuildContext context, List<TaskEntity?> candidateData,
             List<dynamic> rejectedData) {
-          return Container(
+          return ElevatedContainer(
             padding: EdgeInsets.symmetric(
                 vertical: $constants.insets.xs,
                 horizontal: $constants.insets.xs),
-            decoration: BoxDecoration(
-              color: getTheme(context).surfaceContainer,
-              borderRadius: BorderRadius.circular($constants.insets.sm),
-            ),
             child: Column(
               children: [
                 Row(

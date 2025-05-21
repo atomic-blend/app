@@ -2,6 +2,7 @@ import 'package:app/blocs/tag/tag.bloc.dart';
 import 'package:app/blocs/tasks/tasks.bloc.dart';
 import 'package:app/components/buttons/icon_text_pill.dart';
 import 'package:app/components/buttons/task_item.dart';
+import 'package:app/components/widgets/elevated_container.dart';
 import 'package:app/entities/tag/tag.entity.dart';
 import 'package:app/entities/tasks/tasks.entity.dart';
 import 'package:app/i18n/strings.g.dart';
@@ -29,126 +30,167 @@ class _TagsViewState extends State<TagsView> {
     return BlocBuilder<TasksBloc, TasksState>(builder: (context, taskState) {
       return BlocBuilder<TagBloc, TagState>(builder: (context, tagState) {
         return Padding(
-          padding: EdgeInsets.symmetric(
-            horizontal: $constants.insets.sm,
-            vertical: $constants.insets.xs,
-          ),
+          padding: isDesktop(context)
+              ? EdgeInsets.only(
+                  right: $constants.insets.md,
+                  left: $constants.insets.sm,
+                  bottom: $constants.insets.sm,
+                )
+              : EdgeInsets.only(
+                  right: $constants.insets.sm,
+                  left: $constants.insets.sm,
+                  bottom: $constants.insets.sm,
+                ),
           child: RefreshIndicator(
             onRefresh: () {
               SyncService.sync(context);
               return Future.delayed(const Duration(seconds: 1));
             },
-            child: ListView(
-              padding: EdgeInsets.zero,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.symmetric(
-                          horizontal: $constants.insets.xxs),
-                      child: AutoSizeText(
-                        context.t.tasks.my_tags,
-                        style: getTextTheme(context).titleSmall!.copyWith(
-                              fontWeight: FontWeight.bold,
-                            ),
-                      ),
+                Padding(
+                  padding: EdgeInsets.only(top: $constants.insets.xs),
+                  child: ElevatedContainer(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: $constants.insets.sm,
+                      vertical: $constants.insets.sm,
                     ),
-                    SizedBox(
-                      width: $constants.insets.sm,
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const MyTags()));
-                      },
-                      child: Text(
-                        context.t.actions.edit,
-                        style: getTextTheme(context).bodyMedium!.copyWith(
-                              fontWeight: FontWeight.bold,
-                              color: getTheme(context).primary,
-                            ),
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(
-                  height: $constants.insets.xs,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    if (_filteredTags.isNotEmpty)
-                      TextButton(
-                        onPressed: () {
-                          setState(() {
-                            _filteredTags.clear();
-                          });
-                        },
-                        child: Text(
-                          context.t.actions.clear,
-                          style: getTextTheme(context).bodyMedium!.copyWith(
-                                fontWeight: FontWeight.bold,
-                                color: Colors.grey.shade800,
+                    child: Column(
+                      children: [
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: $constants.insets.xxs),
+                              child: AutoSizeText(
+                                context.t.tasks.my_tags,
+                                style:
+                                    getTextTheme(context).titleSmall!.copyWith(
+                                          fontWeight: FontWeight.bold,
+                                        ),
                               ),
-                        ),
-                      ),
-                    ...(tagState.tags ?? []).map((tag) => GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              _filteredTags.add(tag);
-                            });
-                          },
-                          child: Padding(
-                            padding:
-                                EdgeInsets.only(right: $constants.insets.xs),
-                            child: IconTextPill(
-                              outlined: _filteredTags
-                                  .map((e) => e.id)
-                                  .contains(tag.id),
-                              title: tag.name,
-                              icon: null,
-                              color: tag.color != null
-                                  ? hexToColor(tag.color!)
-                                      .withValues(alpha: 0.2)
-                                  : null,
                             ),
-                          ),
-                        )),
-                    if (tagState.tags == null || tagState.tags!.isEmpty)
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => const MyTags()));
-                        },
-                        child: Padding(
-                          padding: EdgeInsets.only(
-                            right: $constants.insets.xxs,
-                            left: $constants.insets.xxs,
-                          ),
-                          child: AutoSizeText(
-                            context.t.tasks.no_tags_for_now,
-                            style: getTextTheme(context).bodyMedium!.copyWith(),
-                          ),
+                            SizedBox(
+                              width: $constants.insets.sm,
+                            ),
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => const MyTags()));
+                              },
+                              child: Text(
+                                context.t.actions.edit,
+                                style:
+                                    getTextTheme(context).bodyMedium!.copyWith(
+                                          fontWeight: FontWeight.bold,
+                                          color: getTheme(context).primary,
+                                        ),
+                              ),
+                            ),
+                          ],
                         ),
-                      ),
-                  ],
+                        SizedBox(
+                          height: $constants.insets.xs,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            if (_filteredTags.isNotEmpty)
+                              TextButton(
+                                onPressed: () {
+                                  setState(() {
+                                    _filteredTags.clear();
+                                  });
+                                },
+                                child: Text(
+                                  context.t.actions.clear,
+                                  style: getTextTheme(context)
+                                      .bodyMedium!
+                                      .copyWith(
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.grey.shade800,
+                                      ),
+                                ),
+                              ),
+                            ...(tagState.tags ?? [])
+                                .map((tag) => GestureDetector(
+                                      onTap: () {
+                                        setState(() {
+                                          _filteredTags.add(tag);
+                                        });
+                                      },
+                                      child: Padding(
+                                        padding: EdgeInsets.only(
+                                            right: $constants.insets.xs),
+                                        child: IconTextPill(
+                                          outlined: _filteredTags
+                                              .map((e) => e.id)
+                                              .contains(tag.id),
+                                          title: tag.name,
+                                          icon: null,
+                                          color: tag.color != null
+                                              ? hexToColor(tag.color!)
+                                                  .withValues(alpha: 0.2)
+                                              : null,
+                                        ),
+                                      ),
+                                    )),
+                            if (tagState.tags == null || tagState.tags!.isEmpty)
+                              GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              const MyTags()));
+                                },
+                                child: Padding(
+                                  padding: EdgeInsets.only(
+                                    right: $constants.insets.xxs,
+                                    left: $constants.insets.xxs,
+                                  ),
+                                  child: AutoSizeText(
+                                    context.t.tasks.no_tags_for_now,
+                                    style: getTextTheme(context)
+                                        .bodyMedium!
+                                        .copyWith(),
+                                  ),
+                                ),
+                              ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
                 SizedBox(
-                  height: $constants.insets.xs,
+                  height: $constants.insets.sm,
                 ),
-                AutoSizeText(
-                  context.t.tasks.title,
-                  style: getTextTheme(context).titleMedium!.copyWith(
-                        fontWeight: FontWeight.bold,
-                      ),
+                Expanded(
+                  child: ElevatedContainer(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: $constants.insets.sm,
+                      vertical: $constants.insets.sm,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        // AutoSizeText(
+                        //   context.t.tasks.title,
+                        //   style: getTextTheme(context).titleMedium!.copyWith(
+                        //         fontWeight: FontWeight.bold,
+                        //       ),
+                        // ),
+                        ..._getFilteredTasks(context, taskState.tasks)
+                            .map((task) => TaskItem(task: task)),
+                      ],
+                    ),
+                  ),
                 ),
-                ..._getFilteredTasks(context, taskState.tasks)
-                    .map((task) => TaskItem(task: task)),
               ],
             ),
           ),

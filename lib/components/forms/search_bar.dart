@@ -1,3 +1,4 @@
+import 'package:app/utils/shortcuts.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -25,6 +26,7 @@ class _ABSearchBarState extends State<ABSearchBar> {
     // Use Cupertino search bar for iOS, and Material for other platforms
     if (!kIsWeb && (Platform.isIOS || Platform.isMacOS)) {
       return CupertinoSearchTextField(
+        backgroundColor: getTheme(context).surfaceContainer,
         controller: widget.controller,
         placeholder: widget.placeholder ?? 'Search',
         onSubmitted: widget.onSubmitted,
@@ -38,6 +40,7 @@ class _ABSearchBarState extends State<ABSearchBar> {
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(8.0),
           ),
+          fillColor: getTheme(context).surfaceContainer,
           contentPadding: const EdgeInsets.symmetric(
             vertical: 12.0,
             horizontal: 16.0,

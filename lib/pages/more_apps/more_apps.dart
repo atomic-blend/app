@@ -1,6 +1,8 @@
 import 'package:app/components/app/bottom_navigation.dart';
 import 'package:app/components/buttons/icon_text_button.dart';
+import 'package:app/components/widgets/elevated_container.dart';
 import 'package:app/i18n/strings.g.dart';
+import 'package:app/pages/account/account.dart';
 import 'package:app/pages/eiseinhower/eisenhower.dart';
 import 'package:app/pages/settings/settings.dart';
 import 'package:app/utils/constants.dart';
@@ -23,7 +25,17 @@ class _MoreAppsState extends State<MoreApps> {
         $constants.navigation.bottomNavigationItems(context).sublist(5);
     return SafeArea(
       child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: $constants.insets.md),
+        padding: isDesktop(context)
+            ? EdgeInsets.only(
+                right: $constants.insets.md,
+                left: $constants.insets.sm,
+                bottom: $constants.insets.sm,
+              )
+            : EdgeInsets.only(
+                right: $constants.insets.sm,
+                left: $constants.insets.sm,
+                bottom: $constants.insets.sm,
+              ),
         child: Column(
           children: [
             if (!isDesktop(context) && restOfNavigation.isNotEmpty) ...[
@@ -33,38 +45,45 @@ class _MoreAppsState extends State<MoreApps> {
                 crossAxisSpacing: $constants.insets.sm,
                 children: restOfNavigation.map((e) {
                   if (e is NavigationItem) {
-                    return GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const EisenhowerMatrix(),
+                    return StaggeredGridTile.count(
+                      crossAxisCellCount: 1,
+                      mainAxisCellCount: 0.6,
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 8.0),
+                        child: GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const EisenhowerMatrix(),
+                              ),
+                            );
+                          },
+                          child: ElevatedContainer(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                SizedBox(
+                                  height: $constants.insets.sm,
+                                ),
+                                const Icon(
+                                  CupertinoIcons.square_grid_2x2_fill,
+                                  size: 35,
+                                ),
+                                SizedBox(
+                                  height: $constants.insets.xxs,
+                                ),
+                                Text(
+                                  e.label,
+                                  style: getTextTheme(context).labelMedium,
+                                ),
+                                SizedBox(
+                                  height: $constants.insets.sm,
+                                ),
+                              ],
+                            ),
                           ),
-                        );
-                      },
-                      child: Container(
-                        height: 100,
-                        decoration: BoxDecoration(
-                          color: getTheme(context).surfaceContainer,
-                          borderRadius:
-                              BorderRadius.circular($constants.insets.sm),
-                        ),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            const Icon(
-                              CupertinoIcons.square_grid_2x2_fill,
-                              size: 35,
-                            ),
-                            SizedBox(
-                              height: $constants.insets.xxs,
-                            ),
-                            Text(
-                              e.label,
-                              style: getTextTheme(context).labelMedium,
-                            )
-                          ],
                         ),
                       ),
                     );
@@ -72,18 +91,53 @@ class _MoreAppsState extends State<MoreApps> {
                   return Container();
                 }).toList(),
               ),
-              SizedBox(
-                height: $constants.insets.sm,
-              )
             ],
-            IconTextButton(
-              text: context.t.settings.title,
-              icon: CupertinoIcons.gear,
-              iconSize: 20,
-              onTap: () {
-                Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) => const Settings()));
-              },
+            SizedBox(
+              height: $constants.insets.sm,
+            ),
+            Expanded(
+              child: ElevatedContainer(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: isDesktop(context)
+                        ? $constants.insets.lg
+                        : $constants.insets.sm,
+                    vertical: isDesktop(context)
+                        ? $constants.insets.lg
+                        : $constants.insets.sm,
+                  ),
+                  child: Column(
+                    children: [
+                      IconTextButton(
+                        text: context.t.account.sections.account,
+                        icon: CupertinoIcons.person,
+                        iconSize: 25,
+                        onTap: () {
+                          showModalBottomSheet(
+                            context: context,
+                            isScrollControlled: true,
+                            builder: (context) => const Account(),
+                          );
+                        },
+                      ),
+                      SizedBox(
+                        height: isDesktop(context)
+                            ? $constants.insets.md
+                            : $constants.insets.sm,
+                      ),
+                      IconTextButton(
+                        text: context.t.settings.title,
+                        icon: CupertinoIcons.gear,
+                        iconSize: 25,
+                        onTap: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => const Settings()));
+                        },
+                      ),
+                    ],
+                  ),
+                ),
+              ),
             ),
           ],
         ),
