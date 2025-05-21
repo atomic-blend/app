@@ -1,6 +1,7 @@
 import 'package:app/components/app/bottom_navigation.dart';
 import 'package:app/components/buttons/icon_text_button.dart';
 import 'package:app/i18n/strings.g.dart';
+import 'package:app/pages/account/account.dart';
 import 'package:app/pages/eiseinhower/eisenhower.dart';
 import 'package:app/pages/settings/settings.dart';
 import 'package:app/utils/constants.dart';
@@ -76,6 +77,21 @@ class _MoreAppsState extends State<MoreApps> {
                 height: $constants.insets.md,
               )
             ],
+            IconTextButton(
+              text: context.t.account.sections.account,
+              icon: CupertinoIcons.person,
+              iconSize: 25,
+              onTap: () {
+                showModalBottomSheet(
+                  context: context,
+                  isScrollControlled: true,
+                  builder: (context) => const Account(),
+                );
+              },
+            ),
+            SizedBox(
+              height: $constants.insets.sm,
+            ),
             IconTextButton(
               text: context.t.settings.title,
               icon: CupertinoIcons.gear,
