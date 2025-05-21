@@ -47,20 +47,20 @@ class PriorityPicker extends StatelessWidget {
             children: List.generate(
                 4,
                 (index) => Padding(
-                      padding: EdgeInsets.only(bottom: $constants.insets.sm),
+                      padding: EdgeInsets.only(bottom: $constants.insets.xs),
                       child: GestureDetector(
                         onTap: () {
                           onChanged?.call(index);
                           Navigator.of(context).pop();
                         },
                         child: Material(
-                          color: getTheme(context).surface,
+                          color: getTheme(context).surfaceContainer,
                           elevation: displayCard == true ? 1 : 0,
                           borderRadius: BorderRadius.circular(8),
                           child: Container(
                             decoration: displayCard == true
                                 ? BoxDecoration(
-                                    color: getTheme(context).surfaceContainer,
+                                    color: getTheme(context).surface,
                                     borderRadius: BorderRadius.circular(8),
                                   )
                                 : null,
@@ -75,15 +75,12 @@ class PriorityPicker extends StatelessWidget {
                                   width: 24,
                                   child: index == 0
                                       ? const Icon(
-                                          CupertinoIcons.flag_fill,
+                                          CupertinoIcons.flag,
                                           color: Colors.grey,
                                         )
                                       : SizedBox(
                                           width: 6,
-                                          child: Icon(
-                                              index == 0
-                                                  ? CupertinoIcons.flag_fill
-                                                  : CupertinoIcons.flag,
+                                          child: Icon(CupertinoIcons.flag,
                                               color: index == 0
                                                   ? Colors.grey
                                                   : index == 1

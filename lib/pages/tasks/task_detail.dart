@@ -7,6 +7,7 @@ import 'package:app/components/buttons/icon_text_pill.dart';
 import 'package:app/components/dialogs/priority_picker.dart';
 import 'package:app/components/forms/app_text_form_field.dart';
 import 'package:app/components/forms/task_date_picker_modal/task_date_picker_modal.dart';
+import 'package:app/components/widgets/elevated_container.dart';
 import 'package:app/entities/tag/tag.entity.dart';
 import 'package:app/entities/tasks/tasks.entity.dart';
 import 'package:app/i18n/strings.g.dart';
@@ -97,7 +98,7 @@ class _TaskDetailState extends State<TaskDetail> {
         ),
         leading: IconButton(
           icon: Icon(
-            isDesktop(context) ? CupertinoIcons.xmark :CupertinoIcons.back,
+            isDesktop(context) ? CupertinoIcons.xmark : CupertinoIcons.back,
           ),
           onPressed: () {
             _updateTask(context);
@@ -107,22 +108,27 @@ class _TaskDetailState extends State<TaskDetail> {
       ),
       backgroundColor: getTheme(context).surface,
       body: BlocBuilder<TagBloc, TagState>(builder: (context, tagState) {
-        return SingleChildScrollView(
-          child: Padding(
-            padding: EdgeInsets.symmetric(
-              horizontal: $constants.insets.xs,
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
+        return Padding(
+          padding: isDesktop(context)
+              ? EdgeInsets.only(
+                  right: $constants.insets.md,
+                  left: $constants.insets.sm,
+                  bottom: $constants.insets.xs,
+                )
+              : EdgeInsets.only(
+                  right: $constants.insets.sm,
+                  left: $constants.insets.sm,
+                  bottom: $constants.insets.lg,
+                ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: EdgeInsets.only(top: $constants.insets.xs),
+                child: ElevatedContainer(
                   padding: EdgeInsets.symmetric(
                     horizontal: $constants.insets.sm,
                     vertical: $constants.insets.xs,
-                  ),
-                  decoration: BoxDecoration(
-                    color: getTheme(context).surfaceContainer,
-                    borderRadius: BorderRadius.circular($constants.corners.sm),
                   ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -200,6 +206,9 @@ class _TaskDetailState extends State<TaskDetail> {
                       SizedBox(
                         width: 20,
                         child: CustomPopup(
+                            backgroundColor: getTheme(context).surface,
+                            contentPadding:
+                                EdgeInsets.all($constants.insets.xxs),
                             content: PriorityPicker(
                               priority: _priority,
                               onChanged: (newValue) {
@@ -238,16 +247,14 @@ class _TaskDetailState extends State<TaskDetail> {
                     ],
                   ),
                 ),
-                SizedBox(
-                  height: $constants.insets.xs,
-                ),
-                Container(
+              ),
+              SizedBox(
+                height: $constants.insets.xs,
+              ),
+              Expanded(
+                child: ElevatedContainer(
                   padding: EdgeInsets.only(
                     bottom: $constants.insets.xs,
-                  ),
-                  decoration: BoxDecoration(
-                    color: getTheme(context).surfaceContainer,
-                    borderRadius: BorderRadius.circular($constants.corners.sm),
                   ),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
@@ -346,6 +353,7 @@ class _TaskDetailState extends State<TaskDetail> {
                         ),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisSize: MainAxisSize.min,
                           children: [
                             Text(
                               context.t.tasks.add_task_modal.notes,
@@ -357,13 +365,13 @@ class _TaskDetailState extends State<TaskDetail> {
                             KeyboardVisibilityBuilder(
                                 builder: (context, isKeyboardVisible) {
                               return SizedBox(
-                                height: widget.smallNotes == true
-                                    ? getSize(context).height * 0.25
-                                    : isKeyboardVisible
-                                        ? getSize(context).height * 0.3
-                                        : isDesktop(context)
-                                            ? getSize(context).height * 0.4
-                                            : getSize(context).height * 0.45,
+                                // height: widget.smallNotes == true
+                                //     ? getSize(context).height * 0.25
+                                //     : isKeyboardVisible
+                                //         ? getSize(context).height * 0.3
+                                //         : isDesktop(context)
+                                //             ? getSize(context).height * 0.4
+                                //             : getSize(context).height * 0.4,
                                 child: FleatherEditor(
                                   controller: _controller!,
                                 ),
@@ -387,27 +395,58 @@ class _TaskDetailState extends State<TaskDetail> {
                     ],
                   ),
                 ),
-                SizedBox(
-                  height: $constants.insets.xs,
-                ),
-                StaggeredGrid.count(
-                    crossAxisCount: 4,
-                    mainAxisSpacing: $constants.insets.xs,
-                    crossAxisSpacing: $constants.insets.xs,
-                    children: [
-                      StaggeredGridTile.count(
+              ),
+              SizedBox(
+                height: $constants.insets.sm,
+              ),
+              StaggeredGrid.count(
+                  crossAxisCount: 4,
+                  mainAxisSpacing: $constants.insets.sm,
+                  crossAxisSpacing: $constants.insets.sm,
+                  children: [
+                    StaggeredGridTile.count(
+                      crossAxisCellCount: isDesktop(context) ? 1 : 2,
+                      mainAxisCellCount: isDesktop(context) ? 0.4 : 0.8,
+                      child: _buildCard(
+                          context: context,
+                          title: context.t.tasks.time_log,
+                          icon: CupertinoIcons.arrow_counterclockwise,
+                          onTap: () {
+                            if (isDesktop(context)) {
+                              showDialog(
+                                  context: context,
+                                  builder: (context) => Dialog(
+                                        child: TaskTimeEntryLog(
+                                          task: widget.task,
+                                        ),
+                                      ));
+                            } else {
+                              showModalBottomSheet(
+                                context: context,
+                                isScrollControlled: true,
+                                builder: (context) => SizedBox(
+                                    height: getSize(context).height * 0.4,
+                                    width: double.infinity,
+                                    child: TaskTimeEntryLog(
+                                      task: widget.task,
+                                    )),
+                              );
+                            }
+                          }),
+                    ),
+                    StaggeredGridTile.count(
                         crossAxisCellCount: isDesktop(context) ? 1 : 2,
                         mainAxisCellCount: isDesktop(context) ? 0.4 : 0.8,
                         child: _buildCard(
                             context: context,
-                            title: context.t.tasks.time_log,
-                            icon: CupertinoIcons.arrow_counterclockwise,
+                            title: context.t.tasks.log_session,
+                            icon: CupertinoIcons.plus_app,
                             onTap: () {
                               if (isDesktop(context)) {
                                 showDialog(
                                     context: context,
                                     builder: (context) => Dialog(
-                                          child: TaskTimeEntryLog(
+                                          child: AddTimeEntry(
                                             task: widget.task,
                                           ),
                                         ));
@@ -418,82 +457,50 @@ class _TaskDetailState extends State<TaskDetail> {
                                   builder: (context) => SizedBox(
                                       height: getSize(context).height * 0.4,
                                       width: double.infinity,
-                                      child: TaskTimeEntryLog(
+                                      child: AddTimeEntry(
                                         task: widget.task,
                                       )),
                                 );
                               }
-                            }),
-                      ),
-                      StaggeredGridTile.count(
-                          crossAxisCellCount: isDesktop(context) ? 1 : 2,
-                          mainAxisCellCount: isDesktop(context) ? 0.4 : 0.8,
-                          child: _buildCard(
+                            })),
+                    StaggeredGridTile.count(
+                      crossAxisCellCount: isDesktop(context) ? 1 : 2,
+                      mainAxisCellCount: isDesktop(context) ? 0.4 : 0.8,
+                      child: _buildCard(
+                          context: context,
+                          title: context.t.tasks.timer,
+                          icon: CupertinoIcons.stopwatch,
+                          onTap: () {
+                            ToastHelper.showWarning(
                               context: context,
-                              title: context.t.tasks.log_session,
-                              icon: CupertinoIcons.plus_app,
-                              onTap: () {
-                                if (isDesktop(context)) {
-                                  showDialog(
-                                      context: context,
-                                      builder: (context) => Dialog(
-                                            child: AddTimeEntry(
-                                              task: widget.task,
-                                            ),
-                                          ));
-                                } else {
-                                  showModalBottomSheet(
-                                    context: context,
-                                    isScrollControlled: true,
-                                    builder: (context) => SizedBox(
-                                        height: getSize(context).height * 0.4,
-                                        width: double.infinity,
-                                        child: AddTimeEntry(
-                                          task: widget.task,
-                                        )),
-                                  );
-                                }
-                              })),
-                      StaggeredGridTile.count(
-                        crossAxisCellCount: isDesktop(context) ? 1 : 2,
-                        mainAxisCellCount: isDesktop(context) ? 0.4 : 0.8,
-                        child: _buildCard(
-                            context: context,
-                            title: context.t.tasks.timer,
-                            icon: CupertinoIcons.stopwatch,
-                            onTap: () {
-                              ToastHelper.showWarning(
-                                context: context,
-                                title:
-                                    context.t.feature_under_construction.title,
-                                description: context
-                                    .t.feature_under_construction.description,
-                              );
-                            }),
-                      ),
-                      StaggeredGridTile.count(
-                        crossAxisCellCount: isDesktop(context) ? 1 : 2,
-                        mainAxisCellCount: isDesktop(context) ? 0.4 : 0.8,
-                        child: _buildCard(
-                            context: context,
-                            title: context.t.tasks.pomodoro,
-                            icon: CupertinoIcons.timer,
-                            onTap: () {
-                              ToastHelper.showWarning(
-                                context: context,
-                                title:
-                                    context.t.feature_under_construction.title,
-                                description: context
-                                    .t.feature_under_construction.description,
-                              );
-                            }),
-                      )
-                    ]),
-                    if (isDesktop(context)) SizedBox(
-                      height: $constants.insets.xs,
+                              title: context.t.feature_under_construction.title,
+                              description: context
+                                  .t.feature_under_construction.description,
+                            );
+                          }),
                     ),
-              ],
-            ),
+                    StaggeredGridTile.count(
+                      crossAxisCellCount: isDesktop(context) ? 1 : 2,
+                      mainAxisCellCount: isDesktop(context) ? 0.4 : 0.8,
+                      child: _buildCard(
+                          context: context,
+                          title: context.t.tasks.pomodoro,
+                          icon: CupertinoIcons.timer,
+                          onTap: () {
+                            ToastHelper.showWarning(
+                              context: context,
+                              title: context.t.feature_under_construction.title,
+                              description: context
+                                  .t.feature_under_construction.description,
+                            );
+                          }),
+                    )
+                  ]),
+              if (isDesktop(context))
+                SizedBox(
+                  height: $constants.insets.xs,
+                ),
+            ],
           ),
         );
       }),
@@ -508,13 +515,7 @@ class _TaskDetailState extends State<TaskDetail> {
   }) {
     return GestureDetector(
       onTap: onTap,
-      child: Container(
-        decoration: BoxDecoration(
-          color: getTheme(context).surfaceContainer,
-          borderRadius: BorderRadius.circular(
-            $constants.corners.sm,
-          ),
-        ),
+      child: ElevatedContainer(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
