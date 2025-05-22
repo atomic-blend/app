@@ -464,7 +464,7 @@ class Navigation {
           ),
           cupertinoIcon: Icon(
             CupertinoIcons.plus_circle_fill,
-            color: getTheme(context).tertiary,
+            color: getTheme(context).secondary,
           ),
           label: context.t.actions.add,
           onTap: (index) {
