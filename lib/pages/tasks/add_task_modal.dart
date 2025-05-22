@@ -285,13 +285,18 @@ class _AddTaskModalState extends State<AddTaskModal> {
                               context: context,
                               builder: (context) => Dialog(
                                 backgroundColor: getTheme(context).surface,
-                                child: AssignFolder(
-                                  onFolderSelected: (folder) {
-                                    setState(() {
-                                      _folder = folder;
-                                    });
-                                  },
-                                  folderId: _folder?.id,
+                                child: Container(
+                                  padding: EdgeInsets.all($constants.insets.sm),
+                                  height: getSize(context).height * 0.2 +
+                                      $constants.insets.md,
+                                  child: AssignFolder(
+                                    onFolderSelected: (folder) {
+                                      setState(() {
+                                        _folder = folder;
+                                      });
+                                    },
+                                    folderId: _folder?.id,
+                                  ),
                                 ),
                               ),
                             );
@@ -352,26 +357,34 @@ class _AddTaskModalState extends State<AddTaskModal> {
                               context: context,
                               builder: (context) => Dialog(
                                 backgroundColor: getTheme(context).surface,
-                                child: AssignFolder(
-                                  onFolderSelected: (folder) {
-                                    setState(() {
-                                      _folder = folder;
-                                    });
-                                  },
-                                  folderId: _folder?.id,
+                                child: SizedBox(
+                                  height: isDesktop(context)
+                                      ? getSize(context).height * 0.345
+                                      : getSize(context).height * 0.25,
+                                  child: AssignTagModal(
+                                    selectedTags: _tags,
+                                    onSelectedTagsChanged: (tags) {
+                                      setState(() {
+                                        _tags = tags;
+                                      });
+                                    },
+                                  ),
                                 ),
                               ),
                             );
                           } else {
                             showModalBottomSheet(
                                 context: context,
-                                builder: (context) => AssignTagModal(
-                                      selectedTags: _tags,
-                                      onSelectedTagsChanged: (tags) {
-                                        setState(() {
-                                          _tags = tags;
-                                        });
-                                      },
+                                builder: (context) => SizedBox(
+                                      height: getSize(context).height * 0.25,
+                                      child: AssignTagModal(
+                                        selectedTags: _tags,
+                                        onSelectedTagsChanged: (tags) {
+                                          setState(() {
+                                            _tags = tags;
+                                          });
+                                        },
+                                      ),
                                     ));
                           }
                         },
