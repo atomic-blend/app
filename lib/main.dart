@@ -5,6 +5,7 @@ import 'dart:io';
 import 'package:app/blocs/app/app.bloc.dart';
 import 'package:app/blocs/auth/auth.bloc.dart';
 import 'package:app/blocs/device_calendar/device_calendar.bloc.dart';
+import 'package:app/blocs/folder/folder.bloc.dart';
 import 'package:app/blocs/habit/habit.bloc.dart';
 import 'package:app/blocs/tag/tag.bloc.dart';
 import 'package:app/blocs/tasks/tasks.bloc.dart';
@@ -100,6 +101,7 @@ FutureOr<void> main() async {
               BlocProvider(create: (context) => DeviceCalendarBloc()),
               BlocProvider(create: (context) => HabitBloc()),
               BlocProvider(create: (context) => TagBloc()),
+              BlocProvider(create: (context) => FolderBloc())
             ],
             child: TranslationProvider(
                 child: const ToastificationWrapper(child: App()))),
