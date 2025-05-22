@@ -10,8 +10,8 @@ class FolderService {
     final result = await globalApiClient.get('/folders');
     if (result.statusCode == 200) {
       final List<Folder> folders = [];
-      
-     for (var folder in result.data) {
+
+      for (var folder in (result.data ?? [])) {
         final decryptedFolder = await Folder.decrypt(
           folder as Map<String, dynamic>,
           encryptionService!,
@@ -27,7 +27,8 @@ class FolderService {
   Future<bool> createFolder(Folder folder) async {
     final encryptedFolder =
         await folder.encrypt(encryptionService: encryptionService!);
-    final result = await globalApiClient.post('/folders', data: encryptedFolder);
+    final result =
+        await globalApiClient.post('/folders', data: encryptedFolder);
     if (result.statusCode == 201) {
       return true;
     } else {
@@ -39,8 +40,8 @@ class FolderService {
     final encryptedFolder =
         await folder.encrypt(encryptionService: encryptionService!);
 
-    final result =
-        await globalApiClient.put('/folders/${folder.id}', data: encryptedFolder);
+    final result = await globalApiClient.put('/folders/${folder.id}',
+        data: encryptedFolder);
     if (result.statusCode == 200) {
       return true;
     } else {

@@ -1,6 +1,7 @@
 import 'package:app/blocs/folder/folder.bloc.dart';
 import 'package:app/components/buttons/icon_text_card.dart';
 import 'package:app/components/modals/delete_confirm_modal.dart';
+import 'package:app/entities/folder/folder.entity.dart';
 import 'package:app/i18n/strings.g.dart';
 import 'package:app/pages/folder/add_folder_modal.dart';
 import 'package:app/utils/constants.dart';
@@ -58,7 +59,7 @@ class _MyFoldersState extends State<MyFolders> {
                     ),
                     child: GestureDetector(
                       onTap: () {
-                        // TODO: Implement folder selection
+                        // optional: folder tap action
                       },
                       child: Slidable(
                         endActionPane:
@@ -113,6 +114,7 @@ class _MyFoldersState extends State<MyFolders> {
                             child: SlidableAction(
                               onPressed: (context) {
                                 // TODO: Implement folder editing
+                                _showAddFolderModal(context, folder: folder);
                               },
                               backgroundColor:
                                   getTheme(context).surfaceContainer,
@@ -143,7 +145,7 @@ class _MyFoldersState extends State<MyFolders> {
     );
   }
 
-  _showAddFolderModal(BuildContext context) {
+  _showAddFolderModal(BuildContext context, {Folder? folder}) {
     if (isDesktop(context)) {
       showDialog(
         context: context,
@@ -154,7 +156,9 @@ class _MyFoldersState extends State<MyFolders> {
             width: getSize(context).width,
             child: ClipRRect(
               borderRadius: BorderRadius.circular($constants.corners.md),
-              child: const AddFolderModal(),
+              child: AddFolderModal(
+                folder: folder,
+              ),
             ),
           ),
         ),
@@ -165,7 +169,9 @@ class _MyFoldersState extends State<MyFolders> {
         isScrollControlled: true,
         builder: (context) => SizedBox(
           height: getSize(context).height * 0.8,
-          child: const AddFolderModal(),
+          child: AddFolderModal(
+            folder: folder,
+          ),
         ),
       );
     }

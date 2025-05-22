@@ -33,6 +33,8 @@ class _FoldersViewState extends State<FoldersView> {
     return BlocBuilder<TasksBloc, TasksState>(builder: (context, taskState) {
       return BlocBuilder<FolderBloc, FolderState>(
           builder: (context, folderState) {
+        final filteredTasks = _getFilteredTasks(context, taskState.tasks)
+            .map((task) => TaskItem(task: task));
         return Padding(
           padding: isDesktop(context)
               ? EdgeInsets.only(
@@ -161,6 +163,7 @@ class _FoldersViewState extends State<FoldersView> {
                 ),
                 Expanded(
                   child: ElevatedContainer(
+                    width: double.infinity,
                     padding: EdgeInsets.symmetric(
                       horizontal: $constants.insets.sm,
                       vertical: $constants.insets.sm,
@@ -168,8 +171,16 @@ class _FoldersViewState extends State<FoldersView> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        ..._getFilteredTasks(context, taskState.tasks)
-                            .map((task) => TaskItem(task: task)),
+                        if (filteredTasks.isEmpty)
+                          Expanded(
+                            child: AutoSizeText(
+                              context.t.tasks.no_tasks_for_now,
+                              style: getTextTheme(context)
+                                  .bodyMedium!
+                                  .copyWith(),
+                            ),
+                          ),
+                        ...filteredTasks
                       ],
                     ),
                   ),
