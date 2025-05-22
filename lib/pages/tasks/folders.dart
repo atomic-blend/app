@@ -8,6 +8,7 @@ import 'package:app/entities/folder/folder.entity.dart';
 import 'package:app/entities/tag/tag.entity.dart';
 import 'package:app/entities/tasks/tasks.entity.dart';
 import 'package:app/i18n/strings.g.dart';
+import 'package:app/pages/folder/my_folders.dart';
 import 'package:app/pages/tags/my_tags.dart';
 import 'package:app/utils/constants.dart';
 import 'package:app/utils/shortcuts.dart';
@@ -77,7 +78,7 @@ class _FoldersViewState extends State<FoldersView> {
                           ),
                           GestureDetector(
                             onTap: () {
-                              // TODO: Implement folder editing
+                              _showMyFolderModal(context);
                             },
                             child: Text(
                               context.t.actions.edit,
@@ -138,7 +139,7 @@ class _FoldersViewState extends State<FoldersView> {
                               folderState.folders!.isEmpty)
                             GestureDetector(
                               onTap: () {
-                                // TODO: Add folder creation
+                                _showMyFolderModal(context);
                               },
                               child: Padding(
                                 padding: EdgeInsets.only(
@@ -198,5 +199,36 @@ class _FoldersViewState extends State<FoldersView> {
       }
       return false;
     }).toList();
+  }
+
+  _showMyFolderModal(BuildContext context) {
+    if (isDesktop(context)) {
+      showDialog(
+        context: context,
+        builder: (context) => Dialog(
+          insetPadding: EdgeInsets.symmetric(horizontal: $constants.insets.xs),
+          child: SizedBox(
+            height: getSize(context).height * 0.7,
+            width: getSize(context).width,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular($constants.corners.md),
+              child: const MyFolders(),
+            ),
+          ),
+        ),
+      );
+    } else {
+      showModalBottomSheet(
+        context: context,
+        isScrollControlled: true,
+        builder: (context) => SizedBox(
+          height: getSize(context).height * 0.8,
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular($constants.corners.md),
+            child: const MyFolders(),
+          ),
+        ),
+      );
+    }
   }
 }
