@@ -158,7 +158,18 @@
     "my_folders": "Mes dossiers",
     "folders": {
       "title": "Dossiers",
-      "no_folders": "Aucun dossier"
+      "no_folders": "Aucun dossier",
+      "add_folder": "Ajouter un dossier",
+      "edit_folder": "Modifier le dossier",
+      "delete_folder": "Supprimer le dossier",
+      "delete_folder_description": "Êtes-vous sûr de vouloir supprimer ce dossier ?",
+      "delete_folder_warning": "Cette action est irréversible et toutes les tâches associées à ce dossier seront déliées.",
+      "name": "Nom du dossier",
+      "name_hint": "Travail",
+      "name_description": "Définissez un nom pour votre dossier, cela sera affiché dans le tableau de bord et dans les notifications.",
+      "name_required": "Nom requis",
+      "color": "Couleur du dossier",
+      "color_description": "Choisissez une couleur pour votre dossier, cela vous aidera à le distinguer des autres."
     },
     "overview": "Vue d'ensemble",
     "nothing_to_do": "Rien à faire pour le moment, vous pouvez vous détendre !",

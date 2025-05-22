@@ -48,9 +48,10 @@ class FolderBloc extends HydratedBloc<FolderEvent, FolderState> {
 
   void _onAddFolder(AddFolder event, Emitter<FolderState> emit) async {
     final prevState = state;
-    emit(const FolderLoading());
+    emit(FolderCreating(state.folders));
     try {
-      await _folderService.createFolder(event.user, event.folder);
+      await _folderService.createFolder(event.folder);
+      emit(FolderCreated(state.folders));
       add(const LoadFolders());
     } catch (e) {
       emit(FolderLoadingError(prevState.folders ?? [], e.toString()));
@@ -60,9 +61,10 @@ class FolderBloc extends HydratedBloc<FolderEvent, FolderState> {
 
   void _onEditFolder(EditFolder event, Emitter<FolderState> emit) async {
     final prevState = state;
-    emit(const FolderLoading());
+    emit( FolderUpdating(state.folders));
     try {
       await _folderService.updateFolder(event.folder);
+      emit(FolderUpdated(state.folders));
       add(const LoadFolders());
     } catch (e) {
       emit(FolderLoadingError(prevState.folders ?? [], e.toString()));
@@ -72,9 +74,10 @@ class FolderBloc extends HydratedBloc<FolderEvent, FolderState> {
 
   void _onDeleteFolder(DeleteFolder event, Emitter<FolderState> emit) async {
     final prevState = state;
-    emit(const FolderLoading());
+    emit(FolderDeleting(state.folders));
     try {
       await _folderService.deleteFolder(event.folder);
+      emit(FolderDeleted(state.folders));
       add(const LoadFolders());
     } catch (e) {
       emit(FolderLoadingError(prevState.folders ?? [], e.toString()));

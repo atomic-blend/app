@@ -2,6 +2,7 @@ import 'package:app/blocs/folder/folder.bloc.dart';
 import 'package:app/components/buttons/icon_text_card.dart';
 import 'package:app/components/modals/delete_confirm_modal.dart';
 import 'package:app/i18n/strings.g.dart';
+import 'package:app/pages/folder/add_folder_modal.dart';
 import 'package:app/utils/constants.dart';
 import 'package:app/utils/shortcuts.dart';
 import 'package:flutter/cupertino.dart';
@@ -32,7 +33,7 @@ class _MyFoldersState extends State<MyFolders> {
         actions: [
           IconButton(
               onPressed: () {
-                // TODO: Implement folder creation
+                _showAddFolderModal(context);
               },
               icon: const Icon(CupertinoIcons.add)),
         ],
@@ -140,5 +141,33 @@ class _MyFoldersState extends State<MyFolders> {
         );
       }),
     );
+  }
+
+  _showAddFolderModal(BuildContext context) {
+    if (isDesktop(context)) {
+      showDialog(
+        context: context,
+        builder: (context) => Dialog(
+          insetPadding: EdgeInsets.symmetric(horizontal: $constants.insets.xs),
+          child: SizedBox(
+            height: getSize(context).height * 0.7,
+            width: getSize(context).width,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular($constants.corners.md),
+              child: const AddFolderModal(),
+            ),
+          ),
+        ),
+      );
+    } else {
+      showModalBottomSheet(
+        context: context,
+        isScrollControlled: true,
+        builder: (context) => SizedBox(
+          height: getSize(context).height * 0.8,
+          child: const AddFolderModal(),
+        ),
+      );
+    }
   }
 }

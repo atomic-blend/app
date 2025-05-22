@@ -20,20 +20,22 @@ Folder _$FolderFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Folder {
-  String get id => throw _privateConstructorUsedError;
-  set id(String value) => throw _privateConstructorUsedError;
+  String? get id => throw _privateConstructorUsedError;
+  set id(String? value) => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   set name(String value) => throw _privateConstructorUsedError;
   String? get emoji => throw _privateConstructorUsedError;
   set emoji(String? value) => throw _privateConstructorUsedError;
   String? get color => throw _privateConstructorUsedError;
   set color(String? value) => throw _privateConstructorUsedError;
+  String? get userId => throw _privateConstructorUsedError;
+  set userId(String? value) => throw _privateConstructorUsedError;
+  String? get parentId => throw _privateConstructorUsedError;
+  set parentId(String? value) => throw _privateConstructorUsedError;
   DateTime? get createdAt => throw _privateConstructorUsedError;
   set createdAt(DateTime? value) => throw _privateConstructorUsedError;
   DateTime? get updatedAt => throw _privateConstructorUsedError;
   set updatedAt(DateTime? value) => throw _privateConstructorUsedError;
-  List<String> get notes => throw _privateConstructorUsedError;
-  set notes(List<String> value) => throw _privateConstructorUsedError;
 
   /// Serializes this Folder to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -50,13 +52,14 @@ abstract class $FolderCopyWith<$Res> {
       _$FolderCopyWithImpl<$Res, Folder>;
   @useResult
   $Res call(
-      {String id,
+      {String? id,
       String name,
       String? emoji,
       String? color,
+      String? userId,
+      String? parentId,
       DateTime? createdAt,
-      DateTime? updatedAt,
-      List<String> notes});
+      DateTime? updatedAt});
 }
 
 /// @nodoc
@@ -74,19 +77,20 @@ class _$FolderCopyWithImpl<$Res, $Val extends Folder>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
+    Object? id = freezed,
     Object? name = null,
     Object? emoji = freezed,
     Object? color = freezed,
+    Object? userId = freezed,
+    Object? parentId = freezed,
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
-    Object? notes = null,
   }) {
     return _then(_value.copyWith(
-      id: null == id
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -99,6 +103,14 @@ class _$FolderCopyWithImpl<$Res, $Val extends Folder>
           ? _value.color
           : color // ignore: cast_nullable_to_non_nullable
               as String?,
+      userId: freezed == userId
+          ? _value.userId
+          : userId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      parentId: freezed == parentId
+          ? _value.parentId
+          : parentId // ignore: cast_nullable_to_non_nullable
+              as String?,
       createdAt: freezed == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -107,10 +119,6 @@ class _$FolderCopyWithImpl<$Res, $Val extends Folder>
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
               as DateTime?,
-      notes: null == notes
-          ? _value.notes
-          : notes // ignore: cast_nullable_to_non_nullable
-              as List<String>,
     ) as $Val);
   }
 }
@@ -123,13 +131,14 @@ abstract class _$$FolderImplCopyWith<$Res> implements $FolderCopyWith<$Res> {
   @override
   @useResult
   $Res call(
-      {String id,
+      {String? id,
       String name,
       String? emoji,
       String? color,
+      String? userId,
+      String? parentId,
       DateTime? createdAt,
-      DateTime? updatedAt,
-      List<String> notes});
+      DateTime? updatedAt});
 }
 
 /// @nodoc
@@ -145,19 +154,20 @@ class __$$FolderImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
+    Object? id = freezed,
     Object? name = null,
     Object? emoji = freezed,
     Object? color = freezed,
+    Object? userId = freezed,
+    Object? parentId = freezed,
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
-    Object? notes = null,
   }) {
     return _then(_$FolderImpl(
-      id: null == id
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -170,6 +180,14 @@ class __$$FolderImplCopyWithImpl<$Res>
           ? _value.color
           : color // ignore: cast_nullable_to_non_nullable
               as String?,
+      userId: freezed == userId
+          ? _value.userId
+          : userId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      parentId: freezed == parentId
+          ? _value.parentId
+          : parentId // ignore: cast_nullable_to_non_nullable
+              as String?,
       createdAt: freezed == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -178,10 +196,6 @@ class __$$FolderImplCopyWithImpl<$Res>
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
               as DateTime?,
-      notes: null == notes
-          ? _value.notes
-          : notes // ignore: cast_nullable_to_non_nullable
-              as List<String>,
     ));
   }
 }
@@ -190,20 +204,21 @@ class __$$FolderImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$FolderImpl extends _Folder {
   _$FolderImpl(
-      {required this.id,
+      {this.id,
       required this.name,
       this.emoji,
       this.color,
+      this.userId,
+      this.parentId,
       this.createdAt,
-      this.updatedAt,
-      required this.notes})
+      this.updatedAt})
       : super._();
 
   factory _$FolderImpl.fromJson(Map<String, dynamic> json) =>
       _$$FolderImplFromJson(json);
 
   @override
-  String id;
+  String? id;
   @override
   String name;
   @override
@@ -211,11 +226,13 @@ class _$FolderImpl extends _Folder {
   @override
   String? color;
   @override
+  String? userId;
+  @override
+  String? parentId;
+  @override
   DateTime? createdAt;
   @override
   DateTime? updatedAt;
-  @override
-  List<String> notes;
 
   /// Create a copy of Folder
   /// with the given fields replaced by the non-null parameter values.
@@ -235,20 +252,21 @@ class _$FolderImpl extends _Folder {
 
 abstract class _Folder extends Folder {
   factory _Folder(
-      {required String id,
+      {String? id,
       required String name,
       String? emoji,
       String? color,
+      String? userId,
+      String? parentId,
       DateTime? createdAt,
-      DateTime? updatedAt,
-      required List<String> notes}) = _$FolderImpl;
+      DateTime? updatedAt}) = _$FolderImpl;
   _Folder._() : super._();
 
   factory _Folder.fromJson(Map<String, dynamic> json) = _$FolderImpl.fromJson;
 
   @override
-  String get id;
-  set id(String value);
+  String? get id;
+  set id(String? value);
   @override
   String get name;
   set name(String value);
@@ -259,14 +277,17 @@ abstract class _Folder extends Folder {
   String? get color;
   set color(String? value);
   @override
+  String? get userId;
+  set userId(String? value);
+  @override
+  String? get parentId;
+  set parentId(String? value);
+  @override
   DateTime? get createdAt;
   set createdAt(DateTime? value);
   @override
   DateTime? get updatedAt;
   set updatedAt(DateTime? value);
-  @override
-  List<String> get notes;
-  set notes(List<String> value);
 
   /// Create a copy of Folder
   /// with the given fields replaced by the non-null parameter values.

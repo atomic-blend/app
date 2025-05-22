@@ -9,13 +9,14 @@ class Folder with _$Folder {
   Folder._();
 
   factory Folder({
-    required String id,
+    String? id,
     required String name,
     String? emoji,
     String? color,
+    String? userId,
+    String? parentId,
     DateTime? createdAt,
     DateTime? updatedAt,
-    required List<String> notes,
   }) = _Folder;
 
   factory Folder.fromJson(Map<String, dynamic> json) => _$FolderFromJson(json);
@@ -23,6 +24,8 @@ class Folder with _$Folder {
   static const nonEncryptedFields = [
     'id',
     'createdAt',
+    'userId',
+    'parentId',
     'updatedAt',
   ];
 

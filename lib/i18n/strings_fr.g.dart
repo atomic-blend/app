@@ -943,6 +943,17 @@ class _TranslationsTasksFoldersFr implements TranslationsTasksFoldersEn {
 	// Translations
 	@override String get title => 'Dossiers';
 	@override String get no_folders => 'Aucun dossier';
+	@override String get add_folder => 'Ajouter un dossier';
+	@override String get edit_folder => 'Modifier le dossier';
+	@override String get delete_folder => 'Supprimer le dossier';
+	@override String get delete_folder_description => 'Êtes-vous sûr de vouloir supprimer ce dossier ?';
+	@override String get delete_folder_warning => 'Cette action est irréversible et toutes les tâches associées à ce dossier seront déliées.';
+	@override String get name => 'Nom du dossier';
+	@override String get name_hint => 'Travail';
+	@override String get name_description => 'Définissez un nom pour votre dossier, cela sera affiché dans le tableau de bord et dans les notifications.';
+	@override String get name_required => 'Nom requis';
+	@override String get color => 'Couleur du dossier';
+	@override String get color_description => 'Choisissez une couleur pour votre dossier, cela vous aidera à le distinguer des autres.';
 }
 
 // Path: tasks.due_dates
@@ -1356,6 +1367,17 @@ extension on TranslationsFr {
 			case 'tasks.my_folders': return 'Mes dossiers';
 			case 'tasks.folders.title': return 'Dossiers';
 			case 'tasks.folders.no_folders': return 'Aucun dossier';
+			case 'tasks.folders.add_folder': return 'Ajouter un dossier';
+			case 'tasks.folders.edit_folder': return 'Modifier le dossier';
+			case 'tasks.folders.delete_folder': return 'Supprimer le dossier';
+			case 'tasks.folders.delete_folder_description': return 'Êtes-vous sûr de vouloir supprimer ce dossier ?';
+			case 'tasks.folders.delete_folder_warning': return 'Cette action est irréversible et toutes les tâches associées à ce dossier seront déliées.';
+			case 'tasks.folders.name': return 'Nom du dossier';
+			case 'tasks.folders.name_hint': return 'Travail';
+			case 'tasks.folders.name_description': return 'Définissez un nom pour votre dossier, cela sera affiché dans le tableau de bord et dans les notifications.';
+			case 'tasks.folders.name_required': return 'Nom requis';
+			case 'tasks.folders.color': return 'Couleur du dossier';
+			case 'tasks.folders.color_description': return 'Choisissez une couleur pour votre dossier, cela vous aidera à le distinguer des autres.';
 			case 'tasks.overview': return 'Vue d\'ensemble';
 			case 'tasks.nothing_to_do': return 'Rien à faire pour le moment, vous pouvez vous détendre !';
 			case 'tasks.day_off': return 'Vous n\'avez rien de prévu pour demain, profitez-en !';

@@ -949,6 +949,17 @@ class TranslationsTasksFoldersEn {
 	// Translations
 	String get title => 'Folders';
 	String get no_folders => 'No folders for now';
+	String get add_folder => 'Add a folder';
+	String get edit_folder => 'Edit folder';
+	String get delete_folder => 'Delete folder';
+	String get delete_folder_description => 'Are you sure you want to delete this folder?';
+	String get delete_folder_warning => 'This action cannot be undone and all the tasks will be unlinked';
+	String get name => 'Name of the folder';
+	String get name_hint => 'Work';
+	String get name_description => 'Define a name for your folder, this will help you remember what it is about and be shown in notifications.';
+	String get name_required => 'Name is required';
+	String get color => 'Color';
+	String get color_description => 'Choose a color for your folder, this will help you remember what it is about and be shown in notifications.';
 }
 
 // Path: tasks.due_dates
@@ -1363,6 +1374,17 @@ extension on Translations {
 			case 'tasks.my_folders': return 'My folders';
 			case 'tasks.folders.title': return 'Folders';
 			case 'tasks.folders.no_folders': return 'No folders for now';
+			case 'tasks.folders.add_folder': return 'Add a folder';
+			case 'tasks.folders.edit_folder': return 'Edit folder';
+			case 'tasks.folders.delete_folder': return 'Delete folder';
+			case 'tasks.folders.delete_folder_description': return 'Are you sure you want to delete this folder?';
+			case 'tasks.folders.delete_folder_warning': return 'This action cannot be undone and all the tasks will be unlinked';
+			case 'tasks.folders.name': return 'Name of the folder';
+			case 'tasks.folders.name_hint': return 'Work';
+			case 'tasks.folders.name_description': return 'Define a name for your folder, this will help you remember what it is about and be shown in notifications.';
+			case 'tasks.folders.name_required': return 'Name is required';
+			case 'tasks.folders.color': return 'Color';
+			case 'tasks.folders.color_description': return 'Choose a color for your folder, this will help you remember what it is about and be shown in notifications.';
 			case 'tasks.nothing_to_do': return 'Nothing to do for now, enjoy your day!';
 			case 'tasks.day_off': return 'You have nothing planned for tomorrow, enjoy your day!';
 			case 'tasks.week_off': return 'You have nothing planned for this week, try and take the time to do the stuff left behind!';

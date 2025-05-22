@@ -9,8 +9,7 @@ final class LoadFolders extends FolderEvent {
 }
 
 final class AddFolder extends FolderEvent {
-  const AddFolder(this.user, this.folder);
-  final UserEntity user;
+  const AddFolder(this.folder);
   final Folder folder;
 }
 

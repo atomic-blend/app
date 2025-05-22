@@ -29,3 +29,27 @@ class FolderLoadingError extends FolderState {
   @override
   List<Object?> get props => [message];
 }
+
+class FolderCreating extends FolderState {
+  const FolderCreating(super.folders);
+}
+
+class FolderCreated extends FolderState {
+  const FolderCreated(super.folders);
+}
+
+class FolderUpdating extends FolderState {
+  const FolderUpdating(super.folders);
+}
+
+class FolderUpdated extends FolderState {
+  const FolderUpdated(super.folders);
+}
+
+class FolderDeleting extends FolderState {
+  const FolderDeleting(super.folders);
+}
+
+class FolderDeleted extends FolderState {
+  const FolderDeleted(super.folders);
+}

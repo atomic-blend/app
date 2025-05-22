@@ -38,6 +38,8 @@ Map<String, dynamic>? userData;
 String? userKey;
 
 FutureOr<void> main() async {
+    WidgetsFlutterBinding.ensureInitialized();
+
   await SentryFlutter.init((options) {
     String? dsn = const String.fromEnvironment(
       'SENTRY_DSN',
@@ -50,7 +52,6 @@ FutureOr<void> main() async {
     // visit: https://docs.sentry.io/platforms/dart/data-management/data-collected/ for more info
     options.sendDefaultPii = true;
   }, appRunner: () async {
-    WidgetsFlutterBinding.ensureInitialized();
 
     if (!kIsWeb && Platform.isMacOS) {
       await WindowManipulator.initialize();
