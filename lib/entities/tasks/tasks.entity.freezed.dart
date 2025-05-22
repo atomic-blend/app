@@ -36,6 +36,8 @@ mixin _$TaskEntity {
   set updatedAt(DateTime? value) => throw _privateConstructorUsedError;
   int? get priority => throw _privateConstructorUsedError;
   set priority(int? value) => throw _privateConstructorUsedError;
+  Folder? get folder => throw _privateConstructorUsedError;
+  set folder(Folder? value) => throw _privateConstructorUsedError;
   List<TagEntity>? get tags => throw _privateConstructorUsedError;
   set tags(List<TagEntity>? value) => throw _privateConstructorUsedError;
   List<DateTime>? get reminders => throw _privateConstructorUsedError;
@@ -70,10 +72,13 @@ abstract class $TaskEntityCopyWith<$Res> {
       DateTime? createdAt,
       DateTime? updatedAt,
       int? priority,
+      Folder? folder,
       List<TagEntity>? tags,
       List<DateTime>? reminders,
       List<TimeEntry>? timeEntries,
       bool? completed});
+
+  $FolderCopyWith<$Res>? get folder;
 }
 
 /// @nodoc
@@ -99,6 +104,7 @@ class _$TaskEntityCopyWithImpl<$Res, $Val extends TaskEntity>
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
     Object? priority = freezed,
+    Object? folder = freezed,
     Object? tags = freezed,
     Object? reminders = freezed,
     Object? timeEntries = freezed,
@@ -137,6 +143,10 @@ class _$TaskEntityCopyWithImpl<$Res, $Val extends TaskEntity>
           ? _value.priority
           : priority // ignore: cast_nullable_to_non_nullable
               as int?,
+      folder: freezed == folder
+          ? _value.folder
+          : folder // ignore: cast_nullable_to_non_nullable
+              as Folder?,
       tags: freezed == tags
           ? _value.tags
           : tags // ignore: cast_nullable_to_non_nullable
@@ -154,6 +164,20 @@ class _$TaskEntityCopyWithImpl<$Res, $Val extends TaskEntity>
           : completed // ignore: cast_nullable_to_non_nullable
               as bool?,
     ) as $Val);
+  }
+
+  /// Create a copy of TaskEntity
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $FolderCopyWith<$Res>? get folder {
+    if (_value.folder == null) {
+      return null;
+    }
+
+    return $FolderCopyWith<$Res>(_value.folder!, (value) {
+      return _then(_value.copyWith(folder: value) as $Val);
+    });
   }
 }
 
@@ -174,10 +198,14 @@ abstract class _$$TaskEntityImplCopyWith<$Res>
       DateTime? createdAt,
       DateTime? updatedAt,
       int? priority,
+      Folder? folder,
       List<TagEntity>? tags,
       List<DateTime>? reminders,
       List<TimeEntry>? timeEntries,
       bool? completed});
+
+  @override
+  $FolderCopyWith<$Res>? get folder;
 }
 
 /// @nodoc
@@ -201,6 +229,7 @@ class __$$TaskEntityImplCopyWithImpl<$Res>
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
     Object? priority = freezed,
+    Object? folder = freezed,
     Object? tags = freezed,
     Object? reminders = freezed,
     Object? timeEntries = freezed,
@@ -239,6 +268,10 @@ class __$$TaskEntityImplCopyWithImpl<$Res>
           ? _value.priority
           : priority // ignore: cast_nullable_to_non_nullable
               as int?,
+      folder: freezed == folder
+          ? _value.folder
+          : folder // ignore: cast_nullable_to_non_nullable
+              as Folder?,
       tags: freezed == tags
           ? _value.tags
           : tags // ignore: cast_nullable_to_non_nullable
@@ -271,6 +304,7 @@ class _$TaskEntityImpl extends _TaskEntity {
       this.createdAt,
       this.updatedAt,
       this.priority,
+      this.folder,
       this.tags,
       this.reminders,
       this.timeEntries,
@@ -296,6 +330,8 @@ class _$TaskEntityImpl extends _TaskEntity {
   DateTime? updatedAt;
   @override
   int? priority;
+  @override
+  Folder? folder;
   @override
   List<TagEntity>? tags;
   @override
@@ -331,6 +367,7 @@ abstract class _TaskEntity extends TaskEntity {
       DateTime? createdAt,
       DateTime? updatedAt,
       int? priority,
+      Folder? folder,
       List<TagEntity>? tags,
       List<DateTime>? reminders,
       List<TimeEntry>? timeEntries,
@@ -364,6 +401,9 @@ abstract class _TaskEntity extends TaskEntity {
   @override
   int? get priority;
   set priority(int? value);
+  @override
+  Folder? get folder;
+  set folder(Folder? value);
   @override
   List<TagEntity>? get tags;
   set tags(List<TagEntity>? value);

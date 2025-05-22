@@ -1,3 +1,4 @@
+import 'package:app/entities/folder/folder.entity.dart';
 import 'package:app/entities/tag/tag.entity.dart';
 import 'package:app/entities/time_entry/time_entry.entity.dart';
 import 'package:app/services/encryption.service.dart';
@@ -19,6 +20,7 @@ class TaskEntity with _$TaskEntity {
     DateTime? createdAt,
     DateTime? updatedAt,
     int? priority,
+    Folder? folder,
     List<TagEntity>? tags,
     List<DateTime>? reminders,
     List<TimeEntry>? timeEntries,
@@ -37,7 +39,7 @@ class TaskEntity with _$TaskEntity {
     'completed'
   ];
 
-  static final manualParseFields = ['tags', 'timeEntries'];
+  static final manualParseFields = ['tags', 'timeEntries', 'folder'];
 
   factory TaskEntity.fromJson(Map<String, dynamic> json) =>
       _$TaskEntityFromJson(json);
@@ -63,6 +65,7 @@ class TaskEntity with _$TaskEntity {
             .add(await timeEntry.encrypt(encryptionService: encryptionService));
       }
     }
+
     Map<String, dynamic> encryptedData = {
       'id': id,
       'title': await encryptionService.encryptJson(title),
@@ -72,6 +75,7 @@ class TaskEntity with _$TaskEntity {
       'startDate': startDate?.toUtc().toIso8601String(),
       'endDate': endDate?.toUtc().toIso8601String(),
       'tags': encryptedTags,
+      'folder': folder?.id,
       'timeEntries': encryptedTimeEntries,
       'priority': priority,
       'reminders': reminders?.map((e) => e.toUtc().toIso8601String()).toList(),
@@ -83,7 +87,9 @@ class TaskEntity with _$TaskEntity {
   static Future<TaskEntity> decrypt(
       Map<String, dynamic> data, EncryptionService encryptionService) async {
     Map<String, dynamic> decryptedData = {};
+
     List<dynamic>? encryptedTimeEntries = [];
+    dynamic encryptedFolder;
 
     for (var entry in data.entries) {
       if (nonEncryptedFields.contains(entry.key) ||
@@ -97,6 +103,8 @@ class TaskEntity with _$TaskEntity {
 
     encryptedTimeEntries = decryptedData['timeEntries'];
     decryptedData['timeEntries'] = null;
+    encryptedFolder = decryptedData['folder'];
+    decryptedData['folder'] = null;
 
     final task = TaskEntity.fromJson(decryptedData);
 
@@ -111,6 +119,12 @@ class TaskEntity with _$TaskEntity {
           (timeEntry) => TimeEntry.decrypt(
               data: timeEntry, encryptionService: encryptionService)));
       task.timeEntries = decryptedData['timeEntries'];
+    }
+
+    if (encryptedFolder != null) {
+      decryptedData['folder'] = await Folder.decrypt(
+          encryptedFolder, encryptionService);
+      task.folder = decryptedData['folder'];
     }
 
     return task;
