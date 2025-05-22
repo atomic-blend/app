@@ -20,10 +20,10 @@ class AssignFolder extends StatelessWidget {
       builder: (context, folderState) {
         return Padding(
           padding: EdgeInsets.symmetric(
-            horizontal: $constants.insets.sm,
-            vertical: $constants.insets.sm,
+            horizontal: $constants.insets.xs,
           ),
           child: Column(
+            mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
@@ -35,59 +35,69 @@ class AssignFolder extends StatelessWidget {
               SizedBox(
                 height: $constants.insets.sm,
               ),
-              ...?folderState.folders?.map((folder) {
-                return GestureDetector(
-                  onTap: () {
-                    if (folder.id == task.folderId) {
-                      onFolderSelected(null);
-                    } else {
-                      onFolderSelected(folder);
-                    }
-                    Navigator.of(context).pop();
-                  },
-                  child: Container(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: $constants.insets.md,
-                      vertical: $constants.insets.xxs,
-                    ),
-                    decoration: BoxDecoration(
-                      color: folder.color != null
-                          ? hexToColor(folder.color!).withValues(alpha: 0.2)
-                          : getTheme(context).primary,
-                      borderRadius: BorderRadius.circular($constants.insets.xs),
-                    ),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        if (folder.emoji != null) ...[
-                          Text(
-                            folder.emoji!,
-                            style: const TextStyle(
-                              fontSize: 30,
-                            ),
-                          ),
-                          SizedBox(
-                            width: $constants.insets.sm,
-                          ),
-                        ],
-                        Text(
-                          folder.name,
-                          style: getTextTheme(context).bodyLarge!.copyWith(
-                                fontWeight: FontWeight.bold,
+              SingleChildScrollView(
+                child: Row(
+                  children: [
+                    ...?folderState.folders?.map((folder) {
+                      return GestureDetector(
+                        onTap: () {
+                          if (folder.id == task.folderId) {
+                            onFolderSelected(null);
+                          } else {
+                            onFolderSelected(folder);
+                          }
+                          Navigator.of(context).pop();
+                        },
+                        child: Column(
+                          children: [
+                            if (folder.emoji != null) ...[
+                              Container(
+                                height: 50,
+                                width: 50,
+                                decoration: BoxDecoration(
+                                  border: folder.id != task.folderId
+                                      ? null
+                                      : Border.all(
+                                          color: getTheme(context)
+                                              .primary
+                                              .withValues(alpha: 0.75),
+                                          width: 1,
+                                        ),
+                                  borderRadius: BorderRadius.circular(
+                                      $constants.corners.full),
+                                  color: folder.color != null
+                                      ? hexToColor(folder.color!)
+                                          .withValues(alpha: 0.2)
+                                      : Colors.grey,
+                                ),
+                                child: Column(
+                                  children: [
+                                    Text(
+                                      folder.emoji!,
+                                      style: const TextStyle(
+                                        fontSize: 30,
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
+                              SizedBox(
+                                width: $constants.insets.sm,
+                              ),
+                            ],
+                            Text(
+                              folder.name,
+                              style: getTextTheme(context).bodyLarge!.copyWith(
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                            ),
+                          ],
                         ),
-                        const Spacer(),
-                        if (folder.id == task.folderId) ...[
-                          Icon(
-                            Icons.check,
-                            color: getTheme(context).primary,
-                          ),
-                        ],
-                      ],
-                    ),
-                  ),
-                );
-              }).toList(),
+                      );
+                    }).toList()
+                  ],
+                ),
+              ),
             ],
           ),
         );

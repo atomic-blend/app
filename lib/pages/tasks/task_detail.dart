@@ -102,8 +102,7 @@ class _TaskDetailState extends State<TaskDetail> {
         appBar: AppBar(
           title: CustomPopup(
             content: SizedBox(
-              height: getSize(context).height * 0.4,
-              width: double.infinity,
+              width: getSize(context).width * 0.9,
               child: AssignFolder(
                 task: widget.task,
                 onFolderSelected: (folder) {
@@ -126,10 +125,10 @@ class _TaskDetailState extends State<TaskDetail> {
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 if (widget.task.folderId == null) ...[
-                  SizedBox(
+                  const SizedBox(
                     width: 20,
                     height: 30,
-                    child: const Icon(
+                    child: Icon(
                       CupertinoIcons.tray_arrow_down,
                       size: 18,
                     ),
