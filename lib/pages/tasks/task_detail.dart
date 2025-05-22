@@ -104,7 +104,7 @@ class _TaskDetailState extends State<TaskDetail> {
             content: SizedBox(
               width: getSize(context).width * 0.9,
               child: AssignFolder(
-                task: widget.task,
+                folderId: widget.task.folderId,
                 onFolderSelected: (folder) {
                   if (folder == null) {
                     setState(() {

@@ -1,15 +1,12 @@
 import 'package:app/blocs/folder/folder.bloc.dart';
-import 'package:app/blocs/tag/tag.bloc.dart';
 import 'package:app/blocs/tasks/tasks.bloc.dart';
 import 'package:app/components/buttons/icon_text_pill.dart';
 import 'package:app/components/buttons/task_item.dart';
 import 'package:app/components/widgets/elevated_container.dart';
 import 'package:app/entities/folder/folder.entity.dart';
-import 'package:app/entities/tag/tag.entity.dart';
 import 'package:app/entities/tasks/tasks.entity.dart';
 import 'package:app/i18n/strings.g.dart';
 import 'package:app/pages/folder/my_folders.dart';
-import 'package:app/pages/tags/my_tags.dart';
 import 'package:app/utils/constants.dart';
 import 'package:app/utils/shortcuts.dart';
 import 'package:auto_size_text/auto_size_text.dart';

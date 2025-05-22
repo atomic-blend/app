@@ -1,7 +1,5 @@
 import 'package:app/blocs/folder/folder.bloc.dart';
-import 'package:app/blocs/tasks/tasks.bloc.dart';
 import 'package:app/entities/folder/folder.entity.dart';
-import 'package:app/entities/tasks/tasks.entity.dart';
 import 'package:app/i18n/strings.g.dart';
 import 'package:app/utils/constants.dart';
 import 'package:app/utils/shortcuts.dart';
@@ -9,10 +7,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AssignFolder extends StatelessWidget {
-  final TaskEntity task;
+  final String? folderId;
   final Function(Folder?) onFolderSelected;
   const AssignFolder(
-      {super.key, required this.task, required this.onFolderSelected});
+      {super.key, this.folderId, required this.onFolderSelected});
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +39,7 @@ class AssignFolder extends StatelessWidget {
                     ...?folderState.folders?.map((folder) {
                       return GestureDetector(
                         onTap: () {
-                          if (folder.id == task.folderId) {
+                          if (folder.id == folderId) {
                             onFolderSelected(null);
                           } else {
                             onFolderSelected(folder);
@@ -55,7 +53,7 @@ class AssignFolder extends StatelessWidget {
                                 height: 50,
                                 width: 50,
                                 decoration: BoxDecoration(
-                                  border: folder.id != task.folderId
+                                  border: folder.id != folderId
                                       ? null
                                       : Border.all(
                                           color: getTheme(context)
@@ -94,7 +92,7 @@ class AssignFolder extends StatelessWidget {
                           ],
                         ),
                       );
-                    }).toList()
+                    })
                   ],
                 ),
               ),

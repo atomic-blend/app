@@ -4,7 +4,6 @@ import 'package:app/components/app/bottom_navigation.dart';
 import 'package:app/components/app/side_menu_item.dart';
 import 'package:app/components/buttons/account_avatar_with_sync_status.dart';
 import 'package:app/components/buttons/task_item.dart';
-import 'package:app/entities/folder/folder.entity.dart';
 import 'package:app/entities/tasks/tasks.entity.dart';
 import 'package:app/i18n/strings.g.dart';
 import 'package:app/main.dart';

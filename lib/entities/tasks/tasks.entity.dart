@@ -1,4 +1,3 @@
-import 'package:app/entities/folder/folder.entity.dart';
 import 'package:app/entities/tag/tag.entity.dart';
 import 'package:app/entities/time_entry/time_entry.entity.dart';
 import 'package:app/services/encryption.service.dart';

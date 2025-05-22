@@ -1,5 +1,4 @@
 import 'package:app/blocs/folder/folder.bloc.dart';
-import 'package:app/blocs/tag/tag.bloc.dart';
 import 'package:app/components/buttons/primary_button_square.dart';
 import 'package:app/components/forms/ab_color_picker.dart';
 import 'package:app/components/forms/app_text_form_field.dart';
@@ -218,7 +217,12 @@ class _AddFolderModalState extends State<AddFolderModal> {
                                           warning: context.t.tasks.folders
                                               .delete_folder_warning,
                                           onDelete: () {
-                                            //TODO
+                                            if (!context.mounted) return;
+                                            context
+                                                .read<FolderBloc>()
+                                                .add(DeleteFolder(
+                                                  widget.folder!,
+                                                ));
                                           },
                                         ));
                                 if (!context.mounted) return;

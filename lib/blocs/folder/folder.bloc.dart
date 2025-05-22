@@ -1,5 +1,4 @@
 import 'package:app/entities/folder/folder.entity.dart';
-import 'package:app/entities/user/user.entity.dart';
 import 'package:app/services/folder_service.dart';
 import 'package:equatable/equatable.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
