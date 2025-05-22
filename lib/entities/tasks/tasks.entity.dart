@@ -20,7 +20,7 @@ class TaskEntity with _$TaskEntity {
     DateTime? createdAt,
     DateTime? updatedAt,
     int? priority,
-    Folder? folder,
+    String? folderId,
     List<TagEntity>? tags,
     List<DateTime>? reminders,
     List<TimeEntry>? timeEntries,
@@ -33,13 +33,14 @@ class TaskEntity with _$TaskEntity {
     'updatedAt',
     'user',
     'reminders',
+    'folderId',
     'startDate',
     'endDate',
     'priority',
     'completed'
   ];
 
-  static final manualParseFields = ['tags', 'timeEntries', 'folder'];
+  static final manualParseFields = ['tags', 'timeEntries'];
 
   factory TaskEntity.fromJson(Map<String, dynamic> json) =>
       _$TaskEntityFromJson(json);
@@ -75,7 +76,7 @@ class TaskEntity with _$TaskEntity {
       'startDate': startDate?.toUtc().toIso8601String(),
       'endDate': endDate?.toUtc().toIso8601String(),
       'tags': encryptedTags,
-      'folder': folder?.id,
+      'folder': folderId,
       'timeEntries': encryptedTimeEntries,
       'priority': priority,
       'reminders': reminders?.map((e) => e.toUtc().toIso8601String()).toList(),
@@ -89,7 +90,6 @@ class TaskEntity with _$TaskEntity {
     Map<String, dynamic> decryptedData = {};
 
     List<dynamic>? encryptedTimeEntries = [];
-    dynamic encryptedFolder;
 
     for (var entry in data.entries) {
       if (nonEncryptedFields.contains(entry.key) ||
@@ -103,8 +103,6 @@ class TaskEntity with _$TaskEntity {
 
     encryptedTimeEntries = decryptedData['timeEntries'];
     decryptedData['timeEntries'] = null;
-    encryptedFolder = decryptedData['folder'];
-    decryptedData['folder'] = null;
 
     final task = TaskEntity.fromJson(decryptedData);
 
@@ -119,12 +117,6 @@ class TaskEntity with _$TaskEntity {
           (timeEntry) => TimeEntry.decrypt(
               data: timeEntry, encryptionService: encryptionService)));
       task.timeEntries = decryptedData['timeEntries'];
-    }
-
-    if (encryptedFolder != null) {
-      decryptedData['folder'] = await Folder.decrypt(
-          encryptedFolder, encryptionService);
-      task.folder = decryptedData['folder'];
     }
 
     return task;

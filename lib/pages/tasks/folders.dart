@@ -193,7 +193,7 @@ class _FoldersViewState extends State<FoldersView> {
     }
     return tasks.where((task) {
       for (var folder in _filteredFolders) {
-        if (task.folder != null && task.folder!.id == folder.id) {
+        if (task.folderId != null && task.folderId == folder.id) {
           return true;
         }
       }
