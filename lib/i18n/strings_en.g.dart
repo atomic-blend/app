@@ -166,6 +166,8 @@ class TranslationsTasksEn {
 	String get completed_tasks => 'Completed tasks';
 	String get my_tags => 'My tags';
 	String get no_tags_for_now => 'No tags for now';
+	String get my_folders => 'My folders';
+	late final TranslationsTasksFoldersEn folders = TranslationsTasksFoldersEn._(_root);
 	String get nothing_to_do => 'Nothing to do for now, enjoy your day!';
 	String get day_off => 'You have nothing planned for tomorrow, enjoy your day!';
 	String get week_off => 'You have nothing planned for this week, try and take the time to do the stuff left behind!';
@@ -938,6 +940,17 @@ class TranslationsTagsDeleteEn {
 	String get warning => 'This action cannot be undone and the tag will be removed from all tags associated.';
 }
 
+// Path: tasks.folders
+class TranslationsTasksFoldersEn {
+	TranslationsTasksFoldersEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	String get title => 'Folders';
+	String get no_folders => 'No folders for now';
+}
+
 // Path: tasks.due_dates
 class TranslationsTasksDueDatesEn {
 	TranslationsTasksDueDatesEn._(this._root);
@@ -1347,6 +1360,9 @@ extension on Translations {
 			case 'tasks.completed_tasks': return 'Completed tasks';
 			case 'tasks.my_tags': return 'My tags';
 			case 'tasks.no_tags_for_now': return 'No tags for now';
+			case 'tasks.my_folders': return 'My folders';
+			case 'tasks.folders.title': return 'Folders';
+			case 'tasks.folders.no_folders': return 'No folders for now';
 			case 'tasks.nothing_to_do': return 'Nothing to do for now, enjoy your day!';
 			case 'tasks.day_off': return 'You have nothing planned for tomorrow, enjoy your day!';
 			case 'tasks.week_off': return 'You have nothing planned for this week, try and take the time to do the stuff left behind!';

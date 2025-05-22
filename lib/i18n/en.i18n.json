@@ -156,6 +156,11 @@
     "completed_tasks": "Completed tasks",
     "my_tags": "My tags",
     "no_tags_for_now": "No tags for now",
+    "my_folders": "My folders",
+    "folders": {
+      "title": "Folders",
+      "no_folders": "No folders for now"
+    },
     "nothing_to_do": "Nothing to do for now, enjoy your day!",
     "day_off": "You have nothing planned for tomorrow, enjoy your day!",
     "week_off": "You have nothing planned for this week, try and take the time to do the stuff left behind!",

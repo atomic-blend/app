@@ -55,7 +55,6 @@ class _FilteredTaskViewState extends State<FilteredTaskView> {
                   child: ABSearchBar(
                       controller: _searchController, onSubmitted: (value) {}),
                 ),
-                SizedBox(height: $constants.insets.xxs),
                 Expanded(
                   child: ElevatedContainer(
                     padding: EdgeInsets.symmetric(

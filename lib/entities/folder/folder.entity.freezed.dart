@@ -188,15 +188,16 @@ class __$$FolderImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$FolderImpl implements _Folder {
-  const _$FolderImpl(
+class _$FolderImpl extends _Folder {
+  _$FolderImpl(
       {required this.id,
       required this.name,
       this.emoji,
       this.color,
       this.createdAt,
       this.updatedAt,
-      required this.notes});
+      required this.notes})
+      : super._();
 
   factory _$FolderImpl.fromJson(Map<String, dynamic> json) =>
       _$$FolderImplFromJson(json);
@@ -232,8 +233,8 @@ class _$FolderImpl implements _Folder {
   }
 }
 
-abstract class _Folder implements Folder {
-  const factory _Folder(
+abstract class _Folder extends Folder {
+  factory _Folder(
       {required String id,
       required String name,
       String? emoji,
@@ -241,6 +242,7 @@ abstract class _Folder implements Folder {
       DateTime? createdAt,
       DateTime? updatedAt,
       required List<String> notes}) = _$FolderImpl;
+  _Folder._() : super._();
 
   factory _Folder.fromJson(Map<String, dynamic> json) = _$FolderImpl.fromJson;
 

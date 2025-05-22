@@ -58,7 +58,6 @@ class _OverviewTasksState extends State<OverviewTasks> {
                   child: ABSearchBar(
                       controller: _searchController, onSubmitted: (value) {}),
                 ),
-                SizedBox(height: $constants.insets.xxs),
                 Expanded(
                   child: ElevatedContainer(
                     width: double.infinity,

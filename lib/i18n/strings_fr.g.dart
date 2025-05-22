@@ -162,6 +162,8 @@ class _TranslationsTasksFr implements TranslationsTasksEn {
 	@override String get completed_tasks => 'Tâches terminées';
 	@override String get my_tags => 'Mes tags';
 	@override String get no_tags_for_now => 'Pas de tags pour le moment';
+	@override String get my_folders => 'Mes dossiers';
+	@override late final _TranslationsTasksFoldersFr folders = _TranslationsTasksFoldersFr._(_root);
 	@override String get overview => 'Vue d\'ensemble';
 	@override String get nothing_to_do => 'Rien à faire pour le moment, vous pouvez vous détendre !';
 	@override String get day_off => 'Vous n\'avez rien de prévu pour demain, profitez-en !';
@@ -932,6 +934,17 @@ class _TranslationsTagsDeleteFr implements TranslationsTagsDeleteEn {
 	@override String get warning => 'Cette action est irréversible et le tag sera supprimé de tous les éléments associés.';
 }
 
+// Path: tasks.folders
+class _TranslationsTasksFoldersFr implements TranslationsTasksFoldersEn {
+	_TranslationsTasksFoldersFr._(this._root);
+
+	final TranslationsFr _root; // ignore: unused_field
+
+	// Translations
+	@override String get title => 'Dossiers';
+	@override String get no_folders => 'Aucun dossier';
+}
+
 // Path: tasks.due_dates
 class _TranslationsTasksDueDatesFr implements TranslationsTasksDueDatesEn {
 	_TranslationsTasksDueDatesFr._(this._root);
@@ -1340,6 +1353,9 @@ extension on TranslationsFr {
 			case 'tasks.completed_tasks': return 'Tâches terminées';
 			case 'tasks.my_tags': return 'Mes tags';
 			case 'tasks.no_tags_for_now': return 'Pas de tags pour le moment';
+			case 'tasks.my_folders': return 'Mes dossiers';
+			case 'tasks.folders.title': return 'Dossiers';
+			case 'tasks.folders.no_folders': return 'Aucun dossier';
 			case 'tasks.overview': return 'Vue d\'ensemble';
 			case 'tasks.nothing_to_do': return 'Rien à faire pour le moment, vous pouvez vous détendre !';
 			case 'tasks.day_off': return 'Vous n\'avez rien de prévu pour demain, profitez-en !';

@@ -15,14 +15,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../services/sync.service.dart';
 
-class TagsView extends StatefulWidget {
-  const TagsView({super.key});
+class FoldersView extends StatefulWidget {
+  const FoldersView({super.key});
 
   @override
-  State<TagsView> createState() => _TagsViewState();
+  State<FoldersView> createState() => _FoldersViewState();
 }
 
-class _TagsViewState extends State<TagsView> {
+class _FoldersViewState extends State<FoldersView> {
   final List<TagEntity> _filteredTags = [];
 
   @override
@@ -63,7 +63,7 @@ class _TagsViewState extends State<TagsView> {
                             padding: EdgeInsets.symmetric(
                                 horizontal: $constants.insets.xxs),
                             child: AutoSizeText(
-                              context.t.tasks.my_tags,
+                              context.t.tasks.my_folders,
                               style: getTextTheme(context).titleSmall!.copyWith(
                                     fontWeight: FontWeight.bold,
                                   ),
@@ -74,10 +74,10 @@ class _TagsViewState extends State<TagsView> {
                           ),
                           GestureDetector(
                             onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => const MyTags()));
+                              // Navigator.push(
+                              //     context,
+                              //     MaterialPageRoute(
+                              //         builder: (context) => const MyTags()));
                             },
                             child: Text(
                               context.t.actions.edit,
@@ -147,7 +147,7 @@ class _TagsViewState extends State<TagsView> {
                                   left: $constants.insets.xxs,
                                 ),
                                 child: AutoSizeText(
-                                  context.t.tasks.no_tags_for_now,
+                                  context.t.tasks.folders.no_folders,
                                   style: getTextTheme(context)
                                       .bodyMedium!
                                       .copyWith(),

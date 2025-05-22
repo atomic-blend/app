@@ -155,6 +155,11 @@
     "completed_tasks": "Tâches terminées",
     "my_tags": "Mes tags",
     "no_tags_for_now": "Pas de tags pour le moment",
+    "my_folders": "Mes dossiers",
+    "folders": {
+      "title": "Dossiers",
+      "no_folders": "Aucun dossier"
+    },
     "overview": "Vue d'ensemble",
     "nothing_to_do": "Rien à faire pour le moment, vous pouvez vous détendre !",
     "day_off": "Vous n'avez rien de prévu pour demain, profitez-en !",

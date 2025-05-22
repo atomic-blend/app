@@ -6,7 +6,9 @@ part 'folder.entity.freezed.dart';
 
 @unfreezed
 class Folder with _$Folder {
-  const factory Folder({
+  Folder._();
+
+  factory Folder({
     required String id,
     required String name,
     String? emoji,

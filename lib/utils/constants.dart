@@ -4,6 +4,7 @@ import 'package:app/components/app/bottom_navigation.dart';
 import 'package:app/components/app/side_menu_item.dart';
 import 'package:app/components/buttons/account_avatar_with_sync_status.dart';
 import 'package:app/components/buttons/task_item.dart';
+import 'package:app/entities/folder/folder.entity.dart';
 import 'package:app/entities/tasks/tasks.entity.dart';
 import 'package:app/i18n/strings.g.dart';
 import 'package:app/main.dart';
@@ -14,6 +15,7 @@ import 'package:app/pages/habits/habits.dart';
 import 'package:app/pages/more_apps/more_apps.dart';
 import 'package:app/pages/tasks/add_task_modal.dart';
 import 'package:app/pages/tasks/filtered_view.dart';
+import 'package:app/pages/tasks/folders.dart';
 import 'package:app/pages/tasks/overview.dart';
 import 'package:app/pages/tasks/tags.dart';
 import 'package:app/utils/exntensions/date_time_extension.dart';
@@ -328,6 +330,16 @@ class Navigation {
             },
           ),
           SideMenuItem(
+            title: context.t.tasks.folders.title,
+            icon: CupertinoIcons.folder,
+            color: getTheme(context).tertiary,
+            iconContainer: true,
+            body: const FoldersView(),
+            onTap: () {
+              context.read<AppCubit>().changeSelectedTabIndex(index: 3);
+            },
+          ),
+          SideMenuItem(
             title: context.t.tasks.all_tasks,
             separatorBefore: true,
             icon: CupertinoIcons.square_stack_3d_down_right,
@@ -342,7 +354,7 @@ class Navigation {
                   .toList();
             }),
             onTap: () {
-              context.read<AppCubit>().changeSelectedTabIndex(index: 3);
+              context.read<AppCubit>().changeSelectedTabIndex(index: 4);
             },
           ),
           SideMenuItem(
@@ -359,7 +371,7 @@ class Navigation {
                   .toList();
             }),
             onTap: () {
-              context.read<AppCubit>().changeSelectedTabIndex(index: 4);
+              context.read<AppCubit>().changeSelectedTabIndex(index: 5);
             },
           ),
         ],
