@@ -94,6 +94,7 @@ class TranslationsFr implements Translations {
 	@override late final _TranslationsNameGeneratorFr name_generator = _TranslationsNameGeneratorFr._(_root);
 	@override late final _TranslationsEisenhowerFr eisenhower = _TranslationsEisenhowerFr._(_root);
 	@override late final _TranslationsFeatureUnderConstructionFr feature_under_construction = _TranslationsFeatureUnderConstructionFr._(_root);
+	@override late final _TranslationsInboxFr inbox = _TranslationsInboxFr._(_root);
 }
 
 // Path: navigation
@@ -737,6 +738,16 @@ class _TranslationsFeatureUnderConstructionFr implements TranslationsFeatureUnde
 	@override String get description => 'Cette fonctionnalité n\'est pas encore disponible, mais nous travaillons dur pour vous l\'apporter bientôt.\n\nRestez à l\'écoute !';
 }
 
+// Path: inbox
+class _TranslationsInboxFr implements TranslationsInboxEn {
+	_TranslationsInboxFr._(this._root);
+
+	final TranslationsFr _root; // ignore: unused_field
+
+	// Translations
+	@override String get title => 'Boîte de réception';
+}
+
 // Path: auth.not_logged_in
 class _TranslationsAuthNotLoggedInFr implements TranslationsAuthNotLoggedInEn {
 	_TranslationsAuthNotLoggedInFr._(this._root);
@@ -954,6 +965,7 @@ class _TranslationsTasksFoldersFr implements TranslationsTasksFoldersEn {
 	@override String get name_required => 'Nom requis';
 	@override String get color => 'Couleur du dossier';
 	@override String get color_description => 'Choisissez une couleur pour votre dossier, cela vous aidera à le distinguer des autres.';
+	@override String get select_a_folder => 'Sélectionner un dossier';
 }
 
 // Path: tasks.due_dates
@@ -1378,6 +1390,7 @@ extension on TranslationsFr {
 			case 'tasks.folders.name_required': return 'Nom requis';
 			case 'tasks.folders.color': return 'Couleur du dossier';
 			case 'tasks.folders.color_description': return 'Choisissez une couleur pour votre dossier, cela vous aidera à le distinguer des autres.';
+			case 'tasks.folders.select_a_folder': return 'Sélectionner un dossier';
 			case 'tasks.overview': return 'Vue d\'ensemble';
 			case 'tasks.nothing_to_do': return 'Rien à faire pour le moment, vous pouvez vous détendre !';
 			case 'tasks.day_off': return 'Vous n\'avez rien de prévu pour demain, profitez-en !';
@@ -1817,6 +1830,7 @@ extension on TranslationsFr {
 			case 'eisenhower.title': return 'Matrice d\'Eisenhower';
 			case 'feature_under_construction.title': return 'Fonctionnalité en construction';
 			case 'feature_under_construction.description': return 'Cette fonctionnalité n\'est pas encore disponible, mais nous travaillons dur pour vous l\'apporter bientôt.\n\nRestez à l\'écoute !';
+			case 'inbox.title': return 'Boîte de réception';
 			default: return null;
 		}
 	}

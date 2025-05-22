@@ -76,7 +76,7 @@ class TaskEntity with _$TaskEntity {
       'startDate': startDate?.toUtc().toIso8601String(),
       'endDate': endDate?.toUtc().toIso8601String(),
       'tags': encryptedTags,
-      'folder': folderId,
+      'folderId': folderId,
       'timeEntries': encryptedTimeEntries,
       'priority': priority,
       'reminders': reminders?.map((e) => e.toUtc().toIso8601String()).toList(),

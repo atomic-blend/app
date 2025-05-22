@@ -170,7 +170,8 @@
       "name_description": "Define a name for your folder, this will help you remember what it is about and be shown in notifications.",
       "name_required": "Name is required",
       "color": "Color",
-      "color_description": "Choose a color for your folder, this will help you remember what it is about and be shown in notifications."
+      "color_description": "Choose a color for your folder, this will help you remember what it is about and be shown in notifications.",
+      "select_a_folder": "Select a folder"
       },
     "nothing_to_do": "Nothing to do for now, enjoy your day!",
     "day_off": "You have nothing planned for tomorrow, enjoy your day!",
@@ -717,5 +718,8 @@
   "feature_under_construction": {
     "title": "Feature under construction",
     "description": "This feature is not yet available, but we're working hard to bring it to you soon.\n\nStay tuned!"
+  },
+  "inbox": {
+    "title": "Inbox"
   }
 }

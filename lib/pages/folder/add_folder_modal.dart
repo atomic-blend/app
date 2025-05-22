@@ -254,6 +254,7 @@ class _AddFolderModalState extends State<AddFolderModal> {
                               final folder = widget.folder!.copyWith(
                                 name: _nameController.text,
                                 color: _color?.hexCode,
+                                emoji: _emojiController.text,
                               );
                               context.read<FolderBloc>().add(
                                     EditFolder(

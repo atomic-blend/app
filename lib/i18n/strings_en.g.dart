@@ -97,6 +97,7 @@ class Translations implements BaseTranslations<AppLocale, Translations> {
 	late final TranslationsNameGeneratorEn name_generator = TranslationsNameGeneratorEn._(_root);
 	late final TranslationsEisenhowerEn eisenhower = TranslationsEisenhowerEn._(_root);
 	late final TranslationsFeatureUnderConstructionEn feature_under_construction = TranslationsFeatureUnderConstructionEn._(_root);
+	late final TranslationsInboxEn inbox = TranslationsInboxEn._(_root);
 }
 
 // Path: navigation
@@ -743,6 +744,16 @@ class TranslationsFeatureUnderConstructionEn {
 	String get description => 'This feature is not yet available, but we\'re working hard to bring it to you soon.\n\nStay tuned!';
 }
 
+// Path: inbox
+class TranslationsInboxEn {
+	TranslationsInboxEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	String get title => 'Inbox';
+}
+
 // Path: auth.not_logged_in
 class TranslationsAuthNotLoggedInEn {
 	TranslationsAuthNotLoggedInEn._(this._root);
@@ -960,6 +971,7 @@ class TranslationsTasksFoldersEn {
 	String get name_required => 'Name is required';
 	String get color => 'Color';
 	String get color_description => 'Choose a color for your folder, this will help you remember what it is about and be shown in notifications.';
+	String get select_a_folder => 'Select a folder';
 }
 
 // Path: tasks.due_dates
@@ -1385,6 +1397,7 @@ extension on Translations {
 			case 'tasks.folders.name_required': return 'Name is required';
 			case 'tasks.folders.color': return 'Color';
 			case 'tasks.folders.color_description': return 'Choose a color for your folder, this will help you remember what it is about and be shown in notifications.';
+			case 'tasks.folders.select_a_folder': return 'Select a folder';
 			case 'tasks.nothing_to_do': return 'Nothing to do for now, enjoy your day!';
 			case 'tasks.day_off': return 'You have nothing planned for tomorrow, enjoy your day!';
 			case 'tasks.week_off': return 'You have nothing planned for this week, try and take the time to do the stuff left behind!';
@@ -1826,6 +1839,7 @@ extension on Translations {
 			case 'eisenhower.title': return 'Eisenhower Matrix';
 			case 'feature_under_construction.title': return 'Feature under construction';
 			case 'feature_under_construction.description': return 'This feature is not yet available, but we\'re working hard to bring it to you soon.\n\nStay tuned!';
+			case 'inbox.title': return 'Inbox';
 			default: return null;
 		}
 	}

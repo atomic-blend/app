@@ -161,6 +161,9 @@ class _FoldersViewState extends State<FoldersView> {
                     ],
                   ),
                 ),
+                SizedBox(
+                  height: $constants.insets.xs
+                ),
                 Expanded(
                   child: ElevatedContainer(
                     width: double.infinity,
