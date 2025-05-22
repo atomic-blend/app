@@ -107,10 +107,17 @@ class _TaskDetailState extends State<TaskDetail> {
               child: AssignFolder(
                 task: widget.task,
                 onFolderSelected: (folder) {
-                  setState(() {
-                    widget.task.folderId = folder.id;
-                    _folder = folder;
-                  });
+                  if (folder == null) {
+                    setState(() {
+                      widget.task.folderId = null;
+                      _folder = null;
+                    });
+                  } else {
+                    setState(() {
+                      widget.task.folderId = folder.id;
+                      _folder = folder;
+                    });
+                  }
                 },
               ),
             ),
@@ -119,9 +126,13 @@ class _TaskDetailState extends State<TaskDetail> {
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 if (widget.task.folderId == null) ...[
-                  const Icon(
-                    CupertinoIcons.tray_arrow_down,
-                    size: 18,
+                  SizedBox(
+                    width: 20,
+                    height: 30,
+                    child: const Icon(
+                      CupertinoIcons.tray_arrow_down,
+                      size: 18,
+                    ),
                   ),
                   SizedBox(
                     width: $constants.insets.xs,

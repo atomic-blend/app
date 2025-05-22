@@ -10,8 +10,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AssignFolder extends StatelessWidget {
   final TaskEntity task;
-  final Function(Folder) onFolderSelected;
-  const AssignFolder({super.key, required this.task, required this.onFolderSelected});
+  final Function(Folder?) onFolderSelected;
+  const AssignFolder(
+      {super.key, required this.task, required this.onFolderSelected});
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +38,11 @@ class AssignFolder extends StatelessWidget {
               ...?folderState.folders?.map((folder) {
                 return GestureDetector(
                   onTap: () {
-                    onFolderSelected(folder);
+                    if (folder.id == task.folderId) {
+                      onFolderSelected(null);
+                    } else {
+                      onFolderSelected(folder);
+                    }
                     Navigator.of(context).pop();
                   },
                   child: Container(
