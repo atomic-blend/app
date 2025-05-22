@@ -6,9 +6,10 @@ class ElevatedContainer extends StatelessWidget {
   final Widget? child;
   final double? width;
   final double? height;
+  final Color? color;
   final EdgeInsetsGeometry? padding;
   const ElevatedContainer(
-      {super.key, this.child, this.width, this.height, this.padding});
+      {super.key, this.child, this.width, this.height, this.padding, this.color});
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +18,7 @@ class ElevatedContainer extends StatelessWidget {
       height: height,
       padding: padding,
       decoration: BoxDecoration(
-          color: getTheme(context).surfaceContainer,
+          color: color ?? getTheme(context).surfaceContainer,
           borderRadius: BorderRadius.circular($constants.insets.sm),
           boxShadow: [
             BoxShadow(

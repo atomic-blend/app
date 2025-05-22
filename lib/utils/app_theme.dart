@@ -31,6 +31,7 @@ abstract final class AppTheme {
       onError: Color(0xFFFFDAD6),
       surface: Color(0xFFF2F2F2),
       surfaceContainer: Colors.white,
+      primaryContainer: Color(0xFFE8F3FF),
       onSurface: Colors.black,
     ),
     colors: const FlexSchemeColor(
