@@ -87,7 +87,11 @@ class _MyFoldersState extends State<MyFolders> {
                                           warning:
                                               context.t.tags.delete.warning,
                                           onDelete: () {
-                                            //TODO : Implement folder deletion
+                                            context.read<FolderBloc>().add(
+                                                  DeleteFolder(
+                                                    folder,
+                                                  ),
+                                                );
                                           },
                                         ));
                               },
@@ -113,7 +117,6 @@ class _MyFoldersState extends State<MyFolders> {
                             )),
                             child: SlidableAction(
                               onPressed: (context) {
-                                // TODO: Implement folder editing
                                 _showAddFolderModal(context, folder: folder);
                               },
                               backgroundColor:
