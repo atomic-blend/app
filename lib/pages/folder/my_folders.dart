@@ -44,87 +44,97 @@ class _MyFoldersState extends State<MyFolders> {
               horizontal: $constants.insets.sm, vertical: $constants.insets.xs),
           child: Column(
             children: [
-              ...(folderState.folders ?? []).map(
-                (folder) => Padding(
-                  padding: EdgeInsets.only(
-                    bottom: $constants.insets.xs,
-                  ),
-                  child: GestureDetector(
-                    onTap: () {
-                      // TODO: Implement folder selection
-                    },
-                    child: Slidable(
-                      endActionPane:
-                          ActionPane(motion: const ScrollMotion(), children: [
-                        SizedBox(
-                          width: $constants.insets.xs,
-                        ),
-                        Theme(
-                          data: Theme.of(context).copyWith(
-                              outlinedButtonTheme:
-                                  const OutlinedButtonThemeData(
-                            style: ButtonStyle(
-                                iconColor: WidgetStatePropertyAll(Colors.white),
-                                iconSize: WidgetStatePropertyAll(25)),
-                          )),
-                          child: SlidableAction(
-                            onPressed: (context) {
-                              showDialog(
-                                  context: context,
-                                  builder: (context) => DeleteConfirmModal(
-                                        title: context.t.tags.delete.title,
-                                        description:
-                                            context.t.tags.delete.description,
-                                        warning: context.t.tags.delete.warning,
-                                        onDelete: () {
-                                          //TODO : Implement folder deletion
-                                        },
-                                      ));
-                            },
-                            backgroundColor: getTheme(context).error,
-                            foregroundColor: Colors.white,
-                            icon: CupertinoIcons.delete,
-                            borderRadius: BorderRadius.circular(
-                              $constants.corners.sm,
+              if (folderState.folders?.isEmpty == true)
+                Text(
+                  context.t.tasks.folders.no_folders,
+                  style: getTextTheme(context).bodyMedium,
+                )
+              else if (folderState.folders?.isNotEmpty == true)
+                ...(folderState.folders ?? []).map(
+                  (folder) => Padding(
+                    padding: EdgeInsets.only(
+                      bottom: $constants.insets.xs,
+                    ),
+                    child: GestureDetector(
+                      onTap: () {
+                        // TODO: Implement folder selection
+                      },
+                      child: Slidable(
+                        endActionPane:
+                            ActionPane(motion: const ScrollMotion(), children: [
+                          SizedBox(
+                            width: $constants.insets.xs,
+                          ),
+                          Theme(
+                            data: Theme.of(context).copyWith(
+                                outlinedButtonTheme:
+                                    const OutlinedButtonThemeData(
+                              style: ButtonStyle(
+                                  iconColor:
+                                      WidgetStatePropertyAll(Colors.white),
+                                  iconSize: WidgetStatePropertyAll(25)),
+                            )),
+                            child: SlidableAction(
+                              onPressed: (context) {
+                                showDialog(
+                                    context: context,
+                                    builder: (context) => DeleteConfirmModal(
+                                          title: context.t.tags.delete.title,
+                                          description:
+                                              context.t.tags.delete.description,
+                                          warning:
+                                              context.t.tags.delete.warning,
+                                          onDelete: () {
+                                            //TODO : Implement folder deletion
+                                          },
+                                        ));
+                              },
+                              backgroundColor: getTheme(context).error,
+                              foregroundColor: Colors.white,
+                              icon: CupertinoIcons.delete,
+                              borderRadius: BorderRadius.circular(
+                                $constants.corners.sm,
+                              ),
                             ),
                           ),
-                        ),
-                        SizedBox(
-                          width: $constants.insets.xs,
-                        ),
-                        Theme(
-                          data: Theme.of(context).copyWith(
-                              outlinedButtonTheme:
-                                  const OutlinedButtonThemeData(
-                            style: ButtonStyle(
-                                iconColor: WidgetStatePropertyAll(Colors.white),
-                                iconSize: WidgetStatePropertyAll(30)),
-                          )),
-                          child: SlidableAction(
-                            onPressed: (context) {
-                              // TODO: Implement folder editing
-                            },
-                            backgroundColor: getTheme(context).surfaceContainer,
-                            foregroundColor: getTheme(context).onSurface,
-                            icon: CupertinoIcons.pencil,
-                            borderRadius: BorderRadius.circular(
-                              $constants.corners.sm,
+                          SizedBox(
+                            width: $constants.insets.xs,
+                          ),
+                          Theme(
+                            data: Theme.of(context).copyWith(
+                                outlinedButtonTheme:
+                                    const OutlinedButtonThemeData(
+                              style: ButtonStyle(
+                                  iconColor:
+                                      WidgetStatePropertyAll(Colors.white),
+                                  iconSize: WidgetStatePropertyAll(30)),
+                            )),
+                            child: SlidableAction(
+                              onPressed: (context) {
+                                // TODO: Implement folder editing
+                              },
+                              backgroundColor:
+                                  getTheme(context).surfaceContainer,
+                              foregroundColor: getTheme(context).onSurface,
+                              icon: CupertinoIcons.pencil,
+                              borderRadius: BorderRadius.circular(
+                                $constants.corners.sm,
+                              ),
                             ),
                           ),
+                        ]),
+                        child: IconTextCard(
+                          width: double.infinity,
+                          title: folder.name,
+                          icon: CupertinoIcons.folder,
+                          color: folder.color != null
+                              ? hexToColor(folder.color!).withValues(alpha: 0.2)
+                              : null,
                         ),
-                      ]),
-                      child: IconTextCard(
-                        width: double.infinity,
-                        title: folder.name,
-                        icon: CupertinoIcons.folder,
-                        color: folder.color != null
-                            ? hexToColor(folder.color!).withValues(alpha: 0.2)
-                            : null,
                       ),
                     ),
                   ),
                 ),
-              ),
             ],
           ),
         );

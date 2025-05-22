@@ -10,7 +10,8 @@ class FolderService {
     final result = await globalApiClient.get('/folders');
     if (result.statusCode == 200) {
       final List<Folder> folders = [];
-      for (var i = 0; i < (result.data as List).length; i++) {
+      
+      for (var i = 0; i < ((result.data ?? []) as List).length; i++) {
         folders.add(await Folder.decrypt(result.data[i], encryptionService!));
       }
       return folders;
