@@ -32,8 +32,8 @@ class _TagsViewState extends State<TagsView> {
         return Padding(
           padding: isDesktop(context)
               ? EdgeInsets.only(
-                  right: $constants.insets.md,
-                  left: $constants.insets.sm,
+                  right: $constants.insets.sm,
+                  left: $constants.insets.xs,
                   bottom: $constants.insets.sm,
                 )
               : EdgeInsets.only(
@@ -159,6 +159,7 @@ class _TagsViewState extends State<TagsView> {
                     ],
                   ),
                 ),
+                SizedBox(height: $constants.insets.xs),
                 Expanded(
                   child: ElevatedContainer(
                     padding: EdgeInsets.symmetric(

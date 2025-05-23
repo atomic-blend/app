@@ -132,6 +132,7 @@ class AppLayoutState extends ResponsiveState<AppLayout> {
                       },
                     ),
                     appBar: AppBar(
+                      backgroundColor: getTheme(context).surface,
                       title: Text(
                         folder.name,
                         style: getTextTheme(context).headlineSmall!.copyWith(
@@ -191,6 +192,7 @@ class AppLayoutState extends ResponsiveState<AppLayout> {
                     // if there's secondary, show the secondary item appBar
                     // else show the primary appBar
                     appBar: appBar,
+                    backgroundColor: getTheme(context).surface,
                     drawer: TapRegion(
                       onTapOutside: (_) {
                         Navigator.of(context).pop();

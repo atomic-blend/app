@@ -315,6 +315,7 @@ class Navigation {
           appBar: AppBar(
               key: const Key("calendar"),
               backgroundColor: getTheme(context).surface,
+              surfaceTintColor: getTheme(context).surface,
               title: Center(
                 child: Row(
                   mainAxisSize: MainAxisSize.min,

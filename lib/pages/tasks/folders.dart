@@ -35,8 +35,8 @@ class _FoldersViewState extends State<FoldersView> {
         return Padding(
           padding: isDesktop(context)
               ? EdgeInsets.only(
-                  right: $constants.insets.md,
-                  left: $constants.insets.sm,
+                  right: $constants.insets.sm,
+                  left: $constants.insets.xs,
                   bottom: $constants.insets.sm,
                 )
               : EdgeInsets.only(
@@ -158,9 +158,7 @@ class _FoldersViewState extends State<FoldersView> {
                     ],
                   ),
                 ),
-                SizedBox(
-                  height: $constants.insets.xs
-                ),
+                SizedBox(height: $constants.insets.xs),
                 Expanded(
                   child: ElevatedContainer(
                     width: double.infinity,
@@ -175,9 +173,8 @@ class _FoldersViewState extends State<FoldersView> {
                           Expanded(
                             child: AutoSizeText(
                               context.t.tasks.no_tasks_for_now,
-                              style: getTextTheme(context)
-                                  .bodyMedium!
-                                  .copyWith(),
+                              style:
+                                  getTextTheme(context).bodyMedium!.copyWith(),
                             ),
                           ),
                         ...filteredTasks
