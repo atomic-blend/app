@@ -24,7 +24,6 @@ class _FilteredTaskViewState extends State<FilteredTaskView> {
 
   @override
   void initState() {
-    SyncService.sync(context);
     super.initState();
   }
 
