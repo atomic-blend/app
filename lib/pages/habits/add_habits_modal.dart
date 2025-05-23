@@ -156,7 +156,7 @@ class _AddHabitModalState extends State<AddHabitModal> {
                           },
                           child: Container(
                             decoration: BoxDecoration(
-                              color: getTheme(context).surfaceContainerHighest,
+                              color: getTheme(context).surfaceContainer,
                               borderRadius: BorderRadius.circular(
                                   $constants.corners.full),
                             ),
@@ -220,8 +220,6 @@ class _AddHabitModalState extends State<AddHabitModal> {
                               "${_duration?.inHours != 0 ? "${_duration?.inHours}:" : ""}${_duration?.inMinutes.remainder(60)} ${context.t.time_units.long.minute(n: _duration?.inMinutes.remainder(60) ?? 0)}",
                         ),
                         disabled: true,
-                        backgroundColor:
-                            getTheme(context).surfaceContainerHighest,
                         labelText: context.t.habits.add.duration_label,
                         hintText: context.t.habits.add.duration_hint,
                         labelDescription:
@@ -259,7 +257,7 @@ class _AddHabitModalState extends State<AddHabitModal> {
                                 tabIndicatorAnimDuration:
                                     const Duration(milliseconds: 300),
                                 backgroundColor:
-                                    getTheme(context).surfaceContainerLow,
+                                    getTheme(context).surfaceContainer,
                                 indicatorColor: getTheme(context).primary,
                                 iconColor: Colors.grey,
                                 iconColorSelected: getTheme(context).primary,
@@ -268,7 +266,7 @@ class _AddHabitModalState extends State<AddHabitModal> {
                               bottomActionBarConfig: BottomActionBarConfig(
                                 enabled: false,
                                 backgroundColor:
-                                    getTheme(context).surfaceContainerLow,
+                                    getTheme(context).surfaceContainer,
                                 buttonColor: Colors.grey,
                                 buttonIconColor: Colors.white,
                               ),
@@ -357,7 +355,7 @@ class _AddHabitModalState extends State<AddHabitModal> {
                               return ToggleStyle(
                                 borderColor: Colors.transparent,
                                 indicatorColor: value == _frequency
-                                    ? getTheme(context).surface
+                                    ? getTheme(context).surfaceContainerLow
                                     : getTheme(context).surfaceContainer,
                                 backgroundColor:
                                     getTheme(context).surfaceContainer,
@@ -411,7 +409,7 @@ class _AddHabitModalState extends State<AddHabitModal> {
                           minVal: 0,
                           steps: 1,
                           decoration: QtyDecorationProps(
-                            fillColor: getTheme(context).surfaceContainerHigh,
+                            fillColor: getTheme(context).surfaceContainer,
                             plusBtn: Padding(
                               padding:
                                   EdgeInsets.only(right: $constants.insets.xs),
@@ -639,7 +637,7 @@ class _AddHabitModalState extends State<AddHabitModal> {
                           minVal: 0,
                           steps: 1,
                           decoration: QtyDecorationProps(
-                            fillColor: getTheme(context).surfaceContainerHigh,
+                            fillColor: getTheme(context).surfaceContainer,
                             plusBtn: Padding(
                               padding:
                                   EdgeInsets.only(right: $constants.insets.xs),
@@ -695,8 +693,7 @@ class _AddHabitModalState extends State<AddHabitModal> {
                                     vertical: $constants.insets.xs),
                                 child: Container(
                                   decoration: BoxDecoration(
-                                    color:
-                                        getTheme(context).surfaceContainerHigh,
+                                    color: getTheme(context).surfaceContainer,
                                     borderRadius: BorderRadius.circular(
                                         $constants.corners.md),
                                   ),
@@ -704,14 +701,14 @@ class _AddHabitModalState extends State<AddHabitModal> {
                                       horizontal: $constants.insets.xs,
                                       vertical: $constants.insets.xs),
                                   child: Text(Jiffy.parseFromDateTime(
-                                          DateTime.utc(
-                                              DateTime.now().year,
-                                              DateTime.now().month,
-                                              DateTime.now().day,
-                                              int.parse(e.split(":")[0]),
-                                              int.parse(e.split(":")[1]),),)
-                                      .toLocal()
-                                      .Hm),
+                                    DateTime.utc(
+                                      DateTime.now().year,
+                                      DateTime.now().month,
+                                      DateTime.now().day,
+                                      int.parse(e.split(":")[0]),
+                                      int.parse(e.split(":")[1]),
+                                    ),
+                                  ).toLocal().Hm),
                                 ),
                               ),
                               Positioned(
@@ -842,7 +839,7 @@ class _AddHabitModalState extends State<AddHabitModal> {
         selected: selected,
         decorations: MultiSelectItemDecorations(
             decoration: BoxDecoration(
-          color: getTheme(context).surfaceContainerHigh,
+          color: getTheme(context).surfaceContainer,
           borderRadius: BorderRadius.circular($constants.corners.full),
         )),
         label: label);

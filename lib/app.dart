@@ -1,7 +1,8 @@
 import 'package:app/i18n/strings.g.dart';
 import 'package:app/main.dart';
-import 'package:app/pages/app_wrapper.dart';
+import 'package:app/pages/app_layout.dart';
 import 'package:app/utils/app_theme.dart';
+import 'package:fleather/l10n/fleather_localizations.g.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -17,9 +18,11 @@ class App extends StatelessWidget {
       theme: AppTheme.light,
       darkTheme: AppTheme.dark,
       themeMode: ThemeMode.system,
-      locale: TranslationProvider.of(context).flutterLocale, // use provider
+      locale: TranslationProvider.of(context).flutterLocale,
+      // use provider
       supportedLocales: AppLocaleUtils.supportedLocales,
       localizationsDelegates: const [
+        FleatherLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
@@ -27,7 +30,7 @@ class App extends StatelessWidget {
       debugShowCheckedModeBanner: env!.debugShowCheckedModeBanner,
       title: F.title,
       home: _flavorBanner(
-        child: const Scaffold(body: AppWrapper()),
+        child: const Scaffold(body: AppLayout()),
         show: kDebugMode && env!.debugShowCheckedModeBanner,
       ),
     );

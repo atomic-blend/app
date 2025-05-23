@@ -1,6 +1,7 @@
 import 'package:app/blocs/tasks/tasks.bloc.dart';
 import 'package:app/components/buttons/task_item.dart';
 import 'package:app/components/forms/search_bar.dart';
+import 'package:app/components/widgets/elevated_container.dart';
 import 'package:app/entities/tasks/tasks.entity.dart';
 import 'package:app/i18n/strings.g.dart';
 import 'package:app/services/sync.service.dart';
@@ -19,6 +20,7 @@ class OverviewTasks extends StatefulWidget {
 
 class _OverviewTasksState extends State<OverviewTasks> {
   final TextEditingController _searchController = TextEditingController();
+
   @override
   void initState() {
     SyncService.sync(context);
@@ -33,52 +35,126 @@ class _OverviewTasksState extends State<OverviewTasks> {
         final tomorrowTasks = _tomorrowTasks(taskState.tasks ?? []);
         final thisWeekTasks = _thisWeekTasks(taskState.tasks ?? []);
         return Padding(
-          padding: EdgeInsets.symmetric(horizontal: $constants.insets.sm),
-          child: ListView(
-            padding: EdgeInsets.zero,
-            children: [
-              ABSearchBar(
-                  controller: _searchController, onSubmitted: (value) {}),
-              SizedBox(height: $constants.insets.xs),
-              Text(
-                context.t.times.today,
-                style: getTextTheme(context).titleMedium!.copyWith(
-                      fontWeight: FontWeight.bold,
-                    ),
-              ),
-              if (todayTasks.isEmpty)
-                Text(
-                  context.t.tasks.nothing_to_do,
-                  style: getTextTheme(context).labelSmall!,
+          padding: isDesktop(context)
+              ? EdgeInsets.only(
+                  right: $constants.insets.sm,
+                  left: $constants.insets.xs,
+                  bottom: $constants.insets.sm,
+                )
+              : EdgeInsets.only(
+                  right: $constants.insets.sm,
+                  left: $constants.insets.sm,
+                  bottom: $constants.insets.sm,
                 ),
-              if (todayTasks.isNotEmpty) ...todayTasks,
-              SizedBox(height: $constants.insets.xxs),
-              Text(
-                context.t.times.tomorrow,
-                style: getTextTheme(context).titleMedium!.copyWith(
-                      fontWeight: FontWeight.bold,
-                    ),
-              ),
-              if (tomorrowTasks.isEmpty)
-                Text(
-                  context.t.tasks.day_off,
-                  style: getTextTheme(context).labelSmall!,
+          child: RefreshIndicator(
+            onRefresh: () {
+              SyncService.sync(context);
+              return Future.delayed(const Duration(seconds: 1));
+            },
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                ElevatedContainer(
+                  child: ABSearchBar(
+                      controller: _searchController, onSubmitted: (value) {}),
                 ),
-              if (tomorrowTasks.isNotEmpty) ...tomorrowTasks,
-              SizedBox(height: $constants.insets.xxs),
-              Text(
-                context.t.times.this_week,
-                style: getTextTheme(context).titleMedium!.copyWith(
-                      fontWeight: FontWeight.bold,
+                SizedBox(height: $constants.insets.xs),
+                Expanded(
+                  child: ElevatedContainer(
+                    width: double.infinity,
+                    padding: EdgeInsets.symmetric(
+                      horizontal: $constants.insets.sm,
+                      vertical: $constants.insets.xs,
                     ),
-              ),
-              if (thisWeekTasks.isEmpty)
-                Text(
-                  context.t.tasks.nothing_to_do,
-                  style: getTextTheme(context).labelSmall!,
+                    child: SingleChildScrollView(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            context.t.times.today,
+                            style: getTextTheme(context).titleMedium!.copyWith(
+                                  fontWeight: FontWeight.bold,
+                                ),
+                          ),
+                          if (todayTasks.isEmpty)
+                            Text(
+                              context.t.tasks.nothing_to_do,
+                              style: getTextTheme(context).labelSmall!,
+                            ),
+                          if (todayTasks.isNotEmpty) ...todayTasks,
+                        ],
+                      ),
+                    ),
+                  ),
                 ),
-              if (thisWeekTasks.isNotEmpty) ...thisWeekTasks,
-            ],
+                SizedBox(height: $constants.insets.xs),
+                Expanded(
+                  child: ElevatedContainer(
+                    width: double.infinity,
+                    padding: EdgeInsets.symmetric(
+                      horizontal: $constants.insets.sm,
+                      vertical: $constants.insets.xs,
+                    ),
+                    child: SingleChildScrollView(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            context.t.times.tomorrow,
+                            style: getTextTheme(context).titleMedium!.copyWith(
+                                  fontWeight: FontWeight.bold,
+                                ),
+                          ),
+                          if (tomorrowTasks.isEmpty)
+                            Padding(
+                              padding: EdgeInsets.only(
+                                  bottom: $constants.insets.xxs),
+                              child: Text(
+                                context.t.tasks.day_off,
+                                style: getTextTheme(context).labelSmall!,
+                              ),
+                            ),
+                          if (tomorrowTasks.isNotEmpty) ...tomorrowTasks,
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(height: $constants.insets.xs),
+                Expanded(
+                  child: ElevatedContainer(
+                    width: double.infinity,
+                    padding: EdgeInsets.symmetric(
+                      horizontal: $constants.insets.sm,
+                      vertical: $constants.insets.xs,
+                    ),
+                    child: SingleChildScrollView(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            context.t.times.this_week,
+                            style: getTextTheme(context).titleMedium!.copyWith(
+                                  fontWeight: FontWeight.bold,
+                                ),
+                          ),
+                          if (thisWeekTasks.isEmpty)
+                            Padding(
+                              padding: EdgeInsets.only(
+                                  bottom: $constants.insets.xxs),
+                              child: Text(
+                                context.t.tasks.nothing_to_do,
+                                style: getTextTheme(context).labelSmall!,
+                              ),
+                            ),
+                          if (thisWeekTasks.isNotEmpty) ...thisWeekTasks,
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         );
       }),

@@ -13,7 +13,7 @@ class CalendarSettings extends StatelessWidget {
     return BlocBuilder<AppCubit, AppState>(builder: (context, appState) {
       return Container(
         height: getSize(context).height * 0.8,
-        padding: EdgeInsets.all($constants.insets.sm),
+        padding: EdgeInsets.all($constants.insets.md),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

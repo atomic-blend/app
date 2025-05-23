@@ -1,667 +1,722 @@
 {
-    "app_name": "Atomic Blend",
-    "app_name_saas": "Atomic Blend Cloud",
-    "navigation": {
-        "back": "Retour"
+  "app_name": "Atomic Blend",
+  "app_name_saas": "Atomic Blend Cloud",
+  "navigation": {
+    "back": "Retour"
+  },
+  "auth": {
+    "not_logged_in": {
+      "welcome": "Bienvenue sur Atomic Blend",
+      "description_start": "Atomic Blend est la première",
+      "e2e_app": "application chiffrée de bout en bout",
+      "description_middle": "qui regroupe tous les outils dont vous avez besoin pour gérer à la fois votre travail et votre vie personnelle en un seul endroit.\n\nDe la gestion des tâches à la prise de notes, en passant par la rédaction de documents, le suivi du temps, le suivi des films, le suivi de l'alimentation, tout reste",
+      "description_middle_bold": "sécurisé et fluide.",
+      "description_end": "Fini de jongler entre plusieurs applications—Atomic Blend rassemble tout avec la confidentialité au cœur de son fonctionnement, pour que vous puissiez vous concentrer sur l’essentiel.",
+      "time_to_set_things_up": "À vous de jouer !",
+      "set_up_start": "Pour utiliser Atomic Blend et synchroniser vos données sur tous vos appareils, vous pouvez choisir entre la version cloud ou une installation auto-hébergée.\n\nDans les deux cas, vos données sont",
+      "set_up_middle": "chiffrées de bout en bout",
+      "set_up_end": ", garantissant que vous seul avez accès à votre clé de chiffrement —",
+      "set_up_end_bold": "ni nous, ni personne d'autre.",
+      "description": "LifeOS est une application de gestion de la vie personnelle qui vous aide à organiser votre vie, à atteindre vos objectifs et à améliorer votre bien-être.",
+      "e2ee": "Nous utilisons le chiffrement de bout en bout pour protéger vos données personnelles. Vos données sont sécurisées et accessibles uniquement par vous.",
+      "get_started_now": "Commencez maintenant",
+      "i_agree_to": "J'accepte les",
+      "terms_of_service": "Conditions d'utilisation"
     },
-    "auth": {
-        "not_logged_in": {
-            "welcome": "Bienvenue sur Atomic Blend",
-            "description_start": "Atomic Blend est la première",
-            "e2e_app": "application chiffrée de bout en bout",
-            "description_middle": "qui regroupe tous les outils dont vous avez besoin pour gérer à la fois votre travail et votre vie personnelle en un seul endroit.\n\nDe la gestion des tâches à la prise de notes, en passant par la rédaction de documents, le suivi du temps, le suivi des films, le suivi de l'alimentation, tout reste",
-            "description_middle_bold": "sécurisé et fluide.",
-            "description_end": "Fini de jongler entre plusieurs applications—Atomic Blend rassemble tout avec la confidentialité au cœur de son fonctionnement, pour que vous puissiez vous concentrer sur l’essentiel.",
-            "time_to_set_things_up": "À vous de jouer !",
-            "set_up_start": "Pour utiliser Atomic Blend et synchroniser vos données sur tous vos appareils, vous pouvez choisir entre la version cloud ou une installation auto-hébergée.\n\nDans les deux cas, vos données sont",
-            "set_up_middle": "chiffrées de bout en bout",
-            "set_up_end": ", garantissant que vous seul avez accès à votre clé de chiffrement —",
-            "set_up_end_bold": "ni nous, ni personne d'autre.",
-            "description": "LifeOS est une application de gestion de la vie personnelle qui vous aide à organiser votre vie, à atteindre vos objectifs et à améliorer votre bien-être.",
-            "e2ee": "Nous utilisons le chiffrement de bout en bout pour protéger vos données personnelles. Vos données sont sécurisées et accessibles uniquement par vous.",
-            "get_started_now": "Commencez maintenant",
-            "i_agree_to": "J'accepte les",
-            "terms_of_service": "Conditions d'utilisation"
-        },
-        "login_or_register": {
-            "title": "Libérez le potentiel de votre vie",
-            "login_or_register": "Connectez-vous ou inscrivez-vous",
-            "login": "Se connecter",
-            "register": "S'inscrire",
-            "or": "ou",
-            "connecting_to": "Connexion à : "
-        },
-        "login": {
-            "title": "👋 Bon retour parmis nous !",
-            "description": "Utilisez votre adresse e-mail et votre mot de passe pour vous reconnecter et accéder à vos données.",
-            "email": "Adresse e-mail",
-            "forgot_password": "Mot de passe oublié",
-            "login": "Se connecter",
-            "no_account": "Pas de compte ?",
-            "email_hint": "Entrez votre adresse e-mail"
-        },
-        "register": {
-            "email": "Quelle est votre adresse e-mail ?",
-            "email_description": "Votre e-mail est utilisé uniquement a des fins de connexion et de récupération de mot de passe.",
-            "we_never_sell": "Nous ne vendrons jamais vos données à des tiers.",
-            "email_hint": "email@example.com",
-            "password": "Choisissez un mot de passe",
-            "password_hint": "SuperSecure123!",
-            "forgot_password": "Mot de passe oublié",
-            "confirmation_hint": "Confirmez votre mot de passe",
-            "password_mismatch": "Les mots de passe ne correspondent pas",
-            "register": "S'inscrire",
-            "no_account": "Pas de compte ?"
-        },
-        "delete_account": {
-            "title": "Supprimer mon compte",
-            "description": "Etes-vous sûr de vouloir supprimer votre compte ?",
-            "cannot_be_undone": "Cette action est irréversible et toutes vos données seront perdues."
-        },
-        "mnemonic_key": {
-            "title": "Clé de récupération",
-            "description_start": "Ceci est votre clé de récupération",
-            "description_mid": "Écrivez-la sur un papier et gardez-la en sécurité.",
-            "description_end": "Vous en aurez besoin pour récupérer l'accès à vos données si vous perdez votre mot de passe.",
-            "mnemonic_hint": "Entrez votre clé de récupération",
-            "mnemonic_error": "Clé de récupération invalide",
-            "copy_success": "Clé copiée dans le presse-papiers"
-        },
-        "reset_password": {
-            "title": "Reset your password",
-            "subtitle": "Vous ne vous souvenez pas de votre mot de passe ?",
-            "description": "Enter your email address to receive a password reset link.",
-            "warning": "Vous allez recevoir un code par email pour réinitialiser votre mot de passe, puis vous devrez entrer votre clé de récupération pour accéder à vos données.",
-            "no_mnemonic_data_loss": "Si vous ne vous rappelez pas de votre clé de récupération, vous perdrez accès à toutes vos précédentes données.",
-            "email": "Email",
-            "email_description": "L'adresse e-mail utilisée pour vous inscrire.",
-            "email_hint": "atomicblend@gmail.com",
-            "email_required": "L'adresse e-mail est requise",
-            "confirmation_code": "Code de confirmation",
-            "confirmation_code_description": "Entrez le code que vous avez reçu par e-mail.",
-            "confirmation_code_hint": "a1b5c3d4",
-            "confirmation_code_required": "Le code de confirmation est requis",
-            "enter_the_confirmation_code": "Entrez le code de confirmation",
-            "confirmation_code_sent": "Un code de confirmation a été envoyé à votre adresse e-mail.",
-            "confirmation_code_sent_description": "Vérifiez votre boîte de réception et entrez le code ci-dessous.",
-            "do_you_have_your_mnemonic_key": "Avez-vous votre clé de récupération ?",
-            "backup_key_description": "C'est une phrase de 12 mots qui vous a été fournie lors de votre inscription. Vous en aurez besoin pour récupérer vos données.",
-            "yes_i_have": "Oui, je l'ai et je veux récupérer mes données",
-            "no_i_dont": "Non, je ne l'ai pas et je veux supprimer mes données",
-            "reset_data_warning": "Je suis conscient qu'en sélectionnant cette option, toutes mes données seront éffacées sans aucune possibilité de récupération.",
-            "mnemonic_key": "Clé de récupération",
-            "mnemonic_key_description": "Saisis votre clé de récupération pour accéder à vos données.",
-            "mnemonic_key_hint": "business theme rotate together surprise wisdom powder knee view border local runway",
-            "mnemonic_key_required": "La clé de récupération est requise",
-            "select_your_new_password": "Sélectionnez votre nouveau mot de passe",
-            "select_your_new_password_description": "Entrez un mot de passe fort pour protéger votre compte.",
-            "new_password": "Nouveau mot de passe",
-            "new_password_description": "Entrez un nouveau mot de passe pour votre compte.",
-            "new_password_hint": "SuperSecure123!",
-            "new_password_required": "Nouveau mot de passe requis",
-            "confirm_new_password": "Confirmer le mot de passe",
-            "confirm_new_password_description": "Entrez à nouveau votre mot de passe pour le confirmer.",
-            "confirm_new_password_required": "Confirmer le mot de passe requis",
-            "password_mismatch": "Les mots de passe ne correspondent pas",
-            "password_missing": "Mot de passe manquant",
-            "password_too_short": "Le mot de passe doit contenir au moins 8 caractères",
-            "recap_subtitle": "Récapitulatif de la réinitialisation",
-            "yes": "Oui",
-            "no": "Non",
-            "confirm_reset": "Confirmer la réinitialisation"
-        }
+    "login_or_register": {
+      "title": "Libérez le potentiel de votre vie",
+      "login_or_register": "Connectez-vous ou inscrivez-vous",
+      "login": "Se connecter",
+      "register": "S'inscrire",
+      "or": "ou",
+      "connecting_to": "Connexion à : "
+    },
+    "login": {
+      "title": "👋 Bon retour parmis nous !",
+      "description": "Utilisez votre adresse e-mail et votre mot de passe pour vous reconnecter et accéder à vos données.",
+      "email": "Adresse e-mail",
+      "forgot_password": "Mot de passe oublié",
+      "login": "Se connecter",
+      "no_account": "Pas de compte ?",
+      "email_hint": "Entrez votre adresse e-mail"
+    },
+    "register": {
+      "email": "Quelle est votre adresse e-mail ?",
+      "email_description": "Votre e-mail est utilisé uniquement a des fins de connexion et de récupération de mot de passe.",
+      "we_never_sell": "Nous ne vendrons jamais vos données à des tiers.",
+      "email_hint": "email@example.com",
+      "password": "Choisissez un mot de passe",
+      "password_hint": "SuperSecure123!",
+      "forgot_password": "Mot de passe oublié",
+      "confirmation_hint": "Confirmez votre mot de passe",
+      "password_mismatch": "Les mots de passe ne correspondent pas",
+      "register": "S'inscrire",
+      "no_account": "Pas de compte ?"
+    },
+    "delete_account": {
+      "title": "Supprimer mon compte",
+      "description": "Etes-vous sûr de vouloir supprimer votre compte ?",
+      "cannot_be_undone": "Cette action est irréversible et toutes vos données seront perdues."
+    },
+    "mnemonic_key": {
+      "title": "Clé de récupération",
+      "description_start": "Ceci est votre clé de récupération",
+      "description_mid": "Écrivez-la sur un papier et gardez-la en sécurité.",
+      "description_end": "Vous en aurez besoin pour récupérer l'accès à vos données si vous perdez votre mot de passe.",
+      "mnemonic_hint": "Entrez votre clé de récupération",
+      "mnemonic_error": "Clé de récupération invalide",
+      "copy_success": "Clé copiée dans le presse-papiers"
+    },
+    "reset_password": {
+      "title": "Reset your password",
+      "subtitle": "Vous ne vous souvenez pas de votre mot de passe ?",
+      "description": "Enter your email address to receive a password reset link.",
+      "warning": "Vous allez recevoir un code par email pour réinitialiser votre mot de passe, puis vous devrez entrer votre clé de récupération pour accéder à vos données.",
+      "no_mnemonic_data_loss": "Si vous ne vous rappelez pas de votre clé de récupération, vous perdrez accès à toutes vos précédentes données.",
+      "email": "Email",
+      "email_description": "L'adresse e-mail utilisée pour vous inscrire.",
+      "email_hint": "atomicblend@gmail.com",
+      "email_required": "L'adresse e-mail est requise",
+      "confirmation_code": "Code de confirmation",
+      "confirmation_code_description": "Entrez le code que vous avez reçu par e-mail.",
+      "confirmation_code_hint": "a1b5c3d4",
+      "confirmation_code_required": "Le code de confirmation est requis",
+      "enter_the_confirmation_code": "Entrez le code de confirmation",
+      "confirmation_code_sent": "Un code de confirmation a été envoyé à votre adresse e-mail.",
+      "confirmation_code_sent_description": "Vérifiez votre boîte de réception et entrez le code ci-dessous.",
+      "do_you_have_your_mnemonic_key": "Avez-vous votre clé de récupération ?",
+      "backup_key_description": "C'est une phrase de 12 mots qui vous a été fournie lors de votre inscription. Vous en aurez besoin pour récupérer vos données.",
+      "yes_i_have": "Oui, je l'ai et je veux récupérer mes données",
+      "no_i_dont": "Non, je ne l'ai pas et je veux supprimer mes données",
+      "reset_data_warning": "Je suis conscient qu'en sélectionnant cette option, toutes mes données seront éffacées sans aucune possibilité de récupération.",
+      "mnemonic_key": "Clé de récupération",
+      "mnemonic_key_description": "Saisis votre clé de récupération pour accéder à vos données.",
+      "mnemonic_key_hint": "business theme rotate together surprise wisdom powder knee view border local runway",
+      "mnemonic_key_required": "La clé de récupération est requise",
+      "select_your_new_password": "Sélectionnez votre nouveau mot de passe",
+      "select_your_new_password_description": "Entrez un mot de passe fort pour protéger votre compte.",
+      "new_password": "Nouveau mot de passe",
+      "new_password_description": "Entrez un nouveau mot de passe pour votre compte.",
+      "new_password_hint": "SuperSecure123!",
+      "new_password_required": "Nouveau mot de passe requis",
+      "confirm_new_password": "Confirmer le mot de passe",
+      "confirm_new_password_description": "Entrez à nouveau votre mot de passe pour le confirmer.",
+      "confirm_new_password_required": "Confirmer le mot de passe requis",
+      "password_mismatch": "Les mots de passe ne correspondent pas",
+      "password_missing": "Mot de passe manquant",
+      "password_too_short": "Le mot de passe doit contenir au moins 8 caractères",
+      "recap_subtitle": "Récapitulatif de la réinitialisation",
+      "yes": "Oui",
+      "no": "Non",
+      "confirm_reset": "Confirmer la réinitialisation"
+    }
+  },
+  "settings": {
+    "title": "Paramètres",
+    "app_settings": {
+      "title": "Paramètres de l'application",
+      "selfHostedUrl": {
+        "title": "URL auto-hébergée",
+        "description": "Si vous utilisez une instance auto-hébergée d'Atomic Blend, vous pouvez saisir l'URL ici.",
+        "placeholder": "Entrez l'URL de votre instance",
+        "not_set": "Non défini"
+      }
+    },
+    "logout": "Déconnexion"
+  },
+  "tags": {
+    "title": "Tags",
+    "no_tags": "Aucun tag",
+    "assign_tags": "Assigner des tags",
+    "add_modal": {
+      "title": "Ajouter un nouveau tag",
+      "edit_title": "Modifier le tag",
+      "name": "Nom du tag",
+      "name_hint": "Travail",
+      "name_description": "Définissez un nom pour votre tag, cela sera affiché dans le tableau de bord et dans les notifications.",
+      "name_required": "Le nom du tag est requis",
+      "color": "Couleur du tag",
+      "color_description": "Choisissez une couleur pour votre tag, cela vous aidera à le distinguer des autres.",
+      "primary": "Primaire",
+      "accent": "Accent",
+      "wheel": "Roue"
+    },
+    "delete": {
+      "title": "Supprimer le tag",
+      "description": "Êtes-vous sûr de vouloir supprimer ce tag ?",
+      "warning": "Cette action est irréversible et le tag sera supprimé de tous les éléments associés."
+    }
+  },
+  "tasks": {
+    "title": "Tâches",
+    "today": "Aujourd'hui",
+    "tags": "Tags",
+    "all_tasks": "Toutes les tâches",
+    "completed_tasks": "Tâches terminées",
+    "my_tags": "Mes tags",
+    "no_tags_for_now": "Pas de tags pour le moment",
+    "my_folders": "Mes dossiers",
+    "folders": {
+      "title": "Dossiers",
+      "no_folders": "Aucun dossier",
+      "add_folder": "Ajouter un dossier",
+      "edit_folder": "Modifier le dossier",
+      "delete_folder": "Supprimer le dossier",
+      "delete_folder_description": "Êtes-vous sûr de vouloir supprimer ce dossier ?",
+      "delete_folder_warning": "Cette action est irréversible et toutes les tâches associées à ce dossier seront déliées.",
+      "name": "Nom du dossier",
+      "name_hint": "Travail",
+      "name_description": "Définissez un nom pour votre dossier, cela sera affiché dans le tableau de bord et dans les notifications.",
+      "name_required": "Nom requis",
+      "color": "Couleur du dossier",
+      "color_description": "Choisissez une couleur pour votre dossier, cela vous aidera à le distinguer des autres.",
+      "select_a_folder": "Sélectionner un dossier"
+    },
+    "overview": "Vue d'ensemble",
+    "nothing_to_do": "Rien à faire pour le moment, vous pouvez vous détendre !",
+    "day_off": "Vous n'avez rien de prévu pour demain, profitez-en !",
+    "week_off": "Vous n'avez rien de prévu pour cette semaine, essayez de prendre le temps de faire les choses laissées de côté !",
+    "no_tasks_for_now": "Pas de tâches pour le moment",
+    "task_details": "Détail de la tâche",
+    "time_log": "Journal",
+    "log_session": "Journaliser une session",
+    "timer": "Chronomètre",
+    "pomodoro": "Pomodoro",
+    "from": "De",
+    "to": "À",
+    "priority": "Priorité",
+    "priorities(map)": {
+      "none": "Aucune",
+      "low": "Faible",
+      "medium": "Moyenne",
+      "high": "Haute"
+    },
+    "due_dates": {
+      "today": "Aujourd'hui",
+      "tomorrow": "Demain",
+      "no_due_date": "Pas de date d'échéance"
+    },
+    "add_task_modal": {
+      "task_title": "Que devez-vous faire ?",
+      "description": "Description",
+      "due_date": "Date d'échéance",
+      "start_date": "Date de début",
+      "dates": "Dates",
+      "notes": "Notes",
+      "end_date": "Date de fin",
+      "cancel": "Annuler",
+      "save": "Enregistrer",
+      "erase": "Effacer",
+      "title_required": "Titre requis",
+      "title_required_description": "Veuillez saisir un titre pour votre tâche",
+      "reminders": {
+        "zero": "Rappel",
+        "one": "Rappel",
+        "other": "Rappels"
+      },
+      "time_planned": "Heure prévue",
+      "none": "Aucun",
+      "no_reminders": "Pas de rappels",
+      "add_reminder": "Ajouter un rappel",
+      "when_would_you_like_to_be_reminded": "Quand aimeriez-vous être rappelé ?",
+      "when_would_you_like_the_task_to_start": "Quand aimeriez-vous que la tâche commence ?",
+      "when_would_you_like_the_task_to_end": "Quand aimeriez-vous que la tâche se termine ?"
+    },
+    "time_spent": "Temps passé",
+    "no_time_entries": "Pas d'entrées de temps",
+    "add_time_entry": {
+      "title": "Ajouter une entrée de temps",
+      "description": "Manually add a time entry for this task.",
+      "start_time": "Heure de début",
+      "end_time": "Heure de fin",
+      "not_defined": "Non défini",
+      "date_required": "Date requise"
+    }
+  },
+  "calendar": {
+    "title": "Calendrier",
+    "month": "Mois",
+    "day": "Jour",
+    "threeDays": "3 jours",
+    "event_detail": {
+      "date": "Date",
+      "time": "Heure",
+      "organizer": "Organisateur",
+      "reminders": "Rappels",
+      "no_reminders": "Pas de rappels",
+      "details": "Détails",
+      "join_meeting": "Rejoindre la réunion",
+      "google_meet_call": "Appel Meet Call",
+      "zoom_meet_call": "Appel Zoom",
+      "ms_teams_call": "Appel MS Teams",
+      "join_now": "Rejoindre maintenant",
+      "attendee": {
+        "zero": "Participant",
+        "one": "Participant",
+        "other": "Participants"
+      },
+      "no_attendees": "Pas de participants",
+      "no_notes": "Pas de notes"
     },
     "settings": {
-        "title": "Paramètres",
-        "app_settings": {
-            "title": "Paramètres de l'application",
-            "selfHostedUrl": {
-                "title": "URL auto-hébergée",
-                "description": "Si vous utilisez une instance auto-hébergée d'Atomic Blend, vous pouvez saisir l'URL ici.",
-                "placeholder": "Entrez l'URL de votre instance",
-                "not_set": "Non défini"
-            }
-        },
-        "logout": "Déconnexion"
-    },
-    "tags": {
-        "title": "Tags",
-        "no_tags": "Aucun tag",
-        "assign_tags": "Assigner des tags",
-        "add_modal": {
-            "title": "Ajouter un nouveau tag",
-            "edit_title": "Modifier le tag",
-            "name": "Nom du tag",
-            "name_hint": "Travail",
-            "name_description": "Définissez un nom pour votre tag, cela sera affiché dans le tableau de bord et dans les notifications.",
-            "name_required": "Le nom du tag est requis",
-            "color": "Couleur du tag",
-            "color_description": "Choisissez une couleur pour votre tag, cela vous aidera à le distinguer des autres.",
-            "primary": "Primaire",
-            "accent": "Accent",
-            "wheel": "Roue"
-        },
-        "delete": {
-            "title": "Supprimer le tag",
-            "description": "Êtes-vous sûr de vouloir supprimer ce tag ?",
-            "warning": "Cette action est irréversible et le tag sera supprimé de tous les éléments associés."
-        }
-    },
-    "tasks": {
-        "title": "Tâches",
-        "today": "Aujourd'hui",
-        "tags": "Tags",
-        "my_tags": "Mes tags",
-        "overview": "Vue d'ensemble",
-        "nothing_to_do": "Rien à faire pour le moment, vous pouvez vous détendre !",
-        "day_off": "Vous n'avez rien de prévu pour demain, profitez-en !",
-        "week_off": "Vous n'avez rien de prévu pour cette semaine, essayez de prendre le temps de faire les choses laissées de côté !",
-        "no_tasks_for_now": "Pas de tâches pour le moment",
-        "task_details": "Détail de la tâche",
-        "from": "De",
-        "to": "À",
-        "due_dates": {
-            "today": "Aujourd'hui",
-            "tomorrow": "Demain",
-            "no_due_date": "Pas de date d'échéance"
-        },
-        "add_task_modal": {
-            "task_title": "Que devez-vous faire ?",
-            "description": "Description",
-            "due_date": "Date d'échéance",
-            "start_date": "Date de début",
-            "dates": "Dates",
-            "end_date": "Date de fin",
-            "cancel": "Annuler",
-            "save": "Enregistrer",
-            "erase": "Effacer",
-            "title_required": "Titre requis",
-            "title_required_description": "Veuillez saisir un titre pour votre tâche",
-            "reminders": {
-                "zero": "Rappel",
-                "one": "Rappel",
-                "other": "Rappels"
-            },
-            "time_planned": "Heure prévue",
-            "none": "Aucun",
-            "no_reminders": "Pas de rappels",
-            "add_reminder": "Ajouter un rappel",
-            "when_would_you_like_to_be_reminded": "Quand aimeriez-vous être rappelé ?",
-            "when_would_you_like_the_task_to_start": "Quand aimeriez-vous que la tâche commence ?",
-            "when_would_you_like_the_task_to_end": "Quand aimeriez-vous que la tâche se termine ?"
-        }
-    },
-    "calendar": {
-        "title": "Calendrier",
-        "month": "Mois",
-        "day": "Jour",
-        "threeDays": "3 jours",
-        "event_detail": {
-            "date": "Date",
-            "time": "Heure",
-            "organizer": "Organisateur",
-            "reminders": "Rappels",
-            "no_reminders": "Pas de rappels",
-            "details": "Détails",
-            "join_meeting": "Rejoindre la réunion",
-            "google_meet_call": "Appel Meet Call",
-            "zoom_meet_call": "Appel Zoom",
-            "ms_teams_call": "Appel MS Teams",
-            "join_now": "Rejoindre maintenant",
-            "attendee": {
-                "zero": "Participant",
-                "one": "Participant",
-                "other": "Participants"
-            }
-        },
-        "settings": {
-            "title": "Paramètres du calendrier",
-            "display_habits": "Afficher les habitudes"
-        }
-    },
-    "account": {
-        "edit_profile": "Modifier le profil",
-        "sections": {
-            "account": "Compte"
-        },
-        "actions": {
-            "security": "Sécurité et confidentialité",
-            "delete_account": "Supprimer mon compte"
-        },
-        "profile": {
-            "my_profile": "Mon profil",
-            "email": "Adresse e-mail",
-            "undefined": "Non défini",
-            "email_missing": "Adresse e-mail manquante",
-            "email_same": "L'adresse e-mail doit être différente de l'adresse e-mail actuelle"
-        },
-        "security_and_privacy": {
-            "title": "Sécurité et confidentialité",
-            "change_password": {
-                "title": "Changer le mot de passe",
-                "old_password": "Ancien mot de passe",
-                "new_password": "Nouveau mot de passe",
-                "confirm_password": "Confirmer le mot de passe",
-                "old_password_required": "Ancien mot de passe requis",
-                "new_password_required": "Nouveau mot de passe requis",
-                "confirm_password_required": "Confirmer le mot de passe requis",
-                "password_mismatch": "Les mots de passe ne correspondent pas",
-                "password_hint": "SuperSecure123!",
-                "warning_changing_pws_will_log_you_out": "Changer le mot de passe vous déconnectera de l'application."
-            }
-        }
-    },
-    "habits": {
-        "title": "Habitudes",
-        "no_habits": "Aucune habitude",
-        "get_started_now": "Ajoutez votre première habitude pour commencer !",
-        "add": {
-            "title": "Que souhaitez-vous accomplir ?",
-            "name": "Nom de l'habitude*",
-            "name_hint": "Boire de l'eau",
-            "name_description": "Définissez un nom pour votre habitude, cela sera affiché dans le tableau de bord et dans les notifications.",
-            "name_required": "Le nom de l'habitude est requis",
-            "citation": "Citation",
-            "citation_description": "Ajoutez une citation à votre habitude, cela vous aidera à vous souvenir de la raison pour laquelle vous la suivez et vous motivera.",
-            "citation_hint": "“L'eau est la seule boisson d'un homme sage.” - Henry David Thoreau",
-            "start_date": "Date de début",
-            "end_date": "Date de fin",
-            "when_would_you_like_the_habit_to_start": "Quand aimeriez-vous que l'habitude commence ?",
-            "when_would_you_like_the_habit_to_end": "Quand aimeriez-vous que l'habitude se termine ?",
-            "no_date_selected": "Pas de date sélectionnée",
-            "frequency_label": "Fréquence",
-            "frequency(map)": {
-                "daily": "Journalier",
-                "weekly": "Hebdomadaire",
-                "monthly": "Mensuel",
-                "repeatition": "Répétition"
-            },
-            "number_of_times_label": "Nombre de fois",
-            "number_of_times_description": "Combien de fois voulez-vous faire cette habitude ?\nSera réinitialisé à chaque fois que la fréquence est atteinte (par exemple, si vous le réglez sur 3 fois et une fréquence quotidienne, vous devrez le faire 3 fois par jour)..",
-            "days_of_week_label": "Jours de la semaine",
-            "days_of_week_description": "Quels jours de la semaine souhaitez-vous suivre cette habitude ?",
-            "search_emoji_hint": "Rechercher un emoji",
-            "reminders_label": "Rappels",
-            "reminders_description": "Fixez une heure pour vos rappels. Vous serez averti lorsque l'heure sera atteinte.",
-            "reminders_add": "Ajouter un rappel",
-            "duration_label": "Durée",
-            "duration_description": "Combien de temps dure cette habitude ?",
-            "duration_hint": "5 minutes",
-            "name_too_short": "Le nom de l'habitude doit contenir au moins 4 caractères",
-            "days_of_week_mismatch": "Vous devez sélectionner autant de jours que le nombre de fois que vous avez défini",
-            "every_number_day_title": "Interval de répétition",
-            "every_number_day_description": "Combien de jours entre chaque répétition ?",
-            "days_of_month_title": "Jours du mois",
-            "days_of_month_description": "Quels jours du mois souhaitez-vous suivre cette habitude ?",
-            "select_days": "Sélectionner les jours"
-        },
-        "list": "Habitudes",
-        "overview": "Vue d'ensemble",
-        "times_a_day": "${nb} fois par jour",
-        "times_a_week": "${nb} fois par semaine",
-        "times_a_month": "${nb} fois par mois",
-        "habit_detail": {
-            "no_citation": "Pas de citation",
-            "no_end_date": "Pas de date de fin",
-            "delete_habit": "Supprimer l'habitude",
-            "delete_habit_description": "Êtes-vous sûr de vouloir supprimer cette habitude ?",
-            "delete_habit_warning": "Cette action est irréversible et toutes les entrées associées à l'habitude seront supprimées.",
-            "entries": "Historique",
-            "no_entries": "Pas d'entrées pour le moment",
-            "delete_entry": "Supprimer l'entrée",
-            "delete_entry_description": "Êtes-vous sûr de vouloir supprimer cette entrée ?",
-            "delete_entry_warning": "Cette action est irréversible."
-        }
-    },
-    "under_construction": {
-        "title": "On travaille dessus !",
-        "description": "Cette fonctionnalité est en cours de développement.\n\nRevenez bientôt pour découvrir les dernières mises à jour !"
-    },
-    "more": {
-        "title": "Plus"
-    },
-    "days_of_week(map)": {
-        "monday": "Lundi",
-        "tuesday": "Mardi",
-        "wednesday": "Mercredi",
-        "thursday": "Jeudi",
-        "friday": "Vendredi",
-        "saturday": "Samedi",
-        "sunday": "Dimanche"
-    },
-    "times": {
-        "today": "Aujourd'hui",
-        "tomorrow": "Demain",
-        "yesterday": "Hier",
-        "this_week": "Cette semaine",
-        "last_week": "La semaine dernière",
-        "this_month": "Ce mois-ci",
-        "last_month": "Le mois dernier",
-        "this_year": "Cette année",
-        "last_year": "L'année dernière",
-        "all_time": "Tout le temps"
-    },
-    "days_before(map)": {
-        "none": {
-            "value": 0,
-            "label": "Aucun"
-        },
-        "same_day": {
-            "value": 0,
-            "label": "Le même jour"
-        },
-        "one_day": {
-            "value": -1,
-            "label": "1 jour avant"
-        },
-        "two_days": {
-            "value": -2,
-            "label": "2 jours avant"
-        },
-        "three_days": {
-            "value": -3,
-            "label": "3 jours avant"
-        },
-        "one_week": {
-            "value": -7,
-            "label": "1 semaine avant"
-        },
-        "custom": {
-            "value": "null",
-            "label": "Personnalisé"
-        }
-    },
-    "time_before(map)": {
-        "same_time": {
-            "value": 0,
-            "label": "Au même moment"
-        },
-        "five_minutes": {
-            "value": -5,
-            "label": "5 minutes avant"
-        },
-        "fifteen_minutes": {
-            "value": -15,
-            "label": "15 minutes avant"
-        },
-        "thirty_minutes": {
-            "value": -30,
-            "label": "30 minutes avant"
-        },
-        "one_hour": {
-            "value": -60,
-            "label": "1 heure avant"
-        },
-        "two_hours": {
-            "value": -120,
-            "label": "2 heures avant"
-        },
-        "one_day": {
-            "value": -1440,
-            "label": "1 jour avant"
-        },
-        "custom": {
-            "value": "null",
-            "label": "Personnalisé"
-        }
+      "title": "Paramètres du calendrier",
+      "display_habits": "Afficher les habitudes"
+    }
+  },
+  "account": {
+    "edit_profile": "Modifier le profil",
+    "sections": {
+      "account": "Compte"
     },
     "actions": {
-        "save": "Enregistrer",
-        "cancel": "Annuler",
-        "next": "Suivant",
-        "back": "Retour",
-        "delete": "Supprimer",
-        "add": "Ajouter",
-        "edit": "Modifier",
-        "clear": "Effacer"
+      "security": "Sécurité et confidentialité",
+      "delete_account": "Supprimer mon compte"
     },
-    "date_modes(map)": {
-        "date": "Date",
-        "duration": "Durée"
+    "profile": {
+      "my_profile": "Mon profil",
+      "email": "Adresse e-mail",
+      "undefined": "Non défini",
+      "email_missing": "Adresse e-mail manquante",
+      "email_same": "L'adresse e-mail doit être différente de l'adresse e-mail actuelle"
     },
-    "loading": {
-        "simple": "Chargement en cours..."
-    },
-    "validation": {
-        "required": "Ce champ est obligatoire",
-        "invalid_url": "URL invalide"
-    },
-    "errors(map)": {
-        "wrong_email_password": "Adresse e-mail ou mot de passe incorrect",
-        "email_malformed": "Adresse e-mail invalide",
-        "unknown_error": "Une erreur inconnue s'est produite"
-    },
-    "notifications": {
-        "task_due_now": "La tâche est due maintenant",
-        "task_starting": "La tâche commence maintenant",
-        "task_starting_in": "La tâche commence dans ${time}",
-        "habit_due_now": "Effectuez votre habitude maintenant, une chose en moins à faire !"
-    },
-    "time_units": {
-        "short": {
-            "day": "j",
-            "hour": "h",
-            "minute": "m"
-        },
-        "long": {
-            "day": {
-                "zero": "jour",
-                "one": "jour",
-                "other": "jours"
-            },
-            "hour": {
-                "zero": "heure",
-                "one": "heure",
-                "other": "heures"
-            },
-            "minute": {
-                "zero": "minute",
-                "one": "minute",
-                "other": "minutes"
-            }
-        }
-    },
-    "name_generator": {
-        "animals": [
-            "hibou",
-            "renard",
-            "lapin",
-            "loutre",
-            "pingouin",
-            "panda",
-            "écureuil",
-            "koala",
-            "tigre",
-            "girafe",
-            "singe",
-            "raton-laveur",
-            "zèbre",
-            "kangourou",
-            "perroquet",
-            "dauphin",
-            "paresseux",
-            "loup",
-            "lion",
-            "ours",
-            "aigle",
-            "éléphant",
-            "léopard",
-            "guépard",
-            "hippopotame",
-            "lemurien",
-            "grenouille",
-            "caméléon",
-            "lynx",
-            "macareux",
-            "phoque",
-            "faucon",
-            "orque",
-            "suricate",
-            "hérisson",
-            "belette",
-            "tatou",
-            "wombat",
-            "ornithorynque",
-            "blaireau",
-            "yak",
-            "lézard",
-            "scarabée",
-            "chenille",
-            "jaguar",
-            "buffle",
-            "raie",
-            "taupe",
-            "âne",
-            "toucan",
-            "flamant",
-            "chèvre",
-            "alpaga",
-            "orignal",
-            "paon",
-            "rhinocéros",
-            "gecko",
-            "dinde",
-            "hamster",
-            "loutre",
-            "gorille",
-            "morse",
-            "vautour",
-            "raie",
-            "triton",
-            "iguane",
-            "porc-épic",
-            "python",
-            "antilope",
-            "gibbon",
-            "sanglier",
-            "grue",
-            "émeu",
-            "pélican",
-            "hyène",
-            "héron",
-            "agneau",
-            "tortue",
-            "crevette",
-            "homard",
-            "papillon de nuit",
-            "palourde",
-            "poisson-globe",
-            "étoile de mer",
-            "pie-grièche",
-            "rouge-gorge",
-            "caille",
-            "koala",
-            "escargot",
-            "limace",
-            "hibou",
-            "vipère",
-            "canard",
-            "hirondelle",
-            "crabe",
-            "lama",
-            "mangouste",
-            "chaton"
-        ],
-        "adjectives": [
-            "joyeux",
-            "courageux",
-            "rigolo",
-            "jovial",
-            "espiègle",
-            "brillant",
-            "farfelu",
-            "curieux",
-            "rapide",
-            "audacieux",
-            "puissant",
-            "malin",
-            "rusé",
-            "doux",
-            "pelucheux",
-            "excentrique",
-            "rebondissant",
-            "étincelant",
-            "vif",
-            "chantant",
-            "lustré",
-            "claquant",
-            "brillant",
-            "rêveur",
-            "frétillant",
-            "ensoleillé",
-            "dingue",
-            "sauvage",
-            "funky",
-            "intrépide",
-            "confortable",
-            "croquant",
-            "vivant",
-            "coquin",
-            "spirituel",
-            "dynamique",
-            "pétillant",
-            "astucieux",
-            "élégant",
-            "souriant",
-            "chanceux",
-            "plein d'énergie",
-            "chouette",
-            "soigné",
-            "frisquet",
-            "venté",
-            "gai",
-            "gracieux",
-            "courageux",
-            "étourdi",
-            "agile",
-            "fantasque",
-            "habile",
-            "chanteur",
-            "sautillant",
-            "bizarre",
-            "épicé",
-            "énergique",
-            "rapide",
-            "pratique",
-            "vacillant",
-            "croustillant",
-            "grognon",
-            "chic",
-            "plein d'entrain",
-            "bouillonnant",
-            "éclaboussant",
-            "venté",
-            "rebondissant",
-            "étincelant",
-            "joyeux",
-            "moelleux",
-            "loufoque",
-            "vivifiant",
-            "claquant",
-            "joyeux",
-            "plumé",
-            "piquant",
-            "rapide",
-            "vif",
-            "moustachu",
-            "tacheté",
-            "rayé",
-            "fougueux",
-            "bavard",
-            "distingué",
-            "serpentin",
-            "rigolo",
-            "élégant",
-            "sautillant",
-            "dynamique",
-            "skippy",
-            "duveteux",
-            "rondelet",
-            "gonflé",
-            "déjanté",
-            "rose",
-            "exubérant",
-            "raffiné"
-        ]
+    "security_and_privacy": {
+      "title": "Sécurité et confidentialité",
+      "change_password": {
+        "title": "Changer le mot de passe",
+        "old_password": "Ancien mot de passe",
+        "new_password": "Nouveau mot de passe",
+        "confirm_password": "Confirmer le mot de passe",
+        "old_password_required": "Ancien mot de passe requis",
+        "new_password_required": "Nouveau mot de passe requis",
+        "confirm_password_required": "Confirmer le mot de passe requis",
+        "password_mismatch": "Les mots de passe ne correspondent pas",
+        "password_hint": "SuperSecure123!",
+        "warning_changing_pws_will_log_you_out": "Changer le mot de passe vous déconnectera de l'application."
+      }
     }
+  },
+  "habits": {
+    "title": "Habitudes",
+    "no_habits": "Aucune habitude",
+    "get_started_now": "Ajoutez votre première habitude pour commencer !",
+    "add": {
+      "title": "Que souhaitez-vous accomplir ?",
+      "name": "Nom de l'habitude*",
+      "name_hint": "Boire de l'eau",
+      "name_description": "Définissez un nom pour votre habitude, cela sera affiché dans le tableau de bord et dans les notifications.",
+      "name_required": "Le nom de l'habitude est requis",
+      "citation": "Citation",
+      "citation_description": "Ajoutez une citation à votre habitude, cela vous aidera à vous souvenir de la raison pour laquelle vous la suivez et vous motivera.",
+      "citation_hint": "“L'eau est la seule boisson d'un homme sage.” - Henry David Thoreau",
+      "start_date": "Date de début",
+      "end_date": "Date de fin",
+      "when_would_you_like_the_habit_to_start": "Quand aimeriez-vous que l'habitude commence ?",
+      "when_would_you_like_the_habit_to_end": "Quand aimeriez-vous que l'habitude se termine ?",
+      "no_date_selected": "Pas de date sélectionnée",
+      "frequency_label": "Fréquence",
+      "frequency(map)": {
+        "daily": "Journalier",
+        "weekly": "Hebdomadaire",
+        "monthly": "Mensuel",
+        "repeatition": "Répétition"
+      },
+      "number_of_times_label": "Nombre de fois",
+      "number_of_times_description": "Combien de fois voulez-vous faire cette habitude ?\nSera réinitialisé à chaque fois que la fréquence est atteinte (par exemple, si vous le réglez sur 3 fois et une fréquence quotidienne, vous devrez le faire 3 fois par jour)..",
+      "days_of_week_label": "Jours de la semaine",
+      "days_of_week_description": "Quels jours de la semaine souhaitez-vous suivre cette habitude ?",
+      "search_emoji_hint": "Rechercher un emoji",
+      "reminders_label": "Rappels",
+      "reminders_description": "Fixez une heure pour vos rappels. Vous serez averti lorsque l'heure sera atteinte.",
+      "reminders_add": "Ajouter un rappel",
+      "duration_label": "Durée",
+      "duration_description": "Combien de temps dure cette habitude ?",
+      "duration_hint": "5 minutes",
+      "name_too_short": "Le nom de l'habitude doit contenir au moins 4 caractères",
+      "days_of_week_mismatch": "Vous devez sélectionner autant de jours que le nombre de fois que vous avez défini",
+      "every_number_day_title": "Interval de répétition",
+      "every_number_day_description": "Combien de jours entre chaque répétition ?",
+      "days_of_month_title": "Jours du mois",
+      "days_of_month_description": "Quels jours du mois souhaitez-vous suivre cette habitude ?",
+      "select_days": "Sélectionner les jours"
+    },
+    "list": "Habitudes",
+    "overview": "Vue d'ensemble",
+    "times_a_day": "${nb} fois par jour",
+    "times_a_week": "${nb} fois par semaine",
+    "times_a_month": "${nb} fois par mois",
+    "habit_detail": {
+      "no_citation": "Pas de citation",
+      "no_end_date": "Pas de date de fin",
+      "delete_habit": "Supprimer l'habitude",
+      "delete_habit_description": "Êtes-vous sûr de vouloir supprimer cette habitude ?",
+      "delete_habit_warning": "Cette action est irréversible et toutes les entrées associées à l'habitude seront supprimées.",
+      "entries": "Historique",
+      "no_entries": "Pas d'entrées pour le moment",
+      "delete_entry": "Supprimer l'entrée",
+      "delete_entry_description": "Êtes-vous sûr de vouloir supprimer cette entrée ?",
+      "delete_entry_warning": "Cette action est irréversible."
+    }
+  },
+  "under_construction": {
+    "title": "On travaille dessus !",
+    "description": "Cette fonctionnalité est en cours de développement.\n\nRevenez bientôt pour découvrir les dernières mises à jour !"
+  },
+  "more": {
+    "title": "Plus"
+  },
+  "days_of_week(map)": {
+    "monday": "Lundi",
+    "tuesday": "Mardi",
+    "wednesday": "Mercredi",
+    "thursday": "Jeudi",
+    "friday": "Vendredi",
+    "saturday": "Samedi",
+    "sunday": "Dimanche"
+  },
+  "times": {
+    "today": "Aujourd'hui",
+    "tomorrow": "Demain",
+    "yesterday": "Hier",
+    "this_week": "Cette semaine",
+    "last_week": "La semaine dernière",
+    "this_month": "Ce mois-ci",
+    "last_month": "Le mois dernier",
+    "this_year": "Cette année",
+    "last_year": "L'année dernière",
+    "all_time": "Tout le temps"
+  },
+  "days_before(map)": {
+    "none": {
+      "value": 0,
+      "label": "Aucun"
+    },
+    "same_day": {
+      "value": 0,
+      "label": "Le même jour"
+    },
+    "one_day": {
+      "value": -1,
+      "label": "1 jour avant"
+    },
+    "two_days": {
+      "value": -2,
+      "label": "2 jours avant"
+    },
+    "three_days": {
+      "value": -3,
+      "label": "3 jours avant"
+    },
+    "one_week": {
+      "value": -7,
+      "label": "1 semaine avant"
+    },
+    "custom": {
+      "value": "null",
+      "label": "Personnalisé"
+    }
+  },
+  "time_before(map)": {
+    "same_time": {
+      "value": 0,
+      "label": "Au même moment"
+    },
+    "five_minutes": {
+      "value": -5,
+      "label": "5 minutes avant"
+    },
+    "fifteen_minutes": {
+      "value": -15,
+      "label": "15 minutes avant"
+    },
+    "thirty_minutes": {
+      "value": -30,
+      "label": "30 minutes avant"
+    },
+    "one_hour": {
+      "value": -60,
+      "label": "1 heure avant"
+    },
+    "two_hours": {
+      "value": -120,
+      "label": "2 heures avant"
+    },
+    "one_day": {
+      "value": -1440,
+      "label": "1 jour avant"
+    },
+    "custom": {
+      "value": "null",
+      "label": "Personnalisé"
+    }
+  },
+  "actions": {
+    "save": "Enregistrer",
+    "cancel": "Annuler",
+    "next": "Suivant",
+    "back": "Retour",
+    "delete": "Supprimer",
+    "add": "Ajouter",
+    "edit": "Modifier",
+    "clear": "Effacer"
+  },
+  "date_modes(map)": {
+    "date": "Date",
+    "duration": "Durée"
+  },
+  "loading": {
+    "simple": "Chargement en cours..."
+  },
+  "validation": {
+    "required": "Ce champ est obligatoire",
+    "invalid_url": "URL invalide"
+  },
+  "errors(map)": {
+    "wrong_email_password": "Adresse e-mail ou mot de passe incorrect",
+    "email_malformed": "Adresse e-mail invalide",
+    "unknown_error": "Une erreur inconnue s'est produite"
+  },
+  "notifications": {
+    "task_due_now": "La tâche est due maintenant",
+    "task_starting": "La tâche commence maintenant",
+    "task_starting_in": "La tâche commence dans ${time}",
+    "habit_due_now": "Effectuez votre habitude maintenant, une chose en moins à faire !"
+  },
+  "time_units": {
+    "short": {
+      "day": "j",
+      "hour": "h",
+      "minute": "m"
+    },
+    "long": {
+      "day": {
+        "zero": "jour",
+        "one": "jour",
+        "other": "jours"
+      },
+      "hour": {
+        "zero": "heure",
+        "one": "heure",
+        "other": "heures"
+      },
+      "minute": {
+        "zero": "minute",
+        "one": "minute",
+        "other": "minutes"
+      }
+    }
+  },
+  "name_generator": {
+    "animals": [
+      "hibou",
+      "renard",
+      "lapin",
+      "loutre",
+      "pingouin",
+      "panda",
+      "écureuil",
+      "koala",
+      "tigre",
+      "girafe",
+      "singe",
+      "raton-laveur",
+      "zèbre",
+      "kangourou",
+      "perroquet",
+      "dauphin",
+      "paresseux",
+      "loup",
+      "lion",
+      "ours",
+      "aigle",
+      "éléphant",
+      "léopard",
+      "guépard",
+      "hippopotame",
+      "lemurien",
+      "grenouille",
+      "caméléon",
+      "lynx",
+      "macareux",
+      "phoque",
+      "faucon",
+      "orque",
+      "suricate",
+      "hérisson",
+      "belette",
+      "tatou",
+      "wombat",
+      "ornithorynque",
+      "blaireau",
+      "yak",
+      "lézard",
+      "scarabée",
+      "chenille",
+      "jaguar",
+      "buffle",
+      "raie",
+      "taupe",
+      "âne",
+      "toucan",
+      "flamant",
+      "chèvre",
+      "alpaga",
+      "orignal",
+      "paon",
+      "rhinocéros",
+      "gecko",
+      "dinde",
+      "hamster",
+      "loutre",
+      "gorille",
+      "morse",
+      "vautour",
+      "raie",
+      "triton",
+      "iguane",
+      "porc-épic",
+      "python",
+      "antilope",
+      "gibbon",
+      "sanglier",
+      "grue",
+      "émeu",
+      "pélican",
+      "hyène",
+      "héron",
+      "agneau",
+      "tortue",
+      "crevette",
+      "homard",
+      "papillon de nuit",
+      "palourde",
+      "poisson-globe",
+      "étoile de mer",
+      "pie-grièche",
+      "rouge-gorge",
+      "caille",
+      "koala",
+      "escargot",
+      "limace",
+      "hibou",
+      "vipère",
+      "canard",
+      "hirondelle",
+      "crabe",
+      "lama",
+      "mangouste",
+      "chaton"
+    ],
+    "adjectives": [
+      "joyeux",
+      "courageux",
+      "rigolo",
+      "jovial",
+      "espiègle",
+      "brillant",
+      "farfelu",
+      "curieux",
+      "rapide",
+      "audacieux",
+      "puissant",
+      "malin",
+      "rusé",
+      "doux",
+      "pelucheux",
+      "excentrique",
+      "rebondissant",
+      "étincelant",
+      "vif",
+      "chantant",
+      "lustré",
+      "claquant",
+      "brillant",
+      "rêveur",
+      "frétillant",
+      "ensoleillé",
+      "dingue",
+      "sauvage",
+      "funky",
+      "intrépide",
+      "confortable",
+      "croquant",
+      "vivant",
+      "coquin",
+      "spirituel",
+      "dynamique",
+      "pétillant",
+      "astucieux",
+      "élégant",
+      "souriant",
+      "chanceux",
+      "plein d'énergie",
+      "chouette",
+      "soigné",
+      "frisquet",
+      "venté",
+      "gai",
+      "gracieux",
+      "courageux",
+      "étourdi",
+      "agile",
+      "fantasque",
+      "habile",
+      "chanteur",
+      "sautillant",
+      "bizarre",
+      "épicé",
+      "énergique",
+      "rapide",
+      "pratique",
+      "vacillant",
+      "croustillant",
+      "grognon",
+      "chic",
+      "plein d'entrain",
+      "bouillonnant",
+      "éclaboussant",
+      "venté",
+      "rebondissant",
+      "étincelant",
+      "joyeux",
+      "moelleux",
+      "loufoque",
+      "vivifiant",
+      "claquant",
+      "joyeux",
+      "plumé",
+      "piquant",
+      "rapide",
+      "vif",
+      "moustachu",
+      "tacheté",
+      "rayé",
+      "fougueux",
+      "bavard",
+      "distingué",
+      "serpentin",
+      "rigolo",
+      "élégant",
+      "sautillant",
+      "dynamique",
+      "skippy",
+      "duveteux",
+      "rondelet",
+      "gonflé",
+      "déjanté",
+      "rose",
+      "exubérant",
+      "raffiné"
+    ]
+  },
+  "eisenhower": {
+    "small_title": "Eisenhower",
+    "title": "Matrice d'Eisenhower"
+  },
+  "feature_under_construction": {
+    "title": "Fonctionnalité en construction",
+    "description": "Cette fonctionnalité n'est pas encore disponible, mais nous travaillons dur pour vous l'apporter bientôt.\n\nRestez à l'écoute !"
+  },
+  "inbox": {
+    "title": "Boîte de réception"
+  }
 }

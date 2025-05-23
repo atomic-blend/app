@@ -95,6 +95,9 @@ class Translations implements BaseTranslations<AppLocale, Translations> {
 	late final TranslationsNotificationsEn notifications = TranslationsNotificationsEn._(_root);
 	late final TranslationsTimeUnitsEn time_units = TranslationsTimeUnitsEn._(_root);
 	late final TranslationsNameGeneratorEn name_generator = TranslationsNameGeneratorEn._(_root);
+	late final TranslationsEisenhowerEn eisenhower = TranslationsEisenhowerEn._(_root);
+	late final TranslationsFeatureUnderConstructionEn feature_under_construction = TranslationsFeatureUnderConstructionEn._(_root);
+	late final TranslationsInboxEn inbox = TranslationsInboxEn._(_root);
 }
 
 // Path: navigation
@@ -160,16 +163,35 @@ class TranslationsTasksEn {
 	String get today => 'Today';
 	String get overview => 'Overview';
 	String get tags => 'Tags';
+	String get all_tasks => 'All tasks';
+	String get completed_tasks => 'Completed tasks';
 	String get my_tags => 'My tags';
+	String get no_tags_for_now => 'No tags for now';
+	String get my_folders => 'My folders';
+	late final TranslationsTasksFoldersEn folders = TranslationsTasksFoldersEn._(_root);
 	String get nothing_to_do => 'Nothing to do for now, enjoy your day!';
 	String get day_off => 'You have nothing planned for tomorrow, enjoy your day!';
 	String get week_off => 'You have nothing planned for this week, try and take the time to do the stuff left behind!';
 	String get no_tasks_for_now => 'No tasks for now';
 	String get task_details => 'Task Details';
+	String get time_log => 'Time Log';
+	String get log_session => 'Log session';
+	String get timer => 'Timer';
+	String get pomodoro => 'Pomodoro';
 	String get from => 'From';
 	String get to => 'To';
+	String get priority => 'Priority';
+	Map<String, String> get priorities => {
+		'none': 'None',
+		'low': 'Low',
+		'medium': 'Medium',
+		'high': 'High',
+	};
 	late final TranslationsTasksDueDatesEn due_dates = TranslationsTasksDueDatesEn._(_root);
 	late final TranslationsTasksAddTaskModalEn add_task_modal = TranslationsTasksAddTaskModalEn._(_root);
+	String get time_spent => 'Time spent';
+	String get no_time_entries => 'No time entries for now';
+	late final TranslationsTasksAddTimeEntryEn add_time_entry = TranslationsTasksAddTimeEntryEn._(_root);
 }
 
 // Path: calendar
@@ -700,6 +722,38 @@ class TranslationsNameGeneratorEn {
 	];
 }
 
+// Path: eisenhower
+class TranslationsEisenhowerEn {
+	TranslationsEisenhowerEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	String get small_title => 'Eisenhower';
+	String get title => 'Eisenhower Matrix';
+}
+
+// Path: feature_under_construction
+class TranslationsFeatureUnderConstructionEn {
+	TranslationsFeatureUnderConstructionEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	String get title => 'Feature under construction';
+	String get description => 'This feature is not yet available, but we\'re working hard to bring it to you soon.\n\nStay tuned!';
+}
+
+// Path: inbox
+class TranslationsInboxEn {
+	TranslationsInboxEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	String get title => 'Inbox';
+}
+
 // Path: auth.not_logged_in
 class TranslationsAuthNotLoggedInEn {
 	TranslationsAuthNotLoggedInEn._(this._root);
@@ -897,6 +951,29 @@ class TranslationsTagsDeleteEn {
 	String get warning => 'This action cannot be undone and the tag will be removed from all tags associated.';
 }
 
+// Path: tasks.folders
+class TranslationsTasksFoldersEn {
+	TranslationsTasksFoldersEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	String get title => 'Folders';
+	String get no_folders => 'No folders for now';
+	String get add_folder => 'Add a folder';
+	String get edit_folder => 'Edit folder';
+	String get delete_folder => 'Delete folder';
+	String get delete_folder_description => 'Are you sure you want to delete this folder?';
+	String get delete_folder_warning => 'This action cannot be undone and all the tasks will be unlinked';
+	String get name => 'Name of the folder';
+	String get name_hint => 'Work';
+	String get name_description => 'Define a name for your folder, this will help you remember what it is about and be shown in notifications.';
+	String get name_required => 'Name is required';
+	String get color => 'Color';
+	String get color_description => 'Choose a color for your folder, this will help you remember what it is about and be shown in notifications.';
+	String get select_a_folder => 'Select a folder';
+}
+
 // Path: tasks.due_dates
 class TranslationsTasksDueDatesEn {
 	TranslationsTasksDueDatesEn._(this._root);
@@ -920,6 +997,7 @@ class TranslationsTasksAddTaskModalEn {
 	String get description => 'Description';
 	String get due_date => 'Due Date';
 	String get dates => 'Dates';
+	String get notes => 'Notes';
 	String get start_date => 'Start Date';
 	String get end_date => 'End Date';
 	String get cancel => 'Cancel';
@@ -939,6 +1017,21 @@ class TranslationsTasksAddTaskModalEn {
 	String get when_would_you_like_to_be_reminded => 'When would you like to be reminded?';
 	String get when_would_you_like_the_task_to_start => 'When would you like the task to start?';
 	String get when_would_you_like_the_task_to_end => 'When would you like the task to end?';
+}
+
+// Path: tasks.add_time_entry
+class TranslationsTasksAddTimeEntryEn {
+	TranslationsTasksAddTimeEntryEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	String get title => 'Add a time entry';
+	String get description => 'Manually add a time entry for this task.';
+	String get start_time => 'Start time';
+	String get end_time => 'End time';
+	String get not_defined => 'Not defined';
+	String get date_required => 'Date is required';
 }
 
 // Path: calendar.event_detail
@@ -964,6 +1057,8 @@ class TranslationsCalendarEventDetailEn {
 		one: 'Attendee',
 		other: 'Attendees',
 	);
+	String get no_attendees => 'No attendees';
+	String get no_notes => 'No notes';
 }
 
 // Path: calendar.settings
@@ -1284,14 +1379,41 @@ extension on Translations {
 			case 'tasks.today': return 'Today';
 			case 'tasks.overview': return 'Overview';
 			case 'tasks.tags': return 'Tags';
+			case 'tasks.all_tasks': return 'All tasks';
+			case 'tasks.completed_tasks': return 'Completed tasks';
 			case 'tasks.my_tags': return 'My tags';
+			case 'tasks.no_tags_for_now': return 'No tags for now';
+			case 'tasks.my_folders': return 'My folders';
+			case 'tasks.folders.title': return 'Folders';
+			case 'tasks.folders.no_folders': return 'No folders for now';
+			case 'tasks.folders.add_folder': return 'Add a folder';
+			case 'tasks.folders.edit_folder': return 'Edit folder';
+			case 'tasks.folders.delete_folder': return 'Delete folder';
+			case 'tasks.folders.delete_folder_description': return 'Are you sure you want to delete this folder?';
+			case 'tasks.folders.delete_folder_warning': return 'This action cannot be undone and all the tasks will be unlinked';
+			case 'tasks.folders.name': return 'Name of the folder';
+			case 'tasks.folders.name_hint': return 'Work';
+			case 'tasks.folders.name_description': return 'Define a name for your folder, this will help you remember what it is about and be shown in notifications.';
+			case 'tasks.folders.name_required': return 'Name is required';
+			case 'tasks.folders.color': return 'Color';
+			case 'tasks.folders.color_description': return 'Choose a color for your folder, this will help you remember what it is about and be shown in notifications.';
+			case 'tasks.folders.select_a_folder': return 'Select a folder';
 			case 'tasks.nothing_to_do': return 'Nothing to do for now, enjoy your day!';
 			case 'tasks.day_off': return 'You have nothing planned for tomorrow, enjoy your day!';
 			case 'tasks.week_off': return 'You have nothing planned for this week, try and take the time to do the stuff left behind!';
 			case 'tasks.no_tasks_for_now': return 'No tasks for now';
 			case 'tasks.task_details': return 'Task Details';
+			case 'tasks.time_log': return 'Time Log';
+			case 'tasks.log_session': return 'Log session';
+			case 'tasks.timer': return 'Timer';
+			case 'tasks.pomodoro': return 'Pomodoro';
 			case 'tasks.from': return 'From';
 			case 'tasks.to': return 'To';
+			case 'tasks.priority': return 'Priority';
+			case 'tasks.priorities.none': return 'None';
+			case 'tasks.priorities.low': return 'Low';
+			case 'tasks.priorities.medium': return 'Medium';
+			case 'tasks.priorities.high': return 'High';
 			case 'tasks.due_dates.today': return 'Today';
 			case 'tasks.due_dates.tomorrow': return 'Tomorrow';
 			case 'tasks.due_dates.no_due_date': return 'No due date';
@@ -1299,6 +1421,7 @@ extension on Translations {
 			case 'tasks.add_task_modal.description': return 'Description';
 			case 'tasks.add_task_modal.due_date': return 'Due Date';
 			case 'tasks.add_task_modal.dates': return 'Dates';
+			case 'tasks.add_task_modal.notes': return 'Notes';
 			case 'tasks.add_task_modal.start_date': return 'Start Date';
 			case 'tasks.add_task_modal.end_date': return 'End Date';
 			case 'tasks.add_task_modal.cancel': return 'Cancel';
@@ -1318,6 +1441,14 @@ extension on Translations {
 			case 'tasks.add_task_modal.when_would_you_like_to_be_reminded': return 'When would you like to be reminded?';
 			case 'tasks.add_task_modal.when_would_you_like_the_task_to_start': return 'When would you like the task to start?';
 			case 'tasks.add_task_modal.when_would_you_like_the_task_to_end': return 'When would you like the task to end?';
+			case 'tasks.time_spent': return 'Time spent';
+			case 'tasks.no_time_entries': return 'No time entries for now';
+			case 'tasks.add_time_entry.title': return 'Add a time entry';
+			case 'tasks.add_time_entry.description': return 'Manually add a time entry for this task.';
+			case 'tasks.add_time_entry.start_time': return 'Start time';
+			case 'tasks.add_time_entry.end_time': return 'End time';
+			case 'tasks.add_time_entry.not_defined': return 'Not defined';
+			case 'tasks.add_time_entry.date_required': return 'Date is required';
 			case 'calendar.title': return 'Calendar';
 			case 'calendar.month': return 'Month';
 			case 'calendar.day': return 'Day';
@@ -1338,6 +1469,8 @@ extension on Translations {
 				one: 'Attendee',
 				other: 'Attendees',
 			);
+			case 'calendar.event_detail.no_attendees': return 'No attendees';
+			case 'calendar.event_detail.no_notes': return 'No notes';
 			case 'calendar.settings.title': return 'Calendar Settings';
 			case 'calendar.settings.display_habits': return 'Display habits';
 			case 'account.edit_profile': return 'Edit Profile';
@@ -1702,6 +1835,11 @@ extension on Translations {
 			case 'name_generator.adjectives.97': return 'pinky';
 			case 'name_generator.adjectives.98': return 'spunky';
 			case 'name_generator.adjectives.99': return 'fancy';
+			case 'eisenhower.small_title': return 'Eisenhower';
+			case 'eisenhower.title': return 'Eisenhower Matrix';
+			case 'feature_under_construction.title': return 'Feature under construction';
+			case 'feature_under_construction.description': return 'This feature is not yet available, but we\'re working hard to bring it to you soon.\n\nStay tuned!';
+			case 'inbox.title': return 'Inbox';
 			default: return null;
 		}
 	}

@@ -12,13 +12,6 @@ class AppCubit extends HydratedCubit<AppState> {
     hydrate();
   }
 
-  void changePageIndex({required int index}) => emit(
-        state.copyWith(
-          pageIndex: index,
-          selectedTabIndex: 0,
-        ),
-      );
-
   void changeMobileSyncDisabled({required bool value}) => emit(
         state.copyWith(
           mobileSyncDisabled: value,
@@ -28,12 +21,6 @@ class AppCubit extends HydratedCubit<AppState> {
   void changeWarnUserOnMobileInternetAccess({required bool value}) => emit(
         state.copyWith(
           warnUserOnMobileInternetAccess: value,
-        ),
-      );
-
-  void changeSelectedTabIndex({required int index}) => emit(
-        state.copyWith(
-          selectedTabIndex: index,
         ),
       );
 
@@ -52,6 +39,18 @@ class AppCubit extends HydratedCubit<AppState> {
   void changeDisplayHabitsInCalendar({required bool value}) => emit(
         state.copyWith(
           displayHabitsInCalendar: value,
+        ),
+      );
+
+  void changePrimaryMenuSelectedKey({required String key}) => emit(
+        state.copyWith(
+          primaryMenuSelectedKey: key,
+        ),
+      );
+
+  void changeSecondaryMenuSelectedKey({required String key}) => emit(
+        state.copyWith(
+          secondaryMenuSelectedKey: key,
         ),
       );
 

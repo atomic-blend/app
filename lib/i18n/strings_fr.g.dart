@@ -92,6 +92,9 @@ class TranslationsFr implements Translations {
 	@override late final _TranslationsNotificationsFr notifications = _TranslationsNotificationsFr._(_root);
 	@override late final _TranslationsTimeUnitsFr time_units = _TranslationsTimeUnitsFr._(_root);
 	@override late final _TranslationsNameGeneratorFr name_generator = _TranslationsNameGeneratorFr._(_root);
+	@override late final _TranslationsEisenhowerFr eisenhower = _TranslationsEisenhowerFr._(_root);
+	@override late final _TranslationsFeatureUnderConstructionFr feature_under_construction = _TranslationsFeatureUnderConstructionFr._(_root);
+	@override late final _TranslationsInboxFr inbox = _TranslationsInboxFr._(_root);
 }
 
 // Path: navigation
@@ -156,17 +159,36 @@ class _TranslationsTasksFr implements TranslationsTasksEn {
 	@override String get title => 'Tâches';
 	@override String get today => 'Aujourd\'hui';
 	@override String get tags => 'Tags';
+	@override String get all_tasks => 'Toutes les tâches';
+	@override String get completed_tasks => 'Tâches terminées';
 	@override String get my_tags => 'Mes tags';
+	@override String get no_tags_for_now => 'Pas de tags pour le moment';
+	@override String get my_folders => 'Mes dossiers';
+	@override late final _TranslationsTasksFoldersFr folders = _TranslationsTasksFoldersFr._(_root);
 	@override String get overview => 'Vue d\'ensemble';
 	@override String get nothing_to_do => 'Rien à faire pour le moment, vous pouvez vous détendre !';
 	@override String get day_off => 'Vous n\'avez rien de prévu pour demain, profitez-en !';
 	@override String get week_off => 'Vous n\'avez rien de prévu pour cette semaine, essayez de prendre le temps de faire les choses laissées de côté !';
 	@override String get no_tasks_for_now => 'Pas de tâches pour le moment';
 	@override String get task_details => 'Détail de la tâche';
+	@override String get time_log => 'Journal';
+	@override String get log_session => 'Journaliser une session';
+	@override String get timer => 'Chronomètre';
+	@override String get pomodoro => 'Pomodoro';
 	@override String get from => 'De';
 	@override String get to => 'À';
+	@override String get priority => 'Priorité';
+	@override Map<String, String> get priorities => {
+		'none': 'Aucune',
+		'low': 'Faible',
+		'medium': 'Moyenne',
+		'high': 'Haute',
+	};
 	@override late final _TranslationsTasksDueDatesFr due_dates = _TranslationsTasksDueDatesFr._(_root);
 	@override late final _TranslationsTasksAddTaskModalFr add_task_modal = _TranslationsTasksAddTaskModalFr._(_root);
+	@override String get time_spent => 'Temps passé';
+	@override String get no_time_entries => 'Pas d\'entrées de temps';
+	@override late final _TranslationsTasksAddTimeEntryFr add_time_entry = _TranslationsTasksAddTimeEntryFr._(_root);
 }
 
 // Path: calendar
@@ -694,6 +716,38 @@ class _TranslationsNameGeneratorFr implements TranslationsNameGeneratorEn {
 	];
 }
 
+// Path: eisenhower
+class _TranslationsEisenhowerFr implements TranslationsEisenhowerEn {
+	_TranslationsEisenhowerFr._(this._root);
+
+	final TranslationsFr _root; // ignore: unused_field
+
+	// Translations
+	@override String get small_title => 'Eisenhower';
+	@override String get title => 'Matrice d\'Eisenhower';
+}
+
+// Path: feature_under_construction
+class _TranslationsFeatureUnderConstructionFr implements TranslationsFeatureUnderConstructionEn {
+	_TranslationsFeatureUnderConstructionFr._(this._root);
+
+	final TranslationsFr _root; // ignore: unused_field
+
+	// Translations
+	@override String get title => 'Fonctionnalité en construction';
+	@override String get description => 'Cette fonctionnalité n\'est pas encore disponible, mais nous travaillons dur pour vous l\'apporter bientôt.\n\nRestez à l\'écoute !';
+}
+
+// Path: inbox
+class _TranslationsInboxFr implements TranslationsInboxEn {
+	_TranslationsInboxFr._(this._root);
+
+	final TranslationsFr _root; // ignore: unused_field
+
+	// Translations
+	@override String get title => 'Boîte de réception';
+}
+
 // Path: auth.not_logged_in
 class _TranslationsAuthNotLoggedInFr implements TranslationsAuthNotLoggedInEn {
 	_TranslationsAuthNotLoggedInFr._(this._root);
@@ -891,6 +945,29 @@ class _TranslationsTagsDeleteFr implements TranslationsTagsDeleteEn {
 	@override String get warning => 'Cette action est irréversible et le tag sera supprimé de tous les éléments associés.';
 }
 
+// Path: tasks.folders
+class _TranslationsTasksFoldersFr implements TranslationsTasksFoldersEn {
+	_TranslationsTasksFoldersFr._(this._root);
+
+	final TranslationsFr _root; // ignore: unused_field
+
+	// Translations
+	@override String get title => 'Dossiers';
+	@override String get no_folders => 'Aucun dossier';
+	@override String get add_folder => 'Ajouter un dossier';
+	@override String get edit_folder => 'Modifier le dossier';
+	@override String get delete_folder => 'Supprimer le dossier';
+	@override String get delete_folder_description => 'Êtes-vous sûr de vouloir supprimer ce dossier ?';
+	@override String get delete_folder_warning => 'Cette action est irréversible et toutes les tâches associées à ce dossier seront déliées.';
+	@override String get name => 'Nom du dossier';
+	@override String get name_hint => 'Travail';
+	@override String get name_description => 'Définissez un nom pour votre dossier, cela sera affiché dans le tableau de bord et dans les notifications.';
+	@override String get name_required => 'Nom requis';
+	@override String get color => 'Couleur du dossier';
+	@override String get color_description => 'Choisissez une couleur pour votre dossier, cela vous aidera à le distinguer des autres.';
+	@override String get select_a_folder => 'Sélectionner un dossier';
+}
+
 // Path: tasks.due_dates
 class _TranslationsTasksDueDatesFr implements TranslationsTasksDueDatesEn {
 	_TranslationsTasksDueDatesFr._(this._root);
@@ -915,6 +992,7 @@ class _TranslationsTasksAddTaskModalFr implements TranslationsTasksAddTaskModalE
 	@override String get due_date => 'Date d\'échéance';
 	@override String get start_date => 'Date de début';
 	@override String get dates => 'Dates';
+	@override String get notes => 'Notes';
 	@override String get end_date => 'Date de fin';
 	@override String get cancel => 'Annuler';
 	@override String get save => 'Enregistrer';
@@ -933,6 +1011,21 @@ class _TranslationsTasksAddTaskModalFr implements TranslationsTasksAddTaskModalE
 	@override String get when_would_you_like_to_be_reminded => 'Quand aimeriez-vous être rappelé ?';
 	@override String get when_would_you_like_the_task_to_start => 'Quand aimeriez-vous que la tâche commence ?';
 	@override String get when_would_you_like_the_task_to_end => 'Quand aimeriez-vous que la tâche se termine ?';
+}
+
+// Path: tasks.add_time_entry
+class _TranslationsTasksAddTimeEntryFr implements TranslationsTasksAddTimeEntryEn {
+	_TranslationsTasksAddTimeEntryFr._(this._root);
+
+	final TranslationsFr _root; // ignore: unused_field
+
+	// Translations
+	@override String get title => 'Ajouter une entrée de temps';
+	@override String get description => 'Manually add a time entry for this task.';
+	@override String get start_time => 'Heure de début';
+	@override String get end_time => 'Heure de fin';
+	@override String get not_defined => 'Non défini';
+	@override String get date_required => 'Date requise';
 }
 
 // Path: calendar.event_detail
@@ -958,6 +1051,8 @@ class _TranslationsCalendarEventDetailFr implements TranslationsCalendarEventDet
 		one: 'Participant',
 		other: 'Participants',
 	);
+	@override String get no_attendees => 'Pas de participants';
+	@override String get no_notes => 'Pas de notes';
 }
 
 // Path: calendar.settings
@@ -1277,15 +1372,42 @@ extension on TranslationsFr {
 			case 'tasks.title': return 'Tâches';
 			case 'tasks.today': return 'Aujourd\'hui';
 			case 'tasks.tags': return 'Tags';
+			case 'tasks.all_tasks': return 'Toutes les tâches';
+			case 'tasks.completed_tasks': return 'Tâches terminées';
 			case 'tasks.my_tags': return 'Mes tags';
+			case 'tasks.no_tags_for_now': return 'Pas de tags pour le moment';
+			case 'tasks.my_folders': return 'Mes dossiers';
+			case 'tasks.folders.title': return 'Dossiers';
+			case 'tasks.folders.no_folders': return 'Aucun dossier';
+			case 'tasks.folders.add_folder': return 'Ajouter un dossier';
+			case 'tasks.folders.edit_folder': return 'Modifier le dossier';
+			case 'tasks.folders.delete_folder': return 'Supprimer le dossier';
+			case 'tasks.folders.delete_folder_description': return 'Êtes-vous sûr de vouloir supprimer ce dossier ?';
+			case 'tasks.folders.delete_folder_warning': return 'Cette action est irréversible et toutes les tâches associées à ce dossier seront déliées.';
+			case 'tasks.folders.name': return 'Nom du dossier';
+			case 'tasks.folders.name_hint': return 'Travail';
+			case 'tasks.folders.name_description': return 'Définissez un nom pour votre dossier, cela sera affiché dans le tableau de bord et dans les notifications.';
+			case 'tasks.folders.name_required': return 'Nom requis';
+			case 'tasks.folders.color': return 'Couleur du dossier';
+			case 'tasks.folders.color_description': return 'Choisissez une couleur pour votre dossier, cela vous aidera à le distinguer des autres.';
+			case 'tasks.folders.select_a_folder': return 'Sélectionner un dossier';
 			case 'tasks.overview': return 'Vue d\'ensemble';
 			case 'tasks.nothing_to_do': return 'Rien à faire pour le moment, vous pouvez vous détendre !';
 			case 'tasks.day_off': return 'Vous n\'avez rien de prévu pour demain, profitez-en !';
 			case 'tasks.week_off': return 'Vous n\'avez rien de prévu pour cette semaine, essayez de prendre le temps de faire les choses laissées de côté !';
 			case 'tasks.no_tasks_for_now': return 'Pas de tâches pour le moment';
 			case 'tasks.task_details': return 'Détail de la tâche';
+			case 'tasks.time_log': return 'Journal';
+			case 'tasks.log_session': return 'Journaliser une session';
+			case 'tasks.timer': return 'Chronomètre';
+			case 'tasks.pomodoro': return 'Pomodoro';
 			case 'tasks.from': return 'De';
 			case 'tasks.to': return 'À';
+			case 'tasks.priority': return 'Priorité';
+			case 'tasks.priorities.none': return 'Aucune';
+			case 'tasks.priorities.low': return 'Faible';
+			case 'tasks.priorities.medium': return 'Moyenne';
+			case 'tasks.priorities.high': return 'Haute';
 			case 'tasks.due_dates.today': return 'Aujourd\'hui';
 			case 'tasks.due_dates.tomorrow': return 'Demain';
 			case 'tasks.due_dates.no_due_date': return 'Pas de date d\'échéance';
@@ -1294,6 +1416,7 @@ extension on TranslationsFr {
 			case 'tasks.add_task_modal.due_date': return 'Date d\'échéance';
 			case 'tasks.add_task_modal.start_date': return 'Date de début';
 			case 'tasks.add_task_modal.dates': return 'Dates';
+			case 'tasks.add_task_modal.notes': return 'Notes';
 			case 'tasks.add_task_modal.end_date': return 'Date de fin';
 			case 'tasks.add_task_modal.cancel': return 'Annuler';
 			case 'tasks.add_task_modal.save': return 'Enregistrer';
@@ -1312,6 +1435,14 @@ extension on TranslationsFr {
 			case 'tasks.add_task_modal.when_would_you_like_to_be_reminded': return 'Quand aimeriez-vous être rappelé ?';
 			case 'tasks.add_task_modal.when_would_you_like_the_task_to_start': return 'Quand aimeriez-vous que la tâche commence ?';
 			case 'tasks.add_task_modal.when_would_you_like_the_task_to_end': return 'Quand aimeriez-vous que la tâche se termine ?';
+			case 'tasks.time_spent': return 'Temps passé';
+			case 'tasks.no_time_entries': return 'Pas d\'entrées de temps';
+			case 'tasks.add_time_entry.title': return 'Ajouter une entrée de temps';
+			case 'tasks.add_time_entry.description': return 'Manually add a time entry for this task.';
+			case 'tasks.add_time_entry.start_time': return 'Heure de début';
+			case 'tasks.add_time_entry.end_time': return 'Heure de fin';
+			case 'tasks.add_time_entry.not_defined': return 'Non défini';
+			case 'tasks.add_time_entry.date_required': return 'Date requise';
 			case 'calendar.title': return 'Calendrier';
 			case 'calendar.month': return 'Mois';
 			case 'calendar.day': return 'Jour';
@@ -1332,6 +1463,8 @@ extension on TranslationsFr {
 				one: 'Participant',
 				other: 'Participants',
 			);
+			case 'calendar.event_detail.no_attendees': return 'Pas de participants';
+			case 'calendar.event_detail.no_notes': return 'Pas de notes';
 			case 'calendar.settings.title': return 'Paramètres du calendrier';
 			case 'calendar.settings.display_habits': return 'Afficher les habitudes';
 			case 'account.edit_profile': return 'Modifier le profil';
@@ -1693,6 +1826,11 @@ extension on TranslationsFr {
 			case 'name_generator.adjectives.96': return 'rose';
 			case 'name_generator.adjectives.97': return 'exubérant';
 			case 'name_generator.adjectives.98': return 'raffiné';
+			case 'eisenhower.small_title': return 'Eisenhower';
+			case 'eisenhower.title': return 'Matrice d\'Eisenhower';
+			case 'feature_under_construction.title': return 'Fonctionnalité en construction';
+			case 'feature_under_construction.description': return 'Cette fonctionnalité n\'est pas encore disponible, mais nous travaillons dur pour vous l\'apporter bientôt.\n\nRestez à l\'écoute !';
+			case 'inbox.title': return 'Boîte de réception';
 			default: return null;
 		}
 	}

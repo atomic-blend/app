@@ -1,4 +1,5 @@
 import 'package:app/entities/tag/tag.entity.dart';
+import 'package:app/entities/time_entry/time_entry.entity.dart';
 import 'package:app/services/encryption.service.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -8,6 +9,7 @@ part 'tasks.entity.g.dart';
 @unfreezed
 class TaskEntity with _$TaskEntity {
   TaskEntity._();
+
   factory TaskEntity({
     String? id,
     required String title,
@@ -16,8 +18,11 @@ class TaskEntity with _$TaskEntity {
     DateTime? endDate,
     DateTime? createdAt,
     DateTime? updatedAt,
+    int? priority,
+    String? folderId,
     List<TagEntity>? tags,
     List<DateTime>? reminders,
+    List<TimeEntry>? timeEntries,
     bool? completed,
   }) = _TaskEntity;
 
@@ -27,14 +32,14 @@ class TaskEntity with _$TaskEntity {
     'updatedAt',
     'user',
     'reminders',
+    'folderId',
     'startDate',
     'endDate',
+    'priority',
     'completed'
   ];
 
-  static final manualParseFields = [
-    'tags'
-  ];
+  static final manualParseFields = ['tags', 'timeEntries'];
 
   factory TaskEntity.fromJson(Map<String, dynamic> json) =>
       _$TaskEntityFromJson(json);
@@ -53,6 +58,14 @@ class TaskEntity with _$TaskEntity {
             .add(await tag.encrypt(encryptionService: encryptionService));
       }
     }
+    final encryptedTimeEntries = [];
+    if (timeEntries != null) {
+      for (var timeEntry in timeEntries!) {
+        encryptedTimeEntries
+            .add(await timeEntry.encrypt(encryptionService: encryptionService));
+      }
+    }
+
     Map<String, dynamic> encryptedData = {
       'id': id,
       'title': await encryptionService.encryptJson(title),
@@ -62,6 +75,9 @@ class TaskEntity with _$TaskEntity {
       'startDate': startDate?.toUtc().toIso8601String(),
       'endDate': endDate?.toUtc().toIso8601String(),
       'tags': encryptedTags,
+      'folderId': folderId,
+      'timeEntries': encryptedTimeEntries,
+      'priority': priority,
       'reminders': reminders?.map((e) => e.toUtc().toIso8601String()).toList(),
       'completed': completed
     };
@@ -72,8 +88,11 @@ class TaskEntity with _$TaskEntity {
       Map<String, dynamic> data, EncryptionService encryptionService) async {
     Map<String, dynamic> decryptedData = {};
 
+    List<dynamic>? encryptedTimeEntries = [];
+
     for (var entry in data.entries) {
-      if (nonEncryptedFields.contains(entry.key) || manualParseFields.contains(entry.key)) {
+      if (nonEncryptedFields.contains(entry.key) ||
+          manualParseFields.contains(entry.key)) {
         decryptedData[entry.key] = entry.value;
       } else {
         decryptedData[entry.key] =
@@ -81,12 +100,22 @@ class TaskEntity with _$TaskEntity {
       }
     }
 
+    encryptedTimeEntries = decryptedData['timeEntries'];
+    decryptedData['timeEntries'] = null;
+
     final task = TaskEntity.fromJson(decryptedData);
 
     if (decryptedData['tags'] != null) {
       decryptedData['tags'] = await Future.wait((decryptedData['tags'] as List)
           .map((tag) => TagEntity.decrypt(tag, encryptionService)));
       task.tags = decryptedData['tags'];
+    }
+
+    if (encryptedTimeEntries != null) {
+      decryptedData['timeEntries'] = await Future.wait(encryptedTimeEntries.map(
+          (timeEntry) => TimeEntry.decrypt(
+              data: timeEntry, encryptionService: encryptionService)));
+      task.timeEntries = decryptedData['timeEntries'];
     }
 
     return task;

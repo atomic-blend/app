@@ -177,7 +177,7 @@ platform :windows do
 
     lane :build_prod do
         Dir.chdir("..") do
-            sh('fvm flutter build windows --release -t lib/main_prod.dart --dart-define APP_ENV=prod')
+            sh('flutter build windows --release -t lib/main_prod.dart --dart-define APP_ENV=prod')
         end
     end
 
