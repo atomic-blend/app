@@ -25,10 +25,13 @@ abstract final class AppTheme {
       onPrimary: Color(0xFFE8F3FF),
       secondary: Color(0xFF006875),
       onSecondary: Color(0xFFEDFCFF),
+      tertiary: Color(0xFF673AB7),
+      onTertiary: Color(0xFFF5EFFF),
       error: Color(0xFFBA1A1A),
       onError: Color(0xFFFFDAD6),
       surface: Color(0xFFF2F2F2),
       surfaceContainer: Colors.white,
+      primaryContainer: Color(0xFFE8F3FF),
       onSurface: Colors.black,
     ),
     colors: const FlexSchemeColor(

@@ -5,6 +5,7 @@ import 'dart:io';
 import 'package:app/blocs/app/app.bloc.dart';
 import 'package:app/blocs/auth/auth.bloc.dart';
 import 'package:app/blocs/device_calendar/device_calendar.bloc.dart';
+import 'package:app/blocs/folder/folder.bloc.dart';
 import 'package:app/blocs/habit/habit.bloc.dart';
 import 'package:app/blocs/tag/tag.bloc.dart';
 import 'package:app/blocs/tasks/tasks.bloc.dart';
@@ -37,6 +38,8 @@ Map<String, dynamic>? userData;
 String? userKey;
 
 FutureOr<void> main() async {
+    WidgetsFlutterBinding.ensureInitialized();
+
   await SentryFlutter.init((options) {
     String? dsn = const String.fromEnvironment(
       'SENTRY_DSN',
@@ -49,7 +52,6 @@ FutureOr<void> main() async {
     // visit: https://docs.sentry.io/platforms/dart/data-management/data-collected/ for more info
     options.sendDefaultPii = true;
   }, appRunner: () async {
-    WidgetsFlutterBinding.ensureInitialized();
 
     if (!kIsWeb && Platform.isMacOS) {
       await WindowManipulator.initialize();
@@ -100,6 +102,7 @@ FutureOr<void> main() async {
               BlocProvider(create: (context) => DeviceCalendarBloc()),
               BlocProvider(create: (context) => HabitBloc()),
               BlocProvider(create: (context) => TagBloc()),
+              BlocProvider(create: (context) => FolderBloc())
             ],
             child: TranslationProvider(
                 child: const ToastificationWrapper(child: App()))),

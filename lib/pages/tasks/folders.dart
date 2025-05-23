@@ -1,12 +1,12 @@
-import 'package:app/blocs/tag/tag.bloc.dart';
+import 'package:app/blocs/folder/folder.bloc.dart';
 import 'package:app/blocs/tasks/tasks.bloc.dart';
 import 'package:app/components/buttons/icon_text_pill.dart';
 import 'package:app/components/buttons/task_item.dart';
 import 'package:app/components/widgets/elevated_container.dart';
-import 'package:app/entities/tag/tag.entity.dart';
+import 'package:app/entities/folder/folder.entity.dart';
 import 'package:app/entities/tasks/tasks.entity.dart';
 import 'package:app/i18n/strings.g.dart';
-import 'package:app/pages/tags/my_tags.dart';
+import 'package:app/pages/folder/my_folders.dart';
 import 'package:app/utils/constants.dart';
 import 'package:app/utils/shortcuts.dart';
 import 'package:auto_size_text/auto_size_text.dart';
@@ -15,20 +15,23 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../services/sync.service.dart';
 
-class TagsView extends StatefulWidget {
-  const TagsView({super.key});
+class FoldersView extends StatefulWidget {
+  const FoldersView({super.key});
 
   @override
-  State<TagsView> createState() => _TagsViewState();
+  State<FoldersView> createState() => _FoldersViewState();
 }
 
-class _TagsViewState extends State<TagsView> {
-  final List<TagEntity> _filteredTags = [];
+class _FoldersViewState extends State<FoldersView> {
+  final List<Folder> _filteredFolders = [];
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<TasksBloc, TasksState>(builder: (context, taskState) {
-      return BlocBuilder<TagBloc, TagState>(builder: (context, tagState) {
+      return BlocBuilder<FolderBloc, FolderState>(
+          builder: (context, folderState) {
+        final filteredTasks = _getFilteredTasks(context, taskState.tasks)
+            .map((task) => TaskItem(task: task));
         return Padding(
           padding: isDesktop(context)
               ? EdgeInsets.only(
@@ -63,7 +66,7 @@ class _TagsViewState extends State<TagsView> {
                             padding: EdgeInsets.symmetric(
                                 horizontal: $constants.insets.xxs),
                             child: AutoSizeText(
-                              context.t.tasks.my_tags,
+                              context.t.tasks.my_folders,
                               style: getTextTheme(context).titleSmall!.copyWith(
                                     fontWeight: FontWeight.bold,
                                   ),
@@ -74,10 +77,7 @@ class _TagsViewState extends State<TagsView> {
                           ),
                           GestureDetector(
                             onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => const MyTags()));
+                              _showMyFolderModal(context);
                             },
                             child: Text(
                               context.t.actions.edit,
@@ -95,11 +95,11 @@ class _TagsViewState extends State<TagsView> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          if (_filteredTags.isNotEmpty)
+                          if (_filteredFolders.isNotEmpty)
                             TextButton(
                               onPressed: () {
                                 setState(() {
-                                  _filteredTags.clear();
+                                  _filteredFolders.clear();
                                 });
                               },
                               child: Text(
@@ -111,35 +111,34 @@ class _TagsViewState extends State<TagsView> {
                                         ),
                               ),
                             ),
-                          ...(tagState.tags ?? []).map((tag) => GestureDetector(
-                                onTap: () {
-                                  setState(() {
-                                    _filteredTags.add(tag);
-                                  });
-                                },
-                                child: Padding(
-                                  padding: EdgeInsets.only(
-                                      right: $constants.insets.xs),
-                                  child: IconTextPill(
-                                    outlined: _filteredTags
-                                        .map((e) => e.id)
-                                        .contains(tag.id),
-                                    title: tag.name,
-                                    icon: null,
-                                    color: tag.color != null
-                                        ? hexToColor(tag.color!)
-                                            .withValues(alpha: 0.2)
-                                        : null,
-                                  ),
-                                ),
-                              )),
-                          if (tagState.tags == null || tagState.tags!.isEmpty)
+                          ...(folderState.folders ?? [])
+                              .map((folder) => GestureDetector(
+                                    onTap: () {
+                                      setState(() {
+                                        _filteredFolders.add(folder);
+                                      });
+                                    },
+                                    child: Padding(
+                                      padding: EdgeInsets.only(
+                                          right: $constants.insets.xs),
+                                      child: IconTextPill(
+                                        outlined: _filteredFolders
+                                            .map((e) => e.id)
+                                            .contains(folder.id),
+                                        title: folder.name,
+                                        icon: null,
+                                        color: folder.color != null
+                                            ? hexToColor(folder.color!)
+                                                .withValues(alpha: 0.2)
+                                            : null,
+                                      ),
+                                    ),
+                                  )),
+                          if (folderState.folders == null ||
+                              folderState.folders!.isEmpty)
                             GestureDetector(
                               onTap: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => const MyTags()));
+                                _showMyFolderModal(context);
                               },
                               child: Padding(
                                 padding: EdgeInsets.only(
@@ -147,7 +146,7 @@ class _TagsViewState extends State<TagsView> {
                                   left: $constants.insets.xxs,
                                 ),
                                 child: AutoSizeText(
-                                  context.t.tasks.no_tags_for_now,
+                                  context.t.tasks.folders.no_folders,
                                   style: getTextTheme(context)
                                       .bodyMedium!
                                       .copyWith(),
@@ -162,6 +161,7 @@ class _TagsViewState extends State<TagsView> {
                 SizedBox(height: $constants.insets.xs),
                 Expanded(
                   child: ElevatedContainer(
+                    width: double.infinity,
                     padding: EdgeInsets.symmetric(
                       horizontal: $constants.insets.sm,
                       vertical: $constants.insets.sm,
@@ -169,14 +169,15 @@ class _TagsViewState extends State<TagsView> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        // AutoSizeText(
-                        //   context.t.tasks.title,
-                        //   style: getTextTheme(context).titleMedium!.copyWith(
-                        //         fontWeight: FontWeight.bold,
-                        //       ),
-                        // ),
-                        ..._getFilteredTasks(context, taskState.tasks)
-                            .map((task) => TaskItem(task: task)),
+                        if (filteredTasks.isEmpty)
+                          Expanded(
+                            child: AutoSizeText(
+                              context.t.tasks.no_tasks_for_now,
+                              style:
+                                  getTextTheme(context).bodyMedium!.copyWith(),
+                            ),
+                          ),
+                        ...filteredTasks
                       ],
                     ),
                   ),
@@ -195,16 +196,47 @@ class _TagsViewState extends State<TagsView> {
       return [];
     }
     tasks = tasks.where((task) => task.completed != true).toList();
-    if (_filteredTags.isEmpty) {
+    if (_filteredFolders.isEmpty) {
       return tasks;
     }
     return tasks.where((task) {
-      for (var tag in _filteredTags) {
-        if (task.tags?.map((e) => e.id).contains(tag.id) == true) {
+      for (var folder in _filteredFolders) {
+        if (task.folderId != null && task.folderId == folder.id) {
           return true;
         }
       }
       return false;
     }).toList();
+  }
+
+  _showMyFolderModal(BuildContext context) {
+    if (isDesktop(context)) {
+      showDialog(
+        context: context,
+        builder: (context) => Dialog(
+          insetPadding: EdgeInsets.symmetric(horizontal: $constants.insets.xs),
+          child: SizedBox(
+            height: getSize(context).height * 0.7,
+            width: getSize(context).width,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular($constants.corners.md),
+              child: const MyFolders(),
+            ),
+          ),
+        ),
+      );
+    } else {
+      showModalBottomSheet(
+        context: context,
+        isScrollControlled: true,
+        builder: (context) => SizedBox(
+          height: getSize(context).height * 0.8,
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular($constants.corners.md),
+            child: const MyFolders(),
+          ),
+        ),
+      );
+    }
   }
 }

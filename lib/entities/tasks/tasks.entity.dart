@@ -19,6 +19,7 @@ class TaskEntity with _$TaskEntity {
     DateTime? createdAt,
     DateTime? updatedAt,
     int? priority,
+    String? folderId,
     List<TagEntity>? tags,
     List<DateTime>? reminders,
     List<TimeEntry>? timeEntries,
@@ -31,6 +32,7 @@ class TaskEntity with _$TaskEntity {
     'updatedAt',
     'user',
     'reminders',
+    'folderId',
     'startDate',
     'endDate',
     'priority',
@@ -63,6 +65,7 @@ class TaskEntity with _$TaskEntity {
             .add(await timeEntry.encrypt(encryptionService: encryptionService));
       }
     }
+
     Map<String, dynamic> encryptedData = {
       'id': id,
       'title': await encryptionService.encryptJson(title),
@@ -72,6 +75,7 @@ class TaskEntity with _$TaskEntity {
       'startDate': startDate?.toUtc().toIso8601String(),
       'endDate': endDate?.toUtc().toIso8601String(),
       'tags': encryptedTags,
+      'folderId': folderId,
       'timeEntries': encryptedTimeEntries,
       'priority': priority,
       'reminders': reminders?.map((e) => e.toUtc().toIso8601String()).toList(),
@@ -83,6 +87,7 @@ class TaskEntity with _$TaskEntity {
   static Future<TaskEntity> decrypt(
       Map<String, dynamic> data, EncryptionService encryptionService) async {
     Map<String, dynamic> decryptedData = {};
+
     List<dynamic>? encryptedTimeEntries = [];
 
     for (var entry in data.entries) {

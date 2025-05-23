@@ -97,6 +97,7 @@ class Translations implements BaseTranslations<AppLocale, Translations> {
 	late final TranslationsNameGeneratorEn name_generator = TranslationsNameGeneratorEn._(_root);
 	late final TranslationsEisenhowerEn eisenhower = TranslationsEisenhowerEn._(_root);
 	late final TranslationsFeatureUnderConstructionEn feature_under_construction = TranslationsFeatureUnderConstructionEn._(_root);
+	late final TranslationsInboxEn inbox = TranslationsInboxEn._(_root);
 }
 
 // Path: navigation
@@ -166,6 +167,8 @@ class TranslationsTasksEn {
 	String get completed_tasks => 'Completed tasks';
 	String get my_tags => 'My tags';
 	String get no_tags_for_now => 'No tags for now';
+	String get my_folders => 'My folders';
+	late final TranslationsTasksFoldersEn folders = TranslationsTasksFoldersEn._(_root);
 	String get nothing_to_do => 'Nothing to do for now, enjoy your day!';
 	String get day_off => 'You have nothing planned for tomorrow, enjoy your day!';
 	String get week_off => 'You have nothing planned for this week, try and take the time to do the stuff left behind!';
@@ -741,6 +744,16 @@ class TranslationsFeatureUnderConstructionEn {
 	String get description => 'This feature is not yet available, but we\'re working hard to bring it to you soon.\n\nStay tuned!';
 }
 
+// Path: inbox
+class TranslationsInboxEn {
+	TranslationsInboxEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	String get title => 'Inbox';
+}
+
 // Path: auth.not_logged_in
 class TranslationsAuthNotLoggedInEn {
 	TranslationsAuthNotLoggedInEn._(this._root);
@@ -936,6 +949,29 @@ class TranslationsTagsDeleteEn {
 	String get title => 'Delete tag';
 	String get description => 'Are you sure you want to delete this tag?';
 	String get warning => 'This action cannot be undone and the tag will be removed from all tags associated.';
+}
+
+// Path: tasks.folders
+class TranslationsTasksFoldersEn {
+	TranslationsTasksFoldersEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	String get title => 'Folders';
+	String get no_folders => 'No folders for now';
+	String get add_folder => 'Add a folder';
+	String get edit_folder => 'Edit folder';
+	String get delete_folder => 'Delete folder';
+	String get delete_folder_description => 'Are you sure you want to delete this folder?';
+	String get delete_folder_warning => 'This action cannot be undone and all the tasks will be unlinked';
+	String get name => 'Name of the folder';
+	String get name_hint => 'Work';
+	String get name_description => 'Define a name for your folder, this will help you remember what it is about and be shown in notifications.';
+	String get name_required => 'Name is required';
+	String get color => 'Color';
+	String get color_description => 'Choose a color for your folder, this will help you remember what it is about and be shown in notifications.';
+	String get select_a_folder => 'Select a folder';
 }
 
 // Path: tasks.due_dates
@@ -1347,6 +1383,21 @@ extension on Translations {
 			case 'tasks.completed_tasks': return 'Completed tasks';
 			case 'tasks.my_tags': return 'My tags';
 			case 'tasks.no_tags_for_now': return 'No tags for now';
+			case 'tasks.my_folders': return 'My folders';
+			case 'tasks.folders.title': return 'Folders';
+			case 'tasks.folders.no_folders': return 'No folders for now';
+			case 'tasks.folders.add_folder': return 'Add a folder';
+			case 'tasks.folders.edit_folder': return 'Edit folder';
+			case 'tasks.folders.delete_folder': return 'Delete folder';
+			case 'tasks.folders.delete_folder_description': return 'Are you sure you want to delete this folder?';
+			case 'tasks.folders.delete_folder_warning': return 'This action cannot be undone and all the tasks will be unlinked';
+			case 'tasks.folders.name': return 'Name of the folder';
+			case 'tasks.folders.name_hint': return 'Work';
+			case 'tasks.folders.name_description': return 'Define a name for your folder, this will help you remember what it is about and be shown in notifications.';
+			case 'tasks.folders.name_required': return 'Name is required';
+			case 'tasks.folders.color': return 'Color';
+			case 'tasks.folders.color_description': return 'Choose a color for your folder, this will help you remember what it is about and be shown in notifications.';
+			case 'tasks.folders.select_a_folder': return 'Select a folder';
 			case 'tasks.nothing_to_do': return 'Nothing to do for now, enjoy your day!';
 			case 'tasks.day_off': return 'You have nothing planned for tomorrow, enjoy your day!';
 			case 'tasks.week_off': return 'You have nothing planned for this week, try and take the time to do the stuff left behind!';
@@ -1788,6 +1839,7 @@ extension on Translations {
 			case 'eisenhower.title': return 'Eisenhower Matrix';
 			case 'feature_under_construction.title': return 'Feature under construction';
 			case 'feature_under_construction.description': return 'This feature is not yet available, but we\'re working hard to bring it to you soon.\n\nStay tuned!';
+			case 'inbox.title': return 'Inbox';
 			default: return null;
 		}
 	}

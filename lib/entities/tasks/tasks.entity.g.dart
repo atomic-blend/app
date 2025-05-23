@@ -24,6 +24,7 @@ _$TaskEntityImpl _$$TaskEntityImplFromJson(Map<String, dynamic> json) =>
           ? null
           : DateTime.parse(json['updatedAt'] as String),
       priority: (json['priority'] as num?)?.toInt(),
+      folderId: json['folderId'] as String?,
       tags: (json['tags'] as List<dynamic>?)
           ?.map((e) => TagEntity.fromJson(e as Map<String, dynamic>))
           .toList(),
@@ -46,6 +47,7 @@ Map<String, dynamic> _$$TaskEntityImplToJson(_$TaskEntityImpl instance) =>
       'createdAt': instance.createdAt?.toIso8601String(),
       'updatedAt': instance.updatedAt?.toIso8601String(),
       'priority': instance.priority,
+      'folderId': instance.folderId,
       'tags': instance.tags,
       'reminders': instance.reminders?.map((e) => e.toIso8601String()).toList(),
       'timeEntries': instance.timeEntries,

@@ -37,8 +37,8 @@ class _OverviewTasksState extends State<OverviewTasks> {
         return Padding(
           padding: isDesktop(context)
               ? EdgeInsets.only(
-                  right: $constants.insets.md,
-                  left: $constants.insets.sm,
+                  right: $constants.insets.sm,
+                  left: $constants.insets.xs,
                   bottom: $constants.insets.sm,
                 )
               : EdgeInsets.only(
@@ -58,7 +58,7 @@ class _OverviewTasksState extends State<OverviewTasks> {
                   child: ABSearchBar(
                       controller: _searchController, onSubmitted: (value) {}),
                 ),
-                SizedBox(height: $constants.insets.xxs),
+                SizedBox(height: $constants.insets.xs),
                 Expanded(
                   child: ElevatedContainer(
                     width: double.infinity,
@@ -87,7 +87,7 @@ class _OverviewTasksState extends State<OverviewTasks> {
                     ),
                   ),
                 ),
-                SizedBox(height: $constants.insets.xxs),
+                SizedBox(height: $constants.insets.xs),
                 Expanded(
                   child: ElevatedContainer(
                     width: double.infinity,
@@ -120,7 +120,7 @@ class _OverviewTasksState extends State<OverviewTasks> {
                     ),
                   ),
                 ),
-                SizedBox(height: $constants.insets.xxs),
+                SizedBox(height: $constants.insets.xs),
                 Expanded(
                   child: ElevatedContainer(
                     width: double.infinity,

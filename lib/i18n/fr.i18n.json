@@ -155,6 +155,23 @@
     "completed_tasks": "Tâches terminées",
     "my_tags": "Mes tags",
     "no_tags_for_now": "Pas de tags pour le moment",
+    "my_folders": "Mes dossiers",
+    "folders": {
+      "title": "Dossiers",
+      "no_folders": "Aucun dossier",
+      "add_folder": "Ajouter un dossier",
+      "edit_folder": "Modifier le dossier",
+      "delete_folder": "Supprimer le dossier",
+      "delete_folder_description": "Êtes-vous sûr de vouloir supprimer ce dossier ?",
+      "delete_folder_warning": "Cette action est irréversible et toutes les tâches associées à ce dossier seront déliées.",
+      "name": "Nom du dossier",
+      "name_hint": "Travail",
+      "name_description": "Définissez un nom pour votre dossier, cela sera affiché dans le tableau de bord et dans les notifications.",
+      "name_required": "Nom requis",
+      "color": "Couleur du dossier",
+      "color_description": "Choisissez une couleur pour votre dossier, cela vous aidera à le distinguer des autres.",
+      "select_a_folder": "Sélectionner un dossier"
+    },
     "overview": "Vue d'ensemble",
     "nothing_to_do": "Rien à faire pour le moment, vous pouvez vous détendre !",
     "day_off": "Vous n'avez rien de prévu pour demain, profitez-en !",
@@ -698,5 +715,8 @@
   "feature_under_construction": {
     "title": "Fonctionnalité en construction",
     "description": "Cette fonctionnalité n'est pas encore disponible, mais nous travaillons dur pour vous l'apporter bientôt.\n\nRestez à l'écoute !"
+  },
+  "inbox": {
+    "title": "Boîte de réception"
   }
 }

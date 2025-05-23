@@ -63,49 +63,64 @@ class _AssignTagModalState extends State<AssignTagModal> {
             SizedBox(
               height: $constants.insets.sm,
             ),
-            ...(tagState.tags ?? []).map(
-              (tag) => Padding(
-                padding: EdgeInsets.only(
-                    bottom: $constants.insets.sm, left: $constants.insets.xxs),
-                child: GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      if (_selectedTags
-                          .map((e) => e.id)
-                          .toList()
-                          .contains(tag.id)) {
-                        _selectedTags.removeWhere((e) => e.id == tag.id);
-                      } else {
-                        _selectedTags.add(tag);
-                      }
-                    });
-                    if (widget.onSelectedTagsChanged != null) {
-                      widget.onSelectedTagsChanged!(_selectedTags);
-                    }
-                  },
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      IconTextPill(
-                        title: tag.name,
-                      ),
-                      // check if tag is in selectedTags
-                      if (_selectedTags
-                          .map((e) => e.id)
-                          .toList()
-                          .contains(tag.id))
-                        Padding(
-                          padding: EdgeInsets.only(right: $constants.insets.md),
-                          child: Icon(
-                            CupertinoIcons.checkmark,
-                            color: getTheme(context).primary,
+            Row(
+              children: [
+                ...(tagState.tags ?? []).map(
+                  (tag) => Padding(
+                    padding: EdgeInsets.only(
+                        bottom: $constants.insets.sm,
+                        left: $constants.insets.xxs),
+                    child: GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          if (_selectedTags
+                              .map((e) => e.id)
+                              .toList()
+                              .contains(tag.id)) {
+                            _selectedTags.removeWhere((e) => e.id == tag.id);
+                          } else {
+                            _selectedTags.add(tag);
+                          }
+                        });
+                        if (widget.onSelectedTagsChanged != null) {
+                          widget.onSelectedTagsChanged!(_selectedTags);
+                        }
+                      },
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Container(
+                            width: 50,
+                            height: 50,
+                            decoration: BoxDecoration(
+                              border: _selectedTags
+                                      .map((e) => e.id)
+                                      .toList()
+                                      .contains(tag.id)
+                                  ? Border.all(
+                                      color: getTheme(context).primary,
+                                      width: 1,
+                                    )
+                                  : null,
+                              borderRadius: BorderRadius.circular(
+                                $constants.corners.full,
+                              ),
+                              color: tag.color != null
+                                  ? hexToColor(tag.color!).withValues(alpha: 0.2)
+                                  : Colors.grey.withValues(alpha: 0.2),
+                            ),
+                            child: const Icon(CupertinoIcons.tag),
                           ),
-                        ),
-                    ],
+                          IconTextPill(
+                            title: tag.name,
+                          ),
+                        ],
+                      ),
+                    ),
                   ),
                 ),
-              ),
-            ),
+              ],
+            )
           ],
         ),
       );

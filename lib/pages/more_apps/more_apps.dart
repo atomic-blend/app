@@ -1,4 +1,3 @@
-import 'package:app/components/app/bottom_navigation.dart';
 import 'package:app/components/buttons/icon_text_button.dart';
 import 'package:app/components/widgets/elevated_container.dart';
 import 'package:app/i18n/strings.g.dart';
@@ -22,7 +21,7 @@ class _MoreAppsState extends State<MoreApps> {
   @override
   Widget build(BuildContext context) {
     final restOfNavigation =
-        $constants.navigation.bottomNavigationItems(context).sublist(5);
+        $constants.navigation.primaryMenuItems(context).sublist(5);
     return SafeArea(
       child: Padding(
         padding: isDesktop(context)
@@ -44,48 +43,45 @@ class _MoreAppsState extends State<MoreApps> {
                 mainAxisSpacing: $constants.insets.sm,
                 crossAxisSpacing: $constants.insets.sm,
                 children: restOfNavigation.map((e) {
-                  if (e is NavigationItem) {
-                    return StaggeredGridTile.count(
-                      crossAxisCellCount: 1,
-                      mainAxisCellCount: 0.6,
-                      child: GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const EisenhowerMatrix(),
-                            ),
-                          );
-                        },
-                        child: ElevatedContainer(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              SizedBox(
-                                height: $constants.insets.sm,
-                              ),
-                              const Icon(
-                                CupertinoIcons.square_grid_2x2_fill,
-                                size: 35,
-                              ),
-                              SizedBox(
-                                height: $constants.insets.xxs,
-                              ),
-                              Text(
-                                e.label,
-                                style: getTextTheme(context).labelMedium,
-                              ),
-                              SizedBox(
-                                height: $constants.insets.sm,
-                              ),
-                            ],
+                  return StaggeredGridTile.count(
+                    crossAxisCellCount: 1,
+                    mainAxisCellCount: 0.6,
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const EisenhowerMatrix(),
                           ),
+                        );
+                      },
+                      child: ElevatedContainer(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            SizedBox(
+                              height: $constants.insets.sm,
+                            ),
+                            const Icon(
+                              CupertinoIcons.square_grid_2x2_fill,
+                              size: 35,
+                            ),
+                            SizedBox(
+                              height: $constants.insets.xxs,
+                            ),
+                            Text(
+                              e.label,
+                              style: getTextTheme(context).labelMedium,
+                            ),
+                            SizedBox(
+                              height: $constants.insets.sm,
+                            ),
+                          ],
                         ),
                       ),
-                    );
-                  }
-                  return Container();
+                    ),
+                  );
                 }).toList(),
               ),
             ],

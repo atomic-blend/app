@@ -3,12 +3,17 @@ import 'package:app/blocs/tasks/tasks.bloc.dart';
 import 'package:app/components/dialogs/priority_picker.dart';
 import 'package:app/components/forms/app_text_form_field.dart';
 import 'package:app/components/forms/task_date_picker_modal/task_date_picker_modal.dart';
+import 'package:app/entities/folder/folder.entity.dart';
+import 'package:app/entities/tag/tag.entity.dart';
 import 'package:app/entities/tasks/tasks.entity.dart';
 import 'package:app/i18n/strings.g.dart';
+import 'package:app/pages/tasks/assign_folder.dart';
+import 'package:app/pages/tasks/assign_tag_modal.dart';
 import 'package:app/utils/constants.dart';
 import 'package:app/utils/exntensions/date_time_extension.dart';
 import 'package:app/utils/shortcuts.dart';
 import 'package:app/utils/toast_helper.dart';
+import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -30,6 +35,8 @@ class _AddTaskModalState extends State<AddTaskModal> {
   DateTime? _startDate;
   List<DateTime>? _reminders;
   int? _priority;
+  Folder? _folder;
+  List<TagEntity>? _tags;
 
   @override
   void initState() {
@@ -267,7 +274,148 @@ class _AddTaskModalState extends State<AddTaskModal> {
                             ],
                           ),
                         ),
-                      )
+                      ),
+                      SizedBox(
+                        width: $constants.insets.xs,
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          if (isDesktop(context)) {
+                            showDialog(
+                              context: context,
+                              builder: (context) => Dialog(
+                                backgroundColor: getTheme(context).surface,
+                                child: Container(
+                                  padding: EdgeInsets.all($constants.insets.sm),
+                                  height: getSize(context).height * 0.2 +
+                                      $constants.insets.md,
+                                  child: AssignFolder(
+                                    onFolderSelected: (folder) {
+                                      setState(() {
+                                        _folder = folder;
+                                      });
+                                    },
+                                    folderId: _folder?.id,
+                                  ),
+                                ),
+                              ),
+                            );
+                          } else {
+                            showModalBottomSheet(
+                              context: context,
+                              isScrollControlled: true,
+                              builder: (context) => Container(
+                                height: getSize(context).height * 0.2,
+                                padding: EdgeInsets.all($constants.insets.md),
+                                child: AssignFolder(
+                                  onFolderSelected: (folder) {
+                                    setState(() {
+                                      _folder = folder;
+                                    });
+                                  },
+                                  folderId: _folder?.id,
+                                ),
+                              ),
+                            );
+                          }
+                        },
+                        child: Container(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: $constants.insets.xs + 4,
+                              vertical: 2),
+                          decoration: BoxDecoration(
+                            color: _folder != null && _folder?.color != null
+                                ? hexToColor(_folder!.color!)
+                                    .withValues(alpha: 0.2)
+                                : getTheme(context).surfaceContainer,
+                            borderRadius:
+                                BorderRadius.circular($constants.corners.full),
+                          ),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              SizedBox(
+                                width: 25,
+                                height: 25,
+                                child: Icon(CupertinoIcons.folder,
+                                    size: 18,
+                                    color: _folder != null
+                                        ? getTheme(context).primary
+                                        : null),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        width: $constants.insets.xs,
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          if (isDesktop(context)) {
+                            showDialog(
+                              context: context,
+                              builder: (context) => Dialog(
+                                backgroundColor: getTheme(context).surface,
+                                child: SizedBox(
+                                  height: isDesktop(context)
+                                      ? getSize(context).height * 0.345
+                                      : getSize(context).height * 0.25,
+                                  child: AssignTagModal(
+                                    selectedTags: _tags,
+                                    onSelectedTagsChanged: (tags) {
+                                      setState(() {
+                                        _tags = tags;
+                                      });
+                                    },
+                                  ),
+                                ),
+                              ),
+                            );
+                          } else {
+                            showModalBottomSheet(
+                                context: context,
+                                builder: (context) => SizedBox(
+                                      height: getSize(context).height * 0.25,
+                                      child: AssignTagModal(
+                                        selectedTags: _tags,
+                                        onSelectedTagsChanged: (tags) {
+                                          setState(() {
+                                            _tags = tags;
+                                          });
+                                        },
+                                      ),
+                                    ));
+                          }
+                        },
+                        child: Container(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: $constants.insets.xs + 4,
+                              vertical: 2),
+                          decoration: BoxDecoration(
+                            color: _tags != null && _tags?.isNotEmpty == true
+                                ? getTheme(context).primaryContainer.darken(5)
+                                : getTheme(context).surfaceContainer,
+                            borderRadius:
+                                BorderRadius.circular($constants.corners.full),
+                          ),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              SizedBox(
+                                width: 25,
+                                height: 25,
+                                child: Icon(CupertinoIcons.tag,
+                                    size: 18,
+                                    color: _tags != null &&
+                                            _tags?.isNotEmpty == true
+                                        ? getTheme(context).primary
+                                        : null),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                   GestureDetector(
