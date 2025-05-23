@@ -1,7 +1,6 @@
 import 'package:app/blocs/app/app.bloc.dart';
 import 'package:app/blocs/auth/auth.bloc.dart';
 import 'package:app/components/app/bottom_navigation.dart';
-import 'package:app/components/app/side_menu_item.dart';
 import 'package:app/components/buttons/account_avatar_with_sync_status.dart';
 import 'package:app/components/buttons/task_item.dart';
 import 'package:app/entities/tasks/tasks.entity.dart';
@@ -105,335 +104,146 @@ class Ads {
 
 @immutable
 class Navigation {
-  /// Appbar configuration.
-  List<AppBar?> appbars(BuildContext context, {Widget? leading}) => [
-        AppBar(
-          backgroundColor: getTheme(context).surface,
-          title: Center(
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                BlocBuilder<AppCubit, AppState>(builder: (context, appState) {
-                  var selectedSideItem = sideMenuItems(
-                      context)[appState.pageIndex]![appState.selectedTabIndex];
-                  return Text(
-                    selectedSideItem.title,
-                    style: getTextTheme(context).headlineSmall!.copyWith(
-                          fontWeight: FontWeight.bold,
-                        ),
-                  );
-                })
-              ],
+  List<NavigationSection> secondaryMenuSections(BuildContext context) => [
+        NavigationSection(
+          key: const Key("tasks"),
+          items: [
+            NavigationItem(
+              key: const Key("overview"),
+              icon: const Icon(Icons.check_box),
+              cupertinoIcon: const Icon(CupertinoIcons.checkmark_square),
+              label: context.t.tasks.overview,
+              body: const OverviewTasks(),
             ),
-          ),
-          actions: [
-            BlocBuilder<AuthBloc, AuthState>(builder: (context, authState) {
-              if (authState is LoggedIn && !isDesktop(context)) {
-                return Padding(
-                  padding: EdgeInsets.only(right: $constants.insets.sm),
-                  child: const AccountAvatarWithSyncStatus(),
-                );
-              }
-              return Container();
-            }),
-          ],
-        ),
-        AppBar(
-            backgroundColor: getTheme(context).surface,
-            title: Center(
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(
-                    context.t.calendar.title,
-                    style: getTextTheme(context).headlineSmall!.copyWith(
-                          fontWeight: FontWeight.bold,
-                        ),
-                  )
-                ],
-              ),
-            ),
-            actions: [
-              GestureDetector(
-                  onTap: () {
-                    if (isDesktop(context)) {
-                      showDialog(
-                        context: context,
-                        builder: (context) => Dialog(
-                          child: SizedBox(
-                            width: getSize(context).width * 0.5,
-                            height: getSize(context).height * 0.5,
-                            child: const CalendarSettings(),
-                          ),
-                        ),
-                      );
-                    } else {
-                      showModalBottomSheet(
-                          isScrollControlled: true,
-                          context: context,
-                          builder: (context) => const CalendarSettings());
+            NavigationItem(
+              key: const Key("today"),
+              icon: const Icon(Icons.calendar_today),
+              cupertinoIcon: const Icon(CupertinoIcons.calendar_today),
+              label: context.t.tasks.today,
+              color: getTheme(context).primary,
+              body: FilteredTaskView(
+                filter: (List<TaskEntity> tasks) {
+                  final List<TaskItem> widgets = [];
+                  for (final task in tasks) {
+                    if (task.completed != true &&
+                        task.endDate != null &&
+                        task.endDate!.isToday()) {
+                      widgets.add(TaskItem(task: task));
                     }
-                  },
-                  child: const Icon(CupertinoIcons.settings)),
-              SizedBox(
-                width: $constants.insets.sm,
-              ),
-              BlocBuilder<AuthBloc, AuthState>(builder: (context, authState) {
-                if (authState is LoggedIn && !isDesktop(context)) {
-                  return Padding(
-                    padding: EdgeInsets.only(right: $constants.insets.sm),
-                    child: const AccountAvatarWithSyncStatus(),
-                  );
-                }
-                return Container();
-              })
-            ]),
-        null,
-        AppBar(
-            backgroundColor: getTheme(context).surface,
-            title: Center(
-              child: Text(
-                context.t.habits.title,
-                style: getTextTheme(context).headlineSmall!.copyWith(
-                      fontWeight: FontWeight.bold,
-                    ),
-              ),
-            ),
-            actions: [
-              IconButton(
-                icon: const Icon(CupertinoIcons.add),
-                onPressed: () {
-                  var modal = const AddHabitModal();
-                  if (isDesktop(context)) {
-                    showDialog(
-                      context: context,
-                      builder: (context) => Dialog(
-                        backgroundColor: getTheme(context).surface,
-                        child: modal,
-                      ),
-                    );
-                  } else {
-                    showModalBottomSheet(
-                        isScrollControlled: true,
-                        context: context,
-                        builder: (context) => modal);
                   }
+                  return widgets;
                 },
               ),
-              BlocBuilder<AuthBloc, AuthState>(builder: (context, authState) {
-                if (authState is LoggedIn && !isDesktop(context)) {
-                  return Padding(
-                    padding: EdgeInsets.only(right: $constants.insets.sm),
-                    child: const AccountAvatarWithSyncStatus(),
-                  );
-                }
-                return Container();
-              })
-            ]),
-        AppBar(
-            backgroundColor: getTheme(context).surface,
-            title: Center(
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(
-                    context.t.more.title,
-                    style: getTextTheme(context).headlineSmall!.copyWith(
-                          fontWeight: FontWeight.bold,
-                        ),
-                  )
-                ],
+            ),
+            NavigationItem(
+              key: const Key("tags"),
+              icon: const Icon(Icons.tag),
+              cupertinoIcon: const Icon(CupertinoIcons.tag),
+              label: context.t.tasks.tags,
+              color: getTheme(context).secondary,
+              body: const TagsView(),
+            ),
+            NavigationItem(
+              key: const Key("folders"),
+              icon: const Icon(Icons.folder),
+              cupertinoIcon: const Icon(CupertinoIcons.folder),
+              label: context.t.tasks.folders.title,
+              separatorBefore: true,
+              color: getTheme(context).tertiary,
+              body: const FoldersView(),
+            ),
+            NavigationItem(
+              key: const Key("all_tasks"),
+              separatorBefore: true,
+              icon: const Icon(Icons.list),
+              cupertinoIcon:
+                  const Icon(CupertinoIcons.square_stack_3d_down_right),
+              label: context.t.tasks.all_tasks,
+              body: FilteredTaskView(
+                filter: (tasks) {
+                  return tasks
+                      .where((task) => task.completed != true)
+                      .map((task) => TaskItem(task: task))
+                      .toList();
+                },
               ),
             ),
-            actions: [
-              BlocBuilder<AuthBloc, AuthState>(builder: (context, authState) {
-                if (authState is LoggedIn && !isDesktop(context)) {
-                  return Padding(
-                    padding: EdgeInsets.only(right: $constants.insets.sm),
-                    child: const AccountAvatarWithSyncStatus(),
-                  );
-                }
-                return Container();
-              })
-            ]),
-        AppBar(
-          backgroundColor: getTheme(context).surface,
-          title: Text(
-            context.t.eisenhower.title,
-            style: getTextTheme(context).headlineSmall!.copyWith(
-                  fontWeight: FontWeight.bold,
-                ),
-          ),
-        )
-      ];
-
-  /// Bottom navigation configuration.
-  List<Widget?> bottomNavigationScreens() => [
-        const OverviewTasks(),
-        const Calendar(
-          view: CalendarView.month,
+            NavigationItem(
+              key: const Key("completed_tasks"),
+              icon: const Icon(Icons.check_circle),
+              cupertinoIcon: const Icon(CupertinoIcons.checkmark_circle),
+              label: context.t.tasks.completed_tasks,
+              body: FilteredTaskView(
+                filter: (tasks) {
+                  return tasks
+                      .where((task) => task.completed == true)
+                      .map((task) => TaskItem(task: task))
+                      .toList();
+                },
+              ),
+            ),
+          ],
         ),
-        null,
-        const Habits(),
-        const MoreApps(),
-        const EisenhowerMatrix(),
+        NavigationSection(
+          key: const Key("calendar"),
+          items: [
+            NavigationItem(
+              key: const Key("three_days"),
+              icon: const Icon(Icons.calendar_today),
+              cupertinoIcon: const Icon(CupertinoIcons.calendar_badge_plus),
+              label: context.t.calendar.threeDays,
+              body: Calendar(
+                key: UniqueKey(),
+                view: CalendarView.week,
+                numberOfDays: 3,
+              ),
+            ),
+            NavigationItem(
+              key: const Key("month"),
+              icon: const Icon(Icons.calendar_month),
+              cupertinoIcon: const Icon(CupertinoIcons.calendar),
+              label: context.t.calendar.month,
+              body: Calendar(
+                key: UniqueKey(),
+                view: CalendarView.month,
+              ),
+            ),
+            NavigationItem(
+              key: const Key("day"),
+              icon: const Icon(Icons.calendar_today),
+              cupertinoIcon: const Icon(CupertinoIcons.calendar_today),
+              label: context.t.calendar.day,
+              body: Calendar(
+                key: UniqueKey(),
+                view: CalendarView.day,
+              ),
+            ),
+          ],
+        ),
+        const NavigationSection(
+          key: Key("add_task"),
+          items: [],
+        ),
+        const NavigationSection(
+          key: Key("habits"),
+          items: [],
+        ),
+        const NavigationSection(
+          key: Key("more"),
+          items: [],
+        ),
+        const NavigationSection(
+          key: Key("eisenhower"),
+          items: [],
+        ),
       ];
 
-  List<Widget?> floatingActionButtons(BuildContext context) =>
-      [null, null, null, null, null, null];
-
-  List<List<SideMenuItem>?> sideMenuItems(BuildContext context) => [
-        [
-          SideMenuItem(
-            title: context.t.tasks.overview,
-            icon: CupertinoIcons.collections,
-            color: getTheme(context).brightness == Brightness.dark
-                ? Colors.white
-                : Colors.grey[800]!,
-            iconContainer: true,
-            body: const OverviewTasks(),
-            onTap: () {
-              context.read<AppCubit>().changeSelectedTabIndex(index: 0);
-            },
-          ),
-          SideMenuItem(
-            title: context.t.tasks.today,
-            icon: CupertinoIcons.calendar_today,
-            color: getTheme(context).primary,
-            iconContainer: true,
-            body: FilteredTaskView(
-              filter: (List<TaskEntity> tasks) {
-                final List<TaskItem> widgets = [];
-                for (final task in tasks) {
-                  if (task.completed != true &&
-                      task.endDate != null &&
-                      task.endDate!.isToday()) {
-                    widgets.add(TaskItem(task: task));
-                  }
-                }
-                return widgets;
-              },
-            ),
-            onTap: () {
-              context.read<AppCubit>().changeSelectedTabIndex(index: 1);
-            },
-          ),
-          SideMenuItem(
-            title: context.t.tasks.tags,
-            icon: CupertinoIcons.tag,
-            color: getTheme(context).secondary,
-            iconContainer: true,
-            body: const TagsView(),
-            onTap: () {
-              context.read<AppCubit>().changeSelectedTabIndex(index: 2);
-            },
-          ),
-          SideMenuItem(
-            title: context.t.tasks.folders.title,
-            icon: CupertinoIcons.folder,
-            color: getTheme(context).tertiary,
-            iconContainer: true,
-            body: const FoldersView(),
-            onTap: () {
-              context.read<AppCubit>().changeSelectedTabIndex(index: 3);
-            },
-          ),
-          SideMenuItem(
-            title: context.t.tasks.all_tasks,
-            separatorBefore: true,
-            icon: CupertinoIcons.square_stack_3d_down_right,
-            color: getTheme(context).brightness == Brightness.dark
-                ? Colors.white
-                : Colors.grey[800]!,
-            iconContainer: true,
-            body: FilteredTaskView(filter: (tasks) {
-              return tasks
-                  .where((task) => task.completed != true)
-                  .map((task) => TaskItem(task: task))
-                  .toList();
-            }),
-            onTap: () {
-              context.read<AppCubit>().changeSelectedTabIndex(index: 4);
-            },
-          ),
-          SideMenuItem(
-            title: context.t.tasks.completed_tasks,
-            icon: CupertinoIcons.checkmark_circle_fill,
-            color: getTheme(context).brightness == Brightness.dark
-                ? Colors.white
-                : Colors.grey[800]!,
-            iconContainer: true,
-            body: FilteredTaskView(filter: (tasks) {
-              return tasks
-                  .where((task) => task.completed == true)
-                  .map((task) => TaskItem(task: task))
-                  .toList();
-            }),
-            onTap: () {
-              context.read<AppCubit>().changeSelectedTabIndex(index: 5);
-            },
-          ),
-        ],
-        [
-          SideMenuItem(
-            title: context.t.calendar.threeDays,
-            initialOnly: true,
-            icon: CupertinoIcons.book,
-            color: getTheme(context).brightness == Brightness.dark
-                ? Colors.white
-                : Colors.grey[800]!,
-            iconContainer: true,
-            body: Calendar(
-              key: UniqueKey(),
-              view: CalendarView.week,
-              numberOfDays: 3,
-            ),
-            onTap: () {
-              context.read<AppCubit>().changeSelectedTabIndex(index: 0);
-            },
-          ),
-          SideMenuItem(
-            title: context.t.calendar.month,
-            initialOnly: true,
-            icon: CupertinoIcons.collections,
-            color: getTheme(context).brightness == Brightness.dark
-                ? Colors.white
-                : Colors.grey[800]!,
-            iconContainer: true,
-            body: Calendar(
-              key: UniqueKey(),
-              view: CalendarView.month,
-            ),
-            onTap: () {
-              context.read<AppCubit>().changeSelectedTabIndex(index: 1);
-            },
-          ),
-          SideMenuItem(
-            title: context.t.calendar.day,
-            initialOnly: true,
-            icon: CupertinoIcons.calendar_today,
-            color: getTheme(context).brightness == Brightness.dark
-                ? Colors.white
-                : Colors.grey[800]!,
-            iconContainer: true,
-            body: Calendar(
-              key: UniqueKey(),
-              view: CalendarView.day,
-            ),
-            onTap: () {
-              context.read<AppCubit>().changeSelectedTabIndex(index: 2);
-            },
-          ),
-        ],
-        null,
-        null,
-        null,
-        null,
-      ];
-
-  List<Widget> bottomNavigationItems(BuildContext context) => [
+  // list of fixed items, limited to 5 on mobile
+  // on mobile: the rest is added as a grid on the more apps page (last item to the right)
+  // on desktop: the more apps page is moved at the end of the menu
+  List<NavigationItem> primaryMenuItems(BuildContext context) => [
         NavigationItem(
-          key: const Key("today"),
+          key: const Key("tasks"),
           icon: const Icon(
             LineAwesome.home_solid,
             size: 25,
@@ -443,6 +253,49 @@ class Navigation {
             size: 25,
           ),
           label: context.t.tasks.title,
+          body: const OverviewTasks(),
+          mainSecondaryKey: "overview",
+          appBar: AppBar(
+            key: const Key("tasks"),
+            backgroundColor: getTheme(context).surface,
+            title: Center(
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  BlocBuilder<AppCubit, AppState>(builder: (context, appState) {
+                    var selectedSecondarySection =
+                        secondaryMenuSections(context)
+                            .where((element) =>
+                                (element.key as ValueKey).value ==
+                                appState.primaryMenuSelectedKey)
+                            .firstOrNull;
+                    var selectedSecondaryItem = selectedSecondarySection?.items
+                        .where((element) =>
+                            (element.key as ValueKey).value ==
+                            appState.secondaryMenuSelectedKey)
+                        .firstOrNull;
+                    return Text(
+                      selectedSecondaryItem?.label ?? "",
+                      style: getTextTheme(context).headlineSmall!.copyWith(
+                            fontWeight: FontWeight.bold,
+                          ),
+                    );
+                  })
+                ],
+              ),
+            ),
+            actions: [
+              BlocBuilder<AuthBloc, AuthState>(builder: (context, authState) {
+                if (authState is LoggedIn && !isDesktop(context)) {
+                  return Padding(
+                    padding: EdgeInsets.only(right: $constants.insets.sm),
+                    child: const AccountAvatarWithSyncStatus(),
+                  );
+                }
+                return Container();
+              }),
+            ],
+          ),
         ),
         NavigationItem(
           key: const Key("calendar"),
@@ -455,8 +308,64 @@ class Navigation {
             size: 25,
           ),
           label: context.t.calendar.title,
+          body: const Calendar(
+            view: CalendarView.month,
+          ),
+          mainSecondaryKey: "month",
+          appBar: AppBar(
+              key: const Key("calendar"),
+              backgroundColor: getTheme(context).surface,
+              title: Center(
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      context.t.calendar.title,
+                      style: getTextTheme(context).headlineSmall!.copyWith(
+                            fontWeight: FontWeight.bold,
+                          ),
+                    )
+                  ],
+                ),
+              ),
+              actions: [
+                GestureDetector(
+                    onTap: () {
+                      if (isDesktop(context)) {
+                        showDialog(
+                          context: context,
+                          builder: (context) => Dialog(
+                            child: SizedBox(
+                              width: getSize(context).width * 0.5,
+                              height: getSize(context).height * 0.5,
+                              child: const CalendarSettings(),
+                            ),
+                          ),
+                        );
+                      } else {
+                        showModalBottomSheet(
+                            isScrollControlled: true,
+                            context: context,
+                            builder: (context) => const CalendarSettings());
+                      }
+                    },
+                    child: const Icon(CupertinoIcons.settings)),
+                SizedBox(
+                  width: $constants.insets.sm,
+                ),
+                BlocBuilder<AuthBloc, AuthState>(builder: (context, authState) {
+                  if (authState is LoggedIn && !isDesktop(context)) {
+                    return Padding(
+                      padding: EdgeInsets.only(right: $constants.insets.sm),
+                      child: const AccountAvatarWithSyncStatus(),
+                    );
+                  }
+                  return Container();
+                })
+              ]),
         ),
         NavigationItem(
+          key: const Key("add_task"),
           icon: Icon(
             LineAwesome.plus_solid,
             color: getTheme(context).tertiary,
@@ -490,6 +399,49 @@ class Navigation {
             size: 25,
           ),
           label: context.t.habits.title,
+          body: const Habits(),
+          appBar: AppBar(
+              key: const Key("habits"),
+              backgroundColor: getTheme(context).surface,
+              title: Center(
+                child: Text(
+                  context.t.habits.title,
+                  style: getTextTheme(context).headlineSmall!.copyWith(
+                        fontWeight: FontWeight.bold,
+                      ),
+                ),
+              ),
+              actions: [
+                IconButton(
+                  icon: const Icon(CupertinoIcons.add),
+                  onPressed: () {
+                    var modal = const AddHabitModal();
+                    if (isDesktop(context)) {
+                      showDialog(
+                        context: context,
+                        builder: (context) => Dialog(
+                          backgroundColor: getTheme(context).surface,
+                          child: modal,
+                        ),
+                      );
+                    } else {
+                      showModalBottomSheet(
+                          isScrollControlled: true,
+                          context: context,
+                          builder: (context) => modal);
+                    }
+                  },
+                ),
+                BlocBuilder<AuthBloc, AuthState>(builder: (context, authState) {
+                  if (authState is LoggedIn && !isDesktop(context)) {
+                    return Padding(
+                      padding: EdgeInsets.only(right: $constants.insets.sm),
+                      child: const AccountAvatarWithSyncStatus(),
+                    );
+                  }
+                  return Container();
+                })
+              ]),
         ),
         NavigationItem(
           key: const Key("more"),
@@ -502,6 +454,34 @@ class Navigation {
             size: 25,
           ),
           label: context.t.more.title,
+          body: const MoreApps(),
+          appBar: AppBar(
+              key: const Key("more"),
+              backgroundColor: getTheme(context).surface,
+              title: Center(
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      context.t.more.title,
+                      style: getTextTheme(context).headlineSmall!.copyWith(
+                            fontWeight: FontWeight.bold,
+                          ),
+                    )
+                  ],
+                ),
+              ),
+              actions: [
+                BlocBuilder<AuthBloc, AuthState>(builder: (context, authState) {
+                  if (authState is LoggedIn && !isDesktop(context)) {
+                    return Padding(
+                      padding: EdgeInsets.only(right: $constants.insets.sm),
+                      child: const AccountAvatarWithSyncStatus(),
+                    );
+                  }
+                  return Container();
+                })
+              ]),
         ),
         NavigationItem(
           key: const Key("eisenhower"),
@@ -514,6 +494,17 @@ class Navigation {
             size: 25,
           ),
           label: context.t.eisenhower.small_title,
+          body: const EisenhowerMatrix(),
+          appBar: AppBar(
+            key: const Key("eisenhower"),
+            backgroundColor: getTheme(context).surface,
+            title: Text(
+              context.t.eisenhower.title,
+              style: getTextTheme(context).headlineSmall!.copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
+            ),
+          ),
         ),
       ];
 }

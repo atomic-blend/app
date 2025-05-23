@@ -21,7 +21,9 @@ class NavigationItem extends StatelessWidget {
     this.tooltip,
     this.enabled = true,
     this.body,
-    this.color,
+    this.appBar,
+    this.mainSecondaryKey,
+    this.color, this.separatorBefore,
   });
 
   /// The icon displayed by the destination.
@@ -41,6 +43,15 @@ class NavigationItem extends StatelessWidget {
 
   /// Optional body
   final Widget? body;
+
+  /// Optional appbar
+  final AppBar? appBar;
+
+  /// Optional separatorBefore
+  final bool? separatorBefore;
+
+  /// Main secondary key (the default secondary screen)
+  final String? mainSecondaryKey;
 
   /// Optional color
   final Color? color;
@@ -69,17 +80,30 @@ class NavigationItem extends StatelessWidget {
   }
 }
 
+class NavigationSection {
+  const NavigationSection({
+    required this.key,
+    required this.items,
+  });
+
+  /// The key of the section.
+  final Key key;
+
+  /// The list of items in the section.
+  final List<NavigationItem> items;
+}
+
 class BottomNavigation extends StatelessWidget {
   const BottomNavigation({
     super.key,
     required this.destinations,
-    required this.currentPageIndex,
+    required this.primaryMenuKey,
     this.backgroundColor,
     this.onTap,
   });
 
   final List<Widget> destinations;
-  final int currentPageIndex;
+  final String primaryMenuKey;
   final Color? backgroundColor;
   final Function(int)? onTap;
 
@@ -105,7 +129,9 @@ class BottomNavigation extends StatelessWidget {
 
       return CupertinoTabBar(
         backgroundColor: backgroundColor,
-        currentIndex: currentPageIndex,
+        currentIndex: destinations.indexWhere((element) =>
+            element is NavigationItem &&
+            (element.key as ValueKey).value == primaryMenuKey),
         onTap: (index) {
           // Check if the tapped item has its own onTap handler
           if (destinations.length > index &&
@@ -117,8 +143,14 @@ class BottomNavigation extends StatelessWidget {
           else if (onTap != null) {
             onTap!(index);
           } else {
-            context.read<AppCubit>().changePageIndex(index: index);
-          }
+            context.read<AppCubit>().changePrimaryMenuSelectedKey(
+                key: (destinations[index].key as ValueKey).value);
+            if (destinations[index] is NavigationItem && (destinations[index] as NavigationItem).mainSecondaryKey != null) {
+              context.read<AppCubit>().changeSecondaryMenuSelectedKey(
+                  key: (destinations[index] as NavigationItem)
+                      .mainSecondaryKey!);
+            }
+      }
         },
         items: cupertinoItems,
       );
@@ -128,7 +160,9 @@ class BottomNavigation extends StatelessWidget {
     return NavigationBar(
       height: 60,
       indicatorColor: getTheme(context).primaryContainer,
-      selectedIndex: currentPageIndex,
+      selectedIndex: destinations.indexWhere((element) =>
+          element is NavigationItem &&
+          (element.key as ValueKey).value == primaryMenuKey),
       onDestinationSelected: (index) {
         // Check if the tapped item has its own onTap handler
         if (destinations.length > index &&
@@ -140,7 +174,8 @@ class BottomNavigation extends StatelessWidget {
         else if (onTap != null) {
           onTap!(index);
         } else {
-          context.read<AppCubit>().changePageIndex(index: index);
+          context.read<AppCubit>().changePrimaryMenuSelectedKey(
+              key: (destinations[index].key as ValueKey).value);
         }
       },
       destinations: destinations,

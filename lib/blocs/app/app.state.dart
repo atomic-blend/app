@@ -3,8 +3,8 @@ part of 'app.bloc.dart';
 @freezed
 class AppState with _$AppState {
   factory AppState(
-      {required int pageIndex,
-      required int selectedTabIndex,
+      {required String primaryMenuSelectedKey,
+      required String secondaryMenuSelectedKey,
       bool? mobileSyncDisabled,
       bool? warnUserOnMobileInternetAccess,
       bool? isIntroCompleted,
@@ -12,8 +12,8 @@ class AppState with _$AppState {
       Map<String, bool>? showcasePageStatus}) = _AppState;
 
   factory AppState.initial() => _AppState(
-        pageIndex: 0,
-        selectedTabIndex: 0,
+        primaryMenuSelectedKey: 'tasks',
+        secondaryMenuSelectedKey: 'overview',
       );
 
   factory AppState.fromJson(Map<String, dynamic> stored) =>

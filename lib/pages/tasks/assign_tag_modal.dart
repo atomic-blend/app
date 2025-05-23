@@ -109,7 +109,7 @@ class _AssignTagModalState extends State<AssignTagModal> {
                                   ? hexToColor(tag.color!).withValues(alpha: 0.2)
                                   : Colors.grey.withValues(alpha: 0.2),
                             ),
-                            child: Icon(CupertinoIcons.tag),
+                            child: const Icon(CupertinoIcons.tag),
                           ),
                           IconTextPill(
                             title: tag.name,

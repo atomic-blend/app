@@ -20,8 +20,8 @@ AppState _$AppStateFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$AppState {
-  int get pageIndex => throw _privateConstructorUsedError;
-  int get selectedTabIndex => throw _privateConstructorUsedError;
+  String get primaryMenuSelectedKey => throw _privateConstructorUsedError;
+  String get secondaryMenuSelectedKey => throw _privateConstructorUsedError;
   bool? get mobileSyncDisabled => throw _privateConstructorUsedError;
   bool? get warnUserOnMobileInternetAccess =>
       throw _privateConstructorUsedError;
@@ -46,8 +46,8 @@ abstract class $AppStateCopyWith<$Res> {
       _$AppStateCopyWithImpl<$Res, AppState>;
   @useResult
   $Res call(
-      {int pageIndex,
-      int selectedTabIndex,
+      {String primaryMenuSelectedKey,
+      String secondaryMenuSelectedKey,
       bool? mobileSyncDisabled,
       bool? warnUserOnMobileInternetAccess,
       bool? isIntroCompleted,
@@ -70,8 +70,8 @@ class _$AppStateCopyWithImpl<$Res, $Val extends AppState>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? pageIndex = null,
-    Object? selectedTabIndex = null,
+    Object? primaryMenuSelectedKey = null,
+    Object? secondaryMenuSelectedKey = null,
     Object? mobileSyncDisabled = freezed,
     Object? warnUserOnMobileInternetAccess = freezed,
     Object? isIntroCompleted = freezed,
@@ -79,14 +79,14 @@ class _$AppStateCopyWithImpl<$Res, $Val extends AppState>
     Object? showcasePageStatus = freezed,
   }) {
     return _then(_value.copyWith(
-      pageIndex: null == pageIndex
-          ? _value.pageIndex
-          : pageIndex // ignore: cast_nullable_to_non_nullable
-              as int,
-      selectedTabIndex: null == selectedTabIndex
-          ? _value.selectedTabIndex
-          : selectedTabIndex // ignore: cast_nullable_to_non_nullable
-              as int,
+      primaryMenuSelectedKey: null == primaryMenuSelectedKey
+          ? _value.primaryMenuSelectedKey
+          : primaryMenuSelectedKey // ignore: cast_nullable_to_non_nullable
+              as String,
+      secondaryMenuSelectedKey: null == secondaryMenuSelectedKey
+          ? _value.secondaryMenuSelectedKey
+          : secondaryMenuSelectedKey // ignore: cast_nullable_to_non_nullable
+              as String,
       mobileSyncDisabled: freezed == mobileSyncDisabled
           ? _value.mobileSyncDisabled
           : mobileSyncDisabled // ignore: cast_nullable_to_non_nullable
@@ -120,8 +120,8 @@ abstract class _$$AppStateImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {int pageIndex,
-      int selectedTabIndex,
+      {String primaryMenuSelectedKey,
+      String secondaryMenuSelectedKey,
       bool? mobileSyncDisabled,
       bool? warnUserOnMobileInternetAccess,
       bool? isIntroCompleted,
@@ -142,8 +142,8 @@ class __$$AppStateImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? pageIndex = null,
-    Object? selectedTabIndex = null,
+    Object? primaryMenuSelectedKey = null,
+    Object? secondaryMenuSelectedKey = null,
     Object? mobileSyncDisabled = freezed,
     Object? warnUserOnMobileInternetAccess = freezed,
     Object? isIntroCompleted = freezed,
@@ -151,14 +151,14 @@ class __$$AppStateImplCopyWithImpl<$Res>
     Object? showcasePageStatus = freezed,
   }) {
     return _then(_$AppStateImpl(
-      pageIndex: null == pageIndex
-          ? _value.pageIndex
-          : pageIndex // ignore: cast_nullable_to_non_nullable
-              as int,
-      selectedTabIndex: null == selectedTabIndex
-          ? _value.selectedTabIndex
-          : selectedTabIndex // ignore: cast_nullable_to_non_nullable
-              as int,
+      primaryMenuSelectedKey: null == primaryMenuSelectedKey
+          ? _value.primaryMenuSelectedKey
+          : primaryMenuSelectedKey // ignore: cast_nullable_to_non_nullable
+              as String,
+      secondaryMenuSelectedKey: null == secondaryMenuSelectedKey
+          ? _value.secondaryMenuSelectedKey
+          : secondaryMenuSelectedKey // ignore: cast_nullable_to_non_nullable
+              as String,
       mobileSyncDisabled: freezed == mobileSyncDisabled
           ? _value.mobileSyncDisabled
           : mobileSyncDisabled // ignore: cast_nullable_to_non_nullable
@@ -187,8 +187,8 @@ class __$$AppStateImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$AppStateImpl implements _AppState {
   _$AppStateImpl(
-      {required this.pageIndex,
-      required this.selectedTabIndex,
+      {required this.primaryMenuSelectedKey,
+      required this.secondaryMenuSelectedKey,
       this.mobileSyncDisabled,
       this.warnUserOnMobileInternetAccess,
       this.isIntroCompleted,
@@ -200,9 +200,9 @@ class _$AppStateImpl implements _AppState {
       _$$AppStateImplFromJson(json);
 
   @override
-  final int pageIndex;
+  final String primaryMenuSelectedKey;
   @override
-  final int selectedTabIndex;
+  final String secondaryMenuSelectedKey;
   @override
   final bool? mobileSyncDisabled;
   @override
@@ -224,7 +224,7 @@ class _$AppStateImpl implements _AppState {
 
   @override
   String toString() {
-    return 'AppState(pageIndex: $pageIndex, selectedTabIndex: $selectedTabIndex, mobileSyncDisabled: $mobileSyncDisabled, warnUserOnMobileInternetAccess: $warnUserOnMobileInternetAccess, isIntroCompleted: $isIntroCompleted, displayHabitsInCalendar: $displayHabitsInCalendar, showcasePageStatus: $showcasePageStatus)';
+    return 'AppState(primaryMenuSelectedKey: $primaryMenuSelectedKey, secondaryMenuSelectedKey: $secondaryMenuSelectedKey, mobileSyncDisabled: $mobileSyncDisabled, warnUserOnMobileInternetAccess: $warnUserOnMobileInternetAccess, isIntroCompleted: $isIntroCompleted, displayHabitsInCalendar: $displayHabitsInCalendar, showcasePageStatus: $showcasePageStatus)';
   }
 
   @override
@@ -232,10 +232,11 @@ class _$AppStateImpl implements _AppState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$AppStateImpl &&
-            (identical(other.pageIndex, pageIndex) ||
-                other.pageIndex == pageIndex) &&
-            (identical(other.selectedTabIndex, selectedTabIndex) ||
-                other.selectedTabIndex == selectedTabIndex) &&
+            (identical(other.primaryMenuSelectedKey, primaryMenuSelectedKey) ||
+                other.primaryMenuSelectedKey == primaryMenuSelectedKey) &&
+            (identical(
+                    other.secondaryMenuSelectedKey, secondaryMenuSelectedKey) ||
+                other.secondaryMenuSelectedKey == secondaryMenuSelectedKey) &&
             (identical(other.mobileSyncDisabled, mobileSyncDisabled) ||
                 other.mobileSyncDisabled == mobileSyncDisabled) &&
             (identical(other.warnUserOnMobileInternetAccess,
@@ -255,8 +256,8 @@ class _$AppStateImpl implements _AppState {
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      pageIndex,
-      selectedTabIndex,
+      primaryMenuSelectedKey,
+      secondaryMenuSelectedKey,
       mobileSyncDisabled,
       warnUserOnMobileInternetAccess,
       isIntroCompleted,
@@ -281,8 +282,8 @@ class _$AppStateImpl implements _AppState {
 
 abstract class _AppState implements AppState {
   factory _AppState(
-      {required final int pageIndex,
-      required final int selectedTabIndex,
+      {required final String primaryMenuSelectedKey,
+      required final String secondaryMenuSelectedKey,
       final bool? mobileSyncDisabled,
       final bool? warnUserOnMobileInternetAccess,
       final bool? isIntroCompleted,
@@ -293,9 +294,9 @@ abstract class _AppState implements AppState {
       _$AppStateImpl.fromJson;
 
   @override
-  int get pageIndex;
+  String get primaryMenuSelectedKey;
   @override
-  int get selectedTabIndex;
+  String get secondaryMenuSelectedKey;
   @override
   bool? get mobileSyncDisabled;
   @override
