@@ -162,6 +162,7 @@ class TranslationsTasksEn {
 	String get title => 'Tasks';
 	String get today => 'Today';
 	String get overview => 'Overview';
+	String get inbox => 'Inbox';
 	String get tags => 'Tags';
 	String get all_tasks => 'All tasks';
 	String get completed_tasks => 'Completed tasks';
@@ -1378,6 +1379,7 @@ extension on Translations {
 			case 'tasks.title': return 'Tasks';
 			case 'tasks.today': return 'Today';
 			case 'tasks.overview': return 'Overview';
+			case 'tasks.inbox': return 'Inbox';
 			case 'tasks.tags': return 'Tags';
 			case 'tasks.all_tasks': return 'All tasks';
 			case 'tasks.completed_tasks': return 'Completed tasks';

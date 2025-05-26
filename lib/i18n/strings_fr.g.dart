@@ -159,6 +159,7 @@ class _TranslationsTasksFr implements TranslationsTasksEn {
 	@override String get title => 'Tâches';
 	@override String get today => 'Aujourd\'hui';
 	@override String get tags => 'Tags';
+	@override String get inbox => 'Boîte de réception';
 	@override String get all_tasks => 'Toutes les tâches';
 	@override String get completed_tasks => 'Tâches terminées';
 	@override String get my_tags => 'Mes tags';
@@ -1372,6 +1373,7 @@ extension on TranslationsFr {
 			case 'tasks.title': return 'Tâches';
 			case 'tasks.today': return 'Aujourd\'hui';
 			case 'tasks.tags': return 'Tags';
+			case 'tasks.inbox': return 'Boîte de réception';
 			case 'tasks.all_tasks': return 'Toutes les tâches';
 			case 'tasks.completed_tasks': return 'Tâches terminées';
 			case 'tasks.my_tags': return 'Mes tags';

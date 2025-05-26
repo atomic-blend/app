@@ -18,6 +18,7 @@ import 'package:app/pages/tasks/overview.dart';
 import 'package:app/pages/tasks/tags.dart';
 import 'package:app/utils/exntensions/date_time_extension.dart';
 import 'package:app/utils/shortcuts.dart';
+import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -114,6 +115,24 @@ class Navigation {
               cupertinoIcon: const Icon(CupertinoIcons.checkmark_square),
               label: context.t.tasks.overview,
               body: const OverviewTasks(),
+            ),
+            NavigationItem(
+              key: const Key("inbox"),
+              icon: const Icon(Icons.inbox),
+              cupertinoIcon: const Icon(CupertinoIcons.tray_arrow_down),
+              color: Colors.cyan.darken(12),
+              label: context.t.tasks.inbox,
+              body: FilteredTaskView(
+                filter: (List<TaskEntity> tasks) {
+                  final List<TaskItem> widgets = [];
+                  for (final task in tasks) {
+                    if (task.completed != true && task.folderId == null) {
+                      widgets.add(TaskItem(task: task));
+                    }
+                  }
+                  return widgets;
+                },
+              ),
             ),
             NavigationItem(
               key: const Key("today"),
