@@ -10,6 +10,15 @@ import 'package:flutter/material.dart';
 import 'package:jiffy/jiffy.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 
+// TODO: add a switch between pomodoro and stopwatch
+// TODO: when the notification for pomodoro happen on the foreground, show an ui with the option to start a new pomodoro or reset the timer
+// TODO: add a settings page to change the pomodoro duration and break duration
+// TODO: when pomo is completed on foreground, call completePomodoro() from TimerUtils
+// TODO: in TimerUtils, send the time entry to the backend when the pomodoro is completed in completePomodoro()
+// TODO: in the overview tab, show the pomo status and the time spent on the current pomo if there's one running
+// TODO: implement the background pomo notification handler when a notification is tapped from outside the app (pass params to determine the notification tapped + call completePomodoro() from TimerUtils)
+
+
 class Timer extends StatefulWidget {
   final TaskEntity? task;
   const Timer({super.key, this.task});
