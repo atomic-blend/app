@@ -95,6 +95,7 @@ class TranslationsFr implements Translations {
 	@override late final _TranslationsEisenhowerFr eisenhower = _TranslationsEisenhowerFr._(_root);
 	@override late final _TranslationsFeatureUnderConstructionFr feature_under_construction = _TranslationsFeatureUnderConstructionFr._(_root);
 	@override late final _TranslationsInboxFr inbox = _TranslationsInboxFr._(_root);
+	@override late final _TranslationsTimerFr timer = _TranslationsTimerFr._(_root);
 }
 
 // Path: navigation
@@ -747,6 +748,25 @@ class _TranslationsInboxFr implements TranslationsInboxEn {
 
 	// Translations
 	@override String get title => 'Boîte de réception';
+}
+
+// Path: timer
+class _TranslationsTimerFr implements TranslationsTimerEn {
+	_TranslationsTimerFr._(this._root);
+
+	final TranslationsFr _root; // ignore: unused_field
+
+	// Translations
+	@override String get title => 'Minuteur';
+	@override String get start => 'Démarrer';
+	@override String get stop => 'Arrêter';
+	@override String get reset => 'Réinitialiser';
+	@override String get pause => 'Pause';
+	@override String get resume => 'Reprendre';
+	@override String get duration => 'Durée';
+	@override String get elapsed_time => 'Temps écoulé';
+	@override String get remaining_time => 'Temps restant';
+	@override String get no_timer_running => 'Aucun minuteur en cours';
 }
 
 // Path: auth.not_logged_in
@@ -1833,6 +1853,16 @@ extension on TranslationsFr {
 			case 'feature_under_construction.title': return 'Fonctionnalité en construction';
 			case 'feature_under_construction.description': return 'Cette fonctionnalité n\'est pas encore disponible, mais nous travaillons dur pour vous l\'apporter bientôt.\n\nRestez à l\'écoute !';
 			case 'inbox.title': return 'Boîte de réception';
+			case 'timer.title': return 'Minuteur';
+			case 'timer.start': return 'Démarrer';
+			case 'timer.stop': return 'Arrêter';
+			case 'timer.reset': return 'Réinitialiser';
+			case 'timer.pause': return 'Pause';
+			case 'timer.resume': return 'Reprendre';
+			case 'timer.duration': return 'Durée';
+			case 'timer.elapsed_time': return 'Temps écoulé';
+			case 'timer.remaining_time': return 'Temps restant';
+			case 'timer.no_timer_running': return 'Aucun minuteur en cours';
 			default: return null;
 		}
 	}

@@ -722,5 +722,17 @@
   },
   "inbox": {
     "title": "Inbox"
+  },
+  "timer": {
+    "title": "Timer",
+    "start": "Start",
+    "stop": "Stop",
+    "reset": "Reset",
+    "pause": "Pause",
+    "resume": "Resume",
+    "duration": "Duration",
+    "elapsed_time": "Elapsed time",
+    "remaining_time": "Remaining time",
+    "no_timer_running": "No timer running"
   }
 }

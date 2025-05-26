@@ -98,6 +98,7 @@ class Translations implements BaseTranslations<AppLocale, Translations> {
 	late final TranslationsEisenhowerEn eisenhower = TranslationsEisenhowerEn._(_root);
 	late final TranslationsFeatureUnderConstructionEn feature_under_construction = TranslationsFeatureUnderConstructionEn._(_root);
 	late final TranslationsInboxEn inbox = TranslationsInboxEn._(_root);
+	late final TranslationsTimerEn timer = TranslationsTimerEn._(_root);
 }
 
 // Path: navigation
@@ -753,6 +754,25 @@ class TranslationsInboxEn {
 
 	// Translations
 	String get title => 'Inbox';
+}
+
+// Path: timer
+class TranslationsTimerEn {
+	TranslationsTimerEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	String get title => 'Timer';
+	String get start => 'Start';
+	String get stop => 'Stop';
+	String get reset => 'Reset';
+	String get pause => 'Pause';
+	String get resume => 'Resume';
+	String get duration => 'Duration';
+	String get elapsed_time => 'Elapsed time';
+	String get remaining_time => 'Remaining time';
+	String get no_timer_running => 'No timer running';
 }
 
 // Path: auth.not_logged_in
@@ -1842,6 +1862,16 @@ extension on Translations {
 			case 'feature_under_construction.title': return 'Feature under construction';
 			case 'feature_under_construction.description': return 'This feature is not yet available, but we\'re working hard to bring it to you soon.\n\nStay tuned!';
 			case 'inbox.title': return 'Inbox';
+			case 'timer.title': return 'Timer';
+			case 'timer.start': return 'Start';
+			case 'timer.stop': return 'Stop';
+			case 'timer.reset': return 'Reset';
+			case 'timer.pause': return 'Pause';
+			case 'timer.resume': return 'Resume';
+			case 'timer.duration': return 'Duration';
+			case 'timer.elapsed_time': return 'Elapsed time';
+			case 'timer.remaining_time': return 'Remaining time';
+			case 'timer.no_timer_running': return 'No timer running';
 			default: return null;
 		}
 	}

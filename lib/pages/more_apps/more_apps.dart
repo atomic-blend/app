@@ -51,7 +51,7 @@ class _MoreAppsState extends State<MoreApps> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => const EisenhowerMatrix(),
+                            builder: (context) => e.body ?? Container(),
                           ),
                         );
                       },
@@ -63,10 +63,7 @@ class _MoreAppsState extends State<MoreApps> {
                             SizedBox(
                               height: $constants.insets.sm,
                             ),
-                            const Icon(
-                              CupertinoIcons.square_grid_2x2_fill,
-                              size: 35,
-                            ),
+                            isDesktop(context) ? e.icon : e.cupertinoIcon,
                             SizedBox(
                               height: $constants.insets.xxs,
                             ),

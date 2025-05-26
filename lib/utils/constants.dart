@@ -16,6 +16,7 @@ import 'package:app/pages/tasks/filtered_view.dart';
 import 'package:app/pages/tasks/folders.dart';
 import 'package:app/pages/tasks/overview.dart';
 import 'package:app/pages/tasks/tags.dart';
+import 'package:app/pages/timer/timer.dart';
 import 'package:app/utils/exntensions/date_time_extension.dart';
 import 'package:app/utils/shortcuts.dart';
 import 'package:flex_color_scheme/flex_color_scheme.dart';
@@ -253,6 +254,10 @@ class Navigation {
         ),
         const NavigationSection(
           key: Key("eisenhower"),
+          items: [],
+        ),
+        const NavigationSection(
+          key: Key("timer"),
           items: [],
         ),
       ];
@@ -506,12 +511,12 @@ class Navigation {
         NavigationItem(
           key: const Key("eisenhower"),
           icon: const Icon(
-            CupertinoIcons.grid,
-            size: 25,
+            CupertinoIcons.square_grid_2x2,
+            size: 35,
           ),
           cupertinoIcon: const Icon(
-            CupertinoIcons.grid,
-            size: 25,
+            CupertinoIcons.square_grid_2x2,
+            size: 35,
           ),
           label: context.t.eisenhower.small_title,
           body: const EisenhowerMatrix(),
@@ -520,6 +525,29 @@ class Navigation {
             backgroundColor: getTheme(context).surface,
             title: Text(
               context.t.eisenhower.title,
+              style: getTextTheme(context).headlineSmall!.copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
+            ),
+          ),
+        ),
+        NavigationItem(
+          key: const Key("timer"),
+          icon: const Icon(
+            CupertinoIcons.stopwatch,
+            size: 35,
+          ),
+          cupertinoIcon: const Icon(
+            CupertinoIcons.stopwatch,
+            size: 35,
+          ),
+          label: context.t.timer.title,
+          body: const Timer(),
+          appBar: AppBar(
+            key: const Key("timer"),
+            backgroundColor: getTheme(context).surface,
+            title: Text(
+              context.t.timer.title,
               style: getTextTheme(context).headlineSmall!.copyWith(
                     fontWeight: FontWeight.bold,
                   ),

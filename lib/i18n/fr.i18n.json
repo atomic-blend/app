@@ -719,5 +719,17 @@
   },
   "inbox": {
     "title": "Boîte de réception"
+  },
+  "timer": {
+    "title": "Minuteur",
+    "start": "Démarrer",
+    "stop": "Arrêter",
+    "reset": "Réinitialiser",
+    "pause": "Pause",
+    "resume": "Reprendre",
+    "duration": "Durée",
+    "elapsed_time": "Temps écoulé",
+    "remaining_time": "Temps restant",
+    "no_timer_running": "Aucun minuteur en cours"
   }
 }
