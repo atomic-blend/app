@@ -82,21 +82,15 @@ class AppLayoutState extends ResponsiveState<AppLayout> {
                 )
                 .firstOrNull;
 
+            var primaryMenuItem = $constants.navigation
+                      .primaryMenuItems(context)
+                      .where((item) =>
+                          (item.key as ValueKey).value ==
+                          appState.primaryMenuSelectedKey)
+                      .firstOrNull;
             // by default, the primary menu is selected
-            Widget? body = $constants.navigation
-                .primaryMenuItems(context)
-                .where((item) =>
-                    (item.key as ValueKey).value ==
-                    appState.primaryMenuSelectedKey)
-                .firstOrNull
-                ?.body;
-            AppBar? appBar = $constants.navigation
-                .primaryMenuItems(context)
-                .where((item) =>
-                    (item.key as ValueKey).value ==
-                    appState.primaryMenuSelectedKey)
-                .firstOrNull
-                ?.appBar;
+            Widget? body = primaryMenuItem?.body;
+            AppBar? appBar = primaryMenuItem?.appBar;
 
             // if primary key is tasks, get the folders, and add them to the secondary section items at the right place (4th), after all folders
             if (appState.primaryMenuSelectedKey == 'tasks' &&

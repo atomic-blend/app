@@ -542,6 +542,34 @@ class Navigation {
             size: 35,
           ),
           label: context.t.timer.title,
+          onTap: (index) {
+            if (isDesktop(context)) {
+              showDialog(
+                context: context,
+                builder: (context) => Dialog(
+                  child: SizedBox(
+                    width: getSize(context).width * 0.5,
+                    height: getSize(context).height * 0.5,
+                    child: const Timer(),
+                  ),
+                ),
+              );
+            } else {
+              showModalBottomSheet(
+                isScrollControlled: true,
+                context: context,
+                builder: (context) => SizedBox(
+                  height: getSize(context).height * 0.8,
+                  child: ClipRRect(
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular($constants.corners.lg),
+                        topRight: Radius.circular($constants.corners.lg),
+                      ),
+                      child: const Timer()),
+                ),
+              );
+            }
+          },
           body: const Timer(),
           appBar: AppBar(
             key: const Key("timer"),

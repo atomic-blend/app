@@ -48,6 +48,10 @@ class _MoreAppsState extends State<MoreApps> {
                     mainAxisCellCount: 0.6,
                     child: GestureDetector(
                       onTap: () {
+                        if (e.onTap != null) {
+                          e.onTap!(0);
+                          return;
+                        }
                         Navigator.push(
                           context,
                           MaterialPageRoute(
