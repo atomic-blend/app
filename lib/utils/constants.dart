@@ -428,6 +428,7 @@ class Navigation {
           appBar: AppBar(
               key: const Key("habits"),
               backgroundColor: getTheme(context).surface,
+              leading: Container(),
               title: Center(
                 child: Text(
                   context.t.habits.title,
@@ -483,6 +484,7 @@ class Navigation {
           appBar: AppBar(
               key: const Key("more"),
               backgroundColor: getTheme(context).surface,
+              leading: Container(),
               title: Center(
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
