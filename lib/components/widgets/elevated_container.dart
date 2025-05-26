@@ -34,9 +34,16 @@ class ElevatedContainer extends StatelessWidget {
                 BorderRadius.circular(borderRadius ?? $constants.insets.sm),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withValues(alpha: 0.1),
-                offset: const Offset(0, 4),
-                blurRadius: 10,
+                color: Colors.black.withValues(alpha: 0.06),
+                offset: const Offset(0, 2),
+                blurRadius: 8,
+                spreadRadius: 0,
+              ),
+              BoxShadow(
+                color: Colors.black.withValues(alpha: 0.04),
+                offset: const Offset(0, 8),
+                blurRadius: 16,
+                spreadRadius: -4,
               ),
             ]),
         child: child,
