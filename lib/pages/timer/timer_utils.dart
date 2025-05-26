@@ -48,4 +48,39 @@ class TimerUtils {
     //TODO: 
     await resetPomodoroTimer();
   }
+
+  static Future<void> startStopwatch() async {
+    final startDate = DateTime.now();
+
+    await prefs?.setString(
+      'stopwatch_start_time',
+      startDate.toIso8601String(),
+    );
+  }
+
+  static Future<Duration> getStopwatchElapsedTime() async {
+    final startTimeString = prefs?.getString('stopwatch_start_time');
+
+    if (startTimeString == null) {
+      return Duration.zero;
+    }
+
+    final startTime = DateTime.parse(startTimeString);
+    return DateTime.now().difference(startTime);
+  }
+
+  static Future<void> resetStopwatch() async {
+    await prefs?.remove('stopwatch_start_time');
+  }
+
+  static Future<bool> isStopwatchRunning() async {
+    final startTimeString = prefs?.getString('stopwatch_start_time');
+    return startTimeString != null;
+  }
+
+  static Future<void> stopwatchComplete() async {
+    // Logic to handle what happens when a stopwatch session is completed
+    // For example, you might want to show a notification or log the completion
+    await resetStopwatch();
+  }
 }

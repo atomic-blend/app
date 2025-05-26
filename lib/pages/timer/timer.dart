@@ -13,10 +13,12 @@ import 'package:percent_indicator/circular_percent_indicator.dart';
 // TODO: add a switch between pomodoro and stopwatch
 // TODO: when the notification for pomodoro happen on the foreground, show an ui with the option to start a new pomodoro or reset the timer
 // TODO: add a settings page to change the pomodoro duration and break duration
-// TODO: when pomo is completed on foreground, call completePomodoro() from TimerUtils
-// TODO: in TimerUtils, send the time entry to the backend when the pomodoro is completed in completePomodoro()
+// TODO: when pomo is completed on foreground, call pomodoroComplete() from TimerUtils
+// TODO: in TimerUtils, send the time entry to the backend when the pomodoro is completed in pomodoroComplete()
 // TODO: in the overview tab, show the pomo status and the time spent on the current pomo if there's one running
-// TODO: implement the background pomo notification handler when a notification is tapped from outside the app (pass params to determine the notification tapped + call completePomodoro() from TimerUtils)
+// TODO: implement the background pomo notification handler when a notification is tapped from outside the app (pass params to determine the notification tapped + call pomodoroComplete() from TimerUtils)
+// TODO: when the app starts, check if there's a pomo running and restore the timer.periodic with the pomo duration and check if the pomo is completed or not at each tick to run the pomodoroComplete() method
+// TODO: add a duration selector to choose the pomo duration and store the duration in app cubit state
 
 
 class Timer extends StatefulWidget {
