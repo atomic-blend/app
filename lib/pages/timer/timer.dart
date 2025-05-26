@@ -1,5 +1,6 @@
 import 'package:app/components/buttons/primary_button_square.dart';
 import 'package:app/components/widgets/elevated_container.dart';
+import 'package:app/entities/tasks/tasks.entity.dart';
 import 'package:app/i18n/strings.g.dart';
 import 'package:app/utils/constants.dart';
 import 'package:app/utils/shortcuts.dart';
@@ -10,7 +11,8 @@ import 'package:jiffy/jiffy.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 
 class Timer extends StatefulWidget {
-  const Timer({super.key});
+  final TaskEntity? task;
+  const Timer({super.key, this.task});
 
   @override
   State<Timer> createState() => _TimerState();
@@ -29,6 +31,14 @@ class _TimerState extends State<Timer> {
                 fontWeight: FontWeight.bold,
               ),
         ),
+        leading: widget.task != null
+            ? IconButton(
+                icon: const Icon(CupertinoIcons.xmark),
+                onPressed: () {
+                  Navigator.pop(context, widget.task);
+                },
+              )
+            : null,
       ),
       body: Column(
         children: [

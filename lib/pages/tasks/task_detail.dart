@@ -17,6 +17,7 @@ import 'package:app/pages/tasks/add_time_entry.dart';
 import 'package:app/pages/tasks/assign_folder.dart';
 import 'package:app/pages/tasks/assign_tag_modal.dart';
 import 'package:app/pages/tasks/task_time_entry_log.dart' show TaskTimeEntryLog;
+import 'package:app/pages/timer/timer.dart';
 import 'package:app/utils/constants.dart';
 import 'package:app/utils/exntensions/date_time_extension.dart';
 import 'package:app/utils/shortcuts.dart';
@@ -544,13 +545,7 @@ class _TaskDetailState extends State<TaskDetail> {
                             title: context.t.tasks.timer,
                             icon: CupertinoIcons.stopwatch,
                             onTap: () {
-                              ToastHelper.showWarning(
-                                context: context,
-                                title:
-                                    context.t.feature_under_construction.title,
-                                description: context
-                                    .t.feature_under_construction.description,
-                              );
+                              _showTimerModal(context);
                             }),
                       ),
                       StaggeredGridTile.count(
@@ -561,13 +556,7 @@ class _TaskDetailState extends State<TaskDetail> {
                             title: context.t.tasks.pomodoro,
                             icon: CupertinoIcons.timer,
                             onTap: () {
-                              ToastHelper.showWarning(
-                                context: context,
-                                title:
-                                    context.t.feature_under_construction.title,
-                                description: context
-                                    .t.feature_under_construction.description,
-                              );
+                              _showTimerModal(context);
                             }),
                       )
                     ]),
@@ -621,5 +610,32 @@ class _TaskDetailState extends State<TaskDetail> {
     widget.task.folderId = _folder?.id;
     widget.task.priority = _priority;
     context.read<TasksBloc>().add(EditTask(widget.task));
+  }
+
+  _showTimerModal(BuildContext context) {
+    if (isDesktop(context)) {
+      showDialog(
+          context: context,
+          builder: (context) => Dialog(
+                child: Timer(
+                  task: widget.task,
+                ),
+              ));
+    } else {
+      showModalBottomSheet(
+        context: context,
+        isScrollControlled: true,
+        builder: (context) => SizedBox(
+          height: getSize(context).height * 0.8,
+          width: double.infinity,
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular($constants.corners.xl),
+            child: Timer(
+              task: widget.task,
+            ),
+          ),
+        ),
+      );
+    }
   }
 }

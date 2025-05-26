@@ -83,7 +83,7 @@ class _MoreAppsState extends State<MoreApps> {
               ),
             ],
             SizedBox(
-              height: $constants.insets.xxs,
+              height: $constants.insets.sm,
             ),
             Expanded(
               child: ElevatedContainer(
