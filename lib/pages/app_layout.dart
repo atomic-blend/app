@@ -293,14 +293,17 @@ class AppLayoutState extends ResponsiveState<AppLayout> {
                                                                     width: 1,
                                                                   )
                                                                 : null,
-                                                            color: item.color !=
+                                                            color: item
+                                                                        .color !=
                                                                     null
-                                                                ? item.color!
-                                                                    .withValues(
-                                                                        alpha:
-                                                                            0.1)
+                                                                ? item.color!.withValues(
+                                                                    alpha: getTheme(context).brightness ==
+                                                                            Brightness
+                                                                                .dark
+                                                                        ? 0.4
+                                                                        : 0.2)
                                                                 : Colors.grey
-                                                                    .shade800
+                                                                    .shade400
                                                                     .withValues(
                                                                         alpha:
                                                                             0.2),
@@ -313,13 +316,19 @@ class AppLayoutState extends ResponsiveState<AppLayout> {
                                                           child: IconTheme(
                                                               data:
                                                                   IconThemeData(
-                                                                color: item.color !=
-                                                                        null
-                                                                    ? item
-                                                                        .color!
+                                                                color: getTheme(context)
+                                                                            .brightness ==
+                                                                        Brightness
+                                                                            .light
+                                                                    ? item.color !=
+                                                                            null
+                                                                        ? item
+                                                                            .color!
+                                                                        : Colors
+                                                                            .grey
+                                                                            .shade800
                                                                     : Colors
-                                                                        .grey
-                                                                        .shade800,
+                                                                        .white,
                                                               ),
                                                               child: isApple(
                                                                       context)
