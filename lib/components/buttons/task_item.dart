@@ -15,11 +15,18 @@ import 'package:jiffy/jiffy.dart';
 
 class TaskItem extends StatelessWidget {
   final TaskEntity task;
+  final VoidCallback? onTap;
   final bool? collapsed;
   final bool? slideable;
+  final bool? checkable;
 
   const TaskItem(
-      {super.key, required this.task, this.collapsed, this.slideable});
+      {super.key,
+      required this.task,
+      this.collapsed,
+      this.slideable,
+      this.onTap,
+      this.checkable});
 
   @override
   Widget build(BuildContext context) {
@@ -34,6 +41,10 @@ class TaskItem extends StatelessWidget {
   Widget buildContent(BuildContext context) {
     return GestureDetector(
       onTap: () {
+        if (onTap != null) {
+          onTap!();
+          return;
+        }
         if (isDesktop(context)) {
           showDialog(
             context: context,
@@ -88,12 +99,13 @@ class TaskItem extends StatelessWidget {
                   mainAxisSize: MainAxisSize.max,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    ABCheckbox(
-                        value: task.completed ?? false,
-                        onChanged: (value) {
-                          task.completed = value!;
-                          context.read<TasksBloc>().add(EditTask(task));
-                        }),
+                    if (checkable != false)
+                      ABCheckbox(
+                          value: task.completed ?? false,
+                          onChanged: (value) {
+                            task.completed = value!;
+                            context.read<TasksBloc>().add(EditTask(task));
+                          }),
                     SizedBox(
                       width: $constants.insets.xs,
                     ),

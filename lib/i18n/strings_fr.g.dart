@@ -771,6 +771,7 @@ class _TranslationsTimerFr implements TranslationsTimerEn {
 		'pomodoro': 'Pomodoro',
 		'stopwatch': 'Chronomètre',
 	};
+	@override String get select_task => 'Sélectionner une tâche';
 }
 
 // Path: auth.not_logged_in
@@ -1869,6 +1870,7 @@ extension on TranslationsFr {
 			case 'timer.no_timer_running': return 'Aucun minuteur en cours';
 			case 'timer.modes.pomodoro': return 'Pomodoro';
 			case 'timer.modes.stopwatch': return 'Chronomètre';
+			case 'timer.select_task': return 'Sélectionner une tâche';
 			default: return null;
 		}
 	}

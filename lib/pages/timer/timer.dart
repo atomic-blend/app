@@ -1,5 +1,8 @@
 import 'package:animated_toggle_switch/animated_toggle_switch.dart';
+import 'package:app/blocs/tasks/tasks.bloc.dart';
 import 'package:app/components/buttons/primary_button_square.dart';
+import 'package:app/components/buttons/task_item.dart';
+import 'package:app/components/forms/search_bar.dart';
 import 'package:app/components/widgets/elevated_container.dart';
 import 'package:app/entities/tasks/tasks.entity.dart';
 import 'package:app/i18n/strings.g.dart';
@@ -8,6 +11,8 @@ import 'package:app/utils/shortcuts.dart';
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_popup/flutter_popup.dart';
 import 'package:jiffy/jiffy.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 
@@ -33,7 +38,9 @@ class Timer extends StatefulWidget {
 
 class _TimerState extends State<Timer> {
   int mode = 0; // 0 for pomodoro, 1 for stopwatch
-  final double? _progress = 0.0;
+  double? _progress = 0.0;
+  TaskEntity? _task;
+  final TextEditingController _searchController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -54,86 +61,171 @@ class _TimerState extends State<Timer> {
               )
             : null,
       ),
-      body: Column(
-        children: [
-          SizedBox(
-            height: 30,
-            child: AnimatedToggleSwitch<int?>.rolling(
-              current: mode,
-              indicatorSize: Size.fromWidth(getSize(context).width * 0.8 / 2),
-              values: const [0, 1],
-              iconBuilder: (value, foreground) {
-                return Text(context.t.timer.modes.values.elementAt(value!),
-                    style: getTextTheme(context).bodyMedium!.copyWith());
-              },
-              styleBuilder: (value) {
-                return ToggleStyle(
-                  borderColor: Colors.transparent,
-                  indicatorColor: value == mode
-                      ? getTheme(context).surface
-                      : getTheme(context).surfaceContainer,
-                  backgroundColor: getTheme(context).surfaceContainer,
-                );
-              },
-              onChanged: (value) {
-                if (value == null) return;
-                setState(() {
-                  mode = value;
-                });
-              },
+      body: BlocBuilder<TasksBloc, TasksState>(builder: (context, taskState) {
+        return Column(
+          children: [
+            SizedBox(
+              height: 30,
+              child: AnimatedToggleSwitch<int?>.rolling(
+                current: mode,
+                indicatorSize: Size.fromWidth(getSize(context).width * 0.8 / 2),
+                values: const [0, 1],
+                iconBuilder: (value, foreground) {
+                  return Text(context.t.timer.modes.values.elementAt(value!),
+                      style: getTextTheme(context).bodyMedium!.copyWith());
+                },
+                styleBuilder: (value) {
+                  return ToggleStyle(
+                    borderColor: Colors.transparent,
+                    indicatorColor: value == mode
+                        ? getTheme(context).surface
+                        : getTheme(context).surfaceContainer,
+                    backgroundColor: getTheme(context).surfaceContainer,
+                  );
+                },
+                onChanged: (value) {
+                  if (value == null) return;
+                  setState(() {
+                    mode = value;
+                  });
+                },
+              ),
             ),
-          ),
-          SizedBox(
-            height: getSize(context).height * 0.4,
-            width: getSize(context).width * 0.8,
-            child: Center(
-              child: CircularPercentIndicator(
-                radius: 150.0,
-                lineWidth: 12.0,
-                animation: true,
-                animateFromLastPercent: true,
-                circularStrokeCap: CircularStrokeCap.round,
-                backgroundColor: getTheme(context).surfaceContainer.darken(10),
-                percent: _progress ?? 0.0,
-                center: Text(
-                  context.t.timer.no_timer_running,
-                  style: getTextTheme(context).titleSmall!.copyWith(
-                        fontWeight: FontWeight.bold,
+            SizedBox(
+              height: $constants.insets.lg,
+            ),
+            if (taskState.tasks != null && taskState.tasks!.isNotEmpty)
+              CustomPopup(
+                backgroundColor: getTheme(context).surface,
+                content: Container(
+                  height: getSize(context).height * 0.4,
+                  width: getSize(context).width * 0.8,
+                  color: getTheme(context).surface,
+                  padding: EdgeInsets.all($constants.insets.xxs),
+                  child: ListView(
+                    padding: EdgeInsets.zero,
+                    children: [
+                      ABSearchBar(
+                        controller: _searchController,
+                        onSubmitted: (value) {},
                       ),
+                      SizedBox(
+                        height: $constants.insets.xs,
+                      ),
+                      ...?taskState.tasks
+                          ?.where((task) => task.completed != true)
+                          .map((task) => Padding(
+                                padding: EdgeInsets.only(
+                                  bottom: $constants.insets.xs,
+                                ),
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    color: getTheme(context).surfaceContainer,
+                                    borderRadius: BorderRadius.circular(
+                                        $constants.corners.md),
+                                  ),
+                                  padding: EdgeInsets.all($constants.insets.xs),
+                                  child: TaskItem(
+                                    task: task,
+                                    checkable: false,
+                                    onTap: () {
+                                      setState(() {
+                                        _task = task;
+                                      });
+                                      Navigator.pop(context, task);
+                                    },
+                                  ),
+                                ),
+                              ))
+                    ],
+                  ),
                 ),
-                progressColor: getTheme(context).primary,
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    if (_task == null)
+                      Text(
+                        context.t.timer.select_task,
+                        style: getTextTheme(context).bodyLarge!.copyWith(),
+                      )
+                    else
+                      Text(
+                        _task!.title,
+                        style: getTextTheme(context).bodyLarge!.copyWith(
+                              fontWeight: FontWeight.bold,
+                            ),
+                      ),
+                    SizedBox(
+                      width: $constants.insets.xxs,
+                    ),
+                    const Icon(
+                      CupertinoIcons.chevron_right,
+                      size: 16,
+                    )
+                  ],
+                ),
+              ),
+            SizedBox(
+              height: $constants.insets.lg,
+            ),
+            SizedBox(
+              width: getSize(context).width * 0.8,
+              child: Center(
+                child: CircularPercentIndicator(
+                  radius: 150.0,
+                  lineWidth: 12.0,
+                  animation: true,
+                  animateFromLastPercent: true,
+                  circularStrokeCap: CircularStrokeCap.round,
+                  backgroundColor:
+                      getTheme(context).surfaceContainer.darken(10),
+                  percent: _progress ?? 0.0,
+                  center: Text(
+                    context.t.timer.no_timer_running,
+                    style: getTextTheme(context).titleSmall!.copyWith(
+                          fontWeight: FontWeight.bold,
+                        ),
+                  ),
+                  progressColor: getTheme(context).primary,
+                ),
               ),
             ),
-          ),
-          const Spacer(),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              ElevatedContainer(
-                padding: EdgeInsets.all($constants.insets.lg),
-                borderRadius: $constants.corners.full,
-                child: const Icon(
-                  CupertinoIcons.arrow_counterclockwise,
-                  size: 40,
+            const Spacer(),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                ElevatedContainer(
+                  padding: EdgeInsets.all($constants.insets.lg),
+                  borderRadius: $constants.corners.full,
+                  child: const Icon(
+                    CupertinoIcons.arrow_counterclockwise,
+                    size: 40,
+                  ),
+                  onTap: () {
+                    // Reset the timer logic here
+                    setState(() {
+                      _progress = 0.0; // Reset progress
+                      _task = null; // Reset task selection
+                    });
+                  },
                 ),
-                onTap: () {},
-              ),
-              ElevatedContainer(
-                padding: EdgeInsets.all($constants.insets.lg),
-                borderRadius: $constants.corners.full,
-                child: const Icon(
-                  CupertinoIcons.play_fill,
-                  size: 40,
+                ElevatedContainer(
+                  padding: EdgeInsets.all($constants.insets.lg),
+                  borderRadius: $constants.corners.full,
+                  child: const Icon(
+                    CupertinoIcons.play_fill,
+                    size: 40,
+                  ),
+                  onTap: () {},
                 ),
-                onTap: () {},
-              ),
-            ],
-          ),
-          SizedBox(
-            height: getSize(context).height * 0.15,
-          )
-        ],
-      ),
+              ],
+            ),
+            SizedBox(
+              height: getSize(context).height * 0.15,
+            )
+          ],
+        );
+      }),
     );
   }
 }

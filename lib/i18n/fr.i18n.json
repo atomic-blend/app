@@ -734,6 +734,7 @@
     "modes(map)": {
       "pomodoro": "Pomodoro",
       "stopwatch": "Chronomètre"
-    }
+    },
+    "select_task": "Sélectionner une tâche"
   }
 }

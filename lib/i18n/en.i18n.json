@@ -737,6 +737,7 @@
     "modes(map)": {
       "pomodoro": "Pomodoro",
       "stopwatch": "Stopwatch"
-    }
+    },
+    "select_task": "Select a task"
   }
 }
