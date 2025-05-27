@@ -733,6 +733,10 @@
     "duration": "Duration",
     "elapsed_time": "Elapsed time",
     "remaining_time": "Remaining time",
-    "no_timer_running": "No timer running"
+    "no_timer_running": "No timer running",
+    "modes(map)": {
+      "pomodoro": "Pomodoro",
+      "stopwatch": "Stopwatch"
+    }
   }
 }

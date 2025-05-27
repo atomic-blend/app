@@ -767,6 +767,10 @@ class _TranslationsTimerFr implements TranslationsTimerEn {
 	@override String get elapsed_time => 'Temps écoulé';
 	@override String get remaining_time => 'Temps restant';
 	@override String get no_timer_running => 'Aucun minuteur en cours';
+	@override Map<String, String> get modes => {
+		'pomodoro': 'Pomodoro',
+		'stopwatch': 'Chronomètre',
+	};
 }
 
 // Path: auth.not_logged_in
@@ -1863,6 +1867,8 @@ extension on TranslationsFr {
 			case 'timer.elapsed_time': return 'Temps écoulé';
 			case 'timer.remaining_time': return 'Temps restant';
 			case 'timer.no_timer_running': return 'Aucun minuteur en cours';
+			case 'timer.modes.pomodoro': return 'Pomodoro';
+			case 'timer.modes.stopwatch': return 'Chronomètre';
 			default: return null;
 		}
 	}

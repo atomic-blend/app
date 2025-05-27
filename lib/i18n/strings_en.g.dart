@@ -773,6 +773,10 @@ class TranslationsTimerEn {
 	String get elapsed_time => 'Elapsed time';
 	String get remaining_time => 'Remaining time';
 	String get no_timer_running => 'No timer running';
+	Map<String, String> get modes => {
+		'pomodoro': 'Pomodoro',
+		'stopwatch': 'Stopwatch',
+	};
 }
 
 // Path: auth.not_logged_in
@@ -1872,6 +1876,8 @@ extension on Translations {
 			case 'timer.elapsed_time': return 'Elapsed time';
 			case 'timer.remaining_time': return 'Remaining time';
 			case 'timer.no_timer_running': return 'No timer running';
+			case 'timer.modes.pomodoro': return 'Pomodoro';
+			case 'timer.modes.stopwatch': return 'Stopwatch';
 			default: return null;
 		}
 	}

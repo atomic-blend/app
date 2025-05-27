@@ -730,6 +730,10 @@
     "duration": "Durée",
     "elapsed_time": "Temps écoulé",
     "remaining_time": "Temps restant",
-    "no_timer_running": "Aucun minuteur en cours"
+    "no_timer_running": "Aucun minuteur en cours",
+    "modes(map)": {
+      "pomodoro": "Pomodoro",
+      "stopwatch": "Chronomètre"
+    }
   }
 }
