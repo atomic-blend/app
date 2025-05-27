@@ -2,7 +2,6 @@ import 'package:app/components/buttons/icon_text_button.dart';
 import 'package:app/components/widgets/elevated_container.dart';
 import 'package:app/i18n/strings.g.dart';
 import 'package:app/pages/account/account.dart';
-import 'package:app/pages/eiseinhower/eisenhower.dart';
 import 'package:app/pages/settings/settings.dart';
 import 'package:app/utils/constants.dart';
 import 'package:app/utils/shortcuts.dart';

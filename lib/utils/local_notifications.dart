@@ -30,11 +30,13 @@ class LocalNotificationUtil {
 
   // static method to schedule a pomodoro notification
   static Future<void> schedulePomodoroNotification(
-      FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin,
       String androidChannelId,
       String androidChannelName,
       int id,
       DateTime scheduledTime) async {
+    final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+        FlutterLocalNotificationsPlugin();
+
     final NotificationDetails notifDetails =
         getNotifDetails(androidChannelId, androidChannelName);
 
@@ -47,4 +49,11 @@ class LocalNotificationUtil {
       androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
     );
   }
+
+  static Future<void> cancelNotification(int id) async {
+    final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+        FlutterLocalNotificationsPlugin();
+    await flutterLocalNotificationsPlugin.cancel(id);
+  }
 }
+

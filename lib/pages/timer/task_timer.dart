@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:animated_toggle_switch/animated_toggle_switch.dart';
 import 'package:app/blocs/app/app.bloc.dart';
 import 'package:app/blocs/tasks/tasks.bloc.dart';
-import 'package:app/components/buttons/primary_button_square.dart';
 import 'package:app/components/buttons/task_item.dart';
 import 'package:app/components/forms/search_bar.dart';
 import 'package:app/components/widgets/elevated_container.dart';
@@ -17,22 +16,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_popup/flutter_popup.dart';
-import 'package:jiffy/jiffy.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
-
-// DONE: add a switch between pomodoro and stopwatch
-// DONE: add a task selector to choose the task to associate with
-// DONE: do stopwatch mode
-// DONE: add a duration selector to choose the pomo duration and store the duration in app cubit state
-// TODO: do the pomodoro mode
-// TODO: when the notification for pomodoro happen on the foreground, show an ui with the option to start a new pomodoro or reset the timer
-// TODO: add a selector to change the pomodoro duration or break duration
-// TODO: when pomo is completed on foreground, call pomodoroComplete() from TimerUtils
-// TODO: in TimerUtils, send the time entry to the backend when the pomodoro is completed in pomodoroComplete()
-// TODO: in the overview tab, show the pomo status and the time spent on the current pomo if there's one running
-// TODO: implement the background pomo notification handler when a notification is tapped from outside the app (pass params to determine the notification tapped + call pomodoroComplete() from TimerUtils)
-// TODO: when the app starts, check if there's a pomo running and restore the timer.periodic with the pomo duration and check if the pomo is completed or not at each tick to run the pomodoroComplete() method
-// TODO: test on desktop
 
 class TaskTimer extends StatefulWidget {
   final TaskEntity? task;
@@ -44,7 +28,7 @@ class TaskTimer extends StatefulWidget {
 
 class _TaskTimerState extends State<TaskTimer> {
   int mode = 0; // 0 for pomodoro, 1 for stopwatch
-  double? _progress = 0.0;
+  double? _progress = 1.0;
   TaskEntity? _task;
   final TextEditingController _searchController = TextEditingController();
 
@@ -106,6 +90,9 @@ class _TaskTimerState extends State<TaskTimer> {
                     if (value == null) return;
                     setState(() {
                       mode = value;
+                      _progress = mode == 0 ? 1.0 : 0.0;
+                      _startTime = null; // Reset start time
+                      _timer = null; // Reset timer
                     });
                   },
                 ),
@@ -201,10 +188,10 @@ class _TaskTimerState extends State<TaskTimer> {
                         getTheme(context).surfaceContainer.darken(10),
                     percent: _progress ?? 0.0,
                     center: Text(
-                      _timer == null
-                          ? context.t.timer.no_timer_running
-                          : _durationToHMS(_getStartDateDiffFromNow()),
-                      style: getTextTheme(context).titleSmall!.copyWith(
+                      _durationToHMS(mode == 1
+                          ? _getStartDateDiffFromNow()
+                          : _getPomoRemainingTime()),
+                      style: getTextTheme(context).titleLarge!.copyWith(
                             fontWeight: FontWeight.bold,
                           ),
                     ),
@@ -267,21 +254,12 @@ class _TaskTimerState extends State<TaskTimer> {
                     padding: EdgeInsets.all($constants.insets.lg),
                     borderRadius: $constants.corners.full,
                     child: Icon(
-                      _timer != null && _timer!.isActive
+                      _timer != null && (_timer?.isActive ?? true)
                           ? CupertinoIcons.square_fill
                           : CupertinoIcons.arrow_counterclockwise,
                       size: 40,
                     ),
                     onTap: () {
-                      if (_timer == null || !_timer!.isActive) {
-                        setState(() {
-                          _progress = 0.0; // Reset progress
-                          _task = null; // Reset task selection
-                          _startTime = null; // Reset start time
-                        });
-                      } else {
-                        _timer?.cancel();
-                      }
                     },
                   ),
                   ElevatedContainer(
@@ -299,17 +277,14 @@ class _TaskTimerState extends State<TaskTimer> {
                         );
                         return;
                       }
-                      setState(() {
-                        _startTime = DateTime.now();
-                      });
-                      if (mode == 1) {
-                        _timer =
-                            Timer.periodic(const Duration(seconds: 1), (timer) {
-                          setState(() {
-                            _progress = ((_progress ?? 0.0) + 0.01) % 1.0;
-                          });
+                      if (_timer == null) {
+                        setState(() {
+                          _startTime = DateTime.now();
                         });
-                      } else {}
+                      }
+                      if (mode == 1) {
+                      } else { 
+                      }
                     },
                   ),
                 ],
@@ -329,11 +304,19 @@ class _TaskTimerState extends State<TaskTimer> {
     return DateTime.now().difference(_startTime!);
   }
 
+  _getPomoRemainingTime() {
+    if (_startTime == null) {
+      return _pomodoroDuration ?? const Duration(minutes: 20);
+    }
+    final elapsed = _getStartDateDiffFromNow();
+    return _pomodoroDuration! - elapsed;
+  }
+
   _durationToHMS(Duration duration) {
     String twoDigits(int n) => n.toString().padLeft(2, '0');
     String twoDigitMinutes = twoDigits(duration.inMinutes.remainder(60));
     String twoDigitSeconds = twoDigits(duration.inSeconds.remainder(60));
-    return '${twoDigits(duration.inHours)}:$twoDigitMinutes:$twoDigitSeconds';
+    return '$twoDigitMinutes:$twoDigitSeconds';
   }
 
   _updatePomoDuration(Duration value) {
