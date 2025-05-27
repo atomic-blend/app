@@ -772,6 +772,7 @@ class _TranslationsTimerFr implements TranslationsTimerEn {
 		'stopwatch': 'Chronomètre',
 	};
 	@override String get select_task => 'Sélectionner une tâche';
+	@override String get select_task_to_start_timer => 'Sélectionner une tâche pour démarrer le minuteur';
 }
 
 // Path: auth.not_logged_in
@@ -1871,6 +1872,7 @@ extension on TranslationsFr {
 			case 'timer.modes.pomodoro': return 'Pomodoro';
 			case 'timer.modes.stopwatch': return 'Chronomètre';
 			case 'timer.select_task': return 'Sélectionner une tâche';
+			case 'timer.select_task_to_start_timer': return 'Sélectionner une tâche pour démarrer le minuteur';
 			default: return null;
 		}
 	}

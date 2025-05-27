@@ -778,6 +778,7 @@ class TranslationsTimerEn {
 		'stopwatch': 'Stopwatch',
 	};
 	String get select_task => 'Select a task';
+	String get select_task_to_start_timer => 'Select a task to start the timer';
 }
 
 // Path: auth.not_logged_in
@@ -1880,6 +1881,7 @@ extension on Translations {
 			case 'timer.modes.pomodoro': return 'Pomodoro';
 			case 'timer.modes.stopwatch': return 'Stopwatch';
 			case 'timer.select_task': return 'Select a task';
+			case 'timer.select_task_to_start_timer': return 'Select a task to start the timer';
 			default: return null;
 		}
 	}

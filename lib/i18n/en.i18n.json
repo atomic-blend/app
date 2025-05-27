@@ -738,6 +738,7 @@
       "pomodoro": "Pomodoro",
       "stopwatch": "Stopwatch"
     },
-    "select_task": "Select a task"
+    "select_task": "Select a task",
+    "select_task_to_start_timer": "Select a task to start the timer"
   }
 }

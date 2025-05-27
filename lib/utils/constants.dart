@@ -16,7 +16,7 @@ import 'package:app/pages/tasks/filtered_view.dart';
 import 'package:app/pages/tasks/folders.dart';
 import 'package:app/pages/tasks/overview.dart';
 import 'package:app/pages/tasks/tags.dart';
-import 'package:app/pages/timer/timer.dart';
+import 'package:app/pages/timer/task_timer.dart';
 import 'package:app/utils/exntensions/date_time_extension.dart';
 import 'package:app/utils/shortcuts.dart';
 import 'package:flex_color_scheme/flex_color_scheme.dart';
@@ -552,7 +552,7 @@ class Navigation {
                   child: SizedBox(
                     width: getSize(context).width * 0.5,
                     height: getSize(context).height * 0.5,
-                    child: const Timer(),
+                    child: const TaskTimer(),
                   ),
                 ),
               );
@@ -567,12 +567,12 @@ class Navigation {
                         topLeft: Radius.circular($constants.corners.lg),
                         topRight: Radius.circular($constants.corners.lg),
                       ),
-                      child: const Timer()),
+                      child: const TaskTimer()),
                 ),
               );
             }
           },
-          body: const Timer(),
+          body: const TaskTimer(),
           appBar: AppBar(
             key: const Key("timer"),
             backgroundColor: getTheme(context).surface,

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:animated_toggle_switch/animated_toggle_switch.dart';
 import 'package:app/blocs/tasks/tasks.bloc.dart';
 import 'package:app/components/buttons/primary_button_square.dart';
@@ -8,6 +10,7 @@ import 'package:app/entities/tasks/tasks.entity.dart';
 import 'package:app/i18n/strings.g.dart';
 import 'package:app/utils/constants.dart';
 import 'package:app/utils/shortcuts.dart';
+import 'package:app/utils/toast_helper.dart';
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +20,9 @@ import 'package:jiffy/jiffy.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 
 // DONE: add a switch between pomodoro and stopwatch
-// TODO: add a task selector to choose the task to associate with
+// DONE: add a task selector to choose the task to associate with
+// DONE: do stopwatch mode
+// TODO: do the pomodoro mode
 // TODO: when the notification for pomodoro happen on the foreground, show an ui with the option to start a new pomodoro or reset the timer
 // TODO: add a selector to change the pomodoro duration or break duration
 // TODO: when pomo is completed on foreground, call pomodoroComplete() from TimerUtils
@@ -28,19 +33,22 @@ import 'package:percent_indicator/circular_percent_indicator.dart';
 // TODO: add a duration selector to choose the pomo duration and store the duration in app cubit state
 // TODO: test on desktop
 
-class Timer extends StatefulWidget {
+class TaskTimer extends StatefulWidget {
   final TaskEntity? task;
-  const Timer({super.key, this.task});
+  const TaskTimer({super.key, this.task});
 
   @override
-  State<Timer> createState() => _TimerState();
+  State<TaskTimer> createState() => _TaskTimerState();
 }
 
-class _TimerState extends State<Timer> {
+class _TaskTimerState extends State<TaskTimer> {
   int mode = 0; // 0 for pomodoro, 1 for stopwatch
   double? _progress = 0.0;
   TaskEntity? _task;
   final TextEditingController _searchController = TextEditingController();
+
+  DateTime? _startTime;
+  Timer? _timer;
 
   @override
   Widget build(BuildContext context) {
@@ -181,7 +189,9 @@ class _TimerState extends State<Timer> {
                       getTheme(context).surfaceContainer.darken(10),
                   percent: _progress ?? 0.0,
                   center: Text(
-                    context.t.timer.no_timer_running,
+                    _timer == null
+                        ? context.t.timer.no_timer_running
+                        : _durationToHMS(_getStartDateDiffFromNow()),
                     style: getTextTheme(context).titleSmall!.copyWith(
                           fontWeight: FontWeight.bold,
                         ),
@@ -197,16 +207,23 @@ class _TimerState extends State<Timer> {
                 ElevatedContainer(
                   padding: EdgeInsets.all($constants.insets.lg),
                   borderRadius: $constants.corners.full,
-                  child: const Icon(
-                    CupertinoIcons.arrow_counterclockwise,
+                  child: Icon(
+                    _timer != null && _timer!.isActive
+                        ? CupertinoIcons.square_fill
+                        : CupertinoIcons.arrow_counterclockwise,
                     size: 40,
                   ),
                   onTap: () {
                     // Reset the timer logic here
-                    setState(() {
-                      _progress = 0.0; // Reset progress
-                      _task = null; // Reset task selection
-                    });
+                    if (_timer == null || !_timer!.isActive) {
+                      setState(() {
+                        _progress = 0.0; // Reset progress
+                        _task = null; // Reset task selection
+                        _startTime = null; // Reset start time
+                      });
+                    } else {
+                      _timer?.cancel();
+                    }
                   },
                 ),
                 ElevatedContainer(
@@ -216,7 +233,26 @@ class _TimerState extends State<Timer> {
                     CupertinoIcons.play_fill,
                     size: 40,
                   ),
-                  onTap: () {},
+                  onTap: () {
+                    if (_task == null) {
+                      ToastHelper.showError(
+                        context: context,
+                        title: context.t.timer.select_task_to_start_timer,
+                      );
+                      return;
+                    }
+                    setState(() {
+                      _startTime = DateTime.now();
+                    });
+                    if (mode == 1) {
+                      _timer =
+                          Timer.periodic(const Duration(seconds: 1), (timer) {
+                        setState(() {
+                          _progress = ((_progress ?? 0.0) + 0.01) % 1.0;
+                        });
+                      });
+                    }
+                  },
                 ),
               ],
             ),
@@ -227,5 +263,17 @@ class _TimerState extends State<Timer> {
         );
       }),
     );
+  }
+
+  _getStartDateDiffFromNow() {
+    if (_startTime == null) return const Duration(minutes: 0);
+    return DateTime.now().difference(_startTime!);
+  }
+
+  _durationToHMS(Duration duration) {
+    String twoDigits(int n) => n.toString().padLeft(2, '0');
+    String twoDigitMinutes = twoDigits(duration.inMinutes.remainder(60));
+    String twoDigitSeconds = twoDigits(duration.inSeconds.remainder(60));
+    return '${twoDigits(duration.inHours)}:$twoDigitMinutes:$twoDigitSeconds';
   }
 }

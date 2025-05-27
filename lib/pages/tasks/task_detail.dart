@@ -17,7 +17,7 @@ import 'package:app/pages/tasks/add_time_entry.dart';
 import 'package:app/pages/tasks/assign_folder.dart';
 import 'package:app/pages/tasks/assign_tag_modal.dart';
 import 'package:app/pages/tasks/task_time_entry_log.dart' show TaskTimeEntryLog;
-import 'package:app/pages/timer/timer.dart';
+import 'package:app/pages/timer/task_timer.dart';
 import 'package:app/utils/constants.dart';
 import 'package:app/utils/exntensions/date_time_extension.dart';
 import 'package:app/utils/shortcuts.dart';
@@ -617,7 +617,7 @@ class _TaskDetailState extends State<TaskDetail> {
       showDialog(
           context: context,
           builder: (context) => Dialog(
-                child: Timer(
+                child: TaskTimer(
                   task: widget.task,
                 ),
               ));
@@ -630,7 +630,7 @@ class _TaskDetailState extends State<TaskDetail> {
           width: double.infinity,
           child: ClipRRect(
             borderRadius: BorderRadius.circular($constants.corners.xl),
-            child: Timer(
+            child: TaskTimer(
               task: widget.task,
             ),
           ),

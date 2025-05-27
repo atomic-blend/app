@@ -735,6 +735,7 @@
       "pomodoro": "Pomodoro",
       "stopwatch": "Chronomètre"
     },
-    "select_task": "Sélectionner une tâche"
+    "select_task": "Sélectionner une tâche",
+    "select_task_to_start_timer": "Sélectionner une tâche pour démarrer le minuteur"
   }
 }
