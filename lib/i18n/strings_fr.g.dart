@@ -279,6 +279,11 @@ class _TranslationsTimesFr implements TranslationsTimesEn {
 	@override String get this_year => 'Cette année';
 	@override String get last_year => 'L\'année dernière';
 	@override String get all_time => 'Tout le temps';
+	@override String minutes({required num n, required Object nb}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('fr'))(n,
+		zero: '${nb} minutes',
+		one: '${nb} minute',
+		other: '${nb} minutes',
+	);
 }
 
 // Path: days_before.none
@@ -1589,6 +1594,11 @@ extension on TranslationsFr {
 			case 'times.this_year': return 'Cette année';
 			case 'times.last_year': return 'L\'année dernière';
 			case 'times.all_time': return 'Tout le temps';
+			case 'times.minutes': return ({required num n, required Object nb}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('fr'))(n,
+				zero: '${nb} minutes',
+				one: '${nb} minute',
+				other: '${nb} minutes',
+			);
 			case 'days_before.none.value': return '0';
 			case 'days_before.none.label': return 'Aucun';
 			case 'days_before.same_day.value': return '0';

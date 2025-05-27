@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:animated_toggle_switch/animated_toggle_switch.dart';
+import 'package:app/blocs/app/app.bloc.dart';
 import 'package:app/blocs/tasks/tasks.bloc.dart';
 import 'package:app/components/buttons/primary_button_square.dart';
 import 'package:app/components/buttons/task_item.dart';
@@ -22,6 +23,7 @@ import 'package:percent_indicator/circular_percent_indicator.dart';
 // DONE: add a switch between pomodoro and stopwatch
 // DONE: add a task selector to choose the task to associate with
 // DONE: do stopwatch mode
+// DONE: add a duration selector to choose the pomo duration and store the duration in app cubit state
 // TODO: do the pomodoro mode
 // TODO: when the notification for pomodoro happen on the foreground, show an ui with the option to start a new pomodoro or reset the timer
 // TODO: add a selector to change the pomodoro duration or break duration
@@ -30,7 +32,6 @@ import 'package:percent_indicator/circular_percent_indicator.dart';
 // TODO: in the overview tab, show the pomo status and the time spent on the current pomo if there's one running
 // TODO: implement the background pomo notification handler when a notification is tapped from outside the app (pass params to determine the notification tapped + call pomodoroComplete() from TimerUtils)
 // TODO: when the app starts, check if there's a pomo running and restore the timer.periodic with the pomo duration and check if the pomo is completed or not at each tick to run the pomodoroComplete() method
-// TODO: add a duration selector to choose the pomo duration and store the duration in app cubit state
 // TODO: test on desktop
 
 class TaskTimer extends StatefulWidget {
@@ -49,6 +50,7 @@ class _TaskTimerState extends State<TaskTimer> {
 
   DateTime? _startTime;
   Timer? _timer;
+  Duration? _pomodoroDuration;
 
   @override
   Widget build(BuildContext context) {
@@ -69,198 +71,255 @@ class _TaskTimerState extends State<TaskTimer> {
               )
             : null,
       ),
-      body: BlocBuilder<TasksBloc, TasksState>(builder: (context, taskState) {
-        return Column(
-          children: [
-            SizedBox(
-              height: 30,
-              child: AnimatedToggleSwitch<int?>.rolling(
-                current: mode,
-                indicatorSize: Size.fromWidth(getSize(context).width * 0.8 / 2),
-                values: const [0, 1],
-                iconBuilder: (value, foreground) {
-                  return Text(context.t.timer.modes.values.elementAt(value!),
-                      style: getTextTheme(context).bodyMedium!.copyWith());
-                },
-                styleBuilder: (value) {
-                  return ToggleStyle(
-                    borderColor: Colors.transparent,
-                    indicatorColor: value == mode
-                        ? getTheme(context).surface
-                        : getTheme(context).surfaceContainer,
-                    backgroundColor: getTheme(context).surfaceContainer,
-                  );
-                },
-                onChanged: (value) {
-                  if (value == null) return;
-                  setState(() {
-                    mode = value;
-                  });
-                },
+      body: BlocBuilder<AppCubit, AppState>(builder: (context, appState) {
+        if (appState.pomodoroDuration == null) {
+          _pomodoroDuration = const Duration(minutes: 20);
+        }
+        if (appState.pomodoroDuration != null) {
+          _pomodoroDuration = Duration(minutes: appState.pomodoroDuration!);
+        }
+        return BlocBuilder<TasksBloc, TasksState>(
+            builder: (context, taskState) {
+          return Column(
+            children: [
+              SizedBox(
+                height: 30,
+                child: AnimatedToggleSwitch<int?>.rolling(
+                  current: mode,
+                  indicatorSize:
+                      Size.fromWidth(getSize(context).width * 0.8 / 2),
+                  values: const [0, 1],
+                  iconBuilder: (value, foreground) {
+                    return Text(context.t.timer.modes.values.elementAt(value!),
+                        style: getTextTheme(context).bodyMedium!.copyWith());
+                  },
+                  styleBuilder: (value) {
+                    return ToggleStyle(
+                      borderColor: Colors.transparent,
+                      indicatorColor: value == mode
+                          ? getTheme(context).surface
+                          : getTheme(context).surfaceContainer,
+                      backgroundColor: getTheme(context).surfaceContainer,
+                    );
+                  },
+                  onChanged: (value) {
+                    if (value == null) return;
+                    setState(() {
+                      mode = value;
+                    });
+                  },
+                ),
               ),
-            ),
-            SizedBox(
-              height: $constants.insets.lg,
-            ),
-            if (taskState.tasks != null && taskState.tasks!.isNotEmpty)
-              CustomPopup(
-                backgroundColor: getTheme(context).surface,
-                content: Container(
-                  height: getSize(context).height * 0.4,
-                  width: getSize(context).width * 0.8,
-                  color: getTheme(context).surface,
-                  padding: EdgeInsets.all($constants.insets.xxs),
-                  child: ListView(
-                    padding: EdgeInsets.zero,
+              SizedBox(
+                height: $constants.insets.lg,
+              ),
+              if (taskState.tasks != null && taskState.tasks!.isNotEmpty)
+                CustomPopup(
+                  backgroundColor: getTheme(context).surface,
+                  content: Container(
+                    height: getSize(context).height * 0.4,
+                    width: getSize(context).width * 0.8,
+                    color: getTheme(context).surface,
+                    padding: EdgeInsets.all($constants.insets.xxs),
+                    child: ListView(
+                      padding: EdgeInsets.zero,
+                      children: [
+                        ABSearchBar(
+                          controller: _searchController,
+                          onSubmitted: (value) {},
+                        ),
+                        SizedBox(
+                          height: $constants.insets.xs,
+                        ),
+                        ...?taskState.tasks
+                            ?.where((task) => task.completed != true)
+                            .map((task) => Padding(
+                                  padding: EdgeInsets.only(
+                                    bottom: $constants.insets.xs,
+                                  ),
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      color: getTheme(context).surfaceContainer,
+                                      borderRadius: BorderRadius.circular(
+                                          $constants.corners.md),
+                                    ),
+                                    padding:
+                                        EdgeInsets.all($constants.insets.xs),
+                                    child: TaskItem(
+                                      task: task,
+                                      checkable: false,
+                                      onTap: () {
+                                        setState(() {
+                                          _task = task;
+                                        });
+                                        Navigator.pop(context, task);
+                                      },
+                                    ),
+                                  ),
+                                ))
+                      ],
+                    ),
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
                     children: [
-                      ABSearchBar(
-                        controller: _searchController,
-                        onSubmitted: (value) {},
-                      ),
+                      if (_task == null)
+                        Text(
+                          context.t.timer.select_task,
+                          style: getTextTheme(context).bodyLarge!.copyWith(),
+                        )
+                      else
+                        Text(
+                          _task!.title,
+                          style: getTextTheme(context).bodyLarge!.copyWith(
+                                fontWeight: FontWeight.bold,
+                              ),
+                        ),
                       SizedBox(
-                        height: $constants.insets.xs,
+                        width: $constants.insets.xxs,
                       ),
-                      ...?taskState.tasks
-                          ?.where((task) => task.completed != true)
-                          .map((task) => Padding(
-                                padding: EdgeInsets.only(
-                                  bottom: $constants.insets.xs,
-                                ),
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    color: getTheme(context).surfaceContainer,
-                                    borderRadius: BorderRadius.circular(
-                                        $constants.corners.md),
-                                  ),
-                                  padding: EdgeInsets.all($constants.insets.xs),
-                                  child: TaskItem(
-                                    task: task,
-                                    checkable: false,
-                                    onTap: () {
-                                      setState(() {
-                                        _task = task;
-                                      });
-                                      Navigator.pop(context, task);
-                                    },
-                                  ),
-                                ),
-                              ))
+                      const Icon(
+                        CupertinoIcons.chevron_right,
+                        size: 16,
+                      )
                     ],
                   ),
                 ),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    if (_task == null)
+              SizedBox(
+                height: $constants.insets.lg,
+              ),
+              SizedBox(
+                width: getSize(context).width * 0.8,
+                child: Center(
+                  child: CircularPercentIndicator(
+                    radius: 150.0,
+                    lineWidth: 12.0,
+                    animation: true,
+                    animateFromLastPercent: true,
+                    circularStrokeCap: CircularStrokeCap.round,
+                    backgroundColor:
+                        getTheme(context).surfaceContainer.darken(10),
+                    percent: _progress ?? 0.0,
+                    center: Text(
+                      _timer == null
+                          ? context.t.timer.no_timer_running
+                          : _durationToHMS(_getStartDateDiffFromNow()),
+                      style: getTextTheme(context).titleSmall!.copyWith(
+                            fontWeight: FontWeight.bold,
+                          ),
+                    ),
+                    progressColor: getTheme(context).primary,
+                  ),
+                ),
+              ),
+              const Spacer(),
+              if (mode == 0) ...[
+                SizedBox(
+                  height: $constants.insets.md,
+                ),
+                CustomPopup(
+                  content: Container(
+                    padding: EdgeInsets.all($constants.insets.xs),
+                    decoration: BoxDecoration(
+                      color: getTheme(context).surfaceContainer,
+                      borderRadius:
+                          BorderRadius.circular($constants.corners.md),
+                    ),
+                    width: getSize(context).width * 0.6,
+                    height: getSize(context).height * 0.2,
+                    child: CupertinoTimerPicker(
+                      mode: CupertinoTimerPickerMode.hm,
+                      initialTimerDuration:
+                          _pomodoroDuration ?? const Duration(minutes: 20),
+                      onTimerDurationChanged: (Duration value) {
+                        _updatePomoDuration(value);
+                      },
+                    ),
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const Icon(
+                        CupertinoIcons.alarm_fill,
+                        size: 20,
+                      ),
+                      SizedBox(
+                        width: $constants.insets.xs,
+                      ),
                       Text(
-                        context.t.timer.select_task,
+                        context.t.times.minutes(
+                          n: _pomodoroDuration!.inMinutes,
+                          nb: _pomodoroDuration!.inMinutes,
+                        ),
                         style: getTextTheme(context).bodyLarge!.copyWith(),
                       )
-                    else
-                      Text(
-                        _task!.title,
-                        style: getTextTheme(context).bodyLarge!.copyWith(
-                              fontWeight: FontWeight.bold,
-                            ),
-                      ),
-                    SizedBox(
-                      width: $constants.insets.xxs,
-                    ),
-                    const Icon(
-                      CupertinoIcons.chevron_right,
-                      size: 16,
-                    )
-                  ],
-                ),
-              ),
-            SizedBox(
-              height: $constants.insets.lg,
-            ),
-            SizedBox(
-              width: getSize(context).width * 0.8,
-              child: Center(
-                child: CircularPercentIndicator(
-                  radius: 150.0,
-                  lineWidth: 12.0,
-                  animation: true,
-                  animateFromLastPercent: true,
-                  circularStrokeCap: CircularStrokeCap.round,
-                  backgroundColor:
-                      getTheme(context).surfaceContainer.darken(10),
-                  percent: _progress ?? 0.0,
-                  center: Text(
-                    _timer == null
-                        ? context.t.timer.no_timer_running
-                        : _durationToHMS(_getStartDateDiffFromNow()),
-                    style: getTextTheme(context).titleSmall!.copyWith(
-                          fontWeight: FontWeight.bold,
-                        ),
+                    ],
                   ),
-                  progressColor: getTheme(context).primary,
                 ),
-              ),
-            ),
-            const Spacer(),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                ElevatedContainer(
-                  padding: EdgeInsets.all($constants.insets.lg),
-                  borderRadius: $constants.corners.full,
-                  child: Icon(
-                    _timer != null && _timer!.isActive
-                        ? CupertinoIcons.square_fill
-                        : CupertinoIcons.arrow_counterclockwise,
-                    size: 40,
-                  ),
-                  onTap: () {
-                    // Reset the timer logic here
-                    if (_timer == null || !_timer!.isActive) {
-                      setState(() {
-                        _progress = 0.0; // Reset progress
-                        _task = null; // Reset task selection
-                        _startTime = null; // Reset start time
-                      });
-                    } else {
-                      _timer?.cancel();
-                    }
-                  },
-                ),
-                ElevatedContainer(
-                  padding: EdgeInsets.all($constants.insets.lg),
-                  borderRadius: $constants.corners.full,
-                  child: const Icon(
-                    CupertinoIcons.play_fill,
-                    size: 40,
-                  ),
-                  onTap: () {
-                    if (_task == null) {
-                      ToastHelper.showError(
-                        context: context,
-                        title: context.t.timer.select_task_to_start_timer,
-                      );
-                      return;
-                    }
-                    setState(() {
-                      _startTime = DateTime.now();
-                    });
-                    if (mode == 1) {
-                      _timer =
-                          Timer.periodic(const Duration(seconds: 1), (timer) {
-                        setState(() {
-                          _progress = ((_progress ?? 0.0) + 0.01) % 1.0;
-                        });
-                      });
-                    }
-                  },
+                SizedBox(
+                  height: $constants.insets.md,
                 ),
               ],
-            ),
-            SizedBox(
-              height: getSize(context).height * 0.15,
-            )
-          ],
-        );
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  ElevatedContainer(
+                    padding: EdgeInsets.all($constants.insets.lg),
+                    borderRadius: $constants.corners.full,
+                    child: Icon(
+                      _timer != null && _timer!.isActive
+                          ? CupertinoIcons.square_fill
+                          : CupertinoIcons.arrow_counterclockwise,
+                      size: 40,
+                    ),
+                    onTap: () {
+                      if (_timer == null || !_timer!.isActive) {
+                        setState(() {
+                          _progress = 0.0; // Reset progress
+                          _task = null; // Reset task selection
+                          _startTime = null; // Reset start time
+                        });
+                      } else {
+                        _timer?.cancel();
+                      }
+                    },
+                  ),
+                  ElevatedContainer(
+                    padding: EdgeInsets.all($constants.insets.lg),
+                    borderRadius: $constants.corners.full,
+                    child: const Icon(
+                      CupertinoIcons.play_fill,
+                      size: 40,
+                    ),
+                    onTap: () {
+                      if (_task == null) {
+                        ToastHelper.showError(
+                          context: context,
+                          title: context.t.timer.select_task_to_start_timer,
+                        );
+                        return;
+                      }
+                      setState(() {
+                        _startTime = DateTime.now();
+                      });
+                      if (mode == 1) {
+                        _timer =
+                            Timer.periodic(const Duration(seconds: 1), (timer) {
+                          setState(() {
+                            _progress = ((_progress ?? 0.0) + 0.01) % 1.0;
+                          });
+                        });
+                      } else {}
+                    },
+                  ),
+                ],
+              ),
+              SizedBox(
+                height: getSize(context).height * 0.1,
+              )
+            ],
+          );
+        });
       }),
     );
   }
@@ -275,5 +334,12 @@ class _TaskTimerState extends State<TaskTimer> {
     String twoDigitMinutes = twoDigits(duration.inMinutes.remainder(60));
     String twoDigitSeconds = twoDigits(duration.inSeconds.remainder(60));
     return '${twoDigits(duration.inHours)}:$twoDigitMinutes:$twoDigitSeconds';
+  }
+
+  _updatePomoDuration(Duration value) {
+    setState(() {
+      _pomodoroDuration = value;
+    });
+    context.read<AppCubit>().changePomodoroDuration(value: value.inMinutes);
   }
 }

@@ -15,6 +15,7 @@ _$AppStateImpl _$$AppStateImplFromJson(Map<String, dynamic> json) =>
           json['warnUserOnMobileInternetAccess'] as bool?,
       isIntroCompleted: json['isIntroCompleted'] as bool?,
       displayHabitsInCalendar: json['displayHabitsInCalendar'] as bool?,
+      pomodoroDuration: (json['pomodoroDuration'] as num?)?.toInt(),
       showcasePageStatus:
           (json['showcasePageStatus'] as Map<String, dynamic>?)?.map(
         (k, e) => MapEntry(k, e as bool),
@@ -29,5 +30,6 @@ Map<String, dynamic> _$$AppStateImplToJson(_$AppStateImpl instance) =>
       'warnUserOnMobileInternetAccess': instance.warnUserOnMobileInternetAccess,
       'isIntroCompleted': instance.isIntroCompleted,
       'displayHabitsInCalendar': instance.displayHabitsInCalendar,
+      'pomodoroDuration': instance.pomodoroDuration,
       'showcasePageStatus': instance.showcasePageStatus,
     };

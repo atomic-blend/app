@@ -379,7 +379,12 @@
     "last_month": "Last month",
     "this_year": "This year",
     "last_year": "Last year",
-    "all_time": "All time"
+    "all_time": "All time",
+    "minutes": {
+      "zero": "${nb} minutes",
+      "one": "${nb} minute",
+      "other": "${nb} minutes"
+    }
   },
   "days_of_week(map)": {
     "monday": "Monday",

@@ -282,6 +282,11 @@ class TranslationsTimesEn {
 	String get this_year => 'This year';
 	String get last_year => 'Last year';
 	String get all_time => 'All time';
+	String minutes({required num n, required Object nb}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n,
+		zero: '${nb} minutes',
+		one: '${nb} minute',
+		other: '${nb} minutes',
+	);
 }
 
 // Path: days_before.none
@@ -1590,6 +1595,11 @@ extension on Translations {
 			case 'times.this_year': return 'This year';
 			case 'times.last_year': return 'Last year';
 			case 'times.all_time': return 'All time';
+			case 'times.minutes': return ({required num n, required Object nb}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n,
+				zero: '${nb} minutes',
+				one: '${nb} minute',
+				other: '${nb} minutes',
+			);
 			case 'days_of_week.monday': return 'Monday';
 			case 'days_of_week.tuesday': return 'Tuesday';
 			case 'days_of_week.wednesday': return 'Wednesday';

@@ -384,7 +384,12 @@
     "last_month": "Le mois dernier",
     "this_year": "Cette année",
     "last_year": "L'année dernière",
-    "all_time": "Tout le temps"
+    "all_time": "Tout le temps",
+    "minutes": {
+      "zero": "${nb} minutes",
+      "one": "${nb} minute",
+      "other": "${nb} minutes"
+    }
   },
   "days_before(map)": {
     "none": {
