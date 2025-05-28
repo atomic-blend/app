@@ -18,6 +18,7 @@ import 'package:app/pages/tasks/assign_folder.dart';
 import 'package:app/pages/tasks/assign_tag_modal.dart';
 import 'package:app/pages/tasks/task_time_entry_log.dart' show TaskTimeEntryLog;
 import 'package:app/pages/timer/task_timer.dart';
+import 'package:app/pages/timer/timer_utils.dart';
 import 'package:app/utils/constants.dart';
 import 'package:app/utils/exntensions/date_time_extension.dart';
 import 'package:app/utils/shortcuts.dart';
@@ -544,7 +545,7 @@ class _TaskDetailState extends State<TaskDetail> {
                             title: context.t.tasks.timer,
                             icon: CupertinoIcons.stopwatch,
                             onTap: () {
-                              _showTimerModal(context);
+                              _showTimerModal(context, TimerMode.stopwatch);
                             }),
                       ),
                       StaggeredGridTile.count(
@@ -555,7 +556,7 @@ class _TaskDetailState extends State<TaskDetail> {
                             title: context.t.tasks.pomodoro,
                             icon: CupertinoIcons.timer,
                             onTap: () {
-                              _showTimerModal(context);
+                              _showTimerModal(context, TimerMode.pomodoro);
                             }),
                       )
                     ]),
@@ -611,13 +612,14 @@ class _TaskDetailState extends State<TaskDetail> {
     context.read<TasksBloc>().add(EditTask(widget.task));
   }
 
-  _showTimerModal(BuildContext context) {
+  _showTimerModal(BuildContext context, TimerMode mode) {
     if (isDesktop(context)) {
       showDialog(
           context: context,
           builder: (context) => Dialog(
                 child: TaskTimer(
                   task: widget.task,
+                  mode: mode,
                 ),
               ));
     } else {
@@ -631,6 +633,7 @@ class _TaskDetailState extends State<TaskDetail> {
             borderRadius: BorderRadius.circular($constants.corners.xl),
             child: TaskTimer(
               task: widget.task,
+              mode: mode,
             ),
           ),
         ),

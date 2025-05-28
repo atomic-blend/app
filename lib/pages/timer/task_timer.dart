@@ -20,8 +20,9 @@ import 'package:flutter_popup/flutter_popup.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 
 class TaskTimer extends StatefulWidget {
+  final TimerMode? mode;
   final TaskEntity? task;
-  const TaskTimer({super.key, this.task});
+  const TaskTimer({super.key, this.task, this.mode});
 
   @override
   State<TaskTimer> createState() => _TaskTimerState();
@@ -44,6 +45,9 @@ class _TaskTimerState extends State<TaskTimer> {
   @override
   void initState() {
     super.initState();
+    if (widget.mode != null) {
+      mode = widget.mode == TimerMode.pomodoro ? 0 : 1;
+    }
     _initializeTimerState();
     _startUITimer();
   }
@@ -151,7 +155,7 @@ class _TaskTimerState extends State<TaskTimer> {
         return BlocBuilder<TasksBloc, TasksState>(
             builder: (context, taskState) {
           final taskId =
-              TimerUtils.getPomodoroTaskId() ?? TimerUtils.getStopwatchTaskId();
+              TimerUtils.getPomodoroTaskId() ?? TimerUtils.getStopwatchTaskId() ?? widget.task?.id;
           if (taskId != null && _task == null) {
             _task = taskState.tasks
                 ?.where(
