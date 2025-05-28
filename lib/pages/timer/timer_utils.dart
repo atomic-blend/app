@@ -1,185 +1,298 @@
+import 'dart:convert';
 import 'package:app/entities/tasks/tasks.entity.dart';
 import 'package:app/main.dart';
 import 'package:app/utils/local_notifications.dart';
 
+enum TimerMode { pomodoro, stopwatch }
+
+class PausePeriod {
+  final DateTime pauseStart;
+  final DateTime? pauseEnd; // null if currently paused
+
+  PausePeriod({required this.pauseStart, this.pauseEnd});
+
+  Duration get duration {
+    if (pauseEnd == null) {
+      // Currently paused, calculate duration up to now
+      return DateTime.now().difference(pauseStart);
+    }
+    return pauseEnd!.difference(pauseStart);
+  }
+
+  Map<String, dynamic> toJson() => {
+        'pauseStart': pauseStart.toIso8601String(),
+        'pauseEnd': pauseEnd?.toIso8601String(),
+      };
+
+  factory PausePeriod.fromJson(Map<String, dynamic> json) => PausePeriod(
+        pauseStart: DateTime.parse(json['pauseStart']),
+        pauseEnd:
+            json['pauseEnd'] != null ? DateTime.parse(json['pauseEnd']) : null,
+      );
+}
+
 class TimerUtils {
-  static Future<void> startPomodoroTimer(int durationInMinutes,
-      {TaskEntity? task}) async {
+  // Helper methods for pause periods
+  static Future<List<PausePeriod>> _getPausePeriods(TimerMode mode) async {
+    final key = '${mode.name}_pause_periods';
+    final pauseDataString = prefs?.getString(key);
+    if (pauseDataString == null) return [];
+
+    try {
+      final List<dynamic> pauseData = jsonDecode(pauseDataString);
+      return pauseData.map((data) => PausePeriod.fromJson(data)).toList();
+    } catch (e) {
+      return [];
+    }
+  }
+
+  static Future<void> _savePausePeriods(
+      TimerMode mode, List<PausePeriod> periods) async {
+    final key = '${mode.name}_pause_periods';
+    final pauseData = periods.map((period) => period.toJson()).toList();
+    await prefs?.setString(key, jsonEncode(pauseData));
+  }
+
+  static Duration _getTotalPausedDuration(List<PausePeriod> pausePeriods) {
+    Duration totalPaused = Duration.zero;
+    for (final period in pausePeriods) {
+      totalPaused += period.duration;
+    }
+    return totalPaused;
+  }
+
+  static Duration _getElapsedTimeExcludingCurrentPause(
+      DateTime startTime, List<PausePeriod> pausePeriods) {
+    // Find the last pause period (should be the current one)
+    final currentPauseIndex =
+        pausePeriods.indexWhere((period) => period.pauseEnd == null);
+    if (currentPauseIndex == -1) {
+      return DateTime.now().difference(startTime);
+    }
+
+    final currentPause = pausePeriods[currentPauseIndex];
+    return currentPause.pauseStart.difference(startTime);
+  }
+
+  // Unified timer methods
+  static Future<void> startTimer(TimerMode mode,
+      {int? durationInMinutes, TaskEntity? task}) async {
     final startDate = DateTime.now();
 
     await prefs?.setString(
-      'pomodoro_start_time',
+      '${mode.name}_start_time',
       startDate.toIso8601String(),
     );
-    await prefs
-        ?.remove('pomodoro_paused_time'); // Ensure paused time is cleared
-    await prefs?.setInt(
-      'pomodoro_duration',
-      durationInMinutes,
-    );
+    await prefs?.remove('${mode.name}_pause_periods');
+
     if (task != null) {
       await prefs?.setString(
-        'pomodoro_task_id',
+        '${mode.name}_task_id',
         task.id!,
       );
     }
 
-    LocalNotificationUtil.schedulePomodoroNotification(
-      "pomo-completed",
-      "Pomodoro completed",
-      0,
-      startDate.add(
-        Duration(minutes: durationInMinutes),
-      ),
-    );
+    if (mode == TimerMode.pomodoro && durationInMinutes != null) {
+      await prefs?.setInt(
+        'pomodoro_duration',
+        durationInMinutes,
+      );
+
+      LocalNotificationUtil.schedulePomodoroNotification(
+        "pomo-completed",
+        "Pomodoro completed",
+        0,
+        startDate.add(Duration(minutes: durationInMinutes)),
+      );
+    }
   }
 
-  static String? getPomodoroTaskId() {
-    return prefs?.getString('pomodoro_task_id');
+  static String? getTaskId(TimerMode mode) {
+    return prefs?.getString('${mode.name}_task_id');
   }
 
   static int getPomodoroDuration() {
-    return prefs?.getInt('pomodoro_duration') ?? 20; // Default to 20 minutes
+    return prefs?.getInt('pomodoro_duration') ?? 20;
   }
 
-  static Duration getPomodoroRemainingTime() {
-    final startTimeString = prefs?.getString('pomodoro_start_time');
-    final durationInMinutes = prefs?.getInt('pomodoro_duration') ?? 20;
-    final pausedTimeString = prefs?.getString('pomodoro_paused_time');
-
-    // If the timer is paused, calculate remaining time from the paused time
-    if (pausedTimeString != null && startTimeString != null) {
-      final pausedTime = DateTime.parse(pausedTimeString);
-      final startTime = DateTime.parse(startTimeString);
-      final elapsed = pausedTime.difference(startTime);
-      return Duration(minutes: durationInMinutes) - elapsed;
-    }
+  static Future<Duration> getTimerDuration(TimerMode mode) async {
+    final startTimeString = prefs?.getString('${mode.name}_start_time');
 
     if (startTimeString == null) {
       return Duration.zero;
     }
 
     final startTime = DateTime.parse(startTimeString);
-    final elapsed = DateTime.now().difference(startTime);
-    final totalDuration = Duration(minutes: durationInMinutes);
+    final pausePeriods = await _getPausePeriods(mode);
+    final totalPausedDuration = _getTotalPausedDuration(pausePeriods);
 
-    return totalDuration - elapsed;
-  }
+    // If currently paused, don't count time since last pause
+    final isCurrentlyPaused = await isTimerPaused(mode);
+    final elapsed = isCurrentlyPaused
+        ? _getElapsedTimeExcludingCurrentPause(startTime, pausePeriods)
+        : DateTime.now().difference(startTime);
 
-  static Future<void> pausePomodoroTimer() async {
-    // Logic to pause the pomodoro timer
-    // This could involve saving the current state and stopping the notification
-    final remainingTime = await getPomodoroRemainingTime();
-    if (remainingTime > Duration.zero) {
-      await LocalNotificationUtil.cancelNotification(0);
-    }
+    final effectiveElapsed = elapsed - totalPausedDuration;
 
-    await prefs?.setString(
-      'pomodoro_paused_time',
-      DateTime.now().toIso8601String(),
-    );
-  }
-
-  static Future<void> resumePomodoroTimer() async {
-    await prefs?.remove('pomodoro_paused_time');
-  }
-
-  static Future<void> resetPomodoroTimer({bool? completed = false}) async {
-    await prefs?.remove('pomodoro_start_time');
-    await prefs?.remove('pomodoro_duration');
-    await prefs?.remove('pomodoro_task_id');
-    await prefs?.remove('pomodoro_paused_time');
-
-    if (completed == false) {
-      await LocalNotificationUtil.cancelNotification(0);
+    if (mode == TimerMode.pomodoro) {
+      final durationInMinutes = prefs?.getInt('pomodoro_duration') ?? 20;
+      final totalDuration = Duration(minutes: durationInMinutes);
+      return totalDuration - effectiveElapsed;
+    } else {
+      // Stopwatch returns elapsed time
+      return effectiveElapsed;
     }
   }
 
-  static bool isPomodoroRunning() {
-    final startTimeString = prefs?.getString('pomodoro_start_time');
-    final pausedTimeString = prefs?.getString('pomodoro_paused_time');
-    return startTimeString != null && pausedTimeString == null;
+  static Future<void> pauseTimer(TimerMode mode) async {
+    // Check if already paused
+    if (await isTimerPaused(mode)) return;
+
+    if (mode == TimerMode.pomodoro) {
+      final remainingTime = await getTimerDuration(mode);
+      if (remainingTime > Duration.zero) {
+        await LocalNotificationUtil.cancelNotification(0);
+      }
+    }
+
+    // Add new pause period
+    final pausePeriods = await _getPausePeriods(mode);
+    pausePeriods.add(PausePeriod(pauseStart: DateTime.now()));
+    await _savePausePeriods(mode, pausePeriods);
   }
 
-  static bool isPomodoroPaused() {
-    final pausedTimeString = prefs?.getString('pomodoro_paused_time');
-    return pausedTimeString != null;
-  }
+  static Future<void> resumeTimer(TimerMode mode) async {
+    // Check if currently paused
+    if (!await isTimerPaused(mode)) return;
 
-  static Future<void> pomodoroComplete() async {
-    // Logic to handle what happens when a pomodoro session is completed
-    // For example, you might want to show a notification or log the completion
-    await resetPomodoroTimer();
-  }
+    final pausePeriods = await _getPausePeriods(mode);
 
-  static Future<void> startStopwatch({TaskEntity? task}) async {
-    final startDate = DateTime.now();
-
-    await prefs?.setString(
-      'stopwatch_start_time',
-      startDate.toIso8601String(),
-    );
-
-    if (task != null) {
-      await prefs?.setString(
-        'stopwatch_task_id',
-        task.id!,
+    // Find the current pause period and end it
+    final currentPauseIndex =
+        pausePeriods.indexWhere((period) => period.pauseEnd == null);
+    if (currentPauseIndex != -1) {
+      final currentPause = pausePeriods[currentPauseIndex];
+      pausePeriods[currentPauseIndex] = PausePeriod(
+        pauseStart: currentPause.pauseStart,
+        pauseEnd: DateTime.now(),
       );
+      await _savePausePeriods(mode, pausePeriods);
+    }
+
+    // Reschedule notification for pomodoro
+    if (mode == TimerMode.pomodoro) {
+      final remainingTime = await getTimerDuration(mode);
+      if (remainingTime > Duration.zero) {
+        LocalNotificationUtil.schedulePomodoroNotification(
+          "pomo-completed",
+          "Pomodoro completed",
+          0,
+          DateTime.now().add(remainingTime),
+        );
+      }
     }
   }
 
-  static String? getStopwatchTaskId() {
-    return prefs?.getString('stopwatch_task_id');
-  }
+  static Future<void> resetTimer(TimerMode mode,
+      {bool? completed = false}) async {
+    await prefs?.remove('${mode.name}_start_time');
+    await prefs?.remove('${mode.name}_task_id');
+    await prefs?.remove('${mode.name}_pause_periods');
 
-  static Duration getStopwatchElapsedTime() {
-    final startTimeString = prefs?.getString('stopwatch_start_time');
-
-    if (startTimeString == null) {
-      return Duration.zero;
+    if (mode == TimerMode.pomodoro) {
+      await prefs?.remove('pomodoro_duration');
+      if (completed == false) {
+        await LocalNotificationUtil.cancelNotification(0);
+      }
     }
-
-    final startTime = DateTime.parse(startTimeString);
-    return DateTime.now().difference(startTime);
   }
 
-  static Future<void> pauseStopwatch() async {
-    // Logic to pause the stopwatch
-    // This could involve saving the current state and stopping the notification
-    final elapsedTime = await getStopwatchElapsedTime();
-    if (elapsedTime > Duration.zero) {
-      await LocalNotificationUtil.cancelNotification(0);
-    }
-
-    await prefs?.setString(
-      'stopwatch_paused_time',
-      DateTime.now().toIso8601String(),
-    );
-  }
-
-  static Future<void> resumeStopwatch() async {
-    await prefs?.remove('stopwatch_paused_time');
-  }
-
-  static Future<void> resetStopwatch() async {
-    await prefs?.remove('stopwatch_start_time');
-    await prefs?.remove('stopwatch_task_id');
-    await prefs?.remove('stopwatch_paused_time');
-  }
-
-  static bool isStopwatchRunning() {
-    final startTimeString = prefs?.getString('stopwatch_start_time');
+  static bool isTimerRunning(TimerMode mode) {
+    final startTimeString = prefs?.getString('${mode.name}_start_time');
     return startTimeString != null;
   }
 
-  static bool isStopwatchPaused() {
-    final pausedTimeString = prefs?.getString('stopwatch_paused_time');
-    return pausedTimeString != null;
+  static Future<bool> isTimerPaused(TimerMode mode) async {
+    final pausePeriods = await _getPausePeriods(mode);
+    return pausePeriods.any((period) => period.pauseEnd == null);
+  }
+
+  static Future<void> completeTimer(TimerMode mode) async {
+    await resetTimer(mode, completed: true);
+  }
+
+  // Legacy methods for backward compatibility
+  static Future<void> startPomodoroTimer(int durationInMinutes,
+      {TaskEntity? task}) async {
+    await startTimer(TimerMode.pomodoro,
+        durationInMinutes: durationInMinutes, task: task);
+  }
+
+  static String? getPomodoroTaskId() {
+    return getTaskId(TimerMode.pomodoro);
+  }
+
+  static Future<Duration> getPomodoroRemainingTime() async {
+    return await getTimerDuration(TimerMode.pomodoro);
+  }
+
+  static Future<void> pausePomodoroTimer() async {
+    await pauseTimer(TimerMode.pomodoro);
+  }
+
+  static Future<void> resumePomodoroTimer() async {
+    await resumeTimer(TimerMode.pomodoro);
+  }
+
+  static Future<void> resetPomodoroTimer({bool? completed = false}) async {
+    await resetTimer(TimerMode.pomodoro, completed: completed);
+  }
+
+  static bool isPomodoroRunning() {
+    return isTimerRunning(TimerMode.pomodoro);
+  }
+
+  static Future<bool> isPomodoroPaused() async {
+    return await isTimerPaused(TimerMode.pomodoro);
+  }
+
+  static Future<void> pomodoroComplete() async {
+    await completeTimer(TimerMode.pomodoro);
+  }
+
+  static Future<void> startStopwatch({TaskEntity? task}) async {
+    await startTimer(TimerMode.stopwatch, task: task);
+  }
+
+  static String? getStopwatchTaskId() {
+    return getTaskId(TimerMode.stopwatch);
+  }
+
+  static Future<Duration> getStopwatchElapsedTime() async {
+    return await getTimerDuration(TimerMode.stopwatch);
+  }
+
+  static Future<void> pauseStopwatch() async {
+    await pauseTimer(TimerMode.stopwatch);
+  }
+
+  static Future<void> resumeStopwatch() async {
+    await resumeTimer(TimerMode.stopwatch);
+  }
+
+  static Future<void> resetStopwatch() async {
+    await resetTimer(TimerMode.stopwatch);
+  }
+
+  static bool isStopwatchRunning() {
+    return isTimerRunning(TimerMode.stopwatch);
+  }
+
+  static Future<bool> isStopwatchPaused() async {
+    return await isTimerPaused(TimerMode.stopwatch);
   }
 
   static Future<void> stopwatchComplete() async {
-    // Logic to handle what happens when a stopwatch session is completed
-    // For example, you might want to show a notification or log the completion
-    await resetStopwatch();
+    await completeTimer(TimerMode.stopwatch);
   }
 }
