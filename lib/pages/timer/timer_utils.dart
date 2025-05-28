@@ -11,6 +11,8 @@ class TimerUtils {
       'pomodoro_start_time',
       startDate.toIso8601String(),
     );
+    await prefs
+        ?.remove('pomodoro_paused_time'); // Ensure paused time is cleared
     await prefs?.setInt(
       'pomodoro_duration',
       durationInMinutes,
@@ -34,6 +36,10 @@ class TimerUtils {
 
   static String? getPomodoroTaskId() {
     return prefs?.getString('pomodoro_task_id');
+  }
+
+  static int getPomodoroDuration() {
+    return prefs?.getInt('pomodoro_duration') ?? 20; // Default to 20 minutes
   }
 
   static Duration getPomodoroRemainingTime() {

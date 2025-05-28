@@ -34,7 +34,18 @@ class _TaskTimerState extends State<TaskTimer> {
   TaskEntity? _task;
   final TextEditingController _searchController = TextEditingController();
 
+  bool _isPaused = false;
+  bool _isRunning = false;
   Duration? _pomodoroDuration;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _isPaused = TimerUtils.isPomodoroPaused() || TimerUtils.isStopwatchPaused();
+    _isRunning =
+        TimerUtils.isPomodoroRunning() || TimerUtils.isStopwatchRunning();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -72,6 +83,18 @@ class _TaskTimerState extends State<TaskTimer> {
                   (task) => task.id == taskId,
                 )
                 .firstOrNull;
+          }
+          switch (mode) {
+            case 0:
+              _progress = TimerUtils.getPomodoroRemainingTime() == Duration.zero
+                  ? 1.0
+                  : TimerUtils.getPomodoroRemainingTime().inSeconds /
+                      _pomodoroDuration!.inSeconds;
+              break;
+            case 1:
+              _progress = TimerUtils.getStopwatchElapsedTime().inSeconds /
+                  (_pomodoroDuration?.inSeconds ?? 1);
+              break;
           }
           return Column(
             children: [
@@ -260,10 +283,7 @@ class _TaskTimerState extends State<TaskTimer> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  if (!TimerUtils.isPomodoroRunning() &&
-                      !TimerUtils.isStopwatchRunning() &&
-                      TimerUtils.getPomodoroRemainingTime() != Duration.zero &&
-                      TimerUtils.getStopwatchElapsedTime() != Duration.zero)
+                  if (_isPaused)
                     // reset button
                     ElevatedContainer(
                       padding: EdgeInsets.all($constants.insets.lg),
@@ -276,8 +296,7 @@ class _TaskTimerState extends State<TaskTimer> {
                         TimerUtils.resetPomodoroTimer(completed: false);
                       },
                     ),
-                  if (TimerUtils.isPomodoroRunning() ||
-                      TimerUtils.isStopwatchRunning())
+                  if (_isRunning)
                     ElevatedContainer(
                       padding: EdgeInsets.all($constants.insets.lg),
                       borderRadius: $constants.corners.full,
@@ -287,7 +306,7 @@ class _TaskTimerState extends State<TaskTimer> {
                       ),
                       onTap: () {},
                     ),
-                  if (TimerUtils.isPomodoroRunning())
+                  if (_isRunning && !_isPaused)
                     ElevatedContainer(
                       padding: EdgeInsets.all($constants.insets.lg),
                       borderRadius: $constants.corners.full,
@@ -296,7 +315,11 @@ class _TaskTimerState extends State<TaskTimer> {
                         size: 40,
                       ),
                       onTap: () {
-                          TimerUtils.pausePomodoroTimer();
+                        setState(() {
+                          _isPaused = true;
+                          _isRunning = false;
+                        });
+                        TimerUtils.pausePomodoroTimer();
                       },
                     ),
                   if (!TimerUtils.isPomodoroRunning())
@@ -317,16 +340,26 @@ class _TaskTimerState extends State<TaskTimer> {
                         }
 
                         // stopwatch mode
-                        if (mode == 1) {
-                          TimerUtils.startStopwatch(task: _task);
-                          
+                        if (!_isPaused) {
+                          if (mode == 1) {
+                            TimerUtils.startStopwatch(task: _task);
+                          } else {
+                            TimerUtils.startPomodoroTimer(
+                              _pomodoroDuration!.inMinutes,
+                              task: _task,
+                            );
+                            // pomodoro mode
+                          }
                         } else {
-                          TimerUtils.startPomodoroTimer(
-                            _pomodoroDuration!.inMinutes,
-                            task: _task,
-                          );
-                          // pomodoro mode
-                          
+                          if (mode == 1) {
+                            TimerUtils.resumeStopwatch();
+                          } else {
+                            TimerUtils.resumePomodoroTimer();
+                          }
+                          setState(() {
+                            _isPaused = false;
+                            _isRunning = true;
+                          });
                         }
                       },
                     ),
