@@ -1,5 +1,5 @@
-import 'package:device_calendar/device_calendar.dart' as tz;
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:timezone/timezone.dart' as tz;
 
 class LocalNotificationUtil {
   static NotificationDetails getNotifDetails(
@@ -29,11 +29,8 @@ class LocalNotificationUtil {
   }
 
   // static method to schedule a pomodoro notification
-  static Future<void> schedulePomodoroNotification(
-      String androidChannelId,
-      String androidChannelName,
-      int id,
-      DateTime scheduledTime) async {
+  static Future<void> schedulePomodoroNotification(String androidChannelId,
+      String androidChannelName, int id, DateTime scheduledTime) async {
     final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
         FlutterLocalNotificationsPlugin();
 
@@ -56,4 +53,3 @@ class LocalNotificationUtil {
     await flutterLocalNotificationsPlugin.cancel(id);
   }
 }
-

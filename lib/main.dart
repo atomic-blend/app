@@ -26,6 +26,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sizer/sizer.dart';
+import 'package:timezone/data/latest.dart' as tz;
 import 'package:toastification/toastification.dart';
 
 import 'app.dart';
@@ -38,7 +39,7 @@ Map<String, dynamic>? userData;
 String? userKey;
 
 FutureOr<void> main() async {
-    WidgetsFlutterBinding.ensureInitialized();
+  WidgetsFlutterBinding.ensureInitialized();
 
   await SentryFlutter.init((options) {
     String? dsn = const String.fromEnvironment(
@@ -52,6 +53,7 @@ FutureOr<void> main() async {
     // visit: https://docs.sentry.io/platforms/dart/data-management/data-collected/ for more info
     options.sendDefaultPii = true;
   }, appRunner: () async {
+    tz.initializeTimeZones();
 
     if (!kIsWeb && Platform.isMacOS) {
       await WindowManipulator.initialize();
@@ -72,7 +74,6 @@ FutureOr<void> main() async {
       );
       fcmService = FcmService();
       fcmService!.initFCM();
-
 
       // Register background handler
       FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
