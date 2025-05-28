@@ -5,6 +5,7 @@ import 'package:app/entities/tasks/tasks.entity.dart';
 import 'package:app/entities/time_entry/time_entry.entity.dart';
 import 'package:app/pages/timer/completed_timer.dart';
 import 'package:app/pages/timer/timer_utils.dart';
+import 'package:app/services/time_entry_service.dart';
 import 'package:app/utils/shortcuts.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -102,7 +103,12 @@ class _TimerWatcherState extends State<TimerWatcher> {
     }
 
     // Add time entry to task after marking completion
-    await _addTimeEntryToTask(mode, task);
+    if (task != null) {
+      // If task is found, add time entry to it
+      await _addTimeEntryToTask(mode, task);
+    } else {
+      await _addTimeEntryWithoutTask(mode);
+    }
 
     // Reset the timer (this will clear the start time and other data)
     await TimerUtils.resetTimer(mode, completed: false);
@@ -167,6 +173,36 @@ class _TimerWatcherState extends State<TimerWatcher> {
             timeEntry: timeEntry,
           ),
         );
+  }
+
+  Future<bool> _addTimeEntryWithoutTask(TimerMode mode) async {
+    final TimeEntryService timeEntryService = TimeEntryService();
+
+    // Get the start time based on timer mode
+    final startTimeString = TimerUtils.getStartDate();
+
+    if (startTimeString == null) {
+      // If start date is null, we can't create a time entry
+      return false;
+    }
+
+    final endDate = DateTime.now();
+    final duration = await TimerUtils.getTimerDuration(mode);
+
+    final timeEntry = TimeEntry(
+      startDate: startTimeString,
+      endDate: endDate,
+      pomodoro: mode == TimerMode.pomodoro,
+      timer: mode == TimerMode.stopwatch,
+      duration: duration.inSeconds,
+    );
+
+    try {
+      await timeEntryService.addTimeEntry(timeEntry: timeEntry);
+      return true;
+    } on Exception catch (_) {
+      return false;
+    }
   }
 
   @override
