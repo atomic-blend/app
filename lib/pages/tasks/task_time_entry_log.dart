@@ -1,4 +1,4 @@
-import 'package:app/blocs/tasks/tasks.bloc.dart';
+import 'package:app/blocs/time_entries/time_entry.bloc.dart';
 import 'package:app/components/modals/delete_confirm_modal.dart';
 import 'package:app/entities/tasks/tasks.entity.dart';
 import 'package:app/entities/time_entry/time_entry.entity.dart';
@@ -19,18 +19,14 @@ class TaskTimeEntryLog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<TasksBloc, TasksState>(
+    return BlocListener<TimeEntryBloc, TimeEntryState>(
       listener: (context, state) {
-        if (state is TaskRemoveTimeEntrySuccess) {
+        if (state is TimeEntryDeleteSuccess) {
           Navigator.pop(context);
         }
       },
-      child: BlocBuilder<TasksBloc, TasksState>(builder: (context, taskState) {
-        final TaskEntity latestTask = taskState.tasks?.firstWhere(
-              (task) => task.id == this.task.id,
-              orElse: () => task,
-            ) ??
-            task;
+      child: BlocBuilder<TimeEntryBloc, TimeEntryState>(builder: (context, taskState) {
+        final timeEntries = taskState.timeEntries?.where((e) => e.taskId == task.id).toList();
         return Padding(
           padding: EdgeInsets.all($constants.insets.md),
           child: Column(
@@ -74,7 +70,7 @@ class TaskTimeEntryLog extends StatelessWidget {
                             context: context,
                             builder: (context) => Dialog(
                                   child: AddTimeEntry(
-                                    task: latestTask,
+                                    task: task,
                                   ),
                                 ));
                       } else {
@@ -85,7 +81,7 @@ class TaskTimeEntryLog extends StatelessWidget {
                               height: getSize(context).height * 0.4,
                               width: double.infinity,
                               child: AddTimeEntry(
-                                task: latestTask,
+                                task: task,
                               )),
                         );
                       }
@@ -103,21 +99,21 @@ class TaskTimeEntryLog extends StatelessWidget {
               SizedBox(
                 height: $constants.insets.xs,
               ),
-              if (latestTask.timeEntries == null ||
-                  latestTask.timeEntries!.isEmpty)
+              if (timeEntries == null ||
+                  timeEntries.isEmpty)
                 Text(
                   context.t.tasks.no_time_entries,
                   style: getTextTheme(context)
                       .bodyMedium!
                       .copyWith(color: Colors.grey),
                 ),
-              if (latestTask.timeEntries != null &&
-                  latestTask.timeEntries!.isNotEmpty)
+              if (timeEntries != null &&
+                  timeEntries.isNotEmpty)
                 SingleChildScrollView(
                   child: Column(
                     children: [
-                      ...?latestTask.timeEntries?.map((timeEntry) =>
-                          _buildTimeEntryCard(context, latestTask, timeEntry)),
+                      ...timeEntries.map((timeEntry) =>
+                          _buildTimeEntryCard(context, task, timeEntry)),
                     ],
                   ),
                 )
@@ -161,10 +157,9 @@ class TaskTimeEntryLog extends StatelessWidget {
                         if (!context.mounted) {
                           return;
                         }
-                        context.read<TasksBloc>().add(
-                              RemoveTimeEntryFromTask(
-                                task: task,
-                                timeEntry: timeEntry,
+                        context.read<TimeEntryBloc>().add(
+                              DeleteTimeEntry(
+                                timeEntry,
                               ),
                             );
                       },

@@ -1,13 +1,13 @@
 import 'dart:async';
 
 import 'package:app/blocs/tasks/tasks.bloc.dart';
+import 'package:app/blocs/time_entries/time_entry.bloc.dart';
 import 'package:app/entities/tasks/tasks.entity.dart';
 import 'package:app/entities/time_entry/time_entry.entity.dart';
 import 'package:app/pages/timer/completed_timer.dart';
 import 'package:app/pages/timer/timer_utils.dart';
 import 'package:app/services/time_entry_service.dart';
 import 'package:app/utils/shortcuts.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -96,6 +96,7 @@ class _TimerWatcherState extends State<TimerWatcher> {
     // First, mark the timer as completed by setting the end time
     await TimerUtils.markTimerCompleted(mode);
 
+    if (!mounted) return;
     if (isDesktop(context)) {
       _showDesktopDialog(mode, task);
     } else {
@@ -159,6 +160,7 @@ class _TimerWatcherState extends State<TimerWatcher> {
     final timeEntry = TimeEntry(
       startDate: startTimeString,
       endDate: endDate,
+      taskId: task.id,
       pomodoro: mode == TimerMode.pomodoro,
       timer: mode == TimerMode.stopwatch,
       duration: duration.inSeconds,
@@ -167,10 +169,9 @@ class _TimerWatcherState extends State<TimerWatcher> {
     if (!mounted) return;
 
     // Use the proper bloc event to add time entry to task
-    context.read<TasksBloc>().add(
-          AddTimeEntryToTask(
-            task: task,
-            timeEntry: timeEntry,
+    context.read<TimeEntryBloc>().add(
+          CreateTimeEntry(
+            timeEntry,
           ),
         );
   }
@@ -198,7 +199,7 @@ class _TimerWatcherState extends State<TimerWatcher> {
     );
 
     try {
-      await timeEntryService.addTimeEntry(timeEntry: timeEntry);
+      await timeEntryService.createTimeEntry(timeEntry: timeEntry);
       return true;
     } on Exception catch (_) {
       return false;

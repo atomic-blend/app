@@ -9,6 +9,7 @@ part of 'time_entry.entity.dart';
 _$TimeEntryImpl _$$TimeEntryImplFromJson(Map<String, dynamic> json) =>
     _$TimeEntryImpl(
       id: json['id'] as String?,
+      taskId: json['taskId'] as String?,
       startDate: DateTime.parse(json['startDate'] as String),
       endDate: DateTime.parse(json['endDate'] as String),
       duration: (json['duration'] as num).toInt(),
@@ -25,6 +26,7 @@ _$TimeEntryImpl _$$TimeEntryImplFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$$TimeEntryImplToJson(_$TimeEntryImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
+      'taskId': instance.taskId,
       'startDate': instance.startDate.toIso8601String(),
       'endDate': instance.endDate.toIso8601String(),
       'duration': instance.duration,

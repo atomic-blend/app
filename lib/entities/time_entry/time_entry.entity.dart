@@ -10,6 +10,7 @@ class TimeEntry with _$TimeEntry {
 
   factory TimeEntry({
     String? id,
+    String? taskId,
     required DateTime startDate,
     required DateTime endDate,
     // Duration in seconds
@@ -44,6 +45,7 @@ class TimeEntry with _$TimeEntry {
           .encryptJson(startDate.toUtc().toIso8601String()),
       'endDate': await encryptionService
           .encryptJson(endDate.toUtc().toIso8601String()),
+      'taskId': taskId,
       'duration': await encryptionService.encryptJson(duration.toString()),
       'pomodoro': pomodoro,
       'timer': timer,
@@ -66,6 +68,7 @@ class TimeEntry with _$TimeEntry {
       startDate: DateTime.parse(decryptedStartDate),
       endDate: DateTime.parse(decryptedEndDate),
       duration: int.parse(await encryptionService.decryptJson(data['duration'])),
+      taskId: data['taskId'] as String?,
       pomodoro: data['pomodoro'] as bool?,
       timer: data['timer'] as bool?,
       createdAt:

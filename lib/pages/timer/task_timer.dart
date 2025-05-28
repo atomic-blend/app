@@ -70,7 +70,7 @@ class _TaskTimerState extends State<TaskTimer> {
 
   void _startUITimer() {
     _uiTimer?.cancel();
-    _uiTimer = Timer.periodic(Duration(seconds: 1), (timer) async {
+    _uiTimer = Timer.periodic(const Duration(seconds: 1), (timer) async {
       await _updateTimerDisplay();
     });
   }
@@ -186,7 +186,7 @@ class _TaskTimerState extends State<TaskTimer> {
                                     ? getTextTheme(context)
                                         .bodyMedium!
                                         .color
-                                        ?.withOpacity(0.5)
+                                        ?.withValues(alpha: 0.5)
                                     : null));
                       },
                       styleBuilder: (value) {
@@ -194,13 +194,13 @@ class _TaskTimerState extends State<TaskTimer> {
                           borderColor: Colors.transparent,
                           indicatorColor: value == mode
                               ? (_isRunning
-                                  ? getTheme(context).surface.withOpacity(0.5)
+                                  ? getTheme(context).surface.withValues(alpha: 0.5)
                                   : getTheme(context).surface)
                               : getTheme(context).surfaceContainer,
                           backgroundColor: _isRunning
                               ? getTheme(context)
                                   .surfaceContainer
-                                  .withOpacity(0.5)
+                                  .withValues(alpha: 0.5)
                               : getTheme(context).surfaceContainer,
                         );
                       },

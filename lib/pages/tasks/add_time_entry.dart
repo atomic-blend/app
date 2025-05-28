@@ -1,4 +1,4 @@
-import 'package:app/blocs/tasks/tasks.bloc.dart';
+import 'package:app/blocs/time_entries/time_entry.bloc.dart';
 import 'package:app/components/buttons/primary_button_square.dart';
 import 'package:app/entities/tasks/tasks.entity.dart';
 import 'package:app/entities/time_entry/time_entry.entity.dart';
@@ -34,9 +34,9 @@ class _AddTimeEntryState extends State<AddTimeEntry> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<TasksBloc, TasksState>(
+    return BlocListener<TimeEntryBloc, TimeEntryState>(
       listener: (context, state) {
-        if (state is TaskAddTimeEntrySuccess) {
+        if (state is TimeEntryAddSuccess) {
           Navigator.pop(context);
         }
       },
@@ -100,8 +100,8 @@ class _AddTimeEntryState extends State<AddTimeEntry> {
                         height: getSize(context).height * 0.3,
                         child: CupertinoDatePicker(
                             use24hFormat: true,
-                            initialDateTime:
-                                DateTime.now().subtract(const Duration(minutes: 30)),
+                            initialDateTime: DateTime.now()
+                                .subtract(const Duration(minutes: 30)),
                             onDateTimeChanged: (DateTime dateTime) {
                               setState(() {
                                 _startDate = dateTime;
@@ -120,8 +120,8 @@ class _AddTimeEntryState extends State<AddTimeEntry> {
                             width: double.infinity,
                             decoration: BoxDecoration(
                                 color: Colors.grey.shade300,
-                                borderRadius:
-                                    BorderRadius.circular($constants.corners.md)),
+                                borderRadius: BorderRadius.circular(
+                                    $constants.corners.md)),
                             child: Row(
                               children: [
                                 SizedBox(
@@ -154,8 +154,8 @@ class _AddTimeEntryState extends State<AddTimeEntry> {
                       height: getSize(context).height * 0.3,
                       child: CupertinoDatePicker(
                           use24hFormat: true,
-                          initialDateTime:
-                              DateTime.now().subtract(const Duration(minutes: 30)),
+                          initialDateTime: DateTime.now()
+                              .subtract(const Duration(minutes: 30)),
                           onDateTimeChanged: (DateTime dateTime) {
                             setState(() {
                               _endDate = dateTime;
@@ -189,8 +189,10 @@ class _AddTimeEntryState extends State<AddTimeEntry> {
                               ),
                               Text(
                                 _endDate != null
-                                    ? Jiffy.parseFromDateTime(_endDate!).yMMMEdjm
-                                    : context.t.tasks.add_time_entry.not_defined,
+                                    ? Jiffy.parseFromDateTime(_endDate!)
+                                        .yMMMEdjm
+                                    : context
+                                        .t.tasks.add_time_entry.not_defined,
                               ),
                             ],
                           ),
@@ -208,17 +210,21 @@ class _AddTimeEntryState extends State<AddTimeEntry> {
                         return;
                       }
                       final timeEntry = TimeEntry(
+                        taskId: widget.task.id,
                         startDate: _startDate!,
                         endDate: _endDate!,
                         duration: _endDate!.difference(_startDate!).inSeconds,
                       );
-      
+
                       if (!context.mounted) {
                         return;
                       }
-      
-                      context.read<TasksBloc>().add(AddTimeEntryToTask(
-                          task: widget.task, timeEntry: timeEntry));
+
+                      context.read<TimeEntryBloc>().add(
+                            CreateTimeEntry(
+                              timeEntry,
+                            ),
+                          );
                     },
                   )
                 ],

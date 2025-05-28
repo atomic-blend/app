@@ -22,6 +22,8 @@ TimeEntry _$TimeEntryFromJson(Map<String, dynamic> json) {
 mixin _$TimeEntry {
   String? get id => throw _privateConstructorUsedError;
   set id(String? value) => throw _privateConstructorUsedError;
+  String? get taskId => throw _privateConstructorUsedError;
+  set taskId(String? value) => throw _privateConstructorUsedError;
   DateTime get startDate => throw _privateConstructorUsedError;
   set startDate(DateTime value) => throw _privateConstructorUsedError;
   DateTime get endDate => throw _privateConstructorUsedError;
@@ -55,6 +57,7 @@ abstract class $TimeEntryCopyWith<$Res> {
   @useResult
   $Res call(
       {String? id,
+      String? taskId,
       DateTime startDate,
       DateTime endDate,
       int duration,
@@ -80,6 +83,7 @@ class _$TimeEntryCopyWithImpl<$Res, $Val extends TimeEntry>
   @override
   $Res call({
     Object? id = freezed,
+    Object? taskId = freezed,
     Object? startDate = null,
     Object? endDate = null,
     Object? duration = null,
@@ -92,6 +96,10 @@ class _$TimeEntryCopyWithImpl<$Res, $Val extends TimeEntry>
       id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
+              as String?,
+      taskId: freezed == taskId
+          ? _value.taskId
+          : taskId // ignore: cast_nullable_to_non_nullable
               as String?,
       startDate: null == startDate
           ? _value.startDate
@@ -135,6 +143,7 @@ abstract class _$$TimeEntryImplCopyWith<$Res>
   @useResult
   $Res call(
       {String? id,
+      String? taskId,
       DateTime startDate,
       DateTime endDate,
       int duration,
@@ -158,6 +167,7 @@ class __$$TimeEntryImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = freezed,
+    Object? taskId = freezed,
     Object? startDate = null,
     Object? endDate = null,
     Object? duration = null,
@@ -170,6 +180,10 @@ class __$$TimeEntryImplCopyWithImpl<$Res>
       id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
+              as String?,
+      taskId: freezed == taskId
+          ? _value.taskId
+          : taskId // ignore: cast_nullable_to_non_nullable
               as String?,
       startDate: null == startDate
           ? _value.startDate
@@ -208,6 +222,7 @@ class __$$TimeEntryImplCopyWithImpl<$Res>
 class _$TimeEntryImpl extends _TimeEntry {
   _$TimeEntryImpl(
       {this.id,
+      this.taskId,
       required this.startDate,
       required this.endDate,
       required this.duration,
@@ -222,6 +237,8 @@ class _$TimeEntryImpl extends _TimeEntry {
 
   @override
   String? id;
+  @override
+  String? taskId;
   @override
   DateTime startDate;
   @override
@@ -257,6 +274,7 @@ class _$TimeEntryImpl extends _TimeEntry {
 abstract class _TimeEntry extends TimeEntry {
   factory _TimeEntry(
       {String? id,
+      String? taskId,
       required DateTime startDate,
       required DateTime endDate,
       required int duration,
@@ -272,6 +290,9 @@ abstract class _TimeEntry extends TimeEntry {
   @override
   String? get id;
   set id(String? value);
+  @override
+  String? get taskId;
+  set taskId(String? value);
   @override
   DateTime get startDate;
   set startDate(DateTime value);

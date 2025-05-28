@@ -1,7 +1,5 @@
-import 'dart:async';
 
 import 'package:app/entities/tasks/tasks.entity.dart';
-import 'package:app/entities/time_entry/time_entry.entity.dart';
 import 'package:app/entities/user/user.entity.dart';
 import 'package:app/services/tasks.service.dart';
 import 'package:equatable/equatable.dart';
@@ -17,9 +15,6 @@ class TasksBloc extends HydratedBloc<TasksEvent, TasksState> {
     on<AddTask>(_onAddTask);
     on<EditTask>(_onEditTask);
     on<DeleteTask>(_onDeleteTask);
-    on<AddTimeEntryToTask>(_onAddTimeEntryToTask);
-    on<RemoveTimeEntryFromTask>(_onRemoveTimeEntryFromTask);
-    on<UpdateTimeEntry>(_onUpdateTimeEntry);
     
   }
 
@@ -81,45 +76,6 @@ class TasksBloc extends HydratedBloc<TasksEvent, TasksState> {
     emit(TasksLoading(prevState.tasks ?? []));
     try {
       await _tasksService.deleteTask(event.task);
-      add(const LoadTasks());
-    } catch (e) {
-      emit(TaskLoadingError(prevState.tasks ?? [], e.toString()));
-      add(const LoadTasks());
-    }
-  }
-
-  FutureOr<void> _onAddTimeEntryToTask(AddTimeEntryToTask event, Emitter<TasksState> emit) async {
-    final prevState = state;
-    emit(TasksLoading(prevState.tasks ?? []));
-    try {
-      await _tasksService.addTimeEntryToTask(event.task, event.timeEntry);
-      emit(TaskAddTimeEntrySuccess(prevState.tasks ?? []));
-      add(const LoadTasks());
-    } catch (e) {
-      emit(TaskLoadingError(prevState.tasks ?? [], e.toString()));
-      add(const LoadTasks());
-    }
-  }
-
-  FutureOr<void> _onRemoveTimeEntryFromTask(RemoveTimeEntryFromTask event, Emitter<TasksState> emit) async {
-    final prevState = state;
-    emit(TasksLoading(prevState.tasks ?? []));
-    try {
-      await _tasksService.removeTimeEntryFromTask(event.task, event.timeEntry);
-      emit(TaskRemoveTimeEntrySuccess(prevState.tasks ?? []));
-      add(const LoadTasks());
-    } catch (e) {
-      emit(TaskLoadingError(prevState.tasks ?? [], e.toString()));
-      add(const LoadTasks());
-    }
-  }
-
-  FutureOr<void> _onUpdateTimeEntry(UpdateTimeEntry event, Emitter<TasksState> emit) async {
-    final prevState = state;
-    emit(TasksLoading(prevState.tasks ?? []));
-    try {
-      await _tasksService.updateTimeEntryInTask(event.task, event.timeEntry);
-      emit(TaskUpdateTimeEntrySuccess(prevState.tasks ?? []));
       add(const LoadTasks());
     } catch (e) {
       emit(TaskLoadingError(prevState.tasks ?? [], e.toString()));

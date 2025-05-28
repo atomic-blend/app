@@ -9,6 +9,7 @@ import 'package:app/blocs/folder/folder.bloc.dart';
 import 'package:app/blocs/habit/habit.bloc.dart';
 import 'package:app/blocs/tag/tag.bloc.dart';
 import 'package:app/blocs/tasks/tasks.bloc.dart';
+import 'package:app/blocs/time_entries/time_entry.bloc.dart';
 import 'package:app/i18n/strings.g.dart';
 import 'package:app/services/notifications/background_notification_processor.dart';
 import 'package:app/services/notifications/fcm_service.dart';
@@ -103,7 +104,8 @@ FutureOr<void> main() async {
               BlocProvider(create: (context) => DeviceCalendarBloc()),
               BlocProvider(create: (context) => HabitBloc()),
               BlocProvider(create: (context) => TagBloc()),
-              BlocProvider(create: (context) => FolderBloc())
+              BlocProvider(create: (context) => FolderBloc()),
+              BlocProvider(create: (context) => TimeEntryBloc()),
             ],
             child: TranslationProvider(
                 child: const ToastificationWrapper(child: App()))),
