@@ -25,8 +25,10 @@ class TaskTimeEntryLog extends StatelessWidget {
           Navigator.pop(context);
         }
       },
-      child: BlocBuilder<TimeEntryBloc, TimeEntryState>(builder: (context, taskState) {
-        final timeEntries = taskState.timeEntries?.where((e) => e.taskId == task.id).toList();
+      child: BlocBuilder<TimeEntryBloc, TimeEntryState>(
+          builder: (context, taskState) {
+        final timeEntries =
+            taskState.timeEntries?.where((e) => e.taskId == task.id).toList();
         return Padding(
           padding: EdgeInsets.all($constants.insets.md),
           child: Column(
@@ -99,16 +101,14 @@ class TaskTimeEntryLog extends StatelessWidget {
               SizedBox(
                 height: $constants.insets.xs,
               ),
-              if (timeEntries == null ||
-                  timeEntries.isEmpty)
+              if (timeEntries == null || timeEntries.isEmpty)
                 Text(
                   context.t.tasks.no_time_entries,
                   style: getTextTheme(context)
                       .bodyMedium!
                       .copyWith(color: Colors.grey),
                 ),
-              if (timeEntries != null &&
-                  timeEntries.isNotEmpty)
+              if (timeEntries != null && timeEntries.isNotEmpty)
                 SingleChildScrollView(
                   child: Column(
                     children: [
@@ -126,114 +126,116 @@ class TaskTimeEntryLog extends StatelessWidget {
 
   _buildTimeEntryCard(
       BuildContext context, TaskEntity task, TimeEntry timeEntry) {
-    return Slidable(
-      endActionPane: ActionPane(
-        motion: const ScrollMotion(),
-        children: [
-          SizedBox(
-            width: $constants.insets.xs,
-          ),
-          Theme(
-            data: Theme.of(context).copyWith(
-                outlinedButtonTheme: const OutlinedButtonThemeData(
-              style: ButtonStyle(
-                iconColor: WidgetStatePropertyAll(Colors.white),
-                iconSize: WidgetStatePropertyAll(25),
-              ),
-            )),
-            child: Expanded(
-              child: GestureDetector(
-                onTap: () {
-                  if (!context.mounted) return;
-                  showDialog(
-                    context: context,
-                    builder: (context) => DeleteConfirmModal(
-                      title: context.t.habits.habit_detail.delete_entry,
-                      description: context
-                          .t.habits.habit_detail.delete_entry_description,
-                      warning:
-                          context.t.habits.habit_detail.delete_entry_warning,
-                      onDelete: () {
-                        if (!context.mounted) {
-                          return;
-                        }
-                        context.read<TimeEntryBloc>().add(
-                              DeleteTimeEntry(
-                                timeEntry,
-                              ),
-                            );
-                      },
+    return Padding(
+      padding: EdgeInsets.only(bottom: $constants.insets.xs),
+      child: Slidable(
+        endActionPane: ActionPane(
+          motion: const ScrollMotion(),
+          children: [
+            SizedBox(
+              width: $constants.insets.xs,
+            ),
+            Theme(
+              data: Theme.of(context).copyWith(
+                  outlinedButtonTheme: const OutlinedButtonThemeData(
+                style: ButtonStyle(
+                  iconColor: WidgetStatePropertyAll(Colors.white),
+                  iconSize: WidgetStatePropertyAll(25),
+                ),
+              )),
+              child: Expanded(
+                child: GestureDetector(
+                  onTap: () {
+                    if (!context.mounted) return;
+                    showDialog(
+                      context: context,
+                      builder: (context) => DeleteConfirmModal(
+                        title: context.t.habits.habit_detail.delete_entry,
+                        description: context
+                            .t.habits.habit_detail.delete_entry_description,
+                        warning:
+                            context.t.habits.habit_detail.delete_entry_warning,
+                        onDelete: () {
+                          if (!context.mounted) {
+                            return;
+                          }
+                          context.read<TimeEntryBloc>().add(
+                                DeleteTimeEntry(
+                                  timeEntry,
+                                ),
+                              );
+                        },
+                      ),
+                    );
+                  },
+                  child: Container(
+                    height: double.infinity,
+                    decoration: BoxDecoration(
+                      color: Colors.red,
+                      borderRadius: BorderRadius.circular(10),
                     ),
-                  );
-                },
-                child: Container(
-                  height: double.infinity,
-                  decoration: BoxDecoration(
-                    color: Colors.red,
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: const Icon(
-                    CupertinoIcons.trash,
-                    color: Colors.white,
+                    child: const Icon(
+                      CupertinoIcons.trash,
+                      color: Colors.white,
+                    ),
                   ),
                 ),
               ),
-            ),
-          )
-        ],
-      ),
-      child: Container(
-        width: double.infinity,
-        decoration: BoxDecoration(
-          color: getTheme(context).surfaceContainer,
-          borderRadius: BorderRadius.circular(10),
+            )
+          ],
         ),
-        padding: EdgeInsets.all($constants.insets.xs),
-        child: Padding(
+        child: Container(
+          width: double.infinity,
+          decoration: BoxDecoration(
+            color: getTheme(context).surfaceContainer,
+            borderRadius: BorderRadius.circular(10),
+          ),
           padding: EdgeInsets.all($constants.insets.xs),
-          child: Row(
-            children: [
-              Icon(
-                timeEntry.pomodoro == true
-                    ? CupertinoIcons.timer
-                    : timeEntry.timer == true
-                        ? CupertinoIcons.stopwatch
-                        : CupertinoIcons.person,
-              ),
-              SizedBox(
-                width: $constants.insets.md,
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    timeEntry.pomodoro == true
-                        ? context.t.tasks.pomodoro
-                        : timeEntry.timer == true
-                            ? context.t.tasks.timer
-                            : context.t.tasks.manual,
-                    style: getTextTheme(context).labelLarge!.copyWith(
-                          fontWeight: FontWeight.bold,
-                        ),
-                  ),
-                  Text(_getDurationBetweenDates(
-                      timeEntry.startDate, timeEntry.endDate)),
-                ],
-              ),
-              const Spacer(),
-              Text(Jiffy.parseFromDateTime(timeEntry.startDate).yMMMEd),
-            ],
+          child: Padding(
+            padding: EdgeInsets.all($constants.insets.xs),
+            child: Row(
+              children: [
+                Icon(
+                  timeEntry.pomodoro == true
+                      ? CupertinoIcons.timer
+                      : timeEntry.timer == true
+                          ? CupertinoIcons.stopwatch
+                          : CupertinoIcons.person,
+                ),
+                SizedBox(
+                  width: $constants.insets.md,
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      timeEntry.pomodoro == true
+                          ? context.t.tasks.pomodoro
+                          : timeEntry.timer == true
+                              ? context.t.tasks.timer
+                              : context.t.tasks.manual,
+                      style: getTextTheme(context).labelLarge!.copyWith(
+                            fontWeight: FontWeight.bold,
+                          ),
+                    ),
+                    Text(
+                        _formatDuration(Duration(seconds: timeEntry.duration))),
+                  ],
+                ),
+                const Spacer(),
+                Text(Jiffy.parseFromDateTime(timeEntry.startDate).yMMMEd),
+              ],
+            ),
           ),
         ),
       ),
     );
   }
 
-  _getDurationBetweenDates(
-    DateTime startDate,
-    DateTime endDate,
-  ) {
-    final difference = endDate.difference(startDate);
-    return "${difference.inHours}h ${difference.inMinutes.remainder(60)}m";
+  String _formatDuration(Duration duration) {
+    String twoDigits(int n) => n.toString().padLeft(2, '0');
+    String twoDigitMinutes = twoDigits(duration.inMinutes.remainder(60));
+    String twoDigitSeconds = twoDigits(duration.inSeconds.remainder(60));
+    return '${twoDigits(duration.inHours)}:$twoDigitMinutes:$twoDigitSeconds';
   }
 }

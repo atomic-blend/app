@@ -1,12 +1,9 @@
 import 'dart:async';
 
 import 'package:app/blocs/tasks/tasks.bloc.dart';
-import 'package:app/blocs/time_entries/time_entry.bloc.dart';
 import 'package:app/entities/tasks/tasks.entity.dart';
-import 'package:app/entities/time_entry/time_entry.entity.dart';
 import 'package:app/pages/timer/completed_timer.dart';
 import 'package:app/pages/timer/timer_utils.dart';
-import 'package:app/services/time_entry_service.dart';
 import 'package:app/utils/shortcuts.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -106,9 +103,9 @@ class _TimerWatcherState extends State<TimerWatcher> {
     // Add time entry to task after marking completion
     if (task != null) {
       // If task is found, add time entry to it
-      await _addTimeEntryToTask(mode, task);
+      await TimerUtils.createTimeEntryForStoppedTimer(mode, task: task);
     } else {
-      await _addTimeEntryWithoutTask(mode);
+      await TimerUtils.createTimeEntryForStoppedTimer(mode);
     }
 
     // Reset the timer (this will clear the start time and other data)
@@ -141,69 +138,6 @@ class _TimerWatcherState extends State<TimerWatcher> {
         );
       },
     );
-  }
-
-  Future<void> _addTimeEntryToTask(TimerMode mode, TaskEntity? task) async {
-    if (task == null) return;
-
-    // Get the start time based on timer mode
-    final startTimeString = TimerUtils.getStartDate();
-
-    if (startTimeString == null) {
-      // If start date is null, we can't create a time entry
-      return;
-    }
-
-    final endDate = DateTime.now();
-    final duration = await TimerUtils.getTimerDuration(mode);
-
-    final timeEntry = TimeEntry(
-      startDate: startTimeString,
-      endDate: endDate,
-      taskId: task.id,
-      pomodoro: mode == TimerMode.pomodoro,
-      timer: mode == TimerMode.stopwatch,
-      duration: duration.inSeconds,
-    );
-
-    if (!mounted) return;
-
-    // Use the proper bloc event to add time entry to task
-    context.read<TimeEntryBloc>().add(
-          CreateTimeEntry(
-            timeEntry,
-          ),
-        );
-  }
-
-  Future<bool> _addTimeEntryWithoutTask(TimerMode mode) async {
-    final TimeEntryService timeEntryService = TimeEntryService();
-
-    // Get the start time based on timer mode
-    final startTimeString = TimerUtils.getStartDate();
-
-    if (startTimeString == null) {
-      // If start date is null, we can't create a time entry
-      return false;
-    }
-
-    final endDate = DateTime.now();
-    final duration = await TimerUtils.getTimerDuration(mode);
-
-    final timeEntry = TimeEntry(
-      startDate: startTimeString,
-      endDate: endDate,
-      pomodoro: mode == TimerMode.pomodoro,
-      timer: mode == TimerMode.stopwatch,
-      duration: duration.inSeconds,
-    );
-
-    try {
-      await timeEntryService.createTimeEntry(timeEntry: timeEntry);
-      return true;
-    } on Exception catch (_) {
-      return false;
-    }
   }
 
   @override

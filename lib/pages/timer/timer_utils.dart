@@ -1,5 +1,7 @@
 import 'dart:convert';
 import 'package:app/entities/tasks/tasks.entity.dart';
+import 'package:app/entities/time_entry/time_entry.entity.dart';
+import 'package:app/services/time_entry_service.dart';
 import 'package:app/main.dart';
 import 'package:app/utils/local_notifications.dart';
 
@@ -341,5 +343,37 @@ class TimerUtils {
 
   static Future<void> stopwatchComplete() async {
     await completeTimer(TimerMode.stopwatch);
+  }
+
+  // Method to create time entry when timer is manually stopped
+  static Future<bool> createTimeEntryForStoppedTimer(TimerMode mode,
+      {TaskEntity? task}) async {
+    final startTimeString = prefs?.getString('${mode.name}_start_time');
+
+    if (startTimeString == null) {
+      // If start date is null, we can't create a time entry
+      return false;
+    }
+
+    final startTime = DateTime.parse(startTimeString);
+    final endDate = DateTime.now();
+    final duration = await getTimerDuration(mode);
+
+    final timeEntry = TimeEntry(
+      startDate: startTime,
+      endDate: endDate,
+      taskId: task?.id,
+      pomodoro: mode == TimerMode.pomodoro,
+      timer: mode == TimerMode.stopwatch,
+      duration: duration.inSeconds,
+    );
+
+    try {
+      final timeEntryService = TimeEntryService();
+      await timeEntryService.createTimeEntry(timeEntry: timeEntry);
+      return true;
+    } on Exception catch (_) {
+      return false;
+    }
   }
 }

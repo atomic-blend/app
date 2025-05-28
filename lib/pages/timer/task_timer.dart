@@ -194,7 +194,9 @@ class _TaskTimerState extends State<TaskTimer> {
                           borderColor: Colors.transparent,
                           indicatorColor: value == mode
                               ? (_isRunning
-                                  ? getTheme(context).surface.withValues(alpha: 0.5)
+                                  ? getTheme(context)
+                                      .surface
+                                      .withValues(alpha: 0.5)
                                   : getTheme(context).surface)
                               : getTheme(context).surfaceContainer,
                           backgroundColor: _isRunning
@@ -395,6 +397,11 @@ class _TaskTimerState extends State<TaskTimer> {
                             size: 40,
                           ),
                           onTap: () async {
+                            // Create time entry before stopping the timer
+                            await TimerUtils.createTimeEntryForStoppedTimer(
+                              currentTimerMode,
+                              task: _task,
+                            );
                             await TimerUtils.resetTimer(currentTimerMode);
                             _stopUITimer(); // Stop UI updates
                             await _updateTimerDisplay();
