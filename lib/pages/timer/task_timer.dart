@@ -8,6 +8,7 @@ import 'package:app/components/forms/search_bar.dart';
 import 'package:app/components/widgets/elevated_container.dart';
 import 'package:app/entities/tasks/tasks.entity.dart';
 import 'package:app/i18n/strings.g.dart';
+import 'package:app/pages/timer/timer_utils.dart';
 import 'package:app/utils/constants.dart';
 import 'package:app/utils/shortcuts.dart';
 import 'package:app/utils/toast_helper.dart';
@@ -16,6 +17,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_popup/flutter_popup.dart';
+import 'package:pausable_timer/pausable_timer.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 
 class TaskTimer extends StatefulWidget {
@@ -32,8 +34,6 @@ class _TaskTimerState extends State<TaskTimer> {
   TaskEntity? _task;
   final TextEditingController _searchController = TextEditingController();
 
-  DateTime? _startTime;
-  Timer? _timer;
   Duration? _pomodoroDuration;
 
   @override
@@ -64,6 +64,15 @@ class _TaskTimerState extends State<TaskTimer> {
         }
         return BlocBuilder<TasksBloc, TasksState>(
             builder: (context, taskState) {
+          final taskId =
+              TimerUtils.getPomodoroTaskId() ?? TimerUtils.getStopwatchTaskId();
+          if (taskId != null && _task == null) {
+            _task = taskState.tasks
+                ?.where(
+                  (task) => task.id == taskId,
+                )
+                .firstOrNull;
+          }
           return Column(
             children: [
               SizedBox(
@@ -91,8 +100,6 @@ class _TaskTimerState extends State<TaskTimer> {
                     setState(() {
                       mode = value;
                       _progress = mode == 0 ? 1.0 : 0.0;
-                      _startTime = null; // Reset start time
-                      _timer = null; // Reset timer
                     });
                   },
                 ),
@@ -189,8 +196,11 @@ class _TaskTimerState extends State<TaskTimer> {
                     percent: _progress ?? 0.0,
                     center: Text(
                       _durationToHMS(mode == 1
-                          ? _getStartDateDiffFromNow()
-                          : _getPomoRemainingTime()),
+                          ? TimerUtils.getStopwatchElapsedTime()
+                          : TimerUtils.getPomodoroRemainingTime() ==
+                                  Duration.zero
+                              ? _pomodoroDuration!
+                              : TimerUtils.getPomodoroRemainingTime()),
                       style: getTextTheme(context).titleLarge!.copyWith(
                             fontWeight: FontWeight.bold,
                           ),
@@ -250,43 +260,76 @@ class _TaskTimerState extends State<TaskTimer> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  ElevatedContainer(
-                    padding: EdgeInsets.all($constants.insets.lg),
-                    borderRadius: $constants.corners.full,
-                    child: Icon(
-                      _timer != null && (_timer?.isActive ?? true)
-                          ? CupertinoIcons.square_fill
-                          : CupertinoIcons.arrow_counterclockwise,
-                      size: 40,
+                  if (!TimerUtils.isPomodoroRunning() &&
+                      !TimerUtils.isStopwatchRunning() &&
+                      TimerUtils.getPomodoroRemainingTime() != Duration.zero &&
+                      TimerUtils.getStopwatchElapsedTime() != Duration.zero)
+                    // reset button
+                    ElevatedContainer(
+                      padding: EdgeInsets.all($constants.insets.lg),
+                      borderRadius: $constants.corners.full,
+                      child: const Icon(
+                        CupertinoIcons.arrow_counterclockwise,
+                        size: 40,
+                      ),
+                      onTap: () {
+                        TimerUtils.resetPomodoroTimer(completed: false);
+                      },
                     ),
-                    onTap: () {
-                    },
-                  ),
-                  ElevatedContainer(
-                    padding: EdgeInsets.all($constants.insets.lg),
-                    borderRadius: $constants.corners.full,
-                    child: const Icon(
-                      CupertinoIcons.play_fill,
-                      size: 40,
+                  if (TimerUtils.isPomodoroRunning() ||
+                      TimerUtils.isStopwatchRunning())
+                    ElevatedContainer(
+                      padding: EdgeInsets.all($constants.insets.lg),
+                      borderRadius: $constants.corners.full,
+                      child: const Icon(
+                        CupertinoIcons.square_fill,
+                        size: 40,
+                      ),
+                      onTap: () {},
                     ),
-                    onTap: () {
-                      if (_task == null) {
-                        ToastHelper.showError(
-                          context: context,
-                          title: context.t.timer.select_task_to_start_timer,
-                        );
-                        return;
-                      }
-                      if (_timer == null) {
-                        setState(() {
-                          _startTime = DateTime.now();
-                        });
-                      }
-                      if (mode == 1) {
-                      } else { 
-                      }
-                    },
-                  ),
+                  if (TimerUtils.isPomodoroRunning())
+                    ElevatedContainer(
+                      padding: EdgeInsets.all($constants.insets.lg),
+                      borderRadius: $constants.corners.full,
+                      child: const Icon(
+                        CupertinoIcons.pause,
+                        size: 40,
+                      ),
+                      onTap: () {
+                          TimerUtils.pausePomodoroTimer();
+                      },
+                    ),
+                  if (!TimerUtils.isPomodoroRunning())
+                    ElevatedContainer(
+                      padding: EdgeInsets.all($constants.insets.lg),
+                      borderRadius: $constants.corners.full,
+                      child: const Icon(
+                        CupertinoIcons.play_fill,
+                        size: 40,
+                      ),
+                      onTap: () {
+                        if (_task == null) {
+                          ToastHelper.showError(
+                            context: context,
+                            title: context.t.timer.select_task_to_start_timer,
+                          );
+                          return;
+                        }
+
+                        // stopwatch mode
+                        if (mode == 1) {
+                          TimerUtils.startStopwatch(task: _task);
+                          
+                        } else {
+                          TimerUtils.startPomodoroTimer(
+                            _pomodoroDuration!.inMinutes,
+                            task: _task,
+                          );
+                          // pomodoro mode
+                          
+                        }
+                      },
+                    ),
                 ],
               ),
               SizedBox(
@@ -297,19 +340,6 @@ class _TaskTimerState extends State<TaskTimer> {
         });
       }),
     );
-  }
-
-  _getStartDateDiffFromNow() {
-    if (_startTime == null) return const Duration(minutes: 0);
-    return DateTime.now().difference(_startTime!);
-  }
-
-  _getPomoRemainingTime() {
-    if (_startTime == null) {
-      return _pomodoroDuration ?? const Duration(minutes: 20);
-    }
-    final elapsed = _getStartDateDiffFromNow();
-    return _pomodoroDuration! - elapsed;
   }
 
   _durationToHMS(Duration duration) {
