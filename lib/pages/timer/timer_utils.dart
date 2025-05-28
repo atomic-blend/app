@@ -218,6 +218,12 @@ class TimerUtils {
   }
 
   static Future<void> completeTimer(TimerMode mode) async {
+    final taskId = getTaskId(mode);
+    if (taskId != null) {
+      // Notify task completion if a task is associated
+    } else {
+      // Handle case where no task is associated
+    }
     await resetTimer(mode, completed: true);
   }
 

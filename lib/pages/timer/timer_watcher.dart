@@ -4,6 +4,7 @@ import 'package:app/blocs/tasks/tasks.bloc.dart';
 import 'package:app/components/widgets/elevated_container.dart';
 import 'package:app/entities/tasks/tasks.entity.dart';
 import 'package:app/i18n/strings.g.dart';
+import 'package:app/pages/timer/completed_timer.dart';
 import 'package:app/pages/timer/timer_utils.dart';
 import 'package:app/utils/constants.dart';
 import 'package:app/utils/shortcuts.dart';
@@ -42,7 +43,7 @@ class _TimerWatcherState extends State<TimerWatcher> {
 
   void _startWatching() {
     _watcherTimer?.cancel();
-    _watcherTimer = Timer.periodic(const Duration(seconds: 1), (_) {
+    _watcherTimer = Timer.periodic(const Duration(milliseconds: 50), (_) {
       _checkTimerStates();
     });
   }
@@ -94,10 +95,11 @@ class _TimerWatcherState extends State<TimerWatcher> {
     }
 
     if (isDesktop(context)) {
-      await _showDesktopDialog(mode, task);
+      _showDesktopDialog(mode, task);
     } else {
-      await _showMobileBottomSheet(mode, task);
+      _showMobileBottomSheet(mode, task);
     }
+    await TimerUtils.completeTimer(mode);
   }
 
   Future<void> _showDesktopDialog(TimerMode mode, TaskEntity? task) async {
@@ -105,72 +107,9 @@ class _TimerWatcherState extends State<TimerWatcher> {
       context: context,
       barrierDismissible: false,
       builder: (BuildContext context) {
-        return AlertDialog(
-          title: Row(
-            children: [
-              Icon(
-                mode == TimerMode.pomodoro
-                    ? CupertinoIcons.alarm_fill
-                    : CupertinoIcons.stopwatch_fill,
-                color: getTheme(context).primary,
-              ),
-              SizedBox(width: $constants.insets.xs),
-              Text(
-                mode == TimerMode.pomodoro
-                    ? context.t.timer.modes['pomodoro']! + ' ' + 'Completed!'
-                    : context.t.timer.modes['stopwatch']! + ' ' + 'Completed!',
-                style: getTextTheme(context).headlineSmall?.copyWith(
-                      fontWeight: FontWeight.bold,
-                    ),
-              ),
-            ],
-          ),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              if (task != null) ...[
-                Text(
-                  'Task: ${task.title}',
-                  style: getTextTheme(context).bodyLarge?.copyWith(
-                        fontWeight: FontWeight.w600,
-                      ),
-                ),
-                SizedBox(height: $constants.insets.sm),
-              ],
-              Text(
-                mode == TimerMode.pomodoro
-                    ? 'Your pomodoro session has completed! Time for a break.'
-                    : 'Your stopwatch session has been completed.',
-                style: getTextTheme(context).bodyMedium,
-              ),
-              SizedBox(height: $constants.insets.md),
-              if (mode == TimerMode.pomodoro)
-                Text(
-                  'Duration: ${TimerUtils.getPomodoroDuration()} minutes',
-                  style: getTextTheme(context).bodySmall?.copyWith(
-                        color: getTheme(context).onSurface.withOpacity(0.7),
-                      ),
-                ),
-            ],
-          ),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: Text(context.t.actions.cancel),
-            ),
-            ElevatedButton(
-              onPressed: () async {
-                await TimerUtils.resetTimer(mode, completed: true);
-                if (mounted) {
-                  Navigator.of(context).pop();
-                }
-              },
-              child: Text(context.t.timer.reset),
-            ),
-          ],
+        return CompletedTimer(
+          mode: mode,
+          task: task,
         );
       },
     );
@@ -183,147 +122,9 @@ class _TimerWatcherState extends State<TimerWatcher> {
       isScrollControlled: true,
       backgroundColor: Colors.transparent,
       builder: (BuildContext context) {
-        return Container(
-          decoration: BoxDecoration(
-            color: getTheme(context).surface,
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular($constants.corners.lg),
-              topRight: Radius.circular($constants.corners.lg),
-            ),
-          ),
-          padding: EdgeInsets.all($constants.insets.lg),
-          child: SafeArea(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                // Drag handle
-                Container(
-                  width: 40,
-                  height: 4,
-                  decoration: BoxDecoration(
-                    color: getTheme(context).onSurface.withOpacity(0.3),
-                    borderRadius: BorderRadius.circular($constants.corners.xs),
-                  ),
-                ),
-                SizedBox(height: $constants.insets.lg),
-
-                // Icon and title
-                Container(
-                  padding: EdgeInsets.all($constants.insets.lg),
-                  decoration: BoxDecoration(
-                    color: getTheme(context).primary.withOpacity(0.1),
-                    borderRadius:
-                        BorderRadius.circular($constants.corners.full),
-                  ),
-                  child: Icon(
-                    mode == TimerMode.pomodoro
-                        ? CupertinoIcons.alarm_fill
-                        : CupertinoIcons.stopwatch_fill,
-                    size: 48,
-                    color: getTheme(context).primary,
-                  ),
-                ),
-
-                SizedBox(height: $constants.insets.lg),
-
-                Text(
-                  mode == TimerMode.pomodoro
-                      ? context.t.timer.modes['pomodoro']! + ' Completed!'
-                      : context.t.timer.modes['stopwatch']! + ' Completed!',
-                  style: getTextTheme(context).headlineSmall?.copyWith(
-                        fontWeight: FontWeight.bold,
-                      ),
-                  textAlign: TextAlign.center,
-                ),
-
-                SizedBox(height: $constants.insets.md),
-
-                if (task != null) ...[
-                  ElevatedContainer(
-                    padding: EdgeInsets.all($constants.insets.md),
-                    child: Row(
-                      children: [
-                        Icon(
-                          CupertinoIcons.checkmark_circle_fill,
-                          color: getTheme(context).primary,
-                          size: 20,
-                        ),
-                        SizedBox(width: $constants.insets.sm),
-                        Expanded(
-                          child: Text(
-                            task.title,
-                            style: getTextTheme(context).bodyLarge?.copyWith(
-                                  fontWeight: FontWeight.w600,
-                                ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  SizedBox(height: $constants.insets.md),
-                ],
-
-                Text(
-                  mode == TimerMode.pomodoro
-                      ? 'Your pomodoro session has completed! Time for a break.'
-                      : 'Your stopwatch session has been completed.',
-                  style: getTextTheme(context).bodyMedium,
-                  textAlign: TextAlign.center,
-                ),
-
-                if (mode == TimerMode.pomodoro) ...[
-                  SizedBox(height: $constants.insets.sm),
-                  Text(
-                    'Duration: ${TimerUtils.getPomodoroDuration()} minutes',
-                    style: getTextTheme(context).bodySmall?.copyWith(
-                          color: getTheme(context).onSurface.withOpacity(0.7),
-                        ),
-                    textAlign: TextAlign.center,
-                  ),
-                ],
-
-                SizedBox(height: $constants.insets.xl),
-
-                // Actions
-                Row(
-                  children: [
-                    Expanded(
-                      child: OutlinedButton(
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                        },
-                        style: OutlinedButton.styleFrom(
-                          padding: EdgeInsets.symmetric(
-                            vertical: $constants.insets.md,
-                          ),
-                        ),
-                        child: Text(context.t.actions.cancel),
-                      ),
-                    ),
-                    SizedBox(width: $constants.insets.md),
-                    Expanded(
-                      child: ElevatedButton(
-                        onPressed: () async {
-                          await TimerUtils.resetTimer(mode, completed: true);
-                          if (mounted) {
-                            Navigator.of(context).pop();
-                          }
-                        },
-                        style: ElevatedButton.styleFrom(
-                          padding: EdgeInsets.symmetric(
-                            vertical: $constants.insets.md,
-                          ),
-                        ),
-                        child: Text(context.t.timer.reset),
-                      ),
-                    ),
-                  ],
-                ),
-
-                SizedBox(height: $constants.insets.md),
-              ],
-            ),
-          ),
+        return CompletedTimer(
+          mode: mode,
+          task: task,
         );
       },
     );

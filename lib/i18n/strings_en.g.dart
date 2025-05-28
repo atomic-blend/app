@@ -479,6 +479,7 @@ class TranslationsActionsEn {
 	String get add => 'Add';
 	String get edit => 'Edit';
 	String get clear => 'Clear';
+	String get close => 'Close';
 }
 
 // Path: validation
@@ -784,6 +785,10 @@ class TranslationsTimerEn {
 	};
 	String get select_task => 'Select a task';
 	String get select_task_to_start_timer => 'Select a task to start the timer';
+	String get completed => 'Completed!';
+	String get pomodoro_completed_message => 'Your pomodoro session has completed! Time for a break.';
+	String get stopwatch_completed_message => 'Your stopwatch session has been completed.';
+	String get task_label => 'Task';
 }
 
 // Path: auth.not_logged_in
@@ -1646,6 +1651,7 @@ extension on Translations {
 			case 'actions.add': return 'Add';
 			case 'actions.edit': return 'Edit';
 			case 'actions.clear': return 'Clear';
+			case 'actions.close': return 'Close';
 			case 'validation.required': return 'Required';
 			case 'validation.invalid_url': return 'invalid URL';
 			case 'errors.wrong_email_password': return 'Email or password incorrect';
@@ -1892,6 +1898,10 @@ extension on Translations {
 			case 'timer.modes.stopwatch': return 'Stopwatch';
 			case 'timer.select_task': return 'Select a task';
 			case 'timer.select_task_to_start_timer': return 'Select a task to start the timer';
+			case 'timer.completed': return 'Completed!';
+			case 'timer.pomodoro_completed_message': return 'Your pomodoro session has completed! Time for a break.';
+			case 'timer.stopwatch_completed_message': return 'Your stopwatch session has been completed.';
+			case 'timer.task_label': return 'Task';
 			default: return null;
 		}
 	}

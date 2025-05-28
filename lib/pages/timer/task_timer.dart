@@ -419,15 +419,6 @@ class _TaskTimerState extends State<TaskTimer> {
                             size: 40,
                           ),
                           onTap: () async {
-                            if (_task == null) {
-                              ToastHelper.showError(
-                                context: context,
-                                title:
-                                    context.t.timer.select_task_to_start_timer,
-                              );
-                              return;
-                            }
-
                             if (_isPaused) {
                               // Resume timer
                               await TimerUtils.resumeTimer(currentTimerMode);

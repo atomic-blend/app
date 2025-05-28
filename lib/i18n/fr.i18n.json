@@ -463,7 +463,8 @@
     "delete": "Supprimer",
     "add": "Ajouter",
     "edit": "Modifier",
-    "clear": "Effacer"
+    "clear": "Effacer",
+    "close": "Fermer"
   },
   "date_modes(map)": {
     "date": "Date",
@@ -741,6 +742,10 @@
       "stopwatch": "Chronomètre"
     },
     "select_task": "Sélectionner une tâche",
-    "select_task_to_start_timer": "Sélectionner une tâche pour démarrer le minuteur"
+    "select_task_to_start_timer": "Sélectionner une tâche pour démarrer le minuteur",
+    "completed": "Terminé !",
+    "pomodoro_completed_message": "Votre session pomodoro est terminée ! C'est l'heure de faire une pause.",
+    "stopwatch_completed_message": "Votre session de chronomètre a été terminée.",
+    "task_label": "Tâche"
   }
 }

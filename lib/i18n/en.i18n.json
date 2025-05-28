@@ -166,14 +166,14 @@
       "delete_folder": "Delete folder",
       "delete_folder_description": "Are you sure you want to delete this folder?",
       "delete_folder_warning": "This action cannot be undone and all the tasks will be unlinked",
-      "name":"Name of the folder",
+      "name": "Name of the folder",
       "name_hint": "Work",
       "name_description": "Define a name for your folder, this will help you remember what it is about and be shown in notifications.",
       "name_required": "Name is required",
       "color": "Color",
       "color_description": "Choose a color for your folder, this will help you remember what it is about and be shown in notifications.",
       "select_a_folder": "Select a folder"
-      },
+    },
     "nothing_to_do": "Nothing to do for now, enjoy your day!",
     "day_off": "You have nothing planned for tomorrow, enjoy your day!",
     "week_off": "You have nothing planned for this week, try and take the time to do the stuff left behind!",
@@ -470,7 +470,8 @@
     "delete": "Delete",
     "add": "Add",
     "edit": "Edit",
-    "clear": "Clear"
+    "clear": "Clear",
+    "close": "Close"
   },
   "validation": {
     "required": "Required",
@@ -744,6 +745,10 @@
       "stopwatch": "Stopwatch"
     },
     "select_task": "Select a task",
-    "select_task_to_start_timer": "Select a task to start the timer"
+    "select_task_to_start_timer": "Select a task to start the timer",
+    "completed": "Completed!",
+    "pomodoro_completed_message": "Your pomodoro session has completed! Time for a break.",
+    "stopwatch_completed_message": "Your stopwatch session has been completed.",
+    "task_label": "Task"
   }
 }
