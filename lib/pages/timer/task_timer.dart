@@ -90,17 +90,29 @@ class _TaskTimerState extends State<TaskTimer> {
       _isRunning = isRunning;
 
       if (mode == 0) {
-        // Pomodoro - duration is remaining time, so progress from 1 to 0
-        _progress = _pomodoroDuration != null
-            ? (duration.inSeconds / _pomodoroDuration!.inSeconds)
-                .clamp(0.0, 1.0)
-            : 1.0;
+        // Pomodoro
+        if (!isRunning) {
+          // Timer is stopped/reset - show full circle
+          _progress = 1.0;
+        } else {
+          // Timer is running - duration is remaining time, so progress from 1 to 0
+          _progress = _pomodoroDuration != null
+              ? (duration.inSeconds / _pomodoroDuration!.inSeconds)
+                  .clamp(0.0, 1.0)
+              : 1.0;
+        }
       } else {
-        // Stopwatch - duration is elapsed time, so progress from 0 to 1
-        _progress = _pomodoroDuration != null
-            ? (duration.inSeconds / _pomodoroDuration!.inSeconds)
-                .clamp(0.0, 1.0)
-            : 0.0;
+        // Stopwatch
+        if (!isRunning) {
+          // Timer is stopped/reset - show empty circle
+          _progress = 0.0;
+        } else {
+          // Timer is running - duration is elapsed time, so progress from 0 to 1
+          _progress = _pomodoroDuration != null
+              ? (duration.inSeconds / _pomodoroDuration!.inSeconds)
+                  .clamp(0.0, 1.0)
+              : 0.0;
+        }
       }
     });
 
@@ -165,25 +177,38 @@ class _TaskTimerState extends State<TaskTimer> {
                       iconBuilder: (value, foreground) {
                         return Text(
                             context.t.timer.modes.values.elementAt(value!),
-                            style:
-                                getTextTheme(context).bodyMedium!.copyWith());
+                            style: getTextTheme(context).bodyMedium!.copyWith(
+                                color: _isRunning
+                                    ? getTextTheme(context)
+                                        .bodyMedium!
+                                        .color
+                                        ?.withOpacity(0.5)
+                                    : null));
                       },
                       styleBuilder: (value) {
                         return ToggleStyle(
                           borderColor: Colors.transparent,
                           indicatorColor: value == mode
-                              ? getTheme(context).surface
+                              ? (_isRunning
+                                  ? getTheme(context).surface.withOpacity(0.5)
+                                  : getTheme(context).surface)
                               : getTheme(context).surfaceContainer,
-                          backgroundColor: getTheme(context).surfaceContainer,
+                          backgroundColor: _isRunning
+                              ? getTheme(context)
+                                  .surfaceContainer
+                                  .withOpacity(0.5)
+                              : getTheme(context).surfaceContainer,
                         );
                       },
-                      onChanged: (value) {
-                        if (value == null) return;
-                        setState(() {
-                          mode = value;
-                          _progress = mode == 0 ? 1.0 : 0.0;
-                        });
-                      },
+                      onChanged: _isRunning
+                          ? null
+                          : (value) {
+                              if (value == null) return;
+                              setState(() {
+                                mode = value;
+                                _progress = mode == 0 ? 1.0 : 0.0;
+                              });
+                            },
                     ),
                   ),
                   SizedBox(
@@ -279,7 +304,7 @@ class _TaskTimerState extends State<TaskTimer> {
                             getTheme(context).surfaceContainer.darken(10),
                         percent: _progress ?? 0.0,
                         center: Text(
-                          _durationToHMS(currentDuration),
+                          _getCenterText(currentDuration),
                           style: getTextTheme(context).titleLarge!.copyWith(
                                 fontWeight: FontWeight.bold,
                               ),
@@ -355,7 +380,8 @@ class _TaskTimerState extends State<TaskTimer> {
                             await _updateTimerDisplay();
                           },
                         ),
-                      if (_isRunning)
+                      if (_isPaused)
+                        // stop button (only when paused)
                         ElevatedContainer(
                           padding: EdgeInsets.all($constants.insets.lg),
                           borderRadius: $constants.corners.full,
@@ -370,6 +396,7 @@ class _TaskTimerState extends State<TaskTimer> {
                           },
                         ),
                       if (_isRunning && !_isPaused)
+                        // pause button (only when running and not paused)
                         ElevatedContainer(
                           padding: EdgeInsets.all($constants.insets.lg),
                           borderRadius: $constants.corners.full,
@@ -435,6 +462,15 @@ class _TaskTimerState extends State<TaskTimer> {
         });
       }),
     );
+  }
+
+  String _getCenterText(Duration currentDuration) {
+    // If in pomodoro mode and no timer is running, show the pomodoro duration
+    if (mode == 0 && !_isRunning) {
+      return _durationToHMS(_pomodoroDuration ?? const Duration(minutes: 20));
+    }
+    // Otherwise show the current timer duration
+    return _durationToHMS(currentDuration);
   }
 
   _durationToHMS(Duration duration) {
