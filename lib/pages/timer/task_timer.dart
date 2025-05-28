@@ -3,11 +3,14 @@ import 'dart:async';
 import 'package:animated_toggle_switch/animated_toggle_switch.dart';
 import 'package:app/blocs/app/app.bloc.dart';
 import 'package:app/blocs/tasks/tasks.bloc.dart';
+import 'package:app/blocs/time_entries/time_entry.bloc.dart';
 import 'package:app/components/buttons/task_item.dart';
 import 'package:app/components/forms/search_bar.dart';
 import 'package:app/components/widgets/elevated_container.dart';
 import 'package:app/entities/tasks/tasks.entity.dart';
+import 'package:app/entities/time_entry/time_entry.entity.dart';
 import 'package:app/i18n/strings.g.dart';
+import 'package:app/pages/timer/completed_timer.dart';
 import 'package:app/pages/timer/timer_utils.dart';
 import 'package:app/utils/constants.dart';
 import 'package:app/utils/shortcuts.dart';
@@ -122,6 +125,45 @@ class _TaskTimerState extends State<TaskTimer> {
     if (isPaused || !isRunning) {
       _stopUITimer();
     }
+  }
+
+  Future<void> _showCompletedTimerModal(
+      TimerMode mode, TaskEntity? task) async {
+    if (!mounted) return;
+
+    if (isDesktop(context)) {
+      await _showDesktopDialog(mode, task);
+    } else {
+      await _showMobileBottomSheet(mode, task);
+    }
+  }
+
+  Future<void> _showDesktopDialog(TimerMode mode, TaskEntity? task) async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return CompletedTimer(
+          mode: mode,
+          task: task,
+        );
+      },
+    );
+  }
+
+  Future<void> _showMobileBottomSheet(TimerMode mode, TaskEntity? task) async {
+    return showModalBottomSheet<void>(
+      context: context,
+      isDismissible: false,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (BuildContext context) {
+        return CompletedTimer(
+          mode: mode,
+          task: task,
+        );
+      },
+    );
   }
 
   @override
@@ -398,10 +440,24 @@ class _TaskTimerState extends State<TaskTimer> {
                           ),
                           onTap: () async {
                             // Create time entry before stopping the timer
-                            await TimerUtils.createTimeEntryForStoppedTimer(
+                            final success =
+                                await TimerUtils.createTimeEntryForStoppedTimer(
                               currentTimerMode,
                               task: _task,
                             );
+
+                            if (!context.mounted) return;
+                            context
+                                .read<TimeEntryBloc>()
+                                .add(const LoadTimeEntries());
+
+                            // Show completed modal for stopwatch only if time entry was created successfully
+                            if (success &&
+                                currentTimerMode == TimerMode.stopwatch) {
+                              await _showCompletedTimerModal(
+                                  currentTimerMode, _task);
+                            }
+
                             await TimerUtils.resetTimer(currentTimerMode);
                             _stopUITimer(); // Stop UI updates
                             await _updateTimerDisplay();
