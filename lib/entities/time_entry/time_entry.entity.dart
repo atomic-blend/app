@@ -12,6 +12,8 @@ class TimeEntry with _$TimeEntry {
     String? id,
     required DateTime startDate,
     required DateTime endDate,
+    // Duration in seconds
+    required int duration,
     DateTime? createdAt,
     DateTime? updatedAt,
   }) = _TimeEntry;
@@ -38,6 +40,7 @@ class TimeEntry with _$TimeEntry {
           .encryptJson(startDate.toUtc().toIso8601String()),
       'endDate': await encryptionService
           .encryptJson(endDate.toUtc().toIso8601String()),
+      'duration': await encryptionService.encryptJson(duration),
       'createdAt': createdAt?.toUtc().toIso8601String(),
       'updatedAt': updatedAt?.toUtc().toIso8601String(),
     };
@@ -56,6 +59,7 @@ class TimeEntry with _$TimeEntry {
       id: data['id'],
       startDate: DateTime.parse(decryptedStartDate),
       endDate: DateTime.parse(decryptedEndDate),
+      duration: await encryptionService.decryptJson(data['duration']),
       createdAt:
           data['createdAt'] != null ? DateTime.parse(data['createdAt']) : null,
       updatedAt:

@@ -1,7 +1,12 @@
 import 'dart:convert';
+import 'package:app/blocs/tasks/tasks.bloc.dart';
 import 'package:app/entities/tasks/tasks.entity.dart';
+import 'package:app/entities/time_entry/time_entry.entity.dart';
 import 'package:app/main.dart';
+import 'package:app/services/tasks.service.dart';
 import 'package:app/utils/local_notifications.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 enum TimerMode { pomodoro, stopwatch }
 
@@ -114,6 +119,13 @@ class TimerUtils {
   static int getPomodoroDuration() {
     return prefs?.getInt('pomodoro_duration') ?? 20;
   }
+  static DateTime? getStartDate() {
+    final startTimeString = prefs?.getString('pomodoro_start_time');
+    if (startTimeString != null) {
+      return DateTime.parse(startTimeString);
+    }
+    return null;
+  }
 
   static Future<Duration> getTimerDuration(TimerMode mode) async {
     final startTimeString = prefs?.getString('${mode.name}_start_time');
@@ -217,13 +229,7 @@ class TimerUtils {
     return pausePeriods.any((period) => period.pauseEnd == null);
   }
 
-  static Future<void> completeTimer(TimerMode mode) async {
-    final taskId = getTaskId(mode);
-    if (taskId != null) {
-      // Notify task completion if a task is associated
-    } else {
-      // Handle case where no task is associated
-    }
+  static Future<void> completeTimer(TimerMode mode, {TaskEntity? task}) async {
     await resetTimer(mode, completed: true);
   }
 

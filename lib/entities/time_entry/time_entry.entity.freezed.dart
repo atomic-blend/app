@@ -25,7 +25,10 @@ mixin _$TimeEntry {
   DateTime get startDate => throw _privateConstructorUsedError;
   set startDate(DateTime value) => throw _privateConstructorUsedError;
   DateTime get endDate => throw _privateConstructorUsedError;
-  set endDate(DateTime value) => throw _privateConstructorUsedError;
+  set endDate(DateTime value) =>
+      throw _privateConstructorUsedError; // Duration in seconds
+  int get duration => throw _privateConstructorUsedError; // Duration in seconds
+  set duration(int value) => throw _privateConstructorUsedError;
   DateTime? get createdAt => throw _privateConstructorUsedError;
   set createdAt(DateTime? value) => throw _privateConstructorUsedError;
   DateTime? get updatedAt => throw _privateConstructorUsedError;
@@ -50,6 +53,7 @@ abstract class $TimeEntryCopyWith<$Res> {
       {String? id,
       DateTime startDate,
       DateTime endDate,
+      int duration,
       DateTime? createdAt,
       DateTime? updatedAt});
 }
@@ -72,6 +76,7 @@ class _$TimeEntryCopyWithImpl<$Res, $Val extends TimeEntry>
     Object? id = freezed,
     Object? startDate = null,
     Object? endDate = null,
+    Object? duration = null,
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
   }) {
@@ -88,6 +93,10 @@ class _$TimeEntryCopyWithImpl<$Res, $Val extends TimeEntry>
           ? _value.endDate
           : endDate // ignore: cast_nullable_to_non_nullable
               as DateTime,
+      duration: null == duration
+          ? _value.duration
+          : duration // ignore: cast_nullable_to_non_nullable
+              as int,
       createdAt: freezed == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -112,6 +121,7 @@ abstract class _$$TimeEntryImplCopyWith<$Res>
       {String? id,
       DateTime startDate,
       DateTime endDate,
+      int duration,
       DateTime? createdAt,
       DateTime? updatedAt});
 }
@@ -132,6 +142,7 @@ class __$$TimeEntryImplCopyWithImpl<$Res>
     Object? id = freezed,
     Object? startDate = null,
     Object? endDate = null,
+    Object? duration = null,
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
   }) {
@@ -148,6 +159,10 @@ class __$$TimeEntryImplCopyWithImpl<$Res>
           ? _value.endDate
           : endDate // ignore: cast_nullable_to_non_nullable
               as DateTime,
+      duration: null == duration
+          ? _value.duration
+          : duration // ignore: cast_nullable_to_non_nullable
+              as int,
       createdAt: freezed == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -167,6 +182,7 @@ class _$TimeEntryImpl extends _TimeEntry {
       {this.id,
       required this.startDate,
       required this.endDate,
+      required this.duration,
       this.createdAt,
       this.updatedAt})
       : super._();
@@ -180,6 +196,9 @@ class _$TimeEntryImpl extends _TimeEntry {
   DateTime startDate;
   @override
   DateTime endDate;
+// Duration in seconds
+  @override
+  int duration;
   @override
   DateTime? createdAt;
   @override
@@ -206,6 +225,7 @@ abstract class _TimeEntry extends TimeEntry {
       {String? id,
       required DateTime startDate,
       required DateTime endDate,
+      required int duration,
       DateTime? createdAt,
       DateTime? updatedAt}) = _$TimeEntryImpl;
   _TimeEntry._() : super._();
@@ -221,7 +241,10 @@ abstract class _TimeEntry extends TimeEntry {
   set startDate(DateTime value);
   @override
   DateTime get endDate;
-  set endDate(DateTime value);
+  set endDate(DateTime value); // Duration in seconds
+  @override
+  int get duration; // Duration in seconds
+  set duration(int value);
   @override
   DateTime? get createdAt;
   set createdAt(DateTime? value);

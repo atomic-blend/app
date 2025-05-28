@@ -210,6 +210,7 @@ class _AddTimeEntryState extends State<AddTimeEntry> {
                       final timeEntry = TimeEntry(
                         startDate: _startDate!,
                         endDate: _endDate!,
+                        duration: _endDate!.difference(_startDate!).inSeconds,
                       );
       
                       if (!context.mounted) {

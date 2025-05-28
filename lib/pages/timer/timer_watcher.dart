@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:app/blocs/tasks/tasks.bloc.dart';
 import 'package:app/components/widgets/elevated_container.dart';
 import 'package:app/entities/tasks/tasks.entity.dart';
+import 'package:app/entities/time_entry/time_entry.entity.dart';
 import 'package:app/i18n/strings.g.dart';
 import 'package:app/pages/timer/completed_timer.dart';
 import 'package:app/pages/timer/timer_utils.dart';
@@ -99,7 +100,27 @@ class _TimerWatcherState extends State<TimerWatcher> {
     } else {
       _showMobileBottomSheet(mode, task);
     }
-    await TimerUtils.completeTimer(mode);
+
+    if (task != null) {
+      final startDate = TimerUtils.getStartDate();
+      final endDate = DateTime.now();
+      if (startDate == null) {
+        // If start date is null, we can't create a time entry
+        return;
+      }
+      final duration = await TimerUtils.getTimerDuration(mode);
+      final timeEntry = TimeEntry(
+          startDate: startDate, endDate: endDate, duration: duration.inSeconds);
+      task.timeEntries ??= [];
+      task.timeEntries?.add(timeEntry);
+      if (!mounted) return;
+      context.read<TasksBloc>().add(
+            EditTask(
+              task,
+            ),
+          );
+    }
+    await TimerUtils.resetTimer(mode);
   }
 
   Future<void> _showDesktopDialog(TimerMode mode, TaskEntity? task) async {
