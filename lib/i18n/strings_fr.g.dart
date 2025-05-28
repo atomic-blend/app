@@ -177,6 +177,7 @@ class _TranslationsTasksFr implements TranslationsTasksEn {
 	@override String get log_session => 'Journaliser une session';
 	@override String get timer => 'Chronomètre';
 	@override String get pomodoro => 'Pomodoro';
+	@override String get manual => 'Manuel';
 	@override String get from => 'De';
 	@override String get to => 'À';
 	@override String get priority => 'Priorité';
@@ -1439,6 +1440,7 @@ extension on TranslationsFr {
 			case 'tasks.log_session': return 'Journaliser une session';
 			case 'tasks.timer': return 'Chronomètre';
 			case 'tasks.pomodoro': return 'Pomodoro';
+			case 'tasks.manual': return 'Manuel';
 			case 'tasks.from': return 'De';
 			case 'tasks.to': return 'À';
 			case 'tasks.priority': return 'Priorité';

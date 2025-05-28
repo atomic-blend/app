@@ -180,6 +180,7 @@ class TranslationsTasksEn {
 	String get log_session => 'Log session';
 	String get timer => 'Timer';
 	String get pomodoro => 'Pomodoro';
+	String get manual => 'Manual';
 	String get from => 'From';
 	String get to => 'To';
 	String get priority => 'Priority';
@@ -1445,6 +1446,7 @@ extension on Translations {
 			case 'tasks.log_session': return 'Log session';
 			case 'tasks.timer': return 'Timer';
 			case 'tasks.pomodoro': return 'Pomodoro';
+			case 'tasks.manual': return 'Manual';
 			case 'tasks.from': return 'From';
 			case 'tasks.to': return 'To';
 			case 'tasks.priority': return 'Priority';

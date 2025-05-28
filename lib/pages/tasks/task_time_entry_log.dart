@@ -25,109 +25,111 @@ class TaskTimeEntryLog extends StatelessWidget {
           Navigator.pop(context);
         }
       },
-      child: BlocBuilder<TasksBloc, TasksState>(
-        builder: (context, taskState) {
-          final TaskEntity latestTask = taskState.tasks?.firstWhere(
-            (task) => task.id == this.task.id,
-            orElse: () => task,
-          ) ?? task;
-          return Padding(
-            padding: EdgeInsets.all($constants.insets.md),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    GestureDetector(
-                        onTap: () {
-                          Navigator.pop(context);
-                        },
-                        child: Container(
-                          width: 30,
-                          height: 30,
-                          padding: EdgeInsets.all($constants.insets.xxs),
-                          decoration: BoxDecoration(
-                            color: Colors.grey.shade300,
-                            borderRadius: BorderRadius.circular(100),
-                          ),
-                          child: const Icon(
-                            CupertinoIcons.xmark,
-                            size: 18,
-                          ),
-                        )),
-                    SizedBox(
-                      width: $constants.insets.xs,
-                    ),
-                    Text(
-                      context.t.tasks.time_spent,
-                      style: getTextTheme(context).headlineLarge!.copyWith(
+      child: BlocBuilder<TasksBloc, TasksState>(builder: (context, taskState) {
+        final TaskEntity latestTask = taskState.tasks?.firstWhere(
+              (task) => task.id == this.task.id,
+              orElse: () => task,
+            ) ??
+            task;
+        return Padding(
+          padding: EdgeInsets.all($constants.insets.md),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  GestureDetector(
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
+                      child: Container(
+                        width: 30,
+                        height: 30,
+                        padding: EdgeInsets.all($constants.insets.xxs),
+                        decoration: BoxDecoration(
+                          color: Colors.grey.shade300,
+                          borderRadius: BorderRadius.circular(100),
+                        ),
+                        child: const Icon(
+                          CupertinoIcons.xmark,
+                          size: 18,
+                        ),
+                      )),
+                  SizedBox(
+                    width: $constants.insets.xs,
+                  ),
+                  Text(
+                    context.t.tasks.time_spent,
+                    style: getTextTheme(context).headlineLarge!.copyWith(
+                          fontWeight: FontWeight.bold,
+                        ),
+                  ),
+                  const Spacer(),
+                  GestureDetector(
+                    onTap: () {
+                      if (isDesktop(context)) {
+                        showDialog(
+                            context: context,
+                            builder: (context) => Dialog(
+                                  child: AddTimeEntry(
+                                    task: latestTask,
+                                  ),
+                                ));
+                      } else {
+                        showModalBottomSheet(
+                          context: context,
+                          isScrollControlled: true,
+                          builder: (context) => SizedBox(
+                              height: getSize(context).height * 0.4,
+                              width: double.infinity,
+                              child: AddTimeEntry(
+                                task: latestTask,
+                              )),
+                        );
+                      }
+                    },
+                    child: Text(
+                      context.t.actions.add,
+                      style: getTextTheme(context).labelMedium!.copyWith(
+                            color: getTheme(context).primary,
                             fontWeight: FontWeight.bold,
                           ),
                     ),
-                    const Spacer(),
-                    GestureDetector(
-                      onTap: () {
-                        if (isDesktop(context)) {
-                          showDialog(
-                              context: context,
-                              builder: (context) => Dialog(
-                                    child: AddTimeEntry(
-                                      task: latestTask,
-                                    ),
-                                  ));
-                        } else {
-                          showModalBottomSheet(
-                            context: context,
-                            isScrollControlled: true,
-                            builder: (context) => SizedBox(
-                                height: getSize(context).height * 0.4,
-                                width: double.infinity,
-                                child: AddTimeEntry(
-                                  task: latestTask,
-                                )),
-                          );
-                        }
-                      },
-                      child: Text(
-                        context.t.actions.add,
-                        style: getTextTheme(context).labelMedium!.copyWith(
-                              color: getTheme(context).primary,
-                              fontWeight: FontWeight.bold,
-                            ),
-                      ),
-                    )
-                  ],
-                ),
-                SizedBox(
-                  height: $constants.insets.xs,
-                ),
-                if (latestTask.timeEntries == null || latestTask.timeEntries!.isEmpty)
-                  Text(
-                    context.t.tasks.no_time_entries,
-                    style: getTextTheme(context)
-                        .bodyMedium!
-                        .copyWith(color: Colors.grey),
-                  ),
-                if (latestTask.timeEntries != null && latestTask.timeEntries!.isNotEmpty)
-                  SingleChildScrollView(
-                    child: Column(
-                      children: [
-                        ...?latestTask.timeEntries?.map(
-                            (timeEntry) => _buildTimeEntryCard(context, latestTask, timeEntry)),
-                      ],
-                    ),
                   )
-              ],
-            ),
-          );
-        }
-      ),
+                ],
+              ),
+              SizedBox(
+                height: $constants.insets.xs,
+              ),
+              if (latestTask.timeEntries == null ||
+                  latestTask.timeEntries!.isEmpty)
+                Text(
+                  context.t.tasks.no_time_entries,
+                  style: getTextTheme(context)
+                      .bodyMedium!
+                      .copyWith(color: Colors.grey),
+                ),
+              if (latestTask.timeEntries != null &&
+                  latestTask.timeEntries!.isNotEmpty)
+                SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      ...?latestTask.timeEntries?.map((timeEntry) =>
+                          _buildTimeEntryCard(context, latestTask, timeEntry)),
+                    ],
+                  ),
+                )
+            ],
+          ),
+        );
+      }),
     );
   }
 
-  _buildTimeEntryCard(BuildContext context, TaskEntity task, TimeEntry timeEntry) {
+  _buildTimeEntryCard(
+      BuildContext context, TaskEntity task, TimeEntry timeEntry) {
     return Slidable(
       endActionPane: ActionPane(
         motion: const ScrollMotion(),
@@ -165,7 +167,6 @@ class TaskTimeEntryLog extends StatelessWidget {
                                 timeEntry: timeEntry,
                               ),
                             );
-                      
                       },
                     ),
                   );
@@ -197,8 +198,12 @@ class TaskTimeEntryLog extends StatelessWidget {
           padding: EdgeInsets.all($constants.insets.xs),
           child: Row(
             children: [
-              const Icon(
-                CupertinoIcons.clock,
+              Icon(
+                timeEntry.pomodoro == true
+                    ? CupertinoIcons.timer
+                    : timeEntry.timer == true
+                        ? CupertinoIcons.stopwatch
+                        : CupertinoIcons.person,
               ),
               SizedBox(
                 width: $constants.insets.md,
@@ -207,7 +212,11 @@ class TaskTimeEntryLog extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "Manual Entry",
+                    timeEntry.pomodoro == true
+                        ? context.t.tasks.pomodoro
+                        : timeEntry.timer == true
+                            ? context.t.tasks.timer
+                            : context.t.tasks.manual,
                     style: getTextTheme(context).labelLarge!.copyWith(
                           fontWeight: FontWeight.bold,
                         ),
