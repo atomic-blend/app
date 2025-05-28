@@ -12,6 +12,8 @@ _$TimeEntryImpl _$$TimeEntryImplFromJson(Map<String, dynamic> json) =>
       startDate: DateTime.parse(json['startDate'] as String),
       endDate: DateTime.parse(json['endDate'] as String),
       duration: (json['duration'] as num).toInt(),
+      pomodoro: json['pomodoro'] as bool?,
+      timer: json['timer'] as bool?,
       createdAt: json['createdAt'] == null
           ? null
           : DateTime.parse(json['createdAt'] as String),
@@ -26,6 +28,8 @@ Map<String, dynamic> _$$TimeEntryImplToJson(_$TimeEntryImpl instance) =>
       'startDate': instance.startDate.toIso8601String(),
       'endDate': instance.endDate.toIso8601String(),
       'duration': instance.duration,
+      'pomodoro': instance.pomodoro,
+      'timer': instance.timer,
       'createdAt': instance.createdAt?.toIso8601String(),
       'updatedAt': instance.updatedAt?.toIso8601String(),
     };

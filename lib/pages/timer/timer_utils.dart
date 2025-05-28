@@ -1,12 +1,7 @@
 import 'dart:convert';
-import 'package:app/blocs/tasks/tasks.bloc.dart';
 import 'package:app/entities/tasks/tasks.entity.dart';
-import 'package:app/entities/time_entry/time_entry.entity.dart';
 import 'package:app/main.dart';
-import 'package:app/services/tasks.service.dart';
 import 'package:app/utils/local_notifications.dart';
-import 'package:flutter/widgets.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 enum TimerMode { pomodoro, stopwatch }
 
@@ -119,6 +114,7 @@ class TimerUtils {
   static int getPomodoroDuration() {
     return prefs?.getInt('pomodoro_duration') ?? 20;
   }
+
   static DateTime? getStartDate() {
     final startTimeString = prefs?.getString('pomodoro_start_time');
     if (startTimeString != null) {
@@ -135,6 +131,27 @@ class TimerUtils {
     }
 
     final startTime = DateTime.parse(startTimeString);
+
+    // Check if timer is completed
+    final endTimeString = prefs?.getString('${mode.name}_end_time');
+    if (endTimeString != null) {
+      // Timer is completed
+      if (mode == TimerMode.pomodoro) {
+        // For completed pomodoro, always return the configured duration
+        final durationInMinutes = prefs?.getInt('pomodoro_duration') ?? 20;
+        return Duration(minutes: durationInMinutes);
+      } else {
+        // For completed stopwatch, return actual elapsed time
+        final endTime = DateTime.parse(endTimeString);
+        final pausePeriods = await _getPausePeriods(mode);
+        final totalPausedDuration = _getTotalPausedDuration(pausePeriods);
+        final totalDuration =
+            endTime.difference(startTime) - totalPausedDuration;
+        return totalDuration.isNegative ? Duration.zero : totalDuration;
+      }
+    }
+
+    // Timer is running, use existing logic
     final pausePeriods = await _getPausePeriods(mode);
     final totalPausedDuration = _getTotalPausedDuration(pausePeriods);
 
@@ -152,7 +169,7 @@ class TimerUtils {
       return totalDuration - effectiveElapsed;
     } else {
       // Stopwatch returns elapsed time
-      return effectiveElapsed;
+      return effectiveElapsed.isNegative ? Duration.zero : effectiveElapsed;
     }
   }
 
@@ -207,6 +224,17 @@ class TimerUtils {
 
   static Future<void> resetTimer(TimerMode mode,
       {bool? completed = false}) async {
+    // If completing, save the end time before clearing
+    if (completed == true) {
+      await prefs?.setString(
+        '${mode.name}_end_time',
+        DateTime.now().toIso8601String(),
+      );
+    } else {
+      // If not completing (resetting), remove the end time
+      await prefs?.remove('${mode.name}_end_time');
+    }
+
     await prefs?.remove('${mode.name}_start_time');
     await prefs?.remove('${mode.name}_task_id');
     await prefs?.remove('${mode.name}_pause_periods');
@@ -217,6 +245,13 @@ class TimerUtils {
         await LocalNotificationUtil.cancelNotification(0);
       }
     }
+  }
+
+  static Future<void> markTimerCompleted(TimerMode mode) async {
+    await prefs?.setString(
+      '${mode.name}_end_time',
+      DateTime.now().toIso8601String(),
+    );
   }
 
   static bool isTimerRunning(TimerMode mode) {

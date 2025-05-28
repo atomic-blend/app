@@ -29,6 +29,10 @@ mixin _$TimeEntry {
       throw _privateConstructorUsedError; // Duration in seconds
   int get duration => throw _privateConstructorUsedError; // Duration in seconds
   set duration(int value) => throw _privateConstructorUsedError;
+  bool? get pomodoro => throw _privateConstructorUsedError;
+  set pomodoro(bool? value) => throw _privateConstructorUsedError;
+  bool? get timer => throw _privateConstructorUsedError;
+  set timer(bool? value) => throw _privateConstructorUsedError;
   DateTime? get createdAt => throw _privateConstructorUsedError;
   set createdAt(DateTime? value) => throw _privateConstructorUsedError;
   DateTime? get updatedAt => throw _privateConstructorUsedError;
@@ -54,6 +58,8 @@ abstract class $TimeEntryCopyWith<$Res> {
       DateTime startDate,
       DateTime endDate,
       int duration,
+      bool? pomodoro,
+      bool? timer,
       DateTime? createdAt,
       DateTime? updatedAt});
 }
@@ -77,6 +83,8 @@ class _$TimeEntryCopyWithImpl<$Res, $Val extends TimeEntry>
     Object? startDate = null,
     Object? endDate = null,
     Object? duration = null,
+    Object? pomodoro = freezed,
+    Object? timer = freezed,
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
   }) {
@@ -97,6 +105,14 @@ class _$TimeEntryCopyWithImpl<$Res, $Val extends TimeEntry>
           ? _value.duration
           : duration // ignore: cast_nullable_to_non_nullable
               as int,
+      pomodoro: freezed == pomodoro
+          ? _value.pomodoro
+          : pomodoro // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      timer: freezed == timer
+          ? _value.timer
+          : timer // ignore: cast_nullable_to_non_nullable
+              as bool?,
       createdAt: freezed == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -122,6 +138,8 @@ abstract class _$$TimeEntryImplCopyWith<$Res>
       DateTime startDate,
       DateTime endDate,
       int duration,
+      bool? pomodoro,
+      bool? timer,
       DateTime? createdAt,
       DateTime? updatedAt});
 }
@@ -143,6 +161,8 @@ class __$$TimeEntryImplCopyWithImpl<$Res>
     Object? startDate = null,
     Object? endDate = null,
     Object? duration = null,
+    Object? pomodoro = freezed,
+    Object? timer = freezed,
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
   }) {
@@ -163,6 +183,14 @@ class __$$TimeEntryImplCopyWithImpl<$Res>
           ? _value.duration
           : duration // ignore: cast_nullable_to_non_nullable
               as int,
+      pomodoro: freezed == pomodoro
+          ? _value.pomodoro
+          : pomodoro // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      timer: freezed == timer
+          ? _value.timer
+          : timer // ignore: cast_nullable_to_non_nullable
+              as bool?,
       createdAt: freezed == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -183,6 +211,8 @@ class _$TimeEntryImpl extends _TimeEntry {
       required this.startDate,
       required this.endDate,
       required this.duration,
+      this.pomodoro,
+      this.timer,
       this.createdAt,
       this.updatedAt})
       : super._();
@@ -199,6 +229,10 @@ class _$TimeEntryImpl extends _TimeEntry {
 // Duration in seconds
   @override
   int duration;
+  @override
+  bool? pomodoro;
+  @override
+  bool? timer;
   @override
   DateTime? createdAt;
   @override
@@ -226,6 +260,8 @@ abstract class _TimeEntry extends TimeEntry {
       required DateTime startDate,
       required DateTime endDate,
       required int duration,
+      bool? pomodoro,
+      bool? timer,
       DateTime? createdAt,
       DateTime? updatedAt}) = _$TimeEntryImpl;
   _TimeEntry._() : super._();
@@ -245,6 +281,12 @@ abstract class _TimeEntry extends TimeEntry {
   @override
   int get duration; // Duration in seconds
   set duration(int value);
+  @override
+  bool? get pomodoro;
+  set pomodoro(bool? value);
+  @override
+  bool? get timer;
+  set timer(bool? value);
   @override
   DateTime? get createdAt;
   set createdAt(DateTime? value);

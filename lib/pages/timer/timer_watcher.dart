@@ -1,13 +1,10 @@
 import 'dart:async';
 
 import 'package:app/blocs/tasks/tasks.bloc.dart';
-import 'package:app/components/widgets/elevated_container.dart';
 import 'package:app/entities/tasks/tasks.entity.dart';
 import 'package:app/entities/time_entry/time_entry.entity.dart';
-import 'package:app/i18n/strings.g.dart';
 import 'package:app/pages/timer/completed_timer.dart';
 import 'package:app/pages/timer/timer_utils.dart';
-import 'package:app/utils/constants.dart';
 import 'package:app/utils/shortcuts.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -95,32 +92,20 @@ class _TimerWatcherState extends State<TimerWatcher> {
       task = tasksState.tasks?.where((t) => t.id == taskId).firstOrNull;
     }
 
+    // First, mark the timer as completed by setting the end time
+    await TimerUtils.markTimerCompleted(mode);
+
     if (isDesktop(context)) {
       _showDesktopDialog(mode, task);
     } else {
       _showMobileBottomSheet(mode, task);
     }
 
-    if (task != null) {
-      final startDate = TimerUtils.getStartDate();
-      final endDate = DateTime.now();
-      if (startDate == null) {
-        // If start date is null, we can't create a time entry
-        return;
-      }
-      final duration = await TimerUtils.getTimerDuration(mode);
-      final timeEntry = TimeEntry(
-          startDate: startDate, endDate: endDate, duration: duration.inSeconds);
-      task.timeEntries ??= [];
-      task.timeEntries?.add(timeEntry);
-      if (!mounted) return;
-      context.read<TasksBloc>().add(
-            EditTask(
-              task,
-            ),
-          );
-    }
-    await TimerUtils.resetTimer(mode);
+    // Add time entry to task after marking completion
+    await _addTimeEntryToTask(mode, task);
+
+    // Reset the timer (this will clear the start time and other data)
+    await TimerUtils.resetTimer(mode, completed: false);
   }
 
   Future<void> _showDesktopDialog(TimerMode mode, TaskEntity? task) async {
@@ -149,6 +134,39 @@ class _TimerWatcherState extends State<TimerWatcher> {
         );
       },
     );
+  }
+
+  Future<void> _addTimeEntryToTask(TimerMode mode, TaskEntity? task) async {
+    if (task == null) return;
+
+    // Get the start time based on timer mode
+    final startTimeString = TimerUtils.getStartDate();
+
+    if (startTimeString == null) {
+      // If start date is null, we can't create a time entry
+      return;
+    }
+
+    final endDate = DateTime.now();
+    final duration = await TimerUtils.getTimerDuration(mode);
+
+    final timeEntry = TimeEntry(
+      startDate: startTimeString,
+      endDate: endDate,
+      pomodoro: mode == TimerMode.pomodoro,
+      timer: mode == TimerMode.stopwatch,
+      duration: duration.inSeconds,
+    );
+
+    if (!mounted) return;
+
+    // Use the proper bloc event to add time entry to task
+    context.read<TasksBloc>().add(
+          AddTimeEntryToTask(
+            task: task,
+            timeEntry: timeEntry,
+          ),
+        );
   }
 
   @override
