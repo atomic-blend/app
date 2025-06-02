@@ -7,27 +7,47 @@ class ElevatedContainer extends StatelessWidget {
   final double? width;
   final double? height;
   final Color? color;
+  final double? borderRadius;
   final EdgeInsetsGeometry? padding;
+  final VoidCallback? onTap;
   const ElevatedContainer(
-      {super.key, this.child, this.width, this.height, this.padding, this.color});
+      {super.key,
+      this.child,
+      this.width,
+      this.height,
+      this.padding,
+      this.color,
+      this.borderRadius,
+      this.onTap});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: width,
-      height: height,
-      padding: padding,
-      decoration: BoxDecoration(
-          color: color ?? getTheme(context).surfaceContainer,
-          borderRadius: BorderRadius.circular($constants.insets.sm),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withValues(alpha: 0.1),
-              offset: const Offset(0, 4),
-              blurRadius: 10,
-            ),
-          ]),
-      child: child,
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        width: width,
+        height: height,
+        padding: padding,
+        decoration: BoxDecoration(
+            color: color ?? getTheme(context).surfaceContainer,
+            borderRadius:
+                BorderRadius.circular(borderRadius ?? $constants.insets.sm),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withValues(alpha: 0.06),
+                offset: const Offset(0, 2),
+                blurRadius: 8,
+                spreadRadius: 0,
+              ),
+              BoxShadow(
+                color: Colors.black.withValues(alpha: 0.04),
+                offset: const Offset(0, 8),
+                blurRadius: 16,
+                spreadRadius: -4,
+              ),
+            ]),
+        child: child,
+      ),
     );
   }
 }

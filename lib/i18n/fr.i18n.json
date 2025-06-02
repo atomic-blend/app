@@ -183,6 +183,7 @@
     "log_session": "Journaliser une session",
     "timer": "Chronomètre",
     "pomodoro": "Pomodoro",
+    "manual": "Manuel",
     "from": "De",
     "to": "À",
     "priority": "Priorité",
@@ -384,7 +385,12 @@
     "last_month": "Le mois dernier",
     "this_year": "Cette année",
     "last_year": "L'année dernière",
-    "all_time": "Tout le temps"
+    "all_time": "Tout le temps",
+    "minutes": {
+      "zero": "${nb} minutes",
+      "one": "${nb} minute",
+      "other": "${nb} minutes"
+    }
   },
   "days_before(map)": {
     "none": {
@@ -458,7 +464,8 @@
     "delete": "Supprimer",
     "add": "Ajouter",
     "edit": "Modifier",
-    "clear": "Effacer"
+    "clear": "Effacer",
+    "close": "Fermer"
   },
   "date_modes(map)": {
     "date": "Date",
@@ -719,5 +726,33 @@
   },
   "inbox": {
     "title": "Boîte de réception"
+  },
+  "timer": {
+    "title": "Minuteur",
+    "start": "Démarrer",
+    "stop": "Arrêter",
+    "reset": "Réinitialiser",
+    "start_pomodoro": "Démarrer Pomodoro",
+    "start_stopwatch": "Démarrer Chronomètre",
+    "start_break": "Démarrer une pause",
+    "pomo_running": "Pomodoro en cours",
+    "timer_running": "Timer en cours",
+    "time_left": "Temps restant : ${timeLeft}",
+    "pause": "Pause",
+    "resume": "Reprendre",
+    "duration": "Durée",
+    "elapsed_time": "Temps écoulé",
+    "remaining_time": "Temps restant",
+    "no_timer_running": "Aucun minuteur en cours",
+    "modes(map)": {
+      "pomodoro": "Pomodoro",
+      "stopwatch": "Chronomètre"
+    },
+    "select_task": "Sélectionner une tâche",
+    "select_task_to_start_timer": "Sélectionner une tâche pour démarrer le minuteur",
+    "completed": "Terminé !",
+    "pomodoro_completed_message": "Votre session pomodoro est terminée ! C'est l'heure de faire une pause.",
+    "stopwatch_completed_message": "Votre session de chronomètre a été terminée.",
+    "task_label": "Tâche"
   }
 }

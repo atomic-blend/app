@@ -1,7 +1,9 @@
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:timezone/timezone.dart' as tz;
 
 class LocalNotificationUtil {
-  static NotificationDetails getNotifDetails(String androidChannelId, String androidChannelName) {
+  static NotificationDetails getNotifDetails(
+      String androidChannelId, String androidChannelName) {
     // define notification details
     const AndroidNotificationDetails androidDetails =
         AndroidNotificationDetails(
@@ -24,5 +26,30 @@ class LocalNotificationUtil {
     );
 
     return notifDetails;
+  }
+
+  // static method to schedule a pomodoro notification
+  static Future<void> schedulePomodoroNotification(String androidChannelId,
+      String androidChannelName, int id, DateTime scheduledTime) async {
+    final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+        FlutterLocalNotificationsPlugin();
+
+    final NotificationDetails notifDetails =
+        getNotifDetails(androidChannelId, androidChannelName);
+
+    await flutterLocalNotificationsPlugin.zonedSchedule(
+      id,
+      'Pomodoro Complete!',
+      'Time to take a break or start a new session.',
+      tz.TZDateTime.from(scheduledTime, tz.local),
+      notifDetails,
+      androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
+    );
+  }
+
+  static Future<void> cancelNotification(int id) async {
+    final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+        FlutterLocalNotificationsPlugin();
+    await flutterLocalNotificationsPlugin.cancel(id);
   }
 }

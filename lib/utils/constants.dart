@@ -16,6 +16,7 @@ import 'package:app/pages/tasks/filtered_view.dart';
 import 'package:app/pages/tasks/folders.dart';
 import 'package:app/pages/tasks/overview.dart';
 import 'package:app/pages/tasks/tags.dart';
+import 'package:app/pages/timer/task_timer.dart';
 import 'package:app/utils/exntensions/date_time_extension.dart';
 import 'package:app/utils/shortcuts.dart';
 import 'package:flex_color_scheme/flex_color_scheme.dart';
@@ -255,6 +256,10 @@ class Navigation {
           key: Key("eisenhower"),
           items: [],
         ),
+        const NavigationSection(
+          key: Key("timer"),
+          items: [],
+        ),
       ];
 
   // list of fixed items, limited to 5 on mobile
@@ -423,6 +428,7 @@ class Navigation {
           appBar: AppBar(
               key: const Key("habits"),
               backgroundColor: getTheme(context).surface,
+              leading: Container(),
               title: Center(
                 child: Text(
                   context.t.habits.title,
@@ -478,6 +484,7 @@ class Navigation {
           appBar: AppBar(
               key: const Key("more"),
               backgroundColor: getTheme(context).surface,
+              leading: Container(),
               title: Center(
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
@@ -506,12 +513,12 @@ class Navigation {
         NavigationItem(
           key: const Key("eisenhower"),
           icon: const Icon(
-            CupertinoIcons.grid,
-            size: 25,
+            CupertinoIcons.square_grid_2x2,
+            size: 35,
           ),
           cupertinoIcon: const Icon(
-            CupertinoIcons.grid,
-            size: 25,
+            CupertinoIcons.square_grid_2x2,
+            size: 35,
           ),
           label: context.t.eisenhower.small_title,
           body: const EisenhowerMatrix(),
@@ -520,6 +527,59 @@ class Navigation {
             backgroundColor: getTheme(context).surface,
             title: Text(
               context.t.eisenhower.title,
+              style: getTextTheme(context).headlineSmall!.copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
+            ),
+          ),
+        ),
+        NavigationItem(
+          key: const Key("timer"),
+          icon: const Icon(
+            CupertinoIcons.stopwatch,
+            size: 35,
+          ),
+          cupertinoIcon: const Icon(
+            CupertinoIcons.stopwatch,
+            size: 35,
+          ),
+          label: context.t.timer.title,
+          onTap: (index) {
+            if (isDesktop(context)) {
+              showDialog(
+                context: context,
+                builder: (context) => Dialog(
+                  child: SizedBox(
+                    width: getSize(context).width * 0.7,
+                    height: getSize(context).height * 0.75,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular($constants.corners.lg),
+                      child: const TaskTimer()),
+                  ),
+                ),
+              );
+            } else {
+              showModalBottomSheet(
+                isScrollControlled: true,
+                context: context,
+                builder: (context) => SizedBox(
+                  height: getSize(context).height * 0.8,
+                  child: ClipRRect(
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular($constants.corners.lg),
+                        topRight: Radius.circular($constants.corners.lg),
+                      ),
+                      child: const TaskTimer()),
+                ),
+              );
+            }
+          },
+          body: const TaskTimer(),
+          appBar: AppBar(
+            key: const Key("timer"),
+            backgroundColor: getTheme(context).surface,
+            title: Text(
+              context.t.timer.title,
               style: getTextTheme(context).headlineSmall!.copyWith(
                     fontWeight: FontWeight.bold,
                   ),

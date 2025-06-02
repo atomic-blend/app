@@ -95,6 +95,7 @@ class TranslationsFr implements Translations {
 	@override late final _TranslationsEisenhowerFr eisenhower = _TranslationsEisenhowerFr._(_root);
 	@override late final _TranslationsFeatureUnderConstructionFr feature_under_construction = _TranslationsFeatureUnderConstructionFr._(_root);
 	@override late final _TranslationsInboxFr inbox = _TranslationsInboxFr._(_root);
+	@override late final _TranslationsTimerFr timer = _TranslationsTimerFr._(_root);
 }
 
 // Path: navigation
@@ -176,6 +177,7 @@ class _TranslationsTasksFr implements TranslationsTasksEn {
 	@override String get log_session => 'Journaliser une session';
 	@override String get timer => 'Chronomètre';
 	@override String get pomodoro => 'Pomodoro';
+	@override String get manual => 'Manuel';
 	@override String get from => 'De';
 	@override String get to => 'À';
 	@override String get priority => 'Priorité';
@@ -278,6 +280,11 @@ class _TranslationsTimesFr implements TranslationsTimesEn {
 	@override String get this_year => 'Cette année';
 	@override String get last_year => 'L\'année dernière';
 	@override String get all_time => 'Tout le temps';
+	@override String minutes({required num n, required Object nb}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('fr'))(n,
+		zero: '${nb} minutes',
+		one: '${nb} minute',
+		other: '${nb} minutes',
+	);
 }
 
 // Path: days_before.none
@@ -460,6 +467,7 @@ class _TranslationsActionsFr implements TranslationsActionsEn {
 	@override String get add => 'Ajouter';
 	@override String get edit => 'Modifier';
 	@override String get clear => 'Effacer';
+	@override String get close => 'Fermer';
 }
 
 // Path: loading
@@ -747,6 +755,41 @@ class _TranslationsInboxFr implements TranslationsInboxEn {
 
 	// Translations
 	@override String get title => 'Boîte de réception';
+}
+
+// Path: timer
+class _TranslationsTimerFr implements TranslationsTimerEn {
+	_TranslationsTimerFr._(this._root);
+
+	final TranslationsFr _root; // ignore: unused_field
+
+	// Translations
+	@override String get title => 'Minuteur';
+	@override String get start => 'Démarrer';
+	@override String get stop => 'Arrêter';
+	@override String get reset => 'Réinitialiser';
+	@override String get start_pomodoro => 'Démarrer Pomodoro';
+	@override String get start_stopwatch => 'Démarrer Chronomètre';
+	@override String get start_break => 'Démarrer une pause';
+	@override String get pomo_running => 'Pomodoro en cours';
+	@override String get timer_running => 'Timer en cours';
+	@override String time_left({required Object timeLeft}) => 'Temps restant : ${timeLeft}';
+	@override String get pause => 'Pause';
+	@override String get resume => 'Reprendre';
+	@override String get duration => 'Durée';
+	@override String get elapsed_time => 'Temps écoulé';
+	@override String get remaining_time => 'Temps restant';
+	@override String get no_timer_running => 'Aucun minuteur en cours';
+	@override Map<String, String> get modes => {
+		'pomodoro': 'Pomodoro',
+		'stopwatch': 'Chronomètre',
+	};
+	@override String get select_task => 'Sélectionner une tâche';
+	@override String get select_task_to_start_timer => 'Sélectionner une tâche pour démarrer le minuteur';
+	@override String get completed => 'Terminé !';
+	@override String get pomodoro_completed_message => 'Votre session pomodoro est terminée ! C\'est l\'heure de faire une pause.';
+	@override String get stopwatch_completed_message => 'Votre session de chronomètre a été terminée.';
+	@override String get task_label => 'Tâche';
 }
 
 // Path: auth.not_logged_in
@@ -1403,6 +1446,7 @@ extension on TranslationsFr {
 			case 'tasks.log_session': return 'Journaliser une session';
 			case 'tasks.timer': return 'Chronomètre';
 			case 'tasks.pomodoro': return 'Pomodoro';
+			case 'tasks.manual': return 'Manuel';
 			case 'tasks.from': return 'De';
 			case 'tasks.to': return 'À';
 			case 'tasks.priority': return 'Priorité';
@@ -1563,6 +1607,11 @@ extension on TranslationsFr {
 			case 'times.this_year': return 'Cette année';
 			case 'times.last_year': return 'L\'année dernière';
 			case 'times.all_time': return 'Tout le temps';
+			case 'times.minutes': return ({required num n, required Object nb}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('fr'))(n,
+				zero: '${nb} minutes',
+				one: '${nb} minute',
+				other: '${nb} minutes',
+			);
 			case 'days_before.none.value': return '0';
 			case 'days_before.none.label': return 'Aucun';
 			case 'days_before.same_day.value': return '0';
@@ -1601,6 +1650,7 @@ extension on TranslationsFr {
 			case 'actions.add': return 'Ajouter';
 			case 'actions.edit': return 'Modifier';
 			case 'actions.clear': return 'Effacer';
+			case 'actions.close': return 'Fermer';
 			case 'date_modes.date': return 'Date';
 			case 'date_modes.duration': return 'Durée';
 			case 'loading.simple': return 'Chargement en cours...';
@@ -1833,6 +1883,30 @@ extension on TranslationsFr {
 			case 'feature_under_construction.title': return 'Fonctionnalité en construction';
 			case 'feature_under_construction.description': return 'Cette fonctionnalité n\'est pas encore disponible, mais nous travaillons dur pour vous l\'apporter bientôt.\n\nRestez à l\'écoute !';
 			case 'inbox.title': return 'Boîte de réception';
+			case 'timer.title': return 'Minuteur';
+			case 'timer.start': return 'Démarrer';
+			case 'timer.stop': return 'Arrêter';
+			case 'timer.reset': return 'Réinitialiser';
+			case 'timer.start_pomodoro': return 'Démarrer Pomodoro';
+			case 'timer.start_stopwatch': return 'Démarrer Chronomètre';
+			case 'timer.start_break': return 'Démarrer une pause';
+			case 'timer.pomo_running': return 'Pomodoro en cours';
+			case 'timer.timer_running': return 'Timer en cours';
+			case 'timer.time_left': return ({required Object timeLeft}) => 'Temps restant : ${timeLeft}';
+			case 'timer.pause': return 'Pause';
+			case 'timer.resume': return 'Reprendre';
+			case 'timer.duration': return 'Durée';
+			case 'timer.elapsed_time': return 'Temps écoulé';
+			case 'timer.remaining_time': return 'Temps restant';
+			case 'timer.no_timer_running': return 'Aucun minuteur en cours';
+			case 'timer.modes.pomodoro': return 'Pomodoro';
+			case 'timer.modes.stopwatch': return 'Chronomètre';
+			case 'timer.select_task': return 'Sélectionner une tâche';
+			case 'timer.select_task_to_start_timer': return 'Sélectionner une tâche pour démarrer le minuteur';
+			case 'timer.completed': return 'Terminé !';
+			case 'timer.pomodoro_completed_message': return 'Votre session pomodoro est terminée ! C\'est l\'heure de faire une pause.';
+			case 'timer.stopwatch_completed_message': return 'Votre session de chronomètre a été terminée.';
+			case 'timer.task_label': return 'Tâche';
 			default: return null;
 		}
 	}

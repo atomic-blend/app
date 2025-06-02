@@ -27,6 +27,8 @@ mixin _$AppState {
       throw _privateConstructorUsedError;
   bool? get isIntroCompleted => throw _privateConstructorUsedError;
   bool? get displayHabitsInCalendar => throw _privateConstructorUsedError;
+  int? get pomodoroDuration => throw _privateConstructorUsedError;
+  int? get pomodoroBreakDuration => throw _privateConstructorUsedError;
   Map<String, bool>? get showcasePageStatus =>
       throw _privateConstructorUsedError;
 
@@ -52,6 +54,8 @@ abstract class $AppStateCopyWith<$Res> {
       bool? warnUserOnMobileInternetAccess,
       bool? isIntroCompleted,
       bool? displayHabitsInCalendar,
+      int? pomodoroDuration,
+      int? pomodoroBreakDuration,
       Map<String, bool>? showcasePageStatus});
 }
 
@@ -76,6 +80,8 @@ class _$AppStateCopyWithImpl<$Res, $Val extends AppState>
     Object? warnUserOnMobileInternetAccess = freezed,
     Object? isIntroCompleted = freezed,
     Object? displayHabitsInCalendar = freezed,
+    Object? pomodoroDuration = freezed,
+    Object? pomodoroBreakDuration = freezed,
     Object? showcasePageStatus = freezed,
   }) {
     return _then(_value.copyWith(
@@ -103,6 +109,14 @@ class _$AppStateCopyWithImpl<$Res, $Val extends AppState>
           ? _value.displayHabitsInCalendar
           : displayHabitsInCalendar // ignore: cast_nullable_to_non_nullable
               as bool?,
+      pomodoroDuration: freezed == pomodoroDuration
+          ? _value.pomodoroDuration
+          : pomodoroDuration // ignore: cast_nullable_to_non_nullable
+              as int?,
+      pomodoroBreakDuration: freezed == pomodoroBreakDuration
+          ? _value.pomodoroBreakDuration
+          : pomodoroBreakDuration // ignore: cast_nullable_to_non_nullable
+              as int?,
       showcasePageStatus: freezed == showcasePageStatus
           ? _value.showcasePageStatus
           : showcasePageStatus // ignore: cast_nullable_to_non_nullable
@@ -126,6 +140,8 @@ abstract class _$$AppStateImplCopyWith<$Res>
       bool? warnUserOnMobileInternetAccess,
       bool? isIntroCompleted,
       bool? displayHabitsInCalendar,
+      int? pomodoroDuration,
+      int? pomodoroBreakDuration,
       Map<String, bool>? showcasePageStatus});
 }
 
@@ -148,6 +164,8 @@ class __$$AppStateImplCopyWithImpl<$Res>
     Object? warnUserOnMobileInternetAccess = freezed,
     Object? isIntroCompleted = freezed,
     Object? displayHabitsInCalendar = freezed,
+    Object? pomodoroDuration = freezed,
+    Object? pomodoroBreakDuration = freezed,
     Object? showcasePageStatus = freezed,
   }) {
     return _then(_$AppStateImpl(
@@ -175,6 +193,14 @@ class __$$AppStateImplCopyWithImpl<$Res>
           ? _value.displayHabitsInCalendar
           : displayHabitsInCalendar // ignore: cast_nullable_to_non_nullable
               as bool?,
+      pomodoroDuration: freezed == pomodoroDuration
+          ? _value.pomodoroDuration
+          : pomodoroDuration // ignore: cast_nullable_to_non_nullable
+              as int?,
+      pomodoroBreakDuration: freezed == pomodoroBreakDuration
+          ? _value.pomodoroBreakDuration
+          : pomodoroBreakDuration // ignore: cast_nullable_to_non_nullable
+              as int?,
       showcasePageStatus: freezed == showcasePageStatus
           ? _value._showcasePageStatus
           : showcasePageStatus // ignore: cast_nullable_to_non_nullable
@@ -193,6 +219,8 @@ class _$AppStateImpl implements _AppState {
       this.warnUserOnMobileInternetAccess,
       this.isIntroCompleted,
       this.displayHabitsInCalendar,
+      this.pomodoroDuration,
+      this.pomodoroBreakDuration,
       final Map<String, bool>? showcasePageStatus})
       : _showcasePageStatus = showcasePageStatus;
 
@@ -211,6 +239,10 @@ class _$AppStateImpl implements _AppState {
   final bool? isIntroCompleted;
   @override
   final bool? displayHabitsInCalendar;
+  @override
+  final int? pomodoroDuration;
+  @override
+  final int? pomodoroBreakDuration;
   final Map<String, bool>? _showcasePageStatus;
   @override
   Map<String, bool>? get showcasePageStatus {
@@ -224,7 +256,7 @@ class _$AppStateImpl implements _AppState {
 
   @override
   String toString() {
-    return 'AppState(primaryMenuSelectedKey: $primaryMenuSelectedKey, secondaryMenuSelectedKey: $secondaryMenuSelectedKey, mobileSyncDisabled: $mobileSyncDisabled, warnUserOnMobileInternetAccess: $warnUserOnMobileInternetAccess, isIntroCompleted: $isIntroCompleted, displayHabitsInCalendar: $displayHabitsInCalendar, showcasePageStatus: $showcasePageStatus)';
+    return 'AppState(primaryMenuSelectedKey: $primaryMenuSelectedKey, secondaryMenuSelectedKey: $secondaryMenuSelectedKey, mobileSyncDisabled: $mobileSyncDisabled, warnUserOnMobileInternetAccess: $warnUserOnMobileInternetAccess, isIntroCompleted: $isIntroCompleted, displayHabitsInCalendar: $displayHabitsInCalendar, pomodoroDuration: $pomodoroDuration, pomodoroBreakDuration: $pomodoroBreakDuration, showcasePageStatus: $showcasePageStatus)';
   }
 
   @override
@@ -248,6 +280,10 @@ class _$AppStateImpl implements _AppState {
             (identical(
                     other.displayHabitsInCalendar, displayHabitsInCalendar) ||
                 other.displayHabitsInCalendar == displayHabitsInCalendar) &&
+            (identical(other.pomodoroDuration, pomodoroDuration) ||
+                other.pomodoroDuration == pomodoroDuration) &&
+            (identical(other.pomodoroBreakDuration, pomodoroBreakDuration) ||
+                other.pomodoroBreakDuration == pomodoroBreakDuration) &&
             const DeepCollectionEquality()
                 .equals(other._showcasePageStatus, _showcasePageStatus));
   }
@@ -262,6 +298,8 @@ class _$AppStateImpl implements _AppState {
       warnUserOnMobileInternetAccess,
       isIntroCompleted,
       displayHabitsInCalendar,
+      pomodoroDuration,
+      pomodoroBreakDuration,
       const DeepCollectionEquality().hash(_showcasePageStatus));
 
   /// Create a copy of AppState
@@ -288,6 +326,8 @@ abstract class _AppState implements AppState {
       final bool? warnUserOnMobileInternetAccess,
       final bool? isIntroCompleted,
       final bool? displayHabitsInCalendar,
+      final int? pomodoroDuration,
+      final int? pomodoroBreakDuration,
       final Map<String, bool>? showcasePageStatus}) = _$AppStateImpl;
 
   factory _AppState.fromJson(Map<String, dynamic> json) =
@@ -305,6 +345,10 @@ abstract class _AppState implements AppState {
   bool? get isIntroCompleted;
   @override
   bool? get displayHabitsInCalendar;
+  @override
+  int? get pomodoroDuration;
+  @override
+  int? get pomodoroBreakDuration;
   @override
   Map<String, bool>? get showcasePageStatus;
 

@@ -17,10 +17,11 @@ import 'package:app/pages/tasks/add_time_entry.dart';
 import 'package:app/pages/tasks/assign_folder.dart';
 import 'package:app/pages/tasks/assign_tag_modal.dart';
 import 'package:app/pages/tasks/task_time_entry_log.dart' show TaskTimeEntryLog;
+import 'package:app/pages/timer/task_timer.dart';
+import 'package:app/pages/timer/timer_utils.dart';
 import 'package:app/utils/constants.dart';
 import 'package:app/utils/exntensions/date_time_extension.dart';
 import 'package:app/utils/shortcuts.dart';
-import 'package:app/utils/toast_helper.dart';
 import 'package:collection/collection.dart';
 import 'package:fleather/fleather.dart';
 import 'package:flutter/cupertino.dart';
@@ -544,13 +545,7 @@ class _TaskDetailState extends State<TaskDetail> {
                             title: context.t.tasks.timer,
                             icon: CupertinoIcons.stopwatch,
                             onTap: () {
-                              ToastHelper.showWarning(
-                                context: context,
-                                title:
-                                    context.t.feature_under_construction.title,
-                                description: context
-                                    .t.feature_under_construction.description,
-                              );
+                              _showTimerModal(context, TimerMode.stopwatch);
                             }),
                       ),
                       StaggeredGridTile.count(
@@ -561,13 +556,7 @@ class _TaskDetailState extends State<TaskDetail> {
                             title: context.t.tasks.pomodoro,
                             icon: CupertinoIcons.timer,
                             onTap: () {
-                              ToastHelper.showWarning(
-                                context: context,
-                                title:
-                                    context.t.feature_under_construction.title,
-                                description: context
-                                    .t.feature_under_construction.description,
-                              );
+                              _showTimerModal(context, TimerMode.pomodoro);
                             }),
                       )
                     ]),
@@ -621,5 +610,41 @@ class _TaskDetailState extends State<TaskDetail> {
     widget.task.folderId = _folder?.id;
     widget.task.priority = _priority;
     context.read<TasksBloc>().add(EditTask(widget.task));
+  }
+
+  _showTimerModal(BuildContext context, TimerMode mode) {
+    if (isDesktop(context)) {
+      showDialog(
+          context: context,
+          builder: (context) => Dialog(
+                child: SizedBox(
+                  width: getSize(context).width * 0.7,
+                  height: getSize(context).height * 0.75,
+                  child: ClipRRect(
+                      borderRadius:
+                          BorderRadius.circular($constants.corners.lg),
+                      child: TaskTimer(
+                        task: widget.task,
+                        mode: TimerMode.stopwatch,
+                      )),
+                ),
+              ));
+    } else {
+      showModalBottomSheet(
+        context: context,
+        isScrollControlled: true,
+        builder: (context) => SizedBox(
+          height: getSize(context).height * 0.8,
+          width: double.infinity,
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular($constants.corners.xl),
+            child: TaskTimer(
+              task: widget.task,
+              mode: mode,
+            ),
+          ),
+        ),
+      );
+    }
   }
 }

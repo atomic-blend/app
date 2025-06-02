@@ -2,7 +2,6 @@ import 'package:app/components/buttons/icon_text_button.dart';
 import 'package:app/components/widgets/elevated_container.dart';
 import 'package:app/i18n/strings.g.dart';
 import 'package:app/pages/account/account.dart';
-import 'package:app/pages/eiseinhower/eisenhower.dart';
 import 'package:app/pages/settings/settings.dart';
 import 'package:app/utils/constants.dart';
 import 'package:app/utils/shortcuts.dart';
@@ -48,10 +47,14 @@ class _MoreAppsState extends State<MoreApps> {
                     mainAxisCellCount: 0.6,
                     child: GestureDetector(
                       onTap: () {
+                        if (e.onTap != null) {
+                          e.onTap!(0);
+                          return;
+                        }
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => const EisenhowerMatrix(),
+                            builder: (context) => e.body ?? Container(),
                           ),
                         );
                       },
@@ -63,10 +66,7 @@ class _MoreAppsState extends State<MoreApps> {
                             SizedBox(
                               height: $constants.insets.sm,
                             ),
-                            const Icon(
-                              CupertinoIcons.square_grid_2x2_fill,
-                              size: 35,
-                            ),
+                            isDesktop(context) ? e.icon : e.cupertinoIcon,
                             SizedBox(
                               height: $constants.insets.xxs,
                             ),
@@ -86,7 +86,7 @@ class _MoreAppsState extends State<MoreApps> {
               ),
             ],
             SizedBox(
-              height: $constants.insets.xxs,
+              height: $constants.insets.sm,
             ),
             Expanded(
               child: ElevatedContainer(

@@ -98,6 +98,7 @@ class Translations implements BaseTranslations<AppLocale, Translations> {
 	late final TranslationsEisenhowerEn eisenhower = TranslationsEisenhowerEn._(_root);
 	late final TranslationsFeatureUnderConstructionEn feature_under_construction = TranslationsFeatureUnderConstructionEn._(_root);
 	late final TranslationsInboxEn inbox = TranslationsInboxEn._(_root);
+	late final TranslationsTimerEn timer = TranslationsTimerEn._(_root);
 }
 
 // Path: navigation
@@ -179,6 +180,7 @@ class TranslationsTasksEn {
 	String get log_session => 'Log session';
 	String get timer => 'Timer';
 	String get pomodoro => 'Pomodoro';
+	String get manual => 'Manual';
 	String get from => 'From';
 	String get to => 'To';
 	String get priority => 'Priority';
@@ -281,6 +283,11 @@ class TranslationsTimesEn {
 	String get this_year => 'This year';
 	String get last_year => 'Last year';
 	String get all_time => 'All time';
+	String minutes({required num n, required Object nb}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n,
+		zero: '${nb} minutes',
+		one: '${nb} minute',
+		other: '${nb} minutes',
+	);
 }
 
 // Path: days_before.none
@@ -473,6 +480,7 @@ class TranslationsActionsEn {
 	String get add => 'Add';
 	String get edit => 'Edit';
 	String get clear => 'Clear';
+	String get close => 'Close';
 }
 
 // Path: validation
@@ -753,6 +761,41 @@ class TranslationsInboxEn {
 
 	// Translations
 	String get title => 'Inbox';
+}
+
+// Path: timer
+class TranslationsTimerEn {
+	TranslationsTimerEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	String get title => 'Timer';
+	String get start => 'Start';
+	String get stop => 'Stop';
+	String get reset => 'Reset';
+	String get pause => 'Pause';
+	String get resume => 'Resume';
+	String get duration => 'Duration';
+	String get start_pomodoro => 'Start pomodoro';
+	String get start_stopwatch => 'Start stopwatch';
+	String get pomo_running => 'Pomodoro running';
+	String get timer_running => 'Timer running';
+	String time_left({required Object timeLeft}) => 'Time left: ${timeLeft}';
+	String get start_break => 'Start break';
+	String get elapsed_time => 'Elapsed time';
+	String get remaining_time => 'Remaining time';
+	String get no_timer_running => 'No timer running';
+	Map<String, String> get modes => {
+		'pomodoro': 'Pomodoro',
+		'stopwatch': 'Stopwatch',
+	};
+	String get select_task => 'Select a task';
+	String get select_task_to_start_timer => 'Select a task to start the timer';
+	String get completed => 'Completed!';
+	String get pomodoro_completed_message => 'Your pomodoro session has completed! Time for a break.';
+	String get stopwatch_completed_message => 'Your stopwatch session has been completed.';
+	String get task_label => 'Task';
 }
 
 // Path: auth.not_logged_in
@@ -1409,6 +1452,7 @@ extension on Translations {
 			case 'tasks.log_session': return 'Log session';
 			case 'tasks.timer': return 'Timer';
 			case 'tasks.pomodoro': return 'Pomodoro';
+			case 'tasks.manual': return 'Manual';
 			case 'tasks.from': return 'From';
 			case 'tasks.to': return 'To';
 			case 'tasks.priority': return 'Priority';
@@ -1564,6 +1608,11 @@ extension on Translations {
 			case 'times.this_year': return 'This year';
 			case 'times.last_year': return 'Last year';
 			case 'times.all_time': return 'All time';
+			case 'times.minutes': return ({required num n, required Object nb}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n,
+				zero: '${nb} minutes',
+				one: '${nb} minute',
+				other: '${nb} minutes',
+			);
 			case 'days_of_week.monday': return 'Monday';
 			case 'days_of_week.tuesday': return 'Tuesday';
 			case 'days_of_week.wednesday': return 'Wednesday';
@@ -1610,6 +1659,7 @@ extension on Translations {
 			case 'actions.add': return 'Add';
 			case 'actions.edit': return 'Edit';
 			case 'actions.clear': return 'Clear';
+			case 'actions.close': return 'Close';
 			case 'validation.required': return 'Required';
 			case 'validation.invalid_url': return 'invalid URL';
 			case 'errors.wrong_email_password': return 'Email or password incorrect';
@@ -1842,6 +1892,30 @@ extension on Translations {
 			case 'feature_under_construction.title': return 'Feature under construction';
 			case 'feature_under_construction.description': return 'This feature is not yet available, but we\'re working hard to bring it to you soon.\n\nStay tuned!';
 			case 'inbox.title': return 'Inbox';
+			case 'timer.title': return 'Timer';
+			case 'timer.start': return 'Start';
+			case 'timer.stop': return 'Stop';
+			case 'timer.reset': return 'Reset';
+			case 'timer.pause': return 'Pause';
+			case 'timer.resume': return 'Resume';
+			case 'timer.duration': return 'Duration';
+			case 'timer.start_pomodoro': return 'Start pomodoro';
+			case 'timer.start_stopwatch': return 'Start stopwatch';
+			case 'timer.pomo_running': return 'Pomodoro running';
+			case 'timer.timer_running': return 'Timer running';
+			case 'timer.time_left': return ({required Object timeLeft}) => 'Time left: ${timeLeft}';
+			case 'timer.start_break': return 'Start break';
+			case 'timer.elapsed_time': return 'Elapsed time';
+			case 'timer.remaining_time': return 'Remaining time';
+			case 'timer.no_timer_running': return 'No timer running';
+			case 'timer.modes.pomodoro': return 'Pomodoro';
+			case 'timer.modes.stopwatch': return 'Stopwatch';
+			case 'timer.select_task': return 'Select a task';
+			case 'timer.select_task_to_start_timer': return 'Select a task to start the timer';
+			case 'timer.completed': return 'Completed!';
+			case 'timer.pomodoro_completed_message': return 'Your pomodoro session has completed! Time for a break.';
+			case 'timer.stopwatch_completed_message': return 'Your stopwatch session has been completed.';
+			case 'timer.task_label': return 'Task';
 			default: return null;
 		}
 	}

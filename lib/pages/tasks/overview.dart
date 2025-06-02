@@ -1,9 +1,13 @@
+import 'dart:async';
+
 import 'package:app/blocs/tasks/tasks.bloc.dart';
 import 'package:app/components/buttons/task_item.dart';
 import 'package:app/components/forms/search_bar.dart';
 import 'package:app/components/widgets/elevated_container.dart';
 import 'package:app/entities/tasks/tasks.entity.dart';
 import 'package:app/i18n/strings.g.dart';
+import 'package:app/pages/timer/timer_info.dart';
+import 'package:app/pages/timer/timer_utils.dart';
 import 'package:app/services/sync.service.dart';
 import 'package:app/utils/constants.dart';
 import 'package:app/utils/exntensions/date_time_extension.dart';
@@ -25,6 +29,11 @@ class _OverviewTasksState extends State<OverviewTasks> {
   void initState() {
     SyncService.sync(context);
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 
   @override
@@ -54,6 +63,11 @@ class _OverviewTasksState extends State<OverviewTasks> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                if (TimerUtils.isPomodoroRunning() ||
+                    TimerUtils.isStopwatchRunning()) ...[
+                  const TimerInfo(),
+                  SizedBox(height: $constants.insets.xs),
+                ],
                 ElevatedContainer(
                   child: ABSearchBar(
                       controller: _searchController, onSubmitted: (value) {}),

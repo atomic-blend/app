@@ -42,8 +42,6 @@ mixin _$TaskEntity {
   set tags(List<TagEntity>? value) => throw _privateConstructorUsedError;
   List<DateTime>? get reminders => throw _privateConstructorUsedError;
   set reminders(List<DateTime>? value) => throw _privateConstructorUsedError;
-  List<TimeEntry>? get timeEntries => throw _privateConstructorUsedError;
-  set timeEntries(List<TimeEntry>? value) => throw _privateConstructorUsedError;
   bool? get completed => throw _privateConstructorUsedError;
   set completed(bool? value) => throw _privateConstructorUsedError;
 
@@ -75,7 +73,6 @@ abstract class $TaskEntityCopyWith<$Res> {
       String? folderId,
       List<TagEntity>? tags,
       List<DateTime>? reminders,
-      List<TimeEntry>? timeEntries,
       bool? completed});
 }
 
@@ -105,7 +102,6 @@ class _$TaskEntityCopyWithImpl<$Res, $Val extends TaskEntity>
     Object? folderId = freezed,
     Object? tags = freezed,
     Object? reminders = freezed,
-    Object? timeEntries = freezed,
     Object? completed = freezed,
   }) {
     return _then(_value.copyWith(
@@ -153,10 +149,6 @@ class _$TaskEntityCopyWithImpl<$Res, $Val extends TaskEntity>
           ? _value.reminders
           : reminders // ignore: cast_nullable_to_non_nullable
               as List<DateTime>?,
-      timeEntries: freezed == timeEntries
-          ? _value.timeEntries
-          : timeEntries // ignore: cast_nullable_to_non_nullable
-              as List<TimeEntry>?,
       completed: freezed == completed
           ? _value.completed
           : completed // ignore: cast_nullable_to_non_nullable
@@ -185,7 +177,6 @@ abstract class _$$TaskEntityImplCopyWith<$Res>
       String? folderId,
       List<TagEntity>? tags,
       List<DateTime>? reminders,
-      List<TimeEntry>? timeEntries,
       bool? completed});
 }
 
@@ -213,7 +204,6 @@ class __$$TaskEntityImplCopyWithImpl<$Res>
     Object? folderId = freezed,
     Object? tags = freezed,
     Object? reminders = freezed,
-    Object? timeEntries = freezed,
     Object? completed = freezed,
   }) {
     return _then(_$TaskEntityImpl(
@@ -261,10 +251,6 @@ class __$$TaskEntityImplCopyWithImpl<$Res>
           ? _value.reminders
           : reminders // ignore: cast_nullable_to_non_nullable
               as List<DateTime>?,
-      timeEntries: freezed == timeEntries
-          ? _value.timeEntries
-          : timeEntries // ignore: cast_nullable_to_non_nullable
-              as List<TimeEntry>?,
       completed: freezed == completed
           ? _value.completed
           : completed // ignore: cast_nullable_to_non_nullable
@@ -288,7 +274,6 @@ class _$TaskEntityImpl extends _TaskEntity {
       this.folderId,
       this.tags,
       this.reminders,
-      this.timeEntries,
       this.completed})
       : super._();
 
@@ -317,8 +302,6 @@ class _$TaskEntityImpl extends _TaskEntity {
   List<TagEntity>? tags;
   @override
   List<DateTime>? reminders;
-  @override
-  List<TimeEntry>? timeEntries;
   @override
   bool? completed;
 
@@ -351,7 +334,6 @@ abstract class _TaskEntity extends TaskEntity {
       String? folderId,
       List<TagEntity>? tags,
       List<DateTime>? reminders,
-      List<TimeEntry>? timeEntries,
       bool? completed}) = _$TaskEntityImpl;
   _TaskEntity._() : super._();
 
@@ -391,9 +373,6 @@ abstract class _TaskEntity extends TaskEntity {
   @override
   List<DateTime>? get reminders;
   set reminders(List<DateTime>? value);
-  @override
-  List<TimeEntry>? get timeEntries;
-  set timeEntries(List<TimeEntry>? value);
   @override
   bool? get completed;
   set completed(bool? value);
