@@ -771,6 +771,9 @@ class _TranslationsTimerFr implements TranslationsTimerEn {
 	@override String get start_pomodoro => 'Démarrer Pomodoro';
 	@override String get start_stopwatch => 'Démarrer Chronomètre';
 	@override String get start_break => 'Démarrer une pause';
+	@override String get pomo_running => 'Pomodoro en cours';
+	@override String get timer_running => 'Timer en cours';
+	@override String time_left({required Object timeLeft}) => 'Temps restant : ${timeLeft}';
 	@override String get pause => 'Pause';
 	@override String get resume => 'Reprendre';
 	@override String get duration => 'Durée';
@@ -1887,6 +1890,9 @@ extension on TranslationsFr {
 			case 'timer.start_pomodoro': return 'Démarrer Pomodoro';
 			case 'timer.start_stopwatch': return 'Démarrer Chronomètre';
 			case 'timer.start_break': return 'Démarrer une pause';
+			case 'timer.pomo_running': return 'Pomodoro en cours';
+			case 'timer.timer_running': return 'Timer en cours';
+			case 'timer.time_left': return ({required Object timeLeft}) => 'Temps restant : ${timeLeft}';
 			case 'timer.pause': return 'Pause';
 			case 'timer.resume': return 'Reprendre';
 			case 'timer.duration': return 'Durée';

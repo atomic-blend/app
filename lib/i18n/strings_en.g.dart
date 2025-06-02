@@ -779,6 +779,9 @@ class TranslationsTimerEn {
 	String get duration => 'Duration';
 	String get start_pomodoro => 'Start pomodoro';
 	String get start_stopwatch => 'Start stopwatch';
+	String get pomo_running => 'Pomodoro running';
+	String get timer_running => 'Timer running';
+	String time_left({required Object timeLeft}) => 'Time left: ${timeLeft}';
 	String get start_break => 'Start break';
 	String get elapsed_time => 'Elapsed time';
 	String get remaining_time => 'Remaining time';
@@ -1898,6 +1901,9 @@ extension on Translations {
 			case 'timer.duration': return 'Duration';
 			case 'timer.start_pomodoro': return 'Start pomodoro';
 			case 'timer.start_stopwatch': return 'Start stopwatch';
+			case 'timer.pomo_running': return 'Pomodoro running';
+			case 'timer.timer_running': return 'Timer running';
+			case 'timer.time_left': return ({required Object timeLeft}) => 'Time left: ${timeLeft}';
 			case 'timer.start_break': return 'Start break';
 			case 'timer.elapsed_time': return 'Elapsed time';
 			case 'timer.remaining_time': return 'Remaining time';
