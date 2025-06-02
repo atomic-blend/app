@@ -39,6 +39,7 @@ class _TaskTimerState extends State<TaskTimer> {
   bool _isPaused = false;
   bool _isRunning = false;
   Duration? _pomodoroDuration;
+  Duration? _pomodoroBreakDuration;
   Timer? _uiTimer;
 
   TimerMode get currentTimerMode => mode;
@@ -191,6 +192,13 @@ class _TaskTimerState extends State<TaskTimer> {
         }
         if (appState.pomodoroDuration != null) {
           _pomodoroDuration = Duration(minutes: appState.pomodoroDuration!);
+        }
+        if (appState.pomodoroBreakDuration == null) {
+          _pomodoroBreakDuration = const Duration(minutes: 5);
+        }
+        if (appState.pomodoroBreakDuration != null) {
+          _pomodoroBreakDuration =
+              Duration(minutes: appState.pomodoroBreakDuration!);
         }
         return BlocBuilder<TasksBloc, TasksState>(
             builder: (context, taskState) {
@@ -392,44 +400,93 @@ class _TaskTimerState extends State<TaskTimer> {
                     SizedBox(
                       height: $constants.insets.md,
                     ),
-                    CustomPopup(
-                      content: Container(
-                        padding: EdgeInsets.all($constants.insets.xs),
-                        decoration: BoxDecoration(
-                          color: getTheme(context).surfaceContainer,
-                          borderRadius:
-                              BorderRadius.circular($constants.corners.md),
-                        ),
-                        width: getSize(context).width * 0.6,
-                        height: getSize(context).height * 0.2,
-                        child: CupertinoTimerPicker(
-                          mode: CupertinoTimerPickerMode.hm,
-                          initialTimerDuration:
-                              _pomodoroDuration ?? const Duration(minutes: 20),
-                          onTimerDurationChanged: (Duration value) {
-                            _updatePomoDuration(value);
-                          },
-                        ),
-                      ),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          const Icon(
-                            CupertinoIcons.alarm_fill,
-                            size: 20,
-                          ),
-                          SizedBox(
-                            width: $constants.insets.xs,
-                          ),
-                          Text(
-                            context.t.times.minutes(
-                              n: _pomodoroDuration!.inMinutes,
-                              nb: _pomodoroDuration!.inMinutes,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        CustomPopup(
+                          content: Container(
+                            padding: EdgeInsets.all($constants.insets.xs),
+                            decoration: BoxDecoration(
+                              color: getTheme(context).surfaceContainer,
+                              borderRadius:
+                                  BorderRadius.circular($constants.corners.md),
                             ),
-                            style: getTextTheme(context).bodyLarge!.copyWith(),
-                          )
-                        ],
-                      ),
+                            width: getSize(context).width * 0.6,
+                            height: getSize(context).height * 0.2,
+                            child: CupertinoTimerPicker(
+                              mode: CupertinoTimerPickerMode.hm,
+                              initialTimerDuration: _pomodoroDuration ??
+                                  const Duration(minutes: 20),
+                              onTimerDurationChanged: (Duration value) {
+                                _updatePomoDuration(value);
+                              },
+                            ),
+                          ),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              const Icon(
+                                CupertinoIcons.alarm_fill,
+                                size: 20,
+                              ),
+                              SizedBox(
+                                width: $constants.insets.xs,
+                              ),
+                              Text(
+                                context.t.times.minutes(
+                                  n: _pomodoroDuration!.inMinutes,
+                                  nb: _pomodoroDuration!.inMinutes,
+                                ),
+                                style:
+                                    getTextTheme(context).bodyLarge!.copyWith(),
+                              )
+                            ],
+                          ),
+                        ),
+                        SizedBox(
+                          width: $constants.insets.md,
+                        ),
+                        CustomPopup(
+                          content: Container(
+                            padding: EdgeInsets.all($constants.insets.xs),
+                            decoration: BoxDecoration(
+                              color: getTheme(context).surfaceContainer,
+                              borderRadius:
+                                  BorderRadius.circular($constants.corners.md),
+                            ),
+                            width: getSize(context).width * 0.6,
+                            height: getSize(context).height * 0.2,
+                            child: CupertinoTimerPicker(
+                              mode: CupertinoTimerPickerMode.hm,
+                              initialTimerDuration: _pomodoroBreakDuration ??
+                                  const Duration(minutes: 20),
+                              onTimerDurationChanged: (Duration value) {
+                                _updatePomodoroBreakDuration(value);
+                              },
+                            ),
+                          ),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              const Icon(
+                                CupertinoIcons.pause_fill,
+                                size: 20,
+                              ),
+                              SizedBox(
+                                width: $constants.insets.xs,
+                              ),
+                              Text(
+                                context.t.times.minutes(
+                                  n: _pomodoroBreakDuration!.inMinutes,
+                                  nb: _pomodoroBreakDuration!.inMinutes,
+                                ),
+                                style:
+                                    getTextTheme(context).bodyLarge!.copyWith(),
+                              )
+                            ],
+                          ),
+                        ),
+                      ],
                     ),
                     SizedBox(
                       height: $constants.insets.md,
@@ -569,5 +626,14 @@ class _TaskTimerState extends State<TaskTimer> {
       _pomodoroDuration = value;
     });
     context.read<AppCubit>().changePomodoroDuration(value: value.inMinutes);
+  }
+
+  _updatePomodoroBreakDuration(Duration value) {
+    setState(() {
+      _pomodoroBreakDuration = value;
+    });
+    context
+        .read<AppCubit>()
+        .changePomodoroBreakDuration(value: value.inMinutes);
   }
 }

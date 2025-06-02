@@ -72,6 +72,12 @@ class AppCubit extends HydratedCubit<AppState> {
         ),
       );
 
+  void changePomodoroBreakDuration({required int value}) => emit(
+        state.copyWith(
+          pomodoroBreakDuration: value,
+        ),
+      );
+
   @override
   AppState? fromJson(Map<String, dynamic> json) {
     return AppState.fromJson(json);

@@ -16,6 +16,7 @@ _$AppStateImpl _$$AppStateImplFromJson(Map<String, dynamic> json) =>
       isIntroCompleted: json['isIntroCompleted'] as bool?,
       displayHabitsInCalendar: json['displayHabitsInCalendar'] as bool?,
       pomodoroDuration: (json['pomodoroDuration'] as num?)?.toInt(),
+      pomodoroBreakDuration: (json['pomodoroBreakDuration'] as num?)?.toInt(),
       showcasePageStatus:
           (json['showcasePageStatus'] as Map<String, dynamic>?)?.map(
         (k, e) => MapEntry(k, e as bool),
@@ -31,5 +32,6 @@ Map<String, dynamic> _$$AppStateImplToJson(_$AppStateImpl instance) =>
       'isIntroCompleted': instance.isIntroCompleted,
       'displayHabitsInCalendar': instance.displayHabitsInCalendar,
       'pomodoroDuration': instance.pomodoroDuration,
+      'pomodoroBreakDuration': instance.pomodoroBreakDuration,
       'showcasePageStatus': instance.showcasePageStatus,
     };
