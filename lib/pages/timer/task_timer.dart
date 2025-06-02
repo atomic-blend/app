@@ -244,361 +244,374 @@ class _TaskTimerState extends State<TaskTimer> {
           }
           final currentDuration = TimerUtils.getTimerDuration(currentTimerMode);
 
-          return Column(
-            children: [
-              SizedBox(
-                height: 30,
-                child: AnimatedToggleSwitch<TimerMode?>.rolling(
-                  current: _mode,
-                  indicatorSize:
-                      Size.fromWidth(getSize(context).width * 0.8 / 2),
-                  values: const [TimerMode.pomodoro, TimerMode.stopwatch],
-                  iconBuilder: (value, foreground) {
-                    final index = value == TimerMode.pomodoro ? 0 : 1;
-                    return Text(context.t.timer.modes.values.elementAt(index),
-                        style: getTextTheme(context).bodyMedium!.copyWith(
-                            color: _isRunning
-                                ? getTextTheme(context)
-                                    .bodyMedium!
-                                    .color
-                                    ?.withValues(alpha: 0.5)
-                                : null));
-                  },
-                  styleBuilder: (value) {
-                    return ToggleStyle(
-                      borderColor: Colors.transparent,
-                      indicatorColor: value == _mode
-                          ? (_isRunning
-                              ? getTheme(context).surface.withValues(alpha: 0.5)
-                              : getTheme(context).surface)
-                          : getTheme(context).surfaceContainer,
-                      backgroundColor: _isRunning
-                          ? getTheme(context)
-                              .surfaceContainer
-                              .withValues(alpha: 0.5)
-                          : getTheme(context).surfaceContainer,
-                    );
-                  },
-                  onChanged: _isRunning
-                      ? null
-                      : (value) {
-                          if (value == null) return;
-                          setState(() {
-                            _mode = value;
-                            _progress = _mode == TimerMode.pomodoro ? 1.0 : 0.0;
-                          });
-                        },
+          return SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                SizedBox(
+                  height: 30,
+                  width: isDesktop(context)
+                      ? getSize(context).width * 0.5
+                      : getSize(context).width * 0.9,
+                  child: AnimatedToggleSwitch<TimerMode?>.rolling(
+                    current: _mode,
+                    indicatorSize:
+                        Size.fromWidth(getSize(context).width * 0.8 / 2),
+                    values: const [TimerMode.pomodoro, TimerMode.stopwatch],
+                    iconBuilder: (value, foreground) {
+                      final index = value == TimerMode.pomodoro ? 0 : 1;
+                      return Text(context.t.timer.modes.values.elementAt(index),
+                          style: getTextTheme(context).bodyMedium!.copyWith(
+                              color: _isRunning
+                                  ? getTextTheme(context)
+                                      .bodyMedium!
+                                      .color
+                                      ?.withValues(alpha: 0.5)
+                                  : null));
+                    },
+                    styleBuilder: (value) {
+                      return ToggleStyle(
+                        borderColor: Colors.transparent,
+                        indicatorColor: value == _mode
+                            ? (_isRunning
+                                ? getTheme(context)
+                                    .surface
+                                    .withValues(alpha: 0.5)
+                                : getTheme(context).surface)
+                            : getTheme(context).surfaceContainer,
+                        backgroundColor: _isRunning
+                            ? getTheme(context)
+                                .surfaceContainer
+                                .withValues(alpha: 0.5)
+                            : getTheme(context).surfaceContainer,
+                      );
+                    },
+                    onChanged: _isRunning
+                        ? null
+                        : (value) {
+                            if (value == null) return;
+                            setState(() {
+                              _mode = value;
+                              _progress =
+                                  _mode == TimerMode.pomodoro ? 1.0 : 0.0;
+                            });
+                          },
+                  ),
                 ),
-              ),
-              SizedBox(
-                height: $constants.insets.lg,
-              ),
-              if (taskState.tasks != null && taskState.tasks!.isNotEmpty)
-                GestureDetector(
-                  onTap: () {
-                    _showTaskSelector();
-                  },
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      if (_task == null)
-                        Text(
-                          context.t.timer.select_task,
-                          style: getTextTheme(context).bodyLarge!.copyWith(),
-                        )
-                      else
-                        Text(
-                          _task!.title,
-                          style: getTextTheme(context).bodyLarge!.copyWith(
-                                fontWeight: FontWeight.bold,
-                              ),
+                SizedBox(
+                  height: $constants.insets.lg,
+                ),
+                if (taskState.tasks != null && taskState.tasks!.isNotEmpty)
+                  GestureDetector(
+                    onTap: () {
+                      _showTaskSelector();
+                    },
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        if (_task == null)
+                          Text(
+                            context.t.timer.select_task,
+                            style: getTextTheme(context).bodyLarge!.copyWith(),
+                          )
+                        else
+                          Text(
+                            _task!.title,
+                            style: getTextTheme(context).bodyLarge!.copyWith(
+                                  fontWeight: FontWeight.bold,
+                                ),
+                          ),
+                        SizedBox(
+                          width: $constants.insets.xxs,
                         ),
-                      SizedBox(
-                        width: $constants.insets.xxs,
+                        const Icon(
+                          CupertinoIcons.chevron_right,
+                          size: 16,
+                        )
+                      ],
+                    ),
+                  ),
+                SizedBox(
+                  height: isDesktop(context)
+                      ? $constants.insets.sm
+                      : $constants.insets.lg,
+                ),
+                SizedBox(
+                  width: getSize(context).width * 0.8,
+                  child: Center(
+                    child: CircularPercentIndicator(
+                      radius: isDesktop(context) ? 100 : 150.0,
+                      lineWidth: 12.0,
+                      animation: true,
+                      animateFromLastPercent: true,
+                      circularStrokeCap: CircularStrokeCap.round,
+                      backgroundColor:
+                          getTheme(context).surfaceContainer.darken(10),
+                      percent: _progress ?? 0.0,
+                      center: Text(
+                        _getCenterText(currentDuration),
+                        style: getTextTheme(context).titleLarge!.copyWith(
+                              fontWeight: FontWeight.bold,
+                            ),
                       ),
-                      const Icon(
-                        CupertinoIcons.chevron_right,
-                        size: 16,
-                      )
+                      progressColor: getTheme(context).primary,
+                    ),
+                  ),
+                ),
+                if (_mode == TimerMode.pomodoro) ...[
+                  SizedBox(
+                    height: $constants.insets.md,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      CustomPopup(
+                        content: Container(
+                          padding: EdgeInsets.all($constants.insets.xs),
+                          decoration: BoxDecoration(
+                            color: getTheme(context).surfaceContainer,
+                            borderRadius:
+                                BorderRadius.circular($constants.corners.md),
+                          ),
+                          width: getSize(context).width * 0.6,
+                          height: getSize(context).height * 0.2,
+                          child: CupertinoTimerPicker(
+                            mode: CupertinoTimerPickerMode.hm,
+                            initialTimerDuration: _pomodoroDuration ??
+                                const Duration(minutes: 20),
+                            onTimerDurationChanged: (Duration value) {
+                              _updatePomoDuration(value);
+                            },
+                          ),
+                        ),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            const Icon(
+                              CupertinoIcons.alarm_fill,
+                              size: 20,
+                            ),
+                            SizedBox(
+                              width: $constants.insets.xs,
+                            ),
+                            Text(
+                              context.t.times.minutes(
+                                n: _pomodoroDuration!.inMinutes,
+                                nb: _pomodoroDuration!.inMinutes,
+                              ),
+                              style:
+                                  getTextTheme(context).bodyLarge!.copyWith(),
+                            )
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                        width: $constants.insets.md,
+                      ),
+                      CustomPopup(
+                        content: Container(
+                          padding: EdgeInsets.all($constants.insets.xs),
+                          decoration: BoxDecoration(
+                            color: getTheme(context).surfaceContainer,
+                            borderRadius:
+                                BorderRadius.circular($constants.corners.md),
+                          ),
+                          width: getSize(context).width * 0.6,
+                          height: getSize(context).height * 0.2,
+                          child: CupertinoTimerPicker(
+                            mode: CupertinoTimerPickerMode.hm,
+                            initialTimerDuration: _pomodoroBreakDuration ??
+                                const Duration(minutes: 20),
+                            onTimerDurationChanged: (Duration value) {
+                              _updatePomodoroBreakDuration(value);
+                            },
+                          ),
+                        ),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            const Icon(
+                              CupertinoIcons.pause_fill,
+                              size: 20,
+                            ),
+                            SizedBox(
+                              width: $constants.insets.xs,
+                            ),
+                            Text(
+                              context.t.times.minutes(
+                                n: _pomodoroBreakDuration!.inMinutes,
+                                nb: _pomodoroBreakDuration!.inMinutes,
+                              ),
+                              style:
+                                  getTextTheme(context).bodyLarge!.copyWith(),
+                            )
+                          ],
+                        ),
+                      ),
                     ],
                   ),
-                ),
-              SizedBox(
-                height: isDesktop(context)
-                    ? $constants.insets.sm
-                    : $constants.insets.lg,
-              ),
-              SizedBox(
-                width: getSize(context).width * 0.8,
-                child: Center(
-                  child: CircularPercentIndicator(
-                    radius: isDesktop(context) ? 100 : 150.0,
-                    lineWidth: 12.0,
-                    animation: true,
-                    animateFromLastPercent: true,
-                    circularStrokeCap: CircularStrokeCap.round,
-                    backgroundColor:
-                        getTheme(context).surfaceContainer.darken(10),
-                    percent: _progress ?? 0.0,
-                    center: Text(
-                      _getCenterText(currentDuration),
-                      style: getTextTheme(context).titleLarge!.copyWith(
-                            fontWeight: FontWeight.bold,
-                          ),
-                    ),
-                    progressColor: getTheme(context).primary,
+                  SizedBox(
+                    height: $constants.insets.md,
                   ),
-                ),
-              ),
-              const Spacer(),
-              if (_mode == TimerMode.pomodoro) ...[
-                SizedBox(
-                  height: $constants.insets.md,
-                ),
+                ],
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    CustomPopup(
-                      content: Container(
-                        padding: EdgeInsets.all($constants.insets.xs),
-                        decoration: BoxDecoration(
-                          color: getTheme(context).surfaceContainer,
-                          borderRadius:
-                              BorderRadius.circular($constants.corners.md),
+                    if (_isPaused)
+                      // reset button
+                      ElevatedContainer(
+                        padding: EdgeInsets.all($constants.insets.lg),
+                        borderRadius: $constants.corners.full,
+                        child: const Icon(
+                          CupertinoIcons.arrow_counterclockwise,
+                          size: 40,
                         ),
-                        width: getSize(context).width * 0.6,
-                        height: getSize(context).height * 0.2,
-                        child: CupertinoTimerPicker(
-                          mode: CupertinoTimerPickerMode.hm,
-                          initialTimerDuration:
-                              _pomodoroDuration ?? const Duration(minutes: 20),
-                          onTimerDurationChanged: (Duration value) {
-                            _updatePomoDuration(value);
-                          },
-                        ),
+                        onTap: () async {
+                          await TimerUtils.resetTimer(currentTimerMode,
+                              completed: false);
+                          _stopUITimer(); // Stop UI updates
+                          await _updateTimerDisplay();
+                        },
                       ),
-                      child: Row(
+                    if (_isPaused)
+                      // stop button (only when paused)
+                      ElevatedContainer(
+                        padding: EdgeInsets.all($constants.insets.lg),
+                        borderRadius: $constants.corners.full,
+                        child: const Icon(
+                          CupertinoIcons.square_fill,
+                          size: 40,
+                        ),
+                        onTap: () async {
+                          // Create time entry before stopping the timer
+                          final success = await TimerUtils.createTimeEntry(
+                            currentTimerMode,
+                            task: _task,
+                          );
+
+                          if (!context.mounted) return;
+                          context
+                              .read<TimeEntryBloc>()
+                              .add(const LoadTimeEntries());
+
+                          // Show completed modal for stopwatch only if time entry was created successfully
+                          if (success &&
+                              currentTimerMode == TimerMode.stopwatch) {
+                            await _showCompletedTimerModal(
+                                currentTimerMode, _task);
+                          }
+
+                          await TimerUtils.resetTimer(currentTimerMode);
+                          _stopUITimer(); // Stop UI updates
+                          await _updateTimerDisplay();
+                        },
+                      ),
+                    if (_isRunning && !_isPaused)
+                      // pause button (only when running and not paused)
+                      ElevatedContainer(
+                        padding: EdgeInsets.all($constants.insets.lg),
+                        borderRadius: $constants.corners.full,
+                        child: const Icon(
+                          CupertinoIcons.pause,
+                          size: 40,
+                        ),
+                        onTap: () async {
+                          await TimerUtils.pauseTimer(currentTimerMode);
+                          await _updateTimerDisplay();
+                          // UI timer will be stopped in _updateTimerDisplay
+                        },
+                      ),
+                    if (!_isRunning || _isPaused)
+                      Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          const Icon(
-                            CupertinoIcons.alarm_fill,
-                            size: 20,
+                          ElevatedContainer(
+                            padding: EdgeInsets.all($constants.insets.lg),
+                            borderRadius: $constants.corners.full,
+                            child: const Icon(
+                              CupertinoIcons.play_fill,
+                              size: 40,
+                            ),
+                            onTap: () async {
+                              if (_isPaused) {
+                                // Resume timer
+                                await TimerUtils.resumeTimer(currentTimerMode);
+                                _startUITimer(); // Restart UI updates
+                              } else {
+                                // Start new timer
+                                if (_mode == TimerMode.stopwatch) {
+                                  await TimerUtils.startTimer(
+                                      TimerMode.stopwatch,
+                                      task: _task);
+                                } else {
+                                  await TimerUtils.startTimer(
+                                    TimerMode.pomodoro,
+                                    durationInMinutes:
+                                        _pomodoroDuration!.inMinutes,
+                                    task: _task,
+                                  );
+                                }
+                                _startUITimer(); // Start UI updates
+                              }
+                              await _updateTimerDisplay();
+                            },
                           ),
                           SizedBox(
-                            width: $constants.insets.xs,
+                            height: $constants.insets.xs,
                           ),
                           Text(
-                            context.t.times.minutes(
-                              n: _pomodoroDuration!.inMinutes,
-                              nb: _pomodoroDuration!.inMinutes,
-                            ),
-                            style: getTextTheme(context).bodyLarge!.copyWith(),
-                          )
+                            _mode == TimerMode.stopwatch
+                                ? context.t.timer.start_stopwatch
+                                : context.t.timer.start_pomodoro,
+                            style: getTextTheme(context).bodyMedium!.copyWith(),
+                          ),
                         ],
                       ),
-                    ),
-                    SizedBox(
-                      width: $constants.insets.md,
-                    ),
-                    CustomPopup(
-                      content: Container(
-                        padding: EdgeInsets.all($constants.insets.xs),
-                        decoration: BoxDecoration(
-                          color: getTheme(context).surfaceContainer,
-                          borderRadius:
-                              BorderRadius.circular($constants.corners.md),
-                        ),
-                        width: getSize(context).width * 0.6,
-                        height: getSize(context).height * 0.2,
-                        child: CupertinoTimerPicker(
-                          mode: CupertinoTimerPickerMode.hm,
-                          initialTimerDuration: _pomodoroBreakDuration ??
-                              const Duration(minutes: 20),
-                          onTimerDurationChanged: (Duration value) {
-                            _updatePomodoroBreakDuration(value);
-                          },
-                        ),
-                      ),
-                      child: Row(
+                    if (!_isRunning &&
+                        !_isPaused &&
+                        _mode == TimerMode.pomodoro)
+                      // start pomo break button (only when not running and not paused)
+                      Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          const Icon(
-                            CupertinoIcons.pause_fill,
-                            size: 20,
+                          ElevatedContainer(
+                            padding: EdgeInsets.all($constants.insets.lg),
+                            borderRadius: $constants.corners.full,
+                            child: const Icon(
+                              CupertinoIcons.zzz,
+                              size: 40,
+                            ),
+                            onTap: () async {
+                              // Start pomodoro break
+                              await TimerUtils.startTimer(
+                                TimerMode.pomodoro,
+                                durationInMinutes:
+                                    _pomodoroBreakDuration!.inMinutes,
+                                task: _task,
+                                pomoBreak: true,
+                              );
+                              _startUITimer(); // Start UI updates
+                              await _updateTimerDisplay();
+                            },
                           ),
                           SizedBox(
-                            width: $constants.insets.xs,
+                            height: $constants.insets.xs,
                           ),
                           Text(
-                            context.t.times.minutes(
-                              n: _pomodoroBreakDuration!.inMinutes,
-                              nb: _pomodoroBreakDuration!.inMinutes,
-                            ),
-                            style: getTextTheme(context).bodyLarge!.copyWith(),
-                          )
+                            context.t.timer.start_break,
+                            style: getTextTheme(context).bodyMedium!.copyWith(),
+                          ),
                         ],
                       ),
-                    ),
                   ],
                 ),
                 SizedBox(
-                  height: $constants.insets.md,
-                ),
+                  height: isDesktop(context)
+                      ? $constants.insets.md
+                      : getSize(context).height * 0.08,
+                )
               ],
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  if (_isPaused)
-                    // reset button
-                    ElevatedContainer(
-                      padding: EdgeInsets.all($constants.insets.lg),
-                      borderRadius: $constants.corners.full,
-                      child: const Icon(
-                        CupertinoIcons.arrow_counterclockwise,
-                        size: 40,
-                      ),
-                      onTap: () async {
-                        await TimerUtils.resetTimer(currentTimerMode,
-                            completed: false);
-                        _stopUITimer(); // Stop UI updates
-                        await _updateTimerDisplay();
-                      },
-                    ),
-                  if (_isPaused)
-                    // stop button (only when paused)
-                    ElevatedContainer(
-                      padding: EdgeInsets.all($constants.insets.lg),
-                      borderRadius: $constants.corners.full,
-                      child: const Icon(
-                        CupertinoIcons.square_fill,
-                        size: 40,
-                      ),
-                      onTap: () async {
-                        // Create time entry before stopping the timer
-                        final success = await TimerUtils.createTimeEntry(
-                          currentTimerMode,
-                          task: _task,
-                        );
-
-                        if (!context.mounted) return;
-                        context
-                            .read<TimeEntryBloc>()
-                            .add(const LoadTimeEntries());
-
-                        // Show completed modal for stopwatch only if time entry was created successfully
-                        if (success &&
-                            currentTimerMode == TimerMode.stopwatch) {
-                          await _showCompletedTimerModal(
-                              currentTimerMode, _task);
-                        }
-
-                        await TimerUtils.resetTimer(currentTimerMode);
-                        _stopUITimer(); // Stop UI updates
-                        await _updateTimerDisplay();
-                      },
-                    ),
-                  if (_isRunning && !_isPaused)
-                    // pause button (only when running and not paused)
-                    ElevatedContainer(
-                      padding: EdgeInsets.all($constants.insets.lg),
-                      borderRadius: $constants.corners.full,
-                      child: const Icon(
-                        CupertinoIcons.pause,
-                        size: 40,
-                      ),
-                      onTap: () async {
-                        await TimerUtils.pauseTimer(currentTimerMode);
-                        await _updateTimerDisplay();
-                        // UI timer will be stopped in _updateTimerDisplay
-                      },
-                    ),
-                  if (!_isRunning || _isPaused)
-                    Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        ElevatedContainer(
-                          padding: EdgeInsets.all($constants.insets.lg),
-                          borderRadius: $constants.corners.full,
-                          child: const Icon(
-                            CupertinoIcons.play_fill,
-                            size: 40,
-                          ),
-                          onTap: () async {
-                            if (_isPaused) {
-                              // Resume timer
-                              await TimerUtils.resumeTimer(currentTimerMode);
-                              _startUITimer(); // Restart UI updates
-                            } else {
-                              // Start new timer
-                              if (_mode == TimerMode.stopwatch) {
-                                await TimerUtils.startTimer(TimerMode.stopwatch,
-                                    task: _task);
-                              } else {
-                                await TimerUtils.startTimer(
-                                  TimerMode.pomodoro,
-                                  durationInMinutes:
-                                      _pomodoroDuration!.inMinutes,
-                                  task: _task,
-                                );
-                              }
-                              _startUITimer(); // Start UI updates
-                            }
-                            await _updateTimerDisplay();
-                          },
-                        ),
-                        SizedBox(
-                          height: $constants.insets.xs,
-                        ),
-                        Text(
-                          _mode == TimerMode.stopwatch
-                              ? context.t.timer.start_stopwatch
-                              : context.t.timer.start_pomodoro,
-                          style: getTextTheme(context).bodyMedium!.copyWith(),
-                        ),
-                      ],
-                    ),
-                  if (!_isRunning && !_isPaused && _mode == TimerMode.pomodoro)
-                    // start pomo break button (only when not running and not paused)
-                    Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        ElevatedContainer(
-                          padding: EdgeInsets.all($constants.insets.lg),
-                          borderRadius: $constants.corners.full,
-                          child: const Icon(
-                            CupertinoIcons.zzz,
-                            size: 40,
-                          ),
-                          onTap: () async {
-                            // Start pomodoro break
-                            await TimerUtils.startTimer(
-                              TimerMode.pomodoro,
-                              durationInMinutes:
-                                  _pomodoroBreakDuration!.inMinutes,
-                              task: _task,
-                              pomoBreak: true,
-                            );
-                            _startUITimer(); // Start UI updates
-                            await _updateTimerDisplay();
-                          },
-                        ),
-                        SizedBox(
-                          height: $constants.insets.xs,
-                        ),
-                        Text(
-                          context.t.timer.start_break,
-                          style: getTextTheme(context).bodyMedium!.copyWith(),
-                        ),
-                      ],
-                    ),
-                ],
-              ),
-              SizedBox(
-                height: isDesktop(context)
-                    ? $constants.insets.md
-                    : getSize(context).height * 0.08,
-              )
-            ],
+            ),
           );
         });
       }),
