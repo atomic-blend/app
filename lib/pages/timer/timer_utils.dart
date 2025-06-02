@@ -157,16 +157,23 @@ class TimerUtils {
       }
     }
 
-    // Timer is running, use existing logic
+    // Get pause periods
     final pausePeriods = _getPausePeriods(mode);
-    final totalPausedDuration = _getTotalPausedDuration(pausePeriods);
 
-    // If currently paused, don't count time since last pause
+    // Check if timer is paused
     final isCurrentlyPaused = isTimerPaused(mode);
+
+    // Calculate elapsed time up to pause point if paused, or current time if running
     final elapsed = isCurrentlyPaused
         ? _getElapsedTimeExcludingCurrentPause(startTime, pausePeriods)
         : DateTime.now().difference(startTime);
 
+    // Calculate total paused duration (excluding current pause if timer is paused)
+    final totalPausedDuration = _getTotalPausedDuration(isCurrentlyPaused
+        ? pausePeriods.where((p) => p.pauseEnd != null).toList()
+        : pausePeriods);
+
+    // Calculate effective elapsed time (time spent without pauses)
     final effectiveElapsed = elapsed - totalPausedDuration;
 
     if (mode == TimerMode.pomodoro) {
