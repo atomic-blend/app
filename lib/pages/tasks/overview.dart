@@ -118,7 +118,7 @@ class _OverviewTasksState extends State<OverviewTasks> {
                                                 ));
                                       }
                                     },
-                                    icon: Icon(
+                                    icon: const Icon(
                                       CupertinoIcons.plus,
                                       size: 20,
                                     ))
@@ -190,7 +190,7 @@ class _OverviewTasksState extends State<OverviewTasks> {
                                               ));
                                     }
                                   },
-                                  icon: Icon(
+                                  icon: const Icon(
                                     CupertinoIcons.plus,
                                     size: 20,
                                   ),
@@ -266,7 +266,7 @@ class _OverviewTasksState extends State<OverviewTasks> {
                                               ));
                                     }
                                   },
-                                  icon: Icon(
+                                  icon: const Icon(
                                     CupertinoIcons.plus,
                                     size: 20,
                                   ),
