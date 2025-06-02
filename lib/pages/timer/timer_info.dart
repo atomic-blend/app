@@ -87,7 +87,7 @@ class _TimerInfoState extends State<TimerInfo> {
     if (_currentTimerMode != null) {
       final duration = TimerUtils.getTimerDuration(_currentTimerMode!);
       final isRunning = TimerUtils.isTimerRunning(_currentTimerMode!);
-      final isPaused = await TimerUtils.isTimerPaused(_currentTimerMode!);
+      final isPaused = TimerUtils.isTimerPaused(_currentTimerMode!);
 
       setState(() {
         if (_currentTimerMode == TimerMode.pomodoro) {
@@ -235,7 +235,7 @@ class _TimerInfoState extends State<TimerInfo> {
             ),
             Icon(
               CupertinoIcons.chevron_right,
-              color: getTheme(context).onSurface.withOpacity(0.5),
+              color: getTheme(context).onSurface.withValues(alpha: 0.5),
               size: 16,
             ),
           ],

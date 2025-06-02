@@ -4,11 +4,8 @@ import 'package:animated_toggle_switch/animated_toggle_switch.dart';
 import 'package:app/blocs/app/app.bloc.dart';
 import 'package:app/blocs/tasks/tasks.bloc.dart';
 import 'package:app/blocs/time_entries/time_entry.bloc.dart';
-import 'package:app/components/buttons/task_item.dart';
-import 'package:app/components/forms/search_bar.dart';
 import 'package:app/components/widgets/elevated_container.dart';
 import 'package:app/entities/tasks/tasks.entity.dart';
-import 'package:app/entities/time_entry/time_entry.entity.dart';
 import 'package:app/i18n/strings.g.dart';
 import 'package:app/pages/timer/completed_timer.dart';
 import 'package:app/pages/timer/task_selector.dart';
@@ -32,10 +29,9 @@ class TaskTimer extends StatefulWidget {
 }
 
 class _TaskTimerState extends State<TaskTimer> {
-  TimerMode mode = TimerMode.pomodoro; // Use TimerMode enum instead of int
+  TimerMode _mode = TimerMode.pomodoro; // Use TimerMode enum instead of int
   double? _progress = 0.0;
   TaskEntity? _task;
-  final TextEditingController _searchController = TextEditingController();
 
   bool _isPaused = false;
   bool _isRunning = false;
@@ -43,13 +39,13 @@ class _TaskTimerState extends State<TaskTimer> {
   Duration? _pomodoroBreakDuration;
   Timer? _uiTimer;
 
-  TimerMode get currentTimerMode => mode;
+  TimerMode get currentTimerMode => _mode;
 
   @override
   void initState() {
     super.initState();
     if (widget.mode != null) {
-      mode = widget.mode!;
+      _mode = widget.mode!;
     }
     _initializeTimerState();
     _startUITimer();
@@ -66,9 +62,9 @@ class _TaskTimerState extends State<TaskTimer> {
     final isStopPaused = await TimerUtils.isStopwatchPaused();
     final isPomRunning = TimerUtils.isPomodoroRunning();
     final isStopRunning = TimerUtils.isStopwatchRunning();
-    final _mode = TimerUtils.getMode();
+    final mode = TimerUtils.getMode();
     setState(() {
-      mode = _mode;
+      _mode = mode;
       _isPaused = isPomPaused || isStopPaused;
       _isRunning = isPomRunning || isStopRunning;
     });
@@ -89,15 +85,15 @@ class _TaskTimerState extends State<TaskTimer> {
   Future<void> _updateTimerDisplay() async {
     if (!mounted) return;
 
-    final duration = await TimerUtils.getTimerDuration(currentTimerMode);
-    final isPaused = await TimerUtils.isTimerPaused(currentTimerMode);
+    final duration = TimerUtils.getTimerDuration(currentTimerMode);
+    final isPaused = TimerUtils.isTimerPaused(currentTimerMode);
     final isRunning = TimerUtils.isTimerRunning(currentTimerMode);
 
     setState(() {
       _isPaused = isPaused;
       _isRunning = isRunning;
 
-      if (mode == TimerMode.pomodoro) {
+      if (_mode == TimerMode.pomodoro) {
         // Pomodoro
         if (!isRunning) {
           // Timer is stopped/reset - show full circle
@@ -253,7 +249,7 @@ class _TaskTimerState extends State<TaskTimer> {
               SizedBox(
                 height: 30,
                 child: AnimatedToggleSwitch<TimerMode?>.rolling(
-                  current: mode,
+                  current: _mode,
                   indicatorSize:
                       Size.fromWidth(getSize(context).width * 0.8 / 2),
                   values: const [TimerMode.pomodoro, TimerMode.stopwatch],
@@ -271,7 +267,7 @@ class _TaskTimerState extends State<TaskTimer> {
                   styleBuilder: (value) {
                     return ToggleStyle(
                       borderColor: Colors.transparent,
-                      indicatorColor: value == mode
+                      indicatorColor: value == _mode
                           ? (_isRunning
                               ? getTheme(context).surface.withValues(alpha: 0.5)
                               : getTheme(context).surface)
@@ -288,8 +284,8 @@ class _TaskTimerState extends State<TaskTimer> {
                       : (value) {
                           if (value == null) return;
                           setState(() {
-                            mode = value;
-                            _progress = mode == TimerMode.pomodoro ? 1.0 : 0.0;
+                            _mode = value;
+                            _progress = _mode == TimerMode.pomodoro ? 1.0 : 0.0;
                           });
                         },
                 ),
@@ -353,7 +349,7 @@ class _TaskTimerState extends State<TaskTimer> {
                 ),
               ),
               const Spacer(),
-              if (mode == TimerMode.pomodoro) ...[
+              if (_mode == TimerMode.pomodoro) ...[
                 SizedBox(
                   height: $constants.insets.md,
                 ),
@@ -532,7 +528,7 @@ class _TaskTimerState extends State<TaskTimer> {
                               _startUITimer(); // Restart UI updates
                             } else {
                               // Start new timer
-                              if (mode == TimerMode.stopwatch) {
+                              if (_mode == TimerMode.stopwatch) {
                                 await TimerUtils.startTimer(TimerMode.stopwatch,
                                     task: _task);
                               } else {
@@ -552,14 +548,14 @@ class _TaskTimerState extends State<TaskTimer> {
                           height: $constants.insets.xs,
                         ),
                         Text(
-                          mode == TimerMode.stopwatch
+                          _mode == TimerMode.stopwatch
                               ? context.t.timer.start_stopwatch
                               : context.t.timer.start_pomodoro,
                           style: getTextTheme(context).bodyMedium!.copyWith(),
                         ),
                       ],
                     ),
-                  if (!_isRunning && !_isPaused && mode == TimerMode.pomodoro)
+                  if (!_isRunning && !_isPaused && _mode == TimerMode.pomodoro)
                     // start pomo break button (only when not running and not paused)
                     Column(
                       mainAxisSize: MainAxisSize.min,
@@ -607,7 +603,7 @@ class _TaskTimerState extends State<TaskTimer> {
 
   String _getCenterText(Duration currentDuration) {
     // If in pomodoro mode and no timer is running, show the pomodoro duration
-    if (mode == TimerMode.pomodoro && !_isRunning) {
+    if (_mode == TimerMode.pomodoro && !_isRunning) {
       return _durationToHMS(_pomodoroDuration ?? const Duration(minutes: 20));
     }
     // Otherwise show the current timer duration

@@ -308,7 +308,7 @@ class TimerUtils {
   }
 
   static Future<Duration> getPomodoroRemainingTime() async {
-    return await getTimerDuration(TimerMode.pomodoro);
+    return getTimerDuration(TimerMode.pomodoro);
   }
 
   static Future<void> pausePomodoroTimer() async {
@@ -328,7 +328,7 @@ class TimerUtils {
   }
 
   static Future<bool> isPomodoroPaused() async {
-    return await isTimerPaused(TimerMode.pomodoro);
+    return isTimerPaused(TimerMode.pomodoro);
   }
 
   static Future<void> pomodoroComplete() async {
@@ -344,7 +344,7 @@ class TimerUtils {
   }
 
   static Future<Duration> getStopwatchElapsedTime() async {
-    return await getTimerDuration(TimerMode.stopwatch);
+    return getTimerDuration(TimerMode.stopwatch);
   }
 
   static Future<void> pauseStopwatch() async {
@@ -364,7 +364,7 @@ class TimerUtils {
   }
 
   static Future<bool> isStopwatchPaused() async {
-    return await isTimerPaused(TimerMode.stopwatch);
+    return isTimerPaused(TimerMode.stopwatch);
   }
 
   static Future<void> stopwatchComplete() async {

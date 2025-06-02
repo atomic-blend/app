@@ -68,17 +68,7 @@ class _TaskSelectorState extends State<TaskSelector> {
             SizedBox(
               height: $constants.insets.xs,
             ),
-            ...?taskState.tasks
-                ?.where((task) => task.completed != true)
-                .where((task) {
-              if (_searchController.text == "") {
-                return true; // Show all tasks if search is empty
-              }
-              return _searchController.text != "" &&
-                  task.title
-                      .toLowerCase()
-                      .contains(_searchController.text.toLowerCase());
-            }).map(
+            ..._filteredTasks.map(
               (task) => Padding(
                 padding: EdgeInsets.only(
                   bottom: $constants.insets.xs,
@@ -111,8 +101,9 @@ class _TaskSelectorState extends State<TaskSelector> {
     final tasks = tasksBloc.state.tasks ?? [];
     setState(() {
       _filteredTasks = tasks
-          .where(
-              (task) => task.title.toLowerCase().contains(query.toLowerCase()))
+          .where((task) =>
+              task.title.toLowerCase().contains(query.toLowerCase()) &&
+              task.completed != true)
           .toList();
     });
   }
