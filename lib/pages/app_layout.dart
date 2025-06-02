@@ -83,11 +83,11 @@ class AppLayoutState extends ResponsiveState<AppLayout> {
                 .firstOrNull;
 
             var primaryMenuItem = $constants.navigation
-                      .primaryMenuItems(context)
-                      .where((item) =>
-                          (item.key as ValueKey).value ==
-                          appState.primaryMenuSelectedKey)
-                      .firstOrNull;
+                .primaryMenuItems(context)
+                .where((item) =>
+                    (item.key as ValueKey).value ==
+                    appState.primaryMenuSelectedKey)
+                .firstOrNull;
             // by default, the primary menu is selected
             Widget? body = primaryMenuItem?.body;
             AppBar? appBar = primaryMenuItem?.appBar;

@@ -17,6 +17,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:lottie/lottie.dart';
 import 'package:percent_indicator/percent_indicator.dart';
+import 'package:sizer/sizer.dart';
 
 class Habits extends StatefulWidget {
   const Habits({super.key});
@@ -167,7 +168,7 @@ class _HabitsState extends State<Habits> {
             key: ValueKey(habits[index].id),
             endActionPane: ActionPane(
                 motion: const ScrollMotion(),
-                extentRatio: 0.25,
+                extentRatio: 0.3,
                 children: [
                   SizedBox(
                     width: $constants.insets.xs,
@@ -180,7 +181,8 @@ class _HabitsState extends State<Habits> {
                       );
                       if (isDesktop(context)) {
                         showDialog(
-                            context: context, builder: (context) => selector);
+                            context: context,
+                            builder: (context) => Dialog(child: selector));
                       } else {
                         showModalBottomSheet(
                             context: context,
@@ -190,9 +192,10 @@ class _HabitsState extends State<Habits> {
                     },
                     child: Container(
                       height: double.infinity,
-                      width: getSize(context).width * 0.2,
+                      padding: EdgeInsets.symmetric(
+                          horizontal: $constants.insets.md),
                       decoration: BoxDecoration(
-                        color: getTheme(context).surfaceContainer,
+                        color: getTheme(context).surface,
                         borderRadius:
                             BorderRadius.circular($constants.corners.sm),
                       ),
@@ -210,7 +213,9 @@ class _HabitsState extends State<Habits> {
                   isEdit: true,
                 );
                 if (isDesktop(context)) {
-                  showDialog(context: context, builder: (context) => selector);
+                  showDialog(
+                      context: context,
+                      builder: (context) => Dialog(child: selector));
                 } else {
                   showModalBottomSheet(
                       context: context,

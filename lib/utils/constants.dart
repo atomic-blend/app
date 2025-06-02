@@ -512,13 +512,13 @@ class Navigation {
         ),
         NavigationItem(
           key: const Key("eisenhower"),
-          icon: const Icon(
+          icon: Icon(
             CupertinoIcons.square_grid_2x2,
-            size: 35,
+            size: isDesktop(context) ? 25 : 35,
           ),
-          cupertinoIcon: const Icon(
+          cupertinoIcon: Icon(
             CupertinoIcons.square_grid_2x2,
-            size: 35,
+            size: isDesktop(context) ? 25 : 35,
           ),
           label: context.t.eisenhower.small_title,
           body: const EisenhowerMatrix(),
@@ -535,13 +535,13 @@ class Navigation {
         ),
         NavigationItem(
           key: const Key("timer"),
-          icon: const Icon(
+          icon: Icon(
             CupertinoIcons.stopwatch,
-            size: 35,
+            size: isDesktop(context) ? 25 : 35,
           ),
-          cupertinoIcon: const Icon(
+          cupertinoIcon: Icon(
             CupertinoIcons.stopwatch,
-            size: 35,
+            size: isDesktop(context) ? 25 : 35,
           ),
           label: context.t.timer.title,
           onTap: (index) {
@@ -553,8 +553,9 @@ class Navigation {
                     width: getSize(context).width * 0.7,
                     height: getSize(context).height * 0.75,
                     child: ClipRRect(
-                      borderRadius: BorderRadius.circular($constants.corners.lg),
-                      child: const TaskTimer()),
+                        borderRadius:
+                            BorderRadius.circular($constants.corners.lg),
+                        child: const TaskTimer()),
                   ),
                 ),
               );
