@@ -509,8 +509,7 @@ class _TaskTimerState extends State<TaskTimer> {
                       ),
                       onTap: () async {
                         // Create time entry before stopping the timer
-                        final success =
-                            await TimerUtils.createTimeEntryForStoppedTimer(
+                        final success = await TimerUtils.createTimeEntry(
                           currentTimerMode,
                           task: _task,
                         );
@@ -574,6 +573,28 @@ class _TaskTimerState extends State<TaskTimer> {
                           }
                           _startUITimer(); // Start UI updates
                         }
+                        await _updateTimerDisplay();
+                      },
+                    ),
+                  if (!_isRunning && !_isPaused && mode == TimerMode.pomodoro)
+                    // start pomo break button (only when not running and not paused)
+                    ElevatedContainer(
+                      padding: EdgeInsets.all($constants.insets.lg),
+                      borderRadius: $constants.corners.full,
+                      child: const Icon(
+                        CupertinoIcons.zzz,
+                        size: 40,
+                      ),
+                      onTap: () async {
+                          // Start pomodoro break
+                          await TimerUtils.startTimer(
+                            TimerMode.pomodoro,
+                            durationInMinutes:
+                                _pomodoroBreakDuration!.inMinutes,
+                            task: _task,
+                            pomoBreak: true,
+                          );
+                        _startUITimer(); // Start UI updates
                         await _updateTimerDisplay();
                       },
                     ),

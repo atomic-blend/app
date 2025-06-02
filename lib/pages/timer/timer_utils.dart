@@ -78,7 +78,7 @@ class TimerUtils {
 
   // Unified timer methods
   static Future<void> startTimer(TimerMode mode,
-      {int? durationInMinutes, TaskEntity? task}) async {
+      {int? durationInMinutes, TaskEntity? task, bool? pomoBreak}) async {
     final startDate = DateTime.now();
 
     await prefs?.setString(
@@ -99,6 +99,10 @@ class TimerUtils {
         'pomodoro_duration',
         durationInMinutes,
       );
+
+      if (pomoBreak != null) {
+        await prefs?.setBool("pomodoro_break", pomoBreak);
+      }
 
       LocalNotificationUtil.schedulePomodoroNotification(
         "pomo-completed",
@@ -261,7 +265,7 @@ class TimerUtils {
     return startTimeString != null;
   }
 
-  static bool isTimerPaused(TimerMode mode)  {
+  static bool isTimerPaused(TimerMode mode) {
     final pausePeriods = _getPausePeriods(mode);
     return pausePeriods.any((period) => period.pauseEnd == null);
   }
@@ -279,6 +283,10 @@ class TimerUtils {
 
   static String? getPomodoroTaskId() {
     return getTaskId(TimerMode.pomodoro);
+  }
+
+  static bool? isPomodoroBreak() {
+    return prefs?.getBool("pomodoro_break") ?? false;
   }
 
   static Future<Duration> getPomodoroRemainingTime() async {
@@ -345,8 +353,8 @@ class TimerUtils {
     await completeTimer(TimerMode.stopwatch);
   }
 
-  // Method to create time entry when timer is manually stopped
-  static Future<bool> createTimeEntryForStoppedTimer(TimerMode mode,
+  // Method to create time entry
+  static Future<bool> createTimeEntry(TimerMode mode,
       {TaskEntity? task}) async {
     final startTimeString = prefs?.getString('${mode.name}_start_time');
 
@@ -357,13 +365,15 @@ class TimerUtils {
 
     final startTime = DateTime.parse(startTimeString);
     final endDate = DateTime.now();
-    final duration = await getTimerDuration(mode);
+    final duration = getTimerDuration(mode);
+    final pomoBreak = isPomodoroBreak();
 
     final timeEntry = TimeEntry(
       startDate: startTime,
       endDate: endDate,
       taskId: task?.id,
       pomodoro: mode == TimerMode.pomodoro,
+      pomoBreak: pomoBreak,
       timer: mode == TimerMode.stopwatch,
       duration: duration.inSeconds,
     );

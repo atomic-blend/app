@@ -103,9 +103,9 @@ class _TimerWatcherState extends State<TimerWatcher> {
     // Add time entry to task after marking completion
     if (task != null) {
       // If task is found, add time entry to it
-      await TimerUtils.createTimeEntryForStoppedTimer(mode, task: task);
+      await TimerUtils.createTimeEntry(mode, task: task);
     } else {
-      await TimerUtils.createTimeEntryForStoppedTimer(mode);
+      await TimerUtils.createTimeEntry(mode);
     }
 
     // Reset the timer (this will clear the start time and other data)
