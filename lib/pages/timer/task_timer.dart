@@ -274,9 +274,34 @@ class _TaskTimerState extends State<TaskTimer> {
                         child: ListView(
                           padding: EdgeInsets.zero,
                           children: [
-                            ABSearchBar(
-                              controller: _searchController,
-                              onSubmitted: (value) {},
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: ABSearchBar(
+                                    controller: _searchController,
+                                    onSubmitted: (value) {},
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: $constants.insets.xs,
+                                ),
+                                TextButton(
+                                  onPressed: () {
+                                    _searchController.clear();
+                                    setState(() {
+                                      _task = null;
+                                    });
+                                  },
+                                  child: Text(
+                                    context.t.actions.clear,
+                                    style: getTextTheme(context)
+                                        .bodyMedium!
+                                        .copyWith(
+                                          color: getTheme(context).primary,
+                                        ),
+                                  ),
+                                ),
+                              ],
                             ),
                             SizedBox(
                               height: $constants.insets.xs,
@@ -307,7 +332,7 @@ class _TaskTimerState extends State<TaskTimer> {
                                           },
                                         ),
                                       ),
-                                    ))
+                                    )),
                           ],
                         ),
                       ),
