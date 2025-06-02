@@ -66,8 +66,9 @@ class _TaskTimerState extends State<TaskTimer> {
     final isStopPaused = await TimerUtils.isStopwatchPaused();
     final isPomRunning = TimerUtils.isPomodoroRunning();
     final isStopRunning = TimerUtils.isStopwatchRunning();
-
+    final _mode = TimerUtils.getMode();
     setState(() {
+      mode = _mode;
       _isPaused = isPomPaused || isStopPaused;
       _isRunning = isPomRunning || isStopRunning;
     });

@@ -63,6 +63,17 @@ class TimerUtils {
     return totalPaused;
   }
 
+  static TimerMode getMode() {
+    final pomodoroStartTime = prefs?.getString('pomodoro_start_time');
+    final stopwatchStartTime = prefs?.getString('stopwatch_start_time');
+    if (pomodoroStartTime != null) {
+      return TimerMode.pomodoro;
+    } else if (stopwatchStartTime != null) {
+      return TimerMode.stopwatch;
+    }
+    throw Exception('No active timer found');
+  }
+
   static Duration _getElapsedTimeExcludingCurrentPause(
       DateTime startTime, List<PausePeriod> pausePeriods) {
     // Find the last pause period (should be the current one)
