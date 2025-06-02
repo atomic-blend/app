@@ -462,6 +462,14 @@ class AppLayoutState extends ResponsiveState<AppLayout> {
               secondarySection?.items.insertAll(4, folderItems);
             }
 
+            // on desktop, move the 4th primary menu item to the end of the list
+            final primaryMenuItems =
+                $constants.navigation.primaryMenuItems(context).toList();
+            if (primaryMenuItems.length > 4) {
+              final itemToMove = primaryMenuItems.removeAt(4);
+              primaryMenuItems.add(itemToMove);
+            }
+
             // select the items if there's a secondary menu and a secondary menu item is selected
             if (secondarySection != null &&
                 secondarySection.items.isNotEmpty &&
@@ -527,124 +535,117 @@ class AppLayoutState extends ResponsiveState<AppLayout> {
                                   SizedBox(
                                     height: $constants.insets.xs,
                                   ),
-                                  ...$constants.navigation
-                                      .primaryMenuItems(context)
-                                      .map((item) => Column(
-                                            mainAxisSize: MainAxisSize.min,
-                                            children: [
-                                              if (item.separatorBefore != true)
-                                                SizedBox(
-                                                  height: $constants.insets.xxs,
-                                                ),
-                                              if (item.separatorBefore == true)
-                                                Padding(
-                                                  padding: EdgeInsets.symmetric(
-                                                    horizontal:
-                                                        $constants.insets.sm,
-                                                  ),
-                                                  child: Divider(
-                                                    color: Colors.grey.shade300,
-                                                    thickness: 2,
-                                                  ),
-                                                ),
-                                              GestureDetector(
-                                                onTap: () {
-                                                  if (item.onTap != null) {
-                                                    item.onTap!(0);
-                                                    return;
-                                                  }
-                                                  context
-                                                      .read<AppCubit>()
-                                                      .changePrimaryMenuSelectedKey(
-                                                        key: (item.key
-                                                                as ValueKey)
-                                                            .value,
-                                                      );
-                                                  if (item.mainSecondaryKey !=
-                                                      null) {
-                                                    context
-                                                        .read<AppCubit>()
-                                                        .changeSecondaryMenuSelectedKey(
-                                                          key: item
-                                                              .mainSecondaryKey!,
-                                                        );
-                                                  }
-                                                },
-                                                child: Padding(
-                                                  padding: EdgeInsets.symmetric(
-                                                      horizontal:
-                                                          $constants.insets.sm),
-                                                  child: Row(
+                                  ...primaryMenuItems.map((item) => Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          if (item.separatorBefore != true)
+                                            SizedBox(
+                                              height: $constants.insets.xxs,
+                                            ),
+                                          if (item.separatorBefore == true)
+                                            Padding(
+                                              padding: EdgeInsets.symmetric(
+                                                horizontal:
+                                                    $constants.insets.sm,
+                                              ),
+                                              child: Divider(
+                                                color: Colors.grey.shade300,
+                                                thickness: 2,
+                                              ),
+                                            ),
+                                          GestureDetector(
+                                            onTap: () {
+                                              if (item.onTap != null) {
+                                                item.onTap!(0);
+                                                return;
+                                              }
+                                              context
+                                                  .read<AppCubit>()
+                                                  .changePrimaryMenuSelectedKey(
+                                                    key: (item.key as ValueKey)
+                                                        .value,
+                                                  );
+                                              if (item.mainSecondaryKey !=
+                                                  null) {
+                                                context
+                                                    .read<AppCubit>()
+                                                    .changeSecondaryMenuSelectedKey(
+                                                      key: item
+                                                          .mainSecondaryKey!,
+                                                    );
+                                              }
+                                            },
+                                            child: Padding(
+                                              padding: EdgeInsets.symmetric(
+                                                  horizontal:
+                                                      $constants.insets.sm),
+                                              child: Row(
+                                                children: [
+                                                  Column(
+                                                    mainAxisSize:
+                                                        MainAxisSize.min,
                                                     children: [
-                                                      Column(
-                                                        mainAxisSize:
-                                                            MainAxisSize.min,
-                                                        children: [
-                                                          Container(
-                                                            width: 50,
-                                                            height: 50,
-                                                            decoration:
-                                                                BoxDecoration(
-                                                              border: appState
-                                                                          .primaryMenuSelectedKey ==
-                                                                      (item.key
-                                                                              as ValueKey)
-                                                                          .value
-                                                                  ? Border.all(
-                                                                      color: Colors
-                                                                          .grey
-                                                                          .shade500,
-                                                                      width: 1,
-                                                                    )
-                                                                  : null,
-                                                              color: item.color !=
-                                                                      null
-                                                                  ? item.color!
-                                                                      .withValues(
-                                                                          alpha:
-                                                                              0.1)
-                                                                  : Colors.grey
-                                                                      .shade500
-                                                                      .withValues(
-                                                                          alpha:
-                                                                              0.2),
-                                                              borderRadius:
-                                                                  BorderRadius.circular(
+                                                      Container(
+                                                        width: 50,
+                                                        height: 50,
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          border: appState
+                                                                      .primaryMenuSelectedKey ==
+                                                                  (item.key
+                                                                          as ValueKey)
+                                                                      .value
+                                                              ? Border.all(
+                                                                  color: Colors
+                                                                      .grey
+                                                                      .shade500,
+                                                                  width: 1,
+                                                                )
+                                                              : null,
+                                                          color: item.color !=
+                                                                  null
+                                                              ? item.color!
+                                                                  .withValues(
+                                                                      alpha:
+                                                                          0.1)
+                                                              : Colors
+                                                                  .grey.shade500
+                                                                  .withValues(
+                                                                      alpha:
+                                                                          0.2),
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(
                                                                       $constants
                                                                           .corners
                                                                           .lg),
+                                                        ),
+                                                        child: IconTheme(
+                                                            data: IconThemeData(
+                                                              color: item.color !=
+                                                                      null
+                                                                  ? item.color!
+                                                                  : Colors.grey
+                                                                      .shade800,
                                                             ),
-                                                            child: IconTheme(
-                                                                data:
-                                                                    IconThemeData(
-                                                                  color: item.color !=
-                                                                          null
-                                                                      ? item
-                                                                          .color!
-                                                                      : Colors
-                                                                          .grey
-                                                                          .shade800,
-                                                                ),
-                                                                child: isApple(
-                                                                        context)
-                                                                    ? item
-                                                                        .cupertinoIcon
-                                                                    : item
-                                                                        .icon),
-                                                          ),
-                                                        ],
+                                                            child: isApple(
+                                                                    context)
+                                                                ? item
+                                                                    .cupertinoIcon
+                                                                : item.icon),
                                                       ),
-                                                      SizedBox(
-                                                        width: $constants
-                                                            .insets.sm,
-                                                      ),
-                                                      Text(item.label)
                                                     ],
                                                   ),
-                                                ),
+                                                  SizedBox(
+                                                    width: $constants.insets.sm,
+                                                  ),
+                                                  Text(item.label)
+                                                ],
                                               ),
-                                            ],
-                                          ))
+                                            ),
+                                          ),
+                                        ],
+                                      ))
                                 ],
                               ),
                             ),
