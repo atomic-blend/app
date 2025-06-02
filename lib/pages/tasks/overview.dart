@@ -6,12 +6,14 @@ import 'package:app/components/forms/search_bar.dart';
 import 'package:app/components/widgets/elevated_container.dart';
 import 'package:app/entities/tasks/tasks.entity.dart';
 import 'package:app/i18n/strings.g.dart';
+import 'package:app/pages/tasks/add_task_modal.dart';
 import 'package:app/pages/timer/timer_info.dart';
 import 'package:app/pages/timer/timer_utils.dart';
 import 'package:app/services/sync.service.dart';
 import 'package:app/utils/constants.dart';
 import 'package:app/utils/exntensions/date_time_extension.dart';
 import 'package:app/utils/shortcuts.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -76,26 +78,69 @@ class _OverviewTasksState extends State<OverviewTasks> {
                 Expanded(
                   child: ElevatedContainer(
                     width: double.infinity,
-                    padding: EdgeInsets.symmetric(
-                      horizontal: $constants.insets.sm,
-                      vertical: $constants.insets.xs,
-                    ),
                     child: SingleChildScrollView(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                            context.t.times.today,
-                            style: getTextTheme(context).titleMedium!.copyWith(
-                                  fontWeight: FontWeight.bold,
-                                ),
-                          ),
-                          if (todayTasks.isEmpty)
-                            Text(
-                              context.t.tasks.nothing_to_do,
-                              style: getTextTheme(context).labelSmall!,
+                          Padding(
+                            padding: EdgeInsets.only(
+                              top: $constants.insets.xs,
+                              left: $constants.insets.sm,
                             ),
-                          if (todayTasks.isNotEmpty) ...todayTasks,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  context.t.times.today,
+                                  style: getTextTheme(context)
+                                      .titleMedium!
+                                      .copyWith(
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                ),
+                                IconButton(
+                                    onPressed: () {
+                                      if (isDesktop(context)) {
+                                        showDialog(
+                                            context: context,
+                                            builder: (context) => Dialog(
+                                                    child: AddTaskModal(
+                                                  endDate: DateTime.now().add(
+                                                      const Duration(hours: 1)),
+                                                )));
+                                      } else {
+                                        showModalBottomSheet(
+                                            isScrollControlled: true,
+                                            context: context,
+                                            builder: (context) => AddTaskModal(
+                                                  endDate: DateTime.now().add(
+                                                      const Duration(hours: 1)),
+                                                ));
+                                      }
+                                    },
+                                    icon: Icon(
+                                      CupertinoIcons.plus,
+                                      size: 20,
+                                    ))
+                              ],
+                            ),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: $constants.insets.sm,
+                            ),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                if (todayTasks.isEmpty)
+                                  Text(
+                                    context.t.tasks.nothing_to_do,
+                                    style: getTextTheme(context).labelSmall!,
+                                  ),
+                                if (todayTasks.isNotEmpty) ...todayTasks,
+                              ],
+                            ),
+                          )
                         ],
                       ),
                     ),
@@ -105,30 +150,73 @@ class _OverviewTasksState extends State<OverviewTasks> {
                 Expanded(
                   child: ElevatedContainer(
                     width: double.infinity,
-                    padding: EdgeInsets.symmetric(
-                      horizontal: $constants.insets.sm,
-                      vertical: $constants.insets.xs,
-                    ),
                     child: SingleChildScrollView(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                            context.t.times.tomorrow,
-                            style: getTextTheme(context).titleMedium!.copyWith(
-                                  fontWeight: FontWeight.bold,
-                                ),
-                          ),
-                          if (tomorrowTasks.isEmpty)
-                            Padding(
-                              padding: EdgeInsets.only(
-                                  bottom: $constants.insets.xxs),
-                              child: Text(
-                                context.t.tasks.day_off,
-                                style: getTextTheme(context).labelSmall!,
-                              ),
+                          Padding(
+                            padding: EdgeInsets.only(
+                              top: $constants.insets.xs,
+                              left: $constants.insets.sm,
                             ),
-                          if (tomorrowTasks.isNotEmpty) ...tomorrowTasks,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  context.t.times.tomorrow,
+                                  style: getTextTheme(context)
+                                      .titleMedium!
+                                      .copyWith(
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                ),
+                                IconButton(
+                                  onPressed: () {
+                                    if (isDesktop(context)) {
+                                      showDialog(
+                                          context: context,
+                                          builder: (context) => Dialog(
+                                                  child: AddTaskModal(
+                                                endDate: DateTime.now().add(
+                                                    const Duration(days: 1)),
+                                              )));
+                                    } else {
+                                      showModalBottomSheet(
+                                          isScrollControlled: true,
+                                          context: context,
+                                          builder: (context) => AddTaskModal(
+                                                endDate: DateTime.now().add(
+                                                    const Duration(days: 1)),
+                                              ));
+                                    }
+                                  },
+                                  icon: Icon(
+                                    CupertinoIcons.plus,
+                                    size: 20,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: $constants.insets.sm,
+                            ),
+                            child: Column(
+                              children: [
+                                if (tomorrowTasks.isEmpty)
+                                  Padding(
+                                    padding: EdgeInsets.only(
+                                        bottom: $constants.insets.xxs),
+                                    child: Text(
+                                      context.t.tasks.day_off,
+                                      style: getTextTheme(context).labelSmall!,
+                                    ),
+                                  ),
+                                if (tomorrowTasks.isNotEmpty) ...tomorrowTasks,
+                              ],
+                            ),
+                          )
                         ],
                       ),
                     ),
@@ -138,30 +226,73 @@ class _OverviewTasksState extends State<OverviewTasks> {
                 Expanded(
                   child: ElevatedContainer(
                     width: double.infinity,
-                    padding: EdgeInsets.symmetric(
-                      horizontal: $constants.insets.sm,
-                      vertical: $constants.insets.xs,
-                    ),
                     child: SingleChildScrollView(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                            context.t.times.this_week,
-                            style: getTextTheme(context).titleMedium!.copyWith(
-                                  fontWeight: FontWeight.bold,
-                                ),
-                          ),
-                          if (thisWeekTasks.isEmpty)
-                            Padding(
-                              padding: EdgeInsets.only(
-                                  bottom: $constants.insets.xxs),
-                              child: Text(
-                                context.t.tasks.nothing_to_do,
-                                style: getTextTheme(context).labelSmall!,
-                              ),
+                          Padding(
+                            padding: EdgeInsets.only(
+                              top: $constants.insets.xs,
+                              left: $constants.insets.sm,
                             ),
-                          if (thisWeekTasks.isNotEmpty) ...thisWeekTasks,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  context.t.times.this_week,
+                                  style: getTextTheme(context)
+                                      .titleMedium!
+                                      .copyWith(
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                ),
+                                IconButton(
+                                  onPressed: () {
+                                    if (isDesktop(context)) {
+                                      showDialog(
+                                          context: context,
+                                          builder: (context) => Dialog(
+                                                  child: AddTaskModal(
+                                                endDate: DateTime.now().add(
+                                                    const Duration(days: 2)),
+                                              )));
+                                    } else {
+                                      showModalBottomSheet(
+                                          isScrollControlled: true,
+                                          context: context,
+                                          builder: (context) => AddTaskModal(
+                                                endDate: DateTime.now().add(
+                                                    const Duration(days: 2)),
+                                              ));
+                                    }
+                                  },
+                                  icon: Icon(
+                                    CupertinoIcons.plus,
+                                    size: 20,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: $constants.insets.sm,
+                            ),
+                            child: Column(
+                              children: [
+                                if (thisWeekTasks.isEmpty)
+                                  Padding(
+                                    padding: EdgeInsets.only(
+                                        bottom: $constants.insets.xxs),
+                                    child: Text(
+                                      context.t.tasks.nothing_to_do,
+                                      style: getTextTheme(context).labelSmall!,
+                                    ),
+                                  ),
+                                if (thisWeekTasks.isNotEmpty) ...thisWeekTasks,
+                              ],
+                            ),
+                          )
                         ],
                       ),
                     ),
