@@ -17,6 +17,8 @@ class TimeEntry with _$TimeEntry {
     required int duration,
     bool? pomodoro,
     bool? timer,
+    bool? pomoBreak,
+    String? note,
     DateTime? createdAt,
     DateTime? updatedAt,
   }) = _TimeEntry;
@@ -26,6 +28,7 @@ class TimeEntry with _$TimeEntry {
     'createdAt',
     'pomodoro',
     'timer',
+    'pomoBreak',
     'updatedAt',
   ];
 
@@ -49,6 +52,8 @@ class TimeEntry with _$TimeEntry {
       'duration': await encryptionService.encryptJson(duration.toString()),
       'pomodoro': pomodoro,
       'timer': timer,
+      'pomoBreak': pomoBreak,
+      'note': await encryptionService.encryptJson(note ?? ''),
       'createdAt': createdAt?.toUtc().toIso8601String(),
       'updatedAt': updatedAt?.toUtc().toIso8601String(),
     };
@@ -71,6 +76,10 @@ class TimeEntry with _$TimeEntry {
       taskId: data['taskId'] as String?,
       pomodoro: data['pomodoro'] as bool?,
       timer: data['timer'] as bool?,
+      pomoBreak: data['pomoBreak'] as bool?,
+      note: data['note'] != null
+          ? await encryptionService.decryptJson(data['note'])
+          : null,
       createdAt:
           data['createdAt'] != null ? DateTime.parse(data['createdAt']) : null,
       updatedAt:

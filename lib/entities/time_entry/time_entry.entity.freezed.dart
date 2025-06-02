@@ -35,6 +35,10 @@ mixin _$TimeEntry {
   set pomodoro(bool? value) => throw _privateConstructorUsedError;
   bool? get timer => throw _privateConstructorUsedError;
   set timer(bool? value) => throw _privateConstructorUsedError;
+  bool? get pomoBreak => throw _privateConstructorUsedError;
+  set pomoBreak(bool? value) => throw _privateConstructorUsedError;
+  String? get note => throw _privateConstructorUsedError;
+  set note(String? value) => throw _privateConstructorUsedError;
   DateTime? get createdAt => throw _privateConstructorUsedError;
   set createdAt(DateTime? value) => throw _privateConstructorUsedError;
   DateTime? get updatedAt => throw _privateConstructorUsedError;
@@ -63,6 +67,8 @@ abstract class $TimeEntryCopyWith<$Res> {
       int duration,
       bool? pomodoro,
       bool? timer,
+      bool? pomoBreak,
+      String? note,
       DateTime? createdAt,
       DateTime? updatedAt});
 }
@@ -89,6 +95,8 @@ class _$TimeEntryCopyWithImpl<$Res, $Val extends TimeEntry>
     Object? duration = null,
     Object? pomodoro = freezed,
     Object? timer = freezed,
+    Object? pomoBreak = freezed,
+    Object? note = freezed,
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
   }) {
@@ -121,6 +129,14 @@ class _$TimeEntryCopyWithImpl<$Res, $Val extends TimeEntry>
           ? _value.timer
           : timer // ignore: cast_nullable_to_non_nullable
               as bool?,
+      pomoBreak: freezed == pomoBreak
+          ? _value.pomoBreak
+          : pomoBreak // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      note: freezed == note
+          ? _value.note
+          : note // ignore: cast_nullable_to_non_nullable
+              as String?,
       createdAt: freezed == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -149,6 +165,8 @@ abstract class _$$TimeEntryImplCopyWith<$Res>
       int duration,
       bool? pomodoro,
       bool? timer,
+      bool? pomoBreak,
+      String? note,
       DateTime? createdAt,
       DateTime? updatedAt});
 }
@@ -173,6 +191,8 @@ class __$$TimeEntryImplCopyWithImpl<$Res>
     Object? duration = null,
     Object? pomodoro = freezed,
     Object? timer = freezed,
+    Object? pomoBreak = freezed,
+    Object? note = freezed,
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
   }) {
@@ -205,6 +225,14 @@ class __$$TimeEntryImplCopyWithImpl<$Res>
           ? _value.timer
           : timer // ignore: cast_nullable_to_non_nullable
               as bool?,
+      pomoBreak: freezed == pomoBreak
+          ? _value.pomoBreak
+          : pomoBreak // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      note: freezed == note
+          ? _value.note
+          : note // ignore: cast_nullable_to_non_nullable
+              as String?,
       createdAt: freezed == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -228,6 +256,8 @@ class _$TimeEntryImpl extends _TimeEntry {
       required this.duration,
       this.pomodoro,
       this.timer,
+      this.pomoBreak,
+      this.note,
       this.createdAt,
       this.updatedAt})
       : super._();
@@ -250,6 +280,10 @@ class _$TimeEntryImpl extends _TimeEntry {
   bool? pomodoro;
   @override
   bool? timer;
+  @override
+  bool? pomoBreak;
+  @override
+  String? note;
   @override
   DateTime? createdAt;
   @override
@@ -280,6 +314,8 @@ abstract class _TimeEntry extends TimeEntry {
       required int duration,
       bool? pomodoro,
       bool? timer,
+      bool? pomoBreak,
+      String? note,
       DateTime? createdAt,
       DateTime? updatedAt}) = _$TimeEntryImpl;
   _TimeEntry._() : super._();
@@ -308,6 +344,12 @@ abstract class _TimeEntry extends TimeEntry {
   @override
   bool? get timer;
   set timer(bool? value);
+  @override
+  bool? get pomoBreak;
+  set pomoBreak(bool? value);
+  @override
+  String? get note;
+  set note(String? value);
   @override
   DateTime? get createdAt;
   set createdAt(DateTime? value);

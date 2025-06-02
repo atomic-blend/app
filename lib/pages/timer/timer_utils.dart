@@ -35,7 +35,7 @@ class PausePeriod {
 
 class TimerUtils {
   // Helper methods for pause periods
-  static Future<List<PausePeriod>> _getPausePeriods(TimerMode mode) async {
+  static List<PausePeriod> _getPausePeriods(TimerMode mode) {
     final key = '${mode.name}_pause_periods';
     final pauseDataString = prefs?.getString(key);
     if (pauseDataString == null) return [];
@@ -125,7 +125,7 @@ class TimerUtils {
     return null;
   }
 
-  static Future<Duration> getTimerDuration(TimerMode mode) async {
+  static Duration getTimerDuration(TimerMode mode) {
     final startTimeString = prefs?.getString('${mode.name}_start_time');
 
     if (startTimeString == null) {
@@ -145,7 +145,7 @@ class TimerUtils {
       } else {
         // For completed stopwatch, return actual elapsed time
         final endTime = DateTime.parse(endTimeString);
-        final pausePeriods = await _getPausePeriods(mode);
+        final pausePeriods = _getPausePeriods(mode);
         final totalPausedDuration = _getTotalPausedDuration(pausePeriods);
         final totalDuration =
             endTime.difference(startTime) - totalPausedDuration;
@@ -154,11 +154,11 @@ class TimerUtils {
     }
 
     // Timer is running, use existing logic
-    final pausePeriods = await _getPausePeriods(mode);
+    final pausePeriods = _getPausePeriods(mode);
     final totalPausedDuration = _getTotalPausedDuration(pausePeriods);
 
     // If currently paused, don't count time since last pause
-    final isCurrentlyPaused = await isTimerPaused(mode);
+    final isCurrentlyPaused = isTimerPaused(mode);
     final elapsed = isCurrentlyPaused
         ? _getElapsedTimeExcludingCurrentPause(startTime, pausePeriods)
         : DateTime.now().difference(startTime);
@@ -177,26 +177,26 @@ class TimerUtils {
 
   static Future<void> pauseTimer(TimerMode mode) async {
     // Check if already paused
-    if (await isTimerPaused(mode)) return;
+    if (isTimerPaused(mode)) return;
 
     if (mode == TimerMode.pomodoro) {
-      final remainingTime = await getTimerDuration(mode);
+      final remainingTime = getTimerDuration(mode);
       if (remainingTime > Duration.zero) {
         await LocalNotificationUtil.cancelNotification(0);
       }
     }
 
     // Add new pause period
-    final pausePeriods = await _getPausePeriods(mode);
+    final pausePeriods = _getPausePeriods(mode);
     pausePeriods.add(PausePeriod(pauseStart: DateTime.now()));
     await _savePausePeriods(mode, pausePeriods);
   }
 
   static Future<void> resumeTimer(TimerMode mode) async {
     // Check if currently paused
-    if (!await isTimerPaused(mode)) return;
+    if (!isTimerPaused(mode)) return;
 
-    final pausePeriods = await _getPausePeriods(mode);
+    final pausePeriods = _getPausePeriods(mode);
 
     // Find the current pause period and end it
     final currentPauseIndex =
@@ -212,7 +212,7 @@ class TimerUtils {
 
     // Reschedule notification for pomodoro
     if (mode == TimerMode.pomodoro) {
-      final remainingTime = await getTimerDuration(mode);
+      final remainingTime = getTimerDuration(mode);
       if (remainingTime > Duration.zero) {
         LocalNotificationUtil.schedulePomodoroNotification(
           "pomo-completed",
@@ -261,8 +261,8 @@ class TimerUtils {
     return startTimeString != null;
   }
 
-  static Future<bool> isTimerPaused(TimerMode mode) async {
-    final pausePeriods = await _getPausePeriods(mode);
+  static bool isTimerPaused(TimerMode mode)  {
+    final pausePeriods = _getPausePeriods(mode);
     return pausePeriods.any((period) => period.pauseEnd == null);
   }
 
