@@ -233,6 +233,7 @@ class _TranslationsHabitsFr implements TranslationsHabitsEn {
 	@override String get title => 'Habitudes';
 	@override String get no_habits => 'Aucune habitude';
 	@override String get get_started_now => 'Ajoutez votre première habitude pour commencer !';
+	@override late final _TranslationsHabitsDeleteHabitFr delete_habit = _TranslationsHabitsDeleteHabitFr._(_root);
 	@override late final _TranslationsHabitsAddFr add = _TranslationsHabitsAddFr._(_root);
 	@override String get list => 'Habitudes';
 	@override String get overview => 'Vue d\'ensemble';
@@ -1156,6 +1157,18 @@ class _TranslationsAccountSecurityAndPrivacyFr implements TranslationsAccountSec
 	@override late final _TranslationsAccountSecurityAndPrivacyChangePasswordFr change_password = _TranslationsAccountSecurityAndPrivacyChangePasswordFr._(_root);
 }
 
+// Path: habits.delete_habit
+class _TranslationsHabitsDeleteHabitFr implements TranslationsHabitsDeleteHabitEn {
+	_TranslationsHabitsDeleteHabitFr._(this._root);
+
+	final TranslationsFr _root; // ignore: unused_field
+
+	// Translations
+	@override String get title => 'Supprimer l\'habitude';
+	@override String get description => 'Êtes-vous sûr de vouloir supprimer cette habitude ?';
+	@override String get warning => 'Cette action est irréversible et toutes les entrées associées à l\'habitude seront supprimées.';
+}
+
 // Path: habits.add
 class _TranslationsHabitsAddFr implements TranslationsHabitsAddEn {
 	_TranslationsHabitsAddFr._(this._root);
@@ -1536,6 +1549,9 @@ extension on TranslationsFr {
 			case 'habits.title': return 'Habitudes';
 			case 'habits.no_habits': return 'Aucune habitude';
 			case 'habits.get_started_now': return 'Ajoutez votre première habitude pour commencer !';
+			case 'habits.delete_habit.title': return 'Supprimer l\'habitude';
+			case 'habits.delete_habit.description': return 'Êtes-vous sûr de vouloir supprimer cette habitude ?';
+			case 'habits.delete_habit.warning': return 'Cette action est irréversible et toutes les entrées associées à l\'habitude seront supprimées.';
 			case 'habits.add.title': return 'Que souhaitez-vous accomplir ?';
 			case 'habits.add.name': return 'Nom de l\'habitude*';
 			case 'habits.add.name_hint': return 'Boire de l\'eau';

@@ -236,6 +236,7 @@ class TranslationsHabitsEn {
 	String get title => 'Habits';
 	String get no_habits => 'No habits for now';
 	String get get_started_now => 'Add your first habit to get started!';
+	late final TranslationsHabitsDeleteHabitEn delete_habit = TranslationsHabitsDeleteHabitEn._(_root);
 	late final TranslationsHabitsAddEn add = TranslationsHabitsAddEn._(_root);
 	String get list => 'Habits';
 	String get overview => 'Overview';
@@ -1162,6 +1163,18 @@ class TranslationsAccountSecurityAndPrivacyEn {
 	late final TranslationsAccountSecurityAndPrivacyChangePasswordEn change_password = TranslationsAccountSecurityAndPrivacyChangePasswordEn._(_root);
 }
 
+// Path: habits.delete_habit
+class TranslationsHabitsDeleteHabitEn {
+	TranslationsHabitsDeleteHabitEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	String get title => 'Delete habit';
+	String get description => 'Are you sure you want to delete this habit?';
+	String get warning => 'This action cannot be undone and all the related entries will also be deleted.';
+}
+
 // Path: habits.add
 class TranslationsHabitsAddEn {
 	TranslationsHabitsAddEn._(this._root);
@@ -1542,6 +1555,9 @@ extension on Translations {
 			case 'habits.title': return 'Habits';
 			case 'habits.no_habits': return 'No habits for now';
 			case 'habits.get_started_now': return 'Add your first habit to get started!';
+			case 'habits.delete_habit.title': return 'Delete habit';
+			case 'habits.delete_habit.description': return 'Are you sure you want to delete this habit?';
+			case 'habits.delete_habit.warning': return 'This action cannot be undone and all the related entries will also be deleted.';
 			case 'habits.add.title': return 'What do you want to achieve?';
 			case 'habits.add.name': return 'Habit name*';
 			case 'habits.add.name_hint': return 'Drink water';
