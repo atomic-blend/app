@@ -42,18 +42,35 @@ class _OverviewTasksState extends State<OverviewTasks> {
   }
 
   @override
+  void didChangeDependencies() {
+    _initializeTimerState();
+    _startUITimer();
+    super.didChangeDependencies();
+  }
+
+  @override
   void dispose() {
     _uiTimer?.cancel();
     super.dispose();
   }
 
   Future<void> _initializeTimerState() async {
+    // Always initialize the pomodoro duration for progress calculations
+    _pomodoroDuration = Duration(minutes: TimerUtils.getPomodoroDuration());
+
     if (TimerUtils.isPomodoroRunning()) {
       _currentTimerMode = TimerMode.pomodoro;
-      _pomodoroDuration = Duration(minutes: TimerUtils.getPomodoroDuration());
     } else if (TimerUtils.isStopwatchRunning()) {
       _currentTimerMode = TimerMode.stopwatch;
-      _pomodoroDuration = Duration(minutes: TimerUtils.getPomodoroDuration());
+    } else {
+      final isPomoPaused = await TimerUtils.isPomodoroPaused();
+      final isStopPaused = await TimerUtils.isStopwatchPaused();
+
+      if (isPomoPaused) {
+        _currentTimerMode = TimerMode.pomodoro;
+      } else if (isStopPaused) {
+        _currentTimerMode = TimerMode.stopwatch;
+      }
     }
   }
 
@@ -75,8 +92,13 @@ class _OverviewTasksState extends State<OverviewTasks> {
     // Check if any timer is still running
     final isPomodoroRunning = TimerUtils.isPomodoroRunning();
     final isStopwatchRunning = TimerUtils.isStopwatchRunning();
+    final isPomoPaused = await TimerUtils.isPomodoroPaused();
+    final isStopPaused = await TimerUtils.isStopwatchPaused();
 
-    if (!isPomodoroRunning && !isStopwatchRunning) {
+    if (!isPomodoroRunning &&
+        !isStopwatchRunning &&
+        !isPomoPaused &&
+        !isStopPaused) {
       _stopUITimer();
       setState(() {
         _progress = 0.0;
@@ -86,20 +108,21 @@ class _OverviewTasksState extends State<OverviewTasks> {
     }
 
     // Determine current timer mode
-    if (isPomodoroRunning) {
+    if (isPomodoroRunning || isPomoPaused) {
       _currentTimerMode = TimerMode.pomodoro;
-    } else if (isStopwatchRunning) {
+    } else if (isStopwatchRunning || isStopPaused) {
       _currentTimerMode = TimerMode.stopwatch;
     }
 
     if (_currentTimerMode != null) {
-      final duration = await TimerUtils.getTimerDuration(_currentTimerMode!);
+      final duration = TimerUtils.getTimerDuration(_currentTimerMode!);
       final isRunning = TimerUtils.isTimerRunning(_currentTimerMode!);
+      final isPaused = await TimerUtils.isTimerPaused(_currentTimerMode!);
 
       setState(() {
         if (_currentTimerMode == TimerMode.pomodoro) {
           // Pomodoro: countdown from 1.0 to 0.0
-          if (!isRunning) {
+          if (!isRunning && !isPaused) {
             _progress = 1.0;
           } else {
             _progress = _pomodoroDuration != null
@@ -109,7 +132,7 @@ class _OverviewTasksState extends State<OverviewTasks> {
           }
         } else {
           // Stopwatch: count up from 0.0 to 1.0
-          if (!isRunning) {
+          if (!isRunning && !isPaused) {
             _progress = 0.0;
           } else {
             _progress = _pomodoroDuration != null
@@ -119,6 +142,15 @@ class _OverviewTasksState extends State<OverviewTasks> {
           }
         }
       });
+
+      // If timer is paused and UI timer is running, stop it
+      if (isPaused && _uiTimer != null) {
+        _stopUITimer();
+      }
+      // If timer is running and UI timer is not running, start it
+      else if (isRunning && _uiTimer == null) {
+        _startUITimer();
+      }
     }
   }
 
@@ -213,13 +245,27 @@ class _OverviewTasksState extends State<OverviewTasks> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(
-                                  _currentTimerMode == TimerMode.pomodoro
-                                      ? context.t.timer.pomo_running
-                                      : context.t.timer.timer_running,
-                                  style: getTextTheme(context)
-                                      .titleSmall!
-                                      .copyWith(fontWeight: FontWeight.bold),
+                                FutureBuilder<bool>(
+                                  future: _currentTimerMode != null
+                                      ? Future.value(TimerUtils.isTimerPaused(
+                                          _currentTimerMode!))
+                                      : Future.value(false),
+                                  builder: (context, snapshot) {
+                                    final isPaused = snapshot.data ?? false;
+                                    return Text(
+                                      _currentTimerMode == TimerMode.pomodoro
+                                          ? isPaused
+                                              ? context.t.timer.pause
+                                              : context.t.timer.pomo_running
+                                          : isPaused
+                                              ? context.t.timer.pause
+                                              : context.t.timer.timer_running,
+                                      style: getTextTheme(context)
+                                          .titleSmall!
+                                          .copyWith(
+                                              fontWeight: FontWeight.bold),
+                                    );
+                                  },
                                 ),
                                 if (_currentTimerMode != null)
                                   Builder(
@@ -229,8 +275,15 @@ class _OverviewTasksState extends State<OverviewTasks> {
                                               _currentTimerMode!);
                                       final minutes = duration.inMinutes;
                                       final seconds = duration.inSeconds % 60;
+                                      final timeString =
+                                          "${minutes.toString().padLeft(2, '0')}:${seconds.toString().padLeft(2, '0')}";
+
                                       return Text(
-                                        context.t.timer.time_left(timeLeft: "${minutes.toString().padLeft(2, '0')}:${seconds.toString().padLeft(2, '0')}"),
+                                        _currentTimerMode == TimerMode.pomodoro
+                                            ? context.t.timer
+                                                .time_left(timeLeft: timeString)
+                                            : context.t.timer.elapsed_time +
+                                                ": $timeString",
                                         style: getTextTheme(context)
                                             .bodySmall!
                                             .copyWith(
