@@ -209,6 +209,9 @@
       "cancel": "Cancel",
       "save": "Save",
       "erase": "Erase",
+      "task_added": "Task added",
+      "task_added_description": "Your task has been added successfully.",
+      "task_error": "Task error",
       "title_required": "Title required",
       "title_required_description": "Please enter a title for your task",
       "reminders": {

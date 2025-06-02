@@ -1040,6 +1040,9 @@ class _TranslationsTasksAddTaskModalFr implements TranslationsTasksAddTaskModalE
 	@override String get notes => 'Notes';
 	@override String get end_date => 'Date de fin';
 	@override String get cancel => 'Annuler';
+	@override String get task_added => 'Tâche ajoutée';
+	@override String get task_added_description => 'Votre tâche a été ajoutée avec succès.';
+	@override String get task_error => 'Erreur lors de l\'opération';
 	@override String get save => 'Enregistrer';
 	@override String get erase => 'Effacer';
 	@override String get title_required => 'Titre requis';
@@ -1478,6 +1481,9 @@ extension on TranslationsFr {
 			case 'tasks.add_task_modal.notes': return 'Notes';
 			case 'tasks.add_task_modal.end_date': return 'Date de fin';
 			case 'tasks.add_task_modal.cancel': return 'Annuler';
+			case 'tasks.add_task_modal.task_added': return 'Tâche ajoutée';
+			case 'tasks.add_task_modal.task_added_description': return 'Votre tâche a été ajoutée avec succès.';
+			case 'tasks.add_task_modal.task_error': return 'Erreur lors de l\'opération';
 			case 'tasks.add_task_modal.save': return 'Enregistrer';
 			case 'tasks.add_task_modal.erase': return 'Effacer';
 			case 'tasks.add_task_modal.title_required': return 'Titre requis';

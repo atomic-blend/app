@@ -1048,6 +1048,9 @@ class TranslationsTasksAddTaskModalEn {
 	String get cancel => 'Cancel';
 	String get save => 'Save';
 	String get erase => 'Erase';
+	String get task_added => 'Task added';
+	String get task_added_description => 'Your task has been added successfully.';
+	String get task_error => 'Task error';
 	String get title_required => 'Title required';
 	String get title_required_description => 'Please enter a title for your task';
 	String reminders({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n,
@@ -1486,6 +1489,9 @@ extension on Translations {
 			case 'tasks.add_task_modal.cancel': return 'Cancel';
 			case 'tasks.add_task_modal.save': return 'Save';
 			case 'tasks.add_task_modal.erase': return 'Erase';
+			case 'tasks.add_task_modal.task_added': return 'Task added';
+			case 'tasks.add_task_modal.task_added_description': return 'Your task has been added successfully.';
+			case 'tasks.add_task_modal.task_error': return 'Task error';
 			case 'tasks.add_task_modal.title_required': return 'Title required';
 			case 'tasks.add_task_modal.title_required_description': return 'Please enter a title for your task';
 			case 'tasks.add_task_modal.reminders': return ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n,

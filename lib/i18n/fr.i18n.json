@@ -207,6 +207,10 @@
       "notes": "Notes",
       "end_date": "Date de fin",
       "cancel": "Annuler",
+
+      "task_added": "Tâche ajoutée",
+      "task_added_description": "Votre tâche a été ajoutée avec succès.",
+      "task_error": "Erreur lors de l'opération",
       "save": "Enregistrer",
       "erase": "Effacer",
       "title_required": "Titre requis",
