@@ -42,13 +42,6 @@ class _OverviewTasksState extends State<OverviewTasks> {
   }
 
   @override
-  void didChangeDependencies() {
-    _initializeTimerState();
-    _startUITimer();
-    super.didChangeDependencies();
-  }
-
-  @override
   void dispose() {
     _uiTimer?.cancel();
     super.dispose();
@@ -158,6 +151,8 @@ class _OverviewTasksState extends State<OverviewTasks> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: BlocBuilder<TasksBloc, TasksState>(builder: (context, taskState) {
+        _initializeTimerState();
+        _startUITimer();
         final todayTasks = _todayTasks(taskState.tasks ?? []);
         final tomorrowTasks = _tomorrowTasks(taskState.tasks ?? []);
         final thisWeekTasks = _thisWeekTasks(taskState.tasks ?? []);
