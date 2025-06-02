@@ -246,7 +246,7 @@ class _HabitsState extends State<Habits> {
               onTap: () {
                 var selector = ViewOrEditHabitModal(
                   habit: habits[index],
-                  isEdit: true,
+                  isEdit: false,
                 );
                 if (isDesktop(context)) {
                   showDialog(
