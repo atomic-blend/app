@@ -768,6 +768,9 @@ class _TranslationsTimerFr implements TranslationsTimerEn {
 	@override String get start => 'Démarrer';
 	@override String get stop => 'Arrêter';
 	@override String get reset => 'Réinitialiser';
+	@override String get start_pomodoro => 'Démarrer Pomodoro';
+	@override String get start_stopwatch => 'Démarrer Chronomètre';
+	@override String get start_break => 'Démarrer une pause';
 	@override String get pause => 'Pause';
 	@override String get resume => 'Reprendre';
 	@override String get duration => 'Durée';
@@ -1881,6 +1884,9 @@ extension on TranslationsFr {
 			case 'timer.start': return 'Démarrer';
 			case 'timer.stop': return 'Arrêter';
 			case 'timer.reset': return 'Réinitialiser';
+			case 'timer.start_pomodoro': return 'Démarrer Pomodoro';
+			case 'timer.start_stopwatch': return 'Démarrer Chronomètre';
+			case 'timer.start_break': return 'Démarrer une pause';
 			case 'timer.pause': return 'Pause';
 			case 'timer.resume': return 'Reprendre';
 			case 'timer.duration': return 'Durée';

@@ -777,6 +777,9 @@ class TranslationsTimerEn {
 	String get pause => 'Pause';
 	String get resume => 'Resume';
 	String get duration => 'Duration';
+	String get start_pomodoro => 'Start pomodoro';
+	String get start_stopwatch => 'Start stopwatch';
+	String get start_break => 'Start break';
 	String get elapsed_time => 'Elapsed time';
 	String get remaining_time => 'Remaining time';
 	String get no_timer_running => 'No timer running';
@@ -1893,6 +1896,9 @@ extension on Translations {
 			case 'timer.pause': return 'Pause';
 			case 'timer.resume': return 'Resume';
 			case 'timer.duration': return 'Duration';
+			case 'timer.start_pomodoro': return 'Start pomodoro';
+			case 'timer.start_stopwatch': return 'Start stopwatch';
+			case 'timer.start_break': return 'Start break';
 			case 'timer.elapsed_time': return 'Elapsed time';
 			case 'timer.remaining_time': return 'Remaining time';
 			case 'timer.no_timer_running': return 'No timer running';
