@@ -400,6 +400,7 @@ class Navigation {
             color: getTheme(context).secondary,
           ),
           label: context.t.actions.add,
+          color: getTheme(context).secondary,
           onTap: (index) {
             if (isDesktop(context)) {
               showDialog(
