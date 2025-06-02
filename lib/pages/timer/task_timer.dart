@@ -11,6 +11,7 @@ import 'package:app/entities/tasks/tasks.entity.dart';
 import 'package:app/entities/time_entry/time_entry.entity.dart';
 import 'package:app/i18n/strings.g.dart';
 import 'package:app/pages/timer/completed_timer.dart';
+import 'package:app/pages/timer/task_selector.dart';
 import 'package:app/pages/timer/timer_utils.dart';
 import 'package:app/utils/constants.dart';
 import 'package:app/utils/shortcuts.dart';
@@ -167,6 +168,38 @@ class _TaskTimerState extends State<TaskTimer> {
     );
   }
 
+  Future<void> _showTaskSelector() async {
+    if (isDesktop(context)) {
+      showDialog(
+          context: context,
+          builder: (context) => Dialog(
+                child: TaskSelector(
+                  onTaskSelected: (task) {
+                    setState(() {
+                      _task = task;
+                    });
+                  },
+                ),
+              ));
+    } else {
+      showModalBottomSheet(
+        context: context,
+        isDismissible: true,
+        isScrollControlled: true,
+        backgroundColor: Colors.transparent,
+        builder: (context) {
+          return TaskSelector(
+            onTaskSelected: (task) {
+              setState(() {
+                _task = task;
+              });
+            },
+          );
+        },
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -264,76 +297,10 @@ class _TaskTimerState extends State<TaskTimer> {
                 height: $constants.insets.lg,
               ),
               if (taskState.tasks != null && taskState.tasks!.isNotEmpty)
-                CustomPopup(
-                  backgroundColor: getTheme(context).surface,
-                  content: Container(
-                    height: getSize(context).height * 0.4,
-                    width: getSize(context).width * 0.8,
-                    color: getTheme(context).surface,
-                    padding: EdgeInsets.all($constants.insets.xxs),
-                    child: ListView(
-                      padding: EdgeInsets.zero,
-                      children: [
-                        Row(
-                          children: [
-                            Expanded(
-                              child: ABSearchBar(
-                                controller: _searchController,
-                                onSubmitted: (value) {},
-                              ),
-                            ),
-                            SizedBox(
-                              width: $constants.insets.xs,
-                            ),
-                            TextButton(
-                              onPressed: () {
-                                _searchController.clear();
-                                setState(() {
-                                  _task = null;
-                                });
-                              },
-                              child: Text(
-                                context.t.actions.clear,
-                                style:
-                                    getTextTheme(context).bodyMedium!.copyWith(
-                                          color: getTheme(context).primary,
-                                        ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: $constants.insets.xs,
-                        ),
-                        ...?taskState.tasks
-                            ?.where((task) => task.completed != true)
-                            .map((task) => Padding(
-                                  padding: EdgeInsets.only(
-                                    bottom: $constants.insets.xs,
-                                  ),
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                      color: getTheme(context).surfaceContainer,
-                                      borderRadius: BorderRadius.circular(
-                                          $constants.corners.md),
-                                    ),
-                                    padding:
-                                        EdgeInsets.all($constants.insets.xs),
-                                    child: TaskItem(
-                                      task: task,
-                                      checkable: false,
-                                      onTap: () {
-                                        setState(() {
-                                          _task = task;
-                                        });
-                                        Navigator.pop(context, task);
-                                      },
-                                    ),
-                                  ),
-                                )),
-                      ],
-                    ),
-                  ),
+                GestureDetector(
+                  onTap: () {
+                    _showTaskSelector();
+                  },
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
