@@ -744,7 +744,6 @@ class _AddHabitModalState extends State<AddHabitModal> {
                     ),
                     Center(
                       child: PrimaryButtonSquare(
-                        height: getSize(context).height * 0.04,
                         width: getSize(context).width * 0.4,
                         text: context.t.habits.add.reminders_add,
                         outlined: true,
