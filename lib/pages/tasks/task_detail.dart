@@ -617,9 +617,16 @@ class _TaskDetailState extends State<TaskDetail> {
       showDialog(
           context: context,
           builder: (context) => Dialog(
-                child: TaskTimer(
-                  task: widget.task,
-                  mode: mode,
+                child: SizedBox(
+                  width: getSize(context).width * 0.7,
+                  height: getSize(context).height * 0.75,
+                  child: ClipRRect(
+                      borderRadius:
+                          BorderRadius.circular($constants.corners.lg),
+                      child: TaskTimer(
+                        task: widget.task,
+                        mode: TimerMode.stopwatch,
+                      )),
                 ),
               ));
     } else {

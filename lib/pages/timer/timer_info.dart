@@ -128,6 +128,9 @@ class _TimerInfoState extends State<TimerInfo> {
   Widget build(BuildContext context) {
     _initializeTimerState();
     _startUITimer();
+    if (_currentTimerMode == null) {
+      return const SizedBox.shrink();
+    }
     return GestureDetector(
       onTap: () {
         if (isDesktop(context)) {
@@ -135,9 +138,11 @@ class _TimerInfoState extends State<TimerInfo> {
             context: context,
             builder: (context) => Dialog(
               child: SizedBox(
-                width: getSize(context).width * 0.5,
-                height: getSize(context).height * 0.5,
-                child: const TaskTimer(),
+                width: getSize(context).width * 0.7,
+                height: getSize(context).height * 0.75,
+                child: ClipRRect(
+                    borderRadius: BorderRadius.circular($constants.corners.lg),
+                    child: const TaskTimer()),
               ),
             ),
           );

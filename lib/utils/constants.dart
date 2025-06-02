@@ -550,9 +550,11 @@ class Navigation {
                 context: context,
                 builder: (context) => Dialog(
                   child: SizedBox(
-                    width: getSize(context).width * 0.5,
-                    height: getSize(context).height * 0.5,
-                    child: const TaskTimer(),
+                    width: getSize(context).width * 0.7,
+                    height: getSize(context).height * 0.75,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular($constants.corners.lg),
+                      child: const TaskTimer()),
                   ),
                 ),
               );

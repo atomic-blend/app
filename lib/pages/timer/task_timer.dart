@@ -324,13 +324,15 @@ class _TaskTimerState extends State<TaskTimer> {
                   ),
                 ),
               SizedBox(
-                height: $constants.insets.lg,
+                height: isDesktop(context)
+                    ? $constants.insets.sm
+                    : $constants.insets.lg,
               ),
               SizedBox(
                 width: getSize(context).width * 0.8,
                 child: Center(
                   child: CircularPercentIndicator(
-                    radius: 150.0,
+                    radius: isDesktop(context) ? 100 : 150.0,
                     lineWidth: 12.0,
                     animation: true,
                     animateFromLastPercent: true,
@@ -592,7 +594,9 @@ class _TaskTimerState extends State<TaskTimer> {
                 ],
               ),
               SizedBox(
-                height: getSize(context).height * 0.08,
+                height: isDesktop(context)
+                    ? $constants.insets.md
+                    : getSize(context).height * 0.08,
               )
             ],
           );
