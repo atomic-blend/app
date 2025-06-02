@@ -42,3 +42,32 @@ class TaskDeleteLoading extends TasksState {
 class TaskEditLoading extends TasksState {
   const TaskEditLoading(List<TaskEntity> super.tasks);
 }
+
+class TaskAdded extends TasksState {
+  const TaskAdded(List<TaskEntity> super.tasks);
+
+  @override
+  List<Object?> get props => [tasks];
+}
+
+class TaskDeleted extends TasksState {
+  const TaskDeleted(List<TaskEntity> super.tasks);
+
+  @override
+  List<Object?> get props => [tasks];
+}
+
+class TaskEdited extends TasksState {
+  const TaskEdited(List<TaskEntity> super.tasks);
+
+  @override
+  List<Object?> get props => [tasks];
+}
+
+class TaskError extends TasksState {
+  const TaskError(List<TaskEntity> super.tasks, this.message);
+  final String message;
+
+  @override
+  List<Object?> get props => [message];
+}

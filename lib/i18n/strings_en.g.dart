@@ -236,6 +236,7 @@ class TranslationsHabitsEn {
 	String get title => 'Habits';
 	String get no_habits => 'No habits for now';
 	String get get_started_now => 'Add your first habit to get started!';
+	late final TranslationsHabitsDeleteHabitEn delete_habit = TranslationsHabitsDeleteHabitEn._(_root);
 	late final TranslationsHabitsAddEn add = TranslationsHabitsAddEn._(_root);
 	String get list => 'Habits';
 	String get overview => 'Overview';
@@ -1047,6 +1048,9 @@ class TranslationsTasksAddTaskModalEn {
 	String get cancel => 'Cancel';
 	String get save => 'Save';
 	String get erase => 'Erase';
+	String get task_added => 'Task added';
+	String get task_added_description => 'Your task has been added successfully.';
+	String get task_error => 'Task error';
 	String get title_required => 'Title required';
 	String get title_required_description => 'Please enter a title for your task';
 	String reminders({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n,
@@ -1160,6 +1164,18 @@ class TranslationsAccountSecurityAndPrivacyEn {
 	// Translations
 	String get title => 'Security & Privacy';
 	late final TranslationsAccountSecurityAndPrivacyChangePasswordEn change_password = TranslationsAccountSecurityAndPrivacyChangePasswordEn._(_root);
+}
+
+// Path: habits.delete_habit
+class TranslationsHabitsDeleteHabitEn {
+	TranslationsHabitsDeleteHabitEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	String get title => 'Delete habit';
+	String get description => 'Are you sure you want to delete this habit?';
+	String get warning => 'This action cannot be undone and all the related entries will also be deleted.';
 }
 
 // Path: habits.add
@@ -1473,6 +1489,9 @@ extension on Translations {
 			case 'tasks.add_task_modal.cancel': return 'Cancel';
 			case 'tasks.add_task_modal.save': return 'Save';
 			case 'tasks.add_task_modal.erase': return 'Erase';
+			case 'tasks.add_task_modal.task_added': return 'Task added';
+			case 'tasks.add_task_modal.task_added_description': return 'Your task has been added successfully.';
+			case 'tasks.add_task_modal.task_error': return 'Task error';
 			case 'tasks.add_task_modal.title_required': return 'Title required';
 			case 'tasks.add_task_modal.title_required_description': return 'Please enter a title for your task';
 			case 'tasks.add_task_modal.reminders': return ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n,
@@ -1542,6 +1561,9 @@ extension on Translations {
 			case 'habits.title': return 'Habits';
 			case 'habits.no_habits': return 'No habits for now';
 			case 'habits.get_started_now': return 'Add your first habit to get started!';
+			case 'habits.delete_habit.title': return 'Delete habit';
+			case 'habits.delete_habit.description': return 'Are you sure you want to delete this habit?';
+			case 'habits.delete_habit.warning': return 'This action cannot be undone and all the related entries will also be deleted.';
 			case 'habits.add.title': return 'What do you want to achieve?';
 			case 'habits.add.name': return 'Habit name*';
 			case 'habits.add.name_hint': return 'Drink water';

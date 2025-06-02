@@ -233,6 +233,7 @@ class _TranslationsHabitsFr implements TranslationsHabitsEn {
 	@override String get title => 'Habitudes';
 	@override String get no_habits => 'Aucune habitude';
 	@override String get get_started_now => 'Ajoutez votre première habitude pour commencer !';
+	@override late final _TranslationsHabitsDeleteHabitFr delete_habit = _TranslationsHabitsDeleteHabitFr._(_root);
 	@override late final _TranslationsHabitsAddFr add = _TranslationsHabitsAddFr._(_root);
 	@override String get list => 'Habitudes';
 	@override String get overview => 'Vue d\'ensemble';
@@ -1039,6 +1040,9 @@ class _TranslationsTasksAddTaskModalFr implements TranslationsTasksAddTaskModalE
 	@override String get notes => 'Notes';
 	@override String get end_date => 'Date de fin';
 	@override String get cancel => 'Annuler';
+	@override String get task_added => 'Tâche ajoutée';
+	@override String get task_added_description => 'Votre tâche a été ajoutée avec succès.';
+	@override String get task_error => 'Erreur lors de l\'opération';
 	@override String get save => 'Enregistrer';
 	@override String get erase => 'Effacer';
 	@override String get title_required => 'Titre requis';
@@ -1154,6 +1158,18 @@ class _TranslationsAccountSecurityAndPrivacyFr implements TranslationsAccountSec
 	// Translations
 	@override String get title => 'Sécurité et confidentialité';
 	@override late final _TranslationsAccountSecurityAndPrivacyChangePasswordFr change_password = _TranslationsAccountSecurityAndPrivacyChangePasswordFr._(_root);
+}
+
+// Path: habits.delete_habit
+class _TranslationsHabitsDeleteHabitFr implements TranslationsHabitsDeleteHabitEn {
+	_TranslationsHabitsDeleteHabitFr._(this._root);
+
+	final TranslationsFr _root; // ignore: unused_field
+
+	// Translations
+	@override String get title => 'Supprimer l\'habitude';
+	@override String get description => 'Êtes-vous sûr de vouloir supprimer cette habitude ?';
+	@override String get warning => 'Cette action est irréversible et toutes les entrées associées à l\'habitude seront supprimées.';
 }
 
 // Path: habits.add
@@ -1465,6 +1481,9 @@ extension on TranslationsFr {
 			case 'tasks.add_task_modal.notes': return 'Notes';
 			case 'tasks.add_task_modal.end_date': return 'Date de fin';
 			case 'tasks.add_task_modal.cancel': return 'Annuler';
+			case 'tasks.add_task_modal.task_added': return 'Tâche ajoutée';
+			case 'tasks.add_task_modal.task_added_description': return 'Votre tâche a été ajoutée avec succès.';
+			case 'tasks.add_task_modal.task_error': return 'Erreur lors de l\'opération';
 			case 'tasks.add_task_modal.save': return 'Enregistrer';
 			case 'tasks.add_task_modal.erase': return 'Effacer';
 			case 'tasks.add_task_modal.title_required': return 'Titre requis';
@@ -1536,6 +1555,9 @@ extension on TranslationsFr {
 			case 'habits.title': return 'Habitudes';
 			case 'habits.no_habits': return 'Aucune habitude';
 			case 'habits.get_started_now': return 'Ajoutez votre première habitude pour commencer !';
+			case 'habits.delete_habit.title': return 'Supprimer l\'habitude';
+			case 'habits.delete_habit.description': return 'Êtes-vous sûr de vouloir supprimer cette habitude ?';
+			case 'habits.delete_habit.warning': return 'Cette action est irréversible et toutes les entrées associées à l\'habitude seront supprimées.';
 			case 'habits.add.title': return 'Que souhaitez-vous accomplir ?';
 			case 'habits.add.name': return 'Nom de l\'habitude*';
 			case 'habits.add.name_hint': return 'Boire de l\'eau';

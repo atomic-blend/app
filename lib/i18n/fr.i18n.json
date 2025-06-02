@@ -207,6 +207,10 @@
       "notes": "Notes",
       "end_date": "Date de fin",
       "cancel": "Annuler",
+
+      "task_added": "Tâche ajoutée",
+      "task_added_description": "Votre tâche a été ajoutée avec succès.",
+      "task_error": "Erreur lors de l'opération",
       "save": "Enregistrer",
       "erase": "Effacer",
       "title_required": "Titre requis",
@@ -301,6 +305,11 @@
     "title": "Habitudes",
     "no_habits": "Aucune habitude",
     "get_started_now": "Ajoutez votre première habitude pour commencer !",
+    "delete_habit": {
+      "title": "Supprimer l'habitude",
+      "description": "Êtes-vous sûr de vouloir supprimer cette habitude ?",
+      "warning": "Cette action est irréversible et toutes les entrées associées à l'habitude seront supprimées."
+    },
     "add": {
       "title": "Que souhaitez-vous accomplir ?",
       "name": "Nom de l'habitude*",

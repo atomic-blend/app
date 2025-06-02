@@ -209,6 +209,9 @@
       "cancel": "Cancel",
       "save": "Save",
       "erase": "Erase",
+      "task_added": "Task added",
+      "task_added_description": "Your task has been added successfully.",
+      "task_error": "Task error",
       "title_required": "Title required",
       "title_required_description": "Please enter a title for your task",
       "reminders": {
@@ -301,6 +304,11 @@
     "title": "Habits",
     "no_habits": "No habits for now",
     "get_started_now": "Add your first habit to get started!",
+    "delete_habit": {
+      "title": "Delete habit",
+      "description": "Are you sure you want to delete this habit?",
+      "warning": "This action cannot be undone and all the related entries will also be deleted."
+    },
     "add": {
       "title": "What do you want to achieve?",
       "name": "Habit name*",
