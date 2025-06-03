@@ -485,7 +485,8 @@
     "add": "Ajouter",
     "edit": "Modifier",
     "clear": "Effacer",
-    "close": "Fermer"
+    "close": "Fermer",
+    "subscribe": "S'abonner"
   },
   "date_modes(map)": {
     "date": "Date",
@@ -774,5 +775,42 @@
     "pomodoro_completed_message": "Votre session pomodoro est terminée ! C'est l'heure de faire une pause.",
     "stopwatch_completed_message": "Votre session de chronomètre a été terminée.",
     "task_label": "Tâche"
+  },
+  "paywall": {
+    "title": "Obtenez AtomicBlend Cloud",
+    "subtitle": "Profitez d'Atomic Blend sans restrictions et aidez l'initiative open source.",
+    "advantages": {
+      "all_apps_of_the_suite": {
+        "title": "Toutes les applications de la suite",
+        "description": "Accédez à toutes les applications de la suite, y compris Tâches, Habitudes, Calendrier, Notes, et plus encore."
+      },
+      "end_to_end_encrypted": {
+        "title": "Chiffrement de bout en bout",
+        "description": "Vos données sont à vous, pour toujours."
+      },
+      "unlimited_tasks": {
+        "title": "Tâches Illimitées",
+        "description": "Créez autant de tâches que vous le souhaitez, sans limites."
+      },
+      "unlimited_habits": {
+        "title": "Habitudes Illimitées",
+        "description": "Faites un pas vers une vie plus saine avec des habitudes illimitées."
+      },
+      "unlimited_tags": {
+        "title": "Tags / Dossiers Illimités",
+        "description": "Utilisez autant de tags et de dossiers que nécessaire pour organiser votre vie."
+      },
+      "sync_across_devices": {
+        "title": "Synchronisation entre appareils",
+        "description": "Accédez à vos données depuis n'importe quel appareil, n'importe où."
+      },
+      "community_backed": {
+        "title": "Soutien de la communauté",
+        "description": "100% opensource : rejoignez une communauté d'utilisateurs qui soutiennent le projet."
+      }
+    },
+    "restore_purchase": "Restaurer l'achat",
+    "terms": "Conditions d'utilisation",
+    "privacy_policy": "Politique de confidentialité"
   }
 }

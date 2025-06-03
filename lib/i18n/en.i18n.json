@@ -491,7 +491,8 @@
     "add": "Add",
     "edit": "Edit",
     "clear": "Clear",
-    "close": "Close"
+    "close": "Close",
+    "subscribe": "Subscribe"
   },
   "validation": {
     "required": "Required",
@@ -776,5 +777,42 @@
     "pomodoro_completed_message": "Your pomodoro session has completed! Time for a break.",
     "stopwatch_completed_message": "Your stopwatch session has been completed.",
     "task_label": "Task"
+  },
+  "paywall": {
+    "title": "Get AtomicBlend Cloud",
+    "subtitle": "Enjoy Atomic Blend without restrictions and help the opensource initiative.",
+    "advantages": {
+      "all_apps_of_the_suite": {
+        "title": "All Apps of the Suite",
+        "description": "Get access to all the apps of the suite, including Tasks, Habits, Calendar, Notes, and more."
+      },
+      "end_to_end_encrypted": {
+        "title": "End-to-End Encryption",
+        "description": "Your data is yours, forever."
+      },
+      "unlimited_tasks": {
+        "title": "Unlimited Tasks",
+        "description": "Create as many tasks as you want, no limits."
+      },
+      "unlimited_habits": {
+        "title": "Unlimited Habits",
+        "description": "Take a step towards a healthier life with unlimited habits."
+      },
+      "unlimited_tags": {
+        "title": "Unlimited Tags / Folders",
+        "description": "Use as many tags and folders as needed to organize your life."
+      },
+      "sync_across_devices": {
+        "title": "Sync Across Devices",
+        "description": "Access your data from any device, anywhere."
+      },
+      "community_backed": {
+        "title": "Community Backed",
+        "description": "100% opensource : join a community of users who support the project."
+      }
+    },
+    "restore_purchase": "Restore Purchase",
+    "terms": "Terms of Service",
+    "privacy_policy": "Privacy Policy"
   }
 }

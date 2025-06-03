@@ -24,7 +24,7 @@ class PaywallUtils {
         isScrollControlled: true,
         builder: (context) => SizedBox(
             width: getSize(context).width,
-            height: getSize(context).height * 0.75,
+            height: getSize(context).height * 0.85,
             child: const Paywall()),
       );
     }

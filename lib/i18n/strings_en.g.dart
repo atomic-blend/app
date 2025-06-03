@@ -99,6 +99,7 @@ class Translations implements BaseTranslations<AppLocale, Translations> {
 	late final TranslationsFeatureUnderConstructionEn feature_under_construction = TranslationsFeatureUnderConstructionEn._(_root);
 	late final TranslationsInboxEn inbox = TranslationsInboxEn._(_root);
 	late final TranslationsTimerEn timer = TranslationsTimerEn._(_root);
+	late final TranslationsPaywallEn paywall = TranslationsPaywallEn._(_root);
 }
 
 // Path: navigation
@@ -486,6 +487,7 @@ class TranslationsActionsEn {
 	String get edit => 'Edit';
 	String get clear => 'Clear';
 	String get close => 'Close';
+	String get subscribe => 'Subscribe';
 }
 
 // Path: validation
@@ -801,6 +803,21 @@ class TranslationsTimerEn {
 	String get pomodoro_completed_message => 'Your pomodoro session has completed! Time for a break.';
 	String get stopwatch_completed_message => 'Your stopwatch session has been completed.';
 	String get task_label => 'Task';
+}
+
+// Path: paywall
+class TranslationsPaywallEn {
+	TranslationsPaywallEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	String get title => 'Get AtomicBlend Cloud';
+	String get subtitle => 'Enjoy Atomic Blend without restrictions and help the opensource initiative.';
+	late final TranslationsPaywallAdvantagesEn advantages = TranslationsPaywallAdvantagesEn._(_root);
+	String get restore_purchase => 'Restore Purchase';
+	String get terms => 'Terms of Service';
+	String get privacy_policy => 'Privacy Policy';
 }
 
 // Path: auth.not_logged_in
@@ -1307,6 +1324,22 @@ class TranslationsTimeUnitsLongEn {
 	);
 }
 
+// Path: paywall.advantages
+class TranslationsPaywallAdvantagesEn {
+	TranslationsPaywallAdvantagesEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	late final TranslationsPaywallAdvantagesAllAppsOfTheSuiteEn all_apps_of_the_suite = TranslationsPaywallAdvantagesAllAppsOfTheSuiteEn._(_root);
+	late final TranslationsPaywallAdvantagesEndToEndEncryptedEn end_to_end_encrypted = TranslationsPaywallAdvantagesEndToEndEncryptedEn._(_root);
+	late final TranslationsPaywallAdvantagesUnlimitedTasksEn unlimited_tasks = TranslationsPaywallAdvantagesUnlimitedTasksEn._(_root);
+	late final TranslationsPaywallAdvantagesUnlimitedHabitsEn unlimited_habits = TranslationsPaywallAdvantagesUnlimitedHabitsEn._(_root);
+	late final TranslationsPaywallAdvantagesUnlimitedTagsEn unlimited_tags = TranslationsPaywallAdvantagesUnlimitedTagsEn._(_root);
+	late final TranslationsPaywallAdvantagesSyncAcrossDevicesEn sync_across_devices = TranslationsPaywallAdvantagesSyncAcrossDevicesEn._(_root);
+	late final TranslationsPaywallAdvantagesCommunityBackedEn community_backed = TranslationsPaywallAdvantagesCommunityBackedEn._(_root);
+}
+
 // Path: settings.app_settings.selfHostedUrl
 class TranslationsSettingsAppSettingsSelfHostedUrlEn {
 	TranslationsSettingsAppSettingsSelfHostedUrlEn._(this._root);
@@ -1337,6 +1370,83 @@ class TranslationsAccountSecurityAndPrivacyChangePasswordEn {
 	String get password_mismatch => 'Passwords do not match';
 	String get password_hint => 'SuperSecure123!';
 	String get warning_changing_pws_will_log_you_out => 'Changing your password will log you out of the app.';
+}
+
+// Path: paywall.advantages.all_apps_of_the_suite
+class TranslationsPaywallAdvantagesAllAppsOfTheSuiteEn {
+	TranslationsPaywallAdvantagesAllAppsOfTheSuiteEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	String get title => 'All Apps of the Suite';
+	String get description => 'Get access to all the apps of the suite, including Tasks, Habits, Calendar, Notes, and more.';
+}
+
+// Path: paywall.advantages.end_to_end_encrypted
+class TranslationsPaywallAdvantagesEndToEndEncryptedEn {
+	TranslationsPaywallAdvantagesEndToEndEncryptedEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	String get title => 'End-to-End Encryption';
+	String get description => 'Your data is yours, forever.';
+}
+
+// Path: paywall.advantages.unlimited_tasks
+class TranslationsPaywallAdvantagesUnlimitedTasksEn {
+	TranslationsPaywallAdvantagesUnlimitedTasksEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	String get title => 'Unlimited Tasks';
+	String get description => 'Create as many tasks as you want, no limits.';
+}
+
+// Path: paywall.advantages.unlimited_habits
+class TranslationsPaywallAdvantagesUnlimitedHabitsEn {
+	TranslationsPaywallAdvantagesUnlimitedHabitsEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	String get title => 'Unlimited Habits';
+	String get description => 'Take a step towards a healthier life with unlimited habits.';
+}
+
+// Path: paywall.advantages.unlimited_tags
+class TranslationsPaywallAdvantagesUnlimitedTagsEn {
+	TranslationsPaywallAdvantagesUnlimitedTagsEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	String get title => 'Unlimited Tags / Folders';
+	String get description => 'Use as many tags and folders as needed to organize your life.';
+}
+
+// Path: paywall.advantages.sync_across_devices
+class TranslationsPaywallAdvantagesSyncAcrossDevicesEn {
+	TranslationsPaywallAdvantagesSyncAcrossDevicesEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	String get title => 'Sync Across Devices';
+	String get description => 'Access your data from any device, anywhere.';
+}
+
+// Path: paywall.advantages.community_backed
+class TranslationsPaywallAdvantagesCommunityBackedEn {
+	TranslationsPaywallAdvantagesCommunityBackedEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	String get title => 'Community Backed';
+	String get description => '100% opensource : join a community of users who support the project.';
 }
 
 /// Flat map(s) containing all translations.
@@ -1716,6 +1826,7 @@ extension on Translations {
 			case 'actions.edit': return 'Edit';
 			case 'actions.clear': return 'Clear';
 			case 'actions.close': return 'Close';
+			case 'actions.subscribe': return 'Subscribe';
 			case 'validation.required': return 'Required';
 			case 'validation.invalid_url': return 'invalid URL';
 			case 'errors.wrong_email_password': return 'Email or password incorrect';
@@ -1972,6 +2083,25 @@ extension on Translations {
 			case 'timer.pomodoro_completed_message': return 'Your pomodoro session has completed! Time for a break.';
 			case 'timer.stopwatch_completed_message': return 'Your stopwatch session has been completed.';
 			case 'timer.task_label': return 'Task';
+			case 'paywall.title': return 'Get AtomicBlend Cloud';
+			case 'paywall.subtitle': return 'Enjoy Atomic Blend without restrictions and help the opensource initiative.';
+			case 'paywall.advantages.all_apps_of_the_suite.title': return 'All Apps of the Suite';
+			case 'paywall.advantages.all_apps_of_the_suite.description': return 'Get access to all the apps of the suite, including Tasks, Habits, Calendar, Notes, and more.';
+			case 'paywall.advantages.end_to_end_encrypted.title': return 'End-to-End Encryption';
+			case 'paywall.advantages.end_to_end_encrypted.description': return 'Your data is yours, forever.';
+			case 'paywall.advantages.unlimited_tasks.title': return 'Unlimited Tasks';
+			case 'paywall.advantages.unlimited_tasks.description': return 'Create as many tasks as you want, no limits.';
+			case 'paywall.advantages.unlimited_habits.title': return 'Unlimited Habits';
+			case 'paywall.advantages.unlimited_habits.description': return 'Take a step towards a healthier life with unlimited habits.';
+			case 'paywall.advantages.unlimited_tags.title': return 'Unlimited Tags / Folders';
+			case 'paywall.advantages.unlimited_tags.description': return 'Use as many tags and folders as needed to organize your life.';
+			case 'paywall.advantages.sync_across_devices.title': return 'Sync Across Devices';
+			case 'paywall.advantages.sync_across_devices.description': return 'Access your data from any device, anywhere.';
+			case 'paywall.advantages.community_backed.title': return 'Community Backed';
+			case 'paywall.advantages.community_backed.description': return '100% opensource : join a community of users who support the project.';
+			case 'paywall.restore_purchase': return 'Restore Purchase';
+			case 'paywall.terms': return 'Terms of Service';
+			case 'paywall.privacy_policy': return 'Privacy Policy';
 			default: return null;
 		}
 	}
