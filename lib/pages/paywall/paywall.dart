@@ -29,7 +29,12 @@ class _PaywallState extends State<Paywall> {
 
   _fetchOfferings() {
     return _memoizer!.runOnce(() async {
-      return await RevenueCatService.getOfferings();
+      final offerings = await RevenueCatService.getOfferings();
+      _package = offerings?.current?.availablePackages.firstWhere(
+        (package) => package.storeProduct.identifier == "cloud_yearly",
+        orElse: () => offerings!.current!.availablePackages.first,
+      );
+      return offerings;
     });
   }
 
@@ -49,12 +54,17 @@ class _PaywallState extends State<Paywall> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      ElevatedContainer(
-                        width: 40,
-                        height: 40,
-                        borderRadius: $constants.corners.full,
-                        child: const Icon(
-                          CupertinoIcons.xmark,
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.of(context).pop();
+                        },
+                        child: ElevatedContainer(
+                          width: 40,
+                          height: 40,
+                          borderRadius: $constants.corners.full,
+                          child: const Icon(
+                            CupertinoIcons.xmark,
+                          ),
                         ),
                       )
                     ],
