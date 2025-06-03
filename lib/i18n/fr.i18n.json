@@ -245,6 +245,7 @@
     "day": "Jour",
     "threeDays": "3 jours",
     "week": "Semaine",
+    "schedule": "Emploi du temps",
     "event_detail": {
       "date": "Date",
       "time": "Heure",

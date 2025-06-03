@@ -206,6 +206,7 @@ class _TranslationsCalendarFr implements TranslationsCalendarEn {
 	@override String get day => 'Jour';
 	@override String get threeDays => '3 jours';
 	@override String get week => 'Semaine';
+	@override String get schedule => 'Emploi du temps';
 	@override late final _TranslationsCalendarEventDetailFr event_detail = _TranslationsCalendarEventDetailFr._(_root);
 	@override late final _TranslationsCalendarSettingsFr settings = _TranslationsCalendarSettingsFr._(_root);
 }
@@ -1514,6 +1515,7 @@ extension on TranslationsFr {
 			case 'calendar.day': return 'Jour';
 			case 'calendar.threeDays': return '3 jours';
 			case 'calendar.week': return 'Semaine';
+			case 'calendar.schedule': return 'Emploi du temps';
 			case 'calendar.event_detail.date': return 'Date';
 			case 'calendar.event_detail.time': return 'Heure';
 			case 'calendar.event_detail.organizer': return 'Organisateur';

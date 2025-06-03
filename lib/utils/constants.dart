@@ -221,6 +221,18 @@ class Navigation {
                 ),
               ),
             NavigationItem(
+              key: const Key("schedule"),
+              icon: const Icon(Icons.schedule),
+              cupertinoIcon: const Icon(CupertinoIcons.clock),
+              label: context.t.calendar.schedule,
+              initialsOnly: true,
+              body: Calendar(
+                key: UniqueKey(),
+                view: CalendarView.schedule,
+                numberOfDays: 7,
+              ),
+            ),
+            NavigationItem(
               key: const Key("three_days"),
               icon: const Icon(Icons.calendar_today),
               cupertinoIcon: const Icon(CupertinoIcons.calendar_badge_plus),

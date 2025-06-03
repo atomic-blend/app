@@ -244,6 +244,7 @@
     "day": "Day",
     "threeDays": "3 Days",
     "week": "Week",
+    "schedule": "Schedule",
     "event_detail": {
       "date": "Date",
       "time": "Time",
