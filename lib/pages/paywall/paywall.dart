@@ -159,7 +159,8 @@ class _PaywallState extends State<Paywall> {
                       print(snapshot.data?.current?.availablePackages);
                       WidgetsBinding.instance.addPostFrameCallback((_) {
                         if (_package == null &&
-                            snapshot.data?.current?.availablePackages.isNotEmpty ==
+                            snapshot.data?.current?.availablePackages
+                                    .isNotEmpty ==
                                 true) {
                           _package = snapshot.data!.current!.availablePackages
                               .firstWhere((package) =>
@@ -299,9 +300,10 @@ class _PaywallState extends State<Paywall> {
                                   .pricing[package.storeProduct.identifier]
                                   ?.discount !=
                               ""
-                          ? getTheme(context).primary
+                          ? getTheme(context).primary.withValues(alpha: 0.2)
                           : Colors.transparent,
-                      borderRadius: BorderRadius.circular($constants.corners.sm),
+                      borderRadius:
+                          BorderRadius.circular($constants.corners.sm),
                     ),
                     child: context
                                 .t
@@ -316,7 +318,7 @@ class _PaywallState extends State<Paywall> {
                                 .pricing[package.storeProduct.identifier]!
                                 .discount,
                             style: getTextTheme(context).bodySmall!.copyWith(
-                                  color: Colors.white,
+                                  color: getTheme(context).primary,
                                   fontWeight: FontWeight.bold,
                                 ),
                           )
@@ -324,20 +326,20 @@ class _PaywallState extends State<Paywall> {
                   ),
                 ),
                 Text(
-                  context
-                      .t.paywall.pricing[package.storeProduct.identifier]!.title,
+                  context.t.paywall.pricing[package.storeProduct.identifier]!
+                      .title,
                   style: getTextTheme(context).bodyLarge?.copyWith(
                         fontWeight: FontWeight.bold,
                       ),
                 ),
                 Text(
-                  context
-                      .t.paywall.pricing[package.storeProduct.identifier]!.price,
+                  context.t.paywall.pricing[package.storeProduct.identifier]!
+                      .price,
                   style: getTextTheme(context).bodyMedium,
                 ),
                 Text(
-                  context
-                      .t.paywall.pricing[package.storeProduct.identifier]!.billed,
+                  context.t.paywall.pricing[package.storeProduct.identifier]!
+                      .billed,
                   style: getTextTheme(context).bodySmall!.copyWith(
                         color: Colors.grey.shade600,
                       ),
