@@ -82,6 +82,8 @@ class _CalendarState extends State<Calendar> {
                 view: widget.view,
                 initialDisplayDate: DateTime.now(),
                 maxDate: calendarEndDate,
+                allowDragAndDrop: true,
+                onDragEnd: _onDragEnd,
                 onSelectionChanged: (calendarSelectionDetails) {
                   final DateTime? selectedDate = calendarSelectionDetails.date;
 
@@ -505,4 +507,47 @@ class _CalendarState extends State<Calendar> {
               ));
     }
   }
+
+  void _onDragEnd(AppointmentDragEndDetails details) {
+  // Cast the appointment to CustomAppointment
+  if (details.appointment is CustomAppointment) {
+    final CustomAppointment customAppointment = details.appointment as CustomAppointment;
+    
+    // Handle different appointment types
+    switch (customAppointment.itemType) {
+      case CustomAppointmentType.task:
+        // Update the task's start and end time
+        final task = context.read<TasksBloc>().state.tasks?.firstWhere(
+          (element) => element.id == customAppointment.itemId,
+        );
+        if (task != null) {
+          // Update task with new times
+          final updatedTask = task.copyWith(
+            startDate: details.droppingTime,
+            endDate: details.droppingTime?.add(
+              customAppointment.endTime.difference(customAppointment.startTime)
+            ),
+          );
+          // Dispatch update event to TasksBloc
+          context.read<TasksBloc>().add(EditTask(updatedTask));
+        }
+        break;
+        
+      case CustomAppointmentType.event:
+        // Handle device calendar events if needed
+        // Note: You might not be able to update device calendar events
+        print("Device calendar events cannot be updated");
+        break;
+        
+      case CustomAppointmentType.habit:
+        // Handle habits if needed
+        print("Habit drag-drop not implemented");
+        break;
+    }
+    
+    print("Drag ended: ${customAppointment.subject} moved to ${details.droppingTime}");
+  } else {
+    print("Appointment is not of type CustomAppointment");
+  }
+}
 }
