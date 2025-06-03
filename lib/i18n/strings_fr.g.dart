@@ -813,6 +813,8 @@ class _TranslationsPaywallFr implements TranslationsPaywallEn {
 		'cloud_yearly': _TranslationsPaywallPricingCloudYearlyFr._(_root),
 		'cloud_monthly': _TranslationsPaywallPricingCloudMonthlyFr._(_root),
 	};
+	@override String get no_package_selected => 'Aucun package sélectionné';
+	@override String get purchase_failed => 'Échec de l\'achat';
 	@override String get restore_purchase => 'Restaurer l\'achat';
 	@override String get terms => 'Conditions d\'utilisation';
 	@override String get privacy_policy => 'Politique de confidentialité';
@@ -2128,6 +2130,8 @@ extension on TranslationsFr {
 			case 'paywall.pricing.cloud_monthly.price': return '3.99€/mo';
 			case 'paywall.pricing.cloud_monthly.billed': return 'facturé à 3.99€/mois';
 			case 'paywall.pricing.cloud_monthly.discount': return '';
+			case 'paywall.no_package_selected': return 'Aucun package sélectionné';
+			case 'paywall.purchase_failed': return 'Échec de l\'achat';
 			case 'paywall.restore_purchase': return 'Restaurer l\'achat';
 			case 'paywall.terms': return 'Conditions d\'utilisation';
 			case 'paywall.privacy_policy': return 'Politique de confidentialité';

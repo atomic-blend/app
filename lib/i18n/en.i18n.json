@@ -825,6 +825,8 @@
         "discount": ""
       }
     },
+    "no_package_selected": "No package selected",
+    "purchase_failed": "Purchase failed",
     "restore_purchase": "Restore Purchase",
     "terms": "Terms of Service",
     "privacy_policy": "Privacy Policy"

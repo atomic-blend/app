@@ -823,6 +823,8 @@
         "discount": ""
       }
     },
+    "no_package_selected": "Aucun package sélectionné",
+    "purchase_failed": "Échec de l'achat",
     "restore_purchase": "Restaurer l'achat",
     "terms": "Conditions d'utilisation",
     "privacy_policy": "Politique de confidentialité"

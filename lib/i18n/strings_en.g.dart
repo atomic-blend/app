@@ -819,6 +819,8 @@ class TranslationsPaywallEn {
 		'cloud_yearly': TranslationsPaywallPricingCloudYearlyEn._(_root),
 		'cloud_monthly': TranslationsPaywallPricingCloudMonthlyEn._(_root),
 	};
+	String get no_package_selected => 'No package selected';
+	String get purchase_failed => 'Purchase failed';
 	String get restore_purchase => 'Restore Purchase';
 	String get terms => 'Terms of Service';
 	String get privacy_policy => 'Privacy Policy';
@@ -2137,6 +2139,8 @@ extension on Translations {
 			case 'paywall.pricing.cloud_monthly.price': return '\$3.99/mo';
 			case 'paywall.pricing.cloud_monthly.billed': return 'billed at \$3.99/month';
 			case 'paywall.pricing.cloud_monthly.discount': return '';
+			case 'paywall.no_package_selected': return 'No package selected';
+			case 'paywall.purchase_failed': return 'Purchase failed';
 			case 'paywall.restore_purchase': return 'Restore Purchase';
 			case 'paywall.terms': return 'Terms of Service';
 			case 'paywall.privacy_policy': return 'Privacy Policy';

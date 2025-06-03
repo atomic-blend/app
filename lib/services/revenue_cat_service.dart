@@ -1,6 +1,7 @@
 import 'dart:io' show Platform;
 
 import 'package:app/main.dart';
+import 'package:flutter/services.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 import 'package:purchases_ui_flutter/purchases_ui_flutter.dart';
 
@@ -47,6 +48,19 @@ class RevenueCatService {
       final offerings = await Purchases.getOfferings();
       return offerings;
     } catch (e) {
+      return null;
+    }
+  }
+
+  static Future<CustomerInfo?> makePurchase({
+    required Package package,
+  }) async {
+    try {
+      final purchaseResult = await Purchases.purchasePackage(package);
+      return purchaseResult;
+    } on PlatformException catch (e) {
+      // Handle purchase error
+      final errorCode = PurchasesErrorHelper.getErrorCode(e);
       return null;
     }
   }

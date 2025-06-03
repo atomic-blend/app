@@ -4,6 +4,7 @@ import 'package:app/i18n/strings.g.dart';
 import 'package:app/services/revenue_cat_service.dart';
 import 'package:app/utils/constants.dart';
 import 'package:app/utils/shortcuts.dart';
+import 'package:app/utils/toast_helper.dart';
 import 'package:async/async.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -22,7 +23,6 @@ class _PaywallState extends State<Paywall> {
 
   @override
   void initState() {
-    // TODO: implement initState
     _memoizer = AsyncMemoizer();
     super.initState();
   }
@@ -223,8 +223,24 @@ class _PaywallState extends State<Paywall> {
                 ),
                 PrimaryButtonSquare(
                     text: context.t.actions.subscribe,
-                    onPressed: () {
-                      Navigator.of(context).pop();
+                    onPressed: () async {
+                      if (_package == null) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content:
+                                Text(context.t.paywall.no_package_selected),
+                          ),
+                        );
+                        return;
+                      }
+                      final customerInfo =
+                          await _makePurchase(package: _package!);
+                      if (customerInfo == null) {
+                        if (!context.mounted) return;
+                        ToastHelper.showError(
+                            context: context,
+                            title: context.t.paywall.purchase_failed);
+                      }
                     }),
                 SingleChildScrollView(
                   child: Row(
@@ -419,5 +435,16 @@ class _PaywallState extends State<Paywall> {
         ),
       ],
     );
+  }
+
+  Future<CustomerInfo?> _makePurchase({required Package package}) async {
+    try {
+      final customerInfo =
+          await RevenueCatService.makePurchase(package: package);
+      return customerInfo;
+    } catch (e) {
+      // Handle purchase error
+      return null;
+    }
   }
 }
