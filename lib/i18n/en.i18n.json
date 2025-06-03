@@ -292,6 +292,9 @@
       "email_missing": "Email is required",
       "email_same": "Email must be different from the current email"
     },
+    "subscription_payments": {
+      "title": "Subscription & Payments"
+    },
     "security_and_privacy": {
       "title": "Security & Privacy",
       "change_password": {

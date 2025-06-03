@@ -286,6 +286,9 @@
       "security": "Sécurité et confidentialité",
       "delete_account": "Supprimer mon compte"
     },
+    "subscription_payments": {
+      "title": "Abonnement & Paiements"
+    },
     "profile": {
       "my_profile": "Mon profil",
       "email": "Adresse e-mail",

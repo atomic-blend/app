@@ -226,6 +226,7 @@ class TranslationsAccountEn {
 	late final TranslationsAccountSectionsEn sections = TranslationsAccountSectionsEn._(_root);
 	late final TranslationsAccountActionsEn actions = TranslationsAccountActionsEn._(_root);
 	late final TranslationsAccountProfileEn profile = TranslationsAccountProfileEn._(_root);
+	late final TranslationsAccountSubscriptionPaymentsEn subscription_payments = TranslationsAccountSubscriptionPaymentsEn._(_root);
 	late final TranslationsAccountSecurityAndPrivacyEn security_and_privacy = TranslationsAccountSecurityAndPrivacyEn._(_root);
 }
 
@@ -1171,6 +1172,16 @@ class TranslationsAccountProfileEn {
 	String get email_same => 'Email must be different from the current email';
 }
 
+// Path: account.subscription_payments
+class TranslationsAccountSubscriptionPaymentsEn {
+	TranslationsAccountSubscriptionPaymentsEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	String get title => 'Subscription & Payments';
+}
+
 // Path: account.security_and_privacy
 class TranslationsAccountSecurityAndPrivacyEn {
 	TranslationsAccountSecurityAndPrivacyEn._(this._root);
@@ -1569,6 +1580,7 @@ extension on Translations {
 			case 'account.profile.undefined': return 'Undefined';
 			case 'account.profile.email_missing': return 'Email is required';
 			case 'account.profile.email_same': return 'Email must be different from the current email';
+			case 'account.subscription_payments.title': return 'Subscription & Payments';
 			case 'account.security_and_privacy.title': return 'Security & Privacy';
 			case 'account.security_and_privacy.change_password.title': return 'Change Password';
 			case 'account.security_and_privacy.change_password.old_password': return 'Old Password';

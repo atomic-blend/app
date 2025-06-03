@@ -222,6 +222,7 @@ class _TranslationsAccountFr implements TranslationsAccountEn {
 	@override String get edit_profile => 'Modifier le profil';
 	@override late final _TranslationsAccountSectionsFr sections = _TranslationsAccountSectionsFr._(_root);
 	@override late final _TranslationsAccountActionsFr actions = _TranslationsAccountActionsFr._(_root);
+	@override late final _TranslationsAccountSubscriptionPaymentsFr subscription_payments = _TranslationsAccountSubscriptionPaymentsFr._(_root);
 	@override late final _TranslationsAccountProfileFr profile = _TranslationsAccountProfileFr._(_root);
 	@override late final _TranslationsAccountSecurityAndPrivacyFr security_and_privacy = _TranslationsAccountSecurityAndPrivacyFr._(_root);
 }
@@ -1151,6 +1152,16 @@ class _TranslationsAccountActionsFr implements TranslationsAccountActionsEn {
 	@override String get delete_account => 'Supprimer mon compte';
 }
 
+// Path: account.subscription_payments
+class _TranslationsAccountSubscriptionPaymentsFr implements TranslationsAccountSubscriptionPaymentsEn {
+	_TranslationsAccountSubscriptionPaymentsFr._(this._root);
+
+	final TranslationsFr _root; // ignore: unused_field
+
+	// Translations
+	@override String get title => 'Abonnement & Paiements';
+}
+
 // Path: account.profile
 class _TranslationsAccountProfileFr implements TranslationsAccountProfileEn {
 	_TranslationsAccountProfileFr._(this._root);
@@ -1558,6 +1569,7 @@ extension on TranslationsFr {
 			case 'account.sections.account': return 'Compte';
 			case 'account.actions.security': return 'Sécurité et confidentialité';
 			case 'account.actions.delete_account': return 'Supprimer mon compte';
+			case 'account.subscription_payments.title': return 'Abonnement & Paiements';
 			case 'account.profile.my_profile': return 'Mon profil';
 			case 'account.profile.email': return 'Adresse e-mail';
 			case 'account.profile.undefined': return 'Non défini';
