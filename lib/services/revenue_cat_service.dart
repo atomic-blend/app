@@ -42,7 +42,12 @@ class RevenueCatService {
     }
   }
 
-  static Future<PaywallResult> showPaywall() async {
-    return await RevenueCatUI.presentPaywall();
+  static Future<Offerings?> getOfferings() async {
+    try {
+      final offerings = await Purchases.getOfferings();
+      return offerings;
+    } catch (e) {
+      return null;
+    }
   }
 }

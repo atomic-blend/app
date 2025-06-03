@@ -1,10 +1,12 @@
 import 'package:app/components/buttons/primary_button_square.dart';
 import 'package:app/components/widgets/elevated_container.dart';
 import 'package:app/i18n/strings.g.dart';
+import 'package:app/services/revenue_cat_service.dart';
 import 'package:app/utils/constants.dart';
 import 'package:app/utils/shortcuts.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:purchases_flutter/object_wrappers.dart';
 
 class Paywall extends StatefulWidget {
   const Paywall({super.key});
@@ -149,46 +151,51 @@ class _PaywallState extends State<Paywall> {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Row(
-                  mainAxisSize: MainAxisSize.min,
-                  spacing: $constants.insets.sm,
-                  children: [
-                    Expanded(
-                      child: ElevatedContainer(
-                        height: getSize(context).height * 0.1,
-                        borderRadius: $constants.corners.sm,
-                        child: TextButton(
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                          },
-                          child: Text(
-                            "test",
-                            style: getTextTheme(context)
-                                .bodyLarge
-                                ?.copyWith(color: Colors.white),
+                FutureBuilder<Offerings?>(
+                    future: RevenueCatService.getOfferings(),
+                    builder: (context, snapshot) {
+                      print(snapshot.data?.current?.availablePackages);
+                      return Row(
+                        mainAxisSize: MainAxisSize.min,
+                        spacing: $constants.insets.sm,
+                        children: [
+                          Expanded(
+                            child: ElevatedContainer(
+                              height: getSize(context).height * 0.1,
+                              borderRadius: $constants.corners.sm,
+                              child: TextButton(
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                                child: Text(
+                                  "test",
+                                  style: getTextTheme(context)
+                                      .bodyLarge
+                                      ?.copyWith(color: Colors.white),
+                                ),
+                              ),
+                            ),
                           ),
-                        ),
-                      ),
-                    ),
-                    Expanded(
-                      child: ElevatedContainer(
-                        height: getSize(context).height * 0.1,
-                        borderRadius: $constants.corners.sm,
-                        child: TextButton(
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                          },
-                          child: Text(
-                            "test",
-                            style: getTextTheme(context)
-                                .bodyLarge
-                                ?.copyWith(color: Colors.white),
-                          ),
-                        ),
-                      ),
-                    )
-                  ],
-                ),
+                          Expanded(
+                            child: ElevatedContainer(
+                              height: getSize(context).height * 0.1,
+                              borderRadius: $constants.corners.sm,
+                              child: TextButton(
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                                child: Text(
+                                  "test",
+                                  style: getTextTheme(context)
+                                      .bodyLarge
+                                      ?.copyWith(color: Colors.white),
+                                ),
+                              ),
+                            ),
+                          )
+                        ],
+                      );
+                    }),
                 SizedBox(
                   height: $constants.insets.sm,
                 ),
@@ -197,42 +204,55 @@ class _PaywallState extends State<Paywall> {
                     onPressed: () {
                       Navigator.of(context).pop();
                     }),
-                Row(
-                  children: [
-                    TextButton(
-                        child: Text(
-                          context.t.paywall.restore_purchase,
-                          style: getTextTheme(context).bodyMedium!.copyWith(
-                                fontWeight: FontWeight.bold,
-                                color: getTheme(context).primary,
-                              ),
-                        ),
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                        }),
-                    TextButton(
-                        child: Text(
-                          context.t.paywall.terms,
-                          style: getTextTheme(context).bodyMedium!.copyWith(
-                                fontWeight: FontWeight.bold,
-                                color: getTheme(context).primary,
-                              ),
-                        ),
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                        }),
-                    TextButton(
-                        child: Text(
-                          context.t.paywall.privacy_policy,
-                          style: getTextTheme(context).bodyMedium!.copyWith(
-                                fontWeight: FontWeight.bold,
-                                color: getTheme(context).primary,
-                              ),
-                        ),
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                        }),
-                  ],
+                SingleChildScrollView(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Expanded(
+                        child: TextButton(
+                            child: Text(
+                              context.t.paywall.restore_purchase,
+                              style: getTextTheme(context).bodySmall!.copyWith(
+                                    fontWeight: FontWeight.bold,
+                                    color: getTheme(context).primary,
+                                  ),
+                              textAlign: TextAlign.center,
+                            ),
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            }),
+                      ),
+                      Expanded(
+                        child: TextButton(
+                            child: Text(
+                              context.t.paywall.terms,
+                              style: getTextTheme(context).bodySmall!.copyWith(
+                                    fontWeight: FontWeight.bold,
+                                    color: getTheme(context).primary,
+                                  ),
+                              textAlign: TextAlign.center,
+                            ),
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            }),
+                      ),
+                      Expanded(
+                        child: TextButton(
+                            child: Text(
+                              context.t.paywall.privacy_policy,
+                              style: getTextTheme(context).bodySmall!.copyWith(
+                                    fontWeight: FontWeight.bold,
+                                    color: getTheme(context).primary,
+                                  ),
+                              textAlign: TextAlign.center,
+                            ),
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            }),
+                      ),
+                    ],
+                  ),
                 )
               ],
             ),
