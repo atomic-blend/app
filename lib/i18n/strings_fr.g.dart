@@ -809,6 +809,10 @@ class _TranslationsPaywallFr implements TranslationsPaywallEn {
 	@override String get title => 'Obtenez AtomicBlend Cloud';
 	@override String get subtitle => 'Profitez d\'Atomic Blend sans restrictions et aidez l\'initiative open source.';
 	@override late final _TranslationsPaywallAdvantagesFr advantages = _TranslationsPaywallAdvantagesFr._(_root);
+	@override Map<String, dynamic> get pricing => {
+		'cloud_yearly': _TranslationsPaywallPricingCloudYearlyFr._(_root),
+		'cloud_monthly': _TranslationsPaywallPricingCloudMonthlyFr._(_root),
+	};
 	@override String get restore_purchase => 'Restaurer l\'achat';
 	@override String get terms => 'Conditions d\'utilisation';
 	@override String get privacy_policy => 'Politique de confidentialité';
@@ -1332,6 +1336,31 @@ class _TranslationsPaywallAdvantagesFr implements TranslationsPaywallAdvantagesE
 	@override late final _TranslationsPaywallAdvantagesUnlimitedTagsFr unlimited_tags = _TranslationsPaywallAdvantagesUnlimitedTagsFr._(_root);
 	@override late final _TranslationsPaywallAdvantagesSyncAcrossDevicesFr sync_across_devices = _TranslationsPaywallAdvantagesSyncAcrossDevicesFr._(_root);
 	@override late final _TranslationsPaywallAdvantagesCommunityBackedFr community_backed = _TranslationsPaywallAdvantagesCommunityBackedFr._(_root);
+}
+
+// Path: paywall.pricing.cloud_yearly
+class _TranslationsPaywallPricingCloudYearlyFr implements TranslationsPaywallPricingCloudYearlyEn {
+	_TranslationsPaywallPricingCloudYearlyFr._(this._root);
+
+	final TranslationsFr _root; // ignore: unused_field
+
+	// Translations
+	@override String get title => 'Annuel';
+	@override String get price => '3.33€/mo';
+	@override String get billed => 'facturé à 39.99€/an';
+	@override String get discount => '16% off';
+}
+
+// Path: paywall.pricing.cloud_monthly
+class _TranslationsPaywallPricingCloudMonthlyFr implements TranslationsPaywallPricingCloudMonthlyEn {
+	_TranslationsPaywallPricingCloudMonthlyFr._(this._root);
+
+	final TranslationsFr _root; // ignore: unused_field
+
+	// Translations
+	@override String get title => 'Mensuel';
+	@override String get price => '3.99€/mo';
+	@override String get billed => 'facturé à 3.99€/mois';
 }
 
 // Path: settings.app_settings.selfHostedUrl
@@ -2090,6 +2119,13 @@ extension on TranslationsFr {
 			case 'paywall.advantages.sync_across_devices.description': return 'Accédez à vos données depuis n\'importe quel appareil, n\'importe où.';
 			case 'paywall.advantages.community_backed.title': return 'Soutien de la communauté';
 			case 'paywall.advantages.community_backed.description': return '100% opensource : rejoignez une communauté d\'utilisateurs qui soutiennent le projet.';
+			case 'paywall.pricing.cloud_yearly.title': return 'Annuel';
+			case 'paywall.pricing.cloud_yearly.price': return '3.33€/mo';
+			case 'paywall.pricing.cloud_yearly.billed': return 'facturé à 39.99€/an';
+			case 'paywall.pricing.cloud_yearly.discount': return '16% off';
+			case 'paywall.pricing.cloud_monthly.title': return 'Mensuel';
+			case 'paywall.pricing.cloud_monthly.price': return '3.99€/mo';
+			case 'paywall.pricing.cloud_monthly.billed': return 'facturé à 3.99€/mois';
 			case 'paywall.restore_purchase': return 'Restaurer l\'achat';
 			case 'paywall.terms': return 'Conditions d\'utilisation';
 			case 'paywall.privacy_policy': return 'Politique de confidentialité';

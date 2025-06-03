@@ -809,6 +809,19 @@
         "description": "100% opensource : rejoignez une communauté d'utilisateurs qui soutiennent le projet."
       }
     },
+    "pricing(map)": {
+      "cloud_yearly": {
+        "title": "Annuel",
+        "price": "3.33€/mo",
+        "billed": "facturé à 39.99€/an",
+        "discount": "16% off"
+      },
+      "cloud_monthly": {
+        "title": "Mensuel",
+        "price": "3.99€/mo",
+        "billed": "facturé à 3.99€/mois"
+      }
+    },
     "restore_purchase": "Restaurer l'achat",
     "terms": "Conditions d'utilisation",
     "privacy_policy": "Politique de confidentialité"

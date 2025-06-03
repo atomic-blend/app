@@ -815,6 +815,10 @@ class TranslationsPaywallEn {
 	String get title => 'Get AtomicBlend Cloud';
 	String get subtitle => 'Enjoy Atomic Blend without restrictions and help the opensource initiative.';
 	late final TranslationsPaywallAdvantagesEn advantages = TranslationsPaywallAdvantagesEn._(_root);
+	Map<String, dynamic> get pricing => {
+		'cloud_yearly': TranslationsPaywallPricingCloudYearlyEn._(_root),
+		'cloud_monthly': TranslationsPaywallPricingCloudMonthlyEn._(_root),
+	};
 	String get restore_purchase => 'Restore Purchase';
 	String get terms => 'Terms of Service';
 	String get privacy_policy => 'Privacy Policy';
@@ -1338,6 +1342,31 @@ class TranslationsPaywallAdvantagesEn {
 	late final TranslationsPaywallAdvantagesUnlimitedTagsEn unlimited_tags = TranslationsPaywallAdvantagesUnlimitedTagsEn._(_root);
 	late final TranslationsPaywallAdvantagesSyncAcrossDevicesEn sync_across_devices = TranslationsPaywallAdvantagesSyncAcrossDevicesEn._(_root);
 	late final TranslationsPaywallAdvantagesCommunityBackedEn community_backed = TranslationsPaywallAdvantagesCommunityBackedEn._(_root);
+}
+
+// Path: paywall.pricing.cloud_yearly
+class TranslationsPaywallPricingCloudYearlyEn {
+	TranslationsPaywallPricingCloudYearlyEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	String get title => 'Yearly';
+	String get price => '\$3.33/mo';
+	String get billed => 'billed at \$39.99/year';
+	String get discount => 'Save 16% with yearly billing';
+}
+
+// Path: paywall.pricing.cloud_monthly
+class TranslationsPaywallPricingCloudMonthlyEn {
+	TranslationsPaywallPricingCloudMonthlyEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	String get title => 'Monthly';
+	String get price => '\$3.99/mo';
+	String get billed => 'billed at \$3.99/month';
 }
 
 // Path: settings.app_settings.selfHostedUrl
@@ -2099,6 +2128,13 @@ extension on Translations {
 			case 'paywall.advantages.sync_across_devices.description': return 'Access your data from any device, anywhere.';
 			case 'paywall.advantages.community_backed.title': return 'Community Backed';
 			case 'paywall.advantages.community_backed.description': return '100% opensource : join a community of users who support the project.';
+			case 'paywall.pricing.cloud_yearly.title': return 'Yearly';
+			case 'paywall.pricing.cloud_yearly.price': return '\$3.33/mo';
+			case 'paywall.pricing.cloud_yearly.billed': return 'billed at \$39.99/year';
+			case 'paywall.pricing.cloud_yearly.discount': return 'Save 16% with yearly billing';
+			case 'paywall.pricing.cloud_monthly.title': return 'Monthly';
+			case 'paywall.pricing.cloud_monthly.price': return '\$3.99/mo';
+			case 'paywall.pricing.cloud_monthly.billed': return 'billed at \$3.99/month';
 			case 'paywall.restore_purchase': return 'Restore Purchase';
 			case 'paywall.terms': return 'Terms of Service';
 			case 'paywall.privacy_policy': return 'Privacy Policy';

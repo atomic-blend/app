@@ -811,6 +811,19 @@
         "description": "100% opensource : join a community of users who support the project."
       }
     },
+    "pricing(map)": {
+      "cloud_yearly": {
+        "title": "Yearly",
+        "price": "\\$3.33/mo",
+        "billed": "billed at \\$39.99/year",
+        "discount": "Save 16% with yearly billing"
+      },
+      "cloud_monthly": {
+        "title": "Monthly",
+        "price": "\\$3.99/mo",
+        "billed": "billed at \\$3.99/month"
+      }
+    },
     "restore_purchase": "Restore Purchase",
     "terms": "Terms of Service",
     "privacy_policy": "Privacy Policy"

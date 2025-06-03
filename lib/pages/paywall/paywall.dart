@@ -155,6 +155,15 @@ class _PaywallState extends State<Paywall> {
                     future: RevenueCatService.getOfferings(),
                     builder: (context, snapshot) {
                       print(snapshot.data?.current?.availablePackages);
+
+                      if (snapshot.connectionState == ConnectionState.waiting ||
+                          snapshot.data == null) {
+                        return Center(
+                          child: CircularProgressIndicator(
+                            color: getTheme(context).primary,
+                          ),
+                        );
+                      }
                       return Row(
                         mainAxisSize: MainAxisSize.min,
                         spacing: $constants.insets.sm,
@@ -162,16 +171,66 @@ class _PaywallState extends State<Paywall> {
                           Expanded(
                             child: ElevatedContainer(
                               height: getSize(context).height * 0.1,
+                              width: double.infinity,
                               borderRadius: $constants.corners.sm,
-                              child: TextButton(
-                                onPressed: () {
-                                  Navigator.of(context).pop();
-                                },
-                                child: Text(
-                                  "test",
-                                  style: getTextTheme(context)
-                                      .bodyLarge
-                                      ?.copyWith(color: Colors.white),
+                              child: Padding(
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: $constants.insets.sm,
+                                  vertical: $constants.insets.xxs,
+                                ),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Center(
+                                      child: Container(
+                                        padding: EdgeInsets.symmetric(
+                                          horizontal: $constants.insets.sm,
+                                        ),
+                                        decoration: BoxDecoration(
+                                          color: getTheme(context).primary,
+                                          borderRadius: BorderRadius.circular(
+                                              $constants.corners.sm),
+                                        ),
+                                        child: Text(
+                                          context
+                                              .t
+                                              .paywall
+                                              .pricing["cloud_yearly"]!
+                                              .discount,
+                                          style: getTextTheme(context)
+                                              .bodySmall!
+                                              .copyWith(
+                                                color: Colors.white,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                        ),
+                                      ),
+                                    ),
+                                    Text(
+                                      context.t.paywall.pricing["cloud_yearly"]!
+                                          .title,
+                                      style: getTextTheme(context)
+                                          .bodyLarge
+                                          ?.copyWith(
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                    ),
+                                    Text(
+                                      context.t.paywall.pricing["cloud_yearly"]!
+                                          .price,
+                                      style: getTextTheme(context).bodyMedium,
+                                    ),
+                                    Text(
+                                      context.t.paywall.pricing["cloud_yearly"]!
+                                          .billed,
+                                      style: getTextTheme(context)
+                                          .bodySmall!
+                                          .copyWith(
+                                            color: Colors.grey.shade600,
+                                          ),
+                                    ),
+                                  ],
                                 ),
                               ),
                             ),
@@ -180,19 +239,43 @@ class _PaywallState extends State<Paywall> {
                             child: ElevatedContainer(
                               height: getSize(context).height * 0.1,
                               borderRadius: $constants.corners.sm,
-                              child: TextButton(
-                                onPressed: () {
-                                  Navigator.of(context).pop();
-                                },
-                                child: Text(
-                                  "test",
-                                  style: getTextTheme(context)
-                                      .bodyLarge
-                                      ?.copyWith(color: Colors.white),
+                              child: Padding(
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: $constants.insets.sm,
+                                  vertical: $constants.insets.sm,
+                                ),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Text(
+                                      context.t.paywall
+                                          .pricing["cloud_monthly"]!.title,
+                                      style: getTextTheme(context)
+                                          .bodyLarge
+                                          ?.copyWith(
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                    ),
+                                    Text(
+                                        context.t.paywall
+                                            .pricing["cloud_monthly"]!.price,
+                                        style:
+                                            getTextTheme(context).bodyMedium),
+                                    Text(
+                                      context.t.paywall
+                                          .pricing["cloud_monthly"]!.billed,
+                                      style: getTextTheme(context)
+                                          .bodySmall!
+                                          .copyWith(
+                                            color: Colors.grey.shade600,
+                                          ),
+                                    ),
+                                  ],
                                 ),
                               ),
                             ),
-                          )
+                          ),
                         ],
                       );
                     }),
