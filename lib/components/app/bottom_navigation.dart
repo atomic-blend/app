@@ -21,9 +21,11 @@ class NavigationItem extends StatelessWidget {
     this.tooltip,
     this.enabled = true,
     this.body,
+    this.initialsOnly,
     this.appBar,
     this.mainSecondaryKey,
-    this.color, this.separatorBefore,
+    this.color,
+    this.separatorBefore,
   });
 
   /// The icon displayed by the destination.
@@ -55,6 +57,9 @@ class NavigationItem extends StatelessWidget {
 
   /// Optional color
   final Color? color;
+
+  /// Whether to show only initials in the destination.
+  final bool? initialsOnly;
 
   /// Whether this destination is interactive.
   final bool enabled;
@@ -145,12 +150,14 @@ class BottomNavigation extends StatelessWidget {
           } else {
             context.read<AppCubit>().changePrimaryMenuSelectedKey(
                 key: (destinations[index].key as ValueKey).value);
-            if (destinations[index] is NavigationItem && (destinations[index] as NavigationItem).mainSecondaryKey != null) {
+            if (destinations[index] is NavigationItem &&
+                (destinations[index] as NavigationItem).mainSecondaryKey !=
+                    null) {
               context.read<AppCubit>().changeSecondaryMenuSelectedKey(
                   key: (destinations[index] as NavigationItem)
                       .mainSecondaryKey!);
             }
-      }
+          }
         },
         items: cupertinoItems,
       );
