@@ -243,6 +243,7 @@
     "month": "Month",
     "day": "Day",
     "threeDays": "3 Days",
+    "week": "Week",
     "event_detail": {
       "date": "Date",
       "time": "Time",

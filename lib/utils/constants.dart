@@ -207,6 +207,19 @@ class Navigation {
         NavigationSection(
           key: const Key("calendar"),
           items: [
+            if (isDesktop(context))
+              NavigationItem(
+                key: const Key("week"),
+                icon: const Icon(Icons.calendar_view_week),
+                cupertinoIcon: const Icon(CupertinoIcons.calendar),
+                label: context.t.calendar.week,
+                initialsOnly: true,
+                body: Calendar(
+                  key: UniqueKey(),
+                  view: CalendarView.week,
+                  numberOfDays: 7,
+                ),
+              ),
             NavigationItem(
               key: const Key("three_days"),
               icon: const Icon(Icons.calendar_today),

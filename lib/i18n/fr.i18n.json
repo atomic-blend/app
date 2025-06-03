@@ -244,6 +244,7 @@
     "month": "Mois",
     "day": "Jour",
     "threeDays": "3 jours",
+    "week": "Semaine",
     "event_detail": {
       "date": "Date",
       "time": "Heure",

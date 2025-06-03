@@ -208,6 +208,7 @@ class TranslationsCalendarEn {
 	String get month => 'Month';
 	String get day => 'Day';
 	String get threeDays => '3 Days';
+	String get week => 'Week';
 	late final TranslationsCalendarEventDetailEn event_detail = TranslationsCalendarEventDetailEn._(_root);
 	late final TranslationsCalendarSettingsEn settings = TranslationsCalendarSettingsEn._(_root);
 }
@@ -1518,6 +1519,7 @@ extension on Translations {
 			case 'calendar.month': return 'Month';
 			case 'calendar.day': return 'Day';
 			case 'calendar.threeDays': return '3 Days';
+			case 'calendar.week': return 'Week';
 			case 'calendar.event_detail.date': return 'Date';
 			case 'calendar.event_detail.time': return 'Time';
 			case 'calendar.event_detail.organizer': return 'Organizer';
