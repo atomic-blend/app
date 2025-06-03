@@ -9,6 +9,7 @@ import 'package:app/entities/tasks/tasks.entity.dart';
 import 'package:app/pages/calendar/custom_appointment.dart';
 import 'package:app/pages/calendar/custom_calendar_data_source.dart';
 import 'package:app/pages/calendar/device_event_detail.dart';
+import 'package:app/pages/tasks/add_task_modal.dart';
 import 'package:app/pages/tasks/task_detail.dart';
 import 'package:app/utils/constants.dart';
 import 'package:app/utils/exntensions/date_time_extension.dart';
@@ -81,6 +82,14 @@ class _CalendarState extends State<Calendar> {
                 view: widget.view,
                 initialDisplayDate: DateTime.now(),
                 maxDate: calendarEndDate,
+                onSelectionChanged: (calendarSelectionDetails) {
+                  final DateTime? selectedDate = calendarSelectionDetails.date;
+
+                  if (selectedDate != null) {
+                    //show the add task dialog with the selected date
+                    _showAddTaskDialog(selectedDate);
+                  }
+                },
                 backgroundColor: getTheme(context).surfaceContainer,
                 showTodayButton: true,
                 cellBorderColor: isDarkMode(context)
@@ -242,8 +251,8 @@ class _CalendarState extends State<Calendar> {
       } else if (task.endDate != null) {
         appointments.add(
           CustomAppointment(
-            startTime: task.endDate!,
-            endTime: task.endDate!.add(const Duration(minutes: 30)),
+            startTime: task.endDate!.toLocal(),
+            endTime: task.endDate!.toLocal().add(const Duration(minutes: 30)),
             subject: task.title,
             color: getTheme(context).primary.withValues(alpha: 0.2),
             notes: task.description,
@@ -472,5 +481,25 @@ class _CalendarState extends State<Calendar> {
     }
 
     return CustomCalendarDataSource(appointments);
+  }
+
+  void _showAddTaskDialog(DateTime selectedDate) {
+    // Implement the logic to show the add task dialog with the selected date
+    // This could be a custom dialog or a new page where the user can add a task
+    if (isDesktop(context)) {
+      showDialog(
+          context: context,
+          builder: (context) => Dialog(
+                  child: AddTaskModal(
+                endDate: selectedDate,
+              )));
+    } else {
+      showModalBottomSheet(
+          isScrollControlled: true,
+          context: context,
+          builder: (context) => AddTaskModal(
+                endDate: selectedDate,
+              ));
+    }
   }
 }

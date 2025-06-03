@@ -137,6 +137,7 @@ class _AddTaskModalState extends State<AddTaskModal> {
                                   },
                                   firstDate: DateTime(2000),
                                   lastDate: DateTime(2100),
+                                  endDate: _endDate,
                                 );
                                 if (isDesktop(context)) {
                                   await showDialog(
