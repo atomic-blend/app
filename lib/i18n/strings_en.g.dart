@@ -208,6 +208,9 @@ class TranslationsCalendarEn {
 	String get month => 'Month';
 	String get day => 'Day';
 	String get threeDays => '3 Days';
+	String get week => 'Week';
+	String get schedule => 'Schedule';
+	late final TranslationsCalendarErrorsEn errors = TranslationsCalendarErrorsEn._(_root);
 	late final TranslationsCalendarEventDetailEn event_detail = TranslationsCalendarEventDetailEn._(_root);
 	late final TranslationsCalendarSettingsEn settings = TranslationsCalendarSettingsEn._(_root);
 }
@@ -1082,6 +1085,19 @@ class TranslationsTasksAddTimeEntryEn {
 	String get date_required => 'Date is required';
 }
 
+// Path: calendar.errors
+class TranslationsCalendarErrorsEn {
+	TranslationsCalendarErrorsEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	String get cannot_move_device_calendar_event => 'You cannot move a device calendar event';
+	String get cannot_move_habit_event => 'You cannot move a habit event';
+	String get cannot_resize_device_calendar_event => 'You cannot resize a device calendar event';
+	String get cannot_resize_habit_event => 'You cannot resize a habit event';
+}
+
 // Path: calendar.event_detail
 class TranslationsCalendarEventDetailEn {
 	TranslationsCalendarEventDetailEn._(this._root);
@@ -1518,6 +1534,12 @@ extension on Translations {
 			case 'calendar.month': return 'Month';
 			case 'calendar.day': return 'Day';
 			case 'calendar.threeDays': return '3 Days';
+			case 'calendar.week': return 'Week';
+			case 'calendar.schedule': return 'Schedule';
+			case 'calendar.errors.cannot_move_device_calendar_event': return 'You cannot move a device calendar event';
+			case 'calendar.errors.cannot_move_habit_event': return 'You cannot move a habit event';
+			case 'calendar.errors.cannot_resize_device_calendar_event': return 'You cannot resize a device calendar event';
+			case 'calendar.errors.cannot_resize_habit_event': return 'You cannot resize a habit event';
 			case 'calendar.event_detail.date': return 'Date';
 			case 'calendar.event_detail.time': return 'Time';
 			case 'calendar.event_detail.organizer': return 'Organizer';

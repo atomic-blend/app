@@ -207,11 +207,37 @@ class Navigation {
         NavigationSection(
           key: const Key("calendar"),
           items: [
+            if (isDesktop(context))
+              NavigationItem(
+                key: const Key("week"),
+                icon: const Icon(Icons.calendar_view_week),
+                cupertinoIcon: const Icon(CupertinoIcons.calendar),
+                label: context.t.calendar.week,
+                initialsOnly: true,
+                body: Calendar(
+                  key: UniqueKey(),
+                  view: CalendarView.week,
+                  numberOfDays: 7,
+                ),
+              ),
+            NavigationItem(
+              key: const Key("schedule"),
+              icon: const Icon(Icons.schedule),
+              cupertinoIcon: const Icon(CupertinoIcons.clock),
+              label: context.t.calendar.schedule,
+              initialsOnly: true,
+              body: Calendar(
+                key: UniqueKey(),
+                view: CalendarView.schedule,
+                numberOfDays: 7,
+              ),
+            ),
             NavigationItem(
               key: const Key("three_days"),
               icon: const Icon(Icons.calendar_today),
               cupertinoIcon: const Icon(CupertinoIcons.calendar_badge_plus),
               label: context.t.calendar.threeDays,
+              initialsOnly: true,
               body: Calendar(
                 key: UniqueKey(),
                 view: CalendarView.week,
@@ -223,6 +249,7 @@ class Navigation {
               icon: const Icon(Icons.calendar_month),
               cupertinoIcon: const Icon(CupertinoIcons.calendar),
               label: context.t.calendar.month,
+              initialsOnly: true,
               body: Calendar(
                 key: UniqueKey(),
                 view: CalendarView.month,
@@ -233,6 +260,7 @@ class Navigation {
               icon: const Icon(Icons.calendar_today),
               cupertinoIcon: const Icon(CupertinoIcons.calendar_today),
               label: context.t.calendar.day,
+              initialsOnly: true,
               body: Calendar(
                 key: UniqueKey(),
                 view: CalendarView.day,

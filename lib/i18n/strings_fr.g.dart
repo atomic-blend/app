@@ -205,6 +205,9 @@ class _TranslationsCalendarFr implements TranslationsCalendarEn {
 	@override String get month => 'Mois';
 	@override String get day => 'Jour';
 	@override String get threeDays => '3 jours';
+	@override String get week => 'Semaine';
+	@override String get schedule => 'Emploi du temps';
+	@override late final _TranslationsCalendarErrorsFr errors = _TranslationsCalendarErrorsFr._(_root);
 	@override late final _TranslationsCalendarEventDetailFr event_detail = _TranslationsCalendarEventDetailFr._(_root);
 	@override late final _TranslationsCalendarSettingsFr settings = _TranslationsCalendarSettingsFr._(_root);
 }
@@ -1076,6 +1079,19 @@ class _TranslationsTasksAddTimeEntryFr implements TranslationsTasksAddTimeEntryE
 	@override String get date_required => 'Date requise';
 }
 
+// Path: calendar.errors
+class _TranslationsCalendarErrorsFr implements TranslationsCalendarErrorsEn {
+	_TranslationsCalendarErrorsFr._(this._root);
+
+	final TranslationsFr _root; // ignore: unused_field
+
+	// Translations
+	@override String get cannot_move_device_calendar_event => 'Vous ne pouvez pas déplacer un événement de calendrier d\'appareil';
+	@override String get cannot_move_habit_event => 'Vous ne pouvez pas déplacer un événement d\'habitude';
+	@override String get cannot_resize_device_calendar_event => 'Vous ne pouvez pas redimensionner un événement de calendrier d\'appareil';
+	@override String get cannot_resize_habit_event => 'Vous ne pouvez pas redimensionner un événement d\'habitude';
+}
+
 // Path: calendar.event_detail
 class _TranslationsCalendarEventDetailFr implements TranslationsCalendarEventDetailEn {
 	_TranslationsCalendarEventDetailFr._(this._root);
@@ -1512,6 +1528,12 @@ extension on TranslationsFr {
 			case 'calendar.month': return 'Mois';
 			case 'calendar.day': return 'Jour';
 			case 'calendar.threeDays': return '3 jours';
+			case 'calendar.week': return 'Semaine';
+			case 'calendar.schedule': return 'Emploi du temps';
+			case 'calendar.errors.cannot_move_device_calendar_event': return 'Vous ne pouvez pas déplacer un événement de calendrier d\'appareil';
+			case 'calendar.errors.cannot_move_habit_event': return 'Vous ne pouvez pas déplacer un événement d\'habitude';
+			case 'calendar.errors.cannot_resize_device_calendar_event': return 'Vous ne pouvez pas redimensionner un événement de calendrier d\'appareil';
+			case 'calendar.errors.cannot_resize_habit_event': return 'Vous ne pouvez pas redimensionner un événement d\'habitude';
 			case 'calendar.event_detail.date': return 'Date';
 			case 'calendar.event_detail.time': return 'Heure';
 			case 'calendar.event_detail.organizer': return 'Organisateur';

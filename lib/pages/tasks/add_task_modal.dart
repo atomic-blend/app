@@ -20,9 +20,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AddTaskModal extends StatefulWidget {
   final DateTime? endDate;
+  final DateTime? startDate;
   final int? priority;
 
-  const AddTaskModal({super.key, this.endDate, this.priority});
+  const AddTaskModal({super.key, this.endDate, this.startDate, this.priority});
 
   @override
   State<AddTaskModal> createState() => _AddTaskModalState();
@@ -43,6 +44,10 @@ class _AddTaskModalState extends State<AddTaskModal> {
     if (widget.endDate != null) {
       _endDate = widget.endDate;
     }
+    if (widget.startDate != null) {
+      _startDate = widget.startDate;
+    }
+
     if (widget.priority != null) {
       _priority = widget.priority;
     }
@@ -137,6 +142,8 @@ class _AddTaskModalState extends State<AddTaskModal> {
                                   },
                                   firstDate: DateTime(2000),
                                   lastDate: DateTime(2100),
+                                  endDate: _endDate,
+                                  startDate: _startDate,
                                 );
                                 if (isDesktop(context)) {
                                   await showDialog(

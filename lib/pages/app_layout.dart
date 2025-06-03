@@ -307,7 +307,29 @@ class AppLayoutState extends ResponsiveState<AppLayout> {
                                                                         .corners
                                                                         .lg),
                                                           ),
-                                                          child: IconTheme(
+                                                          child: item.initialsOnly ==
+                                                              true
+                                                          ? Center(
+                                                              child: Text(
+                                                                _getInitials(item.label),
+                                                                style: getTextTheme(
+                                                                        context)
+                                                                    .bodyLarge!
+                                                                    .copyWith(
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .bold,
+                                                                      color: item.color !=
+                                                                              null
+                                                                          ? item
+                                                                              .color!
+                                                                          : Colors
+                                                                              .grey
+                                                                              .shade800,
+                                                                    ),
+                                                              ),
+                                                            )
+                                                          : IconTheme(
                                                               data:
                                                                   IconThemeData(
                                                                 color: getTheme(context)
@@ -620,19 +642,42 @@ class AppLayoutState extends ResponsiveState<AppLayout> {
                                                                           .corners
                                                                           .lg),
                                                         ),
-                                                        child: IconTheme(
-                                                            data: IconThemeData(
-                                                              color: item.color !=
-                                                                      null
-                                                                  ? item.color!
-                                                                  : Colors.grey
-                                                                      .shade800,
-                                                            ),
-                                                            child: isApple(
-                                                                    context)
-                                                                ? item
-                                                                    .cupertinoIcon
-                                                                : item.icon),
+                                                        child: item.initialsOnly ==
+                                                                true
+                                                            ? Center(
+                                                                child: Text(
+                                                                  _getInitials(
+                                                                      item.label),
+                                                                  style: getTextTheme(
+                                                                          context)
+                                                                      .bodyLarge!
+                                                                      .copyWith(
+                                                                        fontWeight:
+                                                                            FontWeight.bold,
+                                                                        color: item.color !=
+                                                                                null
+                                                                            ? item.color!
+                                                                            : Colors.grey.shade800,
+                                                                      ),
+                                                                ),
+                                                              )
+                                                            : IconTheme(
+                                                                data:
+                                                                    IconThemeData(
+                                                                  color: item.color !=
+                                                                          null
+                                                                      ? item
+                                                                          .color!
+                                                                      : Colors
+                                                                          .grey
+                                                                          .shade800,
+                                                                ),
+                                                                child: isApple(
+                                                                        context)
+                                                                    ? item
+                                                                        .cupertinoIcon
+                                                                    : item
+                                                                        .icon),
                                                       ),
                                                     ],
                                                   ),
@@ -750,19 +795,45 @@ class AppLayoutState extends ResponsiveState<AppLayout> {
                                                                         .corners
                                                                         .lg),
                                                       ),
-                                                      child: IconTheme(
-                                                          data: IconThemeData(
-                                                            color: item.color !=
-                                                                    null
-                                                                ? item.color!
-                                                                : Colors.grey
-                                                                    .shade800,
-                                                          ),
-                                                          child: isApple(
-                                                                  context)
-                                                              ? item
-                                                                  .cupertinoIcon
-                                                              : item.icon),
+                                                      child: item.initialsOnly ==
+                                                              true
+                                                          ? Center(
+                                                              child: Text(
+                                                                _getInitials(
+                                                                    item.label),
+                                                                style: getTextTheme(
+                                                                        context)
+                                                                    .bodyLarge!
+                                                                    .copyWith(
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .bold,
+                                                                      color: item.color !=
+                                                                              null
+                                                                          ? item
+                                                                              .color!
+                                                                          : Colors
+                                                                              .grey
+                                                                              .shade800,
+                                                                    ),
+                                                              ),
+                                                            )
+                                                          : IconTheme(
+                                                              data:
+                                                                  IconThemeData(
+                                                                color: item.color !=
+                                                                        null
+                                                                    ? item
+                                                                        .color!
+                                                                    : Colors
+                                                                        .grey
+                                                                        .shade800,
+                                                              ),
+                                                              child: isApple(
+                                                                      context)
+                                                                  ? item
+                                                                      .cupertinoIcon
+                                                                  : item.icon),
                                                     ),
                                                   ],
                                                 ),
@@ -848,5 +919,17 @@ class AppLayoutState extends ResponsiveState<AppLayout> {
     setState(() {
       _isLoginModalVisible = true;
     });
+  }
+
+  String _getInitials(String name) {
+    if (name.isEmpty) return '';
+
+    return name
+        .trim()
+        .split(' ')
+        .where((word) => word.isNotEmpty)
+        .take(3)
+        .map((word) => word[0].toUpperCase())
+        .join();
   }
 }
