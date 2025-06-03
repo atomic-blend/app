@@ -1,4 +1,5 @@
 import 'package:app/components/dialogs/date_picker_dialog.dart';
+import 'package:app/components/widgets/elevated_container.dart';
 import 'package:app/i18n/strings.g.dart';
 import 'package:app/utils/constants.dart';
 import 'package:app/utils/shortcuts.dart';
@@ -54,13 +55,9 @@ class DatePickerButton extends StatelessWidget {
                       ),
                 ),
               ),
-            Container(
+            ElevatedContainer(
               height: height ?? 80,
               width: double.infinity,
-              decoration: BoxDecoration(
-                color: getTheme(context).surfaceContainer,
-                borderRadius: BorderRadius.circular($constants.corners.md),
-              ),
               padding: EdgeInsets.all($constants.insets.sm),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,

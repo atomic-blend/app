@@ -87,7 +87,8 @@ class _CalendarState extends State<Calendar> {
 
                   if (selectedDate != null) {
                     //show the add task dialog with the selected date
-                    _showAddTaskDialog(selectedDate);
+                    _showAddTaskDialog(selectedDate,
+                        selectedDate.add(const Duration(minutes: 30)));
                   }
                 },
                 backgroundColor: getTheme(context).surfaceContainer,
@@ -97,7 +98,7 @@ class _CalendarState extends State<Calendar> {
                     : Colors.grey.shade400,
                 todayHighlightColor: getTheme(context).primary,
                 timeSlotViewSettings: TimeSlotViewSettings(
-                    minimumAppointmentDuration: const Duration(minutes: 27),
+                    minimumAppointmentDuration: const Duration(minutes: 30),
                     numberOfDaysInView: widget.numberOfDays ?? -1,
                     timeFormat: "HH:mm"),
                 selectionDecoration: BoxDecoration(
@@ -483,7 +484,7 @@ class _CalendarState extends State<Calendar> {
     return CustomCalendarDataSource(appointments);
   }
 
-  void _showAddTaskDialog(DateTime selectedDate) {
+  void _showAddTaskDialog(DateTime startDate, DateTime endDate) {
     // Implement the logic to show the add task dialog with the selected date
     // This could be a custom dialog or a new page where the user can add a task
     if (isDesktop(context)) {
@@ -491,14 +492,16 @@ class _CalendarState extends State<Calendar> {
           context: context,
           builder: (context) => Dialog(
                   child: AddTaskModal(
-                endDate: selectedDate,
+                startDate: startDate,
+                endDate: endDate,
               )));
     } else {
       showModalBottomSheet(
           isScrollControlled: true,
           context: context,
           builder: (context) => AddTaskModal(
-                endDate: selectedDate,
+                startDate: startDate,
+                endDate: endDate,
               ));
     }
   }

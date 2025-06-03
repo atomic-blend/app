@@ -1,5 +1,6 @@
 import 'package:app/components/buttons/date_picker_button.dart';
 import 'package:app/components/forms/task_date_picker_modal/reminder_picker.dart';
+import 'package:app/components/widgets/elevated_container.dart';
 import 'package:app/i18n/strings.g.dart';
 import 'package:app/utils/constants.dart';
 import 'package:app/utils/shortcuts.dart';
@@ -86,11 +87,7 @@ class _DurationPickerState extends State<DurationPicker> {
             ),
           ),
           SizedBox(height: $constants.insets.sm),
-          Container(
-            decoration: BoxDecoration(
-              color: getTheme(context).surfaceContainer,
-              borderRadius: BorderRadius.circular($constants.corners.md),
-            ),
+          ElevatedContainer(
             padding: EdgeInsets.symmetric(
                 vertical: $constants.insets.sm,
                 horizontal: $constants.insets.sm),
