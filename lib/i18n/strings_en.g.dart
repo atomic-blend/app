@@ -1367,6 +1367,7 @@ class TranslationsPaywallPricingCloudMonthlyEn {
 	String get title => 'Monthly';
 	String get price => '\$3.99/mo';
 	String get billed => 'billed at \$3.99/month';
+	String get discount => '';
 }
 
 // Path: settings.app_settings.selfHostedUrl
@@ -2135,6 +2136,7 @@ extension on Translations {
 			case 'paywall.pricing.cloud_monthly.title': return 'Monthly';
 			case 'paywall.pricing.cloud_monthly.price': return '\$3.99/mo';
 			case 'paywall.pricing.cloud_monthly.billed': return 'billed at \$3.99/month';
+			case 'paywall.pricing.cloud_monthly.discount': return '';
 			case 'paywall.restore_purchase': return 'Restore Purchase';
 			case 'paywall.terms': return 'Terms of Service';
 			case 'paywall.privacy_policy': return 'Privacy Policy';

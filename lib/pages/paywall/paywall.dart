@@ -168,114 +168,16 @@ class _PaywallState extends State<Paywall> {
                         mainAxisSize: MainAxisSize.min,
                         spacing: $constants.insets.sm,
                         children: [
-                          Expanded(
-                            child: ElevatedContainer(
-                              height: getSize(context).height * 0.1,
-                              width: double.infinity,
-                              borderRadius: $constants.corners.sm,
-                              child: Padding(
-                                padding: EdgeInsets.symmetric(
-                                  horizontal: $constants.insets.sm,
-                                  vertical: $constants.insets.xxs,
-                                ),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    Center(
-                                      child: Container(
-                                        padding: EdgeInsets.symmetric(
-                                          horizontal: $constants.insets.sm,
-                                        ),
-                                        decoration: BoxDecoration(
-                                          color: getTheme(context).primary,
-                                          borderRadius: BorderRadius.circular(
-                                              $constants.corners.sm),
-                                        ),
-                                        child: Text(
-                                          context
-                                              .t
-                                              .paywall
-                                              .pricing["cloud_yearly"]!
-                                              .discount,
-                                          style: getTextTheme(context)
-                                              .bodySmall!
-                                              .copyWith(
-                                                color: Colors.white,
-                                                fontWeight: FontWeight.bold,
-                                              ),
-                                        ),
-                                      ),
-                                    ),
-                                    Text(
-                                      context.t.paywall.pricing["cloud_yearly"]!
-                                          .title,
-                                      style: getTextTheme(context)
-                                          .bodyLarge
-                                          ?.copyWith(
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                    ),
-                                    Text(
-                                      context.t.paywall.pricing["cloud_yearly"]!
-                                          .price,
-                                      style: getTextTheme(context).bodyMedium,
-                                    ),
-                                    Text(
-                                      context.t.paywall.pricing["cloud_yearly"]!
-                                          .billed,
-                                      style: getTextTheme(context)
-                                          .bodySmall!
-                                          .copyWith(
-                                            color: Colors.grey.shade600,
-                                          ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                          Expanded(
-                            child: ElevatedContainer(
-                              height: getSize(context).height * 0.1,
-                              borderRadius: $constants.corners.sm,
-                              child: Padding(
-                                padding: EdgeInsets.symmetric(
-                                  horizontal: $constants.insets.sm,
-                                  vertical: $constants.insets.sm,
-                                ),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    Text(
-                                      context.t.paywall
-                                          .pricing["cloud_monthly"]!.title,
-                                      style: getTextTheme(context)
-                                          .bodyLarge
-                                          ?.copyWith(
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                    ),
-                                    Text(
-                                        context.t.paywall
-                                            .pricing["cloud_monthly"]!.price,
-                                        style:
-                                            getTextTheme(context).bodyMedium),
-                                    Text(
-                                      context.t.paywall
-                                          .pricing["cloud_monthly"]!.billed,
-                                      style: getTextTheme(context)
-                                          .bodySmall!
-                                          .copyWith(
-                                            color: Colors.grey.shade600,
-                                          ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
+                          _buildPricingCard(context,
+                              package: snapshot.data!.current!.availablePackages
+                                  .firstWhere((package) =>
+                                      package.storeProduct.identifier ==
+                                      "cloud_yearly")),
+                          _buildPricingCard(context,
+                              package: snapshot.data!.current!.availablePackages
+                                  .firstWhere((package) =>
+                                      package.storeProduct.identifier ==
+                                      "cloud_monthly")),
                         ],
                       );
                     }),
@@ -341,6 +243,83 @@ class _PaywallState extends State<Paywall> {
             ),
           )
         ],
+      ),
+    );
+  }
+
+  Expanded _buildPricingCard(BuildContext context, {required Package package}) {
+    return Expanded(
+      child: ElevatedContainer(
+        height: getSize(context).height * 0.1,
+        width: double.infinity,
+        borderRadius: $constants.corners.sm,
+        child: Padding(
+          padding: EdgeInsets.symmetric(
+            horizontal: $constants.insets.sm,
+            vertical: $constants.insets.xxs,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Center(
+                child: Container(
+                  height: 15,
+                  padding: EdgeInsets.symmetric(
+                    horizontal: $constants.insets.sm,
+                  ),
+                  decoration: BoxDecoration(
+                    color: context
+                              .t
+                              .paywall
+                              .pricing[package.storeProduct.identifier]
+                              ?.discount !=
+                          ""
+                      ? getTheme(context).primary : Colors.transparent,
+                    borderRadius: BorderRadius.circular($constants.corners.sm),
+                  ),
+                  child: context
+                              .t
+                              .paywall
+                              .pricing[package.storeProduct.identifier]
+                              ?.discount !=
+                          ""
+                      ? Text(
+                          context
+                              .t
+                              .paywall
+                              .pricing[package.storeProduct.identifier]!
+                              .discount,
+                          style: getTextTheme(context).bodySmall!.copyWith(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                              ),
+                        )
+                      : const SizedBox.shrink(),
+                ),
+              ),
+              Text(
+                context
+                    .t.paywall.pricing[package.storeProduct.identifier]!.title,
+                style: getTextTheme(context).bodyLarge?.copyWith(
+                      fontWeight: FontWeight.bold,
+                    ),
+              ),
+              Text(
+                context
+                    .t.paywall.pricing[package.storeProduct.identifier]!.price,
+                style: getTextTheme(context).bodyMedium,
+              ),
+              Text(
+                context
+                    .t.paywall.pricing[package.storeProduct.identifier]!.billed,
+                style: getTextTheme(context).bodySmall!.copyWith(
+                      color: Colors.grey.shade600,
+                    ),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }

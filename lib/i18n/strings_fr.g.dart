@@ -1361,6 +1361,7 @@ class _TranslationsPaywallPricingCloudMonthlyFr implements TranslationsPaywallPr
 	@override String get title => 'Mensuel';
 	@override String get price => '3.99€/mo';
 	@override String get billed => 'facturé à 3.99€/mois';
+	@override String get discount => '';
 }
 
 // Path: settings.app_settings.selfHostedUrl
@@ -2126,6 +2127,7 @@ extension on TranslationsFr {
 			case 'paywall.pricing.cloud_monthly.title': return 'Mensuel';
 			case 'paywall.pricing.cloud_monthly.price': return '3.99€/mo';
 			case 'paywall.pricing.cloud_monthly.billed': return 'facturé à 3.99€/mois';
+			case 'paywall.pricing.cloud_monthly.discount': return '';
 			case 'paywall.restore_purchase': return 'Restaurer l\'achat';
 			case 'paywall.terms': return 'Conditions d\'utilisation';
 			case 'paywall.privacy_policy': return 'Politique de confidentialité';

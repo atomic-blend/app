@@ -819,7 +819,8 @@
       "cloud_monthly": {
         "title": "Mensuel",
         "price": "3.99€/mo",
-        "billed": "facturé à 3.99€/mois"
+        "billed": "facturé à 3.99€/mois",
+        "discount": ""
       }
     },
     "restore_purchase": "Restaurer l'achat",

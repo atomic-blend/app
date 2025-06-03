@@ -821,7 +821,8 @@
       "cloud_monthly": {
         "title": "Monthly",
         "price": "\\$3.99/mo",
-        "billed": "billed at \\$3.99/month"
+        "billed": "billed at \\$3.99/month",
+        "discount": ""
       }
     },
     "restore_purchase": "Restore Purchase",
