@@ -245,6 +245,12 @@
     "threeDays": "3 Days",
     "week": "Week",
     "schedule": "Schedule",
+    "errors": {
+      "cannot_move_device_calendar_event": "You cannot move a device calendar event",
+      "cannot_move_habit_event": "You cannot move a habit event",
+      "cannot_resize_device_calendar_event": "You cannot resize a device calendar event",
+      "cannot_resize_habit_event": "You cannot resize a habit event"
+    },
     "event_detail": {
       "date": "Date",
       "time": "Time",

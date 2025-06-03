@@ -6,6 +6,7 @@ import 'package:app/components/widgets/elevated_container.dart';
 import 'package:app/entities/device_calendar/calendar/device_calendar.dart';
 import 'package:app/entities/habit/habit.entity.dart';
 import 'package:app/entities/tasks/tasks.entity.dart';
+import 'package:app/i18n/strings.g.dart';
 import 'package:app/pages/calendar/custom_appointment.dart';
 import 'package:app/pages/calendar/custom_calendar_data_source.dart';
 import 'package:app/pages/calendar/device_event_detail.dart';
@@ -14,6 +15,7 @@ import 'package:app/pages/tasks/task_detail.dart';
 import 'package:app/utils/constants.dart';
 import 'package:app/utils/exntensions/date_time_extension.dart';
 import 'package:app/utils/shortcuts.dart';
+import 'package:app/utils/toast_helper.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:collection/collection.dart';
 import 'package:device_calendar/device_calendar.dart';
@@ -83,6 +85,8 @@ class _CalendarState extends State<Calendar> {
                 initialDisplayDate: DateTime.now(),
                 maxDate: calendarEndDate,
                 allowDragAndDrop: true,
+                dragAndDropSettings: const DragAndDropSettings(
+                    autoNavigateDelay: Duration(seconds: 1)),
                 allowAppointmentResize: true,
                 onDragEnd: _onDragEnd,
                 onAppointmentResizeEnd: _onResizeEnd,
@@ -536,22 +540,21 @@ class _CalendarState extends State<Calendar> {
           break;
 
         case CustomAppointmentType.event:
-          // Handle device calendar events if needed
-          // Note: You might not be able to update device calendar events
-          print("Device calendar events cannot be updated");
+          ToastHelper.showError(
+              context: context,
+              title:
+                  context.t.calendar.errors.cannot_move_device_calendar_event);
+          _refreshCalendarEvents();
           break;
 
         case CustomAppointmentType.habit:
-          // Handle habits if needed
-          print("Habit drag-drop not implemented");
+          ToastHelper.showError(
+              context: context,
+              title: context.t.calendar.errors.cannot_move_habit_event);
+          _refreshCalendarEvents();
           break;
       }
-
-      print(
-          "Drag ended: ${customAppointment.subject} moved to ${details.droppingTime}");
-    } else {
-      print("Appointment is not of type CustomAppointment");
-    }
+    } else {}
   }
 
   void _onResizeEnd(
@@ -573,6 +576,16 @@ class _CalendarState extends State<Calendar> {
         // Dispatch update event to TasksBloc
         context.read<TasksBloc>().add(EditTask(updatedTask));
       }
+    } else if (appointment.itemType == CustomAppointmentType.event) {
+      ToastHelper.showError(
+          context: context,
+          title: context.t.calendar.errors.cannot_resize_device_calendar_event);
+      _refreshCalendarEvents();
+    } else if (appointment.itemType == CustomAppointmentType.habit) {
+      ToastHelper.showError(
+          context: context,
+          title: context.t.calendar.errors.cannot_resize_habit_event);
+      _refreshCalendarEvents();
     }
   }
 }

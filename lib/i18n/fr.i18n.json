@@ -246,6 +246,12 @@
     "threeDays": "3 jours",
     "week": "Semaine",
     "schedule": "Emploi du temps",
+    "errors": {
+      "cannot_move_device_calendar_event": "Vous ne pouvez pas déplacer un événement de calendrier d'appareil",
+      "cannot_move_habit_event": "Vous ne pouvez pas déplacer un événement d'habitude",
+      "cannot_resize_device_calendar_event": "Vous ne pouvez pas redimensionner un événement de calendrier d'appareil",
+      "cannot_resize_habit_event": "Vous ne pouvez pas redimensionner un événement d'habitude"
+    },
     "event_detail": {
       "date": "Date",
       "time": "Heure",

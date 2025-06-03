@@ -39,16 +39,15 @@ class CustomCalendarDataSource extends CalendarDataSource<CustomAppointment> {
   @override
   CustomAppointment convertAppointmentToObject(
       Object? customData, Appointment appointment) {
-    print(customData);
     return CustomAppointment(
       startTime: appointment.startTime,
       endTime: appointment.endTime,
       subject: appointment.subject,
       color: appointment.color,
       notes: appointment.notes,
-      isAllDay: appointment.isAllDay ?? false,
+      isAllDay: appointment.isAllDay,
       itemType: (customData as CustomAppointment).itemType,
-      itemId: (customData as CustomAppointment).itemId,
+      itemId: customData.itemId,
     );
   }
 }
