@@ -4,6 +4,7 @@ import 'package:app/i18n/strings.g.dart';
 import 'package:app/services/revenue_cat_service.dart';
 import 'package:app/utils/constants.dart';
 import 'package:app/utils/shortcuts.dart';
+import 'package:async/async.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:purchases_flutter/object_wrappers.dart';
@@ -16,7 +17,21 @@ class Paywall extends StatefulWidget {
 }
 
 class _PaywallState extends State<Paywall> {
+  AsyncMemoizer<Offerings?>? _memoizer;
   Package? _package;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    _memoizer = AsyncMemoizer();
+    super.initState();
+  }
+
+  _fetchOfferings() {
+    return _memoizer!.runOnce(() async {
+      return await RevenueCatService.getOfferings();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -154,9 +169,8 @@ class _PaywallState extends State<Paywall> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 FutureBuilder<Offerings?>(
-                    future: RevenueCatService.getOfferings(),
+                    future: _fetchOfferings(),
                     builder: (context, snapshot) {
-                      print(snapshot.data?.current?.availablePackages);
                       WidgetsBinding.instance.addPostFrameCallback((_) {
                         if (_package == null &&
                             snapshot.data?.current?.availablePackages
