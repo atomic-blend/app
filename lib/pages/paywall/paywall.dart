@@ -16,6 +16,8 @@ class Paywall extends StatefulWidget {
 }
 
 class _PaywallState extends State<Paywall> {
+  Package? _package;
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -155,6 +157,16 @@ class _PaywallState extends State<Paywall> {
                     future: RevenueCatService.getOfferings(),
                     builder: (context, snapshot) {
                       print(snapshot.data?.current?.availablePackages);
+                      WidgetsBinding.instance.addPostFrameCallback((_) {
+                        if (_package == null &&
+                            snapshot.data?.current?.availablePackages.isNotEmpty ==
+                                true) {
+                          _package = snapshot.data!.current!.availablePackages
+                              .firstWhere((package) =>
+                                  package.storeProduct.identifier ==
+                                  "cloud_yearly");
+                        }
+                      });
 
                       if (snapshot.connectionState == ConnectionState.waiting ||
                           snapshot.data == null) {
@@ -249,75 +261,89 @@ class _PaywallState extends State<Paywall> {
 
   Expanded _buildPricingCard(BuildContext context, {required Package package}) {
     return Expanded(
-      child: ElevatedContainer(
-        height: getSize(context).height * 0.1,
-        width: double.infinity,
-        borderRadius: $constants.corners.sm,
-        child: Padding(
-          padding: EdgeInsets.symmetric(
-            horizontal: $constants.insets.sm,
-            vertical: $constants.insets.xxs,
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Center(
-                child: Container(
-                  height: 15,
-                  padding: EdgeInsets.symmetric(
-                    horizontal: $constants.insets.sm,
+      child: GestureDetector(
+        onTap: () {
+          setState(() {
+            _package = package;
+          });
+        },
+        child: ElevatedContainer(
+          height: getSize(context).height * 0.1,
+          width: double.infinity,
+          borderRadius: $constants.corners.sm,
+          border: _package == package
+              ? Border.all(
+                  color: getTheme(context).primary,
+                  width: 2,
+                )
+              : null,
+          child: Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: $constants.insets.sm,
+              vertical: $constants.insets.xxs,
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Center(
+                  child: Container(
+                    height: 15,
+                    padding: EdgeInsets.symmetric(
+                      horizontal: $constants.insets.sm,
+                    ),
+                    decoration: BoxDecoration(
+                      color: context
+                                  .t
+                                  .paywall
+                                  .pricing[package.storeProduct.identifier]
+                                  ?.discount !=
+                              ""
+                          ? getTheme(context).primary
+                          : Colors.transparent,
+                      borderRadius: BorderRadius.circular($constants.corners.sm),
+                    ),
+                    child: context
+                                .t
+                                .paywall
+                                .pricing[package.storeProduct.identifier]
+                                ?.discount !=
+                            ""
+                        ? Text(
+                            context
+                                .t
+                                .paywall
+                                .pricing[package.storeProduct.identifier]!
+                                .discount,
+                            style: getTextTheme(context).bodySmall!.copyWith(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                          )
+                        : const SizedBox.shrink(),
                   ),
-                  decoration: BoxDecoration(
-                    color: context
-                              .t
-                              .paywall
-                              .pricing[package.storeProduct.identifier]
-                              ?.discount !=
-                          ""
-                      ? getTheme(context).primary : Colors.transparent,
-                    borderRadius: BorderRadius.circular($constants.corners.sm),
-                  ),
-                  child: context
-                              .t
-                              .paywall
-                              .pricing[package.storeProduct.identifier]
-                              ?.discount !=
-                          ""
-                      ? Text(
-                          context
-                              .t
-                              .paywall
-                              .pricing[package.storeProduct.identifier]!
-                              .discount,
-                          style: getTextTheme(context).bodySmall!.copyWith(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                              ),
-                        )
-                      : const SizedBox.shrink(),
                 ),
-              ),
-              Text(
-                context
-                    .t.paywall.pricing[package.storeProduct.identifier]!.title,
-                style: getTextTheme(context).bodyLarge?.copyWith(
-                      fontWeight: FontWeight.bold,
-                    ),
-              ),
-              Text(
-                context
-                    .t.paywall.pricing[package.storeProduct.identifier]!.price,
-                style: getTextTheme(context).bodyMedium,
-              ),
-              Text(
-                context
-                    .t.paywall.pricing[package.storeProduct.identifier]!.billed,
-                style: getTextTheme(context).bodySmall!.copyWith(
-                      color: Colors.grey.shade600,
-                    ),
-              ),
-            ],
+                Text(
+                  context
+                      .t.paywall.pricing[package.storeProduct.identifier]!.title,
+                  style: getTextTheme(context).bodyLarge?.copyWith(
+                        fontWeight: FontWeight.bold,
+                      ),
+                ),
+                Text(
+                  context
+                      .t.paywall.pricing[package.storeProduct.identifier]!.price,
+                  style: getTextTheme(context).bodyMedium,
+                ),
+                Text(
+                  context
+                      .t.paywall.pricing[package.storeProduct.identifier]!.billed,
+                  style: getTextTheme(context).bodySmall!.copyWith(
+                        color: Colors.grey.shade600,
+                      ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
