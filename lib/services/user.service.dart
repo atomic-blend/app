@@ -24,9 +24,8 @@ class UserService {
     await prefs?.clear();
     globalApiClient.setIdToken(null);
     Sentry.configureScope(
-        (scope) => scope
-            .setUser(SentryUser(id: null)),
-      );
+      (scope) => scope.setUser(SentryUser(id: null)),
+    );
     await RevenueCatService.logOut();
     encryptionService = null;
     deviceInfoService = null;
@@ -275,27 +274,32 @@ class UserService {
 
   //check if user have an active subscription in purchases
   static bool isSubscriptionActive(UserEntity? user) {
+    if (ApiClient.getSelfHostedRestApiUrl() != null &&
+        ApiClient.getSelfHostedRestApiUrl() != env?.restApiUrl) {
+      // Self-hosted instance, no subscription logic
+      return true;
+    }
     if (user?.purchases == null || user!.purchases!.isEmpty) {
       return false;
     }
-    
+
     final nowMs = DateTime.now().millisecondsSinceEpoch;
-    
+
     for (final purchase in user.purchases!) {
       // Check if it's a RevenueCat purchase
       if (purchase.type == PurchaseType.revenueCat) {
         final purchaseData = purchase.purchaseData;
-        
+
         // Check for expiration timestamp in milliseconds
-        if (purchaseData.containsKey('expiration_at_ms') && 
+        if (purchaseData.containsKey('expiration_at_ms') &&
             purchaseData['expiration_at_ms'] != null) {
           try {
             final expirationAtMs = purchaseData['expiration_at_ms'];
             // Handle both int and string representations
-            final int expirationTimestamp = expirationAtMs is int 
-                ? expirationAtMs 
+            final int expirationTimestamp = expirationAtMs is int
+                ? expirationAtMs
                 : int.parse(expirationAtMs.toString());
-            
+
             if (expirationTimestamp > nowMs) {
               return true; // Found an active subscription
             }
@@ -304,18 +308,18 @@ class UserService {
             continue;
           }
         }
-        
+
         // Additional check: ensure it's a subscription type
-        if (purchaseData.containsKey('type') && 
+        if (purchaseData.containsKey('type') &&
             purchaseData['type'] == 'SUBSCRIPTION') {
           // For subscriptions without expiration data, check purchase date
           if (purchaseData.containsKey('purchased_at_ms')) {
             try {
               final purchasedAtMs = purchaseData['purchased_at_ms'];
-              final int purchaseTimestamp = purchasedAtMs is int 
-                  ? purchasedAtMs 
+              final int purchaseTimestamp = purchasedAtMs is int
+                  ? purchasedAtMs
                   : int.parse(purchasedAtMs.toString());
-              
+
               // Consider it active if purchased recently (within last 30 days)
               // This is a fallback - ideally expiration_at_ms should always be present
               final thirtyDaysAgo = nowMs - (30 * 24 * 60 * 60 * 1000);
@@ -330,7 +334,7 @@ class UserService {
         }
       }
     }
-    
+
     return false; // No active subscription found
   }
 }
