@@ -5,6 +5,7 @@ import 'package:app/components/modals/delete_account_modal.dart';
 import 'package:app/i18n/strings.g.dart';
 import 'package:app/pages/account/profile.dart';
 import 'package:app/pages/account/security.dart';
+import 'package:app/pages/account/subscription_payments.dart';
 import 'package:app/pages/paywall/paywall.dart';
 import 'package:app/pages/paywall/paywall_utils.dart';
 import 'package:app/services/user.service.dart';
@@ -117,7 +118,11 @@ class _AccountState extends State<Account> {
                   text: context.t.account.subscription_payments.title,
                   onTap: () {
                     if (UserService.isSubscriptionActive(authstate.user)) {
-                      //TODO
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => const SubscriptionPayments(),
+                        ),
+                      );
                     } else {
                       PaywallUtils.showPaywall(context);
                     }

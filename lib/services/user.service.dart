@@ -334,7 +334,39 @@ class UserService {
         }
       }
     }
-
     return false; // No active subscription found
+  }
+
+  static Purchase getCurrentSubscription(UserEntity? user) {
+    if (user == null || user.purchases == null || user.purchases!.isEmpty) {
+      throw Exception('No active subscription found');
+    }
+
+    final nowMs = DateTime.now().millisecondsSinceEpoch;
+
+    for (final purchase in user.purchases!) {
+      if (purchase.type == PurchaseType.revenueCat) {
+        final purchaseData = purchase.purchaseData;
+
+        // Check for expiration timestamp in milliseconds
+        if (purchaseData.containsKey('expiration_at_ms') &&
+            purchaseData['expiration_at_ms'] != null) {
+          try {
+            final expirationAtMs = purchaseData['expiration_at_ms'];
+            final int expirationTimestamp = expirationAtMs is int
+                ? expirationAtMs
+                : int.parse(expirationAtMs.toString());
+
+            if (expirationTimestamp > nowMs) {
+              return purchase; // Found an active subscription
+            }
+          } catch (e) {
+            // Invalid timestamp format, skip this purchase
+            continue;
+          }
+        }
+      }
+    }
+    throw Exception('No active subscription found');
   }
 }
