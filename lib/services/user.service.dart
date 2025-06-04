@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:app/entities/user/user.entity.dart';
 import 'package:app/entities/userRole/userRole.entity.dart';
 import 'package:app/entities/user_device/user_device.dart';
+import 'package:app/entities/purchase/purchase.dart';
 import 'package:app/main.dart';
 import 'package:app/services/device_info.service.dart';
 import 'package:app/services/encryption.service.dart';
@@ -270,5 +271,66 @@ class UserService {
     } else {
       throw Exception('reset_password_failed');
     }
+  }
+
+  //check if user have an active subscription in purchases
+  static bool isSubscriptionActive(UserEntity? user) {
+    if (user?.purchases == null || user!.purchases!.isEmpty) {
+      return false;
+    }
+    
+    final nowMs = DateTime.now().millisecondsSinceEpoch;
+    
+    for (final purchase in user.purchases!) {
+      // Check if it's a RevenueCat purchase
+      if (purchase.type == PurchaseType.revenueCat) {
+        final purchaseData = purchase.purchaseData;
+        
+        // Check for expiration timestamp in milliseconds
+        if (purchaseData.containsKey('expiration_at_ms') && 
+            purchaseData['expiration_at_ms'] != null) {
+          try {
+            final expirationAtMs = purchaseData['expiration_at_ms'];
+            // Handle both int and string representations
+            final int expirationTimestamp = expirationAtMs is int 
+                ? expirationAtMs 
+                : int.parse(expirationAtMs.toString());
+            
+            if (expirationTimestamp > nowMs) {
+              return true; // Found an active subscription
+            }
+          } catch (e) {
+            // Invalid timestamp format, skip this purchase
+            continue;
+          }
+        }
+        
+        // Additional check: ensure it's a subscription type
+        if (purchaseData.containsKey('type') && 
+            purchaseData['type'] == 'SUBSCRIPTION') {
+          // For subscriptions without expiration data, check purchase date
+          if (purchaseData.containsKey('purchased_at_ms')) {
+            try {
+              final purchasedAtMs = purchaseData['purchased_at_ms'];
+              final int purchaseTimestamp = purchasedAtMs is int 
+                  ? purchasedAtMs 
+                  : int.parse(purchasedAtMs.toString());
+              
+              // Consider it active if purchased recently (within last 30 days)
+              // This is a fallback - ideally expiration_at_ms should always be present
+              final thirtyDaysAgo = nowMs - (30 * 24 * 60 * 60 * 1000);
+              if (purchaseTimestamp > thirtyDaysAgo) {
+                return true;
+              }
+            } catch (e) {
+              // Invalid timestamp, skip
+              continue;
+            }
+          }
+        }
+      }
+    }
+    
+    return false; // No active subscription found
   }
 }

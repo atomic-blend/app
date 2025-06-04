@@ -7,6 +7,7 @@ import 'package:app/pages/account/profile.dart';
 import 'package:app/pages/account/security.dart';
 import 'package:app/pages/paywall/paywall.dart';
 import 'package:app/pages/paywall/paywall_utils.dart';
+import 'package:app/services/user.service.dart';
 import 'package:app/utils/api_client.dart';
 import 'package:app/utils/constants.dart';
 import 'package:app/utils/name_generator.dart';
@@ -115,8 +116,11 @@ class _AccountState extends State<Account> {
                   iconColor: Colors.grey[700],
                   text: context.t.account.subscription_payments.title,
                   onTap: () {
-                    //TODO: change to subscription page when implemented
-                    PaywallUtils.showPaywall(context);
+                    if (UserService.isSubscriptionActive(authstate.user)) {
+                      //TODO
+                    } else {
+                      PaywallUtils.showPaywall(context);
+                    }
                   },
                 ),
                 SizedBox(
