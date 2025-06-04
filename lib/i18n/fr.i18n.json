@@ -207,7 +207,6 @@
       "notes": "Notes",
       "end_date": "Date de fin",
       "cancel": "Annuler",
-
       "task_added": "Tâche ajoutée",
       "task_added_description": "Votre tâche a été ajoutée avec succès.",
       "task_error": "Erreur lors de l'opération",
@@ -287,7 +286,17 @@
       "delete_account": "Supprimer mon compte"
     },
     "subscription_payments": {
-      "title": "Abonnement & Paiements"
+      "title": "Abonnement & Paiements",
+      "subscription": "Abonnement ${subName}",
+      "latest_subscription": "Ceci est votre abonnement avec la date de facturation la plus récente.",
+      "billing_cycle": "Cycle de facturation",
+      "current_price": "Prix actuel",
+      "next_billing_date": "Prochaine date de facturation",
+      "payment_history": "Historique des paiements",
+      "no_payments": "Aucun paiement trouvé",
+      "currency_symbol": "$",
+      "request_a_refund": "Demander un remboursement",
+      "cancel_plan": "Annuler l'abonnement"
     },
     "profile": {
       "my_profile": "Mon profil",

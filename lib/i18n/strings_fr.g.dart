@@ -1183,6 +1183,16 @@ class _TranslationsAccountSubscriptionPaymentsFr implements TranslationsAccountS
 
 	// Translations
 	@override String get title => 'Abonnement & Paiements';
+	@override String subscription({required Object subName}) => 'Abonnement ${subName}';
+	@override String get latest_subscription => 'Ceci est votre abonnement avec la date de facturation la plus récente.';
+	@override String get billing_cycle => 'Cycle de facturation';
+	@override String get current_price => 'Prix actuel';
+	@override String get next_billing_date => 'Prochaine date de facturation';
+	@override String get payment_history => 'Historique des paiements';
+	@override String get no_payments => 'Aucun paiement trouvé';
+	@override String get currency_symbol => '\$';
+	@override String get request_a_refund => 'Demander un remboursement';
+	@override String get cancel_plan => 'Annuler l\'abonnement';
 }
 
 // Path: account.profile
@@ -1712,6 +1722,16 @@ extension on TranslationsFr {
 			case 'account.actions.security': return 'Sécurité et confidentialité';
 			case 'account.actions.delete_account': return 'Supprimer mon compte';
 			case 'account.subscription_payments.title': return 'Abonnement & Paiements';
+			case 'account.subscription_payments.subscription': return ({required Object subName}) => 'Abonnement ${subName}';
+			case 'account.subscription_payments.latest_subscription': return 'Ceci est votre abonnement avec la date de facturation la plus récente.';
+			case 'account.subscription_payments.billing_cycle': return 'Cycle de facturation';
+			case 'account.subscription_payments.current_price': return 'Prix actuel';
+			case 'account.subscription_payments.next_billing_date': return 'Prochaine date de facturation';
+			case 'account.subscription_payments.payment_history': return 'Historique des paiements';
+			case 'account.subscription_payments.no_payments': return 'Aucun paiement trouvé';
+			case 'account.subscription_payments.currency_symbol': return '\$';
+			case 'account.subscription_payments.request_a_refund': return 'Demander un remboursement';
+			case 'account.subscription_payments.cancel_plan': return 'Annuler l\'abonnement';
 			case 'account.profile.my_profile': return 'Mon profil';
 			case 'account.profile.email': return 'Adresse e-mail';
 			case 'account.profile.undefined': return 'Non défini';

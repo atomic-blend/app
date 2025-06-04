@@ -73,7 +73,7 @@ class UserService {
         return user;
       }
       return null;
-    } on DioException catch (e) {
+    } on DioException catch (_) {
       return null;
     }
   }
@@ -368,5 +368,24 @@ class UserService {
       }
     }
     throw Exception('No active subscription found');
+  }
+
+  static DateTime getNextBillingDate(Purchase purchase) {
+    if (purchase.type != PurchaseType.revenueCat) {
+      throw Exception('Purchase is not a RevenueCat subscription');
+    }
+
+    final purchaseData = purchase.purchaseData;
+
+    final expirationAtMs = purchaseData['expiration_at_ms'];
+    if (expirationAtMs == null) {
+      throw Exception('Expiration at timestamp not found in purchase data');
+    }
+    final int expirationTimestamp = expirationAtMs is int
+        ? expirationAtMs
+        : int.parse(expirationAtMs.toString());
+    final expirationDate =
+        DateTime.fromMillisecondsSinceEpoch(expirationTimestamp);
+    return expirationDate;
   }
 }

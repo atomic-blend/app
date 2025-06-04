@@ -293,7 +293,17 @@
       "email_same": "Email must be different from the current email"
     },
     "subscription_payments": {
-      "title": "Subscription & Payments"
+      "title": "Subscription & Payments",
+      "subscription": "${subName} Subscription",
+      "latest_subscription": "This is your subscription with the earliest billing date.",
+      "billing_cycle": "Billing Cycle",
+      "current_price": "Current Price",
+      "next_billing_date": "Next Billing Date",
+      "payment_history": "Payment History",
+      "no_payments": "No payments for now",
+      "currency_symbol": "$",
+      "request_a_refund": "Request a refund",
+      "cancel_plan": "Cancel plan"
     },
     "security_and_privacy": {
       "title": "Security & Privacy",

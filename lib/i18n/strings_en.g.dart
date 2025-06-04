@@ -1203,6 +1203,16 @@ class TranslationsAccountSubscriptionPaymentsEn {
 
 	// Translations
 	String get title => 'Subscription & Payments';
+	String subscription({required Object subName}) => '${subName} Subscription';
+	String get latest_subscription => 'This is your subscription with the earliest billing date.';
+	String get billing_cycle => 'Billing Cycle';
+	String get current_price => 'Current Price';
+	String get next_billing_date => 'Next Billing Date';
+	String get payment_history => 'Payment History';
+	String get no_payments => 'No payments for now';
+	String get currency_symbol => '\$';
+	String get request_a_refund => 'Request a refund';
+	String get cancel_plan => 'Cancel plan';
 }
 
 // Path: account.security_and_privacy
@@ -1723,6 +1733,16 @@ extension on Translations {
 			case 'account.profile.email_missing': return 'Email is required';
 			case 'account.profile.email_same': return 'Email must be different from the current email';
 			case 'account.subscription_payments.title': return 'Subscription & Payments';
+			case 'account.subscription_payments.subscription': return ({required Object subName}) => '${subName} Subscription';
+			case 'account.subscription_payments.latest_subscription': return 'This is your subscription with the earliest billing date.';
+			case 'account.subscription_payments.billing_cycle': return 'Billing Cycle';
+			case 'account.subscription_payments.current_price': return 'Current Price';
+			case 'account.subscription_payments.next_billing_date': return 'Next Billing Date';
+			case 'account.subscription_payments.payment_history': return 'Payment History';
+			case 'account.subscription_payments.no_payments': return 'No payments for now';
+			case 'account.subscription_payments.currency_symbol': return '\$';
+			case 'account.subscription_payments.request_a_refund': return 'Request a refund';
+			case 'account.subscription_payments.cancel_plan': return 'Cancel plan';
 			case 'account.security_and_privacy.title': return 'Security & Privacy';
 			case 'account.security_and_privacy.change_password.title': return 'Change Password';
 			case 'account.security_and_privacy.change_password.old_password': return 'Old Password';

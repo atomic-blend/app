@@ -3,7 +3,6 @@ import 'dart:io' show Platform;
 import 'package:app/main.dart';
 import 'package:flutter/services.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
-import 'package:purchases_ui_flutter/purchases_ui_flutter.dart';
 
 class RevenueCatService {
   static Future<void> initPlatformState() async {
@@ -58,9 +57,9 @@ class RevenueCatService {
     try {
       final purchaseResult = await Purchases.purchasePackage(package);
       return purchaseResult;
-    } on PlatformException catch (e) {
+    } on PlatformException catch (_) {
       // Handle purchase error
-      final errorCode = PurchasesErrorHelper.getErrorCode(e);
+      // final errorCode = PurchasesErrorHelper.getErrorCode(e);
       return null;
     }
   }

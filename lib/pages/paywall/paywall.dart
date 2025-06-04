@@ -32,7 +32,7 @@ class _PaywallState extends State<Paywall> {
       final offerings = await RevenueCatService.getOfferings();
       _package = offerings?.current?.availablePackages.firstWhere(
         (package) => package.storeProduct.identifier == "cloud_yearly",
-        orElse: () => offerings!.current!.availablePackages.first,
+        orElse: () => offerings.current!.availablePackages.first,
       );
       return offerings;
     });
