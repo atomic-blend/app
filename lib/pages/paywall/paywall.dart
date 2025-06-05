@@ -1,13 +1,18 @@
+import 'dart:async';
+
+import 'package:app/blocs/auth/auth.bloc.dart';
 import 'package:app/components/buttons/primary_button_square.dart';
 import 'package:app/components/widgets/elevated_container.dart';
 import 'package:app/i18n/strings.g.dart';
 import 'package:app/services/revenue_cat_service.dart';
+import 'package:app/services/user.service.dart';
 import 'package:app/utils/constants.dart';
 import 'package:app/utils/shortcuts.dart';
 import 'package:app/utils/toast_helper.dart';
 import 'package:async/async.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:purchases_flutter/object_wrappers.dart';
 
 class Paywall extends StatefulWidget {
@@ -20,6 +25,11 @@ class Paywall extends StatefulWidget {
 class _PaywallState extends State<Paywall> {
   AsyncMemoizer<Offerings?>? _memoizer;
   Package? _package;
+  bool? _isMakingPurchase;
+  Timer? _checkPurchaseTimer;
+  bool? _purchaseSuccess;
+  bool? _purchaseFailed;
+  String? _errorId;
 
   @override
   void initState() {
@@ -40,6 +50,13 @@ class _PaywallState extends State<Paywall> {
 
   @override
   Widget build(BuildContext context) {
+    if (_purchaseSuccess == true) {
+      return _buildPurchaseSuccess(context);
+    } else if (_purchaseFailed == true) {
+      return _buildPurchaseFailed(context);
+    } else if (_isMakingPurchase == true || _checkPurchaseTimer != null) {
+      return _buildPurchaseLoading(context);
+    }
     return Padding(
       padding: EdgeInsets.all($constants.insets.md),
       child: Column(
@@ -439,12 +456,74 @@ class _PaywallState extends State<Paywall> {
 
   Future<CustomerInfo?> _makePurchase({required Package package}) async {
     try {
+      setState(() {
+        _isMakingPurchase = true;
+      });
       final customerInfo =
           await RevenueCatService.makePurchase(package: package);
+      _startCheckingForPurchase(context);
       return customerInfo;
     } catch (e) {
       // Handle purchase error
+      print(e);
       return null;
+    } finally {
+      setState(() {
+        _isMakingPurchase = false;
+      });
     }
+  }
+
+  _startCheckingForPurchase(BuildContext context) {
+    if (_isMakingPurchase == true) {
+      return;
+    }
+    int loopCount = 0;
+    _checkPurchaseTimer = Timer.periodic(const Duration(seconds: 30), (_) {
+      loopCount++;
+      final authState = context.read<AuthBloc>().state;
+      final isUserHaveActiveSubscription =
+          UserService.isSubscriptionActive(authState.user);
+      if (isUserHaveActiveSubscription) {
+        //TODO
+        setState(() {
+          _purchaseSuccess = true;
+          _purchaseFailed = false;
+          _errorId = null;
+        });
+      } else if (loopCount >= 30) {
+        //TODO: show purchase failed, contact support
+        setState(() {
+          _purchaseSuccess = false;
+          _purchaseFailed = true;
+          _errorId = "purchase_validation_timeout";
+        });
+      } else {
+        if (authState.runtimeType != Loading) {
+          context.read<AuthBloc>().add(const RefreshUser());
+        }
+      }
+    });
+  }
+
+  // when _purchaseSuccess is true
+  Widget _buildPurchaseSuccess(BuildContext context) {
+    return Text("purchase success");
+  }
+
+  // when _purchaseFailed is true, display the error corresponding to _errorId
+  Widget _buildPurchaseFailed(BuildContext context) {
+    return Text("purchase failed: $_errorId");
+  }
+
+  // when _isMakingPurchase is true, display a "making purchase" loading widget
+  // when _checkPurchaseTimer is running, display a "checking purchase" loading widget
+  Widget _buildPurchaseLoading(BuildContext context) {
+    if (_isMakingPurchase == true && _checkPurchaseTimer == null) {
+      return Text("making purchase...");
+    } else if (_checkPurchaseTimer != null) {
+      return Text("checking purchase...");
+    }
+    return const SizedBox.shrink();
   }
 }
