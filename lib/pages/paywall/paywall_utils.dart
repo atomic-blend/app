@@ -1,12 +1,20 @@
+import 'package:app/entities/user/user.entity.dart';
 import 'package:app/pages/paywall/paywall.dart';
+import 'package:app/services/user.service.dart';
 import 'package:app/utils/api_client.dart';
 import 'package:app/utils/shortcuts.dart';
 import 'package:flutter/material.dart';
 
 class PaywallUtils {
-  static showPaywall(BuildContext context) {
+  static showPaywall(BuildContext context, {UserEntity? user}) {
     if (ApiClient.getSelfHostedRestApiUrl() != null) {
       return;
+    }
+
+    if (user != null) {
+      if (UserService.isSubscriptionActive(user)) {
+        return;
+      }
     }
 
     if (isDesktop(context)) {
