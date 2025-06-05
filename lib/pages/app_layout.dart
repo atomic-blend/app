@@ -37,6 +37,7 @@ class AppLayoutState extends ResponsiveState<AppLayout> {
 
   @override
   void initState() {
+    context.read<AuthBloc>().add(const RefreshUser());
     if (context.read<AuthBloc>().state.user != null) {
       WidgetsBinding.instance.addPostFrameCallback((_) async {
         if (context.read<AuthBloc>().state.user?.devices == null) {

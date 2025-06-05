@@ -66,14 +66,14 @@ class UserService {
 
   Future<UserEntity?> getUser(UserEntity user) async {
     try {
-      globalApiClient.setIdToken(user.accessToken!);
       var result = await globalApiClient.get('/users/profile');
       if (result.statusCode == 200) {
         await prefs?.setString('user', json.encode(user.toJson()));
         return user;
       }
       return null;
-    } on DioException catch (_) {
+    } catch (e) {
+      print(e);
       return null;
     }
   }
