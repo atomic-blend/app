@@ -63,4 +63,17 @@ class RevenueCatService {
       return null;
     }
   }
+
+  static Future<String?> getManagementUrl() async {
+    try {
+      final customerInfo = await Purchases.getCustomerInfo();
+      if (customerInfo.entitlements.active.isNotEmpty) {
+        return customerInfo.managementURL;
+      } else {
+        return null; // No active entitlements
+      }
+    } catch (e) {
+      return null; // Handle error
+    }
+  }
 }

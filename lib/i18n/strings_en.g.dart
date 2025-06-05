@@ -1211,8 +1211,8 @@ class TranslationsAccountSubscriptionPaymentsEn {
 	String get payment_history => 'Payment History';
 	String get no_payments => 'No payments for now';
 	String get currency_symbol => '\$';
-	String get request_a_refund => 'Request a refund';
-	String get cancel_plan => 'Cancel plan';
+	String get manage_my_subscription => 'Manage my subscription';
+	String get management_url_only_mobile => 'You can only manage your subscription from the iOS or Android app.';
 }
 
 // Path: account.security_and_privacy
@@ -1741,8 +1741,8 @@ extension on Translations {
 			case 'account.subscription_payments.payment_history': return 'Payment History';
 			case 'account.subscription_payments.no_payments': return 'No payments for now';
 			case 'account.subscription_payments.currency_symbol': return '\$';
-			case 'account.subscription_payments.request_a_refund': return 'Request a refund';
-			case 'account.subscription_payments.cancel_plan': return 'Cancel plan';
+			case 'account.subscription_payments.manage_my_subscription': return 'Manage my subscription';
+			case 'account.subscription_payments.management_url_only_mobile': return 'You can only manage your subscription from the iOS or Android app.';
 			case 'account.security_and_privacy.title': return 'Security & Privacy';
 			case 'account.security_and_privacy.change_password.title': return 'Change Password';
 			case 'account.security_and_privacy.change_password.old_password': return 'Old Password';

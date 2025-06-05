@@ -302,8 +302,8 @@
       "payment_history": "Payment History",
       "no_payments": "No payments for now",
       "currency_symbol": "$",
-      "request_a_refund": "Request a refund",
-      "cancel_plan": "Cancel plan"
+      "manage_my_subscription": "Manage my subscription", 
+      "management_url_only_mobile": "You can only manage your subscription from the iOS or Android app."
     },
     "security_and_privacy": {
       "title": "Security & Privacy",

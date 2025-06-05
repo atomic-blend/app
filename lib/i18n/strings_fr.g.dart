@@ -1191,8 +1191,8 @@ class _TranslationsAccountSubscriptionPaymentsFr implements TranslationsAccountS
 	@override String get payment_history => 'Historique des paiements';
 	@override String get no_payments => 'Aucun paiement trouvé';
 	@override String get currency_symbol => '\$';
-	@override String get request_a_refund => 'Demander un remboursement';
-	@override String get cancel_plan => 'Annuler l\'abonnement';
+	@override String get manage_my_subscription => 'Gérer mon abonnement';
+	@override String get management_url_only_mobile => 'Vous ne pouvez gérer votre abonnement que depuis l\'application iOS ou Android.';
 }
 
 // Path: account.profile
@@ -1730,8 +1730,8 @@ extension on TranslationsFr {
 			case 'account.subscription_payments.payment_history': return 'Historique des paiements';
 			case 'account.subscription_payments.no_payments': return 'Aucun paiement trouvé';
 			case 'account.subscription_payments.currency_symbol': return '\$';
-			case 'account.subscription_payments.request_a_refund': return 'Demander un remboursement';
-			case 'account.subscription_payments.cancel_plan': return 'Annuler l\'abonnement';
+			case 'account.subscription_payments.manage_my_subscription': return 'Gérer mon abonnement';
+			case 'account.subscription_payments.management_url_only_mobile': return 'Vous ne pouvez gérer votre abonnement que depuis l\'application iOS ou Android.';
 			case 'account.profile.my_profile': return 'Mon profil';
 			case 'account.profile.email': return 'Adresse e-mail';
 			case 'account.profile.undefined': return 'Non défini';

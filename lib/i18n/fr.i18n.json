@@ -295,8 +295,9 @@
       "payment_history": "Historique des paiements",
       "no_payments": "Aucun paiement trouvé",
       "currency_symbol": "$",
-      "request_a_refund": "Demander un remboursement",
-      "cancel_plan": "Annuler l'abonnement"
+      "manage_my_subscription": "Gérer mon abonnement",
+      "management_url_only_mobile": "Vous ne pouvez gérer votre abonnement que depuis l'application iOS ou Android."
+
     },
     "profile": {
       "my_profile": "Mon profil",

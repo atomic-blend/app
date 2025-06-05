@@ -2,14 +2,17 @@ import 'package:app/blocs/auth/auth.bloc.dart';
 import 'package:app/components/widgets/elevated_container.dart';
 import 'package:app/entities/purchase/purchase.dart';
 import 'package:app/i18n/strings.g.dart';
+import 'package:app/services/revenue_cat_service.dart';
 import 'package:app/services/user.service.dart';
 import 'package:app/utils/constants.dart';
 import 'package:app/utils/shortcuts.dart';
+import 'package:app/utils/toast_helper.dart';
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:jiffy/jiffy.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class SubscriptionPayments extends StatefulWidget {
   const SubscriptionPayments({super.key});
@@ -226,7 +229,7 @@ class _SubscriptionPaymentsState extends State<SubscriptionPayments> {
                     ),
                   ),
                 ),
-                SizedBox(height: $constants.insets.md),
+                SizedBox(height: $constants.insets.sm),
                 ElevatedContainer(
                   width: double.infinity,
                   padding: EdgeInsets.symmetric(
@@ -236,26 +239,29 @@ class _SubscriptionPaymentsState extends State<SubscriptionPayments> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Text(
-                        context
-                            .t.account.subscription_payments.request_a_refund,
-                        style: getTextTheme(context).bodyLarge!.copyWith(
-                              color: CupertinoColors.activeBlue,
-                              fontWeight: FontWeight.w400,
-                            ),
-                      ),
-                      SizedBox(height: $constants.insets.xxs),
-                      Divider(
-                        color: Colors.grey.shade300,
-                        thickness: 1,
-                      ),
-                      SizedBox(height: $constants.insets.xxs),
-                      Text(
-                        context.t.account.subscription_payments.cancel_plan,
-                        style: getTextTheme(context).bodyLarge!.copyWith(
-                              color: CupertinoColors.activeBlue,
-                              fontWeight: FontWeight.w400,
-                            ),
+                      GestureDetector(
+                        onTap: () async {
+                          final managementUrl =
+                              await RevenueCatService.getManagementUrl();
+                          if (managementUrl != null) {
+                            await launchUrl(Uri.parse(managementUrl));
+                          } else {
+                            if (!context.mounted) return;
+                            ToastHelper.showError(
+                              context: context,
+                              title: context.t.account.subscription_payments
+                                  .management_url_only_mobile,
+                            );
+                          }
+                        },
+                        child: Text(
+                          context.t.account.subscription_payments
+                              .manage_my_subscription,
+                          style: getTextTheme(context).bodyMedium!.copyWith(
+                                color: CupertinoColors.activeBlue,
+                                fontWeight: FontWeight.w400,
+                              ),
+                        ),
                       ),
                     ],
                   ),
