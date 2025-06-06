@@ -68,8 +68,9 @@ class UserService {
     try {
       var result = await globalApiClient.get('/users/profile');
       if (result.statusCode == 200) {
-        await prefs?.setString('user', json.encode(user.toJson()));
-        return user;
+        final newUser = UserEntity.fromJson(result.data["data"]);
+        await prefs?.setString('user', json.encode(newUser.toJson()));
+        return newUser;
       }
       return null;
     } catch (e) {

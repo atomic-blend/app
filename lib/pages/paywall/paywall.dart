@@ -467,42 +467,41 @@ class _PaywallState extends State<Paywall> {
       // Handle purchase error
       print(e);
       return null;
-    } finally {
-      setState(() {
-        _isMakingPurchase = false;
-      });
     }
   }
 
   _startCheckingForPurchase(BuildContext context) {
-    if (_isMakingPurchase == true) {
-      return;
-    }
-    int loopCount = 0;
-    _checkPurchaseTimer = Timer.periodic(const Duration(seconds: 30), (_) {
-      loopCount++;
-      final authState = context.read<AuthBloc>().state;
-      final isUserHaveActiveSubscription =
-          UserService.isSubscriptionActive(authState.user);
-      if (isUserHaveActiveSubscription) {
-        //TODO
-        setState(() {
-          _purchaseSuccess = true;
-          _purchaseFailed = false;
-          _errorId = null;
-        });
-      } else if (loopCount >= 30) {
-        //TODO: show purchase failed, contact support
-        setState(() {
-          _purchaseSuccess = false;
-          _purchaseFailed = true;
-          _errorId = "purchase_validation_timeout";
-        });
-      } else {
-        if (authState.runtimeType != Loading) {
-          context.read<AuthBloc>().add(const RefreshUser());
+    setState(() {
+      int loopCount = 0;
+      _checkPurchaseTimer = Timer.periodic(const Duration(seconds: 1), (_) {
+        loopCount++;
+        print("loopCount: $loopCount");
+
+        final authState = context.read<AuthBloc>().state;
+        final isUserHaveActiveSubscription =
+            UserService.isSubscriptionActive(authState.user);
+        if (isUserHaveActiveSubscription) {
+          //TODO
+          setState(() {
+            _purchaseSuccess = true;
+            _purchaseFailed = false;
+            _errorId = null;
+          });
+        } else if (loopCount >= 30) {
+          //TODO: show purchase failed, contact support
+          setState(() {
+            _checkPurchaseTimer?.cancel();
+            _checkPurchaseTimer = null;
+            _purchaseSuccess = false;
+            _purchaseFailed = true;
+            _errorId = "purchase_validation_timeout";
+          });
+        } else {
+          if (authState.runtimeType != Loading) {
+            context.read<AuthBloc>().add(const RefreshUser());
+          }
         }
-      }
+      });
     });
   }
 
