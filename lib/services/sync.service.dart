@@ -18,4 +18,11 @@ class SyncService {
     context.read<FolderBloc>().add(const LoadFolders());
     context.read<TimeEntryBloc>().add(const LoadTimeEntries());
   }
+
+  static void syncUserData(BuildContext context) {
+    if (context.read<AuthBloc>().state is! LoggedIn) return;
+  
+    // Sync user data
+    context.read<AuthBloc>().add(const RefreshUser  ());
+  }
 }
