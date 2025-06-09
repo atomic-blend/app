@@ -10,6 +10,7 @@ class ElevatedContainer extends StatelessWidget {
   final double? borderRadius;
   final EdgeInsetsGeometry? padding;
   final VoidCallback? onTap;
+  final Border? border;
   const ElevatedContainer(
       {super.key,
       this.child,
@@ -18,7 +19,8 @@ class ElevatedContainer extends StatelessWidget {
       this.padding,
       this.color,
       this.borderRadius,
-      this.onTap});
+      this.onTap,
+      this.border});
 
   @override
   Widget build(BuildContext context) {
@@ -32,6 +34,7 @@ class ElevatedContainer extends StatelessWidget {
             color: color ?? getTheme(context).surfaceContainer,
             borderRadius:
                 BorderRadius.circular(borderRadius ?? $constants.insets.sm),
+            border: border,
             boxShadow: [
               BoxShadow(
                 color: Colors.black.withValues(alpha: 0.06),

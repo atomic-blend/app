@@ -42,6 +42,17 @@ class EnvModel with _$EnvModel {
       jsonEnvData['restApiUrl'] = restApiUrl;
     }
 
+    const appleRevenueCatApiKey =
+        String.fromEnvironment('APPLE_REVENUE_CAT_API_KEY', defaultValue: '');
+    if (appleRevenueCatApiKey != '') {
+      jsonEnvData['appleRevenueCatApiKey'] = appleRevenueCatApiKey;
+    }
+    const googleRevenueCatApiKey =
+        String.fromEnvironment('GOOGLE_REVENUE_CAT_API_KEY', defaultValue: '');
+    if (googleRevenueCatApiKey != '') {
+      jsonEnvData['googleRevenueCatApiKey'] = googleRevenueCatApiKey;
+    }
+
     return EnvModel.fromJson(jsonEnvData);
   }
 

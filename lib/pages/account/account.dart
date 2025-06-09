@@ -5,6 +5,10 @@ import 'package:app/components/modals/delete_account_modal.dart';
 import 'package:app/i18n/strings.g.dart';
 import 'package:app/pages/account/profile.dart';
 import 'package:app/pages/account/security.dart';
+import 'package:app/pages/account/subscription_payments.dart';
+import 'package:app/pages/paywall/paywall_utils.dart';
+import 'package:app/services/user.service.dart';
+import 'package:app/utils/api_client.dart';
 import 'package:app/utils/constants.dart';
 import 'package:app/utils/name_generator.dart';
 import 'package:app/utils/shortcuts.dart';
@@ -21,6 +25,12 @@ class Account extends StatefulWidget {
 }
 
 class _AccountState extends State<Account> {
+  @override
+  void initState() {
+    context.read<AuthBloc>().add(const RefreshUser());
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<AuthBloc, AuthState>(builder: (context, authstate) {
@@ -104,6 +114,29 @@ class _AccountState extends State<Account> {
               SizedBox(
                 height: $constants.insets.xs,
               ),
+              if (ApiClient.getSelfHostedRestApiUrl() == null) ...[
+                IconTextButton(
+                  icon: CupertinoIcons.star_fill,
+                  iconContainer: true,
+                  iconSize: 20,
+                  iconColor: Colors.grey[700],
+                  text: context.t.account.subscription_payments.title,
+                  onTap: () {
+                    if (UserService.isSubscriptionActive(authstate.user)) {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => const SubscriptionPayments(),
+                        ),
+                      );
+                    } else {
+                      PaywallUtils.showPaywall(context);
+                    }
+                  },
+                ),
+                SizedBox(
+                  height: $constants.insets.sm,
+                ),
+              ],
               IconTextButton(
                 icon: CupertinoIcons.lock,
                 iconContainer: true,

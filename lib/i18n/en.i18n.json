@@ -292,6 +292,19 @@
       "email_missing": "Email is required",
       "email_same": "Email must be different from the current email"
     },
+    "subscription_payments": {
+      "title": "Subscription & Payments",
+      "subscription": "${subName} Subscription",
+      "latest_subscription": "This is your subscription with the earliest billing date.",
+      "billing_cycle": "Billing Cycle",
+      "current_price": "Current Price",
+      "next_billing_date": "Next Billing Date",
+      "payment_history": "Payment History",
+      "no_payments": "No payments for now",
+      "currency_symbol": "$",
+      "manage_my_subscription": "Manage my subscription", 
+      "management_url_only_mobile": "You can only manage your subscription from the iOS or Android app."
+    },
     "security_and_privacy": {
       "title": "Security & Privacy",
       "change_password": {
@@ -488,7 +501,8 @@
     "add": "Add",
     "edit": "Edit",
     "clear": "Clear",
-    "close": "Close"
+    "close": "Close",
+    "subscribe": "Subscribe"
   },
   "validation": {
     "required": "Required",
@@ -773,5 +787,63 @@
     "pomodoro_completed_message": "Your pomodoro session has completed! Time for a break.",
     "stopwatch_completed_message": "Your stopwatch session has been completed.",
     "task_label": "Task"
+  },
+  "paywall": {
+    "title": "Get AtomicBlend Cloud",
+    "subtitle": "Enjoy Atomic Blend without restrictions and help the opensource initiative.",
+    "advantages": {
+      "all_apps_of_the_suite": {
+        "title": "All Apps of the Suite",
+        "description": "Get access to all the apps of the suite, including Tasks, Habits, Calendar, Notes, and more."
+      },
+      "end_to_end_encrypted": {
+        "title": "End-to-End Encryption",
+        "description": "Your data is yours, forever."
+      },
+      "unlimited_tasks": {
+        "title": "Unlimited Tasks",
+        "description": "Create as many tasks as you want, no limits."
+      },
+      "unlimited_habits": {
+        "title": "Unlimited Habits",
+        "description": "Take a step towards a healthier life with unlimited habits."
+      },
+      "unlimited_tags": {
+        "title": "Unlimited Tags / Folders",
+        "description": "Use as many tags and folders as needed to organize your life."
+      },
+      "sync_across_devices": {
+        "title": "Sync Across Devices",
+        "description": "Access your data from any device, anywhere."
+      },
+      "community_backed": {
+        "title": "Community Backed",
+        "description": "100% opensource : join a community of users who support the project."
+      }
+    },
+    "pricing(map)": {
+      "cloud_yearly": {
+        "title": "Yearly",
+        "price": "\\$3.33/mo",
+        "billed": "billed at \\$39.99/year",
+        "discount": "Save 16% with yearly billing"
+      },
+      "cloud_monthly": {
+        "title": "Monthly",
+        "price": "\\$3.99/mo",
+        "billed": "billed at \\$3.99/month",
+        "discount": ""
+      }
+    },
+    "no_package_selected": "No package selected",
+    "purchase_failed": "Purchase failed",
+    "restore_purchase": "Restore Purchase",
+    "terms": "Terms of Service",
+    "privacy_policy": "Privacy Policy",
+    "payment_in_progress": "Payment in progress",
+    "payment_in_progress_description": "Please wait while we process your payment.",
+    "success": "Purchase successful",
+    "validation_failed": "Validation failed",
+    "validation_failed_description": "Please check your internet connection and restart the app."
   }
 }

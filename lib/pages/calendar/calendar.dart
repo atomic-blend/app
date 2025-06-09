@@ -1,4 +1,5 @@
 import 'package:app/blocs/app/app.bloc.dart';
+import 'package:app/blocs/auth/auth.bloc.dart';
 import 'package:app/blocs/device_calendar/device_calendar.bloc.dart';
 import 'package:app/blocs/habit/habit.bloc.dart';
 import 'package:app/blocs/tasks/tasks.bloc.dart';
@@ -10,6 +11,7 @@ import 'package:app/i18n/strings.g.dart';
 import 'package:app/pages/calendar/custom_appointment.dart';
 import 'package:app/pages/calendar/custom_calendar_data_source.dart';
 import 'package:app/pages/calendar/device_event_detail.dart';
+import 'package:app/pages/paywall/paywall_utils.dart';
 import 'package:app/pages/tasks/add_task_modal.dart';
 import 'package:app/pages/tasks/task_detail.dart';
 import 'package:app/utils/constants.dart';
@@ -58,178 +60,187 @@ class _CalendarState extends State<Calendar> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<HabitBloc, HabitState>(builder: (context, habitState) {
-      return BlocBuilder<DeviceCalendarBloc, DeviceCalendarState>(
-          builder: (context, deviceCalendarState) {
-        return BlocBuilder<TasksBloc, TasksState>(
-            builder: (context, taskState) {
-          return Padding(
-            padding: isDesktop(context)
-                ? EdgeInsets.only(
-                    right: $constants.insets.md,
-                    left: $constants.insets.sm,
-                    bottom: $constants.insets.sm,
-                  )
-                : EdgeInsets.only(
-                    right: $constants.insets.sm,
-                    left: $constants.insets.sm,
-                    bottom: $constants.insets.sm,
+    return BlocBuilder<AuthBloc, AuthState>(
+      builder: (context, authState) {
+        return BlocBuilder<HabitBloc, HabitState>(builder: (context, habitState) {
+          return BlocBuilder<DeviceCalendarBloc, DeviceCalendarState>(
+              builder: (context, deviceCalendarState) {
+            return BlocBuilder<TasksBloc, TasksState>(
+                builder: (context, taskState) {
+              WidgetsBinding.instance.addPostFrameCallback((_) {
+                if (widget.view != CalendarView.month) {
+                  PaywallUtils.showPaywall(context, user: authState.user);
+                }
+              });
+              return Padding(
+                padding: isDesktop(context)
+                    ? EdgeInsets.only(
+                        right: $constants.insets.md,
+                        left: $constants.insets.sm,
+                        bottom: $constants.insets.sm,
+                      )
+                    : EdgeInsets.only(
+                        right: $constants.insets.sm,
+                        left: $constants.insets.sm,
+                        bottom: $constants.insets.sm,
+                      ),
+                child: ElevatedContainer(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: $constants.insets.sm,
+                    vertical: $constants.insets.xs,
                   ),
-            child: ElevatedContainer(
-              padding: EdgeInsets.symmetric(
-                horizontal: $constants.insets.sm,
-                vertical: $constants.insets.xs,
-              ),
-              child: SfCalendar(
-                view: widget.view,
-                initialDisplayDate: DateTime.now(),
-                maxDate: calendarEndDate,
-                allowDragAndDrop: true,
-                dragAndDropSettings: const DragAndDropSettings(
-                    autoNavigateDelay: Duration(seconds: 1)),
-                allowAppointmentResize: true,
-                onDragEnd: _onDragEnd,
-                onAppointmentResizeEnd: _onResizeEnd,
-                onSelectionChanged: (calendarSelectionDetails) {
-                  final DateTime? selectedDate = calendarSelectionDetails.date;
-
-                  if (selectedDate != null) {
-                    //show the add task dialog with the selected date
-                    _showAddTaskDialog(selectedDate,
-                        selectedDate.add(const Duration(minutes: 30)));
-                  }
-                },
-                backgroundColor: getTheme(context).surfaceContainer,
-                showTodayButton: true,
-                cellBorderColor: isDarkMode(context)
-                    ? Colors.grey.shade800
-                    : Colors.grey.shade400,
-                todayHighlightColor: getTheme(context).primary,
-                timeSlotViewSettings: TimeSlotViewSettings(
-                    minimumAppointmentDuration: const Duration(minutes: 30),
-                    numberOfDaysInView: widget.numberOfDays ?? -1,
-                    timeFormat: "HH:mm"),
-                selectionDecoration: BoxDecoration(
-                  color: getTheme(context).primary.withValues(alpha: 0.2),
-                  shape: BoxShape.rectangle,
-                  borderRadius: BorderRadius.circular(6),
-                ),
-                headerStyle: CalendarHeaderStyle(
+                  child: SfCalendar(
+                    view: widget.view,
+                    initialDisplayDate: DateTime.now(),
+                    maxDate: calendarEndDate,
+                    allowDragAndDrop: true,
+                    dragAndDropSettings: const DragAndDropSettings(
+                        autoNavigateDelay: Duration(seconds: 1)),
+                    allowAppointmentResize: true,
+                    onDragEnd: _onDragEnd,
+                    onAppointmentResizeEnd: _onResizeEnd,
+                    onSelectionChanged: (calendarSelectionDetails) {
+                      final DateTime? selectedDate = calendarSelectionDetails.date;
+        
+                      if (selectedDate != null) {
+                        //show the add task dialog with the selected date
+                        _showAddTaskDialog(selectedDate,
+                            selectedDate.add(const Duration(minutes: 30)));
+                      }
+                    },
                     backgroundColor: getTheme(context).surfaceContainer,
-                    textStyle: getTextTheme(context).headlineMedium!.copyWith(
-                          fontWeight: FontWeight.bold,
-                        )),
-                monthViewSettings: MonthViewSettings(
-                  showAgenda: true,
-                  dayFormat: 'EEE',
-                  agendaStyle: AgendaStyle(
-                    appointmentTextStyle: getTextTheme(context).bodyMedium,
-                    dateTextStyle: getTextTheme(context).bodyMedium,
-                  ),
-                ),
-                dataSource: _getDataSource(
-                    taskState.tasks ?? [],
-                    deviceCalendarState.deviceCalendar ?? [],
-                    habitState.habits ?? []),
-                appointmentBuilder:
-                    (BuildContext context, CalendarAppointmentDetails details) {
-                  final CustomAppointment appointment =
-                      details.appointments.first as CustomAppointment;
-
-                  return LayoutBuilder(builder: (context, constraints) {
-                    return Container(
-                      decoration: BoxDecoration(
-                        color: appointment.color,
-                        borderRadius: BorderRadius.circular(6),
+                    showTodayButton: true,
+                    cellBorderColor: isDarkMode(context)
+                        ? Colors.grey.shade800
+                        : Colors.grey.shade400,
+                    todayHighlightColor: getTheme(context).primary,
+                    timeSlotViewSettings: TimeSlotViewSettings(
+                        minimumAppointmentDuration: const Duration(minutes: 30),
+                        numberOfDaysInView: widget.numberOfDays ?? -1,
+                        timeFormat: "HH:mm"),
+                    selectionDecoration: BoxDecoration(
+                      color: getTheme(context).primary.withValues(alpha: 0.2),
+                      shape: BoxShape.rectangle,
+                      borderRadius: BorderRadius.circular(6),
+                    ),
+                    headerStyle: CalendarHeaderStyle(
+                        backgroundColor: getTheme(context).surfaceContainer,
+                        textStyle: getTextTheme(context).headlineMedium!.copyWith(
+                              fontWeight: FontWeight.bold,
+                            )),
+                    monthViewSettings: MonthViewSettings(
+                      showAgenda: true,
+                      dayFormat: 'EEE',
+                      agendaStyle: AgendaStyle(
+                        appointmentTextStyle: getTextTheme(context).bodyMedium,
+                        dateTextStyle: getTextTheme(context).bodyMedium,
                       ),
-                      padding: EdgeInsets.symmetric(
-                          horizontal: $constants.insets.sm),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          SizedBox(
-                            height: constraints.maxHeight,
-                            child: AutoSizeText(
-                              maxLines: 3,
-                              overflow: TextOverflow.ellipsis,
-                              appointment.subject,
-                              style: getTextTheme(context)
-                                  .bodyMedium!
-                                  .copyWith(fontWeight: FontWeight.w400),
-                            ),
+                    ),
+                    dataSource: _getDataSource(
+                        taskState.tasks ?? [],
+                        deviceCalendarState.deviceCalendar ?? [],
+                        habitState.habits ?? []),
+                    appointmentBuilder:
+                        (BuildContext context, CalendarAppointmentDetails details) {
+                      final CustomAppointment appointment =
+                          details.appointments.first as CustomAppointment;
+        
+                      return LayoutBuilder(builder: (context, constraints) {
+                        return Container(
+                          decoration: BoxDecoration(
+                            color: appointment.color,
+                            borderRadius: BorderRadius.circular(6),
                           ),
-                        ],
-                      ),
-                    );
-                  });
-                },
-                onTap: (calendarTapDetails) {
-                  if (calendarTapDetails.appointments?.first.itemType ==
-                      CustomAppointmentType.task) {
-                    showDialog(
-                        context: context,
-                        builder: (context) => Dialog(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: $constants.insets.sm),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              SizedBox(
+                                height: constraints.maxHeight,
+                                child: AutoSizeText(
+                                  maxLines: 3,
+                                  overflow: TextOverflow.ellipsis,
+                                  appointment.subject,
+                                  style: getTextTheme(context)
+                                      .bodyMedium!
+                                      .copyWith(fontWeight: FontWeight.w400),
+                                ),
+                              ),
+                            ],
+                          ),
+                        );
+                      });
+                    },
+                    onTap: (calendarTapDetails) {
+                      if (calendarTapDetails.appointments?.first.itemType ==
+                          CustomAppointmentType.task) {
+                        showDialog(
+                            context: context,
+                            builder: (context) => Dialog(
+                                  insetPadding: EdgeInsets.symmetric(
+                                      horizontal: $constants.insets.xs),
+                                  child: SizedBox(
+                                    height: getSize(context).height * 0.7,
+                                    width: getSize(context).width,
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(
+                                          $constants.corners.md),
+                                      child: TaskDetail(
+                                        smallNotes: true,
+                                        task: taskState.tasks!.firstWhere(
+                                            (element) =>
+                                                element.id ==
+                                                calendarTapDetails
+                                                    .appointments?.first.itemId),
+                                      ),
+                                    ),
+                                  ),
+                                ));
+                      } else if (calendarTapDetails.appointments?.first.itemType ==
+                          CustomAppointmentType.event) {
+                        Event? event;
+                        for (DeviceCalendar calendar
+                            in deviceCalendarState.deviceCalendar ?? []) {
+                          var findedEvent = calendar.events.firstWhereOrNull(
+                              (element) =>
+                                  element.eventId ==
+                                  calendarTapDetails.appointments?.first.itemId);
+                          if (findedEvent != null) {
+                            event = findedEvent;
+                            break;
+                          }
+                        }
+                        if (event != null) {
+                          showDialog(
+                            context: context,
+                            builder: (context) => Dialog(
                               insetPadding: EdgeInsets.symmetric(
                                   horizontal: $constants.insets.xs),
                               child: SizedBox(
                                 height: getSize(context).height * 0.7,
                                 width: getSize(context).width,
                                 child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(
-                                      $constants.corners.md),
-                                  child: TaskDetail(
-                                    smallNotes: true,
-                                    task: taskState.tasks!.firstWhere(
-                                        (element) =>
-                                            element.id ==
-                                            calendarTapDetails
-                                                .appointments?.first.itemId),
+                                  borderRadius:
+                                      BorderRadius.circular($constants.corners.md),
+                                  child: DeviceEventDetail(
+                                    event: event!,
                                   ),
                                 ),
                               ),
-                            ));
-                  } else if (calendarTapDetails.appointments?.first.itemType ==
-                      CustomAppointmentType.event) {
-                    Event? event;
-                    for (DeviceCalendar calendar
-                        in deviceCalendarState.deviceCalendar ?? []) {
-                      var findedEvent = calendar.events.firstWhereOrNull(
-                          (element) =>
-                              element.eventId ==
-                              calendarTapDetails.appointments?.first.itemId);
-                      if (findedEvent != null) {
-                        event = findedEvent;
-                        break;
-                      }
-                    }
-                    if (event != null) {
-                      showDialog(
-                        context: context,
-                        builder: (context) => Dialog(
-                          insetPadding: EdgeInsets.symmetric(
-                              horizontal: $constants.insets.xs),
-                          child: SizedBox(
-                            height: getSize(context).height * 0.7,
-                            width: getSize(context).width,
-                            child: ClipRRect(
-                              borderRadius:
-                                  BorderRadius.circular($constants.corners.md),
-                              child: DeviceEventDetail(
-                                event: event!,
-                              ),
                             ),
-                          ),
-                        ),
-                      );
-                    }
-                  }
-                },
-              ),
-            ),
-          );
+                          );
+                        }
+                      }
+                    },
+                  ),
+                ),
+              );
+            });
+          });
         });
-      });
-    });
+      }
+    );
   }
 
   CustomCalendarDataSource _getTasks(List<TaskEntity> tasks) {
