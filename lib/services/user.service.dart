@@ -74,7 +74,6 @@ class UserService {
       }
       return null;
     } catch (e) {
-      print(e);
       return null;
     }
   }

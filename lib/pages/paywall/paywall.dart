@@ -30,7 +30,6 @@ class _PaywallState extends State<Paywall> {
   Timer? _checkPurchaseTimer;
   bool? _purchaseSuccess;
   bool? _purchaseFailed;
-  String? _errorId;
 
   @override
   void initState() {
@@ -462,11 +461,11 @@ class _PaywallState extends State<Paywall> {
       });
       final customerInfo =
           await RevenueCatService.makePurchase(package: package);
+      if (!mounted) return null;
       _startCheckingForPurchase(context);
       return customerInfo;
     } catch (e) {
       // Handle purchase error
-      print(e);
       return null;
     }
   }
@@ -476,8 +475,6 @@ class _PaywallState extends State<Paywall> {
       int loopCount = 0;
       _checkPurchaseTimer = Timer.periodic(const Duration(seconds: 1), (_) {
         loopCount++;
-        print("loopCount: $loopCount");
-
         final authState = context.read<AuthBloc>().state;
         final isUserHaveActiveSubscription =
             UserService.isSubscriptionActive(authState.user);
@@ -485,7 +482,6 @@ class _PaywallState extends State<Paywall> {
           setState(() {
             _purchaseSuccess = true;
             _purchaseFailed = false;
-            _errorId = null;
           });
           _checkPurchaseTimer?.cancel();
         } else if (loopCount >= 30) {
@@ -494,7 +490,6 @@ class _PaywallState extends State<Paywall> {
             _checkPurchaseTimer = null;
             _purchaseSuccess = false;
             _purchaseFailed = true;
-            _errorId = "purchase_validation_timeout";
           });
           _checkPurchaseTimer?.cancel();
         } else {
@@ -508,40 +503,38 @@ class _PaywallState extends State<Paywall> {
 
   // when _purchaseSuccess is true
   Widget _buildPurchaseSuccess(BuildContext context) {
-    return Container(
-      child: Center(
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: $constants.insets.md),
-          child: Column(
-            children: [
-              Lottie.asset(
-                'assets/animations/credit_card_success.json',
-                width: getSize(context).width,
-              ),
-              SizedBox(
-                height: $constants.insets.sm,
-              ),
-              Text(
-                context.t.paywall.success,
-                style: getTextTheme(context).headlineLarge?.copyWith(
-                      fontWeight: FontWeight.bold,
-                    ),
-              ),
-              SizedBox(
-                height: $constants.insets.sm,
-              ),
-              const Spacer(),
-              PrimaryButtonSquare(
-                text: context.t.actions.close,
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-              ),
-              SizedBox(
-                height: $constants.insets.lg,
-              ),
-            ],
-          ),
+    return Center(
+      child: Padding(
+        padding: EdgeInsets.symmetric(horizontal: $constants.insets.md),
+        child: Column(
+          children: [
+            Lottie.asset(
+              'assets/animations/credit_card_success.json',
+              width: getSize(context).width,
+            ),
+            SizedBox(
+              height: $constants.insets.sm,
+            ),
+            Text(
+              context.t.paywall.success,
+              style: getTextTheme(context).headlineLarge?.copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
+            ),
+            SizedBox(
+              height: $constants.insets.sm,
+            ),
+            const Spacer(),
+            PrimaryButtonSquare(
+              text: context.t.actions.close,
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            SizedBox(
+              height: $constants.insets.lg,
+            ),
+          ],
         ),
       ),
     );
@@ -549,60 +542,58 @@ class _PaywallState extends State<Paywall> {
 
   // when _purchaseFailed is true, display the error corresponding to _errorId
   Widget _buildPurchaseFailed(BuildContext context) {
-    return Container(
-      child: Center(
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: $constants.insets.md),
-          child: Column(
-            children: [
-              SizedBox(
-                height: getSize(context).height * 0.1,
-              ),
-              SizedBox(
-                width: getSize(context).width * 0.8,
-                height: getSize(context).height * 0.3,
-                child: Transform.scale(
-                  scale: 2,
-                  child: Lottie.asset(
-                    'assets/animations/failed.json',
-                    width: getSize(context).width,
-                  ),
+    return Center(
+      child: Padding(
+        padding: EdgeInsets.symmetric(horizontal: $constants.insets.md),
+        child: Column(
+          children: [
+            SizedBox(
+              height: getSize(context).height * 0.1,
+            ),
+            SizedBox(
+              width: getSize(context).width * 0.8,
+              height: getSize(context).height * 0.3,
+              child: Transform.scale(
+                scale: 2,
+                child: Lottie.asset(
+                  'assets/animations/failed.json',
+                  width: getSize(context).width,
                 ),
               ),
-              SizedBox(
-                height: $constants.insets.lg,
-              ),
-              Text(
-                context.t.paywall.validation_failed,
-                style: getTextTheme(context).headlineLarge?.copyWith(
-                      fontWeight: FontWeight.bold,
-                    ),
-              ),
-              SizedBox(
-                height: $constants.insets.sm,
-              ),
-              Text(
-                context.t.paywall.validation_failed_description,
-                textAlign: TextAlign.center,
-                style: getTextTheme(context).bodyMedium?.copyWith(
-                      color: Colors.grey.shade600,
-                    ),
-              ),
-              SizedBox(
-                height: $constants.insets.sm,
-              ),
-              const Spacer(),
-              PrimaryButtonSquare(
-                text: context.t.actions.close,
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-              ),
-              SizedBox(
-                height: $constants.insets.lg,
-              ),
-            ],
-          ),
+            ),
+            SizedBox(
+              height: $constants.insets.lg,
+            ),
+            Text(
+              context.t.paywall.validation_failed,
+              style: getTextTheme(context).headlineLarge?.copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
+            ),
+            SizedBox(
+              height: $constants.insets.sm,
+            ),
+            Text(
+              context.t.paywall.validation_failed_description,
+              textAlign: TextAlign.center,
+              style: getTextTheme(context).bodyMedium?.copyWith(
+                    color: Colors.grey.shade600,
+                  ),
+            ),
+            SizedBox(
+              height: $constants.insets.sm,
+            ),
+            const Spacer(),
+            PrimaryButtonSquare(
+              text: context.t.actions.close,
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            SizedBox(
+              height: $constants.insets.lg,
+            ),
+          ],
         ),
       ),
     );

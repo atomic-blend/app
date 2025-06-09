@@ -1,5 +1,6 @@
 import 'package:app/blocs/app/app.bloc.dart';
 import 'package:app/blocs/auth/auth.bloc.dart';
+import 'package:app/blocs/habit/habit.bloc.dart';
 import 'package:app/components/app/bottom_navigation.dart';
 import 'package:app/components/buttons/account_avatar_with_sync_status.dart';
 import 'package:app/components/buttons/task_item.dart';
@@ -11,6 +12,7 @@ import 'package:app/pages/calendar/calendar_settings.dart';
 import 'package:app/pages/habits/add_habits_modal.dart';
 import 'package:app/pages/habits/habits.dart';
 import 'package:app/pages/more_apps/more_apps.dart';
+import 'package:app/pages/paywall/paywall_utils.dart';
 import 'package:app/pages/tasks/add_task_modal.dart';
 import 'package:app/pages/tasks/filtered_view.dart';
 import 'package:app/pages/tasks/folders.dart';
@@ -467,25 +469,36 @@ class Navigation {
                 ),
               ),
               actions: [
-                IconButton(
-                  icon: const Icon(CupertinoIcons.add),
-                  onPressed: () {
-                    var modal = const AddHabitModal();
-                    if (isDesktop(context)) {
-                      showDialog(
-                        context: context,
-                        builder: (context) => Dialog(
-                          backgroundColor: getTheme(context).surface,
-                          child: modal,
-                        ),
-                      );
-                    } else {
-                      showModalBottomSheet(
-                          isScrollControlled: true,
-                          context: context,
-                          builder: (context) => modal);
-                    }
-                  },
+                BlocBuilder<AuthBloc, AuthState>(
+                  builder: (context, authState) {
+                    return BlocBuilder<HabitBloc, HabitState>(
+                      builder: (context, habitState) {
+                        if ((habitState.habits?.length ?? 0) >= 5) {
+                          PaywallUtils.showPaywall(context, user: authState.user);
+                        }
+                        return IconButton(
+                          icon: const Icon(CupertinoIcons.add),
+                          onPressed: () {
+                            var modal = const AddHabitModal();
+                            if (isDesktop(context)) {
+                              showDialog(
+                                context: context,
+                                builder: (context) => Dialog(
+                                  backgroundColor: getTheme(context).surface,
+                                  child: modal,
+                                ),
+                              );
+                            } else {
+                              showModalBottomSheet(
+                                  isScrollControlled: true,
+                                  context: context,
+                                  builder: (context) => modal);
+                            }
+                          },
+                        );
+                      }
+                    );
+                  }
                 ),
                 BlocBuilder<AuthBloc, AuthState>(builder: (context, authState) {
                   if (authState is LoggedIn && !isDesktop(context)) {
