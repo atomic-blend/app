@@ -611,11 +611,38 @@ class _PaywallState extends State<Paywall> {
   // when _isMakingPurchase is true, display a "making purchase" loading widget
   // when _checkPurchaseTimer is running, display a "checking purchase" loading widget
   Widget _buildPurchaseLoading(BuildContext context) {
-    if (_isMakingPurchase == true && _checkPurchaseTimer == null) {
-      return Text("making purchase...");
-    } else if (_checkPurchaseTimer != null) {
-      return Text("checking purchase...");
-    }
-    return const SizedBox.shrink();
+    return Center(
+      child: Padding(
+        padding: EdgeInsets.symmetric(horizontal: $constants.insets.md),
+        child: Column(
+          children: [
+            SizedBox(
+              height: getSize(context).height * 0.1,
+            ),
+            Lottie.asset(
+              'assets/animations/apple_pay.json',
+              width: getSize(context).width,
+            ),
+            SizedBox(
+              height: $constants.insets.lg,
+            ),
+            Text(
+              context.t.paywall.payment_in_progress,
+              style: getTextTheme(context).headlineSmall,
+            ),
+            SizedBox(
+              height: $constants.insets.sm,
+            ),
+            Text(
+              context.t.paywall.payment_in_progress_description,
+              textAlign: TextAlign.center,
+              style: getTextTheme(context).bodyMedium?.copyWith(
+                    color: Colors.grey.shade600,
+                  ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }

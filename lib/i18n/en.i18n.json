@@ -840,6 +840,8 @@
     "restore_purchase": "Restore Purchase",
     "terms": "Terms of Service",
     "privacy_policy": "Privacy Policy",
+    "payment_in_progress": "Payment in progress",
+    "payment_in_progress_description": "Please wait while we process your payment.",
     "success": "Purchase successful",
     "validation_failed": "Validation failed",
     "validation_failed_description": "Please check your internet connection and restart the app."

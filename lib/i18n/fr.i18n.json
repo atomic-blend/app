@@ -839,6 +839,8 @@
     "terms": "Conditions d'utilisation",
     "privacy_policy": "Politique de confidentialité",
     "success": "Achat réussi !",
+    "payment_in_progress": "Paiement en cours",
+    "payment_in_progress_description": "Veuillez patienter pendant que nous traitons votre paiement.",
     "validation_failed": "Échec de la validation",
     "validation_failed_description": "Veuillez vérifier votre connexion Internet et redémarrer l'application."
   }
