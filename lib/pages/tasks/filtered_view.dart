@@ -4,6 +4,7 @@ import 'package:app/components/forms/search_bar.dart';
 import 'package:app/components/widgets/elevated_container.dart';
 import 'package:app/entities/tasks/tasks.entity.dart';
 import 'package:app/i18n/strings.g.dart';
+import 'package:app/pages/search/search.dart';
 import 'package:app/services/sync.service.dart';
 import 'package:app/utils/constants.dart';
 import 'package:app/utils/shortcuts.dart';
@@ -52,7 +53,9 @@ class _FilteredTaskViewState extends State<FilteredTaskView> {
               children: [
                 ElevatedContainer(
                   child: ABSearchBar(
-                      controller: _searchController, onSubmitted: (value) {}),
+                      controller: _searchController, onSubmitted: (value) {
+                        _showSearchModal();
+                      }),
                 ),
                 SizedBox(height: $constants.insets.xs),
                 Expanded(
@@ -81,5 +84,26 @@ class _FilteredTaskViewState extends State<FilteredTaskView> {
         );
       }),
     );
+  }
+
+  void _showSearchModal() {
+    if (isDesktop(context)) {
+      showDialog(
+        context: context,
+        builder: (context) => Dialog(
+          child: Search(
+            searchQuery: _searchController.text,
+          ),
+        ),
+      );
+    } else {
+      showModalBottomSheet(
+        isScrollControlled: true,
+        context: context,
+        builder: (context) => Search(
+          searchQuery: _searchController.text,
+        ),
+      );
+    }
   }
 }

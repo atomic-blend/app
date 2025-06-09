@@ -6,6 +6,7 @@ import 'package:app/components/forms/search_bar.dart';
 import 'package:app/components/widgets/elevated_container.dart';
 import 'package:app/entities/tasks/tasks.entity.dart';
 import 'package:app/i18n/strings.g.dart';
+import 'package:app/pages/search/search.dart';
 import 'package:app/pages/tasks/add_task_modal.dart';
 import 'package:app/pages/timer/timer_info.dart';
 import 'package:app/pages/timer/timer_utils.dart';
@@ -72,7 +73,11 @@ class _OverviewTasksState extends State<OverviewTasks> {
                 ],
                 ElevatedContainer(
                   child: ABSearchBar(
-                      controller: _searchController, onSubmitted: (value) {}),
+                      controller: _searchController,
+                      onSubmitted: (value) {
+                        print('Search submitted: $value');
+                        _showSearchModal();
+                      }),
                 ),
                 SizedBox(height: $constants.insets.xs),
                 Expanded(
@@ -343,5 +348,26 @@ class _OverviewTasksState extends State<OverviewTasks> {
       }
     }
     return widgets;
+  }
+
+  void _showSearchModal() {
+    if (isDesktop(context)) {
+      showDialog(
+        context: context,
+        builder: (context) => Dialog(
+          child: Search(
+            searchQuery: _searchController.text,
+          ),
+        ),
+      );
+    } else {
+      showModalBottomSheet(
+        isScrollControlled: true,
+        context: context,
+        builder: (context) => Search(
+          searchQuery: _searchController.text,
+        ),
+      );
+    }
   }
 }
