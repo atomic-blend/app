@@ -818,6 +818,9 @@ class _TranslationsPaywallFr implements TranslationsPaywallEn {
 	@override String get restore_purchase => 'Restaurer l\'achat';
 	@override String get terms => 'Conditions d\'utilisation';
 	@override String get privacy_policy => 'Politique de confidentialité';
+	@override String get success => 'Achat réussi !';
+	@override String get validation_failed => 'Échec de la validation';
+	@override String get validation_failed_description => 'Veuillez vérifier votre connexion Internet et redémarrer l\'application.';
 }
 
 // Path: auth.not_logged_in
@@ -2155,6 +2158,9 @@ extension on TranslationsFr {
 			case 'paywall.restore_purchase': return 'Restaurer l\'achat';
 			case 'paywall.terms': return 'Conditions d\'utilisation';
 			case 'paywall.privacy_policy': return 'Politique de confidentialité';
+			case 'paywall.success': return 'Achat réussi !';
+			case 'paywall.validation_failed': return 'Échec de la validation';
+			case 'paywall.validation_failed_description': return 'Veuillez vérifier votre connexion Internet et redémarrer l\'application.';
 			default: return null;
 		}
 	}

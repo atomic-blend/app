@@ -13,6 +13,7 @@ import 'package:async/async.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lottie/lottie.dart';
 import 'package:purchases_flutter/object_wrappers.dart';
 
 class Paywall extends StatefulWidget {
@@ -481,14 +482,13 @@ class _PaywallState extends State<Paywall> {
         final isUserHaveActiveSubscription =
             UserService.isSubscriptionActive(authState.user);
         if (isUserHaveActiveSubscription) {
-          //TODO
           setState(() {
             _purchaseSuccess = true;
             _purchaseFailed = false;
             _errorId = null;
           });
+          _checkPurchaseTimer?.cancel();
         } else if (loopCount >= 30) {
-          //TODO: show purchase failed, contact support
           setState(() {
             _checkPurchaseTimer?.cancel();
             _checkPurchaseTimer = null;
@@ -496,6 +496,7 @@ class _PaywallState extends State<Paywall> {
             _purchaseFailed = true;
             _errorId = "purchase_validation_timeout";
           });
+          _checkPurchaseTimer?.cancel();
         } else {
           if (authState.runtimeType != Loading) {
             context.read<AuthBloc>().add(const RefreshUser());
@@ -507,12 +508,104 @@ class _PaywallState extends State<Paywall> {
 
   // when _purchaseSuccess is true
   Widget _buildPurchaseSuccess(BuildContext context) {
-    return Text("purchase success");
+    return Container(
+      child: Center(
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: $constants.insets.md),
+          child: Column(
+            children: [
+              Lottie.asset(
+                'assets/animations/credit_card_success.json',
+                width: getSize(context).width,
+              ),
+              SizedBox(
+                height: $constants.insets.sm,
+              ),
+              Text(
+                context.t.paywall.success,
+                style: getTextTheme(context).headlineLarge?.copyWith(
+                      fontWeight: FontWeight.bold,
+                    ),
+              ),
+              SizedBox(
+                height: $constants.insets.sm,
+              ),
+              const Spacer(),
+              PrimaryButtonSquare(
+                text: context.t.actions.close,
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+              SizedBox(
+                height: $constants.insets.lg,
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 
   // when _purchaseFailed is true, display the error corresponding to _errorId
   Widget _buildPurchaseFailed(BuildContext context) {
-    return Text("purchase failed: $_errorId");
+    return Container(
+      child: Center(
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: $constants.insets.md),
+          child: Column(
+            children: [
+              SizedBox(
+                height: getSize(context).height * 0.1,
+              ),
+              SizedBox(
+                width: getSize(context).width * 0.8,
+                height: getSize(context).height * 0.3,
+                child: Transform.scale(
+                  scale: 2,
+                  child: Lottie.asset(
+                    'assets/animations/failed.json',
+                    width: getSize(context).width,
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: $constants.insets.lg,
+              ),
+              Text(
+                context.t.paywall.validation_failed,
+                style: getTextTheme(context).headlineLarge?.copyWith(
+                      fontWeight: FontWeight.bold,
+                    ),
+              ),
+              SizedBox(
+                height: $constants.insets.sm,
+              ),
+              Text(
+                context.t.paywall.validation_failed_description,
+                textAlign: TextAlign.center,
+                style: getTextTheme(context).bodyMedium?.copyWith(
+                      color: Colors.grey.shade600,
+                    ),
+              ),
+              SizedBox(
+                height: $constants.insets.sm,
+              ),
+              const Spacer(),
+              PrimaryButtonSquare(
+                text: context.t.actions.close,
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+              SizedBox(
+                height: $constants.insets.lg,
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 
   // when _isMakingPurchase is true, display a "making purchase" loading widget

@@ -824,6 +824,9 @@ class TranslationsPaywallEn {
 	String get restore_purchase => 'Restore Purchase';
 	String get terms => 'Terms of Service';
 	String get privacy_policy => 'Privacy Policy';
+	String get success => 'Purchase successful';
+	String get validation_failed => 'Validation failed';
+	String get validation_failed_description => 'Please check your internet connection and restart the app.';
 }
 
 // Path: auth.not_logged_in
@@ -2164,6 +2167,9 @@ extension on Translations {
 			case 'paywall.restore_purchase': return 'Restore Purchase';
 			case 'paywall.terms': return 'Terms of Service';
 			case 'paywall.privacy_policy': return 'Privacy Policy';
+			case 'paywall.success': return 'Purchase successful';
+			case 'paywall.validation_failed': return 'Validation failed';
+			case 'paywall.validation_failed_description': return 'Please check your internet connection and restart the app.';
 			default: return null;
 		}
 	}

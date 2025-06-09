@@ -839,6 +839,9 @@
     "purchase_failed": "Purchase failed",
     "restore_purchase": "Restore Purchase",
     "terms": "Terms of Service",
-    "privacy_policy": "Privacy Policy"
+    "privacy_policy": "Privacy Policy",
+    "success": "Purchase successful",
+    "validation_failed": "Validation failed",
+    "validation_failed_description": "Please check your internet connection and restart the app."
   }
 }

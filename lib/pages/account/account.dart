@@ -26,6 +26,12 @@ class Account extends StatefulWidget {
 
 class _AccountState extends State<Account> {
   @override
+  void initState() {
+    context.read<AuthBloc>().add(const RefreshUser());
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return BlocBuilder<AuthBloc, AuthState>(builder: (context, authstate) {
       return SizedBox(

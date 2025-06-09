@@ -837,6 +837,9 @@
     "purchase_failed": "Échec de l'achat",
     "restore_purchase": "Restaurer l'achat",
     "terms": "Conditions d'utilisation",
-    "privacy_policy": "Politique de confidentialité"
+    "privacy_policy": "Politique de confidentialité",
+    "success": "Achat réussi !",
+    "validation_failed": "Échec de la validation",
+    "validation_failed_description": "Veuillez vérifier votre connexion Internet et redémarrer l'application."
   }
 }
