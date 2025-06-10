@@ -116,11 +116,11 @@ class AppLayoutState extends ResponsiveState<AppLayout> {
                     color: getTheme(context).tertiary,
                     body: FilteredTaskView(
                       filter: (List<TaskEntity> tasks) {
-                        final List<TaskItem> widgets = [];
+                        final List<TaskEntity> widgets = [];
                         for (final task in tasks) {
                           if (task.completed != true &&
                               task.folderId == folder.id) {
-                            widgets.add(TaskItem(task: task));
+                            widgets.add(task);
                           }
                         }
                         return widgets;
@@ -452,11 +452,11 @@ class AppLayoutState extends ResponsiveState<AppLayout> {
                     color: getTheme(context).tertiary,
                     body: FilteredTaskView(
                       filter: (List<TaskEntity> tasks) {
-                        final List<TaskItem> widgets = [];
+                        final List<TaskEntity> widgets = [];
                         for (final task in tasks) {
                           if (task.completed != true &&
                               task.folderId == folder.id) {
-                            widgets.add(TaskItem(task: task));
+                            widgets.add(task);
                           }
                         }
                         return widgets;

@@ -127,10 +127,10 @@ class Navigation {
               label: context.t.tasks.inbox,
               body: FilteredTaskView(
                 filter: (List<TaskEntity> tasks) {
-                  final List<TaskItem> widgets = [];
+                  final List<TaskEntity> widgets = [];
                   for (final task in tasks) {
                     if (task.completed != true && task.folderId == null) {
-                      widgets.add(TaskItem(task: task));
+                      widgets.add(task);
                     }
                   }
                   return widgets;
@@ -145,12 +145,12 @@ class Navigation {
               color: getTheme(context).primary,
               body: FilteredTaskView(
                 filter: (List<TaskEntity> tasks) {
-                  final List<TaskItem> widgets = [];
+                  final List<TaskEntity> widgets = [];
                   for (final task in tasks) {
                     if (task.completed != true &&
                         task.endDate != null &&
                         task.endDate!.isToday()) {
-                      widgets.add(TaskItem(task: task));
+                      widgets.add(task);
                     }
                   }
                   return widgets;
@@ -183,10 +183,7 @@ class Navigation {
               label: context.t.tasks.all_tasks,
               body: FilteredTaskView(
                 filter: (tasks) {
-                  return tasks
-                      .where((task) => task.completed != true)
-                      .map((task) => TaskItem(task: task))
-                      .toList();
+                  return tasks.where((task) => task.completed != true).toList();
                 },
               ),
             ),
@@ -197,10 +194,7 @@ class Navigation {
               label: context.t.tasks.completed_tasks,
               body: FilteredTaskView(
                 filter: (tasks) {
-                  return tasks
-                      .where((task) => task.completed == true)
-                      .map((task) => TaskItem(task: task))
-                      .toList();
+                  return tasks.where((task) => task.completed == true).toList();
                 },
               ),
             ),
@@ -469,37 +463,34 @@ class Navigation {
                 ),
               ),
               actions: [
-                BlocBuilder<AuthBloc, AuthState>(
-                  builder: (context, authState) {
-                    return BlocBuilder<HabitBloc, HabitState>(
+                BlocBuilder<AuthBloc, AuthState>(builder: (context, authState) {
+                  return BlocBuilder<HabitBloc, HabitState>(
                       builder: (context, habitState) {
-                        if ((habitState.habits?.length ?? 0) >= 5) {
-                          PaywallUtils.showPaywall(context, user: authState.user);
+                    if ((habitState.habits?.length ?? 0) >= 5) {
+                      PaywallUtils.showPaywall(context, user: authState.user);
+                    }
+                    return IconButton(
+                      icon: const Icon(CupertinoIcons.add),
+                      onPressed: () {
+                        var modal = const AddHabitModal();
+                        if (isDesktop(context)) {
+                          showDialog(
+                            context: context,
+                            builder: (context) => Dialog(
+                              backgroundColor: getTheme(context).surface,
+                              child: modal,
+                            ),
+                          );
+                        } else {
+                          showModalBottomSheet(
+                              isScrollControlled: true,
+                              context: context,
+                              builder: (context) => modal);
                         }
-                        return IconButton(
-                          icon: const Icon(CupertinoIcons.add),
-                          onPressed: () {
-                            var modal = const AddHabitModal();
-                            if (isDesktop(context)) {
-                              showDialog(
-                                context: context,
-                                builder: (context) => Dialog(
-                                  backgroundColor: getTheme(context).surface,
-                                  child: modal,
-                                ),
-                              );
-                            } else {
-                              showModalBottomSheet(
-                                  isScrollControlled: true,
-                                  context: context,
-                                  builder: (context) => modal);
-                            }
-                          },
-                        );
-                      }
+                      },
                     );
-                  }
-                ),
+                  });
+                }),
                 BlocBuilder<AuthBloc, AuthState>(builder: (context, authState) {
                   if (authState is LoggedIn && !isDesktop(context)) {
                     return Padding(

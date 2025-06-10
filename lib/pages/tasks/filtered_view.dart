@@ -12,7 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class FilteredTaskView extends StatefulWidget {
-  final List<TaskItem> Function(List<TaskEntity> tasks) filter;
+  final List<TaskEntity> Function(List<TaskEntity> tasks) filter;
 
   const FilteredTaskView({super.key, required this.filter});
 
@@ -99,23 +99,32 @@ class _FilteredTaskViewState extends State<FilteredTaskView> {
                 ],
                 if (_filteredTasks.isEmpty)
                   Expanded(
-                    child: ElevatedContainer(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: $constants.insets.sm,
-                        vertical: $constants.insets.sm,
-                      ),
-                      child: ListView(
-                        padding: EdgeInsets.zero,
-                        children: [
-                          if (widget.filter(taskState.tasks ?? []).isEmpty)
-                            Text(
-                              context.t.tasks.nothing_to_do,
-                              style: getTextTheme(context).labelSmall!,
-                            ),
-                          if (widget.filter(taskState.tasks ?? []).isNotEmpty)
-                            ...widget.filter(taskState.tasks ?? []),
-                        ],
-                      ),
+                    child: ListView(
+                      padding: EdgeInsets.zero,
+                      children: [
+                        if (widget.filter(taskState.tasks ?? []).isEmpty)
+                          Text(
+                            context.t.tasks.nothing_to_do,
+                            style: getTextTheme(context).labelSmall!,
+                          ),
+                        if (widget.filter(taskState.tasks ?? []).isNotEmpty)
+                          ...widget.filter(taskState.tasks ?? []).map(
+                                (task) => Padding(
+                                  padding: EdgeInsets.only(
+                                    bottom: $constants.insets.xs,
+                                  ),
+                                  child: ElevatedContainer(
+                                    padding: EdgeInsets.symmetric(
+                                      horizontal: $constants.insets.sm,
+                                      vertical: $constants.insets.xs,
+                                    ),
+                                    child: TaskItem(
+                                      task: task,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                      ],
                     ),
                   ),
               ],
