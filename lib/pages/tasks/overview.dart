@@ -177,6 +177,7 @@ class _OverviewTasksState extends State<OverviewTasks> {
                               ),
                               child: Column(
                                 mainAxisSize: MainAxisSize.min,
+                                spacing: $constants.insets.xxs,
                                 children: [
                                   if (todayTasks.isEmpty)
                                     Text(

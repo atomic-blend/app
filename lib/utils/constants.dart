@@ -3,7 +3,6 @@ import 'package:app/blocs/auth/auth.bloc.dart';
 import 'package:app/blocs/habit/habit.bloc.dart';
 import 'package:app/components/app/bottom_navigation.dart';
 import 'package:app/components/buttons/account_avatar_with_sync_status.dart';
-import 'package:app/components/buttons/task_item.dart';
 import 'package:app/entities/tasks/tasks.entity.dart';
 import 'package:app/i18n/strings.g.dart';
 import 'package:app/main.dart';
