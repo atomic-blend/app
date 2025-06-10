@@ -302,7 +302,7 @@
       "payment_history": "Payment History",
       "no_payments": "No payments for now",
       "currency_symbol": "$",
-      "manage_my_subscription": "Manage my subscription", 
+      "manage_my_subscription": "Manage my subscription",
       "management_url_only_mobile": "You can only manage your subscription from the iOS or Android app."
     },
     "security_and_privacy": {
@@ -844,6 +844,17 @@
     "payment_in_progress_description": "Please wait while we process your payment.",
     "success": "Purchase successful",
     "validation_failed": "Validation failed",
-    "validation_failed_description": "Please check your internet connection and restart the app."
+    "validation_failed_description": "Please check your internet connection and restart the app.",
+    "mobile_app_required": "Mobile app required",
+    "payment_on_mobile_for_better_xp": "To offer you the best experience possible, payment and account configuration is only available on the mobile app",
+    "ios": "iOS",
+    "android": "Android"
+  },
+  "search": {
+    "results": {
+      "zero": "No results found",
+      "one": "1 result found",
+      "other": "${n} results found"
+    }
   }
 }

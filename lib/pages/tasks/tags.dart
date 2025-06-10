@@ -90,7 +90,7 @@ class _TagsViewState extends State<TagsView> {
                         ],
                       ),
                       SizedBox(
-                        height: $constants.insets.xxs,
+                        height: $constants.insets.xs,
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.start,
@@ -168,6 +168,7 @@ class _TagsViewState extends State<TagsView> {
                       vertical: $constants.insets.sm,
                     ),
                     child: Column(
+                      spacing: $constants.insets.xxs,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         ..._getFilteredTasks(context, taskState.tasks)

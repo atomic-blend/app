@@ -842,6 +842,17 @@
     "payment_in_progress": "Paiement en cours",
     "payment_in_progress_description": "Veuillez patienter pendant que nous traitons votre paiement.",
     "validation_failed": "Échec de la validation",
-    "validation_failed_description": "Veuillez vérifier votre connexion Internet et redémarrer l'application."
+    "validation_failed_description": "Veuillez vérifier votre connexion Internet et redémarrer l'application.",
+    "mobile_app_required": "Application mobile requise",
+    "payment_on_mobile_for_better_xp": "Pour vous offrir la meilleure expérience possible, le paiement et la configuration du compte ne sont disponibles que sur l'application mobile.",
+    "ios": "iOS", 
+    "android": "Android"
+  },
+  "search": {
+    "results": {
+      "zero": "Aucun résultat trouvé",
+      "one": "1 résultat trouvé",
+      "other": "${n} résultats trouvés"
+    }
   }
 }

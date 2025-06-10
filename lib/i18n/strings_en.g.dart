@@ -100,6 +100,7 @@ class Translations implements BaseTranslations<AppLocale, Translations> {
 	late final TranslationsInboxEn inbox = TranslationsInboxEn._(_root);
 	late final TranslationsTimerEn timer = TranslationsTimerEn._(_root);
 	late final TranslationsPaywallEn paywall = TranslationsPaywallEn._(_root);
+	late final TranslationsSearchEn search = TranslationsSearchEn._(_root);
 }
 
 // Path: navigation
@@ -829,6 +830,24 @@ class TranslationsPaywallEn {
 	String get success => 'Purchase successful';
 	String get validation_failed => 'Validation failed';
 	String get validation_failed_description => 'Please check your internet connection and restart the app.';
+	String get mobile_app_required => 'Mobile app required';
+	String get payment_on_mobile_for_better_xp => 'To offer you the best experience possible, payment and account configuration is only available on the mobile app';
+	String get ios => 'iOS';
+	String get android => 'Android';
+}
+
+// Path: search
+class TranslationsSearchEn {
+	TranslationsSearchEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	String results({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n,
+		zero: 'No results found',
+		one: '1 result found',
+		other: '${n} results found',
+	);
 }
 
 // Path: auth.not_logged_in
@@ -2174,6 +2193,15 @@ extension on Translations {
 			case 'paywall.success': return 'Purchase successful';
 			case 'paywall.validation_failed': return 'Validation failed';
 			case 'paywall.validation_failed_description': return 'Please check your internet connection and restart the app.';
+			case 'paywall.mobile_app_required': return 'Mobile app required';
+			case 'paywall.payment_on_mobile_for_better_xp': return 'To offer you the best experience possible, payment and account configuration is only available on the mobile app';
+			case 'paywall.ios': return 'iOS';
+			case 'paywall.android': return 'Android';
+			case 'search.results': return ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n,
+				zero: 'No results found',
+				one: '1 result found',
+				other: '${n} results found',
+			);
 			default: return null;
 		}
 	}
