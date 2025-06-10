@@ -38,6 +38,7 @@ class Calendar extends StatefulWidget {
 
 class _CalendarState extends State<Calendar> {
   final calendarEndDate = DateTime.now().add(const Duration(days: 3650));
+  bool _isPaywallShown = false;
 
   @override
   void initState() {
@@ -68,8 +69,11 @@ class _CalendarState extends State<Calendar> {
             return BlocBuilder<TasksBloc, TasksState>(
                 builder: (context, taskState) {
               WidgetsBinding.instance.addPostFrameCallback((_) {
-                if (widget.view != CalendarView.month) {
+                if (widget.view != CalendarView.month && !_isPaywallShown) {
                   PaywallUtils.showPaywall(context, user: authState.user);
+                  setState(() {
+                    _isPaywallShown = true;
+                  });
                 }
               });
               return Padding(

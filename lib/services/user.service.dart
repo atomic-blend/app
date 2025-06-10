@@ -56,7 +56,6 @@ class UserService {
     final result = await globalApiClient.put('/users/device', data: device);
     if (result.statusCode == 200) {
       final user = UserEntity.fromJson(result.data["data"]);
-      await RevenueCatService.logIn(user.id!);
       prefs?.setString('user', json.encode(user.toJson()));
       return user;
     } else {
@@ -181,7 +180,6 @@ class UserService {
     final accessToken = result.data['accessToken'];
     user.accessToken = accessToken;
     user.refreshToken = result.data['refreshToken'];
-    await RevenueCatService.logIn(user.id!);
     prefs?.setString('user', json.encode(user.toJson()));
     globalApiClient.setIdToken(accessToken);
 
@@ -193,7 +191,6 @@ class UserService {
         await globalApiClient.put('/users/profile', data: userPayload);
     if (result.statusCode == 200) {
       final user = UserEntity.fromJson(result.data["data"]);
-      await RevenueCatService.logIn(user.id!);
       prefs?.setString('user', json.encode(user.toJson()));
       return user;
     } else {

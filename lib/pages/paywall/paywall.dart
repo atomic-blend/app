@@ -57,6 +57,9 @@ class _PaywallState extends State<Paywall> {
     } else if (_isMakingPurchase == true || _checkPurchaseTimer != null) {
       return _buildPurchaseLoading(context);
     }
+    if (isDesktop(context)) {
+      return Container();
+    }
     return Padding(
       padding: EdgeInsets.all($constants.insets.md),
       child: Column(
@@ -189,129 +192,136 @@ class _PaywallState extends State<Paywall> {
           SizedBox(
             height: $constants.insets.xs,
           ),
-          Expanded(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                FutureBuilder<Offerings?>(
-                    future: _fetchOfferings(),
-                    builder: (context, snapshot) {
-                      WidgetsBinding.instance.addPostFrameCallback((_) {
-                        if (_package == null &&
-                            snapshot.data?.current?.availablePackages
-                                    .isNotEmpty ==
-                                true) {
-                          _package = snapshot.data!.current!.availablePackages
-                              .firstWhere((package) =>
-                                  package.storeProduct.identifier ==
-                                  "cloud_yearly");
-                        }
-                      });
+          if (!isDesktop(context))
+            Expanded(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  FutureBuilder<Offerings?>(
+                      future: _fetchOfferings(),
+                      builder: (context, snapshot) {
+                        WidgetsBinding.instance.addPostFrameCallback((_) {
+                          if (_package == null &&
+                              snapshot.data?.current?.availablePackages
+                                      .isNotEmpty ==
+                                  true) {
+                            _package = snapshot.data!.current!.availablePackages
+                                .firstWhere((package) =>
+                                    package.storeProduct.identifier ==
+                                    "cloud_yearly");
+                          }
+                        });
 
-                      if (snapshot.connectionState == ConnectionState.waiting ||
-                          snapshot.data == null) {
-                        return Center(
-                          child: CircularProgressIndicator(
-                            color: getTheme(context).primary,
-                          ),
+                        if (snapshot.connectionState ==
+                                ConnectionState.waiting ||
+                            snapshot.data == null) {
+                          return Center(
+                            child: CircularProgressIndicator(
+                              color: getTheme(context).primary,
+                            ),
+                          );
+                        }
+                        return Row(
+                          mainAxisSize: MainAxisSize.min,
+                          spacing: $constants.insets.sm,
+                          children: [
+                            _buildPricingCard(context,
+                                package: snapshot
+                                    .data!.current!.availablePackages
+                                    .firstWhere((package) =>
+                                        package.storeProduct.identifier ==
+                                        "cloud_yearly")),
+                            _buildPricingCard(context,
+                                package: snapshot
+                                    .data!.current!.availablePackages
+                                    .firstWhere((package) =>
+                                        package.storeProduct.identifier ==
+                                        "cloud_monthly")),
+                          ],
                         );
-                      }
-                      return Row(
-                        mainAxisSize: MainAxisSize.min,
-                        spacing: $constants.insets.sm,
-                        children: [
-                          _buildPricingCard(context,
-                              package: snapshot.data!.current!.availablePackages
-                                  .firstWhere((package) =>
-                                      package.storeProduct.identifier ==
-                                      "cloud_yearly")),
-                          _buildPricingCard(context,
-                              package: snapshot.data!.current!.availablePackages
-                                  .firstWhere((package) =>
-                                      package.storeProduct.identifier ==
-                                      "cloud_monthly")),
-                        ],
-                      );
-                    }),
-                SizedBox(
-                  height: $constants.insets.sm,
-                ),
-                PrimaryButtonSquare(
-                    text: context.t.actions.subscribe,
-                    onPressed: () async {
-                      if (_package == null) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content:
-                                Text(context.t.paywall.no_package_selected),
-                          ),
-                        );
-                        return;
-                      }
-                      final customerInfo =
-                          await _makePurchase(package: _package!);
-                      if (customerInfo == null) {
-                        if (!context.mounted) return;
-                        ToastHelper.showError(
-                            context: context,
-                            title: context.t.paywall.purchase_failed);
-                      }
-                    }),
-                SingleChildScrollView(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Expanded(
-                        child: TextButton(
-                            child: Text(
-                              context.t.paywall.restore_purchase,
-                              style: getTextTheme(context).bodySmall!.copyWith(
-                                    fontWeight: FontWeight.bold,
-                                    color: getTheme(context).primary,
-                                  ),
-                              textAlign: TextAlign.center,
-                            ),
-                            onPressed: () {
-                              Navigator.of(context).pop();
-                            }),
-                      ),
-                      Expanded(
-                        child: TextButton(
-                            child: Text(
-                              context.t.paywall.terms,
-                              style: getTextTheme(context).bodySmall!.copyWith(
-                                    fontWeight: FontWeight.bold,
-                                    color: getTheme(context).primary,
-                                  ),
-                              textAlign: TextAlign.center,
-                            ),
-                            onPressed: () {
-                              Navigator.of(context).pop();
-                            }),
-                      ),
-                      Expanded(
-                        child: TextButton(
-                            child: Text(
-                              context.t.paywall.privacy_policy,
-                              style: getTextTheme(context).bodySmall!.copyWith(
-                                    fontWeight: FontWeight.bold,
-                                    color: getTheme(context).primary,
-                                  ),
-                              textAlign: TextAlign.center,
-                            ),
-                            onPressed: () {
-                              Navigator.of(context).pop();
-                            }),
-                      ),
-                    ],
+                      }),
+                  SizedBox(
+                    height: $constants.insets.sm,
                   ),
-                )
-              ],
-            ),
-          )
+                  PrimaryButtonSquare(
+                      text: context.t.actions.subscribe,
+                      onPressed: () async {
+                        if (_package == null) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content:
+                                  Text(context.t.paywall.no_package_selected),
+                            ),
+                          );
+                          return;
+                        }
+                        final customerInfo =
+                            await _makePurchase(package: _package!);
+                        if (customerInfo == null) {
+                          if (!context.mounted) return;
+                          ToastHelper.showError(
+                              context: context,
+                              title: context.t.paywall.purchase_failed);
+                        }
+                      }),
+                  SingleChildScrollView(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Expanded(
+                          child: TextButton(
+                              child: Text(
+                                context.t.paywall.restore_purchase,
+                                style:
+                                    getTextTheme(context).bodySmall!.copyWith(
+                                          fontWeight: FontWeight.bold,
+                                          color: getTheme(context).primary,
+                                        ),
+                                textAlign: TextAlign.center,
+                              ),
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              }),
+                        ),
+                        Expanded(
+                          child: TextButton(
+                              child: Text(
+                                context.t.paywall.terms,
+                                style:
+                                    getTextTheme(context).bodySmall!.copyWith(
+                                          fontWeight: FontWeight.bold,
+                                          color: getTheme(context).primary,
+                                        ),
+                                textAlign: TextAlign.center,
+                              ),
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              }),
+                        ),
+                        Expanded(
+                          child: TextButton(
+                              child: Text(
+                                context.t.paywall.privacy_policy,
+                                style:
+                                    getTextTheme(context).bodySmall!.copyWith(
+                                          fontWeight: FontWeight.bold,
+                                          color: getTheme(context).primary,
+                                        ),
+                                textAlign: TextAlign.center,
+                              ),
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              }),
+                        ),
+                      ],
+                    ),
+                  )
+                ],
+              ),
+            )
         ],
       ),
     );
