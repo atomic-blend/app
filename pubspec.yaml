@@ -98,6 +98,7 @@ dependencies:
   purchases_flutter_ui: ^0.0.1
   purchases_ui_flutter: ^8.7.3
   async: ^2.12.0
+  qr_flutter: ^4.1.0
 dependency_overrides:
   flutter_secure_storage: 9.2.4
   timezone: 0.10.0

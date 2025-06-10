@@ -826,6 +826,8 @@ class _TranslationsPaywallFr implements TranslationsPaywallEn {
 	@override String get validation_failed_description => 'Veuillez vérifier votre connexion Internet et redémarrer l\'application.';
 	@override String get mobile_app_required => 'Application mobile requise';
 	@override String get payment_on_mobile_for_better_xp => 'Pour vous offrir la meilleure expérience possible, le paiement et la configuration du compte ne sont disponibles que sur l\'application mobile.';
+	@override String get ios => 'iOS';
+	@override String get android => 'Android';
 }
 
 // Path: search
@@ -2184,6 +2186,8 @@ extension on TranslationsFr {
 			case 'paywall.validation_failed_description': return 'Veuillez vérifier votre connexion Internet et redémarrer l\'application.';
 			case 'paywall.mobile_app_required': return 'Application mobile requise';
 			case 'paywall.payment_on_mobile_for_better_xp': return 'Pour vous offrir la meilleure expérience possible, le paiement et la configuration du compte ne sont disponibles que sur l\'application mobile.';
+			case 'paywall.ios': return 'iOS';
+			case 'paywall.android': return 'Android';
 			case 'search.results': return ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('fr'))(n,
 				zero: 'Aucun résultat trouvé',
 				one: '1 résultat trouvé',

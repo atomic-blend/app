@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:animated_toggle_switch/animated_toggle_switch.dart';
 import 'package:app/blocs/auth/auth.bloc.dart';
 import 'package:app/components/buttons/primary_button_square.dart';
 import 'package:app/components/widgets/elevated_container.dart';
@@ -10,11 +11,13 @@ import 'package:app/utils/constants.dart';
 import 'package:app/utils/shortcuts.dart';
 import 'package:app/utils/toast_helper.dart';
 import 'package:async/async.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
 import 'package:purchases_flutter/object_wrappers.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 
 class Paywall extends StatefulWidget {
   const Paywall({super.key});
@@ -30,6 +33,7 @@ class _PaywallState extends State<Paywall> {
   Timer? _checkPurchaseTimer;
   bool? _purchaseSuccess;
   bool? _purchaseFailed;
+  int? _mobilePlatform = 0; // 0 for iOS, 1 for Android
 
   @override
   void initState() {
@@ -60,268 +64,271 @@ class _PaywallState extends State<Paywall> {
 
     return Padding(
       padding: EdgeInsets.all($constants.insets.md),
-      child: Column(
-        children: [
-          SizedBox(
-            height: getSize(context).height * 0.5,
-            child: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.of(context).pop();
-                        },
-                        child: ElevatedContainer(
-                          width: 40,
-                          height: 40,
-                          borderRadius: $constants.corners.full,
-                          child: const Icon(
-                            CupertinoIcons.xmark,
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            SizedBox(
+              height: getSize(context).height * 0.5,
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.of(context).pop();
+                          },
+                          child: ElevatedContainer(
+                            width: 40,
+                            height: 40,
+                            borderRadius: $constants.corners.full,
+                            child: const Icon(
+                              CupertinoIcons.xmark,
+                            ),
                           ),
+                        )
+                      ],
+                    ),
+                    SizedBox(
+                      height: getSize(context).height * 0.1,
+                      child: ClipRRect(
+                        borderRadius:
+                            BorderRadius.circular($constants.corners.xl),
+                        child: Image.asset(
+                          'assets/images/atomic_blend_logo.png',
+                          fit: BoxFit.cover,
                         ),
-                      )
-                    ],
-                  ),
-                  SizedBox(
-                    height: getSize(context).height * 0.1,
-                    child: ClipRRect(
-                      borderRadius:
-                          BorderRadius.circular($constants.corners.xl),
-                      child: Image.asset(
-                        'assets/images/atomic_blend_logo.png',
-                        fit: BoxFit.cover,
                       ),
                     ),
-                  ),
-                  SizedBox(
-                    height: $constants.insets.md,
-                  ),
-                  Text(
-                    context.t.paywall.title,
-                    style: getTextTheme(context).headlineLarge?.copyWith(
-                          fontWeight: FontWeight.bold,
-                        ),
-                  ),
-                  Text(
-                    context.t.paywall.subtitle,
-                    textAlign: TextAlign.center,
-                    style: getTextTheme(context).bodyMedium?.copyWith(
-                          color: Colors.grey.shade600,
-                        ),
-                  ),
-                  SizedBox(
-                    height: $constants.insets.md,
-                  ),
-                  ElevatedContainer(
-                    width: double.infinity,
-                    borderRadius: $constants.corners.sm,
-                    padding: EdgeInsets.symmetric(
-                      horizontal: $constants.insets.md,
-                      vertical: $constants.insets.md,
+                    SizedBox(
+                      height: $constants.insets.md,
                     ),
-                    child: Column(
-                      spacing: $constants.insets.md,
-                      children: [
-                        _buildAdvantageRow(
-                          title: context
-                              .t.paywall.advantages.all_apps_of_the_suite.title,
-                          description: context.t.paywall.advantages
-                              .all_apps_of_the_suite.description,
-                          icon: CupertinoIcons.square_grid_2x2,
-                        ),
-                        _buildAdvantageRow(
-                          title: context
-                              .t.paywall.advantages.end_to_end_encrypted.title,
-                          description: context.t.paywall.advantages
-                              .end_to_end_encrypted.description,
-                          icon: CupertinoIcons.lock,
-                        ),
-                        _buildAdvantageRow(
-                          title: context
-                              .t.paywall.advantages.unlimited_tasks.title,
-                          description: context
-                              .t.paywall.advantages.unlimited_tasks.description,
-                          icon: CupertinoIcons.checkmark_square,
-                        ),
-                        _buildAdvantageRow(
-                          title:
-                              context.t.paywall.advantages.unlimited_tags.title,
-                          description: context
-                              .t.paywall.advantages.unlimited_tags.description,
-                          icon: CupertinoIcons.tags,
-                        ),
-                        _buildAdvantageRow(
-                          title: context
-                              .t.paywall.advantages.unlimited_habits.title,
-                          description: context.t.paywall.advantages
-                              .unlimited_habits.description,
-                          icon: CupertinoIcons.repeat,
-                        ),
-                        _buildAdvantageRow(
-                          title: context
-                              .t.paywall.advantages.sync_across_devices.title,
-                          description: context.t.paywall.advantages
-                              .sync_across_devices.description,
-                          icon: CupertinoIcons.cloud,
-                        ),
-                        _buildAdvantageRow(
-                          title: context
-                              .t.paywall.advantages.community_backed.title,
-                          description: context.t.paywall.advantages
-                              .community_backed.description,
-                          icon: CupertinoIcons.person_3,
-                        ),
-                      ],
+                    Text(
+                      context.t.paywall.title,
+                      style: getTextTheme(context).headlineLarge?.copyWith(
+                            fontWeight: FontWeight.bold,
+                          ),
                     ),
-                  ),
-                ],
+                    Text(
+                      context.t.paywall.subtitle,
+                      textAlign: TextAlign.center,
+                      style: getTextTheme(context).bodyMedium?.copyWith(
+                            color: Colors.grey.shade600,
+                          ),
+                    ),
+                    SizedBox(
+                      height: $constants.insets.md,
+                    ),
+                    ElevatedContainer(
+                      width: double.infinity,
+                      borderRadius: $constants.corners.sm,
+                      padding: EdgeInsets.symmetric(
+                        horizontal: $constants.insets.md,
+                        vertical: $constants.insets.md,
+                      ),
+                      child: Column(
+                        spacing: $constants.insets.md,
+                        children: [
+                          _buildAdvantageRow(
+                            title: context.t.paywall.advantages
+                                .all_apps_of_the_suite.title,
+                            description: context.t.paywall.advantages
+                                .all_apps_of_the_suite.description,
+                            icon: CupertinoIcons.square_grid_2x2,
+                          ),
+                          _buildAdvantageRow(
+                            title: context.t.paywall.advantages
+                                .end_to_end_encrypted.title,
+                            description: context.t.paywall.advantages
+                                .end_to_end_encrypted.description,
+                            icon: CupertinoIcons.lock,
+                          ),
+                          _buildAdvantageRow(
+                            title: context
+                                .t.paywall.advantages.unlimited_tasks.title,
+                            description: context.t.paywall.advantages
+                                .unlimited_tasks.description,
+                            icon: CupertinoIcons.checkmark_square,
+                          ),
+                          _buildAdvantageRow(
+                            title: context
+                                .t.paywall.advantages.unlimited_tags.title,
+                            description: context.t.paywall.advantages
+                                .unlimited_tags.description,
+                            icon: CupertinoIcons.tags,
+                          ),
+                          _buildAdvantageRow(
+                            title: context
+                                .t.paywall.advantages.unlimited_habits.title,
+                            description: context.t.paywall.advantages
+                                .unlimited_habits.description,
+                            icon: CupertinoIcons.repeat,
+                          ),
+                          _buildAdvantageRow(
+                            title: context
+                                .t.paywall.advantages.sync_across_devices.title,
+                            description: context.t.paywall.advantages
+                                .sync_across_devices.description,
+                            icon: CupertinoIcons.cloud,
+                          ),
+                          _buildAdvantageRow(
+                            title: context
+                                .t.paywall.advantages.community_backed.title,
+                            description: context.t.paywall.advantages
+                                .community_backed.description,
+                            icon: CupertinoIcons.person_3,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
-          ),
-          SizedBox(
-            height: $constants.insets.md,
-          ),
-          const Divider(),
-          SizedBox(
-            height: $constants.insets.xs,
-          ),
-          if (isDesktop(context)) _buildPaymentMobileOnly(context),
-          if (!isDesktop(context))
-            Expanded(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  FutureBuilder<Offerings?>(
-                      future: _fetchOfferings(),
-                      builder: (context, snapshot) {
-                        WidgetsBinding.instance.addPostFrameCallback((_) {
-                          if (_package == null &&
-                              snapshot.data?.current?.availablePackages
-                                      .isNotEmpty ==
-                                  true) {
-                            _package = snapshot.data!.current!.availablePackages
-                                .firstWhere((package) =>
-                                    package.storeProduct.identifier ==
-                                    "cloud_yearly");
-                          }
-                        });
+            SizedBox(
+              height: $constants.insets.md,
+            ),
+            const Divider(),
+            SizedBox(
+              height: $constants.insets.xs,
+            ),
+            if (isDesktop(context)) _buildPaymentMobileOnly(context),
+            if (!isDesktop(context))
+              Expanded(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    FutureBuilder<Offerings?>(
+                        future: _fetchOfferings(),
+                        builder: (context, snapshot) {
+                          WidgetsBinding.instance.addPostFrameCallback((_) {
+                            if (_package == null &&
+                                snapshot.data?.current?.availablePackages
+                                        .isNotEmpty ==
+                                    true) {
+                              _package = snapshot
+                                  .data!.current!.availablePackages
+                                  .firstWhere((package) =>
+                                      package.storeProduct.identifier ==
+                                      "cloud_yearly");
+                            }
+                          });
 
-                        if (snapshot.connectionState ==
-                                ConnectionState.waiting ||
-                            snapshot.data == null) {
-                          return Center(
-                            child: CircularProgressIndicator(
-                              color: getTheme(context).primary,
-                            ),
+                          if (snapshot.connectionState ==
+                                  ConnectionState.waiting ||
+                              snapshot.data == null) {
+                            return Center(
+                              child: CircularProgressIndicator(
+                                color: getTheme(context).primary,
+                              ),
+                            );
+                          }
+                          return Row(
+                            mainAxisSize: MainAxisSize.min,
+                            spacing: $constants.insets.sm,
+                            children: [
+                              _buildPricingCard(context,
+                                  package: snapshot
+                                      .data!.current!.availablePackages
+                                      .firstWhere((package) =>
+                                          package.storeProduct.identifier ==
+                                          "cloud_yearly")),
+                              _buildPricingCard(context,
+                                  package: snapshot
+                                      .data!.current!.availablePackages
+                                      .firstWhere((package) =>
+                                          package.storeProduct.identifier ==
+                                          "cloud_monthly")),
+                            ],
                           );
-                        }
-                        return Row(
-                          mainAxisSize: MainAxisSize.min,
-                          spacing: $constants.insets.sm,
-                          children: [
-                            _buildPricingCard(context,
-                                package: snapshot
-                                    .data!.current!.availablePackages
-                                    .firstWhere((package) =>
-                                        package.storeProduct.identifier ==
-                                        "cloud_yearly")),
-                            _buildPricingCard(context,
-                                package: snapshot
-                                    .data!.current!.availablePackages
-                                    .firstWhere((package) =>
-                                        package.storeProduct.identifier ==
-                                        "cloud_monthly")),
-                          ],
-                        );
-                      }),
-                  SizedBox(
-                    height: $constants.insets.sm,
-                  ),
-                  PrimaryButtonSquare(
-                      text: context.t.actions.subscribe,
-                      onPressed: () async {
-                        if (_package == null) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              content:
-                                  Text(context.t.paywall.no_package_selected),
-                            ),
-                          );
-                          return;
-                        }
-                        final customerInfo =
-                            await _makePurchase(package: _package!);
-                        if (customerInfo == null) {
-                          if (!context.mounted) return;
-                          ToastHelper.showError(
-                              context: context,
-                              title: context.t.paywall.purchase_failed);
-                        }
-                      }),
-                  SingleChildScrollView(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Expanded(
-                          child: TextButton(
-                              child: Text(
-                                context.t.paywall.restore_purchase,
-                                style:
-                                    getTextTheme(context).bodySmall!.copyWith(
-                                          fontWeight: FontWeight.bold,
-                                          color: getTheme(context).primary,
-                                        ),
-                                textAlign: TextAlign.center,
-                              ),
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                              }),
-                        ),
-                        Expanded(
-                          child: TextButton(
-                              child: Text(
-                                context.t.paywall.terms,
-                                style:
-                                    getTextTheme(context).bodySmall!.copyWith(
-                                          fontWeight: FontWeight.bold,
-                                          color: getTheme(context).primary,
-                                        ),
-                                textAlign: TextAlign.center,
-                              ),
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                              }),
-                        ),
-                        Expanded(
-                          child: TextButton(
-                              child: Text(
-                                context.t.paywall.privacy_policy,
-                                style:
-                                    getTextTheme(context).bodySmall!.copyWith(
-                                          fontWeight: FontWeight.bold,
-                                          color: getTheme(context).primary,
-                                        ),
-                                textAlign: TextAlign.center,
-                              ),
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                              }),
-                        ),
-                      ],
+                        }),
+                    SizedBox(
+                      height: $constants.insets.sm,
                     ),
-                  )
-                ],
-              ),
-            )
-        ],
+                    PrimaryButtonSquare(
+                        text: context.t.actions.subscribe,
+                        onPressed: () async {
+                          if (_package == null) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content:
+                                    Text(context.t.paywall.no_package_selected),
+                              ),
+                            );
+                            return;
+                          }
+                          final customerInfo =
+                              await _makePurchase(package: _package!);
+                          if (customerInfo == null) {
+                            if (!context.mounted) return;
+                            ToastHelper.showError(
+                                context: context,
+                                title: context.t.paywall.purchase_failed);
+                          }
+                        }),
+                    SingleChildScrollView(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Expanded(
+                            child: TextButton(
+                                child: Text(
+                                  context.t.paywall.restore_purchase,
+                                  style:
+                                      getTextTheme(context).bodySmall!.copyWith(
+                                            fontWeight: FontWeight.bold,
+                                            color: getTheme(context).primary,
+                                          ),
+                                  textAlign: TextAlign.center,
+                                ),
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                }),
+                          ),
+                          Expanded(
+                            child: TextButton(
+                                child: Text(
+                                  context.t.paywall.terms,
+                                  style:
+                                      getTextTheme(context).bodySmall!.copyWith(
+                                            fontWeight: FontWeight.bold,
+                                            color: getTheme(context).primary,
+                                          ),
+                                  textAlign: TextAlign.center,
+                                ),
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                }),
+                          ),
+                          Expanded(
+                            child: TextButton(
+                                child: Text(
+                                  context.t.paywall.privacy_policy,
+                                  style:
+                                      getTextTheme(context).bodySmall!.copyWith(
+                                            fontWeight: FontWeight.bold,
+                                            color: getTheme(context).primary,
+                                          ),
+                                  textAlign: TextAlign.center,
+                                ),
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                }),
+                          ),
+                        ],
+                      ),
+                    )
+                  ],
+                ),
+              )
+          ],
+        ),
       ),
     );
   }
@@ -647,43 +654,93 @@ class _PaywallState extends State<Paywall> {
   }
 
   Widget _buildPaymentMobileOnly(BuildContext context) {
-    return Expanded(
-      child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: $constants.insets.md),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Lottie.asset(
-              'assets/animations/apple_pay.json',
-              width: 200,
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: $constants.insets.md),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          SizedBox(
+            height: getSize(context).height * 0.2,
+            child: ElevatedContainer(
+              padding: EdgeInsets.all($constants.insets.sm),
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: 30,
+                    child: AnimatedToggleSwitch.rolling(
+                      indicatorSize:
+                          Size.fromWidth(getSize(context).width * 0.2 / 2),
+                      current: _mobilePlatform,
+                      values: const [0, 1],
+                      iconBuilder: (value, foreground) {
+                        return AutoSizeText(
+                            maxLines: 1,
+                            value == 0
+                                ? context.t.paywall.ios
+                                : context.t.paywall.android,
+                            style:
+                                getTextTheme(context).bodyMedium!.copyWith());
+                      },
+                      styleBuilder: (value) {
+                        return ToggleStyle(
+                          borderColor: Colors.transparent,
+                          indicatorColor: value == _mobilePlatform
+                              ? getTheme(context).surfaceContainer
+                              : getTheme(context).surface,
+                          backgroundColor: getTheme(context).surface,
+                        );
+                      },
+                      onChanged: (value) {
+                        setState(() {
+                          _mobilePlatform = value;
+                        });
+                      },
+                    ),
+                  ),
+                  SizedBox(
+                    height: $constants.insets.xs,
+                  ),
+                  QrImageView(
+                    version: QrVersions.auto,
+                    data: _mobilePlatform == 0
+                        ? "https://apps.apple.com/fr/app/atomic-task/id6743615832"
+                        : "https://play.google.com/store/apps/details?id=fr.atomicblend.app",
+                    size: 100.0,
+                  ),
+                ],
+              ),
             ),
-            SizedBox(
-              width: $constants.insets.lg,
-            ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  context.t.paywall.mobile_app_required,
-                  style: getTextTheme(context).headlineSmall,
-                ),
-                SizedBox(
-                  height: $constants.insets.sm,
-                ),
-                Text(
+          ),
+          SizedBox(
+            width: $constants.insets.lg,
+          ),
+          Column(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text(
+                context.t.paywall.mobile_app_required,
+                style: getTextTheme(context).headlineSmall,
+              ),
+              SizedBox(
+                height: $constants.insets.sm,
+              ),
+              SizedBox(
+                width: getSize(context).width * 0.4,
+                child: Text(
                   context.t.paywall.payment_on_mobile_for_better_xp,
                   textAlign: TextAlign.center,
                   style: getTextTheme(context).bodyMedium?.copyWith(
                         color: Colors.grey.shade600,
                       ),
                 ),
-              ],
-            ),
-          ],
-        ),
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }

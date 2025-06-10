@@ -1,4 +1,5 @@
 import 'package:app/entities/user/user.entity.dart';
+import 'package:app/main.dart';
 import 'package:app/pages/paywall/paywall.dart';
 import 'package:app/services/user.service.dart';
 import 'package:app/utils/api_client.dart';
@@ -6,10 +7,18 @@ import 'package:app/utils/shortcuts.dart';
 import 'package:flutter/material.dart';
 
 class PaywallUtils {
-  static showPaywall(BuildContext context, {UserEntity? user}) {
+  static resetPaywall() {
+    prefs?.remove("paywall_displayed");
+  }
+  static showPaywall(BuildContext context, {UserEntity? user}) async {
     if (ApiClient.getSelfHostedRestApiUrl() != null) {
       return;
     }
+    if (prefs?.getBool("paywall_displayed") == true) {
+      return;
+    }
+
+    prefs?.setBool("paywall_displayed", true);
 
     if (user != null) {
       if (UserService.isSubscriptionActive(user)) {
@@ -18,7 +27,7 @@ class PaywallUtils {
     }
 
     if (isDesktop(context)) {
-      showDialog(
+      await showDialog(
         context: context,
         builder: (context) => Dialog(
             child: SizedBox(
@@ -27,7 +36,7 @@ class PaywallUtils {
                 child: const Paywall())),
       );
     } else {
-      showModalBottomSheet(
+      await showModalBottomSheet(
         context: context,
         isScrollControlled: true,
         builder: (context) => SizedBox(
@@ -36,5 +45,7 @@ class PaywallUtils {
             child: const Paywall()),
       );
     }
+
+    prefs?.setBool("paywall_displayed", false);
   }
 }
