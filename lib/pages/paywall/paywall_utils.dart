@@ -10,6 +10,7 @@ class PaywallUtils {
   static resetPaywall() {
     prefs?.remove("paywall_displayed");
   }
+
   static showPaywall(BuildContext context, {UserEntity? user}) async {
     if (ApiClient.getSelfHostedRestApiUrl() != null) {
       return;
