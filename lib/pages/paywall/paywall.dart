@@ -57,9 +57,7 @@ class _PaywallState extends State<Paywall> {
     } else if (_isMakingPurchase == true || _checkPurchaseTimer != null) {
       return _buildPurchaseLoading(context);
     }
-    if (isDesktop(context)) {
-      return Container();
-    }
+
     return Padding(
       padding: EdgeInsets.all($constants.insets.md),
       child: Column(
@@ -192,6 +190,7 @@ class _PaywallState extends State<Paywall> {
           SizedBox(
             height: $constants.insets.xs,
           ),
+          if (isDesktop(context)) _buildPaymentMobileOnly(context),
           if (!isDesktop(context))
             Expanded(
               child: Column(
@@ -640,6 +639,48 @@ class _PaywallState extends State<Paywall> {
               style: getTextTheme(context).bodyMedium?.copyWith(
                     color: Colors.grey.shade600,
                   ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildPaymentMobileOnly(BuildContext context) {
+    return Expanded(
+      child: Padding(
+        padding: EdgeInsets.symmetric(horizontal: $constants.insets.md),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Lottie.asset(
+              'assets/animations/apple_pay.json',
+              width: 200,
+            ),
+            SizedBox(
+              width: $constants.insets.lg,
+            ),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  context.t.paywall.mobile_app_required,
+                  style: getTextTheme(context).headlineSmall,
+                ),
+                SizedBox(
+                  height: $constants.insets.sm,
+                ),
+                Text(
+                  context.t.paywall.payment_on_mobile_for_better_xp,
+                  textAlign: TextAlign.center,
+                  style: getTextTheme(context).bodyMedium?.copyWith(
+                        color: Colors.grey.shade600,
+                      ),
+                ),
+              ],
             ),
           ],
         ),

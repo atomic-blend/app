@@ -830,6 +830,8 @@ class TranslationsPaywallEn {
 	String get success => 'Purchase successful';
 	String get validation_failed => 'Validation failed';
 	String get validation_failed_description => 'Please check your internet connection and restart the app.';
+	String get mobile_app_required => 'Mobile app required';
+	String get payment_on_mobile_for_better_xp => 'To offer you the best experience possible, payment and account configuration is only available on the mobile app';
 }
 
 // Path: search
@@ -2189,6 +2191,8 @@ extension on Translations {
 			case 'paywall.success': return 'Purchase successful';
 			case 'paywall.validation_failed': return 'Validation failed';
 			case 'paywall.validation_failed_description': return 'Please check your internet connection and restart the app.';
+			case 'paywall.mobile_app_required': return 'Mobile app required';
+			case 'paywall.payment_on_mobile_for_better_xp': return 'To offer you the best experience possible, payment and account configuration is only available on the mobile app';
 			case 'search.results': return ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n,
 				zero: 'No results found',
 				one: '1 result found',
