@@ -2,6 +2,113 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## 0.9.0 - 2025-06-11
+#### Bug Fixes
+- rendering issues on mobile for new paywall adjustments - (e7d96b1) - Brandon Guigo
+- update paywall to redirect to mobile app for payment - (baeeaeb) - Brandon Guigo
+- bugs on desktop for payment - (6f7f665) - Brandon Guigo
+- other ui fixes + linter - (9017c6a) - Brandon Guigo
+- ui of filtered view - (6f18854) - Brandon Guigo
+- getUser when refresh return the same user - (91719da) - Brandon Guigo
+- add refresh of user on each app layout init (ie. app startup) - (7644d04) - Brandon Guigo
+- enable subscription on custom backed - (75eaae3) - Brandon Guigo
+- load offerings only one time - (441e4e8) - Brandon Guigo
+- ui of discount badge - (f2ebbb4) - Brandon Guigo
+- refactor - (d011715) - Brandon Guigo
+- paywall UI on mobile - (d659d35) - Brandon Guigo
+- cancel the drag drop when it's not supported (ie device calendars) - (044b073) - Brandon Guigo
+- make sidebar clearer for calendar by initialsOnly side menu items - (c3244a4) - Brandon Guigo
+- ui of the duration picker - (700aa0d) - Brandon Guigo
+- linter - (cd24223) - Brandon Guigo
+- timer overflow on desktop - (a86d673) - Brandon Guigo
+- add toast to inform of success / error when adding a task - (a367816) - Brandon Guigo
+- change color of the add task btn on desktop - (7b098cc) - Brandon Guigo
+- move the more button on desktop to the end of the navbar - (0bfd0c8) - Brandon Guigo
+- heatmap colors didn't display - (392addc) - Brandon Guigo
+- size of the reminder - (ee33691) - Brandon Guigo
+- issue with icon size in primary side menu desktop - (521b858) - Brandon Guigo
+- appicon not defined on android - (2897362) - Brandon Guigo
+- desktop UI - (fa5c9d0) - Brandon Guigo
+- linter - (64cc9b4) - Brandon Guigo
+- refactor - (a4b2238) - Brandon Guigo
+- bug when task_timer modal would not open in stopwatch mode - (5b72383) - Brandon Guigo
+- remaining time for pomo - (cbe9438) - Brandon Guigo
+- reactivity - (8aaf857) - Brandon Guigo
+- timer_utils non useful async removed + add field to time_entry - (5f87cd0) - Brandon Guigo
+- refactor task_timer to use timer mode enum - (8d9cdc2) - Brandon Guigo
+- open the timer modal with task and mode from task details - (be37a20) - Brandon Guigo
+- bug in time entry encryption + duration computation - (f9e9e77) - Brandon Guigo
+- tz bug - (c4d0af0) - Brandon Guigo
+- remove drawer icon on mobile for leading when there's no secondaryItems - (b2b5582) - Brandon Guigo
+- show timer in a dialog or bottom modal - (7a8821b) - Brandon Guigo
+- make the elevated container more elegant - (898b309) - Brandon Guigo
+- linter - (661dd6d) - Brandon Guigo
+- expanded but for tags page - (51ca445) - Brandon Guigo
+#### Features
+- redirect to mobile app on desktop for paywall - (af7b06c) - Brandon Guigo
+- integrate search directly inside the page - (b0c9ec1) - Brandon Guigo
+- add search page as a modal / dialog - (bb508a6) - Brandon Guigo
+- enable android billing - (ccaff5e) - Brandon Guigo
+- add paywall where there's a limit - (d73cb75) - Brandon Guigo
+- add payment processing screen - (fb1cc2a) - Brandon Guigo
+- add ui for success and validation failure - (130c919) - Brandon Guigo
+- setup paywall payment steps UI - (b439e92) - Brandon Guigo
+- don't show paywall when user is registered - (5072d7c) - Brandon Guigo
+- manage my subscription button - (674ce41) - Brandon Guigo
+- customer center - (e37e523) - Brandon Guigo
+- add subscription and payment page - (90cb041) - Brandon Guigo
+- add a method to check if a user have an active subscription or not - (3a69a2b) - Brandon Guigo
+- trigger purchase with package - (b2b3367) - Brandon Guigo
+- make yearly by default - (6f23c43) - Brandon Guigo
+- be able to select a package - (8b5e356) - Brandon Guigo
+- add btn ui - (3d1b50f) - Brandon Guigo
+- add paywall UI - (8c9ba39) - Brandon Guigo
+- add paywall structure - (edbcb5b) - Brandon Guigo
+- add Purchase entity and update UserEntity to include purchases - (6fe65ef) - Brandon Guigo
+- add login revenue cat + finish config - (91f2b9d) - Brandon Guigo
+- configure the revenue cat sdk + paywall sdk - (a13417b) - Brandon Guigo
+- add schedule view - (6dd41b8) - Brandon Guigo
+- add week view - (16ebab9) - Brandon Guigo
+- add resizing of a task in calendar - (6923c20) - Brandon Guigo
+- add drag task to move it - (940cf59) - Brandon Guigo
+- be able to create a task directly from the calendar - (736ba11) - Brandon Guigo
+- add ask buttons on overview sections - (1cfd810) - Brandon Guigo
+- be able to delete an habit - (37d38d4) - Brandon Guigo
+- ui for paused timers - (1ac04ba) - Brandon Guigo
+- add pomo container at top of overview when running - (2001b5b) - Brandon Guigo
+- make the search of a task work - (de1848b) - Brandon Guigo
+- add label to btn - (51fed02) - Brandon Guigo
+- add a btn for pomo break start - (e398cd7) - Brandon Guigo
+- set the duration of break pomo - (66669ae) - Brandon Guigo
+- add clear btn to unselect the task - (6557d8a) - Brandon Guigo
+- show the stopwatch completed modal - (151819c) - Brandon Guigo
+- send to backend the time entry for stopwatch when stopped - (f4a1a17) - Brandon Guigo
+- move time entries to it's own bloc and own state - (8f2d7d1) - Brandon Guigo
+- store time entry without task inside a collection - (5f20bdb) - Brandon Guigo
+- add log entry type to log list - (1032192) - Brandon Guigo
+- update model of time entry to have duration - (79cb3aa) - Brandon Guigo
+- completed timer modal and watcher - (d6fed55) - Brandon Guigo
+- add timer_watcher modal - (0e2a41e) - Brandon Guigo
+- add remaining interactions - (b132de4) - Brandon Guigo
+- start pause with ui reaction - (b260cfd) - Brandon Guigo
+- add reactions to timer utils changes - (f9933fb) - Brandon Guigo
+- insert time utils in ui - (b1533fd) - Brandon Guigo
+- add methods to timer_utils + remove bad code - (0e604ae) - Brandon Guigo
+- store and update pomo duration - (b92ffb2) - Brandon Guigo
+- stopwatch ui - (2ba7235) - Brandon Guigo
+- add task selector - (0b9f199) - Brandon Guigo
+- add mode selector - (788531a) - Brandon Guigo
+- add stopwatch methods - (6072877) - Brandon Guigo
+- add timer utils + list of stuff to do - (11ed31e) - Brandon Guigo
+- open the timer modal from task details - (ffdd340) - Brandon Guigo
+- ui of the timer / pomo page - (376fbdc) - Brandon Guigo
+- add timer page - (416c177) - Brandon Guigo
+- add inbox view + dix darkmode issues - (505ab3b) - Brandon Guigo
+#### Miscellaneous Chores
+- **(release)** 0.8.0 [skip ci] - (940031a) - GitHub Actions
+
+- - -
+
 ## 0.8.0 - 2025-05-23
 #### Bug Fixes
 - last ui adjustments - (757f39a) - Brandon Guigo
