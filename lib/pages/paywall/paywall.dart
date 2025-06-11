@@ -230,18 +230,22 @@ class _PaywallState extends State<Paywall> {
                           mainAxisSize: MainAxisSize.min,
                           spacing: $constants.insets.sm,
                           children: [
-                            _buildPricingCard(context,
-                                package: snapshot
-                                    .data!.current!.availablePackages
-                                    .firstWhere((package) =>
-                                        package.storeProduct.identifier ==
-                                        "cloud_yearly")),
-                            _buildPricingCard(context,
-                                package: snapshot
-                                    .data!.current!.availablePackages
-                                    .firstWhere((package) =>
-                                        package.storeProduct.identifier ==
-                                        "cloud_monthly")),
+                            _buildPricingCard(
+                              context,
+                              package: snapshot.data!.current!.availablePackages
+                                  .firstWhere(
+                                (package) =>
+                                    package.identifier ==
+                                    '\$rc_monthly',
+                              ),
+                            ),
+                            _buildPricingCard(
+                              context,
+                              package: snapshot.data!.current!.availablePackages
+                                  .firstWhere((package) =>
+                                      package.identifier ==
+                                      '\$rc_annual'),
+                            ),
                           ],
                         );
                       }),
@@ -385,7 +389,7 @@ class _PaywallState extends State<Paywall> {
                             context
                                 .t
                                 .paywall
-                                .pricing[package.storeProduct.identifier]!
+                                .pricing[package.identifier]!
                                 .discount,
                             style: getTextTheme(context).bodySmall!.copyWith(
                                   color: getTheme(context).primary,
@@ -396,19 +400,19 @@ class _PaywallState extends State<Paywall> {
                   ),
                 ),
                 Text(
-                  context.t.paywall.pricing[package.storeProduct.identifier]!
+                  context.t.paywall.pricing[package.identifier]!
                       .title,
                   style: getTextTheme(context).bodyLarge?.copyWith(
                         fontWeight: FontWeight.bold,
                       ),
                 ),
                 Text(
-                  context.t.paywall.pricing[package.storeProduct.identifier]!
+                  context.t.paywall.pricing[package.identifier]!
                       .price,
                   style: getTextTheme(context).bodyMedium,
                 ),
                 Text(
-                  context.t.paywall.pricing[package.storeProduct.identifier]!
+                  context.t.paywall.pricing[package.identifier]!
                       .billed,
                   style: getTextTheme(context).bodySmall!.copyWith(
                         color: Colors.grey.shade600,

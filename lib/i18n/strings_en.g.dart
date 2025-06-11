@@ -817,8 +817,8 @@ class TranslationsPaywallEn {
 	String get subtitle => 'Enjoy Atomic Blend without restrictions and help the opensource initiative.';
 	late final TranslationsPaywallAdvantagesEn advantages = TranslationsPaywallAdvantagesEn._(_root);
 	Map<String, dynamic> get pricing => {
-		'cloud_yearly': TranslationsPaywallPricingCloudYearlyEn._(_root),
-		'cloud_monthly': TranslationsPaywallPricingCloudMonthlyEn._(_root),
+		'\$rc_annual': TranslationsPaywallPricing$rcAnnualEn._(_root),
+		'\$rc_monthly': TranslationsPaywallPricing$rcMonthlyEn._(_root),
 	};
 	String get no_package_selected => 'No package selected';
 	String get purchase_failed => 'Purchase failed';
@@ -1380,9 +1380,9 @@ class TranslationsPaywallAdvantagesEn {
 	late final TranslationsPaywallAdvantagesCommunityBackedEn community_backed = TranslationsPaywallAdvantagesCommunityBackedEn._(_root);
 }
 
-// Path: paywall.pricing.cloud_yearly
-class TranslationsPaywallPricingCloudYearlyEn {
-	TranslationsPaywallPricingCloudYearlyEn._(this._root);
+// Path: paywall.pricing.\$rc_annual
+class TranslationsPaywallPricing$rcAnnualEn {
+	TranslationsPaywallPricing$rcAnnualEn._(this._root);
 
 	final Translations _root; // ignore: unused_field
 
@@ -1393,9 +1393,9 @@ class TranslationsPaywallPricingCloudYearlyEn {
 	String get discount => 'Save 16% with yearly billing';
 }
 
-// Path: paywall.pricing.cloud_monthly
-class TranslationsPaywallPricingCloudMonthlyEn {
-	TranslationsPaywallPricingCloudMonthlyEn._(this._root);
+// Path: paywall.pricing.\$rc_monthly
+class TranslationsPaywallPricing$rcMonthlyEn {
+	TranslationsPaywallPricing$rcMonthlyEn._(this._root);
 
 	final Translations _root; // ignore: unused_field
 
@@ -2175,14 +2175,14 @@ extension on Translations {
 			case 'paywall.advantages.sync_across_devices.description': return 'Access your data from any device, anywhere.';
 			case 'paywall.advantages.community_backed.title': return 'Community Backed';
 			case 'paywall.advantages.community_backed.description': return '100% opensource : join a community of users who support the project.';
-			case 'paywall.pricing.cloud_yearly.title': return 'Yearly';
-			case 'paywall.pricing.cloud_yearly.price': return '\$3.33/mo';
-			case 'paywall.pricing.cloud_yearly.billed': return 'billed at \$39.99/year';
-			case 'paywall.pricing.cloud_yearly.discount': return 'Save 16% with yearly billing';
-			case 'paywall.pricing.cloud_monthly.title': return 'Monthly';
-			case 'paywall.pricing.cloud_monthly.price': return '\$3.99/mo';
-			case 'paywall.pricing.cloud_monthly.billed': return 'billed at \$3.99/month';
-			case 'paywall.pricing.cloud_monthly.discount': return '';
+			case 'paywall.pricing.\$rc_annual.title': return 'Yearly';
+			case 'paywall.pricing.\$rc_annual.price': return '\$3.33/mo';
+			case 'paywall.pricing.\$rc_annual.billed': return 'billed at \$39.99/year';
+			case 'paywall.pricing.\$rc_annual.discount': return 'Save 16% with yearly billing';
+			case 'paywall.pricing.\$rc_monthly.title': return 'Monthly';
+			case 'paywall.pricing.\$rc_monthly.price': return '\$3.99/mo';
+			case 'paywall.pricing.\$rc_monthly.billed': return 'billed at \$3.99/month';
+			case 'paywall.pricing.\$rc_monthly.discount': return '';
 			case 'paywall.no_package_selected': return 'No package selected';
 			case 'paywall.purchase_failed': return 'Purchase failed';
 			case 'paywall.restore_purchase': return 'Restore Purchase';
