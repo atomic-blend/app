@@ -7,11 +7,12 @@ import 'package:app/i18n/strings.g.dart';
 import 'package:app/services/sync.service.dart';
 import 'package:app/utils/constants.dart';
 import 'package:app/utils/shortcuts.dart';
+import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class FilteredTaskView extends StatefulWidget {
-  final List<TaskItem> Function(List<TaskEntity> tasks) filter;
+  final List<TaskEntity> Function(List<TaskEntity> tasks) filter;
 
   const FilteredTaskView({super.key, required this.filter});
 
@@ -21,6 +22,7 @@ class FilteredTaskView extends StatefulWidget {
 
 class _FilteredTaskViewState extends State<FilteredTaskView> {
   final TextEditingController _searchController = TextEditingController();
+  List<TaskEntity> _filteredTasks = <TaskEntity>[];
 
   @override
   void initState() {
@@ -49,18 +51,54 @@ class _FilteredTaskViewState extends State<FilteredTaskView> {
               return Future.delayed(const Duration(seconds: 1));
             },
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 ElevatedContainer(
                   child: ABSearchBar(
-                      controller: _searchController, onSubmitted: (value) {}),
+                    controller: _searchController,
+                    onChanged: (value) {
+                      _searchTasks(value);
+                    },
+                    onClear: () {
+                      _searchController.clear();
+                      _filteredTasks = [];
+                      setState(() {});
+                    },
+                  ),
                 ),
                 SizedBox(height: $constants.insets.xs),
-                Expanded(
-                  child: ElevatedContainer(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: $constants.insets.sm,
-                      vertical: $constants.insets.sm,
+                if (_filteredTasks.isNotEmpty) ...[
+                  Text(
+                    context.t.search.results(
+                      n: _filteredTasks.length,
                     ),
+                    style: getTextTheme(context).bodyMedium!.copyWith(
+                          color: getTheme(context).onSurface.lighten(50),
+                        ),
+                  ),
+                  SizedBox(height: $constants.insets.xs),
+                  Expanded(
+                    child: SingleChildScrollView(
+                      child: Column(
+                        spacing: $constants.insets.xs,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: _filteredTasks
+                            .map(
+                              (task) => ElevatedContainer(
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: $constants.insets.sm,
+                                  vertical: $constants.insets.xs,
+                                ),
+                                child: TaskItem(task: task),
+                              ),
+                            )
+                            .toList(),
+                      ),
+                    ),
+                  ),
+                ],
+                if (_filteredTasks.isEmpty)
+                  Expanded(
                     child: ListView(
                       padding: EdgeInsets.zero,
                       children: [
@@ -70,16 +108,41 @@ class _FilteredTaskViewState extends State<FilteredTaskView> {
                             style: getTextTheme(context).labelSmall!,
                           ),
                         if (widget.filter(taskState.tasks ?? []).isNotEmpty)
-                          ...widget.filter(taskState.tasks ?? []),
+                          ...widget.filter(taskState.tasks ?? []).map(
+                                (task) => Padding(
+                                  padding: EdgeInsets.only(
+                                    bottom: $constants.insets.xs,
+                                  ),
+                                  child: ElevatedContainer(
+                                    padding: EdgeInsets.symmetric(
+                                      horizontal: $constants.insets.sm,
+                                      vertical: $constants.insets.xs,
+                                    ),
+                                    child: TaskItem(
+                                      task: task,
+                                    ),
+                                  ),
+                                ),
+                              ),
                       ],
                     ),
                   ),
-                ),
               ],
             ),
           ),
         );
       }),
     );
+  }
+
+  void _searchTasks(String query) {
+    final tasks = context.read<TasksBloc>().state.tasks ?? [];
+    _filteredTasks = tasks
+        .where((task) =>
+            task.title.toLowerCase().contains(query.toLowerCase()) ||
+            (task.description?.toLowerCase().contains(query.toLowerCase()) ??
+                false))
+        .toList();
+    setState(() {});
   }
 }

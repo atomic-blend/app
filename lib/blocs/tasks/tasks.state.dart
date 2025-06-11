@@ -43,26 +43,31 @@ class TaskEditLoading extends TasksState {
   const TaskEditLoading(List<TaskEntity> super.tasks);
 }
 
-class TaskAddTimeEntryLoading extends TasksState {
-  const TaskAddTimeEntryLoading(List<TaskEntity> super.tasks);
+class TaskAdded extends TasksState {
+  const TaskAdded(List<TaskEntity> super.tasks);
+
+  @override
+  List<Object?> get props => [tasks];
 }
 
-class TaskRemoveTimeEntryLoading extends TasksState {
-  const TaskRemoveTimeEntryLoading(List<TaskEntity> super.tasks);
+class TaskDeleted extends TasksState {
+  const TaskDeleted(List<TaskEntity> super.tasks);
+
+  @override
+  List<Object?> get props => [tasks];
 }
 
-class TaskUpdateTimeEntryLoading extends TasksState {
-  const TaskUpdateTimeEntryLoading(List<TaskEntity> super.tasks);
+class TaskEdited extends TasksState {
+  const TaskEdited(List<TaskEntity> super.tasks);
+
+  @override
+  List<Object?> get props => [tasks];
 }
 
-class TaskAddTimeEntrySuccess extends TasksState {
-  const TaskAddTimeEntrySuccess(List<TaskEntity> super.tasks);
-}
+class TaskError extends TasksState {
+  const TaskError(List<TaskEntity> super.tasks, this.message);
+  final String message;
 
-class TaskRemoveTimeEntrySuccess extends TasksState {
-  const TaskRemoveTimeEntrySuccess(List<TaskEntity> super.tasks);
-}
-
-class TaskUpdateTimeEntrySuccess extends TasksState {
-  const TaskUpdateTimeEntrySuccess(List<TaskEntity> super.tasks);
+  @override
+  List<Object?> get props => [message];
 }

@@ -3,9 +3,11 @@ import 'dart:convert';
 import 'package:app/entities/user/user.entity.dart';
 import 'package:app/entities/userRole/userRole.entity.dart';
 import 'package:app/entities/user_device/user_device.dart';
+import 'package:app/entities/purchase/purchase.dart';
 import 'package:app/main.dart';
 import 'package:app/services/device_info.service.dart';
 import 'package:app/services/encryption.service.dart';
+import 'package:app/services/revenue_cat_service.dart';
 import 'package:app/utils/api_client.dart';
 import 'package:dio/dio.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
@@ -22,9 +24,9 @@ class UserService {
     await prefs?.clear();
     globalApiClient.setIdToken(null);
     Sentry.configureScope(
-        (scope) => scope
-            .setUser(SentryUser(id: null)),
-      );
+      (scope) => scope.setUser(SentryUser(id: null)),
+    );
+    await RevenueCatService.logOut();
     encryptionService = null;
     deviceInfoService = null;
   }
@@ -63,20 +65,16 @@ class UserService {
 
   Future<UserEntity?> getUser(UserEntity user) async {
     try {
-      globalApiClient.setIdToken(user.accessToken!);
       var result = await globalApiClient.get('/users/profile');
       if (result.statusCode == 200) {
-        await prefs?.setString('user', json.encode(user.toJson()));
-        return user;
+        final newUser = UserEntity.fromJson(result.data["data"]);
+        await prefs?.setString('user', json.encode(newUser.toJson()));
+        return newUser;
       }
       return null;
-    } on DioException catch (e) {
-      if (e.type == DioExceptionType.badResponse &&
-          e.response?.statusCode == 404) {
-        return await createUser(user);
-      }
+    } catch (e) {
+      return null;
     }
-    return null;
   }
 
   Future<UserEntity?> checkForLoggedInUser() async {
@@ -110,6 +108,7 @@ class UserService {
     if (result.statusCode == 200) {
       final userData = result.data['user'];
       final user = UserEntity.fromJson(userData);
+      await RevenueCatService.logIn(user.id!);
       await prefs?.setString('user', json.encode(user.toJson()));
       await prefs?.setString('accessToken', result.data["accessToken"]);
       await prefs?.setString('refreshToken', result.data["refreshToken"]);
@@ -146,6 +145,7 @@ class UserService {
       userData!['accessToken'] = result.data['accessToken'];
       userData!['refreshToken'] = result.data['refreshToken'];
       final user = UserEntity.fromJson(userData!);
+      await RevenueCatService.logIn(user.id!);
       prefs?.setString('user', json.encode(user.toJson()));
       user.keySet = keySet!;
 
@@ -267,5 +267,122 @@ class UserService {
     } else {
       throw Exception('reset_password_failed');
     }
+  }
+
+  //check if user have an active subscription in purchases
+  static bool isSubscriptionActive(UserEntity? user) {
+    if (ApiClient.getSelfHostedRestApiUrl() != null &&
+        ApiClient.getSelfHostedRestApiUrl() != env?.restApiUrl) {
+      // Self-hosted instance, no subscription logic
+      return true;
+    }
+    if (user?.purchases == null || user!.purchases!.isEmpty) {
+      return false;
+    }
+
+    final nowMs = DateTime.now().millisecondsSinceEpoch;
+
+    for (final purchase in user.purchases!) {
+      // Check if it's a RevenueCat purchase
+      if (purchase.type == PurchaseType.revenueCat) {
+        final purchaseData = purchase.purchaseData;
+
+        // Check for expiration timestamp in milliseconds
+        if (purchaseData.containsKey('expiration_at_ms') &&
+            purchaseData['expiration_at_ms'] != null) {
+          try {
+            final expirationAtMs = purchaseData['expiration_at_ms'];
+            // Handle both int and string representations
+            final int expirationTimestamp = expirationAtMs is int
+                ? expirationAtMs
+                : int.parse(expirationAtMs.toString());
+
+            if (expirationTimestamp > nowMs) {
+              return true; // Found an active subscription
+            }
+          } catch (e) {
+            // Invalid timestamp format, skip this purchase
+            continue;
+          }
+        }
+
+        // Additional check: ensure it's a subscription type
+        if (purchaseData.containsKey('type') &&
+            purchaseData['type'] == 'SUBSCRIPTION') {
+          // For subscriptions without expiration data, check purchase date
+          if (purchaseData.containsKey('purchased_at_ms')) {
+            try {
+              final purchasedAtMs = purchaseData['purchased_at_ms'];
+              final int purchaseTimestamp = purchasedAtMs is int
+                  ? purchasedAtMs
+                  : int.parse(purchasedAtMs.toString());
+
+              // Consider it active if purchased recently (within last 30 days)
+              // This is a fallback - ideally expiration_at_ms should always be present
+              final thirtyDaysAgo = nowMs - (30 * 24 * 60 * 60 * 1000);
+              if (purchaseTimestamp > thirtyDaysAgo) {
+                return true;
+              }
+            } catch (e) {
+              // Invalid timestamp, skip
+              continue;
+            }
+          }
+        }
+      }
+    }
+    return false; // No active subscription found
+  }
+
+  static Purchase getCurrentSubscription(UserEntity? user) {
+    if (user == null || user.purchases == null || user.purchases!.isEmpty) {
+      throw Exception('No active subscription found');
+    }
+
+    final nowMs = DateTime.now().millisecondsSinceEpoch;
+
+    for (final purchase in user.purchases!) {
+      if (purchase.type == PurchaseType.revenueCat) {
+        final purchaseData = purchase.purchaseData;
+
+        // Check for expiration timestamp in milliseconds
+        if (purchaseData.containsKey('expiration_at_ms') &&
+            purchaseData['expiration_at_ms'] != null) {
+          try {
+            final expirationAtMs = purchaseData['expiration_at_ms'];
+            final int expirationTimestamp = expirationAtMs is int
+                ? expirationAtMs
+                : int.parse(expirationAtMs.toString());
+
+            if (expirationTimestamp > nowMs) {
+              return purchase; // Found an active subscription
+            }
+          } catch (e) {
+            // Invalid timestamp format, skip this purchase
+            continue;
+          }
+        }
+      }
+    }
+    throw Exception('No active subscription found');
+  }
+
+  static DateTime getNextBillingDate(Purchase purchase) {
+    if (purchase.type != PurchaseType.revenueCat) {
+      throw Exception('Purchase is not a RevenueCat subscription');
+    }
+
+    final purchaseData = purchase.purchaseData;
+
+    final expirationAtMs = purchaseData['expiration_at_ms'];
+    if (expirationAtMs == null) {
+      throw Exception('Expiration at timestamp not found in purchase data');
+    }
+    final int expirationTimestamp = expirationAtMs is int
+        ? expirationAtMs
+        : int.parse(expirationAtMs.toString());
+    final expirationDate =
+        DateTime.fromMillisecondsSinceEpoch(expirationTimestamp);
+    return expirationDate;
   }
 }

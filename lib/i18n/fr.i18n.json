@@ -151,6 +151,7 @@
     "title": "Tâches",
     "today": "Aujourd'hui",
     "tags": "Tags",
+    "inbox": "Boîte de réception",
     "all_tasks": "Toutes les tâches",
     "completed_tasks": "Tâches terminées",
     "my_tags": "Mes tags",
@@ -182,6 +183,7 @@
     "log_session": "Journaliser une session",
     "timer": "Chronomètre",
     "pomodoro": "Pomodoro",
+    "manual": "Manuel",
     "from": "De",
     "to": "À",
     "priority": "Priorité",
@@ -205,6 +207,9 @@
       "notes": "Notes",
       "end_date": "Date de fin",
       "cancel": "Annuler",
+      "task_added": "Tâche ajoutée",
+      "task_added_description": "Votre tâche a été ajoutée avec succès.",
+      "task_error": "Erreur lors de l'opération",
       "save": "Enregistrer",
       "erase": "Effacer",
       "title_required": "Titre requis",
@@ -238,6 +243,14 @@
     "month": "Mois",
     "day": "Jour",
     "threeDays": "3 jours",
+    "week": "Semaine",
+    "schedule": "Emploi du temps",
+    "errors": {
+      "cannot_move_device_calendar_event": "Vous ne pouvez pas déplacer un événement de calendrier d'appareil",
+      "cannot_move_habit_event": "Vous ne pouvez pas déplacer un événement d'habitude",
+      "cannot_resize_device_calendar_event": "Vous ne pouvez pas redimensionner un événement de calendrier d'appareil",
+      "cannot_resize_habit_event": "Vous ne pouvez pas redimensionner un événement d'habitude"
+    },
     "event_detail": {
       "date": "Date",
       "time": "Heure",
@@ -272,6 +285,20 @@
       "security": "Sécurité et confidentialité",
       "delete_account": "Supprimer mon compte"
     },
+    "subscription_payments": {
+      "title": "Abonnement & Paiements",
+      "subscription": "Abonnement ${subName}",
+      "latest_subscription": "Ceci est votre abonnement avec la date de facturation la plus récente.",
+      "billing_cycle": "Cycle de facturation",
+      "current_price": "Prix actuel",
+      "next_billing_date": "Prochaine date de facturation",
+      "payment_history": "Historique des paiements",
+      "no_payments": "Aucun paiement trouvé",
+      "currency_symbol": "$",
+      "manage_my_subscription": "Gérer mon abonnement",
+      "management_url_only_mobile": "Vous ne pouvez gérer votre abonnement que depuis l'application iOS ou Android."
+
+    },
     "profile": {
       "my_profile": "Mon profil",
       "email": "Adresse e-mail",
@@ -299,6 +326,11 @@
     "title": "Habitudes",
     "no_habits": "Aucune habitude",
     "get_started_now": "Ajoutez votre première habitude pour commencer !",
+    "delete_habit": {
+      "title": "Supprimer l'habitude",
+      "description": "Êtes-vous sûr de vouloir supprimer cette habitude ?",
+      "warning": "Cette action est irréversible et toutes les entrées associées à l'habitude seront supprimées."
+    },
     "add": {
       "title": "Que souhaitez-vous accomplir ?",
       "name": "Nom de l'habitude*",
@@ -383,7 +415,12 @@
     "last_month": "Le mois dernier",
     "this_year": "Cette année",
     "last_year": "L'année dernière",
-    "all_time": "Tout le temps"
+    "all_time": "Tout le temps",
+    "minutes": {
+      "zero": "${nb} minutes",
+      "one": "${nb} minute",
+      "other": "${nb} minutes"
+    }
   },
   "days_before(map)": {
     "none": {
@@ -457,7 +494,9 @@
     "delete": "Supprimer",
     "add": "Ajouter",
     "edit": "Modifier",
-    "clear": "Effacer"
+    "clear": "Effacer",
+    "close": "Fermer",
+    "subscribe": "S'abonner"
   },
   "date_modes(map)": {
     "date": "Date",
@@ -718,5 +757,102 @@
   },
   "inbox": {
     "title": "Boîte de réception"
+  },
+  "timer": {
+    "title": "Minuteur",
+    "start": "Démarrer",
+    "stop": "Arrêter",
+    "reset": "Réinitialiser",
+    "start_pomodoro": "Démarrer Pomodoro",
+    "start_stopwatch": "Démarrer Chronomètre",
+    "start_break": "Démarrer une pause",
+    "pomo_running": "Pomodoro en cours",
+    "timer_running": "Timer en cours",
+    "time_left": "Temps restant : ${timeLeft}",
+    "pause": "Pause",
+    "resume": "Reprendre",
+    "duration": "Durée",
+    "elapsed_time": "Temps écoulé",
+    "remaining_time": "Temps restant",
+    "no_timer_running": "Aucun minuteur en cours",
+    "modes(map)": {
+      "pomodoro": "Pomodoro",
+      "stopwatch": "Chronomètre"
+    },
+    "select_task": "Sélectionner une tâche",
+    "select_task_to_start_timer": "Sélectionner une tâche pour démarrer le minuteur",
+    "completed": "Terminé !",
+    "pomodoro_completed_message": "Votre session pomodoro est terminée ! C'est l'heure de faire une pause.",
+    "stopwatch_completed_message": "Votre session de chronomètre a été terminée.",
+    "task_label": "Tâche"
+  },
+  "paywall": {
+    "title": "Obtenez AtomicBlend Cloud",
+    "subtitle": "Profitez d'Atomic Blend sans restrictions et aidez l'initiative open source.",
+    "advantages": {
+      "all_apps_of_the_suite": {
+        "title": "Toutes les applications de la suite",
+        "description": "Accédez à toutes les applications de la suite, y compris Tâches, Habitudes, Calendrier, Notes, et plus encore."
+      },
+      "end_to_end_encrypted": {
+        "title": "Chiffrement de bout en bout",
+        "description": "Vos données sont à vous, pour toujours."
+      },
+      "unlimited_tasks": {
+        "title": "Tâches Illimitées",
+        "description": "Créez autant de tâches que vous le souhaitez, sans limites."
+      },
+      "unlimited_habits": {
+        "title": "Habitudes Illimitées",
+        "description": "Faites un pas vers une vie plus saine avec des habitudes illimitées."
+      },
+      "unlimited_tags": {
+        "title": "Tags / Dossiers Illimités",
+        "description": "Utilisez autant de tags et de dossiers que nécessaire pour organiser votre vie."
+      },
+      "sync_across_devices": {
+        "title": "Synchronisation entre appareils",
+        "description": "Accédez à vos données depuis n'importe quel appareil, n'importe où."
+      },
+      "community_backed": {
+        "title": "Soutien de la communauté",
+        "description": "100% opensource : rejoignez une communauté d'utilisateurs qui soutiennent le projet."
+      }
+    },
+    "pricing(map)": {
+      "cloud_yearly": {
+        "title": "Annuel",
+        "price": "3.33€/mo",
+        "billed": "facturé à 39.99€/an",
+        "discount": "16% off"
+      },
+      "cloud_monthly": {
+        "title": "Mensuel",
+        "price": "3.99€/mo",
+        "billed": "facturé à 3.99€/mois",
+        "discount": ""
+      }
+    },
+    "no_package_selected": "Aucun package sélectionné",
+    "purchase_failed": "Échec de l'achat",
+    "restore_purchase": "Restaurer l'achat",
+    "terms": "Conditions d'utilisation",
+    "privacy_policy": "Politique de confidentialité",
+    "success": "Achat réussi !",
+    "payment_in_progress": "Paiement en cours",
+    "payment_in_progress_description": "Veuillez patienter pendant que nous traitons votre paiement.",
+    "validation_failed": "Échec de la validation",
+    "validation_failed_description": "Veuillez vérifier votre connexion Internet et redémarrer l'application.",
+    "mobile_app_required": "Application mobile requise",
+    "payment_on_mobile_for_better_xp": "Pour vous offrir la meilleure expérience possible, le paiement et la configuration du compte ne sont disponibles que sur l'application mobile.",
+    "ios": "iOS", 
+    "android": "Android"
+  },
+  "search": {
+    "results": {
+      "zero": "Aucun résultat trouvé",
+      "one": "1 résultat trouvé",
+      "other": "${n} résultats trouvés"
+    }
   }
 }

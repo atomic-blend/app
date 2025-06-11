@@ -1,5 +1,6 @@
 import 'package:animated_toggle_switch/animated_toggle_switch.dart';
 import 'package:app/blocs/habit/habit.bloc.dart';
+import 'package:app/components/modals/delete_confirm_modal.dart';
 import 'package:app/components/widgets/elevated_container.dart';
 import 'package:app/entities/habit/habit.entity.dart';
 import 'package:app/entities/habit/habit_entry/habit_entry.entity.dart';
@@ -165,52 +166,91 @@ class _HabitsState extends State<Habits> {
           padding: EdgeInsets.only(bottom: $constants.insets.xs),
           child: Slidable(
             key: ValueKey(habits[index].id),
-            endActionPane: ActionPane(
-                motion: const ScrollMotion(),
-                extentRatio: 0.25,
-                children: [
-                  SizedBox(
-                    width: $constants.insets.xs,
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      var selector = ViewOrEditHabitModal(
-                        habit: habits[index],
-                        isEdit: true,
-                      );
-                      if (isDesktop(context)) {
-                        showDialog(
-                            context: context, builder: (context) => selector);
-                      } else {
-                        showModalBottomSheet(
-                            context: context,
-                            isScrollControlled: true,
-                            builder: (context) => selector);
-                      }
-                    },
-                    child: Container(
-                      height: double.infinity,
-                      width: getSize(context).width * 0.2,
-                      decoration: BoxDecoration(
-                        color: getTheme(context).surfaceContainer,
-                        borderRadius:
-                            BorderRadius.circular($constants.corners.sm),
-                      ),
-                      child: const Icon(
-                        CupertinoIcons.pencil,
-                        size: 30,
-                      ),
+            endActionPane: ActionPane(motion: const ScrollMotion(), children: [
+              SizedBox(
+                width: $constants.insets.xs,
+              ),
+              Expanded(
+                child: GestureDetector(
+                  onTap: () {
+                    var selector = ViewOrEditHabitModal(
+                      habit: habits[index],
+                      isEdit: true,
+                    );
+                    if (isDesktop(context)) {
+                      showDialog(
+                          context: context,
+                          builder: (context) => Dialog(child: selector));
+                    } else {
+                      showModalBottomSheet(
+                          context: context,
+                          isScrollControlled: true,
+                          builder: (context) => selector);
+                    }
+                  },
+                  child: Container(
+                    height: double.infinity,
+                    padding:
+                        EdgeInsets.symmetric(horizontal: $constants.insets.md),
+                    decoration: BoxDecoration(
+                      color: getTheme(context).surface,
+                      borderRadius:
+                          BorderRadius.circular($constants.corners.sm),
+                    ),
+                    child: const Icon(
+                      CupertinoIcons.pencil,
+                      size: 30,
                     ),
                   ),
-                ]),
+                ),
+              ),
+              SizedBox(
+                width: $constants.insets.xs,
+              ),
+              Expanded(
+                child: GestureDetector(
+                  onTap: () {
+                    showDialog(
+                        context: context,
+                        builder: (context) => DeleteConfirmModal(
+                            title: context.t.habits.delete_habit.title,
+                            description:
+                                context.t.habits.delete_habit.description,
+                            warning: context.t.habits.delete_habit.warning,
+                            onDelete: () {
+                              context.read<HabitBloc>().add(
+                                    DeleteHabit(habits[index]),
+                                  );
+                            }));
+                  },
+                  child: Container(
+                    height: double.infinity,
+                    padding:
+                        EdgeInsets.symmetric(horizontal: $constants.insets.md),
+                    decoration: BoxDecoration(
+                      color: getTheme(context).error,
+                      borderRadius:
+                          BorderRadius.circular($constants.corners.sm),
+                    ),
+                    child: const Icon(
+                      CupertinoIcons.trash,
+                      size: 25,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              ),
+            ]),
             child: GestureDetector(
               onTap: () {
                 var selector = ViewOrEditHabitModal(
                   habit: habits[index],
-                  isEdit: true,
+                  isEdit: false,
                 );
                 if (isDesktop(context)) {
-                  showDialog(context: context, builder: (context) => selector);
+                  showDialog(
+                      context: context,
+                      builder: (context) => Dialog(child: selector));
                 } else {
                   showModalBottomSheet(
                       context: context,

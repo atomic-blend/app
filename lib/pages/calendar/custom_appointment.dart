@@ -1,4 +1,4 @@
-import 'package:syncfusion_flutter_calendar/calendar.dart';
+import 'dart:ui';
 
 enum CustomAppointmentType {
   task,
@@ -6,17 +6,23 @@ enum CustomAppointmentType {
   habit,
 }
 
-class CustomAppointment extends Appointment {
+class CustomAppointment {
   final CustomAppointmentType itemType;
   final String itemId;
+  final DateTime startTime;
+  final DateTime endTime;
+  final String subject;
+  final Color color;
+  final String? notes;
+  final bool? isAllDay;
 
   CustomAppointment({
-    required super.startTime,
-    required super.endTime,
-    required super.subject,
-    required super.color,
-    super.notes,
-    super.isAllDay,
+    required this.startTime,
+    required this.endTime,
+    required this.subject,
+    required this.color,
+    this.notes,
+    this.isAllDay,
     required this.itemType,
     required this.itemId,
   });

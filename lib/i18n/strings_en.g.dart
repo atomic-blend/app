@@ -98,6 +98,9 @@ class Translations implements BaseTranslations<AppLocale, Translations> {
 	late final TranslationsEisenhowerEn eisenhower = TranslationsEisenhowerEn._(_root);
 	late final TranslationsFeatureUnderConstructionEn feature_under_construction = TranslationsFeatureUnderConstructionEn._(_root);
 	late final TranslationsInboxEn inbox = TranslationsInboxEn._(_root);
+	late final TranslationsTimerEn timer = TranslationsTimerEn._(_root);
+	late final TranslationsPaywallEn paywall = TranslationsPaywallEn._(_root);
+	late final TranslationsSearchEn search = TranslationsSearchEn._(_root);
 }
 
 // Path: navigation
@@ -162,6 +165,7 @@ class TranslationsTasksEn {
 	String get title => 'Tasks';
 	String get today => 'Today';
 	String get overview => 'Overview';
+	String get inbox => 'Inbox';
 	String get tags => 'Tags';
 	String get all_tasks => 'All tasks';
 	String get completed_tasks => 'Completed tasks';
@@ -178,6 +182,7 @@ class TranslationsTasksEn {
 	String get log_session => 'Log session';
 	String get timer => 'Timer';
 	String get pomodoro => 'Pomodoro';
+	String get manual => 'Manual';
 	String get from => 'From';
 	String get to => 'To';
 	String get priority => 'Priority';
@@ -205,6 +210,9 @@ class TranslationsCalendarEn {
 	String get month => 'Month';
 	String get day => 'Day';
 	String get threeDays => '3 Days';
+	String get week => 'Week';
+	String get schedule => 'Schedule';
+	late final TranslationsCalendarErrorsEn errors = TranslationsCalendarErrorsEn._(_root);
 	late final TranslationsCalendarEventDetailEn event_detail = TranslationsCalendarEventDetailEn._(_root);
 	late final TranslationsCalendarSettingsEn settings = TranslationsCalendarSettingsEn._(_root);
 }
@@ -220,6 +228,7 @@ class TranslationsAccountEn {
 	late final TranslationsAccountSectionsEn sections = TranslationsAccountSectionsEn._(_root);
 	late final TranslationsAccountActionsEn actions = TranslationsAccountActionsEn._(_root);
 	late final TranslationsAccountProfileEn profile = TranslationsAccountProfileEn._(_root);
+	late final TranslationsAccountSubscriptionPaymentsEn subscription_payments = TranslationsAccountSubscriptionPaymentsEn._(_root);
 	late final TranslationsAccountSecurityAndPrivacyEn security_and_privacy = TranslationsAccountSecurityAndPrivacyEn._(_root);
 }
 
@@ -233,6 +242,7 @@ class TranslationsHabitsEn {
 	String get title => 'Habits';
 	String get no_habits => 'No habits for now';
 	String get get_started_now => 'Add your first habit to get started!';
+	late final TranslationsHabitsDeleteHabitEn delete_habit = TranslationsHabitsDeleteHabitEn._(_root);
 	late final TranslationsHabitsAddEn add = TranslationsHabitsAddEn._(_root);
 	String get list => 'Habits';
 	String get overview => 'Overview';
@@ -280,6 +290,11 @@ class TranslationsTimesEn {
 	String get this_year => 'This year';
 	String get last_year => 'Last year';
 	String get all_time => 'All time';
+	String minutes({required num n, required Object nb}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n,
+		zero: '${nb} minutes',
+		one: '${nb} minute',
+		other: '${nb} minutes',
+	);
 }
 
 // Path: days_before.none
@@ -472,6 +487,8 @@ class TranslationsActionsEn {
 	String get add => 'Add';
 	String get edit => 'Edit';
 	String get clear => 'Clear';
+	String get close => 'Close';
+	String get subscribe => 'Subscribe';
 }
 
 // Path: validation
@@ -754,6 +771,85 @@ class TranslationsInboxEn {
 	String get title => 'Inbox';
 }
 
+// Path: timer
+class TranslationsTimerEn {
+	TranslationsTimerEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	String get title => 'Timer';
+	String get start => 'Start';
+	String get stop => 'Stop';
+	String get reset => 'Reset';
+	String get pause => 'Pause';
+	String get resume => 'Resume';
+	String get duration => 'Duration';
+	String get start_pomodoro => 'Start pomodoro';
+	String get start_stopwatch => 'Start stopwatch';
+	String get pomo_running => 'Pomodoro running';
+	String get timer_running => 'Timer running';
+	String time_left({required Object timeLeft}) => 'Time left: ${timeLeft}';
+	String get start_break => 'Start break';
+	String get elapsed_time => 'Elapsed time';
+	String get remaining_time => 'Remaining time';
+	String get no_timer_running => 'No timer running';
+	Map<String, String> get modes => {
+		'pomodoro': 'Pomodoro',
+		'stopwatch': 'Stopwatch',
+	};
+	String get select_task => 'Select a task';
+	String get select_task_to_start_timer => 'Select a task to start the timer';
+	String get completed => 'Completed!';
+	String get pomodoro_completed_message => 'Your pomodoro session has completed! Time for a break.';
+	String get stopwatch_completed_message => 'Your stopwatch session has been completed.';
+	String get task_label => 'Task';
+}
+
+// Path: paywall
+class TranslationsPaywallEn {
+	TranslationsPaywallEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	String get title => 'Get AtomicBlend Cloud';
+	String get subtitle => 'Enjoy Atomic Blend without restrictions and help the opensource initiative.';
+	late final TranslationsPaywallAdvantagesEn advantages = TranslationsPaywallAdvantagesEn._(_root);
+	Map<String, dynamic> get pricing => {
+		'cloud_yearly': TranslationsPaywallPricingCloudYearlyEn._(_root),
+		'cloud_monthly': TranslationsPaywallPricingCloudMonthlyEn._(_root),
+	};
+	String get no_package_selected => 'No package selected';
+	String get purchase_failed => 'Purchase failed';
+	String get restore_purchase => 'Restore Purchase';
+	String get terms => 'Terms of Service';
+	String get privacy_policy => 'Privacy Policy';
+	String get payment_in_progress => 'Payment in progress';
+	String get payment_in_progress_description => 'Please wait while we process your payment.';
+	String get success => 'Purchase successful';
+	String get validation_failed => 'Validation failed';
+	String get validation_failed_description => 'Please check your internet connection and restart the app.';
+	String get mobile_app_required => 'Mobile app required';
+	String get payment_on_mobile_for_better_xp => 'To offer you the best experience possible, payment and account configuration is only available on the mobile app';
+	String get ios => 'iOS';
+	String get android => 'Android';
+}
+
+// Path: search
+class TranslationsSearchEn {
+	TranslationsSearchEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	String results({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n,
+		zero: 'No results found',
+		one: '1 result found',
+		other: '${n} results found',
+	);
+}
+
 // Path: auth.not_logged_in
 class TranslationsAuthNotLoggedInEn {
 	TranslationsAuthNotLoggedInEn._(this._root);
@@ -1003,6 +1099,9 @@ class TranslationsTasksAddTaskModalEn {
 	String get cancel => 'Cancel';
 	String get save => 'Save';
 	String get erase => 'Erase';
+	String get task_added => 'Task added';
+	String get task_added_description => 'Your task has been added successfully.';
+	String get task_error => 'Task error';
 	String get title_required => 'Title required';
 	String get title_required_description => 'Please enter a title for your task';
 	String reminders({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n,
@@ -1032,6 +1131,19 @@ class TranslationsTasksAddTimeEntryEn {
 	String get end_time => 'End time';
 	String get not_defined => 'Not defined';
 	String get date_required => 'Date is required';
+}
+
+// Path: calendar.errors
+class TranslationsCalendarErrorsEn {
+	TranslationsCalendarErrorsEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	String get cannot_move_device_calendar_event => 'You cannot move a device calendar event';
+	String get cannot_move_habit_event => 'You cannot move a habit event';
+	String get cannot_resize_device_calendar_event => 'You cannot resize a device calendar event';
+	String get cannot_resize_habit_event => 'You cannot resize a habit event';
 }
 
 // Path: calendar.event_detail
@@ -1107,6 +1219,26 @@ class TranslationsAccountProfileEn {
 	String get email_same => 'Email must be different from the current email';
 }
 
+// Path: account.subscription_payments
+class TranslationsAccountSubscriptionPaymentsEn {
+	TranslationsAccountSubscriptionPaymentsEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	String get title => 'Subscription & Payments';
+	String subscription({required Object subName}) => '${subName} Subscription';
+	String get latest_subscription => 'This is your subscription with the earliest billing date.';
+	String get billing_cycle => 'Billing Cycle';
+	String get current_price => 'Current Price';
+	String get next_billing_date => 'Next Billing Date';
+	String get payment_history => 'Payment History';
+	String get no_payments => 'No payments for now';
+	String get currency_symbol => '\$';
+	String get manage_my_subscription => 'Manage my subscription';
+	String get management_url_only_mobile => 'You can only manage your subscription from the iOS or Android app.';
+}
+
 // Path: account.security_and_privacy
 class TranslationsAccountSecurityAndPrivacyEn {
 	TranslationsAccountSecurityAndPrivacyEn._(this._root);
@@ -1116,6 +1248,18 @@ class TranslationsAccountSecurityAndPrivacyEn {
 	// Translations
 	String get title => 'Security & Privacy';
 	late final TranslationsAccountSecurityAndPrivacyChangePasswordEn change_password = TranslationsAccountSecurityAndPrivacyChangePasswordEn._(_root);
+}
+
+// Path: habits.delete_habit
+class TranslationsHabitsDeleteHabitEn {
+	TranslationsHabitsDeleteHabitEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	String get title => 'Delete habit';
+	String get description => 'Are you sure you want to delete this habit?';
+	String get warning => 'This action cannot be undone and all the related entries will also be deleted.';
 }
 
 // Path: habits.add
@@ -1220,6 +1364,48 @@ class TranslationsTimeUnitsLongEn {
 	);
 }
 
+// Path: paywall.advantages
+class TranslationsPaywallAdvantagesEn {
+	TranslationsPaywallAdvantagesEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	late final TranslationsPaywallAdvantagesAllAppsOfTheSuiteEn all_apps_of_the_suite = TranslationsPaywallAdvantagesAllAppsOfTheSuiteEn._(_root);
+	late final TranslationsPaywallAdvantagesEndToEndEncryptedEn end_to_end_encrypted = TranslationsPaywallAdvantagesEndToEndEncryptedEn._(_root);
+	late final TranslationsPaywallAdvantagesUnlimitedTasksEn unlimited_tasks = TranslationsPaywallAdvantagesUnlimitedTasksEn._(_root);
+	late final TranslationsPaywallAdvantagesUnlimitedHabitsEn unlimited_habits = TranslationsPaywallAdvantagesUnlimitedHabitsEn._(_root);
+	late final TranslationsPaywallAdvantagesUnlimitedTagsEn unlimited_tags = TranslationsPaywallAdvantagesUnlimitedTagsEn._(_root);
+	late final TranslationsPaywallAdvantagesSyncAcrossDevicesEn sync_across_devices = TranslationsPaywallAdvantagesSyncAcrossDevicesEn._(_root);
+	late final TranslationsPaywallAdvantagesCommunityBackedEn community_backed = TranslationsPaywallAdvantagesCommunityBackedEn._(_root);
+}
+
+// Path: paywall.pricing.cloud_yearly
+class TranslationsPaywallPricingCloudYearlyEn {
+	TranslationsPaywallPricingCloudYearlyEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	String get title => 'Yearly';
+	String get price => '\$3.33/mo';
+	String get billed => 'billed at \$39.99/year';
+	String get discount => 'Save 16% with yearly billing';
+}
+
+// Path: paywall.pricing.cloud_monthly
+class TranslationsPaywallPricingCloudMonthlyEn {
+	TranslationsPaywallPricingCloudMonthlyEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	String get title => 'Monthly';
+	String get price => '\$3.99/mo';
+	String get billed => 'billed at \$3.99/month';
+	String get discount => '';
+}
+
 // Path: settings.app_settings.selfHostedUrl
 class TranslationsSettingsAppSettingsSelfHostedUrlEn {
 	TranslationsSettingsAppSettingsSelfHostedUrlEn._(this._root);
@@ -1250,6 +1436,83 @@ class TranslationsAccountSecurityAndPrivacyChangePasswordEn {
 	String get password_mismatch => 'Passwords do not match';
 	String get password_hint => 'SuperSecure123!';
 	String get warning_changing_pws_will_log_you_out => 'Changing your password will log you out of the app.';
+}
+
+// Path: paywall.advantages.all_apps_of_the_suite
+class TranslationsPaywallAdvantagesAllAppsOfTheSuiteEn {
+	TranslationsPaywallAdvantagesAllAppsOfTheSuiteEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	String get title => 'All Apps of the Suite';
+	String get description => 'Get access to all the apps of the suite, including Tasks, Habits, Calendar, Notes, and more.';
+}
+
+// Path: paywall.advantages.end_to_end_encrypted
+class TranslationsPaywallAdvantagesEndToEndEncryptedEn {
+	TranslationsPaywallAdvantagesEndToEndEncryptedEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	String get title => 'End-to-End Encryption';
+	String get description => 'Your data is yours, forever.';
+}
+
+// Path: paywall.advantages.unlimited_tasks
+class TranslationsPaywallAdvantagesUnlimitedTasksEn {
+	TranslationsPaywallAdvantagesUnlimitedTasksEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	String get title => 'Unlimited Tasks';
+	String get description => 'Create as many tasks as you want, no limits.';
+}
+
+// Path: paywall.advantages.unlimited_habits
+class TranslationsPaywallAdvantagesUnlimitedHabitsEn {
+	TranslationsPaywallAdvantagesUnlimitedHabitsEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	String get title => 'Unlimited Habits';
+	String get description => 'Take a step towards a healthier life with unlimited habits.';
+}
+
+// Path: paywall.advantages.unlimited_tags
+class TranslationsPaywallAdvantagesUnlimitedTagsEn {
+	TranslationsPaywallAdvantagesUnlimitedTagsEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	String get title => 'Unlimited Tags / Folders';
+	String get description => 'Use as many tags and folders as needed to organize your life.';
+}
+
+// Path: paywall.advantages.sync_across_devices
+class TranslationsPaywallAdvantagesSyncAcrossDevicesEn {
+	TranslationsPaywallAdvantagesSyncAcrossDevicesEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	String get title => 'Sync Across Devices';
+	String get description => 'Access your data from any device, anywhere.';
+}
+
+// Path: paywall.advantages.community_backed
+class TranslationsPaywallAdvantagesCommunityBackedEn {
+	TranslationsPaywallAdvantagesCommunityBackedEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	String get title => 'Community Backed';
+	String get description => '100% opensource : join a community of users who support the project.';
 }
 
 /// Flat map(s) containing all translations.
@@ -1378,6 +1641,7 @@ extension on Translations {
 			case 'tasks.title': return 'Tasks';
 			case 'tasks.today': return 'Today';
 			case 'tasks.overview': return 'Overview';
+			case 'tasks.inbox': return 'Inbox';
 			case 'tasks.tags': return 'Tags';
 			case 'tasks.all_tasks': return 'All tasks';
 			case 'tasks.completed_tasks': return 'Completed tasks';
@@ -1407,6 +1671,7 @@ extension on Translations {
 			case 'tasks.log_session': return 'Log session';
 			case 'tasks.timer': return 'Timer';
 			case 'tasks.pomodoro': return 'Pomodoro';
+			case 'tasks.manual': return 'Manual';
 			case 'tasks.from': return 'From';
 			case 'tasks.to': return 'To';
 			case 'tasks.priority': return 'Priority';
@@ -1427,6 +1692,9 @@ extension on Translations {
 			case 'tasks.add_task_modal.cancel': return 'Cancel';
 			case 'tasks.add_task_modal.save': return 'Save';
 			case 'tasks.add_task_modal.erase': return 'Erase';
+			case 'tasks.add_task_modal.task_added': return 'Task added';
+			case 'tasks.add_task_modal.task_added_description': return 'Your task has been added successfully.';
+			case 'tasks.add_task_modal.task_error': return 'Task error';
 			case 'tasks.add_task_modal.title_required': return 'Title required';
 			case 'tasks.add_task_modal.title_required_description': return 'Please enter a title for your task';
 			case 'tasks.add_task_modal.reminders': return ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n,
@@ -1453,6 +1721,12 @@ extension on Translations {
 			case 'calendar.month': return 'Month';
 			case 'calendar.day': return 'Day';
 			case 'calendar.threeDays': return '3 Days';
+			case 'calendar.week': return 'Week';
+			case 'calendar.schedule': return 'Schedule';
+			case 'calendar.errors.cannot_move_device_calendar_event': return 'You cannot move a device calendar event';
+			case 'calendar.errors.cannot_move_habit_event': return 'You cannot move a habit event';
+			case 'calendar.errors.cannot_resize_device_calendar_event': return 'You cannot resize a device calendar event';
+			case 'calendar.errors.cannot_resize_habit_event': return 'You cannot resize a habit event';
 			case 'calendar.event_detail.date': return 'Date';
 			case 'calendar.event_detail.time': return 'Time';
 			case 'calendar.event_detail.organizer': return 'Organizer';
@@ -1482,6 +1756,17 @@ extension on Translations {
 			case 'account.profile.undefined': return 'Undefined';
 			case 'account.profile.email_missing': return 'Email is required';
 			case 'account.profile.email_same': return 'Email must be different from the current email';
+			case 'account.subscription_payments.title': return 'Subscription & Payments';
+			case 'account.subscription_payments.subscription': return ({required Object subName}) => '${subName} Subscription';
+			case 'account.subscription_payments.latest_subscription': return 'This is your subscription with the earliest billing date.';
+			case 'account.subscription_payments.billing_cycle': return 'Billing Cycle';
+			case 'account.subscription_payments.current_price': return 'Current Price';
+			case 'account.subscription_payments.next_billing_date': return 'Next Billing Date';
+			case 'account.subscription_payments.payment_history': return 'Payment History';
+			case 'account.subscription_payments.no_payments': return 'No payments for now';
+			case 'account.subscription_payments.currency_symbol': return '\$';
+			case 'account.subscription_payments.manage_my_subscription': return 'Manage my subscription';
+			case 'account.subscription_payments.management_url_only_mobile': return 'You can only manage your subscription from the iOS or Android app.';
 			case 'account.security_and_privacy.title': return 'Security & Privacy';
 			case 'account.security_and_privacy.change_password.title': return 'Change Password';
 			case 'account.security_and_privacy.change_password.old_password': return 'Old Password';
@@ -1496,6 +1781,9 @@ extension on Translations {
 			case 'habits.title': return 'Habits';
 			case 'habits.no_habits': return 'No habits for now';
 			case 'habits.get_started_now': return 'Add your first habit to get started!';
+			case 'habits.delete_habit.title': return 'Delete habit';
+			case 'habits.delete_habit.description': return 'Are you sure you want to delete this habit?';
+			case 'habits.delete_habit.warning': return 'This action cannot be undone and all the related entries will also be deleted.';
 			case 'habits.add.title': return 'What do you want to achieve?';
 			case 'habits.add.name': return 'Habit name*';
 			case 'habits.add.name_hint': return 'Drink water';
@@ -1562,6 +1850,11 @@ extension on Translations {
 			case 'times.this_year': return 'This year';
 			case 'times.last_year': return 'Last year';
 			case 'times.all_time': return 'All time';
+			case 'times.minutes': return ({required num n, required Object nb}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n,
+				zero: '${nb} minutes',
+				one: '${nb} minute',
+				other: '${nb} minutes',
+			);
 			case 'days_of_week.monday': return 'Monday';
 			case 'days_of_week.tuesday': return 'Tuesday';
 			case 'days_of_week.wednesday': return 'Wednesday';
@@ -1608,6 +1901,8 @@ extension on Translations {
 			case 'actions.add': return 'Add';
 			case 'actions.edit': return 'Edit';
 			case 'actions.clear': return 'Clear';
+			case 'actions.close': return 'Close';
+			case 'actions.subscribe': return 'Subscribe';
 			case 'validation.required': return 'Required';
 			case 'validation.invalid_url': return 'invalid URL';
 			case 'errors.wrong_email_password': return 'Email or password incorrect';
@@ -1840,6 +2135,73 @@ extension on Translations {
 			case 'feature_under_construction.title': return 'Feature under construction';
 			case 'feature_under_construction.description': return 'This feature is not yet available, but we\'re working hard to bring it to you soon.\n\nStay tuned!';
 			case 'inbox.title': return 'Inbox';
+			case 'timer.title': return 'Timer';
+			case 'timer.start': return 'Start';
+			case 'timer.stop': return 'Stop';
+			case 'timer.reset': return 'Reset';
+			case 'timer.pause': return 'Pause';
+			case 'timer.resume': return 'Resume';
+			case 'timer.duration': return 'Duration';
+			case 'timer.start_pomodoro': return 'Start pomodoro';
+			case 'timer.start_stopwatch': return 'Start stopwatch';
+			case 'timer.pomo_running': return 'Pomodoro running';
+			case 'timer.timer_running': return 'Timer running';
+			case 'timer.time_left': return ({required Object timeLeft}) => 'Time left: ${timeLeft}';
+			case 'timer.start_break': return 'Start break';
+			case 'timer.elapsed_time': return 'Elapsed time';
+			case 'timer.remaining_time': return 'Remaining time';
+			case 'timer.no_timer_running': return 'No timer running';
+			case 'timer.modes.pomodoro': return 'Pomodoro';
+			case 'timer.modes.stopwatch': return 'Stopwatch';
+			case 'timer.select_task': return 'Select a task';
+			case 'timer.select_task_to_start_timer': return 'Select a task to start the timer';
+			case 'timer.completed': return 'Completed!';
+			case 'timer.pomodoro_completed_message': return 'Your pomodoro session has completed! Time for a break.';
+			case 'timer.stopwatch_completed_message': return 'Your stopwatch session has been completed.';
+			case 'timer.task_label': return 'Task';
+			case 'paywall.title': return 'Get AtomicBlend Cloud';
+			case 'paywall.subtitle': return 'Enjoy Atomic Blend without restrictions and help the opensource initiative.';
+			case 'paywall.advantages.all_apps_of_the_suite.title': return 'All Apps of the Suite';
+			case 'paywall.advantages.all_apps_of_the_suite.description': return 'Get access to all the apps of the suite, including Tasks, Habits, Calendar, Notes, and more.';
+			case 'paywall.advantages.end_to_end_encrypted.title': return 'End-to-End Encryption';
+			case 'paywall.advantages.end_to_end_encrypted.description': return 'Your data is yours, forever.';
+			case 'paywall.advantages.unlimited_tasks.title': return 'Unlimited Tasks';
+			case 'paywall.advantages.unlimited_tasks.description': return 'Create as many tasks as you want, no limits.';
+			case 'paywall.advantages.unlimited_habits.title': return 'Unlimited Habits';
+			case 'paywall.advantages.unlimited_habits.description': return 'Take a step towards a healthier life with unlimited habits.';
+			case 'paywall.advantages.unlimited_tags.title': return 'Unlimited Tags / Folders';
+			case 'paywall.advantages.unlimited_tags.description': return 'Use as many tags and folders as needed to organize your life.';
+			case 'paywall.advantages.sync_across_devices.title': return 'Sync Across Devices';
+			case 'paywall.advantages.sync_across_devices.description': return 'Access your data from any device, anywhere.';
+			case 'paywall.advantages.community_backed.title': return 'Community Backed';
+			case 'paywall.advantages.community_backed.description': return '100% opensource : join a community of users who support the project.';
+			case 'paywall.pricing.cloud_yearly.title': return 'Yearly';
+			case 'paywall.pricing.cloud_yearly.price': return '\$3.33/mo';
+			case 'paywall.pricing.cloud_yearly.billed': return 'billed at \$39.99/year';
+			case 'paywall.pricing.cloud_yearly.discount': return 'Save 16% with yearly billing';
+			case 'paywall.pricing.cloud_monthly.title': return 'Monthly';
+			case 'paywall.pricing.cloud_monthly.price': return '\$3.99/mo';
+			case 'paywall.pricing.cloud_monthly.billed': return 'billed at \$3.99/month';
+			case 'paywall.pricing.cloud_monthly.discount': return '';
+			case 'paywall.no_package_selected': return 'No package selected';
+			case 'paywall.purchase_failed': return 'Purchase failed';
+			case 'paywall.restore_purchase': return 'Restore Purchase';
+			case 'paywall.terms': return 'Terms of Service';
+			case 'paywall.privacy_policy': return 'Privacy Policy';
+			case 'paywall.payment_in_progress': return 'Payment in progress';
+			case 'paywall.payment_in_progress_description': return 'Please wait while we process your payment.';
+			case 'paywall.success': return 'Purchase successful';
+			case 'paywall.validation_failed': return 'Validation failed';
+			case 'paywall.validation_failed_description': return 'Please check your internet connection and restart the app.';
+			case 'paywall.mobile_app_required': return 'Mobile app required';
+			case 'paywall.payment_on_mobile_for_better_xp': return 'To offer you the best experience possible, payment and account configuration is only available on the mobile app';
+			case 'paywall.ios': return 'iOS';
+			case 'paywall.android': return 'Android';
+			case 'search.results': return ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n,
+				zero: 'No results found',
+				one: '1 result found',
+				other: '${n} results found',
+			);
 			default: return null;
 		}
 	}

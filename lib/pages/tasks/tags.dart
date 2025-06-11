@@ -90,7 +90,7 @@ class _TagsViewState extends State<TagsView> {
                         ],
                       ),
                       SizedBox(
-                        height: $constants.insets.xxs,
+                        height: $constants.insets.xs,
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.start,
@@ -162,19 +162,15 @@ class _TagsViewState extends State<TagsView> {
                 SizedBox(height: $constants.insets.xs),
                 Expanded(
                   child: ElevatedContainer(
+                    width: double.infinity,
                     padding: EdgeInsets.symmetric(
                       horizontal: $constants.insets.sm,
                       vertical: $constants.insets.sm,
                     ),
                     child: Column(
+                      spacing: $constants.insets.xxs,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        // AutoSizeText(
-                        //   context.t.tasks.title,
-                        //   style: getTextTheme(context).titleMedium!.copyWith(
-                        //         fontWeight: FontWeight.bold,
-                        //       ),
-                        // ),
                         ..._getFilteredTasks(context, taskState.tasks)
                             .map((task) => TaskItem(task: task)),
                       ],

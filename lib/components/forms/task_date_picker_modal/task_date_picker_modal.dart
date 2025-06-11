@@ -55,7 +55,7 @@ class _TaskDatePickerModalState extends State<TaskDatePickerModal> {
         width: double.infinity,
         height: getSize(context).height * 0.7,
         decoration: BoxDecoration(
-          color: getTheme(context).surfaceContainer,
+          color: getTheme(context).surface,
           borderRadius: BorderRadius.circular($constants.corners.md),
         ),
         child: Column(

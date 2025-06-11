@@ -2,7 +2,6 @@ import 'package:app/components/buttons/icon_text_button.dart';
 import 'package:app/components/widgets/elevated_container.dart';
 import 'package:app/i18n/strings.g.dart';
 import 'package:app/pages/account/account.dart';
-import 'package:app/pages/eiseinhower/eisenhower.dart';
 import 'package:app/pages/settings/settings.dart';
 import 'package:app/utils/constants.dart';
 import 'package:app/utils/shortcuts.dart';
@@ -48,10 +47,14 @@ class _MoreAppsState extends State<MoreApps> {
                     mainAxisCellCount: 0.6,
                     child: GestureDetector(
                       onTap: () {
+                        if (e.onTap != null) {
+                          e.onTap!(0);
+                          return;
+                        }
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => const EisenhowerMatrix(),
+                            builder: (context) => e.body ?? Container(),
                           ),
                         );
                       },
@@ -63,10 +66,7 @@ class _MoreAppsState extends State<MoreApps> {
                             SizedBox(
                               height: $constants.insets.sm,
                             ),
-                            const Icon(
-                              CupertinoIcons.square_grid_2x2_fill,
-                              size: 35,
-                            ),
+                            isDesktop(context) ? e.icon : e.cupertinoIcon,
                             SizedBox(
                               height: $constants.insets.xxs,
                             ),
@@ -85,23 +85,22 @@ class _MoreAppsState extends State<MoreApps> {
                 }).toList(),
               ),
             ],
-            SizedBox(
-              height: $constants.insets.xxs,
-            ),
             Expanded(
-              child: ElevatedContainer(
-                child: Padding(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: isDesktop(context)
-                        ? $constants.insets.lg
-                        : $constants.insets.sm,
-                    vertical: isDesktop(context)
-                        ? $constants.insets.lg
-                        : $constants.insets.sm,
-                  ),
-                  child: Column(
-                    children: [
-                      IconTextButton(
+              child: Padding(
+                padding: EdgeInsets.symmetric(
+                  horizontal: isDesktop(context) ? $constants.insets.lg : 0,
+                  vertical: isDesktop(context)
+                      ? $constants.insets.lg
+                      : $constants.insets.sm,
+                ),
+                child: Column(
+                  children: [
+                    ElevatedContainer(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: $constants.insets.sm,
+                        vertical: $constants.insets.sm,
+                      ),
+                      child: IconTextButton(
                         text: context.t.account.sections.account,
                         icon: CupertinoIcons.person,
                         iconSize: 25,
@@ -113,12 +112,18 @@ class _MoreAppsState extends State<MoreApps> {
                           );
                         },
                       ),
-                      SizedBox(
-                        height: isDesktop(context)
-                            ? $constants.insets.md
-                            : $constants.insets.sm,
+                    ),
+                    SizedBox(
+                      height: isDesktop(context)
+                          ? $constants.insets.md
+                          : $constants.insets.sm,
+                    ),
+                    ElevatedContainer(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: $constants.insets.sm,
+                        vertical: $constants.insets.sm,
                       ),
-                      IconTextButton(
+                      child: IconTextButton(
                         text: context.t.settings.title,
                         icon: CupertinoIcons.gear,
                         iconSize: 25,
@@ -127,8 +132,8 @@ class _MoreAppsState extends State<MoreApps> {
                               builder: (context) => const Settings()));
                         },
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
             ),

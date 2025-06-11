@@ -95,6 +95,9 @@ class TranslationsFr implements Translations {
 	@override late final _TranslationsEisenhowerFr eisenhower = _TranslationsEisenhowerFr._(_root);
 	@override late final _TranslationsFeatureUnderConstructionFr feature_under_construction = _TranslationsFeatureUnderConstructionFr._(_root);
 	@override late final _TranslationsInboxFr inbox = _TranslationsInboxFr._(_root);
+	@override late final _TranslationsTimerFr timer = _TranslationsTimerFr._(_root);
+	@override late final _TranslationsPaywallFr paywall = _TranslationsPaywallFr._(_root);
+	@override late final _TranslationsSearchFr search = _TranslationsSearchFr._(_root);
 }
 
 // Path: navigation
@@ -159,6 +162,7 @@ class _TranslationsTasksFr implements TranslationsTasksEn {
 	@override String get title => 'Tâches';
 	@override String get today => 'Aujourd\'hui';
 	@override String get tags => 'Tags';
+	@override String get inbox => 'Boîte de réception';
 	@override String get all_tasks => 'Toutes les tâches';
 	@override String get completed_tasks => 'Tâches terminées';
 	@override String get my_tags => 'Mes tags';
@@ -175,6 +179,7 @@ class _TranslationsTasksFr implements TranslationsTasksEn {
 	@override String get log_session => 'Journaliser une session';
 	@override String get timer => 'Chronomètre';
 	@override String get pomodoro => 'Pomodoro';
+	@override String get manual => 'Manuel';
 	@override String get from => 'De';
 	@override String get to => 'À';
 	@override String get priority => 'Priorité';
@@ -202,6 +207,9 @@ class _TranslationsCalendarFr implements TranslationsCalendarEn {
 	@override String get month => 'Mois';
 	@override String get day => 'Jour';
 	@override String get threeDays => '3 jours';
+	@override String get week => 'Semaine';
+	@override String get schedule => 'Emploi du temps';
+	@override late final _TranslationsCalendarErrorsFr errors = _TranslationsCalendarErrorsFr._(_root);
 	@override late final _TranslationsCalendarEventDetailFr event_detail = _TranslationsCalendarEventDetailFr._(_root);
 	@override late final _TranslationsCalendarSettingsFr settings = _TranslationsCalendarSettingsFr._(_root);
 }
@@ -216,6 +224,7 @@ class _TranslationsAccountFr implements TranslationsAccountEn {
 	@override String get edit_profile => 'Modifier le profil';
 	@override late final _TranslationsAccountSectionsFr sections = _TranslationsAccountSectionsFr._(_root);
 	@override late final _TranslationsAccountActionsFr actions = _TranslationsAccountActionsFr._(_root);
+	@override late final _TranslationsAccountSubscriptionPaymentsFr subscription_payments = _TranslationsAccountSubscriptionPaymentsFr._(_root);
 	@override late final _TranslationsAccountProfileFr profile = _TranslationsAccountProfileFr._(_root);
 	@override late final _TranslationsAccountSecurityAndPrivacyFr security_and_privacy = _TranslationsAccountSecurityAndPrivacyFr._(_root);
 }
@@ -230,6 +239,7 @@ class _TranslationsHabitsFr implements TranslationsHabitsEn {
 	@override String get title => 'Habitudes';
 	@override String get no_habits => 'Aucune habitude';
 	@override String get get_started_now => 'Ajoutez votre première habitude pour commencer !';
+	@override late final _TranslationsHabitsDeleteHabitFr delete_habit = _TranslationsHabitsDeleteHabitFr._(_root);
 	@override late final _TranslationsHabitsAddFr add = _TranslationsHabitsAddFr._(_root);
 	@override String get list => 'Habitudes';
 	@override String get overview => 'Vue d\'ensemble';
@@ -277,6 +287,11 @@ class _TranslationsTimesFr implements TranslationsTimesEn {
 	@override String get this_year => 'Cette année';
 	@override String get last_year => 'L\'année dernière';
 	@override String get all_time => 'Tout le temps';
+	@override String minutes({required num n, required Object nb}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('fr'))(n,
+		zero: '${nb} minutes',
+		one: '${nb} minute',
+		other: '${nb} minutes',
+	);
 }
 
 // Path: days_before.none
@@ -459,6 +474,8 @@ class _TranslationsActionsFr implements TranslationsActionsEn {
 	@override String get add => 'Ajouter';
 	@override String get edit => 'Modifier';
 	@override String get clear => 'Effacer';
+	@override String get close => 'Fermer';
+	@override String get subscribe => 'S\'abonner';
 }
 
 // Path: loading
@@ -748,6 +765,85 @@ class _TranslationsInboxFr implements TranslationsInboxEn {
 	@override String get title => 'Boîte de réception';
 }
 
+// Path: timer
+class _TranslationsTimerFr implements TranslationsTimerEn {
+	_TranslationsTimerFr._(this._root);
+
+	final TranslationsFr _root; // ignore: unused_field
+
+	// Translations
+	@override String get title => 'Minuteur';
+	@override String get start => 'Démarrer';
+	@override String get stop => 'Arrêter';
+	@override String get reset => 'Réinitialiser';
+	@override String get start_pomodoro => 'Démarrer Pomodoro';
+	@override String get start_stopwatch => 'Démarrer Chronomètre';
+	@override String get start_break => 'Démarrer une pause';
+	@override String get pomo_running => 'Pomodoro en cours';
+	@override String get timer_running => 'Timer en cours';
+	@override String time_left({required Object timeLeft}) => 'Temps restant : ${timeLeft}';
+	@override String get pause => 'Pause';
+	@override String get resume => 'Reprendre';
+	@override String get duration => 'Durée';
+	@override String get elapsed_time => 'Temps écoulé';
+	@override String get remaining_time => 'Temps restant';
+	@override String get no_timer_running => 'Aucun minuteur en cours';
+	@override Map<String, String> get modes => {
+		'pomodoro': 'Pomodoro',
+		'stopwatch': 'Chronomètre',
+	};
+	@override String get select_task => 'Sélectionner une tâche';
+	@override String get select_task_to_start_timer => 'Sélectionner une tâche pour démarrer le minuteur';
+	@override String get completed => 'Terminé !';
+	@override String get pomodoro_completed_message => 'Votre session pomodoro est terminée ! C\'est l\'heure de faire une pause.';
+	@override String get stopwatch_completed_message => 'Votre session de chronomètre a été terminée.';
+	@override String get task_label => 'Tâche';
+}
+
+// Path: paywall
+class _TranslationsPaywallFr implements TranslationsPaywallEn {
+	_TranslationsPaywallFr._(this._root);
+
+	final TranslationsFr _root; // ignore: unused_field
+
+	// Translations
+	@override String get title => 'Obtenez AtomicBlend Cloud';
+	@override String get subtitle => 'Profitez d\'Atomic Blend sans restrictions et aidez l\'initiative open source.';
+	@override late final _TranslationsPaywallAdvantagesFr advantages = _TranslationsPaywallAdvantagesFr._(_root);
+	@override Map<String, dynamic> get pricing => {
+		'cloud_yearly': _TranslationsPaywallPricingCloudYearlyFr._(_root),
+		'cloud_monthly': _TranslationsPaywallPricingCloudMonthlyFr._(_root),
+	};
+	@override String get no_package_selected => 'Aucun package sélectionné';
+	@override String get purchase_failed => 'Échec de l\'achat';
+	@override String get restore_purchase => 'Restaurer l\'achat';
+	@override String get terms => 'Conditions d\'utilisation';
+	@override String get privacy_policy => 'Politique de confidentialité';
+	@override String get success => 'Achat réussi !';
+	@override String get payment_in_progress => 'Paiement en cours';
+	@override String get payment_in_progress_description => 'Veuillez patienter pendant que nous traitons votre paiement.';
+	@override String get validation_failed => 'Échec de la validation';
+	@override String get validation_failed_description => 'Veuillez vérifier votre connexion Internet et redémarrer l\'application.';
+	@override String get mobile_app_required => 'Application mobile requise';
+	@override String get payment_on_mobile_for_better_xp => 'Pour vous offrir la meilleure expérience possible, le paiement et la configuration du compte ne sont disponibles que sur l\'application mobile.';
+	@override String get ios => 'iOS';
+	@override String get android => 'Android';
+}
+
+// Path: search
+class _TranslationsSearchFr implements TranslationsSearchEn {
+	_TranslationsSearchFr._(this._root);
+
+	final TranslationsFr _root; // ignore: unused_field
+
+	// Translations
+	@override String results({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('fr'))(n,
+		zero: 'Aucun résultat trouvé',
+		one: '1 résultat trouvé',
+		other: '${n} résultats trouvés',
+	);
+}
+
 // Path: auth.not_logged_in
 class _TranslationsAuthNotLoggedInFr implements TranslationsAuthNotLoggedInEn {
 	_TranslationsAuthNotLoggedInFr._(this._root);
@@ -995,6 +1091,9 @@ class _TranslationsTasksAddTaskModalFr implements TranslationsTasksAddTaskModalE
 	@override String get notes => 'Notes';
 	@override String get end_date => 'Date de fin';
 	@override String get cancel => 'Annuler';
+	@override String get task_added => 'Tâche ajoutée';
+	@override String get task_added_description => 'Votre tâche a été ajoutée avec succès.';
+	@override String get task_error => 'Erreur lors de l\'opération';
 	@override String get save => 'Enregistrer';
 	@override String get erase => 'Effacer';
 	@override String get title_required => 'Titre requis';
@@ -1026,6 +1125,19 @@ class _TranslationsTasksAddTimeEntryFr implements TranslationsTasksAddTimeEntryE
 	@override String get end_time => 'Heure de fin';
 	@override String get not_defined => 'Non défini';
 	@override String get date_required => 'Date requise';
+}
+
+// Path: calendar.errors
+class _TranslationsCalendarErrorsFr implements TranslationsCalendarErrorsEn {
+	_TranslationsCalendarErrorsFr._(this._root);
+
+	final TranslationsFr _root; // ignore: unused_field
+
+	// Translations
+	@override String get cannot_move_device_calendar_event => 'Vous ne pouvez pas déplacer un événement de calendrier d\'appareil';
+	@override String get cannot_move_habit_event => 'Vous ne pouvez pas déplacer un événement d\'habitude';
+	@override String get cannot_resize_device_calendar_event => 'Vous ne pouvez pas redimensionner un événement de calendrier d\'appareil';
+	@override String get cannot_resize_habit_event => 'Vous ne pouvez pas redimensionner un événement d\'habitude';
 }
 
 // Path: calendar.event_detail
@@ -1087,6 +1199,26 @@ class _TranslationsAccountActionsFr implements TranslationsAccountActionsEn {
 	@override String get delete_account => 'Supprimer mon compte';
 }
 
+// Path: account.subscription_payments
+class _TranslationsAccountSubscriptionPaymentsFr implements TranslationsAccountSubscriptionPaymentsEn {
+	_TranslationsAccountSubscriptionPaymentsFr._(this._root);
+
+	final TranslationsFr _root; // ignore: unused_field
+
+	// Translations
+	@override String get title => 'Abonnement & Paiements';
+	@override String subscription({required Object subName}) => 'Abonnement ${subName}';
+	@override String get latest_subscription => 'Ceci est votre abonnement avec la date de facturation la plus récente.';
+	@override String get billing_cycle => 'Cycle de facturation';
+	@override String get current_price => 'Prix actuel';
+	@override String get next_billing_date => 'Prochaine date de facturation';
+	@override String get payment_history => 'Historique des paiements';
+	@override String get no_payments => 'Aucun paiement trouvé';
+	@override String get currency_symbol => '\$';
+	@override String get manage_my_subscription => 'Gérer mon abonnement';
+	@override String get management_url_only_mobile => 'Vous ne pouvez gérer votre abonnement que depuis l\'application iOS ou Android.';
+}
+
 // Path: account.profile
 class _TranslationsAccountProfileFr implements TranslationsAccountProfileEn {
 	_TranslationsAccountProfileFr._(this._root);
@@ -1110,6 +1242,18 @@ class _TranslationsAccountSecurityAndPrivacyFr implements TranslationsAccountSec
 	// Translations
 	@override String get title => 'Sécurité et confidentialité';
 	@override late final _TranslationsAccountSecurityAndPrivacyChangePasswordFr change_password = _TranslationsAccountSecurityAndPrivacyChangePasswordFr._(_root);
+}
+
+// Path: habits.delete_habit
+class _TranslationsHabitsDeleteHabitFr implements TranslationsHabitsDeleteHabitEn {
+	_TranslationsHabitsDeleteHabitFr._(this._root);
+
+	final TranslationsFr _root; // ignore: unused_field
+
+	// Translations
+	@override String get title => 'Supprimer l\'habitude';
+	@override String get description => 'Êtes-vous sûr de vouloir supprimer cette habitude ?';
+	@override String get warning => 'Cette action est irréversible et toutes les entrées associées à l\'habitude seront supprimées.';
 }
 
 // Path: habits.add
@@ -1214,6 +1358,48 @@ class _TranslationsTimeUnitsLongFr implements TranslationsTimeUnitsLongEn {
 	);
 }
 
+// Path: paywall.advantages
+class _TranslationsPaywallAdvantagesFr implements TranslationsPaywallAdvantagesEn {
+	_TranslationsPaywallAdvantagesFr._(this._root);
+
+	final TranslationsFr _root; // ignore: unused_field
+
+	// Translations
+	@override late final _TranslationsPaywallAdvantagesAllAppsOfTheSuiteFr all_apps_of_the_suite = _TranslationsPaywallAdvantagesAllAppsOfTheSuiteFr._(_root);
+	@override late final _TranslationsPaywallAdvantagesEndToEndEncryptedFr end_to_end_encrypted = _TranslationsPaywallAdvantagesEndToEndEncryptedFr._(_root);
+	@override late final _TranslationsPaywallAdvantagesUnlimitedTasksFr unlimited_tasks = _TranslationsPaywallAdvantagesUnlimitedTasksFr._(_root);
+	@override late final _TranslationsPaywallAdvantagesUnlimitedHabitsFr unlimited_habits = _TranslationsPaywallAdvantagesUnlimitedHabitsFr._(_root);
+	@override late final _TranslationsPaywallAdvantagesUnlimitedTagsFr unlimited_tags = _TranslationsPaywallAdvantagesUnlimitedTagsFr._(_root);
+	@override late final _TranslationsPaywallAdvantagesSyncAcrossDevicesFr sync_across_devices = _TranslationsPaywallAdvantagesSyncAcrossDevicesFr._(_root);
+	@override late final _TranslationsPaywallAdvantagesCommunityBackedFr community_backed = _TranslationsPaywallAdvantagesCommunityBackedFr._(_root);
+}
+
+// Path: paywall.pricing.cloud_yearly
+class _TranslationsPaywallPricingCloudYearlyFr implements TranslationsPaywallPricingCloudYearlyEn {
+	_TranslationsPaywallPricingCloudYearlyFr._(this._root);
+
+	final TranslationsFr _root; // ignore: unused_field
+
+	// Translations
+	@override String get title => 'Annuel';
+	@override String get price => '3.33€/mo';
+	@override String get billed => 'facturé à 39.99€/an';
+	@override String get discount => '16% off';
+}
+
+// Path: paywall.pricing.cloud_monthly
+class _TranslationsPaywallPricingCloudMonthlyFr implements TranslationsPaywallPricingCloudMonthlyEn {
+	_TranslationsPaywallPricingCloudMonthlyFr._(this._root);
+
+	final TranslationsFr _root; // ignore: unused_field
+
+	// Translations
+	@override String get title => 'Mensuel';
+	@override String get price => '3.99€/mo';
+	@override String get billed => 'facturé à 3.99€/mois';
+	@override String get discount => '';
+}
+
 // Path: settings.app_settings.selfHostedUrl
 class _TranslationsSettingsAppSettingsSelfHostedUrlFr implements TranslationsSettingsAppSettingsSelfHostedUrlEn {
 	_TranslationsSettingsAppSettingsSelfHostedUrlFr._(this._root);
@@ -1244,6 +1430,83 @@ class _TranslationsAccountSecurityAndPrivacyChangePasswordFr implements Translat
 	@override String get password_mismatch => 'Les mots de passe ne correspondent pas';
 	@override String get password_hint => 'SuperSecure123!';
 	@override String get warning_changing_pws_will_log_you_out => 'Changer le mot de passe vous déconnectera de l\'application.';
+}
+
+// Path: paywall.advantages.all_apps_of_the_suite
+class _TranslationsPaywallAdvantagesAllAppsOfTheSuiteFr implements TranslationsPaywallAdvantagesAllAppsOfTheSuiteEn {
+	_TranslationsPaywallAdvantagesAllAppsOfTheSuiteFr._(this._root);
+
+	final TranslationsFr _root; // ignore: unused_field
+
+	// Translations
+	@override String get title => 'Toutes les applications de la suite';
+	@override String get description => 'Accédez à toutes les applications de la suite, y compris Tâches, Habitudes, Calendrier, Notes, et plus encore.';
+}
+
+// Path: paywall.advantages.end_to_end_encrypted
+class _TranslationsPaywallAdvantagesEndToEndEncryptedFr implements TranslationsPaywallAdvantagesEndToEndEncryptedEn {
+	_TranslationsPaywallAdvantagesEndToEndEncryptedFr._(this._root);
+
+	final TranslationsFr _root; // ignore: unused_field
+
+	// Translations
+	@override String get title => 'Chiffrement de bout en bout';
+	@override String get description => 'Vos données sont à vous, pour toujours.';
+}
+
+// Path: paywall.advantages.unlimited_tasks
+class _TranslationsPaywallAdvantagesUnlimitedTasksFr implements TranslationsPaywallAdvantagesUnlimitedTasksEn {
+	_TranslationsPaywallAdvantagesUnlimitedTasksFr._(this._root);
+
+	final TranslationsFr _root; // ignore: unused_field
+
+	// Translations
+	@override String get title => 'Tâches Illimitées';
+	@override String get description => 'Créez autant de tâches que vous le souhaitez, sans limites.';
+}
+
+// Path: paywall.advantages.unlimited_habits
+class _TranslationsPaywallAdvantagesUnlimitedHabitsFr implements TranslationsPaywallAdvantagesUnlimitedHabitsEn {
+	_TranslationsPaywallAdvantagesUnlimitedHabitsFr._(this._root);
+
+	final TranslationsFr _root; // ignore: unused_field
+
+	// Translations
+	@override String get title => 'Habitudes Illimitées';
+	@override String get description => 'Faites un pas vers une vie plus saine avec des habitudes illimitées.';
+}
+
+// Path: paywall.advantages.unlimited_tags
+class _TranslationsPaywallAdvantagesUnlimitedTagsFr implements TranslationsPaywallAdvantagesUnlimitedTagsEn {
+	_TranslationsPaywallAdvantagesUnlimitedTagsFr._(this._root);
+
+	final TranslationsFr _root; // ignore: unused_field
+
+	// Translations
+	@override String get title => 'Tags / Dossiers Illimités';
+	@override String get description => 'Utilisez autant de tags et de dossiers que nécessaire pour organiser votre vie.';
+}
+
+// Path: paywall.advantages.sync_across_devices
+class _TranslationsPaywallAdvantagesSyncAcrossDevicesFr implements TranslationsPaywallAdvantagesSyncAcrossDevicesEn {
+	_TranslationsPaywallAdvantagesSyncAcrossDevicesFr._(this._root);
+
+	final TranslationsFr _root; // ignore: unused_field
+
+	// Translations
+	@override String get title => 'Synchronisation entre appareils';
+	@override String get description => 'Accédez à vos données depuis n\'importe quel appareil, n\'importe où.';
+}
+
+// Path: paywall.advantages.community_backed
+class _TranslationsPaywallAdvantagesCommunityBackedFr implements TranslationsPaywallAdvantagesCommunityBackedEn {
+	_TranslationsPaywallAdvantagesCommunityBackedFr._(this._root);
+
+	final TranslationsFr _root; // ignore: unused_field
+
+	// Translations
+	@override String get title => 'Soutien de la communauté';
+	@override String get description => '100% opensource : rejoignez une communauté d\'utilisateurs qui soutiennent le projet.';
 }
 
 /// Flat map(s) containing all translations.
@@ -1372,6 +1635,7 @@ extension on TranslationsFr {
 			case 'tasks.title': return 'Tâches';
 			case 'tasks.today': return 'Aujourd\'hui';
 			case 'tasks.tags': return 'Tags';
+			case 'tasks.inbox': return 'Boîte de réception';
 			case 'tasks.all_tasks': return 'Toutes les tâches';
 			case 'tasks.completed_tasks': return 'Tâches terminées';
 			case 'tasks.my_tags': return 'Mes tags';
@@ -1401,6 +1665,7 @@ extension on TranslationsFr {
 			case 'tasks.log_session': return 'Journaliser une session';
 			case 'tasks.timer': return 'Chronomètre';
 			case 'tasks.pomodoro': return 'Pomodoro';
+			case 'tasks.manual': return 'Manuel';
 			case 'tasks.from': return 'De';
 			case 'tasks.to': return 'À';
 			case 'tasks.priority': return 'Priorité';
@@ -1419,6 +1684,9 @@ extension on TranslationsFr {
 			case 'tasks.add_task_modal.notes': return 'Notes';
 			case 'tasks.add_task_modal.end_date': return 'Date de fin';
 			case 'tasks.add_task_modal.cancel': return 'Annuler';
+			case 'tasks.add_task_modal.task_added': return 'Tâche ajoutée';
+			case 'tasks.add_task_modal.task_added_description': return 'Votre tâche a été ajoutée avec succès.';
+			case 'tasks.add_task_modal.task_error': return 'Erreur lors de l\'opération';
 			case 'tasks.add_task_modal.save': return 'Enregistrer';
 			case 'tasks.add_task_modal.erase': return 'Effacer';
 			case 'tasks.add_task_modal.title_required': return 'Titre requis';
@@ -1447,6 +1715,12 @@ extension on TranslationsFr {
 			case 'calendar.month': return 'Mois';
 			case 'calendar.day': return 'Jour';
 			case 'calendar.threeDays': return '3 jours';
+			case 'calendar.week': return 'Semaine';
+			case 'calendar.schedule': return 'Emploi du temps';
+			case 'calendar.errors.cannot_move_device_calendar_event': return 'Vous ne pouvez pas déplacer un événement de calendrier d\'appareil';
+			case 'calendar.errors.cannot_move_habit_event': return 'Vous ne pouvez pas déplacer un événement d\'habitude';
+			case 'calendar.errors.cannot_resize_device_calendar_event': return 'Vous ne pouvez pas redimensionner un événement de calendrier d\'appareil';
+			case 'calendar.errors.cannot_resize_habit_event': return 'Vous ne pouvez pas redimensionner un événement d\'habitude';
 			case 'calendar.event_detail.date': return 'Date';
 			case 'calendar.event_detail.time': return 'Heure';
 			case 'calendar.event_detail.organizer': return 'Organisateur';
@@ -1471,6 +1745,17 @@ extension on TranslationsFr {
 			case 'account.sections.account': return 'Compte';
 			case 'account.actions.security': return 'Sécurité et confidentialité';
 			case 'account.actions.delete_account': return 'Supprimer mon compte';
+			case 'account.subscription_payments.title': return 'Abonnement & Paiements';
+			case 'account.subscription_payments.subscription': return ({required Object subName}) => 'Abonnement ${subName}';
+			case 'account.subscription_payments.latest_subscription': return 'Ceci est votre abonnement avec la date de facturation la plus récente.';
+			case 'account.subscription_payments.billing_cycle': return 'Cycle de facturation';
+			case 'account.subscription_payments.current_price': return 'Prix actuel';
+			case 'account.subscription_payments.next_billing_date': return 'Prochaine date de facturation';
+			case 'account.subscription_payments.payment_history': return 'Historique des paiements';
+			case 'account.subscription_payments.no_payments': return 'Aucun paiement trouvé';
+			case 'account.subscription_payments.currency_symbol': return '\$';
+			case 'account.subscription_payments.manage_my_subscription': return 'Gérer mon abonnement';
+			case 'account.subscription_payments.management_url_only_mobile': return 'Vous ne pouvez gérer votre abonnement que depuis l\'application iOS ou Android.';
 			case 'account.profile.my_profile': return 'Mon profil';
 			case 'account.profile.email': return 'Adresse e-mail';
 			case 'account.profile.undefined': return 'Non défini';
@@ -1490,6 +1775,9 @@ extension on TranslationsFr {
 			case 'habits.title': return 'Habitudes';
 			case 'habits.no_habits': return 'Aucune habitude';
 			case 'habits.get_started_now': return 'Ajoutez votre première habitude pour commencer !';
+			case 'habits.delete_habit.title': return 'Supprimer l\'habitude';
+			case 'habits.delete_habit.description': return 'Êtes-vous sûr de vouloir supprimer cette habitude ?';
+			case 'habits.delete_habit.warning': return 'Cette action est irréversible et toutes les entrées associées à l\'habitude seront supprimées.';
 			case 'habits.add.title': return 'Que souhaitez-vous accomplir ?';
 			case 'habits.add.name': return 'Nom de l\'habitude*';
 			case 'habits.add.name_hint': return 'Boire de l\'eau';
@@ -1561,6 +1849,11 @@ extension on TranslationsFr {
 			case 'times.this_year': return 'Cette année';
 			case 'times.last_year': return 'L\'année dernière';
 			case 'times.all_time': return 'Tout le temps';
+			case 'times.minutes': return ({required num n, required Object nb}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('fr'))(n,
+				zero: '${nb} minutes',
+				one: '${nb} minute',
+				other: '${nb} minutes',
+			);
 			case 'days_before.none.value': return '0';
 			case 'days_before.none.label': return 'Aucun';
 			case 'days_before.same_day.value': return '0';
@@ -1599,6 +1892,8 @@ extension on TranslationsFr {
 			case 'actions.add': return 'Ajouter';
 			case 'actions.edit': return 'Modifier';
 			case 'actions.clear': return 'Effacer';
+			case 'actions.close': return 'Fermer';
+			case 'actions.subscribe': return 'S\'abonner';
 			case 'date_modes.date': return 'Date';
 			case 'date_modes.duration': return 'Durée';
 			case 'loading.simple': return 'Chargement en cours...';
@@ -1831,6 +2126,73 @@ extension on TranslationsFr {
 			case 'feature_under_construction.title': return 'Fonctionnalité en construction';
 			case 'feature_under_construction.description': return 'Cette fonctionnalité n\'est pas encore disponible, mais nous travaillons dur pour vous l\'apporter bientôt.\n\nRestez à l\'écoute !';
 			case 'inbox.title': return 'Boîte de réception';
+			case 'timer.title': return 'Minuteur';
+			case 'timer.start': return 'Démarrer';
+			case 'timer.stop': return 'Arrêter';
+			case 'timer.reset': return 'Réinitialiser';
+			case 'timer.start_pomodoro': return 'Démarrer Pomodoro';
+			case 'timer.start_stopwatch': return 'Démarrer Chronomètre';
+			case 'timer.start_break': return 'Démarrer une pause';
+			case 'timer.pomo_running': return 'Pomodoro en cours';
+			case 'timer.timer_running': return 'Timer en cours';
+			case 'timer.time_left': return ({required Object timeLeft}) => 'Temps restant : ${timeLeft}';
+			case 'timer.pause': return 'Pause';
+			case 'timer.resume': return 'Reprendre';
+			case 'timer.duration': return 'Durée';
+			case 'timer.elapsed_time': return 'Temps écoulé';
+			case 'timer.remaining_time': return 'Temps restant';
+			case 'timer.no_timer_running': return 'Aucun minuteur en cours';
+			case 'timer.modes.pomodoro': return 'Pomodoro';
+			case 'timer.modes.stopwatch': return 'Chronomètre';
+			case 'timer.select_task': return 'Sélectionner une tâche';
+			case 'timer.select_task_to_start_timer': return 'Sélectionner une tâche pour démarrer le minuteur';
+			case 'timer.completed': return 'Terminé !';
+			case 'timer.pomodoro_completed_message': return 'Votre session pomodoro est terminée ! C\'est l\'heure de faire une pause.';
+			case 'timer.stopwatch_completed_message': return 'Votre session de chronomètre a été terminée.';
+			case 'timer.task_label': return 'Tâche';
+			case 'paywall.title': return 'Obtenez AtomicBlend Cloud';
+			case 'paywall.subtitle': return 'Profitez d\'Atomic Blend sans restrictions et aidez l\'initiative open source.';
+			case 'paywall.advantages.all_apps_of_the_suite.title': return 'Toutes les applications de la suite';
+			case 'paywall.advantages.all_apps_of_the_suite.description': return 'Accédez à toutes les applications de la suite, y compris Tâches, Habitudes, Calendrier, Notes, et plus encore.';
+			case 'paywall.advantages.end_to_end_encrypted.title': return 'Chiffrement de bout en bout';
+			case 'paywall.advantages.end_to_end_encrypted.description': return 'Vos données sont à vous, pour toujours.';
+			case 'paywall.advantages.unlimited_tasks.title': return 'Tâches Illimitées';
+			case 'paywall.advantages.unlimited_tasks.description': return 'Créez autant de tâches que vous le souhaitez, sans limites.';
+			case 'paywall.advantages.unlimited_habits.title': return 'Habitudes Illimitées';
+			case 'paywall.advantages.unlimited_habits.description': return 'Faites un pas vers une vie plus saine avec des habitudes illimitées.';
+			case 'paywall.advantages.unlimited_tags.title': return 'Tags / Dossiers Illimités';
+			case 'paywall.advantages.unlimited_tags.description': return 'Utilisez autant de tags et de dossiers que nécessaire pour organiser votre vie.';
+			case 'paywall.advantages.sync_across_devices.title': return 'Synchronisation entre appareils';
+			case 'paywall.advantages.sync_across_devices.description': return 'Accédez à vos données depuis n\'importe quel appareil, n\'importe où.';
+			case 'paywall.advantages.community_backed.title': return 'Soutien de la communauté';
+			case 'paywall.advantages.community_backed.description': return '100% opensource : rejoignez une communauté d\'utilisateurs qui soutiennent le projet.';
+			case 'paywall.pricing.cloud_yearly.title': return 'Annuel';
+			case 'paywall.pricing.cloud_yearly.price': return '3.33€/mo';
+			case 'paywall.pricing.cloud_yearly.billed': return 'facturé à 39.99€/an';
+			case 'paywall.pricing.cloud_yearly.discount': return '16% off';
+			case 'paywall.pricing.cloud_monthly.title': return 'Mensuel';
+			case 'paywall.pricing.cloud_monthly.price': return '3.99€/mo';
+			case 'paywall.pricing.cloud_monthly.billed': return 'facturé à 3.99€/mois';
+			case 'paywall.pricing.cloud_monthly.discount': return '';
+			case 'paywall.no_package_selected': return 'Aucun package sélectionné';
+			case 'paywall.purchase_failed': return 'Échec de l\'achat';
+			case 'paywall.restore_purchase': return 'Restaurer l\'achat';
+			case 'paywall.terms': return 'Conditions d\'utilisation';
+			case 'paywall.privacy_policy': return 'Politique de confidentialité';
+			case 'paywall.success': return 'Achat réussi !';
+			case 'paywall.payment_in_progress': return 'Paiement en cours';
+			case 'paywall.payment_in_progress_description': return 'Veuillez patienter pendant que nous traitons votre paiement.';
+			case 'paywall.validation_failed': return 'Échec de la validation';
+			case 'paywall.validation_failed_description': return 'Veuillez vérifier votre connexion Internet et redémarrer l\'application.';
+			case 'paywall.mobile_app_required': return 'Application mobile requise';
+			case 'paywall.payment_on_mobile_for_better_xp': return 'Pour vous offrir la meilleure expérience possible, le paiement et la configuration du compte ne sont disponibles que sur l\'application mobile.';
+			case 'paywall.ios': return 'iOS';
+			case 'paywall.android': return 'Android';
+			case 'search.results': return ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('fr'))(n,
+				zero: 'Aucun résultat trouvé',
+				one: '1 résultat trouvé',
+				other: '${n} résultats trouvés',
+			);
 			default: return null;
 		}
 	}

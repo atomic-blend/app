@@ -6,13 +6,17 @@ import 'dart:io' show Platform;
 
 class ABSearchBar extends StatefulWidget {
   final TextEditingController controller;
-  final Function(String) onSubmitted;
+  final Function(String)? onSubmitted;
+  final Function(String)? onChanged;
+  final VoidCallback? onClear;
   final String? placeholder;
 
   const ABSearchBar({
     super.key,
     required this.controller,
-    required this.onSubmitted,
+    this.onSubmitted,
+    this.onChanged,
+    this.onClear,
     this.placeholder,
   });
 
@@ -30,6 +34,15 @@ class _ABSearchBarState extends State<ABSearchBar> {
         controller: widget.controller,
         placeholder: widget.placeholder ?? 'Search',
         onSubmitted: widget.onSubmitted,
+        onChanged: (value) {
+          if (value.isEmpty && widget.onClear != null) {
+            widget.onClear!();
+            return;
+          }
+          if (widget.onChanged != null) {
+            widget.onChanged!(value);
+          }
+        },
       );
     } else {
       return TextField(

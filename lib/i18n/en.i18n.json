@@ -151,6 +151,7 @@
     "title": "Tasks",
     "today": "Today",
     "overview": "Overview",
+    "inbox": "Inbox",
     "tags": "Tags",
     "all_tasks": "All tasks",
     "completed_tasks": "Completed tasks",
@@ -165,14 +166,14 @@
       "delete_folder": "Delete folder",
       "delete_folder_description": "Are you sure you want to delete this folder?",
       "delete_folder_warning": "This action cannot be undone and all the tasks will be unlinked",
-      "name":"Name of the folder",
+      "name": "Name of the folder",
       "name_hint": "Work",
       "name_description": "Define a name for your folder, this will help you remember what it is about and be shown in notifications.",
       "name_required": "Name is required",
       "color": "Color",
       "color_description": "Choose a color for your folder, this will help you remember what it is about and be shown in notifications.",
       "select_a_folder": "Select a folder"
-      },
+    },
     "nothing_to_do": "Nothing to do for now, enjoy your day!",
     "day_off": "You have nothing planned for tomorrow, enjoy your day!",
     "week_off": "You have nothing planned for this week, try and take the time to do the stuff left behind!",
@@ -182,6 +183,7 @@
     "log_session": "Log session",
     "timer": "Timer",
     "pomodoro": "Pomodoro",
+    "manual": "Manual",
     "from": "From",
     "to": "To",
     "priority": "Priority",
@@ -207,6 +209,9 @@
       "cancel": "Cancel",
       "save": "Save",
       "erase": "Erase",
+      "task_added": "Task added",
+      "task_added_description": "Your task has been added successfully.",
+      "task_error": "Task error",
       "title_required": "Title required",
       "title_required_description": "Please enter a title for your task",
       "reminders": {
@@ -238,6 +243,14 @@
     "month": "Month",
     "day": "Day",
     "threeDays": "3 Days",
+    "week": "Week",
+    "schedule": "Schedule",
+    "errors": {
+      "cannot_move_device_calendar_event": "You cannot move a device calendar event",
+      "cannot_move_habit_event": "You cannot move a habit event",
+      "cannot_resize_device_calendar_event": "You cannot resize a device calendar event",
+      "cannot_resize_habit_event": "You cannot resize a habit event"
+    },
     "event_detail": {
       "date": "Date",
       "time": "Time",
@@ -279,6 +292,19 @@
       "email_missing": "Email is required",
       "email_same": "Email must be different from the current email"
     },
+    "subscription_payments": {
+      "title": "Subscription & Payments",
+      "subscription": "${subName} Subscription",
+      "latest_subscription": "This is your subscription with the earliest billing date.",
+      "billing_cycle": "Billing Cycle",
+      "current_price": "Current Price",
+      "next_billing_date": "Next Billing Date",
+      "payment_history": "Payment History",
+      "no_payments": "No payments for now",
+      "currency_symbol": "$",
+      "manage_my_subscription": "Manage my subscription",
+      "management_url_only_mobile": "You can only manage your subscription from the iOS or Android app."
+    },
     "security_and_privacy": {
       "title": "Security & Privacy",
       "change_password": {
@@ -299,6 +325,11 @@
     "title": "Habits",
     "no_habits": "No habits for now",
     "get_started_now": "Add your first habit to get started!",
+    "delete_habit": {
+      "title": "Delete habit",
+      "description": "Are you sure you want to delete this habit?",
+      "warning": "This action cannot be undone and all the related entries will also be deleted."
+    },
     "add": {
       "title": "What do you want to achieve?",
       "name": "Habit name*",
@@ -378,7 +409,12 @@
     "last_month": "Last month",
     "this_year": "This year",
     "last_year": "Last year",
-    "all_time": "All time"
+    "all_time": "All time",
+    "minutes": {
+      "zero": "${nb} minutes",
+      "one": "${nb} minute",
+      "other": "${nb} minutes"
+    }
   },
   "days_of_week(map)": {
     "monday": "Monday",
@@ -464,7 +500,9 @@
     "delete": "Delete",
     "add": "Add",
     "edit": "Edit",
-    "clear": "Clear"
+    "clear": "Clear",
+    "close": "Close",
+    "subscribe": "Subscribe"
   },
   "validation": {
     "required": "Required",
@@ -721,5 +759,102 @@
   },
   "inbox": {
     "title": "Inbox"
+  },
+  "timer": {
+    "title": "Timer",
+    "start": "Start",
+    "stop": "Stop",
+    "reset": "Reset",
+    "pause": "Pause",
+    "resume": "Resume",
+    "duration": "Duration",
+    "start_pomodoro": "Start pomodoro",
+    "start_stopwatch": "Start stopwatch",
+    "pomo_running": "Pomodoro running",
+    "timer_running": "Timer running",
+    "time_left": "Time left: ${timeLeft}",
+    "start_break": "Start break",
+    "elapsed_time": "Elapsed time",
+    "remaining_time": "Remaining time",
+    "no_timer_running": "No timer running",
+    "modes(map)": {
+      "pomodoro": "Pomodoro",
+      "stopwatch": "Stopwatch"
+    },
+    "select_task": "Select a task",
+    "select_task_to_start_timer": "Select a task to start the timer",
+    "completed": "Completed!",
+    "pomodoro_completed_message": "Your pomodoro session has completed! Time for a break.",
+    "stopwatch_completed_message": "Your stopwatch session has been completed.",
+    "task_label": "Task"
+  },
+  "paywall": {
+    "title": "Get AtomicBlend Cloud",
+    "subtitle": "Enjoy Atomic Blend without restrictions and help the opensource initiative.",
+    "advantages": {
+      "all_apps_of_the_suite": {
+        "title": "All Apps of the Suite",
+        "description": "Get access to all the apps of the suite, including Tasks, Habits, Calendar, Notes, and more."
+      },
+      "end_to_end_encrypted": {
+        "title": "End-to-End Encryption",
+        "description": "Your data is yours, forever."
+      },
+      "unlimited_tasks": {
+        "title": "Unlimited Tasks",
+        "description": "Create as many tasks as you want, no limits."
+      },
+      "unlimited_habits": {
+        "title": "Unlimited Habits",
+        "description": "Take a step towards a healthier life with unlimited habits."
+      },
+      "unlimited_tags": {
+        "title": "Unlimited Tags / Folders",
+        "description": "Use as many tags and folders as needed to organize your life."
+      },
+      "sync_across_devices": {
+        "title": "Sync Across Devices",
+        "description": "Access your data from any device, anywhere."
+      },
+      "community_backed": {
+        "title": "Community Backed",
+        "description": "100% opensource : join a community of users who support the project."
+      }
+    },
+    "pricing(map)": {
+      "cloud_yearly": {
+        "title": "Yearly",
+        "price": "\\$3.33/mo",
+        "billed": "billed at \\$39.99/year",
+        "discount": "Save 16% with yearly billing"
+      },
+      "cloud_monthly": {
+        "title": "Monthly",
+        "price": "\\$3.99/mo",
+        "billed": "billed at \\$3.99/month",
+        "discount": ""
+      }
+    },
+    "no_package_selected": "No package selected",
+    "purchase_failed": "Purchase failed",
+    "restore_purchase": "Restore Purchase",
+    "terms": "Terms of Service",
+    "privacy_policy": "Privacy Policy",
+    "payment_in_progress": "Payment in progress",
+    "payment_in_progress_description": "Please wait while we process your payment.",
+    "success": "Purchase successful",
+    "validation_failed": "Validation failed",
+    "validation_failed_description": "Please check your internet connection and restart the app.",
+    "mobile_app_required": "Mobile app required",
+    "payment_on_mobile_for_better_xp": "To offer you the best experience possible, payment and account configuration is only available on the mobile app",
+    "ios": "iOS",
+    "android": "Android"
+  },
+  "search": {
+    "results": {
+      "zero": "No results found",
+      "one": "1 result found",
+      "other": "${n} results found"
+    }
   }
 }

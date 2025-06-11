@@ -74,7 +74,10 @@ class HabitHeatmap extends StatelessWidget {
   _generateHeatMapData(Habit habit) {
     final data = <DateTime, int>{};
     for (var entry in habit.entries ?? []) {
-      final date = entry.entryDate;
+      // Normalize date to remove time component
+      final date = DateTime(
+          entry.entryDate.year, entry.entryDate.month, entry.entryDate.day);
+      // Initialize with 1 instead of 0, as the colorsets start at 1
       data[date] ??= 0;
       data[date] = data[date]! + 1;
     }

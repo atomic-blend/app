@@ -93,6 +93,12 @@ dependencies:
   fleather: ^1.22.0
   flutter_keyboard_visibility: ^6.0.0
   flutter_side_menu: ^0.5.41
+  timezone: ^0.10.0
+  purchases_flutter: ^8.7.3
+  purchases_flutter_ui: ^0.0.1
+  purchases_ui_flutter: ^8.7.3
+  async: ^2.12.0
+  qr_flutter: ^4.1.0
 dependency_overrides:
   flutter_secure_storage: 9.2.4
   timezone: 0.10.0
@@ -110,7 +116,7 @@ dev_dependencies:
   flutter_flavorizr: ^2.2.3
   build_runner: ^2.4.14
   slang_build_runner: ^4.4.0
-  flutter_launcher_icons: ^0.14.2
+  flutter_launcher_icons: ^0.14.3
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -210,7 +216,7 @@ flutter:
           weight: 700
 
 flutter_launcher_icons:
-  android: "launcher_icon"
+  android: true
   ios: true
   remove_alpha_ios: true
   image_path: "assets/images/appicon.png"
