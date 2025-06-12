@@ -9,6 +9,7 @@ import 'package:app/components/responsive_stateful_widget.dart';
 import 'package:app/components/widgets/elevated_container.dart';
 import 'package:app/entities/tasks/tasks.entity.dart';
 import 'package:app/pages/auth/login_or_register_modal.dart';
+import 'package:app/pages/paywall/paywall_utils.dart';
 import 'package:app/pages/tasks/filtered_view.dart';
 import 'package:app/services/device_info.service.dart';
 import 'package:app/services/encryption.service.dart';
@@ -38,6 +39,7 @@ class AppLayoutState extends ResponsiveState<AppLayout> {
   @override
   void initState() {
     context.read<AuthBloc>().add(const RefreshUser());
+    PaywallUtils.resetPaywall();
 
     if (!isDesktop(context)) {
       RevenueCatService.initPlatformState();
