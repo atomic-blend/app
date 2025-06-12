@@ -498,6 +498,11 @@ class _PaywallState extends State<Paywall> {
             _purchaseSuccess = true;
             _purchaseFailed = false;
           });
+          // Show success message and close the paywall after a delay
+          Timer(const Duration(seconds: 5), () {
+            if (!context.mounted) return;
+            Navigator.of(context).pop();
+          });
           _checkPurchaseTimer?.cancel();
         } else if (loopCount >= 30) {
           setState(() {
