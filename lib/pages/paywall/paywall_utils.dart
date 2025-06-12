@@ -4,6 +4,7 @@ import 'package:app/pages/paywall/paywall.dart';
 import 'package:app/services/user.service.dart';
 import 'package:app/utils/api_client.dart';
 import 'package:app/utils/shortcuts.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class PaywallUtils {
@@ -15,11 +16,15 @@ class PaywallUtils {
     if (ApiClient.getSelfHostedRestApiUrl() != null) {
       return;
     }
-    if (prefs?.getBool("paywall_displayed") == true) {
+    final paywallDisplayed = prefs?.getBool("paywall_displayed") ?? false;
+    if (paywallDisplayed) {
+      if (kDebugMode) {
+        print("Paywall already displayed, skipping...");
+      }
       return;
     }
 
-    prefs?.setBool("paywall_displayed", true);
+    await prefs?.setBool("paywall_displayed", true);
 
     if (user != null) {
       if (UserService.isSubscriptionActive(user)) {
@@ -27,6 +32,12 @@ class PaywallUtils {
       }
     }
 
+    if (!context.mounted) {
+      if (kDebugMode) {
+        print("Context is not mounted, skipping paywall display...");
+      }
+      return;
+    }
     if (isDesktop(context)) {
       await showDialog(
         context: context,
@@ -47,6 +58,6 @@ class PaywallUtils {
       );
     }
 
-    prefs?.setBool("paywall_displayed", false);
+    await prefs?.setBool("paywall_displayed", false);
   }
 }

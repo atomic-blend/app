@@ -1390,7 +1390,7 @@ class TranslationsPaywallPricing$rcAnnualEn {
 	String get title => 'Yearly';
 	String get price => '\$3.33/mo';
 	String get billed => 'billed at \$39.99/year';
-	String get discount => 'Save 16% with yearly billing';
+	String get discount => '16% off';
 }
 
 // Path: paywall.pricing.\$rc_monthly
@@ -2178,7 +2178,7 @@ extension on Translations {
 			case 'paywall.pricing.\$rc_annual.title': return 'Yearly';
 			case 'paywall.pricing.\$rc_annual.price': return '\$3.33/mo';
 			case 'paywall.pricing.\$rc_annual.billed': return 'billed at \$39.99/year';
-			case 'paywall.pricing.\$rc_annual.discount': return 'Save 16% with yearly billing';
+			case 'paywall.pricing.\$rc_annual.discount': return '16% off';
 			case 'paywall.pricing.\$rc_monthly.title': return 'Monthly';
 			case 'paywall.pricing.\$rc_monthly.price': return '\$3.99/mo';
 			case 'paywall.pricing.\$rc_monthly.billed': return 'billed at \$3.99/month';

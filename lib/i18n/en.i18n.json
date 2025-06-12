@@ -826,7 +826,7 @@
         "title": "Yearly",
         "price": "\\$3.33/mo",
         "billed": "billed at \\$39.99/year",
-        "discount": "Save 16% with yearly billing"
+        "discount": "16% off"
       },
       "\\$rc_monthly": {
         "title": "Monthly",
