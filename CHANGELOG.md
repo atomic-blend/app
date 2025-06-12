@@ -2,6 +2,16 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## 0.9.1 - 2025-06-12
+#### Bug Fixes
+- auto close paywall after success - (109b2ee) - Brandon Guigo
+- paywall ui - (81855e4) - Brandon Guigo
+- paywall start on android - (bd87105) - Brandon Guigo
+#### Miscellaneous Chores
+- **(release)** 0.9.0 [skip ci] - (6899624) - GitHub Actions
+
+- - -
+
 ## 0.9.0 - 2025-06-11
 #### Bug Fixes
 - rendering issues on mobile for new paywall adjustments - (e7d96b1) - Brandon Guigo
