@@ -26,7 +26,6 @@ class UserService {
     Sentry.configureScope(
       (scope) => scope.setUser(SentryUser(id: null)),
     );
-    await RevenueCatService.logOut();
     encryptionService = null;
     deviceInfoService = null;
   }
@@ -108,7 +107,6 @@ class UserService {
     if (result.statusCode == 200) {
       final userData = result.data['user'];
       final user = UserEntity.fromJson(userData);
-      await RevenueCatService.logIn(user.id!);
       await prefs?.setString('user', json.encode(user.toJson()));
       await prefs?.setString('accessToken', result.data["accessToken"]);
       await prefs?.setString('refreshToken', result.data["refreshToken"]);
@@ -145,7 +143,6 @@ class UserService {
       userData!['accessToken'] = result.data['accessToken'];
       userData!['refreshToken'] = result.data['refreshToken'];
       final user = UserEntity.fromJson(userData!);
-      await RevenueCatService.logIn(user.id!);
       prefs?.setString('user', json.encode(user.toJson()));
       user.keySet = keySet!;
 
