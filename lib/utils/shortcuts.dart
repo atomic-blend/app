@@ -71,12 +71,16 @@ LinearGradient colorsToGradient(List<Color> colors, {double opacity = 1}) {
   );
 }
 
-bool isDesktop(BuildContext context) {
+bool isDesktop(BuildContext? context) {
   return kIsWeb ||
       Platform.isMacOS ||
       Platform.isWindows ||
       Platform.isLinux ||
       Device.screenType == ScreenType.tablet;
+}
+
+bool isPaymentSupported() {
+  return !kIsWeb && (Platform.isAndroid || Platform.isIOS);
 }
 
 bool isApple(BuildContext context) {
