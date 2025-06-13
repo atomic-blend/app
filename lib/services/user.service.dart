@@ -7,7 +7,6 @@ import 'package:app/entities/purchase/purchase.dart';
 import 'package:app/main.dart';
 import 'package:app/services/device_info.service.dart';
 import 'package:app/services/encryption.service.dart';
-import 'package:app/services/revenue_cat_service.dart';
 import 'package:app/utils/api_client.dart';
 import 'package:dio/dio.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
