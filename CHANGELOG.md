@@ -2,6 +2,15 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## 0.9.2 - 2025-06-13
+#### Bug Fixes
+- linter - (7a1e6a2) - Brandon Guigo
+- enable all payment actions only on iOS and Android - (5b79378) - Brandon Guigo
+#### Miscellaneous Chores
+- **(release)** 0.9.1 [skip ci] - (10671ad) - GitHub Actions
+
+- - -
+
 ## 0.9.1 - 2025-06-12
 #### Bug Fixes
 - auto close paywall after success - (109b2ee) - Brandon Guigo
