@@ -2,6 +2,18 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## 0.9.3 - 2025-06-17
+#### Bug Fixes
+- remove restore purchase btn - (2c73541) - Brandon Guigo
+- linter - (743e96c) - Brandon Guigo
+- change urls of privacy and terms - (54aa09c) - Brandon Guigo
+- fastlane build command issue when publishing for iOS - (cb42c39) - Brandon Guigo
+- remove android reference from inside the app UI - (dd95061) - Brandon Guigo
+#### Miscellaneous Chores
+- **(release)** 0.9.2 [skip ci] - (dbdcabb) - GitHub Actions
+
+- - -
+
 ## 0.9.2 - 2025-06-13
 #### Bug Fixes
 - linter - (7a1e6a2) - Brandon Guigo
