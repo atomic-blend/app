@@ -18,6 +18,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
 import 'package:purchases_flutter/object_wrappers.dart';
 import 'package:qr_flutter/qr_flutter.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 class Paywall extends StatefulWidget {
   const Paywall({super.key});
@@ -303,7 +305,10 @@ class _PaywallState extends State<Paywall> {
                                 textAlign: TextAlign.center,
                               ),
                               onPressed: () {
-                                Navigator.of(context).pop();
+                                const url =
+                                    "https://www.apple.com/legal/internet-services/itunes/dev/stdeula/";
+                                launchUrl(Uri.parse(url),
+                                    mode: LaunchMode.externalApplication);
                               }),
                         ),
                         Expanded(
@@ -318,7 +323,10 @@ class _PaywallState extends State<Paywall> {
                                 textAlign: TextAlign.center,
                               ),
                               onPressed: () {
-                                Navigator.of(context).pop();
+                                const url =
+                                    "https://brandonguigo.notion.site/Politique-de-confidentialit-17591ec0b6688166b781cf05f89d3a2d";
+                                launchUrlString(url,
+                                    mode: LaunchMode.externalApplication);
                               }),
                         ),
                       ],
