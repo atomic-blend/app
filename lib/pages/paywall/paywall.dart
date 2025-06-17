@@ -1,6 +1,6 @@
 import 'dart:async';
+import 'dart:io';
 
-import 'package:animated_toggle_switch/animated_toggle_switch.dart';
 import 'package:app/blocs/auth/auth.bloc.dart';
 import 'package:app/components/buttons/primary_button_square.dart';
 import 'package:app/components/widgets/elevated_container.dart';
@@ -11,8 +11,8 @@ import 'package:app/utils/constants.dart';
 import 'package:app/utils/shortcuts.dart';
 import 'package:app/utils/toast_helper.dart';
 import 'package:async/async.dart';
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
@@ -62,6 +62,11 @@ class _PaywallState extends State<Paywall> {
       return _buildPurchaseFailed(context);
     } else if (_isMakingPurchase == true || _checkPurchaseTimer != null) {
       return _buildPurchaseLoading(context);
+    }
+    if (!kIsWeb && Platform.isIOS) {
+      _mobilePlatform = 0; // iOS
+    } else if (!kIsWeb && Platform.isAndroid) {
+      _mobilePlatform = 1; // Android
     }
 
     return Padding(
