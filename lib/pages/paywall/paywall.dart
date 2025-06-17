@@ -286,21 +286,6 @@ class _PaywallState extends State<Paywall> {
                         Expanded(
                           child: TextButton(
                               child: Text(
-                                context.t.paywall.restore_purchase,
-                                style:
-                                    getTextTheme(context).bodySmall!.copyWith(
-                                          fontWeight: FontWeight.bold,
-                                          color: getTheme(context).primary,
-                                        ),
-                                textAlign: TextAlign.center,
-                              ),
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                              }),
-                        ),
-                        Expanded(
-                          child: TextButton(
-                              child: Text(
                                 context.t.paywall.terms,
                                 style:
                                     getTextTheme(context).bodySmall!.copyWith(
