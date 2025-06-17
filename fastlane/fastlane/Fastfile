@@ -27,7 +27,7 @@ platform :ios do
 
   lane :build_beta do
     Dir.chdir("..") do
-        sh('fvm flutter build ipa --flavor prod --release -t lib/main_prod.dart --release --dart-define APP_ENV=prod --dart-define APPLE_REVENUE_CAT_API_KEY=' + ENV["APPLE_REVENUE_CAT_API_KEY"])
+        sh('fvm flutter build ipa --flavor prod --release -t lib/main_prod.dart --dart-define APP_ENV=prod')
     end
   end
 
