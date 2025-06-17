@@ -666,46 +666,10 @@ class _PaywallState extends State<Paywall> {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           SizedBox(
-            height: getSize(context).height * 0.2,
             child: ElevatedContainer(
               padding: EdgeInsets.all($constants.insets.sm),
               child: Column(
                 children: [
-                  SizedBox(
-                    height: 30,
-                    child: AnimatedToggleSwitch.rolling(
-                      indicatorSize:
-                          Size.fromWidth(getSize(context).width * 0.2 / 2),
-                      current: _mobilePlatform,
-                      values: const [0, 1],
-                      iconBuilder: (value, foreground) {
-                        return AutoSizeText(
-                            maxLines: 1,
-                            value == 0
-                                ? context.t.paywall.ios
-                                : context.t.paywall.android,
-                            style:
-                                getTextTheme(context).bodyMedium!.copyWith());
-                      },
-                      styleBuilder: (value) {
-                        return ToggleStyle(
-                          borderColor: Colors.transparent,
-                          indicatorColor: value == _mobilePlatform
-                              ? getTheme(context).surfaceContainer
-                              : getTheme(context).surface,
-                          backgroundColor: getTheme(context).surface,
-                        );
-                      },
-                      onChanged: (value) {
-                        setState(() {
-                          _mobilePlatform = value;
-                        });
-                      },
-                    ),
-                  ),
-                  SizedBox(
-                    height: $constants.insets.xs,
-                  ),
                   QrImageView(
                     version: QrVersions.auto,
                     data: _mobilePlatform == 0
