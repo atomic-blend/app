@@ -1,6 +1,6 @@
 import 'dart:async';
+import 'dart:io';
 
-import 'package:animated_toggle_switch/animated_toggle_switch.dart';
 import 'package:app/blocs/auth/auth.bloc.dart';
 import 'package:app/components/buttons/primary_button_square.dart';
 import 'package:app/components/widgets/elevated_container.dart';
@@ -11,13 +11,15 @@ import 'package:app/utils/constants.dart';
 import 'package:app/utils/shortcuts.dart';
 import 'package:app/utils/toast_helper.dart';
 import 'package:async/async.dart';
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
 import 'package:purchases_flutter/object_wrappers.dart';
 import 'package:qr_flutter/qr_flutter.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 class Paywall extends StatefulWidget {
   const Paywall({super.key});
@@ -60,6 +62,11 @@ class _PaywallState extends State<Paywall> {
       return _buildPurchaseFailed(context);
     } else if (_isMakingPurchase == true || _checkPurchaseTimer != null) {
       return _buildPurchaseLoading(context);
+    }
+    if (!kIsWeb && Platform.isIOS) {
+      _mobilePlatform = 0; // iOS
+    } else if (!kIsWeb && Platform.isAndroid) {
+      _mobilePlatform = 1; // Android
     }
 
     return Padding(
@@ -279,21 +286,6 @@ class _PaywallState extends State<Paywall> {
                         Expanded(
                           child: TextButton(
                               child: Text(
-                                context.t.paywall.restore_purchase,
-                                style:
-                                    getTextTheme(context).bodySmall!.copyWith(
-                                          fontWeight: FontWeight.bold,
-                                          color: getTheme(context).primary,
-                                        ),
-                                textAlign: TextAlign.center,
-                              ),
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                              }),
-                        ),
-                        Expanded(
-                          child: TextButton(
-                              child: Text(
                                 context.t.paywall.terms,
                                 style:
                                     getTextTheme(context).bodySmall!.copyWith(
@@ -303,7 +295,10 @@ class _PaywallState extends State<Paywall> {
                                 textAlign: TextAlign.center,
                               ),
                               onPressed: () {
-                                Navigator.of(context).pop();
+                                const url =
+                                    "https://www.apple.com/legal/internet-services/itunes/dev/stdeula/";
+                                launchUrl(Uri.parse(url),
+                                    mode: LaunchMode.externalApplication);
                               }),
                         ),
                         Expanded(
@@ -318,7 +313,10 @@ class _PaywallState extends State<Paywall> {
                                 textAlign: TextAlign.center,
                               ),
                               onPressed: () {
-                                Navigator.of(context).pop();
+                                const url =
+                                    "https://brandonguigo.notion.site/Politique-de-confidentialit-17591ec0b6688166b781cf05f89d3a2d";
+                                launchUrlString(url,
+                                    mode: LaunchMode.externalApplication);
                               }),
                         ),
                       ],
@@ -666,46 +664,10 @@ class _PaywallState extends State<Paywall> {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           SizedBox(
-            height: getSize(context).height * 0.2,
             child: ElevatedContainer(
               padding: EdgeInsets.all($constants.insets.sm),
               child: Column(
                 children: [
-                  SizedBox(
-                    height: 30,
-                    child: AnimatedToggleSwitch.rolling(
-                      indicatorSize:
-                          Size.fromWidth(getSize(context).width * 0.2 / 2),
-                      current: _mobilePlatform,
-                      values: const [0, 1],
-                      iconBuilder: (value, foreground) {
-                        return AutoSizeText(
-                            maxLines: 1,
-                            value == 0
-                                ? context.t.paywall.ios
-                                : context.t.paywall.android,
-                            style:
-                                getTextTheme(context).bodyMedium!.copyWith());
-                      },
-                      styleBuilder: (value) {
-                        return ToggleStyle(
-                          borderColor: Colors.transparent,
-                          indicatorColor: value == _mobilePlatform
-                              ? getTheme(context).surfaceContainer
-                              : getTheme(context).surface,
-                          backgroundColor: getTheme(context).surface,
-                        );
-                      },
-                      onChanged: (value) {
-                        setState(() {
-                          _mobilePlatform = value;
-                        });
-                      },
-                    ),
-                  ),
-                  SizedBox(
-                    height: $constants.insets.xs,
-                  ),
                   QrImageView(
                     version: QrVersions.auto,
                     data: _mobilePlatform == 0
