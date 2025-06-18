@@ -2,6 +2,14 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## 0.9.4 - 2025-06-18
+#### Bug Fixes
+- wrong condition on RC init in main - (54c7be0) - Brandon Guigo
+#### Miscellaneous Chores
+- **(release)** 0.9.3 [skip ci] - (74abb09) - GitHub Actions
+
+- - -
+
 ## 0.9.3 - 2025-06-17
 #### Bug Fixes
 - remove restore purchase btn - (2c73541) - Brandon Guigo
