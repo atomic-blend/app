@@ -1,27 +1,50 @@
 import 'dart:io' show Platform;
 
 import 'package:app/main.dart';
-import 'package:flutter/services.dart';
+import 'package:flutter/foundation.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 
 class RevenueCatService {
   static Future<void> initPlatformState() async {
-    await Purchases.setLogLevel(LogLevel.debug);
+    try {
+      if (kDebugMode) {
+        print('RevenueCat: Starting initialization...');
+      }
 
-    PurchasesConfiguration? configuration;
-    if (Platform.isAndroid) {
-      configuration = PurchasesConfiguration(env!.googleRevenueCatApiKey);
-      // if (buildingForAmazon) {
-      //   // use your preferred way to determine if this build is for Amazon store
-      //   // checkout our MagicWeather sample for a suggestion
-      //   configuration = AmazonConfiguration("");
-      // }
-    } else if (Platform.isIOS) {
-      configuration = PurchasesConfiguration(env!.appleRevenueCatApiKey);
-    } else {
-      throw Exception("Unsupported platform");
+      await Purchases.setLogLevel(LogLevel.debug);
+
+      PurchasesConfiguration? configuration;
+      if (Platform.isAndroid) {
+        if (kDebugMode) {
+          print(
+              'RevenueCat: Configuring for Android with key: ${env!.googleRevenueCatApiKey.isNotEmpty ? 'PROVIDED' : 'EMPTY'}');
+        }
+        configuration = PurchasesConfiguration(env!.googleRevenueCatApiKey);
+        // if (buildingForAmazon) {
+        //   // use your preferred way to determine if this build is for Amazon store
+        //   // checkout our MagicWeather sample for a suggestion
+        //   configuration = AmazonConfiguration("");
+        // }
+      } else if (Platform.isIOS) {
+        if (kDebugMode) {
+          print(
+              'RevenueCat: Configuring for iOS with key: ${env!.appleRevenueCatApiKey.isNotEmpty ? 'PROVIDED' : 'EMPTY'}');
+        }
+        configuration = PurchasesConfiguration(env!.appleRevenueCatApiKey);
+      } else {
+        throw Exception("Unsupported platform");
+      }
+
+      await Purchases.configure(configuration);
+      if (kDebugMode) {
+        print('RevenueCat: Initialization completed successfully');
+      }
+    } catch (e) {
+      if (kDebugMode) {
+        print('RevenueCat: Initialization failed with error: $e');
+      }
+      rethrow;
     }
-    await Purchases.configure(configuration);
   }
 
   static Future<bool> logIn(String userId) async {
@@ -47,6 +70,9 @@ class RevenueCatService {
       final offerings = await Purchases.getOfferings();
       return offerings;
     } catch (e) {
+      if (kDebugMode) {
+        print('RevenueCat getOfferings error: $e');
+      }
       return null;
     }
   }
@@ -57,9 +83,12 @@ class RevenueCatService {
     try {
       final purchaseResult = await Purchases.purchasePackage(package);
       return purchaseResult;
-    } on PlatformException catch (_) {
+    } catch (e) {
       // Handle purchase error
       // final errorCode = PurchasesErrorHelper.getErrorCode(e);
+      if (kDebugMode) {
+        print('RevenueCat purchase error: $e');
+      }
       return null;
     }
   }
