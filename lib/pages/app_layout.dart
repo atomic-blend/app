@@ -41,10 +41,6 @@ class AppLayoutState extends ResponsiveState<AppLayout> {
     context.read<AuthBloc>().add(const RefreshUser());
     PaywallUtils.resetPaywall();
 
-    if (!isPaymentSupported()) {
-      RevenueCatService.initPlatformState();
-    }
-
     if (context.read<AuthBloc>().state.user != null) {
       WidgetsBinding.instance.addPostFrameCallback((_) async {
         if (context.read<AuthBloc>().state.user?.devices == null) {
@@ -885,13 +881,13 @@ class AppLayoutState extends ResponsiveState<AppLayout> {
       encryptionService ??=
           EncryptionService(userSalt: authState.user!.keySet.salt);
       encryptionService!.hydrateKey();
-      if (!isPaymentSupported()) RevenueCatService.logIn(authState.user!.id!);
+      if (isPaymentSupported()) RevenueCatService.logIn(authState.user!.id!);
     }
 
     // if the user is logged out, show the login modal
     if (authState is LoggedOut && !_isLoginModalVisible) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        if (!isPaymentSupported()) RevenueCatService.logOut();
+        if (isPaymentSupported()) RevenueCatService.logOut();
         _showLoginModal(context);
       });
     }

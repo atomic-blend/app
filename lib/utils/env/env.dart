@@ -47,6 +47,7 @@ class EnvModel with _$EnvModel {
     if (appleRevenueCatApiKey != '') {
       jsonEnvData['appleRevenueCatApiKey'] = appleRevenueCatApiKey;
     }
+
     const googleRevenueCatApiKey =
         String.fromEnvironment('GOOGLE_REVENUE_CAT_API_KEY', defaultValue: '');
     if (googleRevenueCatApiKey != '') {

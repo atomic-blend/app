@@ -45,17 +45,56 @@ class _PaywallState extends State<Paywall> {
 
   _fetchOfferings() {
     return _memoizer!.runOnce(() async {
-      final offerings = await RevenueCatService.getOfferings();
-      _package = offerings?.current?.availablePackages.firstWhere(
-        (package) => package.storeProduct.identifier == "cloud_yearly",
-        orElse: () => offerings.current!.availablePackages.first,
-      );
-      return offerings;
+      try {
+        if (kDebugMode) {
+          print('Paywall: Starting to fetch offerings...');
+        }
+        final offerings = await RevenueCatService.getOfferings();
+
+        if (kDebugMode) {
+          print(
+              'Paywall: Received offerings: ${offerings != null ? 'SUCCESS' : 'NULL'}');
+          if (offerings != null) {
+            print(
+                'Paywall: Current offering available: ${offerings.current != null ? 'YES' : 'NO'}');
+            if (offerings.current != null) {
+              print(
+                  'Paywall: Available packages count: ${offerings.current!.availablePackages.length}');
+            }
+          }
+        }
+
+        if (offerings?.current?.availablePackages.isNotEmpty == true) {
+          _package = offerings!.current!.availablePackages.firstWhere(
+            (package) => package.storeProduct.identifier == "cloud_yearly",
+            orElse: () => offerings.current!.availablePackages.first,
+          );
+          if (kDebugMode) {
+            print(
+                'Paywall: Selected package: ${_package?.storeProduct.identifier}');
+          }
+        } else {
+          if (kDebugMode) {
+            print('Paywall: No packages available');
+          }
+        }
+        return offerings;
+      } catch (e) {
+        if (kDebugMode) {
+          print('Paywall: Error in _fetchOfferings: $e');
+        }
+        rethrow;
+      }
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    if (kDebugMode) {
+      print(
+          'Paywall: Building widget - purchaseSuccess: $_purchaseSuccess, purchaseFailed: $_purchaseFailed, isMakingPurchase: $_isMakingPurchase');
+    }
+
     if (_purchaseSuccess == true) {
       return _buildPurchaseSuccess(context);
     } else if (_purchaseFailed == true) {
@@ -217,39 +256,60 @@ class _PaywallState extends State<Paywall> {
                               snapshot.data?.current?.availablePackages
                                       .isNotEmpty ==
                                   true) {
-                            _package = snapshot.data!.current!.availablePackages
-                                .firstWhere((package) =>
+                            final packages =
+                                snapshot.data!.current!.availablePackages;
+                            final yearlyPackage = packages
+                                .where((package) =>
                                     package.storeProduct.identifier ==
-                                    "cloud_yearly");
+                                    "cloud_yearly")
+                                .firstOrNull;
+                            _package = yearlyPackage ?? packages.first;
                           }
                         });
 
                         if (snapshot.connectionState ==
                                 ConnectionState.waiting ||
-                            snapshot.data == null) {
+                            snapshot.data == null ||
+                            snapshot.data!.current?.availablePackages.isEmpty ==
+                                true) {
                           return Center(
                             child: CircularProgressIndicator(
                               color: getTheme(context).primary,
                             ),
                           );
                         }
+
+                        final packages =
+                            snapshot.data!.current!.availablePackages;
+                        final monthlyPackage = packages
+                            .where((package) =>
+                                package.identifier == '\$rc_monthly')
+                            .firstOrNull;
+                        final annualPackage = packages
+                            .where((package) =>
+                                package.identifier == '\$rc_annual')
+                            .firstOrNull;
+
+                        if (monthlyPackage == null || annualPackage == null) {
+                          return Center(
+                            child: Text(
+                              'No subscription packages available',
+                              style: getTextTheme(context).bodyMedium,
+                            ),
+                          );
+                        }
+
                         return Row(
                           mainAxisSize: MainAxisSize.min,
                           spacing: $constants.insets.sm,
                           children: [
                             _buildPricingCard(
                               context,
-                              package: snapshot.data!.current!.availablePackages
-                                  .firstWhere(
-                                (package) =>
-                                    package.identifier == '\$rc_monthly',
-                              ),
+                              package: monthlyPackage,
                             ),
                             _buildPricingCard(
                               context,
-                              package: snapshot.data!.current!.availablePackages
-                                  .firstWhere((package) =>
-                                      package.identifier == '\$rc_annual'),
+                              package: annualPackage,
                             ),
                           ],
                         );
@@ -479,6 +539,14 @@ class _PaywallState extends State<Paywall> {
       return customerInfo;
     } catch (e) {
       // Handle purchase error
+      if (kDebugMode) {
+        print('Paywall purchase error: $e');
+      }
+      if (mounted) {
+        setState(() {
+          _isMakingPurchase = false;
+        });
+      }
       return null;
     }
   }

@@ -14,7 +14,9 @@ import 'package:app/i18n/strings.g.dart';
 import 'package:app/services/notifications/background_notification_processor.dart';
 import 'package:app/services/notifications/fcm_service.dart';
 import 'package:app/services/notifications/processors/processors.dart';
+import 'package:app/services/revenue_cat_service.dart';
 import 'package:app/utils/env/env.dart';
+import 'package:app/utils/shortcuts.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
@@ -42,6 +44,9 @@ String? userKey;
 FutureOr<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
+  env = await EnvModel.create();
+  prefs = await SharedPreferences.getInstance();
+
   await SentryFlutter.init((options) {
     String? dsn = const String.fromEnvironment(
       'SENTRY_DSN',
@@ -62,8 +67,9 @@ FutureOr<void> main() async {
       WindowManipulator.enableFullSizeContentView();
     }
 
-    env = await EnvModel.create();
-    prefs = await SharedPreferences.getInstance();
+    if (isPaymentSupported()) {
+      await RevenueCatService.initPlatformState();
+    }
 
     final rawUserData = prefs?.getString("user");
     userData = rawUserData != null ? json.decode(rawUserData) : null;
