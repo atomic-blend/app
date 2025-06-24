@@ -20,7 +20,6 @@ class App extends StatelessWidget {
       darkTheme: AppTheme.dark,
       themeMode: ThemeMode.system,
       locale: TranslationProvider.of(context).flutterLocale,
-      // use provider
       supportedLocales: AppLocaleUtils.supportedLocales,
       localizationsDelegates: const [
         FleatherLocalizations.delegate,
