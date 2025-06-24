@@ -2,6 +2,14 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## 0.9.5 - 2025-06-24
+#### Bug Fixes
+- trigger new version for app store publishing - (3ac07a6) - Brandon Guigo
+#### Miscellaneous Chores
+- **(release)** 0.9.4 [skip ci] - (868d5f0) - GitHub Actions
+
+- - -
+
 ## 0.9.4 - 2025-06-18
 #### Bug Fixes
 - wrong condition on RC init in main - (54c7be0) - Brandon Guigo
