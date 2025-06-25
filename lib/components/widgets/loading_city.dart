@@ -18,27 +18,30 @@ class LoadingAnimated extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Lottie.asset(
-          animationPath ?? 'assets/animations/loading-city.json',
-          width: imageWidth ?? getSize(context).width * 0.5,
-          height: imageHeight ?? getSize(context).height * 0.3,
-        ),
-        if (title != null)
-          Padding(
-            padding: EdgeInsets.symmetric(vertical: $constants.insets.xxs),
-            child: AutoSizeText(
-              title!,
-              style: getTextTheme(context).titleMedium!.copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
-              textAlign: TextAlign.center,
-            ),
+    return SizedBox(
+      width: double.infinity,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Lottie.asset(
+            animationPath ?? 'assets/animations/loading-city.json',
+            width: imageWidth ?? getSize(context).width * 0.5,
+            height: imageHeight ?? getSize(context).height * 0.3,
           ),
-      ],
+          if (title != null)
+            Padding(
+              padding: EdgeInsets.symmetric(vertical: $constants.insets.xxs),
+              child: AutoSizeText(
+                title!,
+                style: getTextTheme(context).titleMedium!.copyWith(
+                      fontWeight: FontWeight.bold,
+                    ),
+                textAlign: TextAlign.center,
+              ),
+            ),
+        ],
+      ),
     );
   }
 }

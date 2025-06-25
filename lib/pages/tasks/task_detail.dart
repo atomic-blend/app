@@ -209,31 +209,44 @@ class _TaskDetailState extends State<TaskDetail> {
                           onChanged: (newValue) {}),
                       GestureDetector(
                         onTap: () async {
-                          await showModalBottomSheet(
+                          final child = TaskDatePickerModal(
+                            endDate: _endDate,
+                            startDate: _startDate,
+                            reminders: _reminders,
+                            onRemindersChanged: (newRem) {
+                              setState(() {
+                                _reminders = newRem;
+                              });
+                            },
+                            onEndDateChanged: (date) {
+                              setState(() {
+                                _endDate = date;
+                              });
+                            },
+                            onStartDateChanged: (date) {
+                              setState(() {
+                                _startDate = date;
+                              });
+                            },
+                            firstDate: DateTime(2000),
+                            lastDate: DateTime(2100),
+                          );
+
+                          if (isDesktop(context)) {
+                            showDialog(
+                                context: context,
+                                builder: (context) => Dialog(
+                                      child: SizedBox(
+                                          width: getSize(context).width * 0.6,
+                                          child: child),
+                                    ));
+                          } else {
+                            await showModalBottomSheet(
                               context: context,
                               isScrollControlled: true,
-                              builder: (context) => TaskDatePickerModal(
-                                    endDate: _endDate,
-                                    startDate: _startDate,
-                                    reminders: _reminders,
-                                    onRemindersChanged: (newRem) {
-                                      setState(() {
-                                        _reminders = newRem;
-                                      });
-                                    },
-                                    onEndDateChanged: (date) {
-                                      setState(() {
-                                        _endDate = date;
-                                      });
-                                    },
-                                    onStartDateChanged: (date) {
-                                      setState(() {
-                                        _startDate = date;
-                                      });
-                                    },
-                                    firstDate: DateTime(2000),
-                                    lastDate: DateTime(2100),
-                                  ));
+                              builder: (context) => child,
+                            );
+                          }
                           widget.task.endDate = _endDate;
                           widget.task.startDate = _startDate;
                           widget.task.reminders = _reminders;
