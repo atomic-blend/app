@@ -865,7 +865,7 @@ class AppLayoutState extends ResponsiveState<AppLayout> {
             if (!kIsWeb && Platform.isMacOS) {
               return TitlebarSafeArea(child: renderedBody);
             }
-            return renderedBody;
+            return SafeArea(child: renderedBody);
           });
         });
       },
