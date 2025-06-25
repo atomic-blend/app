@@ -45,76 +45,79 @@ class _LoginOrRegisterModalState extends State<LoginOrRegisterModal> {
           });
         }
       },
-      child: BlocBuilder<AuthBloc, AuthState>(builder: (context, authState) {
-        if (authState is Loading) {
-          return LoadingAnimated(
-            imageWidth: getSize(context).width * 0.6,
-            title: context.t.loading.simple,
-          );
-        }
-        switch (_step) {
-          case 0:
-            return WelcomeScreen(
-              nextStepCallback: () => setState(() => _step = 1),
+      child: SizedBox(
+        height: getSize(context).height * 0.9,
+        child: BlocBuilder<AuthBloc, AuthState>(builder: (context, authState) {
+          if (authState is Loading) {
+            return LoadingAnimated(
+              imageWidth: getSize(context).width * 0.6,
+              title: context.t.loading.simple,
             );
-          case 1:
-            return LoginOrRegister(
-              backStepCallback: () => setState(() => _step = 0),
-              loginCallback: () => setState(() => _step = 2),
-              registerCallback: () => setState(() => _step = 3),
-            );
-          case 2:
-            return Login(
-              onAuthSuccess: () {
-                widget.onAuthSuccess.call();
-              },
-              cancelCallback: () {
-                setState(() {
-                  _step = 1;
-                });
-              },
-              errorMessage: errorMessage,
-            );
-          case 3:
-            return RegisterEmail(
-              email: email,
-              nextStepCallback: (String newEmail) {
-                setState(() {
-                  email = newEmail;
-                  _step = 4;
-                });
-              },
-              cancelCallback: () {
-                setState(() {
-                  _step = 1;
-                });
-              },
-            );
-          case 4:
-            return RegisterPassword(
-              password: password,
-              onAuthSuccess: () {
-                widget.onAuthSuccess();
-              },
-              onPasswordUpdate: (newPwd) {
-                setState(() {
-                  password = newPwd;
-                });
-              },
-              email: email!,
-              cancelCallback: () {
-                setState(() {
-                  _step = 3;
-                });
-              },
-            );
-          case 5:
-            return MnemonicKey(
-                onSuccess: () {},
-                mnemonic: authState.user?.keySet.backupPhrase ?? '');
-        }
-        return Container();
-      }),
+          }
+          switch (_step) {
+            case 0:
+              return WelcomeScreen(
+                nextStepCallback: () => setState(() => _step = 1),
+              );
+            case 1:
+              return LoginOrRegister(
+                backStepCallback: () => setState(() => _step = 0),
+                loginCallback: () => setState(() => _step = 2),
+                registerCallback: () => setState(() => _step = 3),
+              );
+            case 2:
+              return Login(
+                onAuthSuccess: () {
+                  widget.onAuthSuccess.call();
+                },
+                cancelCallback: () {
+                  setState(() {
+                    _step = 1;
+                  });
+                },
+                errorMessage: errorMessage,
+              );
+            case 3:
+              return RegisterEmail(
+                email: email,
+                nextStepCallback: (String newEmail) {
+                  setState(() {
+                    email = newEmail;
+                    _step = 4;
+                  });
+                },
+                cancelCallback: () {
+                  setState(() {
+                    _step = 1;
+                  });
+                },
+              );
+            case 4:
+              return RegisterPassword(
+                password: password,
+                onAuthSuccess: () {
+                  widget.onAuthSuccess();
+                },
+                onPasswordUpdate: (newPwd) {
+                  setState(() {
+                    password = newPwd;
+                  });
+                },
+                email: email!,
+                cancelCallback: () {
+                  setState(() {
+                    _step = 3;
+                  });
+                },
+              );
+            case 5:
+              return MnemonicKey(
+                  onSuccess: () {},
+                  mnemonic: authState.user?.keySet.backupPhrase ?? '');
+          }
+          return Container();
+        }),
+      ),
     );
   }
 }
