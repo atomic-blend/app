@@ -25,6 +25,7 @@ import 'package:app/utils/shortcuts.dart';
 import 'package:collection/collection.dart';
 import 'package:fleather/fleather.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
@@ -83,7 +84,7 @@ class _TaskDetailState extends State<TaskDetail> {
         child: buildBody(context),
       );
 
-      if (Platform.isMacOS) {
+      if (!kIsWeb && Platform.isMacOS) {
         return TitlebarSafeArea(
           child: body,
         );
