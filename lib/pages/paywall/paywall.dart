@@ -241,8 +241,7 @@ class _PaywallState extends State<Paywall> {
             SizedBox(
               height: $constants.insets.xs,
             ),
-            if (isDesktop(context)) _buildPaymentMobileOnly(context),
-            if (!isDesktop(context))
+            if (isPaymentSupported())
               Column(
                 mainAxisSize: MainAxisSize.min,
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -399,7 +398,7 @@ class _PaywallState extends State<Paywall> {
           });
         },
         child: ElevatedContainer(
-          height: getSize(context).height * 0.1,
+          height: 90,
           width: double.infinity,
           borderRadius: $constants.corners.sm,
           border: _package == package
@@ -596,7 +595,9 @@ class _PaywallState extends State<Paywall> {
           children: [
             Lottie.asset(
               'assets/animations/credit_card_success.json',
-              width: getSize(context).width,
+              width: isDesktop(context)
+                  ? getSize(context).width * 0.3
+                  : getSize(context).width,
             ),
             SizedBox(
               height: $constants.insets.sm,
@@ -643,7 +644,9 @@ class _PaywallState extends State<Paywall> {
                 scale: 2,
                 child: Lottie.asset(
                   'assets/animations/failed.json',
-                  width: getSize(context).width,
+                  width: isDesktop(context)
+                      ? getSize(context).width * 0.3
+                      : getSize(context).width,
                 ),
               ),
             ),
@@ -698,7 +701,9 @@ class _PaywallState extends State<Paywall> {
             ),
             Lottie.asset(
               'assets/animations/apple_pay.json',
-              width: getSize(context).width,
+              width: isDesktop(context)
+                  ? getSize(context).width * 0.3
+                  : getSize(context).width,
             ),
             SizedBox(
               height: $constants.insets.lg,
@@ -719,62 +724,6 @@ class _PaywallState extends State<Paywall> {
             ),
           ],
         ),
-      ),
-    );
-  }
-
-  Widget _buildPaymentMobileOnly(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: $constants.insets.md),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          SizedBox(
-            child: ElevatedContainer(
-              padding: EdgeInsets.all($constants.insets.sm),
-              child: Column(
-                children: [
-                  QrImageView(
-                    version: QrVersions.auto,
-                    data: _mobilePlatform == 0
-                        ? "https://apps.apple.com/fr/app/atomic-task/id6743615832"
-                        : "https://play.google.com/store/apps/details?id=fr.atomicblend.app",
-                    size: 100.0,
-                  ),
-                ],
-              ),
-            ),
-          ),
-          SizedBox(
-            width: $constants.insets.lg,
-          ),
-          Column(
-            mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Text(
-                context.t.paywall.mobile_app_required,
-                style: getTextTheme(context).headlineSmall,
-              ),
-              SizedBox(
-                height: $constants.insets.sm,
-              ),
-              SizedBox(
-                width: getSize(context).width * 0.4,
-                child: Text(
-                  context.t.paywall.payment_on_mobile_for_better_xp,
-                  textAlign: TextAlign.center,
-                  style: getTextTheme(context).bodyMedium?.copyWith(
-                        color: Colors.grey.shade600,
-                      ),
-                ),
-              ),
-            ],
-          ),
-        ],
       ),
     );
   }

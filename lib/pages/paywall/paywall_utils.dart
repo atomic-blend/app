@@ -44,7 +44,7 @@ class PaywallUtils {
         builder: (context) => Dialog(
             child: SizedBox(
                 width: getSize(context).width * 0.8,
-                height: getSize(context).height * 0.8,
+                height: getSize(context).height * 0.85,
                 child: const Paywall())),
       );
     } else {
