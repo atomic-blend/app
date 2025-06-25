@@ -899,6 +899,7 @@ class AppLayoutState extends ResponsiveState<AppLayout> {
           barrierDismissible: false,
           builder: (context) => Dialog(
                 child: SizedBox(
+                  width: getSize(context).width * 0.5,
                   child: LoginOrRegisterModal(
                     onAuthSuccess: () => setState(() {
                       _isLoginModalVisible = false;
@@ -912,10 +913,13 @@ class AppLayoutState extends ResponsiveState<AppLayout> {
         isScrollControlled: true,
         enableDrag: false,
         context: context,
-        builder: (context) => LoginOrRegisterModal(
-          onAuthSuccess: () => setState(() {
-            _isLoginModalVisible = false;
-          }),
+        builder: (context) => SizedBox(
+          height: getSize(context).height * 0.88,
+          child: LoginOrRegisterModal(
+            onAuthSuccess: () => setState(() {
+              _isLoginModalVisible = false;
+            }),
+          ),
         ),
       );
     }
