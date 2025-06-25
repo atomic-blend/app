@@ -53,10 +53,10 @@
 			<string>UIInterfaceOrientationLandscapeRight</string>
 		</array>
 		<key>NSCalendarsUsageDescription</key>
-		<string>Access device calendar to display in app</string>
+		<string>Display calendars and events in a calendar view along with internal app content</string>
 		<key>NSContactsUsageDescription</key>
-		<string>Access device contacts to display in app</string>
+		<string>Access to contacts to link calendar events to when displaying them in the app</string>
 		<key>NSCalendarsFullAccessUsageDescription</key>
-		<string>Access device calendar to display in app.</string>
+		<string>Display calendars and events (plus descriptions etc...) in a calendar view along with internal app content</string>
 	</dict>
 </plist>
