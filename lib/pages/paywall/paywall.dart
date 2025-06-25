@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:animated_toggle_switch/animated_toggle_switch.dart';
 import 'package:app/blocs/auth/auth.bloc.dart';
 import 'package:app/components/buttons/primary_button_square.dart';
 import 'package:app/components/widgets/elevated_container.dart';
@@ -11,6 +12,7 @@ import 'package:app/utils/constants.dart';
 import 'package:app/utils/shortcuts.dart';
 import 'package:app/utils/toast_helper.dart';
 import 'package:async/async.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -241,6 +243,7 @@ class _PaywallState extends State<Paywall> {
             SizedBox(
               height: $constants.insets.xs,
             ),
+            if (!isPaymentSupported()) ...[_buildPaymentMobileOnly(context)],
             if (isPaymentSupported())
               Column(
                 mainAxisSize: MainAxisSize.min,
@@ -724,6 +727,97 @@ class _PaywallState extends State<Paywall> {
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget _buildPaymentMobileOnly(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: $constants.insets.md),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          SizedBox(
+            child: ElevatedContainer(
+              padding: EdgeInsets.all($constants.insets.sm),
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: 30,
+                    child: AnimatedToggleSwitch.rolling(
+                      indicatorSize:
+                          Size.fromWidth(getSize(context).width * 0.2 / 2),
+                      current: _mobilePlatform,
+                      values: const [0, 1],
+                      iconBuilder: (value, foreground) {
+                        return AutoSizeText(
+                            maxLines: 1,
+                            value == 0
+                                ? context.t.paywall.ios
+                                : context.t.paywall.android,
+                            style:
+                                getTextTheme(context).bodyMedium!.copyWith());
+                      },
+                      styleBuilder: (value) {
+                        return ToggleStyle(
+                          borderColor: Colors.transparent,
+                          indicatorColor: value == _mobilePlatform
+                              ? getTheme(context).surfaceContainer
+                              : getTheme(context).surface,
+                          backgroundColor: getTheme(context).surface,
+                        );
+                      },
+                      onChanged: (value) {
+                        setState(() {
+                          _mobilePlatform = value;
+                        });
+                      },
+                    ),
+                  ),
+                  SizedBox(
+                    height: $constants.insets.xs,
+                  ),
+                  QrImageView(
+                    version: QrVersions.auto,
+                    data: _mobilePlatform == 0
+                        ? "https://apps.apple.com/fr/app/atomic-task/id6743615832"
+                        : "https://play.google.com/store/apps/details?id=fr.atomicblend.app",
+                    size: 100.0,
+                  ),
+                ],
+              ),
+            ),
+          ),
+          SizedBox(
+            width: $constants.insets.lg,
+          ),
+          Column(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text(
+                context.t.paywall.mobile_app_required,
+                style: getTextTheme(context).headlineSmall,
+              ),
+              SizedBox(
+                height: $constants.insets.sm,
+              ),
+              SizedBox(
+                width: getSize(context).width * 0.4,
+                child: Text(
+                  context.t.paywall.payment_on_mobile_for_better_xp,
+                  textAlign: TextAlign.center,
+                  style: getTextTheme(context).bodyMedium?.copyWith(
+                        color: Colors.grey.shade600,
+                      ),
+                ),
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }
