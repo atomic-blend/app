@@ -106,6 +106,7 @@ class _TaskDetailState extends State<TaskDetail> {
               width: isDesktop(context)
                   ? getSize(context).width * 0.3
                   : getSize(context).width * 0.9,
+              height: 85,
               child: AssignFolder(
                 folderId: _folder?.id,
                 onFolderSelected: (folder) {
@@ -119,8 +120,8 @@ class _TaskDetailState extends State<TaskDetail> {
                       widget.task.folderId = folder.id;
                       _folder = folder;
                     });
-                    context.read<TasksBloc>().add(EditTask(widget.task));
                   }
+                  context.read<TasksBloc>().add(EditTask(widget.task));
                 },
               ),
             ),
