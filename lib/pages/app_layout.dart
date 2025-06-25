@@ -41,7 +41,7 @@ class AppLayoutState extends ResponsiveState<AppLayout> {
     context.read<AuthBloc>().add(const RefreshUser());
     PaywallUtils.resetPaywall();
 
-    if (context.read<AuthBloc>().state.user != null) {
+    if (context.read<AuthBloc>().state.user != null && !kIsWeb) {
       WidgetsBinding.instance.addPostFrameCallback((_) async {
         if (context.read<AuthBloc>().state.user?.devices == null) {
           context.read<AuthBloc>().state.user?.devices = [];
