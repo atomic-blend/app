@@ -59,11 +59,10 @@ class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
       },
       child: Stack(
         children: [
-          SizedBox(
-            width: double.infinity,
-            height: getSize(context).height * 0.92,
-            child: SingleChildScrollView(
-              child: Column(
+          Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   SizedBox(
@@ -128,23 +127,35 @@ class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
                     onPlay: (controller) => controller.forward(),
                     child: Column(
                       children: [
-                        SizedBox(
-                          width: getSize(context).width * 0.9,
-                          child: AppTextFormField(
-                            controller: _emailController,
-                            hintText: context.t.auth.login.email,
-                            keyboardType: TextInputType.emailAddress,
+                        Padding(
+                          padding: isDesktop(context)
+                              ? EdgeInsets.symmetric(
+                                  horizontal: $constants.insets.md)
+                              : EdgeInsets.zero,
+                          child: SizedBox(
+                            width: getSize(context).width * 0.9,
+                            child: AppTextFormField(
+                              controller: _emailController,
+                              hintText: context.t.auth.login.email,
+                              keyboardType: TextInputType.emailAddress,
+                            ),
                           ),
                         ),
                         SizedBox(
                           height: $constants.insets.xs,
                         ),
-                        SizedBox(
-                          width: getSize(context).width * 0.9,
-                          child: AppTextFormField(
-                            controller: _passwordController,
-                            hintText: context.t.auth.register.password_hint,
-                            obscureText: true,
+                        Padding(
+                          padding: isDesktop(context)
+                              ? EdgeInsets.symmetric(
+                                  horizontal: $constants.insets.md)
+                              : EdgeInsets.zero,
+                          child: SizedBox(
+                            width: getSize(context).width * 0.9,
+                            child: AppTextFormField(
+                              controller: _passwordController,
+                              hintText: context.t.auth.register.password_hint,
+                              obscureText: true,
+                            ),
                           ),
                         ),
                         if (widget.errorMessage != null) ...[
@@ -169,9 +180,11 @@ class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
                       ],
                     ),
                   ),
-                  SizedBox(
-                    height: getSize(context).height * 0.23,
-                  ),
+                ],
+              ),
+              Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
                   const Divider(),
                   Animate(
                     controller: _animationController,
@@ -227,11 +240,13 @@ class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
                     ),
                   ),
                   SizedBox(
-                    height: $constants.insets.lg,
+                    height: !isDesktop(context)
+                        ? $constants.insets.sm
+                        : $constants.insets.xs,
                   ),
                 ],
               ),
-            ),
+            ],
           ),
           Positioned(
             left: $constants.insets.sm,

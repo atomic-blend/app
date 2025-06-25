@@ -102,7 +102,8 @@ class _CalendarState extends State<Calendar> {
                     final DateTime? selectedDate =
                         calendarSelectionDetails.date;
 
-                    if (selectedDate != null) {
+                    if (selectedDate != null &&
+                        widget.view != CalendarView.month) {
                       //show the add task dialog with the selected date
                       _showAddTaskDialog(selectedDate,
                           selectedDate.add(const Duration(minutes: 30)));
@@ -173,6 +174,11 @@ class _CalendarState extends State<Calendar> {
                     });
                   },
                   onTap: (calendarTapDetails) {
+                    if (widget.view == CalendarView.month &&
+                        calendarTapDetails.targetElement ==
+                                CalendarElement.calendarCell) {
+                      return;
+                    }
                     if (calendarTapDetails.appointments?.first.itemType ==
                         CustomAppointmentType.task) {
                       showDialog(
@@ -182,7 +188,9 @@ class _CalendarState extends State<Calendar> {
                                     horizontal: $constants.insets.xs),
                                 child: SizedBox(
                                   height: getSize(context).height * 0.7,
-                                  width: getSize(context).width,
+                                  width: isDesktop(context)
+                                      ? getSize(context).width * 0.5
+                                      : getSize(context).width,
                                   child: ClipRRect(
                                     borderRadius: BorderRadius.circular(
                                         $constants.corners.md),
@@ -220,7 +228,9 @@ class _CalendarState extends State<Calendar> {
                                 horizontal: $constants.insets.xs),
                             child: SizedBox(
                               height: getSize(context).height * 0.7,
-                              width: getSize(context).width,
+                              width: isDesktop(context)
+                                  ? getSize(context).width * 0.5
+                                  : getSize(context).width,
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(
                                     $constants.corners.md),

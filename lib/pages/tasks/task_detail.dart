@@ -25,6 +25,7 @@ import 'package:app/utils/shortcuts.dart';
 import 'package:collection/collection.dart';
 import 'package:fleather/fleather.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
@@ -83,7 +84,7 @@ class _TaskDetailState extends State<TaskDetail> {
         child: buildBody(context),
       );
 
-      if (Platform.isMacOS) {
+      if (!kIsWeb && Platform.isMacOS) {
         return TitlebarSafeArea(
           child: body,
         );
@@ -103,9 +104,12 @@ class _TaskDetailState extends State<TaskDetail> {
         appBar: AppBar(
           title: CustomPopup(
             content: SizedBox(
-              width: getSize(context).width * 0.9,
+              width: isDesktop(context)
+                  ? getSize(context).width * 0.3
+                  : getSize(context).width * 0.9,
+              height: 85,
               child: AssignFolder(
-                folderId: widget.task.folderId,
+                folderId: _folder?.id,
                 onFolderSelected: (folder) {
                   if (folder == null) {
                     setState(() {
@@ -118,6 +122,7 @@ class _TaskDetailState extends State<TaskDetail> {
                       _folder = folder;
                     });
                   }
+                  context.read<TasksBloc>().add(EditTask(widget.task));
                 },
               ),
             ),
@@ -125,7 +130,7 @@ class _TaskDetailState extends State<TaskDetail> {
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                if (widget.task.folderId == null) ...[
+                if (_folder == null) ...[
                   const SizedBox(
                     width: 20,
                     height: 30,
@@ -158,13 +163,13 @@ class _TaskDetailState extends State<TaskDetail> {
                     SizedBox(
                       width: $constants.insets.xs,
                     ),
-                    Text(
-                      _folder?.name ?? "",
-                      style: getTextTheme(context).bodyLarge!.copyWith(
-                            fontWeight: FontWeight.bold,
-                          ),
-                    )
                   ],
+                  Text(
+                    _folder?.name ?? "",
+                    style: getTextTheme(context).bodyLarge!.copyWith(
+                          fontWeight: FontWeight.bold,
+                        ),
+                  )
                 ],
               ],
             ),
@@ -209,31 +214,44 @@ class _TaskDetailState extends State<TaskDetail> {
                           onChanged: (newValue) {}),
                       GestureDetector(
                         onTap: () async {
-                          await showModalBottomSheet(
+                          final child = TaskDatePickerModal(
+                            endDate: _endDate,
+                            startDate: _startDate,
+                            reminders: _reminders,
+                            onRemindersChanged: (newRem) {
+                              setState(() {
+                                _reminders = newRem;
+                              });
+                            },
+                            onEndDateChanged: (date) {
+                              setState(() {
+                                _endDate = date;
+                              });
+                            },
+                            onStartDateChanged: (date) {
+                              setState(() {
+                                _startDate = date;
+                              });
+                            },
+                            firstDate: DateTime(2000),
+                            lastDate: DateTime(2100),
+                          );
+
+                          if (isDesktop(context)) {
+                            showDialog(
+                                context: context,
+                                builder: (context) => Dialog(
+                                      child: SizedBox(
+                                          width: getSize(context).width * 0.6,
+                                          child: child),
+                                    ));
+                          } else {
+                            await showModalBottomSheet(
                               context: context,
                               isScrollControlled: true,
-                              builder: (context) => TaskDatePickerModal(
-                                    endDate: _endDate,
-                                    startDate: _startDate,
-                                    reminders: _reminders,
-                                    onRemindersChanged: (newRem) {
-                                      setState(() {
-                                        _reminders = newRem;
-                                      });
-                                    },
-                                    onEndDateChanged: (date) {
-                                      setState(() {
-                                        _endDate = date;
-                                      });
-                                    },
-                                    onStartDateChanged: (date) {
-                                      setState(() {
-                                        _startDate = date;
-                                      });
-                                    },
-                                    firstDate: DateTime(2000),
-                                    lastDate: DateTime(2100),
-                                  ));
+                              builder: (context) => child,
+                            );
+                          }
                           widget.task.endDate = _endDate;
                           widget.task.startDate = _startDate;
                           widget.task.reminders = _reminders;
@@ -471,7 +489,7 @@ class _TaskDetailState extends State<TaskDetail> {
                     children: [
                       StaggeredGridTile.count(
                         crossAxisCellCount: isDesktop(context) ? 1 : 2,
-                        mainAxisCellCount: isDesktop(context) ? 0.5 : 0.8,
+                        mainAxisCellCount: isDesktop(context) ? 0.6 : 0.8,
                         child: _buildCard(
                             context: context,
                             title: context.t.tasks.time_log,
@@ -501,7 +519,7 @@ class _TaskDetailState extends State<TaskDetail> {
                       ),
                       StaggeredGridTile.count(
                           crossAxisCellCount: isDesktop(context) ? 1 : 2,
-                          mainAxisCellCount: isDesktop(context) ? 0.5 : 0.8,
+                          mainAxisCellCount: isDesktop(context) ? 0.6 : 0.8,
                           child: _buildCard(
                               context: context,
                               title: context.t.tasks.log_session,
@@ -530,7 +548,7 @@ class _TaskDetailState extends State<TaskDetail> {
                               })),
                       StaggeredGridTile.count(
                         crossAxisCellCount: isDesktop(context) ? 1 : 2,
-                        mainAxisCellCount: isDesktop(context) ? 0.5 : 0.8,
+                        mainAxisCellCount: isDesktop(context) ? 0.6 : 0.8,
                         child: _buildCard(
                             context: context,
                             title: context.t.tasks.timer,
@@ -541,7 +559,7 @@ class _TaskDetailState extends State<TaskDetail> {
                       ),
                       StaggeredGridTile.count(
                         crossAxisCellCount: isDesktop(context) ? 1 : 2,
-                        mainAxisCellCount: isDesktop(context) ? 0.5 : 0.8,
+                        mainAxisCellCount: isDesktop(context) ? 0.6 : 0.8,
                         child: _buildCard(
                             context: context,
                             title: context.t.tasks.pomodoro,
@@ -584,6 +602,7 @@ class _TaskDetailState extends State<TaskDetail> {
               style: getTextTheme(context).bodyMedium!.copyWith(
                     fontWeight: FontWeight.bold,
                   ),
+              textAlign: TextAlign.center,
             ),
           ],
         ),

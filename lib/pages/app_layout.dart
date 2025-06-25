@@ -41,7 +41,7 @@ class AppLayoutState extends ResponsiveState<AppLayout> {
     context.read<AuthBloc>().add(const RefreshUser());
     PaywallUtils.resetPaywall();
 
-    if (context.read<AuthBloc>().state.user != null) {
+    if (context.read<AuthBloc>().state.user != null && !kIsWeb) {
       WidgetsBinding.instance.addPostFrameCallback((_) async {
         if (context.read<AuthBloc>().state.user?.devices == null) {
           context.read<AuthBloc>().state.user?.devices = [];
@@ -529,7 +529,6 @@ class AppLayoutState extends ResponsiveState<AppLayout> {
                         controller: _primarySideMenuController,
                         mode: SideMenuMode.open,
                         minWidth: getSize(context).width * 0.08,
-                        maxWidth: 180,
                         backgroundColor: getTheme(context).surfaceContainer,
                         hasResizer: false,
                         hasResizerToggle: false,
@@ -865,7 +864,7 @@ class AppLayoutState extends ResponsiveState<AppLayout> {
             if (!kIsWeb && Platform.isMacOS) {
               return TitlebarSafeArea(child: renderedBody);
             }
-            return renderedBody;
+            return SafeArea(child: renderedBody);
           });
         });
       },
@@ -899,21 +898,28 @@ class AppLayoutState extends ResponsiveState<AppLayout> {
           context: context,
           barrierDismissible: false,
           builder: (context) => Dialog(
-                child: LoginOrRegisterModal(
-                  onAuthSuccess: () => setState(() {
-                    _isLoginModalVisible = false;
-                  }),
+                child: SizedBox(
+                  width: getSize(context).width * 0.5,
+                  child: LoginOrRegisterModal(
+                    onAuthSuccess: () => setState(() {
+                      _isLoginModalVisible = false;
+                    }),
+                  ),
                 ),
               ));
     } else {
       showModalBottomSheet(
         isDismissible: false,
         isScrollControlled: true,
+        enableDrag: false,
         context: context,
-        builder: (context) => LoginOrRegisterModal(
-          onAuthSuccess: () => setState(() {
-            _isLoginModalVisible = false;
-          }),
+        builder: (context) => SizedBox(
+          height: getSize(context).height * 0.88,
+          child: LoginOrRegisterModal(
+            onAuthSuccess: () => setState(() {
+              _isLoginModalVisible = false;
+            }),
+          ),
         ),
       );
     }

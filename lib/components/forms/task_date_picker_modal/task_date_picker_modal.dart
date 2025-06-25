@@ -53,7 +53,7 @@ class _TaskDatePickerModalState extends State<TaskDatePickerModal> {
     return SingleChildScrollView(
       child: Container(
         width: double.infinity,
-        height: getSize(context).height * 0.7,
+        height: getSize(context).height * 0.75,
         decoration: BoxDecoration(
           color: getTheme(context).surface,
           borderRadius: BorderRadius.circular($constants.corners.md),
@@ -128,18 +128,15 @@ class _TaskDatePickerModalState extends State<TaskDatePickerModal> {
               ],
             ),
             if (mode == 0)
-              SizedBox(
-                height: getSize(context).height * 0.55,
-                child: SingleDatePicker(
-                  endDate: endDate,
-                  reminders: widget.reminders,
-                  onRemindersChanged: widget.onRemindersChanged,
-                  onEndDateChanged: (value) {
-                    setState(() {
-                      endDate = value;
-                    });
-                  },
-                ),
+              SingleDatePicker(
+                endDate: endDate,
+                reminders: widget.reminders,
+                onRemindersChanged: widget.onRemindersChanged,
+                onEndDateChanged: (value) {
+                  setState(() {
+                    endDate = value;
+                  });
+                },
               ),
             if (mode == 1)
               SizedBox(

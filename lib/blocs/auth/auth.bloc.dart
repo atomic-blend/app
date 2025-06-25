@@ -62,11 +62,9 @@ class AuthBloc extends HydratedBloc<AuthEvent, AuthState> {
     final user = state.user!;
     final updatedUser = await _userService.getUser(user);
     if (updatedUser == null) {
-      emit(const LoggedOut());
       return;
     }
-    emit(LoggedIn(updatedUser
-    , false));
+    emit(LoggedIn(updatedUser, false));
   }
 
   void _onRegister(RegisterEvent event, Emitter<AuthState> emit) async {

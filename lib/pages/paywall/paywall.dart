@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:animated_toggle_switch/animated_toggle_switch.dart';
 import 'package:app/blocs/auth/auth.bloc.dart';
 import 'package:app/components/buttons/primary_button_square.dart';
 import 'package:app/components/widgets/elevated_container.dart';
@@ -11,6 +12,7 @@ import 'package:app/utils/constants.dart';
 import 'package:app/utils/shortcuts.dart';
 import 'package:app/utils/toast_helper.dart';
 import 'package:async/async.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -241,8 +243,8 @@ class _PaywallState extends State<Paywall> {
             SizedBox(
               height: $constants.insets.xs,
             ),
-            if (isDesktop(context)) _buildPaymentMobileOnly(context),
-            if (!isDesktop(context))
+            if (!isPaymentSupported()) ...[_buildPaymentMobileOnly(context)],
+            if (isPaymentSupported())
               Column(
                 mainAxisSize: MainAxisSize.min,
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -399,7 +401,7 @@ class _PaywallState extends State<Paywall> {
           });
         },
         child: ElevatedContainer(
-          height: getSize(context).height * 0.1,
+          height: 90,
           width: double.infinity,
           borderRadius: $constants.corners.sm,
           border: _package == package
@@ -596,7 +598,9 @@ class _PaywallState extends State<Paywall> {
           children: [
             Lottie.asset(
               'assets/animations/credit_card_success.json',
-              width: getSize(context).width,
+              width: isDesktop(context)
+                  ? getSize(context).width * 0.3
+                  : getSize(context).width,
             ),
             SizedBox(
               height: $constants.insets.sm,
@@ -643,7 +647,9 @@ class _PaywallState extends State<Paywall> {
                 scale: 2,
                 child: Lottie.asset(
                   'assets/animations/failed.json',
-                  width: getSize(context).width,
+                  width: isDesktop(context)
+                      ? getSize(context).width * 0.3
+                      : getSize(context).width,
                 ),
               ),
             ),
@@ -698,7 +704,9 @@ class _PaywallState extends State<Paywall> {
             ),
             Lottie.asset(
               'assets/animations/apple_pay.json',
-              width: getSize(context).width,
+              width: isDesktop(context)
+                  ? getSize(context).width * 0.3
+                  : getSize(context).width,
             ),
             SizedBox(
               height: $constants.insets.lg,
@@ -736,6 +744,41 @@ class _PaywallState extends State<Paywall> {
               padding: EdgeInsets.all($constants.insets.sm),
               child: Column(
                 children: [
+                  SizedBox(
+                    height: 30,
+                    child: AnimatedToggleSwitch.rolling(
+                      indicatorSize:
+                          Size.fromWidth(getSize(context).width * 0.2 / 2),
+                      current: _mobilePlatform,
+                      values: const [0, 1],
+                      iconBuilder: (value, foreground) {
+                        return AutoSizeText(
+                            maxLines: 1,
+                            value == 0
+                                ? context.t.paywall.ios
+                                : context.t.paywall.android,
+                            style:
+                                getTextTheme(context).bodyMedium!.copyWith());
+                      },
+                      styleBuilder: (value) {
+                        return ToggleStyle(
+                          borderColor: Colors.transparent,
+                          indicatorColor: value == _mobilePlatform
+                              ? getTheme(context).surfaceContainer
+                              : getTheme(context).surface,
+                          backgroundColor: getTheme(context).surface,
+                        );
+                      },
+                      onChanged: (value) {
+                        setState(() {
+                          _mobilePlatform = value;
+                        });
+                      },
+                    ),
+                  ),
+                  SizedBox(
+                    height: $constants.insets.xs,
+                  ),
                   QrImageView(
                     version: QrVersions.auto,
                     data: _mobilePlatform == 0

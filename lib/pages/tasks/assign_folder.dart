@@ -3,6 +3,7 @@ import 'package:app/entities/folder/folder.entity.dart';
 import 'package:app/i18n/strings.g.dart';
 import 'package:app/utils/constants.dart';
 import 'package:app/utils/shortcuts.dart';
+import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -24,34 +25,56 @@ class AssignFolder extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                context.t.tasks.folders.select_a_folder,
-                style: getTextTheme(context).headlineMedium!.copyWith(
-                      fontWeight: FontWeight.bold,
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    context.t.tasks.folders.select_a_folder,
+                    style: getTextTheme(context).headlineMedium!.copyWith(
+                          fontWeight: FontWeight.bold,
+                        ),
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      onFolderSelected(null);
+                      Navigator.of(context).pop();
+                    },
+                    child: Text(
+                      context.t.actions.clear,
+                      style: getTextTheme(context).bodyMedium!.copyWith(
+                            fontWeight: FontWeight.bold,
+                            color: getTheme(context).primary,
+                          ),
                     ),
+                  ),
+                ],
               ),
-              SizedBox(
-                height: $constants.insets.sm,
-              ),
-              SingleChildScrollView(
-                child: Row(
-                  children: [
-                    ...?folderState.folders?.map((folder) {
-                      return GestureDetector(
-                        onTap: () {
-                          if (folder.id == folderId) {
-                            onFolderSelected(null);
-                          } else {
-                            onFolderSelected(folder);
-                          }
-                          Navigator.of(context).pop();
-                        },
-                        child: Column(
-                          children: [
-                            if (folder.emoji != null) ...[
+              if (folderState.folders == null || folderState.folders!.isEmpty)
+                Text(
+                  context.t.tasks.folders.no_folders,
+                  style: getTextTheme(context).bodyLarge,
+                )
+              else
+                SingleChildScrollView(
+                  child: Row(
+                    children: [
+                      ...?folderState.folders?.map((folder) {
+                        return GestureDetector(
+                          onTap: () {
+                            if (folder.id == folderId) {
+                              onFolderSelected(null);
+                            } else {
+                              onFolderSelected(folder);
+                            }
+                            Navigator.of(context).pop();
+                          },
+                          child: Column(
+                            children: [
                               Container(
-                                height: 50,
-                                width: 50,
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: $constants.insets.sm,
+                                ),
                                 decoration: BoxDecoration(
                                   border: folder.id != folderId
                                       ? null
@@ -64,38 +87,40 @@ class AssignFolder extends StatelessWidget {
                                   borderRadius: BorderRadius.circular(
                                       $constants.corners.full),
                                   color: folder.color != null
-                                      ? hexToColor(folder.color!)
-                                          .withValues(alpha: 0.2)
+                                      ? hexToColor(folder.color!).lighten(35)
                                       : Colors.grey,
                                 ),
                                 child: Column(
                                   children: [
-                                    Text(
-                                      folder.emoji!,
-                                      style: const TextStyle(
-                                        fontSize: 30,
+                                    if (folder.emoji != null) ...[
+                                      Text(
+                                        folder.emoji!,
+                                        style: const TextStyle(
+                                          fontSize: 30,
+                                        ),
                                       ),
+                                      SizedBox(
+                                        width: $constants.insets.sm,
+                                      ),
+                                    ],
+                                    Text(
+                                      folder.name,
+                                      style: getTextTheme(context)
+                                          .bodyLarge!
+                                          .copyWith(
+                                            fontWeight: FontWeight.bold,
+                                          ),
                                     ),
                                   ],
                                 ),
                               ),
-                              SizedBox(
-                                width: $constants.insets.sm,
-                              ),
                             ],
-                            Text(
-                              folder.name,
-                              style: getTextTheme(context).bodyLarge!.copyWith(
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                            ),
-                          ],
-                        ),
-                      );
-                    })
-                  ],
+                          ),
+                        );
+                      })
+                    ],
+                  ),
                 ),
-              ),
             ],
           ),
         );

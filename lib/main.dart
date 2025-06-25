@@ -42,11 +42,6 @@ Map<String, dynamic>? userData;
 String? userKey;
 
 FutureOr<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-
-  env = await EnvModel.create();
-  prefs = await SharedPreferences.getInstance();
-
   await SentryFlutter.init((options) {
     String? dsn = const String.fromEnvironment(
       'SENTRY_DSN',
@@ -59,6 +54,9 @@ FutureOr<void> main() async {
     // visit: https://docs.sentry.io/platforms/dart/data-management/data-collected/ for more info
     options.sendDefaultPii = true;
   }, appRunner: () async {
+    env = await EnvModel.create();
+    prefs = await SharedPreferences.getInstance();
+ 
     tz.initializeTimeZones();
 
     if (!kIsWeb && Platform.isMacOS) {
@@ -75,7 +73,7 @@ FutureOr<void> main() async {
     userData = rawUserData != null ? json.decode(rawUserData) : null;
     userKey = prefs?.getString("key");
 
-    if (!Platform.isLinux) {
+    if (kIsWeb || !Platform.isLinux) {
       await Firebase.initializeApp(
         options: DefaultFirebaseOptions.currentPlatform,
       );

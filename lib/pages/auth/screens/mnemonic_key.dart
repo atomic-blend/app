@@ -59,194 +59,199 @@ class _MnemonicKeyState extends State<MnemonicKey>
       listener: (BuildContext context, AuthState state) {},
       child: Stack(
         children: [
-          SizedBox(
-            width: double.infinity,
-            height: widget.widgetMode != true
-                ? getSize(context).height * 0.92
-                : getSize(context).height * 0.875,
-            child: Column(
-              children: [
-                SizedBox(
-                  height: getSize(context).height * 0.08,
-                ),
-                Animate(
-                  controller: _animationController,
-                  effects: [
-                    FadeEffect(
-                      duration: _animationDuration,
-                      delay: const Duration(milliseconds: 0),
-                    )
-                  ],
-                  onPlay: (controller) => controller.forward(),
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(
-                        horizontal: widget.widgetMode != true
-                            ? $constants.insets.md
-                            : 0),
-                    child: Form(
-                      key: _formKey,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisSize: MainAxisSize.max,
-                        children: [
-                          Center(
-                            child: Lottie.asset(
-                              'assets/animations/computer_lock.json',
-                              fit: BoxFit.cover,
-                              width: isDesktop(context)
-                                  ? getSize(context).width * 0.2
-                                  : getSize(context).width * 0.5,
-                            ),
-                          ),
-                          AutoSizeText(
-                            maxLines: 1,
-                            context.t.auth.mnemonic_key.title,
-                            style: getTextTheme(context).displaySmall!.copyWith(
-                                  fontWeight: FontWeight.bold,
-                                ),
-                          ),
-                          SizedBox(
-                            height: $constants.insets.xs,
-                          ),
-                          SizedBox(
-                            width: getSize(context).width * 0.9,
-                            child: Text.rich(
-                              TextSpan(
-                                text:
-                                    "${context.t.auth.mnemonic_key.description_start}\n",
-                                children: [
-                                  TextSpan(
-                                    text:
-                                        '${context.t.auth.mnemonic_key.description_mid}\n\n',
-                                    style: const TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                  TextSpan(
-                                      text: context
-                                          .t.auth.mnemonic_key.description_end),
-                                ],
+          Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  SizedBox(
+                    height: getSize(context).height * 0.08,
+                  ),
+                  Animate(
+                    controller: _animationController,
+                    effects: [
+                      FadeEffect(
+                        duration: _animationDuration,
+                        delay: const Duration(milliseconds: 0),
+                      )
+                    ],
+                    onPlay: (controller) => controller.forward(),
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: widget.widgetMode != true
+                              ? $constants.insets.md
+                              : 0),
+                      child: Form(
+                        key: _formKey,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            Center(
+                              child: Lottie.asset(
+                                'assets/animations/computer_lock.json',
+                                fit: BoxFit.cover,
+                                width: isDesktop(context)
+                                    ? getSize(context).width * 0.2
+                                    : getSize(context).width * 0.5,
                               ),
                             ),
-                          ),
-                          if (_isConfirmStep == false) ...[
-                            SizedBox(
-                              height: $constants.insets.md,
+                            AutoSizeText(
+                              maxLines: 1,
+                              context.t.auth.mnemonic_key.title,
+                              style:
+                                  getTextTheme(context).displaySmall!.copyWith(
+                                        fontWeight: FontWeight.bold,
+                                      ),
                             ),
-                            GestureDetector(
-                              onTap: () {
-                                //copy to clipboard
-                                Clipboard.setData(
-                                  ClipboardData(text: _mnemonic ?? ""),
-                                );
-                                ToastHelper.showSuccess(
-                                    context: context,
-                                    title: context
-                                        .t.auth.mnemonic_key.copy_success,
-                                    description: "");
-                              },
-                              child: Container(
-                                padding: EdgeInsets.all($constants.insets.sm),
-                                decoration: BoxDecoration(
-                                  color: getTheme(context).surfaceContainer,
-                                  borderRadius: BorderRadius.circular(
-                                      $constants.corners.md),
-                                ),
-                                child: Text(
-                                  _mnemonic ?? "",
-                                  style: getTextTheme(context)
-                                      .titleSmall!
-                                      .copyWith(fontWeight: FontWeight.bold),
-                                ),
-                              ),
-                            )
-                          ],
-                          if (_isConfirmStep == true) ...[
                             SizedBox(
                               height: $constants.insets.xs,
                             ),
                             SizedBox(
                               width: getSize(context).width * 0.9,
-                              child: AppTextFormField(
-                                controller: _mnemonicController,
-                                hintText:
-                                    context.t.auth.mnemonic_key.mnemonic_hint,
-                                obscureText: true,
-                                validator: (value) {
-                                  if (value == null || value.isEmpty) {
-                                    return context
-                                        .t.auth.mnemonic_key.mnemonic_error;
-                                  }
-                                  if (value != _mnemonic) {
-                                    return context
-                                        .t.auth.mnemonic_key.mnemonic_error;
-                                  }
-                                  return null;
-                                },
+                              child: Text.rich(
+                                TextSpan(
+                                  text:
+                                      "${context.t.auth.mnemonic_key.description_start}\n",
+                                  children: [
+                                    TextSpan(
+                                      text:
+                                          '${context.t.auth.mnemonic_key.description_mid}\n\n',
+                                      style: const TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    TextSpan(
+                                        text: context.t.auth.mnemonic_key
+                                            .description_end),
+                                  ],
+                                ),
                               ),
                             ),
-                          ]
+                            if (_isConfirmStep == false) ...[
+                              SizedBox(
+                                height: $constants.insets.md,
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                  //copy to clipboard
+                                  Clipboard.setData(
+                                    ClipboardData(text: _mnemonic ?? ""),
+                                  );
+                                  ToastHelper.showSuccess(
+                                      context: context,
+                                      title: context
+                                          .t.auth.mnemonic_key.copy_success,
+                                      description: "");
+                                },
+                                child: Container(
+                                  padding: EdgeInsets.all($constants.insets.sm),
+                                  decoration: BoxDecoration(
+                                    color: getTheme(context).surfaceContainer,
+                                    borderRadius: BorderRadius.circular(
+                                        $constants.corners.md),
+                                  ),
+                                  child: Text(
+                                    _mnemonic ?? "",
+                                    style: getTextTheme(context)
+                                        .titleSmall!
+                                        .copyWith(fontWeight: FontWeight.bold),
+                                  ),
+                                ),
+                              )
+                            ],
+                            if (_isConfirmStep == true) ...[
+                              SizedBox(
+                                height: $constants.insets.xs,
+                              ),
+                              SizedBox(
+                                width: getSize(context).width * 0.9,
+                                child: AppTextFormField(
+                                  controller: _mnemonicController,
+                                  hintText:
+                                      context.t.auth.mnemonic_key.mnemonic_hint,
+                                  obscureText: true,
+                                  validator: (value) {
+                                    if (value == null || value.isEmpty) {
+                                      return context
+                                          .t.auth.mnemonic_key.mnemonic_error;
+                                    }
+                                    if (value != _mnemonic) {
+                                      return context
+                                          .t.auth.mnemonic_key.mnemonic_error;
+                                    }
+                                    return null;
+                                  },
+                                ),
+                              ),
+                            ]
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const Divider(),
+                  Animate(
+                    controller: _animationController,
+                    effects: [
+                      FadeEffect(
+                        duration: _animationDuration,
+                        delay: const Duration(milliseconds: 500),
+                      )
+                    ],
+                    onPlay: (controller) => controller.forward(),
+                    child: Container(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: $constants.insets.md),
+                      height: getSize(context).height * 0.1,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const Spacer(),
+                          PrimaryButtonSquare(
+                            text: context.t.actions.next,
+                            backgroundColor: getTheme(context).primary,
+                            onPressed: () async {
+                              if (_isConfirmStep == false) {
+                                setState(() {
+                                  _isConfirmStep = true;
+                                });
+                                return;
+                              }
+                              if (_mnemonicController.text.isEmpty) {
+                                return;
+                              }
+                              if (!_formKey.currentState!.validate()) {
+                                return;
+                              }
+                              _animationController.reverseDuration =
+                                  const Duration(
+                                milliseconds: 500,
+                              );
+                              await _animationController.reverse(from: 1.0);
+
+                              if (!context.mounted) return;
+                              Navigator.pop(context);
+                            },
+                          )
                         ],
                       ),
                     ),
                   ),
-                ),
-                SizedBox(
-                  height: getSize(context).height * 0.23,
-                ),
-                const Divider(),
-                Animate(
-                  controller: _animationController,
-                  effects: [
-                    FadeEffect(
-                      duration: _animationDuration,
-                      delay: const Duration(milliseconds: 500),
-                    )
-                  ],
-                  onPlay: (controller) => controller.forward(),
-                  child: Container(
-                    padding:
-                        EdgeInsets.symmetric(horizontal: $constants.insets.md),
-                    height: getSize(context).height * 0.1,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const Spacer(),
-                        PrimaryButtonSquare(
-                          text: context.t.actions.next,
-                          backgroundColor: getTheme(context).primary,
-                          onPressed: () async {
-                            if (_isConfirmStep == false) {
-                              setState(() {
-                                _isConfirmStep = true;
-                              });
-                              return;
-                            }
-                            if (_mnemonicController.text.isEmpty) {
-                              return;
-                            }
-                            if (!_formKey.currentState!.validate()) {
-                              return;
-                            }
-                            _animationController.reverseDuration =
-                                const Duration(
-                              milliseconds: 500,
-                            );
-                            await _animationController.reverse(from: 1.0);
-
-                            if (!context.mounted) return;
-                            Navigator.pop(context);
-                          },
-                        )
-                      ],
-                    ),
+                  SizedBox(
+                    height: isDesktop(context)
+                        ? $constants.insets.xs
+                        : $constants.insets.sm,
                   ),
-                ),
-                SizedBox(
-                  height: $constants.insets.lg,
-                ),
-              ],
-            ),
+                ],
+              ),
+            ],
           ),
           if (widget.widgetMode != true)
             Positioned(
