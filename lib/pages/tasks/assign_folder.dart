@@ -33,69 +33,76 @@ class AssignFolder extends StatelessWidget {
               SizedBox(
                 height: $constants.insets.sm,
               ),
-              SingleChildScrollView(
-                child: Row(
-                  children: [
-                    ...?folderState.folders?.map((folder) {
-                      return GestureDetector(
-                        onTap: () {
-                          if (folder.id == folderId) {
-                            onFolderSelected(null);
-                          } else {
-                            onFolderSelected(folder);
-                          }
-                          Navigator.of(context).pop();
-                        },
-                        child: Column(
-                          children: [
-                            if (folder.emoji != null) ...[
-                              Container(
-                                height: 50,
-                                width: 50,
-                                decoration: BoxDecoration(
-                                  border: folder.id != folderId
-                                      ? null
-                                      : Border.all(
-                                          color: getTheme(context)
-                                              .primary
-                                              .withValues(alpha: 0.75),
-                                          width: 1,
+              if (folderState.folders == null || folderState.folders!.isEmpty)
+                Text(
+                  context.t.tasks.folders.no_folders,
+                  style: getTextTheme(context).bodyLarge,
+                )
+              else
+                SingleChildScrollView(
+                  child: Row(
+                    children: [
+                      ...?folderState.folders?.map((folder) {
+                        return GestureDetector(
+                          onTap: () {
+                            if (folder.id == folderId) {
+                              onFolderSelected(null);
+                            } else {
+                              onFolderSelected(folder);
+                            }
+                            Navigator.of(context).pop();
+                          },
+                          child: Column(
+                            children: [
+                              if (folder.emoji != null) ...[
+                                Container(
+                                  height: 50,
+                                  width: 50,
+                                  decoration: BoxDecoration(
+                                    border: folder.id != folderId
+                                        ? null
+                                        : Border.all(
+                                            color: getTheme(context)
+                                                .primary
+                                                .withValues(alpha: 0.75),
+                                            width: 1,
+                                          ),
+                                    borderRadius: BorderRadius.circular(
+                                        $constants.corners.full),
+                                    color: folder.color != null
+                                        ? hexToColor(folder.color!)
+                                            .withValues(alpha: 0.9)
+                                        : Colors.grey,
+                                  ),
+                                  child: Column(
+                                    children: [
+                                      Text(
+                                        folder.emoji!,
+                                        style: const TextStyle(
+                                          fontSize: 30,
                                         ),
-                                  borderRadius: BorderRadius.circular(
-                                      $constants.corners.full),
-                                  color: folder.color != null
-                                      ? hexToColor(folder.color!)
-                                          .withValues(alpha: 0.2)
-                                      : Colors.grey,
-                                ),
-                                child: Column(
-                                  children: [
-                                    Text(
-                                      folder.emoji!,
-                                      style: const TextStyle(
-                                        fontSize: 30,
                                       ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
-                              ),
-                              SizedBox(
-                                width: $constants.insets.sm,
+                                SizedBox(
+                                  width: $constants.insets.sm,
+                                ),
+                              ],
+                              Text(
+                                folder.name,
+                                style:
+                                    getTextTheme(context).bodyLarge!.copyWith(
+                                          fontWeight: FontWeight.bold,
+                                        ),
                               ),
                             ],
-                            Text(
-                              folder.name,
-                              style: getTextTheme(context).bodyLarge!.copyWith(
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                            ),
-                          ],
-                        ),
-                      );
-                    })
-                  ],
+                          ),
+                        );
+                      })
+                    ],
+                  ),
                 ),
-              ),
             ],
           ),
         );

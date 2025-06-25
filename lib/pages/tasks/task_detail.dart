@@ -103,9 +103,11 @@ class _TaskDetailState extends State<TaskDetail> {
         appBar: AppBar(
           title: CustomPopup(
             content: SizedBox(
-              width: getSize(context).width * 0.9,
+              width: isDesktop(context)
+                  ? getSize(context).width * 0.3
+                  : getSize(context).width * 0.9,
               child: AssignFolder(
-                folderId: widget.task.folderId,
+                folderId: _folder?.id,
                 onFolderSelected: (folder) {
                   if (folder == null) {
                     setState(() {
@@ -117,6 +119,7 @@ class _TaskDetailState extends State<TaskDetail> {
                       widget.task.folderId = folder.id;
                       _folder = folder;
                     });
+                    context.read<TasksBloc>().add(EditTask(widget.task));
                   }
                 },
               ),
@@ -125,7 +128,7 @@ class _TaskDetailState extends State<TaskDetail> {
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                if (widget.task.folderId == null) ...[
+                if (_folder == null) ...[
                   const SizedBox(
                     width: 20,
                     height: 30,
@@ -158,13 +161,13 @@ class _TaskDetailState extends State<TaskDetail> {
                     SizedBox(
                       width: $constants.insets.xs,
                     ),
-                    Text(
-                      _folder?.name ?? "",
-                      style: getTextTheme(context).bodyLarge!.copyWith(
-                            fontWeight: FontWeight.bold,
-                          ),
-                    )
                   ],
+                  Text(
+                    _folder?.name ?? "",
+                    style: getTextTheme(context).bodyLarge!.copyWith(
+                          fontWeight: FontWeight.bold,
+                        ),
+                  )
                 ],
               ],
             ),
