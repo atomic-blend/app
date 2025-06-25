@@ -102,7 +102,8 @@ class _CalendarState extends State<Calendar> {
                     final DateTime? selectedDate =
                         calendarSelectionDetails.date;
 
-                    if (selectedDate != null) {
+                    if (selectedDate != null &&
+                        widget.view != CalendarView.month) {
                       //show the add task dialog with the selected date
                       _showAddTaskDialog(selectedDate,
                           selectedDate.add(const Duration(minutes: 30)));
@@ -173,6 +174,10 @@ class _CalendarState extends State<Calendar> {
                     });
                   },
                   onTap: (calendarTapDetails) {
+                    if (widget.view == CalendarView.month &&
+                        (calendarTapDetails.appointments?.length ?? 0) > 1) {
+                      return;
+                    }
                     if (calendarTapDetails.appointments?.first.itemType ==
                         CustomAppointmentType.task) {
                       showDialog(
