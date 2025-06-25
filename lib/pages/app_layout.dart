@@ -529,7 +529,6 @@ class AppLayoutState extends ResponsiveState<AppLayout> {
                         controller: _primarySideMenuController,
                         mode: SideMenuMode.open,
                         minWidth: getSize(context).width * 0.08,
-                        maxWidth: 180,
                         backgroundColor: getTheme(context).surfaceContainer,
                         hasResizer: false,
                         hasResizerToggle: false,
