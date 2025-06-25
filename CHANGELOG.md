@@ -2,6 +2,32 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## 0.9.6 - 2025-06-25
+#### Bug Fixes
+- login modal size on desktop - (06fa7ef) - Brandon Guigo
+- side menu max width - (235b5ad) - Brandon Guigo
+- display link to other apps when app is running on unsupported payment - (ebec963) - Brandon Guigo
+- web issue - (62de965) - Brandon Guigo
+- argon2 work on web - (a0b6a93) - Brandon Guigo
+- web compilation error - (3636a93) - Brandon Guigo
+- safe area missing - (60e0204) - Brandon Guigo
+- add clear btn in folder selection - (bef5619) - Brandon Guigo
+- select folder bug - (d2119a4) - Brandon Guigo
+- date picker on big screens - (5c8ffbc) - Brandon Guigo
+- task detail overflow - (a040af3) - Brandon Guigo
+- display of event calendar - (1e348cd) - Brandon Guigo
+- issues with calendar item tap - (f4a44f8) - Brandon Guigo
+- mnemonic ui - (6393b9d) - Brandon Guigo
+- login page + loading - (785d7ab) - Brandon Guigo
+- login or register ui - (fc6049f) - Brandon Guigo
+- ui of login welcome screen - (e410235) - Brandon Guigo
+- purchases on iPad and paywall ui fixes - (2d0a576) - Brandon Guigo
+- update usage string in app info.plist - (1895de4) - Brandon Guigo
+#### Miscellaneous Chores
+- **(release)** 0.9.5 [skip ci] - (a9059f3) - GitHub Actions
+
+- - -
+
 ## 0.9.5 - 2025-06-24
 #### Bug Fixes
 - trigger new version for app store publishing - (3ac07a6) - Brandon Guigo
