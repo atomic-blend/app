@@ -7,7 +7,7 @@ import 'package:app/main.dart';
 import 'package:bip39/bip39.dart' as bip39;
 import 'package:pointycastle/block/aes.dart';
 import 'package:pointycastle/block/modes/gcm.dart';
-import 'package:pointycastle/key_derivators/argon2_native_int_impl.dart';
+import 'package:pointycastle/key_derivators/argon2.dart';
 import 'package:pointycastle/pointycastle.dart';
 
 class EncryptionService {
@@ -87,19 +87,16 @@ class EncryptionService {
         desiredKeyLength: 32);
     mnemonicArgon2.init(mnemonicArgon2parameters);
 
-    mnemonicArgon2.deriveKey(
-        Uint8List.fromList(mnemonic.codeUnits),
-        mnemonic.codeUnits.length,
-        mnemonicKey,
-        0);
+    mnemonicArgon2.deriveKey(Uint8List.fromList(mnemonic.codeUnits),
+        mnemonic.codeUnits.length, mnemonicKey, 0);
 
-        final encryptedMnemonicDataKey = base64.decode(backupKey);
-    final iv = encryptedMnemonicDataKey.sublist(
-        encryptedMnemonicDataKey.length - 12);
+    final encryptedMnemonicDataKey = base64.decode(backupKey);
+    final iv =
+        encryptedMnemonicDataKey.sublist(encryptedMnemonicDataKey.length - 12);
     final tag = encryptedMnemonicDataKey.sublist(
         encryptedMnemonicDataKey.length - 28,
         encryptedMnemonicDataKey.length - 12);
-    final cipherText = encryptedMnemonicDataKey.sublist(  
+    final cipherText = encryptedMnemonicDataKey.sublist(
         0, encryptedMnemonicDataKey.length - 28);
 
     final mnemonicCipher = GCMBlockCipher(AESEngine())

@@ -21,7 +21,7 @@ class PriorityPicker extends StatelessWidget {
   Widget buildList(BuildContext context) {
     return Container(
       width: isDesktop(context)
-          ? getSize(context).width * 0.5
+          ? getSize(context).width * 0.15
           : getSize(context).width * 0.35,
       padding: EdgeInsets.all(
         displayCard == true ? $constants.insets.sm : $constants.insets.xs,

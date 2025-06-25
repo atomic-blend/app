@@ -50,8 +50,14 @@ class TaskItem extends StatelessWidget {
             context: context,
             builder: (context) => Dialog(
               backgroundColor: Colors.transparent,
-              child: TaskDetail(
-                task: task,
+              child: SizedBox(
+                height: getSize(context).height * 0.7,
+                width: isDesktop(context)
+                    ? getSize(context).width * 0.5
+                    : getSize(context).width,
+                child: TaskDetail(
+                  task: task,
+                ),
               ),
             ),
           );

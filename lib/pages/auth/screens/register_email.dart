@@ -56,134 +56,131 @@ class _RegisterEmailState extends State<RegisterEmail>
       },
       child: Stack(
         children: [
-          SizedBox(
-            width: double.infinity,
-            height: getSize(context).height * 0.92,
-            child: Column(
-              children: [
-                SizedBox(
-                  height: getSize(context).height * 0.08,
-                ),
-                Animate(
-                  controller: _animationController,
-                  effects: [
-                    FadeEffect(
-                      duration: _animationDuration,
-                      delay: const Duration(milliseconds: 0),
-                    )
-                  ],
-                  onPlay: (controller) => controller.forward(),
-                  child: Padding(
-                    padding:
-                        EdgeInsets.symmetric(horizontal: $constants.insets.md),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Center(
-                          child: Image.asset(
-                            'assets/images/authentication.png',
-                            fit: BoxFit.cover,
-                            width: isDesktop(context)
-                                ? getSize(context).width * 0.2
-                                : getSize(context).width * 0.5,
-                          ),
+          Column(
+            children: [
+              SizedBox(
+                height: getSize(context).height * 0.08,
+              ),
+              Animate(
+                controller: _animationController,
+                effects: [
+                  FadeEffect(
+                    duration: _animationDuration,
+                    delay: const Duration(milliseconds: 0),
+                  )
+                ],
+                onPlay: (controller) => controller.forward(),
+                child: Padding(
+                  padding:
+                      EdgeInsets.symmetric(horizontal: $constants.insets.md),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Center(
+                        child: Image.asset(
+                          'assets/images/authentication.png',
+                          fit: BoxFit.cover,
+                          width: isDesktop(context)
+                              ? getSize(context).width * 0.2
+                              : getSize(context).width * 0.5,
                         ),
-                        AutoSizeText(
-                          maxLines: 1,
-                          context.t.auth.register.email,
-                          style: getTextTheme(context).displaySmall!.copyWith(
+                      ),
+                      AutoSizeText(
+                        maxLines: 1,
+                        context.t.auth.register.email,
+                        style: getTextTheme(context).displaySmall!.copyWith(
+                              fontWeight: FontWeight.bold,
+                            ),
+                      ),
+                      SizedBox(
+                        height: $constants.insets.xs,
+                      ),
+                      SizedBox(
+                        width: getSize(context).width * 0.9,
+                        child: Text(
+                          context.t.auth.register.email_description,
+                        ),
+                      ),
+                      SizedBox(
+                        width: getSize(context).width * 0.9,
+                        child: Text(
+                          context.t.auth.register.we_never_sell,
+                          style: getTextTheme(context).bodyMedium!.copyWith(
                                 fontWeight: FontWeight.bold,
                               ),
                         ),
-                        SizedBox(
-                          height: $constants.insets.xs,
-                        ),
-                        SizedBox(
+                      ),
+                      SizedBox(
+                        height: $constants.insets.xs,
+                      ),
+                      Animate(
+                        controller: _animationController,
+                        effects: [
+                          FadeEffect(
+                            duration: _animationDuration,
+                            delay: const Duration(milliseconds: 300),
+                          )
+                        ],
+                        onPlay: (controller) => controller.forward(),
+                        child: SizedBox(
                           width: getSize(context).width * 0.9,
-                          child: Text(
-                            context.t.auth.register.email_description,
+                          child: AppTextFormField(
+                            controller: _emailController,
+                            hintText: context.t.auth.login.email,
                           ),
                         ),
-                        SizedBox(
-                          width: getSize(context).width * 0.9,
-                          child: Text(
-                            context.t.auth.register.we_never_sell,
-                            style: getTextTheme(context).bodyMedium!.copyWith(
-                                  fontWeight: FontWeight.bold,
-                                ),
-                          ),
-                        ),
-                        SizedBox(
-                          height: $constants.insets.xs,
-                        ),
-                        Animate(
-                          controller: _animationController,
-                          effects: [
-                            FadeEffect(
-                              duration: _animationDuration,
-                              delay: const Duration(milliseconds: 300),
-                            )
-                          ],
-                          onPlay: (controller) => controller.forward(),
-                          child: SizedBox(
-                            width: getSize(context).width * 0.9,
-                            child: AppTextFormField(
-                              controller: _emailController,
-                              hintText: context.t.auth.login.email,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ),
-                SizedBox(
-                  height: $constants.insets.sm,
-                ),
-                const Spacer(),
-                const Divider(),
-                Animate(
-                  controller: _animationController,
-                  effects: [
-                    FadeEffect(
-                      duration: _animationDuration,
-                      delay: const Duration(milliseconds: 500),
-                    )
-                  ],
-                  onPlay: (controller) => controller.forward(),
-                  child: Container(
-                    padding:
-                        EdgeInsets.symmetric(horizontal: $constants.insets.md),
-                    height: getSize(context).height * 0.1,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const Spacer(),
-                        PrimaryButtonSquare(
-                          text: context.t.actions.next,
-                          backgroundColor: getTheme(context).primary,
-                          onPressed: () async {
-                            if (_emailController.text.isEmpty) {
-                              return;
-                            }
-                            _animationController.reverseDuration =
-                                const Duration(
-                              milliseconds: 500,
-                            );
-                            await _animationController.reverse(from: 1.0);
-                            widget.nextStepCallback(_emailController.text);
-                          },
-                        )
-                      ],
-                    ),
+              ),
+              SizedBox(
+                height: $constants.insets.sm,
+              ),
+              const Spacer(),
+              const Divider(),
+              Animate(
+                controller: _animationController,
+                effects: [
+                  FadeEffect(
+                    duration: _animationDuration,
+                    delay: const Duration(milliseconds: 500),
+                  )
+                ],
+                onPlay: (controller) => controller.forward(),
+                child: Container(
+                  padding:
+                      EdgeInsets.symmetric(horizontal: $constants.insets.md),
+                  height: getSize(context).height * 0.1,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Spacer(),
+                      PrimaryButtonSquare(
+                        text: context.t.actions.next,
+                        backgroundColor: getTheme(context).primary,
+                        onPressed: () async {
+                          if (_emailController.text.isEmpty) {
+                            return;
+                          }
+                          _animationController.reverseDuration = const Duration(
+                            milliseconds: 500,
+                          );
+                          await _animationController.reverse(from: 1.0);
+                          widget.nextStepCallback(_emailController.text);
+                        },
+                      )
+                    ],
                   ),
                 ),
-                SizedBox(
-                  height: $constants.insets.lg,
-                ),
-              ],
-            ),
+              ),
+              SizedBox(
+                height: !isDesktop(context)
+                    ? $constants.insets.sm
+                    : $constants.insets.xs,
+              ),
+            ],
           ),
           Positioned(
             left: $constants.insets.sm,
