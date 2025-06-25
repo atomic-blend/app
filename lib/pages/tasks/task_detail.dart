@@ -471,7 +471,7 @@ class _TaskDetailState extends State<TaskDetail> {
                     children: [
                       StaggeredGridTile.count(
                         crossAxisCellCount: isDesktop(context) ? 1 : 2,
-                        mainAxisCellCount: isDesktop(context) ? 0.5 : 0.8,
+                        mainAxisCellCount: isDesktop(context) ? 0.6 : 0.8,
                         child: _buildCard(
                             context: context,
                             title: context.t.tasks.time_log,
@@ -501,7 +501,7 @@ class _TaskDetailState extends State<TaskDetail> {
                       ),
                       StaggeredGridTile.count(
                           crossAxisCellCount: isDesktop(context) ? 1 : 2,
-                          mainAxisCellCount: isDesktop(context) ? 0.5 : 0.8,
+                          mainAxisCellCount: isDesktop(context) ? 0.6 : 0.8,
                           child: _buildCard(
                               context: context,
                               title: context.t.tasks.log_session,
@@ -530,7 +530,7 @@ class _TaskDetailState extends State<TaskDetail> {
                               })),
                       StaggeredGridTile.count(
                         crossAxisCellCount: isDesktop(context) ? 1 : 2,
-                        mainAxisCellCount: isDesktop(context) ? 0.5 : 0.8,
+                        mainAxisCellCount: isDesktop(context) ? 0.6 : 0.8,
                         child: _buildCard(
                             context: context,
                             title: context.t.tasks.timer,
@@ -541,7 +541,7 @@ class _TaskDetailState extends State<TaskDetail> {
                       ),
                       StaggeredGridTile.count(
                         crossAxisCellCount: isDesktop(context) ? 1 : 2,
-                        mainAxisCellCount: isDesktop(context) ? 0.5 : 0.8,
+                        mainAxisCellCount: isDesktop(context) ? 0.6 : 0.8,
                         child: _buildCard(
                             context: context,
                             title: context.t.tasks.pomodoro,
@@ -584,6 +584,7 @@ class _TaskDetailState extends State<TaskDetail> {
               style: getTextTheme(context).bodyMedium!.copyWith(
                     fontWeight: FontWeight.bold,
                   ),
+              textAlign: TextAlign.center,
             ),
           ],
         ),
