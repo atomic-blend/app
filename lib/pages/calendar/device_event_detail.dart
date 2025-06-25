@@ -1,3 +1,4 @@
+import 'package:app/components/widgets/elevated_container.dart';
 import 'package:app/i18n/strings.g.dart';
 import 'package:app/utils/constants.dart';
 import 'package:app/utils/meeting_link_parser.dart';
@@ -33,12 +34,8 @@ class _DeviceEventDetailState extends State<DeviceEventDetail> {
             SizedBox(
               height: $constants.insets.sm,
             ),
-            Container(
+            ElevatedContainer(
               width: double.infinity,
-              decoration: BoxDecoration(
-                color: getTheme(context).surfaceContainer,
-                borderRadius: BorderRadius.circular($constants.corners.sm),
-              ),
               padding: EdgeInsets.all($constants.insets.sm),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -83,20 +80,11 @@ class _DeviceEventDetailState extends State<DeviceEventDetail> {
             SizedBox(
               height: $constants.insets.xs,
             ),
-            // Text(context.t.calendar.event_detail.details,
-            //     style: getTextTheme(context).titleMedium!.copyWith(
-            //           fontWeight: FontWeight.bold,
-            //         )),
             Row(
               spacing: $constants.insets.xs,
               children: [
                 Expanded(
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: getTheme(context).surfaceContainer,
-                      borderRadius:
-                          BorderRadius.circular($constants.corners.sm),
-                    ),
+                  child: ElevatedContainer(
                     padding: EdgeInsets.all($constants.insets.sm),
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
@@ -135,12 +123,7 @@ class _DeviceEventDetailState extends State<DeviceEventDetail> {
                   ),
                 ),
                 Expanded(
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: getTheme(context).surfaceContainer,
-                      borderRadius:
-                          BorderRadius.circular($constants.corners.sm),
-                    ),
+                  child: ElevatedContainer(
                     padding: EdgeInsets.all($constants.insets.sm),
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
@@ -189,12 +172,7 @@ class _DeviceEventDetailState extends State<DeviceEventDetail> {
               spacing: $constants.insets.xs,
               children: [
                 Expanded(
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: getTheme(context).surfaceContainer,
-                      borderRadius:
-                          BorderRadius.circular($constants.corners.sm),
-                    ),
+                  child: ElevatedContainer(
                     padding: EdgeInsets.all($constants.insets.sm),
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
@@ -238,12 +216,7 @@ class _DeviceEventDetailState extends State<DeviceEventDetail> {
                   ),
                 ),
                 Expanded(
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: getTheme(context).surfaceContainer,
-                      borderRadius:
-                          BorderRadius.circular($constants.corners.sm),
-                    ),
+                  child: ElevatedContainer(
                     padding: EdgeInsets.all($constants.insets.sm),
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
@@ -301,53 +274,43 @@ class _DeviceEventDetailState extends State<DeviceEventDetail> {
 
                   UrlLauncher.launchUrl(meeting);
                 },
-                child: Material(
-                  color: Colors.transparent,
-                  borderRadius: BorderRadius.circular($constants.corners.sm),
-                  elevation: 1,
-                  child: Container(
-                    height: 80,
-                    decoration: BoxDecoration(
-                      color: getTheme(context).surface,
-                      borderRadius:
-                          BorderRadius.circular($constants.corners.sm),
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        SizedBox(
-                          width: $constants.insets.xl,
+                child: ElevatedContainer(
+                  height: 80,
+                  width: double.infinity,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      SizedBox(
+                        width: $constants.insets.xl,
+                      ),
+                      SizedBox(
+                        width: 40,
+                        child: Image.asset(
+                          meetingLinkIcons[meetingLink.type]!,
                         ),
-                        SizedBox(
-                          width: 40,
-                          child: Image.asset(
-                            meetingLinkIcons[meetingLink.type]!,
+                      ),
+                      SizedBox(
+                        width: $constants.insets.sm,
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(
+                            _getMeetingButtonTitle(context, meetingLink.type),
+                            style:
+                                getTextTheme(context).headlineSmall!.copyWith(
+                                      fontWeight: FontWeight.bold,
+                                    ),
                           ),
-                        ),
-                        SizedBox(
-                          width: $constants.insets.sm,
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Text(
-                              _getMeetingButtonTitle(context, meetingLink.type),
-                              style:
-                                  getTextTheme(context).headlineSmall!.copyWith(
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                            ),
-                            Text(
-                              context.t.calendar.event_detail.join_now,
-                              style:
-                                  getTextTheme(context).bodyMedium!.copyWith(),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
+                          Text(
+                            context.t.calendar.event_detail.join_now,
+                            style: getTextTheme(context).bodyMedium!.copyWith(),
+                          ),
+                        ],
+                      ),
+                    ],
                   ),
                 ),
               ),
@@ -366,37 +329,43 @@ class _DeviceEventDetailState extends State<DeviceEventDetail> {
                   .map((e) {
                 return Padding(
                   padding: EdgeInsets.only(bottom: $constants.insets.xs),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      CircleAvatar(
-                        backgroundColor: getTheme(context).surfaceContainer,
-                        child: Text(
-                          e?.name?.substring(0, 1).toUpperCase() ??
-                              e?.emailAddress?.substring(0, 1).toUpperCase() ??
-                              "",
-                          style: getTextTheme(context).bodyLarge,
+                  child: ElevatedContainer(
+                    padding: EdgeInsets.all($constants.insets.sm),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        CircleAvatar(
+                          backgroundColor: getTheme(context).surfaceContainer,
+                          child: Text(
+                            e?.name?.substring(0, 1).toUpperCase() ??
+                                e?.emailAddress
+                                    ?.substring(0, 1)
+                                    .toUpperCase() ??
+                                "",
+                            style: getTextTheme(context).bodyLarge,
+                          ),
                         ),
-                      ),
-                      SizedBox(
-                        width: $constants.insets.sm,
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Text(e?.name ?? e?.emailAddress ?? "",
-                              style: getTextTheme(context).bodyMedium!.copyWith(
-                                    fontWeight: FontWeight.bold,
-                                  )),
-                          Text(
-                            context.t.calendar.event_detail.attendee(
-                              n: 1,
-                            ),
-                          )
-                        ],
-                      ),
-                    ],
+                        SizedBox(
+                          width: $constants.insets.sm,
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text(e?.name ?? e?.emailAddress ?? "",
+                                style:
+                                    getTextTheme(context).bodyMedium!.copyWith(
+                                          fontWeight: FontWeight.bold,
+                                        )),
+                            Text(
+                              context.t.calendar.event_detail.attendee(
+                                n: 1,
+                              ),
+                            )
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 );
               }),

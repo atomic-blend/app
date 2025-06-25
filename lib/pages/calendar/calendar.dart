@@ -175,7 +175,8 @@ class _CalendarState extends State<Calendar> {
                   },
                   onTap: (calendarTapDetails) {
                     if (widget.view == CalendarView.month &&
-                        (calendarTapDetails.appointments?.length ?? 0) > 1) {
+                        calendarTapDetails.targetElement ==
+                                CalendarElement.calendarCell) {
                       return;
                     }
                     if (calendarTapDetails.appointments?.first.itemType ==
@@ -187,7 +188,9 @@ class _CalendarState extends State<Calendar> {
                                     horizontal: $constants.insets.xs),
                                 child: SizedBox(
                                   height: getSize(context).height * 0.7,
-                                  width: getSize(context).width,
+                                  width: isDesktop(context)
+                                      ? getSize(context).width * 0.5
+                                      : getSize(context).width,
                                   child: ClipRRect(
                                     borderRadius: BorderRadius.circular(
                                         $constants.corners.md),
@@ -225,7 +228,9 @@ class _CalendarState extends State<Calendar> {
                                 horizontal: $constants.insets.xs),
                             child: SizedBox(
                               height: getSize(context).height * 0.7,
-                              width: getSize(context).width,
+                              width: isDesktop(context)
+                                  ? getSize(context).width * 0.5
+                                  : getSize(context).width,
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(
                                     $constants.corners.md),
