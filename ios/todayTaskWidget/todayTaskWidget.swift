@@ -95,11 +95,12 @@ struct today_task_widgetEntryView: View {
                         Image(
                             systemName: task.completed == true ? "checkmark.square.fill" : "square"
                         )
+                        .resizable()
                         .foregroundColor(task.completed == true ? .green : .gray)
-                        .frame(width: 16, height: 16)
+                        .frame(width: 12, height: 12)
 
                         Text(task.title)
-                            .font(.body)
+                            .font(.system(size: 14))
                             .lineLimit(1)
                             .strikethrough(task.completed == true)
                             .foregroundColor(task.completed == true ? .secondary : .primary)
