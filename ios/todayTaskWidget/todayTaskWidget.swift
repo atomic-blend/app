@@ -62,13 +62,18 @@ struct today_task_widgetEntryView: View {
 
             // Tasks rows
             if entry.tasks.isEmpty {
-                HStack {
-                    Image(systemName: "checkmark.circle")
-                        .foregroundColor(.green)
-                    Text("Aucune tâche")
+                VStack(spacing: 8) {
+                    Image("winds-icon")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 48, height: 48)
+                        .padding(.top, 8)
+                    Text("Vous êtes libre")
                         .font(.body)
-                    Spacer()
+                        .foregroundColor(.secondary)
+                        .multilineTextAlignment(.center)
                 }
+                .frame(maxWidth: .infinity)
             } else {
                 ForEach(entry.tasks.prefix(3), id: \.id) { task in
                     HStack(alignment: .top, spacing: 8) {
