@@ -16,10 +16,10 @@ struct Provider: TimelineProvider {
     func getSnapshot(in context: Context, completion: @escaping (TodayTaskWidgetData) -> Void) {
         let prefs = UserDefaults(suiteName: "group.atomicblend.tasks")
         let isSubscribed = prefs?.bool(forKey: "isSubscribed") ?? false
-        let tasksData = prefs?.data(forKey: "tasks") ?? Data()
-        let tasks = try? JSONDecoder().decode([TaskEntity].self, from: tasksData)
+        let tasksData = prefs?.string(forKey: "tasks")?.data(using: .utf8) ?? Data()
+        let tasks = try! JSONDecoder().decode([TaskEntity].self, from: tasksData)
         let entry = TodayTaskWidgetData(
-            date: Date(), isSubscribed: isSubscribed, tasks: tasks ?? [])
+            date: Date(), isSubscribed: isSubscribed, tasks: tasks)
         completion(entry)
     }
 
@@ -91,7 +91,7 @@ struct today_task_widgetEntryView: View {
                 .frame(maxWidth: .infinity)
             } else {
                 ForEach(entry.tasks.prefix(3), id: \.id) { task in
-                    HStack(alignment: .top, spacing: 8) {
+                    HStack(alignment: .center, spacing: 8) {
                         Image(
                             systemName: task.completed == true ? "checkmark.square.fill" : "square"
                         )

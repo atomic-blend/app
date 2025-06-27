@@ -92,12 +92,10 @@ class AppLayoutState extends ResponsiveState<AppLayout> {
           if (env?.env == "dev") {
             isSubscribed = true;
           }
-          final data = WidgetData(
-            tasks: tasksState.tasks ?? [],
-            isSubscribed: isSubscribed,
-          );
-          await HomeWidget.saveWidgetData<String>(
-              'widgetData', jsonEncode(data.toJson()));
+          await HomeWidget.saveWidgetData<bool>("isSubscribed", isSubscribed);
+          final tasksJson = jsonEncode(
+              tasksState.tasks?.map((task) => task.toJson()).toList());
+          await HomeWidget.saveWidgetData<String>("tasks", tasksJson);
           await HomeWidget.updateWidget(
             iOSName: "today_task_widget",
             androidName: "fr.atomicblend.tasks",
