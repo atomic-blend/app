@@ -824,15 +824,17 @@
     "pricing(map)": {
       "\\$rc_annual": {
         "title": "Yearly",
-        "price": "\\$3.33/mo",
-        "billed": "billed at \\$39.99/year",
-        "discount": "16% off"
+        "price": "\\$39.99/year",
+        "billed": "= \\$3.33/month",
+        "discount": "16% off",
+        "start_button": "Start the 1-month free trial"
       },
       "\\$rc_monthly": {
         "title": "Monthly",
         "price": "\\$3.99/mo",
-        "billed": "billed at \\$3.99/month",
-        "discount": ""
+        "billed": "",
+        "discount": "",
+        "start_button": "Start the 1-week free trial"
       }
     },
     "no_package_selected": "No package selected",

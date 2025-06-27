@@ -320,7 +320,7 @@ class _PaywallState extends State<Paywall> {
                     height: $constants.insets.sm,
                   ),
                   PrimaryButtonSquare(
-                      text: context.t.actions.subscribe,
+                      text: context.t.paywall.pricing[_package!.identifier]!.start_button,
                       onPressed: () async {
                         if (_package == null) {
                           ScaffoldMessenger.of(context).showSnackBar(
@@ -462,20 +462,21 @@ class _PaywallState extends State<Paywall> {
                   ),
                 Text(
                   context.t.paywall.pricing[package.identifier]!.title,
-                  style: getTextTheme(context).bodyLarge?.copyWith(
-                        fontWeight: FontWeight.bold,
-                      ),
+                  style: getTextTheme(context).bodyMedium?.copyWith(),
                 ),
                 Text(
                   context.t.paywall.pricing[package.identifier]!.price,
-                  style: getTextTheme(context).bodyMedium,
-                ),
-                Text(
-                  context.t.paywall.pricing[package.identifier]!.billed,
-                  style: getTextTheme(context).bodySmall!.copyWith(
-                        color: Colors.grey.shade600,
+                  style: getTextTheme(context).bodyLarge!.copyWith(
+                        fontWeight: FontWeight.bold,
                       ),
                 ),
+                if (context.t.paywall.pricing[package.identifier]!.billed != "")
+                  Text(
+                    context.t.paywall.pricing[package.identifier]!.billed,
+                    style: getTextTheme(context).bodySmall!.copyWith(
+                          color: Colors.grey.shade600,
+                        ),
+                  ),
               ],
             ),
           ),
