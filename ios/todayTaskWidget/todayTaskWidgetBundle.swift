@@ -11,6 +11,6 @@ import SwiftUI
 @main
 struct todayTaskWidgetBundle: WidgetBundle {
     var body: some Widget {
-        todayTaskWidget()
+        today_task_widget()
     }
 }

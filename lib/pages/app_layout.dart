@@ -41,11 +41,14 @@ class AppLayoutState extends ResponsiveState<AppLayout> {
   final SideMenuController _secondarySideMenuController = SideMenuController();
   final SideMenuController _primarySideMenuController = SideMenuController();
   final Logger logger = Logger();
+  final String appGroupId = "group.atomicblend.tasks";
 
   @override
   void initState() {
     context.read<AuthBloc>().add(const RefreshUser());
     PaywallUtils.resetPaywall();
+
+    HomeWidget.setAppGroupId(appGroupId);
 
     if (context.read<AuthBloc>().state.user != null && !kIsWeb) {
       WidgetsBinding.instance.addPostFrameCallback((_) async {

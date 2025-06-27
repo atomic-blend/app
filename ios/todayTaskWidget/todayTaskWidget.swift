@@ -1,72 +1,120 @@
 //
-//  todayTaskWidget.swift
-//  todayTaskWidget
+//  today_task_widget.swift
+//  today-task-widget
 //
 //  Created by Brandon Guigo on 26/06/2025.
 //
 
-import WidgetKit
 import SwiftUI
+import WidgetKit
 
 struct Provider: TimelineProvider {
-    func placeholder(in context: Context) -> SimpleEntry {
-        SimpleEntry(date: Date(), emoji: "😀")
+    func placeholder(in context: Context) -> TodayTaskWidgetData {
+        TodayTaskWidgetData(date: Date(), isSubscribed: false, tasks: [])
     }
 
-    func getSnapshot(in context: Context, completion: @escaping (SimpleEntry) -> ()) {
-        let entry = SimpleEntry(date: Date(), emoji: "😀")
+    func getSnapshot(in context: Context, completion: @escaping (TodayTaskWidgetData) -> Void) {
+        let prefs = UserDefaults(suiteName: "group.atomicblend.tasks")
+        let isSubscribed = prefs?.bool(forKey: "isSubscribed") ?? false
+        let entry = TodayTaskWidgetData(date: Date(), isSubscribed: isSubscribed, tasks: [])
         completion(entry)
     }
 
-    func getTimeline(in context: Context, completion: @escaping (Timeline<Entry>) -> ()) {
-        var entries: [SimpleEntry] = []
-
-        // Generate a timeline consisting of five entries an hour apart, starting from the current date.
-        let currentDate = Date()
-        for hourOffset in 0 ..< 5 {
-            let entryDate = Calendar.current.date(byAdding: .hour, value: hourOffset, to: currentDate)!
-            let entry = SimpleEntry(date: entryDate, emoji: "😀")
-            entries.append(entry)
+    func getTimeline(in context: Context, completion: @escaping (Timeline<Entry>) -> Void) {
+        getSnapshot(in: context) { (entry) in
+            let timeline = Timeline(entries: [entry], policy: .atEnd)
+            completion(timeline)
         }
-
-        let timeline = Timeline(entries: entries, policy: .atEnd)
-        completion(timeline)
     }
 
-//    func relevances() async -> WidgetRelevances<Void> {
-//        // Generate a list containing the contexts this widget is relevant in.
-//    }
+    //    func relevances() async -> WidgetRelevances<Void> {
+    //        // Generate a list containing the contexts this widget is relevant in.
+    //    }
 }
 
-struct SimpleEntry: TimelineEntry {
+struct TodayTaskWidgetData: TimelineEntry {
     let date: Date
-    let emoji: String
+    let isSubscribed: Bool
+    let tasks: [TaskEntity]
 }
 
-struct todayTaskWidgetEntryView : View {
+struct TaskEntity: Decodable {
+    let id: String?
+    let title: String
+    let completed: Bool?
+}
+
+struct today_task_widgetEntryView: View {
     var entry: Provider.Entry
 
     var body: some View {
-        VStack {
-            Text("Time:")
-            Text(entry.date, style: .time)
+        VStack(alignment: .leading, spacing: 8) {
+            // Header row
+            HStack {
+                Text("Aujourd'hui")
+                    .font(.headline)
+                    .fontWeight(.semibold)
+                Spacer()
+                Text(entry.date, style: .time)
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+            }
 
-            Text("Emoji:")
-            Text(entry.emoji)
+            // Tasks rows
+            if entry.tasks.isEmpty {
+                HStack {
+                    Image(systemName: "checkmark.circle")
+                        .foregroundColor(.green)
+                    Text("Aucune tâche")
+                        .font(.body)
+                    Spacer()
+                }
+            } else {
+                ForEach(entry.tasks.prefix(3), id: \.id) { task in
+                    HStack(alignment: .top, spacing: 8) {
+                        Image(
+                            systemName: task.completed == true ? "checkmark.circle.fill" : "circle"
+                        )
+                        .foregroundColor(task.completed == true ? .green : .gray)
+                        .frame(width: 16, height: 16)
+
+                        Text(task.title)
+                            .font(.body)
+                            .lineLimit(1)
+                            .strikethrough(task.completed == true)
+                            .foregroundColor(task.completed == true ? .secondary : .primary)
+
+                        Spacer()
+                    }
+                }
+
+                // Show remaining tasks count if more than 3
+                if entry.tasks.count > 3 {
+                    HStack {
+                        Text("+ \(entry.tasks.count - 3) autres tâches")
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                        Spacer()
+                    }
+                }
+            }
+
+            Spacer()
         }
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
     }
 }
 
-struct todayTaskWidget: Widget {
-    let kind: String = "todayTaskWidget"
+struct today_task_widget: Widget {
+    let kind: String = "today_task_widget"
 
     var body: some WidgetConfiguration {
         StaticConfiguration(kind: kind, provider: Provider()) { entry in
             if #available(iOS 17.0, *) {
-                todayTaskWidgetEntryView(entry: entry)
+                today_task_widgetEntryView(entry: entry)
                     .containerBackground(.fill.tertiary, for: .widget)
             } else {
-                todayTaskWidgetEntryView(entry: entry)
+                today_task_widgetEntryView(entry: entry)
                     .padding()
                     .background()
             }
@@ -77,8 +125,10 @@ struct todayTaskWidget: Widget {
 }
 
 #Preview(as: .systemSmall) {
-    todayTaskWidget()
+    today_task_widget()
 } timeline: {
-    SimpleEntry(date: .now, emoji: "😀")
-    SimpleEntry(date: .now, emoji: "🤩")
+    TodayTaskWidgetData(date: .now, isSubscribed: false, tasks: [])
+    TodayTaskWidgetData(
+        date: .now, isSubscribed: true,
+        tasks: [TaskEntity(id: "1", title: "Task 1", completed: false)])
 }
