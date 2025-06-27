@@ -98,7 +98,7 @@ class AppLayoutState extends ResponsiveState<AppLayout> {
           await HomeWidget.saveWidgetData<String>("tasks", tasksJson);
           await HomeWidget.updateWidget(
             iOSName: "today_task_widget",
-            androidName: "fr.atomicblend.tasks",
+            qualifiedAndroidName: "com.example.app.glance.TodayTaskWidgetReceiver",
           );
           logger.i("Widget data updated");
         });
