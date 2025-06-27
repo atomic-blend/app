@@ -71,15 +71,16 @@ class TodayTaskWidget : GlanceAppWidget() {
             Column(modifier = GlanceModifier.fillMaxSize(), verticalAlignment = Alignment.Top) {
                 // Header row
                 Row(
+                        modifier = GlanceModifier.fillMaxWidth(),
                         horizontalAlignment = Alignment.Start,
                         verticalAlignment = Alignment.CenterVertically
                 ) {
                     Text(
                             text = "Today",
-                            style = TextStyle(fontSize = 18.sp, fontWeight = FontWeight.Bold)
+                            style = TextStyle(fontSize = 18.sp, fontWeight = FontWeight.Bold),
                     )
 
-                    Spacer(modifier = GlanceModifier.fillMaxWidth())
+                    Spacer(modifier = GlanceModifier.width(16.dp))
 
                     Text(
                             text = SimpleDateFormat("HH:mm", Locale.getDefault()).format(Date()),
