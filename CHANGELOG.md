@@ -2,6 +2,14 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## 0.9.7 - 2025-06-27
+#### Bug Fixes
+- paywall ui to emphasis billed price + free tial - (dab4cae) - Brandon Guigo
+#### Miscellaneous Chores
+- **(release)** 0.9.6 [skip ci] - (5f83f83) - GitHub Actions
+
+- - -
+
 ## 0.9.6 - 2025-06-25
 #### Bug Fixes
 - login modal size on desktop - (06fa7ef) - Brandon Guigo
