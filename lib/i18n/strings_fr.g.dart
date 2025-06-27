@@ -1382,9 +1382,10 @@ class _TranslationsPaywallPricing$rcAnnualFr implements TranslationsPaywallPrici
 
 	// Translations
 	@override String get title => 'Annuel';
-	@override String get price => '3.33€/mo';
-	@override String get billed => 'facturé à 39.99€/an';
+	@override String get price => '39.99€/an';
+	@override String get billed => 'soit 3.33€/mois';
 	@override String get discount => '16% off';
+	@override String get start_button => 'Démarrer l\'essai gratuit de 1 mois';
 }
 
 // Path: paywall.pricing.\$rc_monthly
@@ -1395,9 +1396,10 @@ class _TranslationsPaywallPricing$rcMonthlyFr implements TranslationsPaywallPric
 
 	// Translations
 	@override String get title => 'Mensuel';
-	@override String get price => '3.99€/mo';
-	@override String get billed => 'facturé à 3.99€/mois';
+	@override String get price => '3.99€/mois';
+	@override String get billed => '';
 	@override String get discount => '';
+	@override String get start_button => 'Démarrer l\'essai gratuit de 1 semaine';
 }
 
 // Path: settings.app_settings.selfHostedUrl
@@ -2167,13 +2169,15 @@ extension on TranslationsFr {
 			case 'paywall.advantages.community_backed.title': return 'Soutien de la communauté';
 			case 'paywall.advantages.community_backed.description': return '100% opensource : rejoignez une communauté d\'utilisateurs qui soutiennent le projet.';
 			case 'paywall.pricing.\$rc_annual.title': return 'Annuel';
-			case 'paywall.pricing.\$rc_annual.price': return '3.33€/mo';
-			case 'paywall.pricing.\$rc_annual.billed': return 'facturé à 39.99€/an';
+			case 'paywall.pricing.\$rc_annual.price': return '39.99€/an';
+			case 'paywall.pricing.\$rc_annual.billed': return 'soit 3.33€/mois';
 			case 'paywall.pricing.\$rc_annual.discount': return '16% off';
+			case 'paywall.pricing.\$rc_annual.start_button': return 'Démarrer l\'essai gratuit de 1 mois';
 			case 'paywall.pricing.\$rc_monthly.title': return 'Mensuel';
-			case 'paywall.pricing.\$rc_monthly.price': return '3.99€/mo';
-			case 'paywall.pricing.\$rc_monthly.billed': return 'facturé à 3.99€/mois';
+			case 'paywall.pricing.\$rc_monthly.price': return '3.99€/mois';
+			case 'paywall.pricing.\$rc_monthly.billed': return '';
 			case 'paywall.pricing.\$rc_monthly.discount': return '';
+			case 'paywall.pricing.\$rc_monthly.start_button': return 'Démarrer l\'essai gratuit de 1 semaine';
 			case 'paywall.no_package_selected': return 'Aucun package sélectionné';
 			case 'paywall.purchase_failed': return 'Échec de l\'achat';
 			case 'paywall.restore_purchase': return 'Restaurer l\'achat';

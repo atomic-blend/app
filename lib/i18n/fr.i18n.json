@@ -822,15 +822,17 @@
     "pricing(map)": {
       "\\$rc_annual": {
         "title": "Annuel",
-        "price": "3.33€/mo",
-        "billed": "facturé à 39.99€/an",
-        "discount": "16% off"
+        "price": "39.99€/an",
+        "billed": "soit 3.33€/mois",
+        "discount": "16% off",
+        "start_button": "Démarrer l'essai gratuit de 1 mois"
       },
       "\\$rc_monthly": {
         "title": "Mensuel",
-        "price": "3.99€/mo",
-        "billed": "facturé à 3.99€/mois",
-        "discount": ""
+        "price": "3.99€/mois",
+        "billed": "",
+        "discount": "",
+        "start_button": "Démarrer l'essai gratuit de 1 semaine"
       }
     },
     "no_package_selected": "Aucun package sélectionné",
