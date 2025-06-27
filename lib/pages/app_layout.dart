@@ -11,6 +11,7 @@ import 'package:app/components/responsive_stateful_widget.dart';
 import 'package:app/components/widgets/elevated_container.dart';
 import 'package:app/entities/tasks/tasks.entity.dart';
 import 'package:app/entities/widgets/widget_data.dart';
+import 'package:app/main.dart';
 import 'package:app/pages/auth/login_or_register_modal.dart';
 import 'package:app/pages/paywall/paywall_utils.dart';
 import 'package:app/pages/tasks/filtered_view.dart';
@@ -87,9 +88,13 @@ class AppLayoutState extends ResponsiveState<AppLayout> {
       return BlocBuilder<TasksBloc, TasksState>(builder: (context, tasksState) {
         WidgetsBinding.instance.addPostFrameCallback((_) {
           logger.i('Updating widget data');
+          bool isSubscribed = UserService.isSubscriptionActive(authState.user);
+          if (env?.env == "dev") {
+            isSubscribed = true;
+          }
           final data = WidgetData(
             tasks: tasksState.tasks ?? [],
-            isSubscribed: UserService.isSubscriptionActive(authState.user),
+            isSubscribed: isSubscribed,
           );
           HomeWidget.saveWidgetData<String>(
               'widgetData', jsonEncode(data.toJson()));

@@ -51,7 +51,7 @@ struct today_task_widgetEntryView: View {
         VStack(alignment: .leading, spacing: 8) {
             // Header row
             HStack {
-                Text("Aujourd'hui")
+                Text("Today")
                     .font(.headline)
                     .fontWeight(.semibold)
                 Spacer()
@@ -67,7 +67,7 @@ struct today_task_widgetEntryView: View {
                         .aspectRatio(contentMode: .fit)
                         .frame(width: 48, height: 48)
                         .padding(.top, 8)
-                    Text("Abonnement Premium nécessaire")
+                    Text("Premium Subscription Required")
                         .font(.body)
                         .foregroundColor(.secondary)
                         .multilineTextAlignment(.center)
@@ -80,7 +80,7 @@ struct today_task_widgetEntryView: View {
                         .aspectRatio(contentMode: .fit)
                         .frame(width: 48, height: 48)
                         .padding(.top, 8)
-                    Text("Vous êtes libre")
+                    Text("You are free")
                         .font(.body)
                         .foregroundColor(.secondary)
                         .multilineTextAlignment(.center)
@@ -90,7 +90,7 @@ struct today_task_widgetEntryView: View {
                 ForEach(entry.tasks.prefix(3), id: \.id) { task in
                     HStack(alignment: .top, spacing: 8) {
                         Image(
-                            systemName: task.completed == true ? "checkmark.circle.fill" : "circle"
+                            systemName: task.completed == true ? "checkmark.square.fill" : "square"
                         )
                         .foregroundColor(task.completed == true ? .green : .gray)
                         .frame(width: 16, height: 16)
