@@ -60,8 +60,20 @@ struct today_task_widgetEntryView: View {
                     .foregroundColor(.secondary)
             }
 
-            // Tasks rows
-            if entry.tasks.isEmpty {
+            if !entry.isSubscribed {
+                VStack(spacing: 8) {
+                    Image("premium-icon")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 48, height: 48)
+                        .padding(.top, 8)
+                    Text("Abonnement Premium nécessaire")
+                        .font(.body)
+                        .foregroundColor(.secondary)
+                        .multilineTextAlignment(.center)
+                }
+                .frame(maxWidth: .infinity)
+            } else if entry.tasks.isEmpty {
                 VStack(spacing: 8) {
                     Image("winds-icon")
                         .resizable()
