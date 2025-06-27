@@ -16,7 +16,10 @@ struct Provider: TimelineProvider {
     func getSnapshot(in context: Context, completion: @escaping (TodayTaskWidgetData) -> Void) {
         let prefs = UserDefaults(suiteName: "group.atomicblend.tasks")
         let isSubscribed = prefs?.bool(forKey: "isSubscribed") ?? false
-        let entry = TodayTaskWidgetData(date: Date(), isSubscribed: isSubscribed, tasks: [])
+        let tasksData = prefs?.data(forKey: "tasks") ?? Data()
+        let tasks = try? JSONDecoder().decode([TaskEntity].self, from: tasksData)
+        let entry = TodayTaskWidgetData(
+            date: Date(), isSubscribed: isSubscribed, tasks: tasks ?? [])
         completion(entry)
     }
 

@@ -86,7 +86,7 @@ class AppLayoutState extends ResponsiveState<AppLayout> {
 
     return BlocBuilder<AuthBloc, AuthState>(builder: (context, authState) {
       return BlocBuilder<TasksBloc, TasksState>(builder: (context, tasksState) {
-        WidgetsBinding.instance.addPostFrameCallback((_) {
+        WidgetsBinding.instance.addPostFrameCallback((_) async {
           logger.i('Updating widget data');
           bool isSubscribed = UserService.isSubscriptionActive(authState.user);
           if (env?.env == "dev") {
@@ -96,10 +96,10 @@ class AppLayoutState extends ResponsiveState<AppLayout> {
             tasks: tasksState.tasks ?? [],
             isSubscribed: isSubscribed,
           );
-          HomeWidget.saveWidgetData<String>(
+          await HomeWidget.saveWidgetData<String>(
               'widgetData', jsonEncode(data.toJson()));
-          HomeWidget.updateWidget(
-            iOSName: "groups.atomicblend.tasks",
+          await HomeWidget.updateWidget(
+            iOSName: "today_task_widget",
             androidName: "fr.atomicblend.tasks",
           );
           logger.i("Widget data updated");
