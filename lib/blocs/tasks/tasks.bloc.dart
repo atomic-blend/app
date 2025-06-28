@@ -1,4 +1,6 @@
+import 'dart:async';
 
+import 'package:app/entities/conflicted_item/conflicted_item.dart';
 import 'package:app/entities/tasks/tasks.entity.dart';
 import 'package:app/entities/user/user.entity.dart';
 import 'package:app/services/tasks.service.dart';
@@ -15,7 +17,7 @@ class TasksBloc extends HydratedBloc<TasksEvent, TasksState> {
     on<AddTask>(_onAddTask);
     on<EditTask>(_onEditTask);
     on<DeleteTask>(_onDeleteTask);
-    
+    on<SyncTasks>(_onSyncTasks);
   }
 
   @override
@@ -40,7 +42,7 @@ class TasksBloc extends HydratedBloc<TasksEvent, TasksState> {
     final prevState = state;
     emit(TasksLoading(prevState.tasks ?? []));
     try {
-    final tasks = await _tasksService.getAllTasks();
+      final tasks = await _tasksService.getAllTasks();
       emit(TasksLoaded(tasks));
     } catch (e) {
       emit(TaskLoadingError(prevState.tasks ?? [], e.toString()));
@@ -51,7 +53,10 @@ class TasksBloc extends HydratedBloc<TasksEvent, TasksState> {
     final prevState = state;
     emit(TasksLoading(prevState.tasks ?? []));
     try {
-      await _tasksService.createTask(event.user, event.task,);
+      await _tasksService.createTask(
+        event.user,
+        event.task,
+      );
       emit(TaskAdded(prevState.tasks ?? []));
       add(const LoadTasks());
     } catch (e) {
@@ -79,6 +84,23 @@ class TasksBloc extends HydratedBloc<TasksEvent, TasksState> {
     try {
       await _tasksService.deleteTask(event.task);
       emit(TaskDeleted(prevState.tasks ?? []));
+      add(const LoadTasks());
+    } catch (e) {
+      emit(TaskLoadingError(prevState.tasks ?? [], e.toString()));
+      add(const LoadTasks());
+    }
+  }
+
+  FutureOr<void> _onSyncTasks(SyncTasks event, Emitter<TasksState> emit) async {
+    final prevState = state;
+    emit(TaskSyncInProgress(prevState.tasks ?? []));
+    try {
+      if (prevState.tasks == null) {
+        add(const LoadTasks());
+        return;
+      }
+      final conflicts = await _tasksService.updateBulk(prevState.tasks!);
+      emit(TaskSyncSuccess(prevState.tasks!, conflictedItems: conflicts));
       add(const LoadTasks());
     } catch (e) {
       emit(TaskLoadingError(prevState.tasks ?? [], e.toString()));
