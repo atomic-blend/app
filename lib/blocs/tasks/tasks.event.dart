@@ -19,6 +19,10 @@ final class EditTask extends TasksEvent {
   final TaskEntity task;
 }
 
+final class SyncTasks extends TasksEvent {
+  const SyncTasks();
+}
+
 final class DeleteTask extends TasksEvent {
   const DeleteTask(this.task);
   final TaskEntity task;
