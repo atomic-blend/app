@@ -813,6 +813,8 @@ class _TranslationsPaywallFr implements TranslationsPaywallEn {
 	@override Map<String, dynamic> get pricing => {
 		'\$rc_annual': _TranslationsPaywallPricing$rcAnnualFr._(_root),
 		'\$rc_monthly': _TranslationsPaywallPricing$rcMonthlyFr._(_root),
+		'cloud_yearly': _TranslationsPaywallPricingCloudYearlyFr._(_root),
+		'cloud_monthly': _TranslationsPaywallPricingCloudMonthlyFr._(_root),
 	};
 	@override String get no_package_selected => 'Aucun package sélectionné';
 	@override String get purchase_failed => 'Échec de l\'achat';
@@ -1391,6 +1393,34 @@ class _TranslationsPaywallPricing$rcAnnualFr implements TranslationsPaywallPrici
 // Path: paywall.pricing.\$rc_monthly
 class _TranslationsPaywallPricing$rcMonthlyFr implements TranslationsPaywallPricing$rcMonthlyEn {
 	_TranslationsPaywallPricing$rcMonthlyFr._(this._root);
+
+	final TranslationsFr _root; // ignore: unused_field
+
+	// Translations
+	@override String get title => 'Mensuel';
+	@override String get price => '3.99€/mois';
+	@override String get billed => '';
+	@override String get discount => '';
+	@override String get start_button => 'Démarrer l\'essai gratuit de 1 semaine';
+}
+
+// Path: paywall.pricing.cloud_yearly
+class _TranslationsPaywallPricingCloudYearlyFr implements TranslationsPaywallPricingCloudYearlyEn {
+	_TranslationsPaywallPricingCloudYearlyFr._(this._root);
+
+	final TranslationsFr _root; // ignore: unused_field
+
+	// Translations
+	@override String get title => 'Annuel';
+	@override String get price => '39.99€/an';
+	@override String get billed => 'soit 3.33€/mois';
+	@override String get discount => '16% off';
+	@override String get start_button => 'Démarrer l\'essai gratuit de 1 mois';
+}
+
+// Path: paywall.pricing.cloud_monthly
+class _TranslationsPaywallPricingCloudMonthlyFr implements TranslationsPaywallPricingCloudMonthlyEn {
+	_TranslationsPaywallPricingCloudMonthlyFr._(this._root);
 
 	final TranslationsFr _root; // ignore: unused_field
 
@@ -2178,6 +2208,16 @@ extension on TranslationsFr {
 			case 'paywall.pricing.\$rc_monthly.billed': return '';
 			case 'paywall.pricing.\$rc_monthly.discount': return '';
 			case 'paywall.pricing.\$rc_monthly.start_button': return 'Démarrer l\'essai gratuit de 1 semaine';
+			case 'paywall.pricing.cloud_yearly.title': return 'Annuel';
+			case 'paywall.pricing.cloud_yearly.price': return '39.99€/an';
+			case 'paywall.pricing.cloud_yearly.billed': return 'soit 3.33€/mois';
+			case 'paywall.pricing.cloud_yearly.discount': return '16% off';
+			case 'paywall.pricing.cloud_yearly.start_button': return 'Démarrer l\'essai gratuit de 1 mois';
+			case 'paywall.pricing.cloud_monthly.title': return 'Mensuel';
+			case 'paywall.pricing.cloud_monthly.price': return '3.99€/mois';
+			case 'paywall.pricing.cloud_monthly.billed': return '';
+			case 'paywall.pricing.cloud_monthly.discount': return '';
+			case 'paywall.pricing.cloud_monthly.start_button': return 'Démarrer l\'essai gratuit de 1 semaine';
 			case 'paywall.no_package_selected': return 'Aucun package sélectionné';
 			case 'paywall.purchase_failed': return 'Échec de l\'achat';
 			case 'paywall.restore_purchase': return 'Restaurer l\'achat';
