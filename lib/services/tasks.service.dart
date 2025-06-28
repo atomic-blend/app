@@ -1,3 +1,4 @@
+import 'package:app/entities/conflicted_item/conflicted_item.dart';
 import 'package:app/entities/tasks/tasks.entity.dart';
 import 'package:app/entities/time_entry/time_entry.entity.dart';
 import 'package:app/entities/user/user.entity.dart';
@@ -97,6 +98,24 @@ class TasksService {
       return true;
     } else {
       throw Exception('task_update_time_entry_failed');
+    }
+  }
+
+  Future<List<ConflictedItem>> updateBulk(
+    List<TaskEntity> tasks,
+  ) async {
+    final encryptedTasks = await Future.wait(
+      tasks.map((task) => task.encrypt(encryptionService: encryptionService!)),
+    );
+
+    final result = await globalApiClient.put('/tasks/bulk', data: encryptedTasks);
+
+    if (result.statusCode == 200) {
+      return (result.data as List)
+          .map((item) => ConflictedItem.fromJson(item))
+          .toList();
+    } else {
+      throw Exception('tasks_bulk_update_failed');
     }
   }
 }
