@@ -40,60 +40,82 @@ class TasksBloc extends HydratedBloc<TasksEvent, TasksState> {
 
   void _onLoadTasks(LoadTasks event, Emitter<TasksState> emit) async {
     final prevState = state;
-    emit(TasksLoading(prevState.tasks ?? []));
+    emit(TasksLoading(prevState.tasks ?? [],
+        conflictedItems: prevState.conflictedItems));
     try {
       final tasks = await _tasksService.getAllTasks();
-      emit(TasksLoaded(tasks));
+      emit(TasksLoaded(tasks, conflictedItems: prevState.conflictedItems));
     } catch (e) {
-      emit(TaskLoadingError(prevState.tasks ?? [], e.toString()));
+      emit(TaskLoadingError(
+        prevState.tasks ?? [],
+        e.toString(),
+        conflictedItems: prevState.conflictedItems,
+      ));
     }
   }
 
   void _onAddTask(AddTask event, Emitter<TasksState> emit) async {
     final prevState = state;
-    emit(TasksLoading(prevState.tasks ?? []));
+    emit(TasksLoading(prevState.tasks ?? [],
+        conflictedItems: prevState.conflictedItems));
     try {
       await _tasksService.createTask(
         event.user,
         event.task,
       );
-      emit(TaskAdded(prevState.tasks ?? []));
+      emit(TaskAdded(prevState.tasks ?? [],
+          conflictedItems: prevState.conflictedItems));
       add(const LoadTasks());
     } catch (e) {
-      emit(TaskLoadingError(prevState.tasks ?? [], e.toString()));
+      emit(TaskLoadingError(prevState.tasks ?? [], e.toString(),
+          conflictedItems: prevState.conflictedItems));
       add(const LoadTasks());
     }
   }
 
   void _onEditTask(EditTask event, Emitter<TasksState> emit) async {
     final prevState = state;
-    emit(TasksLoading(prevState.tasks ?? []));
+    emit(TasksLoading(prevState.tasks ?? [],
+        conflictedItems: prevState.conflictedItems));
     try {
-      await _tasksService.updateTask(event.task);
-      emit(TaskEdited(prevState.tasks ?? []));
-      add(const LoadTasks());
+      event.task.updatedAt = DateTime.now();
+      // replace old task with event.task
+      final updatedTasks = prevState.tasks?.map((task) {
+        if (task.id == event.task.id) {
+          return event.task;
+        }
+        return task;
+      }).toList();
+      emit(TaskEdited(updatedTasks ?? [],
+          conflictedItems: prevState.conflictedItems));
+      add(const SyncTasks());
     } catch (e) {
-      emit(TaskLoadingError(prevState.tasks ?? [], e.toString()));
+      emit(TaskLoadingError(prevState.tasks ?? [], e.toString(),
+          conflictedItems: prevState.conflictedItems));
       add(const LoadTasks());
     }
   }
 
   void _onDeleteTask(DeleteTask event, Emitter<TasksState> emit) async {
     final prevState = state;
-    emit(TasksLoading(prevState.tasks ?? []));
+    emit(TasksLoading(prevState.tasks ?? [],
+        conflictedItems: prevState.conflictedItems));
     try {
       await _tasksService.deleteTask(event.task);
-      emit(TaskDeleted(prevState.tasks ?? []));
+      emit(TaskDeleted(prevState.tasks ?? [],
+          conflictedItems: prevState.conflictedItems));
       add(const LoadTasks());
     } catch (e) {
-      emit(TaskLoadingError(prevState.tasks ?? [], e.toString()));
+      emit(TaskLoadingError(prevState.tasks ?? [], e.toString(),
+          conflictedItems: prevState.conflictedItems));
       add(const LoadTasks());
     }
   }
 
   FutureOr<void> _onSyncTasks(SyncTasks event, Emitter<TasksState> emit) async {
     final prevState = state;
-    emit(TaskSyncInProgress(prevState.tasks ?? []));
+    emit(TaskSyncInProgress(prevState.tasks ?? [],
+        conflictedItems: prevState.conflictedItems));
     try {
       if (prevState.tasks == null) {
         add(const LoadTasks());
@@ -103,7 +125,8 @@ class TasksBloc extends HydratedBloc<TasksEvent, TasksState> {
       emit(TaskSyncSuccess(prevState.tasks!, conflictedItems: conflicts));
       add(const LoadTasks());
     } catch (e) {
-      emit(TaskLoadingError(prevState.tasks ?? [], e.toString()));
+      emit(TaskLoadingError(prevState.tasks ?? [], e.toString(),
+          conflictedItems: prevState.conflictedItems));
       add(const LoadTasks());
     }
   }
