@@ -835,6 +835,20 @@
         "billed": "",
         "discount": "",
         "start_button": "Start the 1-week free trial"
+      },
+      "cloud_yearly": {
+        "title": "Yearly",
+        "price": "\\$39.99/year",
+        "billed": "= \\$3.33/month",
+        "discount": "16% off",
+        "start_button": "Start the 1-month free trial"
+      },
+      "cloud_monthly": {
+        "title": "Monthly",
+        "price": "\\$3.99/mo",
+        "billed": "",
+        "discount": "",
+        "start_button": "Start the 1-week free trial"
       }
     },
     "no_package_selected": "No package selected",

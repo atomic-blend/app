@@ -819,6 +819,8 @@ class TranslationsPaywallEn {
 	Map<String, dynamic> get pricing => {
 		'\$rc_annual': TranslationsPaywallPricing$rcAnnualEn._(_root),
 		'\$rc_monthly': TranslationsPaywallPricing$rcMonthlyEn._(_root),
+		'cloud_yearly': TranslationsPaywallPricingCloudYearlyEn._(_root),
+		'cloud_monthly': TranslationsPaywallPricingCloudMonthlyEn._(_root),
 	};
 	String get no_package_selected => 'No package selected';
 	String get purchase_failed => 'Purchase failed';
@@ -1397,6 +1399,34 @@ class TranslationsPaywallPricing$rcAnnualEn {
 // Path: paywall.pricing.\$rc_monthly
 class TranslationsPaywallPricing$rcMonthlyEn {
 	TranslationsPaywallPricing$rcMonthlyEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	String get title => 'Monthly';
+	String get price => '\$3.99/mo';
+	String get billed => '';
+	String get discount => '';
+	String get start_button => 'Start the 1-week free trial';
+}
+
+// Path: paywall.pricing.cloud_yearly
+class TranslationsPaywallPricingCloudYearlyEn {
+	TranslationsPaywallPricingCloudYearlyEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	String get title => 'Yearly';
+	String get price => '\$39.99/year';
+	String get billed => '= \$3.33/month';
+	String get discount => '16% off';
+	String get start_button => 'Start the 1-month free trial';
+}
+
+// Path: paywall.pricing.cloud_monthly
+class TranslationsPaywallPricingCloudMonthlyEn {
+	TranslationsPaywallPricingCloudMonthlyEn._(this._root);
 
 	final Translations _root; // ignore: unused_field
 
@@ -2187,6 +2217,16 @@ extension on Translations {
 			case 'paywall.pricing.\$rc_monthly.billed': return '';
 			case 'paywall.pricing.\$rc_monthly.discount': return '';
 			case 'paywall.pricing.\$rc_monthly.start_button': return 'Start the 1-week free trial';
+			case 'paywall.pricing.cloud_yearly.title': return 'Yearly';
+			case 'paywall.pricing.cloud_yearly.price': return '\$39.99/year';
+			case 'paywall.pricing.cloud_yearly.billed': return '= \$3.33/month';
+			case 'paywall.pricing.cloud_yearly.discount': return '16% off';
+			case 'paywall.pricing.cloud_yearly.start_button': return 'Start the 1-month free trial';
+			case 'paywall.pricing.cloud_monthly.title': return 'Monthly';
+			case 'paywall.pricing.cloud_monthly.price': return '\$3.99/mo';
+			case 'paywall.pricing.cloud_monthly.billed': return '';
+			case 'paywall.pricing.cloud_monthly.discount': return '';
+			case 'paywall.pricing.cloud_monthly.start_button': return 'Start the 1-week free trial';
 			case 'paywall.no_package_selected': return 'No package selected';
 			case 'paywall.purchase_failed': return 'Purchase failed';
 			case 'paywall.restore_purchase': return 'Restore Purchase';

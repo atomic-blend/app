@@ -297,7 +297,6 @@
       "currency_symbol": "$",
       "manage_my_subscription": "Gérer mon abonnement",
       "management_url_only_mobile": "Vous ne pouvez gérer votre abonnement que depuis l'application iOS ou Android."
-
     },
     "profile": {
       "my_profile": "Mon profil",
@@ -833,6 +832,20 @@
         "billed": "",
         "discount": "",
         "start_button": "Démarrer l'essai gratuit de 1 semaine"
+      },
+      "cloud_yearly": {
+        "title": "Annuel",
+        "price": "39.99€/an",
+        "billed": "soit 3.33€/mois",
+        "discount": "16% off",
+        "start_button": "Démarrer l'essai gratuit de 1 mois"
+      },
+      "cloud_monthly": {
+        "title": "Mensuel",
+        "price": "3.99€/mois",
+        "billed": "",
+        "discount": "",
+        "start_button": "Démarrer l'essai gratuit de 1 semaine"
       }
     },
     "no_package_selected": "Aucun package sélectionné",
@@ -847,7 +860,7 @@
     "validation_failed_description": "Veuillez vérifier votre connexion Internet et redémarrer l'application.",
     "mobile_app_required": "Application mobile requise",
     "payment_on_mobile_for_better_xp": "Pour vous offrir la meilleure expérience possible, le paiement et la configuration du compte ne sont disponibles que sur l'application mobile.",
-    "ios": "iOS", 
+    "ios": "iOS",
     "android": "Android"
   },
   "search": {
