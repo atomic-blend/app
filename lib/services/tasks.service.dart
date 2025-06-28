@@ -102,20 +102,35 @@ class TasksService {
   }
 
   Future<List<ConflictedItem>> updateBulk(
-    List<TaskEntity> tasks,
-  ) async {
-    final encryptedTasks = await Future.wait(
-      tasks.map((task) => task.encrypt(encryptionService: encryptionService!)),
-    );
+    List<TaskEntity> tasks, {
+    int batchSize = 10,
+  }) async {
+    final List<ConflictedItem> allConflictedItems = [];
 
-    final result = await globalApiClient.put('/tasks/bulk', data: encryptedTasks);
+    // Process tasks in batches
+    for (int i = 0; i < tasks.length; i += batchSize) {
+      final int endIndex =
+          (i + batchSize < tasks.length) ? i + batchSize : tasks.length;
+      final List<TaskEntity> batch = tasks.sublist(i, endIndex);
 
-    if (result.statusCode == 200) {
-      return (result.data as List)
-          .map((item) => ConflictedItem.fromJson(item))
-          .toList();
-    } else {
-      throw Exception('tasks_bulk_update_failed');
+      final encryptedTasks = await Future.wait(
+        batch
+            .map((task) => task.encrypt(encryptionService: encryptionService!)),
+      );
+
+      final result =
+          await globalApiClient.put('/tasks/bulk', data: encryptedTasks);
+
+      if (result.statusCode == 200) {
+        final batchConflictedItems = (result.data as List)
+            .map((item) => ConflictedItem.fromJson(item))
+            .toList();
+        allConflictedItems.addAll(batchConflictedItems);
+      } else {
+        throw Exception('tasks_bulk_update_failed');
+      }
     }
+
+    return allConflictedItems;
   }
 }
