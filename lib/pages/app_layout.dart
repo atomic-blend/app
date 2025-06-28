@@ -10,7 +10,6 @@ import 'package:app/components/buttons/account_avatar_with_sync_status.dart';
 import 'package:app/components/responsive_stateful_widget.dart';
 import 'package:app/components/widgets/elevated_container.dart';
 import 'package:app/entities/tasks/tasks.entity.dart';
-import 'package:app/entities/widgets/widget_data.dart';
 import 'package:app/main.dart';
 import 'package:app/pages/auth/login_or_register_modal.dart';
 import 'package:app/pages/paywall/paywall_utils.dart';
