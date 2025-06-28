@@ -1,13 +1,16 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:app/blocs/app/app.bloc.dart';
 import 'package:app/blocs/auth/auth.bloc.dart';
 import 'package:app/blocs/folder/folder.bloc.dart';
+import 'package:app/blocs/tasks/tasks.bloc.dart';
 import 'package:app/components/app/bottom_navigation.dart';
 import 'package:app/components/buttons/account_avatar_with_sync_status.dart';
 import 'package:app/components/responsive_stateful_widget.dart';
 import 'package:app/components/widgets/elevated_container.dart';
 import 'package:app/entities/tasks/tasks.entity.dart';
+import 'package:app/main.dart';
 import 'package:app/pages/auth/login_or_register_modal.dart';
 import 'package:app/pages/paywall/paywall_utils.dart';
 import 'package:app/pages/tasks/filtered_view.dart';
@@ -22,6 +25,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_side_menu/flutter_side_menu.dart';
+import 'package:home_widget/home_widget.dart';
+import 'package:logger/logger.dart';
 import 'package:macos_window_utils/widgets/titlebar_safe_area.dart';
 
 class AppLayout extends ResponsiveStatefulWidget {
@@ -35,11 +40,15 @@ class AppLayoutState extends ResponsiveState<AppLayout> {
   bool _isLoginModalVisible = false;
   final SideMenuController _secondarySideMenuController = SideMenuController();
   final SideMenuController _primarySideMenuController = SideMenuController();
+  final Logger logger = Logger();
+  final String appGroupId = "group.atomicblend.tasks";
 
   @override
   void initState() {
     context.read<AuthBloc>().add(const RefreshUser());
     PaywallUtils.resetPaywall();
+
+    HomeWidget.setAppGroupId(appGroupId);
 
     if (context.read<AuthBloc>().state.user != null && !kIsWeb) {
       WidgetsBinding.instance.addPostFrameCallback((_) async {
@@ -63,6 +72,38 @@ class AppLayoutState extends ResponsiveState<AppLayout> {
       });
     }
     super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    late Widget child;
+    if (isDesktop(context)) {
+      child = buildDesktop(context);
+    } else {
+      child = buildMobile(context);
+    }
+
+    return BlocBuilder<AuthBloc, AuthState>(builder: (context, authState) {
+      return BlocBuilder<TasksBloc, TasksState>(builder: (context, tasksState) {
+        WidgetsBinding.instance.addPostFrameCallback((_) async {
+          logger.i('Updating widget data');
+          bool isSubscribed = UserService.isSubscriptionActive(authState.user);
+          if (env?.env == "dev") {
+            isSubscribed = true;
+          }
+          await HomeWidget.saveWidgetData<bool>("isSubscribed", isSubscribed);
+          final tasksJson = jsonEncode(
+              tasksState.tasks?.map((task) => task.toJson()).toList());
+          await HomeWidget.saveWidgetData<String>("tasks", tasksJson);
+          await HomeWidget.updateWidget(
+            iOSName: "today_task_widget",
+            qualifiedAndroidName: "com.example.app.glance.TodayTaskWidgetReceiver",
+          );
+          logger.i("Widget data updated");
+        });
+        return child;
+      });
+    });
   }
 
   @override
