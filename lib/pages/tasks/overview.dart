@@ -30,12 +30,6 @@ class _OverviewTasksState extends State<OverviewTasks> {
   List<TaskEntity> _filteredTasks = <TaskEntity>[];
 
   @override
-  void initState() {
-    SyncService.sync(context);
-    super.initState();
-  }
-
-  @override
   void dispose() {
     super.dispose();
   }
