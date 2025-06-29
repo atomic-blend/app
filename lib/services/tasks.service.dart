@@ -1,6 +1,7 @@
 import 'package:app/entities/conflicted_item/conflicted_item.dart';
 import 'package:app/entities/tasks/tasks.entity.dart';
 import 'package:app/entities/user/user.entity.dart';
+import 'package:app/main.dart';
 import 'package:app/services/user.service.dart';
 import 'package:app/utils/api_client.dart';
 
@@ -81,6 +82,9 @@ class TasksService {
             .map((item) => ConflictedItem.fromJson(item))
             .toList();
         allConflictedItems.addAll(batchConflictedItems);
+
+        prefs?.setString(
+            "task_last_update_date", DateTime.now().toIso8601String());
       } else {
         throw Exception('tasks_bulk_update_failed');
       }
