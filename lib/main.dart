@@ -15,9 +15,11 @@ import 'package:app/services/notifications/background_notification_processor.dar
 import 'package:app/services/notifications/fcm_service.dart';
 import 'package:app/services/notifications/processors/processors.dart';
 import 'package:app/services/revenue_cat_service.dart';
+import 'package:app/services/sync.service.dart';
 import 'package:app/services/widget_service/background_processor.dart';
 import 'package:app/utils/env/env.dart';
 import 'package:app/utils/shortcuts.dart';
+import 'package:cron/cron.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
@@ -43,6 +45,9 @@ FcmService? fcmService;
 Map<String, dynamic>? userData;
 String? userKey;
 
+String appGroupId = "group.atomicblend.tasks";
+
+
 FutureOr<void> main() async {
   await SentryFlutter.init((options) {
     String? dsn = const String.fromEnvironment(
@@ -58,10 +63,10 @@ FutureOr<void> main() async {
   }, appRunner: () async {
     env = await EnvModel.create();
     prefs = await SharedPreferences.getInstance();
-
+  
+    HomeWidget.setAppGroupId(appGroupId);
     HomeWidget.registerInteractivityCallback(backgroundCallback);
 
- 
     tz.initializeTimeZones();
 
     if (!kIsWeb && Platform.isMacOS) {
