@@ -12,7 +12,7 @@ class SyncService {
     if (context.read<AuthBloc>().state is! LoggedIn) return;
 
     // Sync data
-    context.read<TasksBloc>().add(const LoadTasks());
+    context.read<TasksBloc>().add(const SyncTasks());
     context.read<HabitBloc>().add(const LoadHabits());
     context.read<TagBloc>().add(const LoadTags());
     context.read<FolderBloc>().add(const LoadFolders());
