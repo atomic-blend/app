@@ -1,6 +1,5 @@
 import 'package:app/entities/conflicted_item/conflicted_item.dart';
 import 'package:app/entities/tasks/tasks.entity.dart';
-import 'package:app/entities/time_entry/time_entry.entity.dart';
 import 'package:app/entities/user/user.entity.dart';
 import 'package:app/services/user.service.dart';
 import 'package:app/utils/api_client.dart';
@@ -54,50 +53,6 @@ class TasksService {
       return true;
     } else {
       throw Exception('task_delete_failed');
-    }
-  }
-
-  Future<bool> addTimeEntryToTask(TaskEntity task, TimeEntry timeEntry) async {
-    final encryptedTimeEntry =
-        await timeEntry.encrypt(encryptionService: encryptionService!);
-    final result = await globalApiClient.post(
-      '/tasks/${task.id}/time-entries',
-      data: encryptedTimeEntry,
-    );
-
-    if (result.statusCode == 200) {
-      return true;
-    } else {
-      throw Exception('task_add_time_entry_failed');
-    }
-  }
-
-  Future<bool> removeTimeEntryFromTask(
-      TaskEntity task, TimeEntry timeEntry) async {
-    final result = await globalApiClient.delete(
-      '/tasks/${task.id}/time-entries/${timeEntry.id}',
-    );
-
-    if (result.statusCode == 204) {
-      return true;
-    } else {
-      throw Exception('task_remove_time_entry_failed');
-    }
-  }
-
-  Future<bool> updateTimeEntryInTask(
-      TaskEntity task, TimeEntry timeEntry) async {
-    final encryptedTimeEntry =
-        await timeEntry.encrypt(encryptionService: encryptionService!);
-    final result = await globalApiClient.delete(
-      '/tasks/${task.id}/time-entries/${timeEntry.id}',
-      data: encryptedTimeEntry,
-    );
-
-    if (result.statusCode == 200) {
-      return true;
-    } else {
-      throw Exception('task_update_time_entry_failed');
     }
   }
 
