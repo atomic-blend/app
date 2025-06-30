@@ -825,14 +825,14 @@
       "\\$rc_annual": {
         "title": "Yearly",
         "price": "\\$39.99/year",
-        "billed": "= \\$3.33/month",
+        "billed": "1 month free trial",
         "discount": "16% off",
         "start_button": "Start the 1-month free trial"
       },
       "\\$rc_monthly": {
         "title": "Monthly",
         "price": "\\$3.99/mo",
-        "billed": "",
+        "billed": "1 week free trial",
         "discount": "",
         "start_button": "Start the 1-week free trial"
       },
