@@ -2,7 +2,7 @@ import 'package:app/i18n/strings.g.dart';
 import 'package:app/main.dart';
 import 'package:app/services/encryption.service.dart';
 import 'package:app/services/user.service.dart';
-import 'package:app/utils/exntensions/date_time_extension.dart';
+import 'package:app/utils/extensions/date_time_extension.dart';
 import 'package:app/utils/local_notifications.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';

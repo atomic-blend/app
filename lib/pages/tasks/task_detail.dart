@@ -20,7 +20,7 @@ import 'package:app/pages/tasks/task_time_entry_log.dart' show TaskTimeEntryLog;
 import 'package:app/pages/timer/task_timer.dart';
 import 'package:app/pages/timer/timer_utils.dart';
 import 'package:app/utils/constants.dart';
-import 'package:app/utils/exntensions/date_time_extension.dart';
+import 'package:app/utils/extensions/date_time_extension.dart';
 import 'package:app/utils/shortcuts.dart';
 import 'package:collection/collection.dart';
 import 'package:fleather/fleather.dart';

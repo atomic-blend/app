@@ -11,7 +11,7 @@ import 'package:app/pages/timer/timer_info.dart';
 import 'package:app/pages/timer/timer_utils.dart';
 import 'package:app/services/sync.service.dart';
 import 'package:app/utils/constants.dart';
-import 'package:app/utils/exntensions/date_time_extension.dart';
+import 'package:app/utils/extensions/date_time_extension.dart';
 import 'package:app/utils/shortcuts.dart';
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/cupertino.dart';

@@ -13,6 +13,7 @@ import 'package:app/entities/tasks/tasks.entity.dart';
 import 'package:app/main.dart';
 import 'package:app/pages/auth/login_or_register_modal.dart';
 import 'package:app/pages/paywall/paywall_utils.dart';
+import 'package:app/pages/sync_status/sync_status.dart';
 import 'package:app/pages/tasks/filtered_view.dart';
 import 'package:app/services/device_info.service.dart';
 import 'package:app/services/encryption.service.dart';
@@ -189,7 +190,7 @@ class AppLayoutState extends ResponsiveState<AppLayout> {
                             return Padding(
                               padding:
                                   EdgeInsets.only(right: $constants.insets.sm),
-                              child: const AccountAvatarWithSyncStatus(),
+                              child: const SyncStatus(),
                             );
                           }
                           return Container();
@@ -517,7 +518,7 @@ class AppLayoutState extends ResponsiveState<AppLayout> {
                           Padding(
                             padding:
                                 EdgeInsets.only(right: $constants.insets.sm),
-                            child: const AccountAvatarWithSyncStatus(),
+                            child: const SyncStatus(),
                           ),
                       ],
                     ),

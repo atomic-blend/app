@@ -3,7 +3,7 @@ import 'package:app/components/forms/task_date_picker_modal/duration_picker.dart
 import 'package:app/components/forms/task_date_picker_modal/single_date_picker.dart';
 import 'package:app/i18n/strings.g.dart';
 import 'package:app/utils/constants.dart';
-import 'package:app/utils/exntensions/date_time_extension.dart';
+import 'package:app/utils/extensions/date_time_extension.dart';
 import 'package:app/utils/shortcuts.dart';
 import 'package:flutter/material.dart';
 

@@ -101,6 +101,7 @@ class Translations implements BaseTranslations<AppLocale, Translations> {
 	late final TranslationsTimerEn timer = TranslationsTimerEn._(_root);
 	late final TranslationsPaywallEn paywall = TranslationsPaywallEn._(_root);
 	late final TranslationsSearchEn search = TranslationsSearchEn._(_root);
+	late final TranslationsSyncEn sync = TranslationsSyncEn._(_root);
 }
 
 // Path: navigation
@@ -850,6 +851,18 @@ class TranslationsSearchEn {
 		one: '1 result found',
 		other: '${n} results found',
 	);
+}
+
+// Path: sync
+class TranslationsSyncEn {
+	TranslationsSyncEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	String get title => 'Synchronization';
+	String get description => 'Synchronization allows you to keep your data up to date across all your devices';
+	String get offline_first => 'This app is designed to work offline first, meaning that you can use it without an internet connection. However, some features require an internet connection to work properly.';
 }
 
 // Path: auth.not_logged_in
@@ -2246,6 +2259,9 @@ extension on Translations {
 				one: '1 result found',
 				other: '${n} results found',
 			);
+			case 'sync.title': return 'Synchronization';
+			case 'sync.description': return 'Synchronization allows you to keep your data up to date across all your devices';
+			case 'sync.offline_first': return 'This app is designed to work offline first, meaning that you can use it without an internet connection. However, some features require an internet connection to work properly.';
 			default: return null;
 		}
 	}
