@@ -2,6 +2,29 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## 0.10.0 - 2025-06-30
+#### Bug Fixes
+- add free tier text - (6f71c5e) - Brandon Guigo
+- linter - (fe63bfb) - Brandon Guigo
+- android widget size - (77e6c57) - Brandon Guigo
+- some padding on Android Widget - (bbe8260) - Brandon Guigo
+- size of the task title - (464a1d5) - Brandon Guigo
+- task parsing - (a66667c) - Brandon Guigo
+- update widget on iOS - (67642a3) - Brandon Guigo
+- translations - (2ae234f) - Brandon Guigo
+#### Features
+- add basic ui v1 - (3f01775) - Brandon Guigo
+- configure android widget - (0220336) - Brandon Guigo
+- add premium required message - (24c8770) - Brandon Guigo
+- add no task message in widget - (4be35a2) - Brandon Guigo
+- add app groups and first UI of widget - (a9bd1b7) - Brandon Guigo
+- send data using home_widget to the iOS widget - (4f015dd) - Brandon Guigo
+- widget extension on flutter finally working - (76a4581) - Brandon Guigo
+#### Miscellaneous Chores
+- **(release)** 0.9.8 [skip ci] - (c0244d2) - GitHub Actions
+
+- - -
+
 ## 0.9.8 - 2025-06-28
 #### Bug Fixes
 - missing translation for subscription page - (7ddd4c8) - Brandon Guigo
