@@ -15,6 +15,7 @@ import 'package:app/services/notifications/background_notification_processor.dar
 import 'package:app/services/notifications/fcm_service.dart';
 import 'package:app/services/notifications/processors/processors.dart';
 import 'package:app/services/revenue_cat_service.dart';
+import 'package:app/services/widget_service/background_processor.dart';
 import 'package:app/utils/env/env.dart';
 import 'package:app/utils/shortcuts.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -22,6 +23,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:home_widget/home_widget.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:jiffy/jiffy.dart';
 import 'package:macos_window_utils/window_manipulator.dart';
@@ -56,6 +58,9 @@ FutureOr<void> main() async {
   }, appRunner: () async {
     env = await EnvModel.create();
     prefs = await SharedPreferences.getInstance();
+
+    HomeWidget.registerInteractivityCallback(backgroundCallback);
+
  
     tz.initializeTimeZones();
 
