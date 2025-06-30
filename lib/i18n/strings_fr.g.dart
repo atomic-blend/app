@@ -98,6 +98,7 @@ class TranslationsFr implements Translations {
 	@override late final _TranslationsTimerFr timer = _TranslationsTimerFr._(_root);
 	@override late final _TranslationsPaywallFr paywall = _TranslationsPaywallFr._(_root);
 	@override late final _TranslationsSearchFr search = _TranslationsSearchFr._(_root);
+	@override late final _TranslationsSyncFr sync = _TranslationsSyncFr._(_root);
 }
 
 // Path: navigation
@@ -844,6 +845,18 @@ class _TranslationsSearchFr implements TranslationsSearchEn {
 		one: '1 résultat trouvé',
 		other: '${n} résultats trouvés',
 	);
+}
+
+// Path: sync
+class _TranslationsSyncFr implements TranslationsSyncEn {
+	_TranslationsSyncFr._(this._root);
+
+	final TranslationsFr _root; // ignore: unused_field
+
+	// Translations
+	@override String get title => 'Synchronisation';
+	@override String get description => 'La synchronisation vous permet de garder vos données à jour sur tous vos appareils';
+	@override String get offline_first => 'Cette application est conçue pour fonctionner hors ligne en premier, ce qui signifie que vous pouvez l\'utiliser sans connexion Internet. Cependant, certaines fonctionnalités nécessitent une connexion Internet pour fonctionner correctement.';
 }
 
 // Path: auth.not_logged_in
@@ -2237,6 +2250,9 @@ extension on TranslationsFr {
 				one: '1 résultat trouvé',
 				other: '${n} résultats trouvés',
 			);
+			case 'sync.title': return 'Synchronisation';
+			case 'sync.description': return 'La synchronisation vous permet de garder vos données à jour sur tous vos appareils';
+			case 'sync.offline_first': return 'Cette application est conçue pour fonctionner hors ligne en premier, ce qui signifie que vous pouvez l\'utiliser sans connexion Internet. Cependant, certaines fonctionnalités nécessitent une connexion Internet pour fonctionner correctement.';
 			default: return null;
 		}
 	}

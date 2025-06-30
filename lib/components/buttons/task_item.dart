@@ -3,7 +3,7 @@ import 'package:app/components/forms/ab_checkbox.dart';
 import 'package:app/entities/tasks/tasks.entity.dart';
 import 'package:app/pages/tasks/task_detail.dart';
 import 'package:app/utils/constants.dart';
-import 'package:app/utils/exntensions/date_time_extension.dart';
+import 'package:app/utils/extensions/date_time_extension.dart';
 import 'package:app/utils/shortcuts.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';

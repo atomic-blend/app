@@ -872,5 +872,10 @@
       "one": "1 result found",
       "other": "${n} results found"
     }
+  },
+  "sync": {
+    "title": "Synchronization",
+    "description": "Synchronization allows you to keep your data up to date across all your devices",
+    "offline_first": "This app is designed to work offline first, meaning that you can use it without an internet connection. However, some features require an internet connection to work properly."
   }
 }
