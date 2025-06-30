@@ -862,7 +862,11 @@ class TranslationsSyncEn {
 	// Translations
 	String get title => 'Synchronization';
 	String get description => 'Synchronization allows you to keep your data up to date across all your devices';
-	String get offline_first => 'This app is designed to work offline first, meaning that you can use it without an internet connection. However, some features require an internet connection to work properly.';
+	String get status => 'Status';
+	String get loading => 'Loading...';
+	String get up_to_date => 'Up to date';
+	String get conflicts => 'Conflicts';
+	late final TranslationsSyncDetailsEn details = TranslationsSyncDetailsEn._(_root);
 }
 
 // Path: auth.not_logged_in
@@ -1449,6 +1453,16 @@ class TranslationsPaywallPricingCloudMonthlyEn {
 	String get billed => '';
 	String get discount => '';
 	String get start_button => 'Start the 1-week free trial';
+}
+
+// Path: sync.details
+class TranslationsSyncDetailsEn {
+	TranslationsSyncDetailsEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	String get title => 'Details';
 }
 
 // Path: settings.app_settings.selfHostedUrl
@@ -2261,7 +2275,11 @@ extension on Translations {
 			);
 			case 'sync.title': return 'Synchronization';
 			case 'sync.description': return 'Synchronization allows you to keep your data up to date across all your devices';
-			case 'sync.offline_first': return 'This app is designed to work offline first, meaning that you can use it without an internet connection. However, some features require an internet connection to work properly.';
+			case 'sync.status': return 'Status';
+			case 'sync.loading': return 'Loading...';
+			case 'sync.up_to_date': return 'Up to date';
+			case 'sync.conflicts': return 'Conflicts';
+			case 'sync.details.title': return 'Details';
 			default: return null;
 		}
 	}
