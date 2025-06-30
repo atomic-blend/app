@@ -881,7 +881,14 @@
     "up_to_date": "Up to date",
     "conflicts": "Conflicts",
     "details": {
-      "title": "Details"
-    }
+      "title": "Details",
+      "tasks": "Tasks",
+      "task_items": {
+        "zero": "No tasks",
+        "one": "1 task",
+        "other": "${n} tasks"
+      }
+    },
+    "sync_now": "Sync now"
   }
 }
