@@ -861,6 +861,7 @@ class _TranslationsSyncFr implements TranslationsSyncEn {
 	@override String get up_to_date => 'À jour';
 	@override String get conflicts => 'Conflits';
 	@override late final _TranslationsSyncDetailsFr details = _TranslationsSyncDetailsFr._(_root);
+	@override String get sync_now => 'Synchroniser maintenant';
 }
 
 // Path: auth.not_logged_in
@@ -1457,6 +1458,12 @@ class _TranslationsSyncDetailsFr implements TranslationsSyncDetailsEn {
 
 	// Translations
 	@override String get title => 'Details';
+	@override String get tasks => 'Tâches';
+	@override String task_items({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('fr'))(n,
+		zero: 'Aucune tâche',
+		one: '1 tâche',
+		other: '${n} tâches',
+	);
 }
 
 // Path: settings.app_settings.selfHostedUrl
@@ -2271,6 +2278,13 @@ extension on TranslationsFr {
 			case 'sync.up_to_date': return 'À jour';
 			case 'sync.conflicts': return 'Conflits';
 			case 'sync.details.title': return 'Details';
+			case 'sync.details.tasks': return 'Tâches';
+			case 'sync.details.task_items': return ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('fr'))(n,
+				zero: 'Aucune tâche',
+				one: '1 tâche',
+				other: '${n} tâches',
+			);
+			case 'sync.sync_now': return 'Synchroniser maintenant';
 			default: return null;
 		}
 	}

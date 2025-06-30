@@ -1,4 +1,5 @@
 import 'package:app/blocs/tasks/tasks.bloc.dart';
+import 'package:app/components/buttons/primary_button_square.dart';
 import 'package:app/components/widgets/elevated_container.dart';
 import 'package:app/i18n/strings.g.dart';
 import 'package:app/services/sync.service.dart';
@@ -141,30 +142,18 @@ class _SyncStatusState extends State<SyncStatus> {
                     SizedBox(
                       height: $constants.insets.xxs,
                     ),
-                    ElevatedContainer(
-                      height: 20,
-                      width: double.infinity,
+                    _buildStatusContainer(
+                      context,
                       color: _isLoading(taskState: taskState)
                           ? Colors.amber
                           : _hasConflictedItems(taskState: taskState)
                               ? Colors.red
                               : Colors.green,
-                      child: _isLoading(taskState: taskState)
-                          ? Center(
-                              child: Text(
-                              context.t.sync.loading,
-                            ))
+                      text: _isLoading(taskState: taskState)
+                          ? context.t.sync.loading
                           : _hasConflictedItems(taskState: taskState)
-                              ? Center(
-                                  child: Text(
-                                  context.t.sync.conflicts,
-                                  style: const TextStyle(color: Colors.white),
-                                ))
-                              : Center(
-                                  child: Text(
-                                  context.t.sync.up_to_date,
-                                  style: const TextStyle(color: Colors.white),
-                                )),
+                              ? context.t.sync.conflicts
+                              : context.t.sync.up_to_date,
                     ),
                     SizedBox(
                       height: $constants.insets.xs,
@@ -184,28 +173,147 @@ class _SyncStatusState extends State<SyncStatus> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(context.t.sync.details.title,
-                        style: getTextTheme(context).headlineMedium!.copyWith(
-                              fontWeight: FontWeight.bold,
-                            )),
+                        style:
+                            getTextTheme(context).headlineMedium!.copyWith()),
                     SizedBox(
                       height: $constants.insets.xxs,
                     ),
+                    _buildSyncItemRow(
+                      context,
+                      title: context.t.sync.details.tasks,
+                      icon: CupertinoIcons.checkmark_square,
+                      taskState: taskState,
+                    )
                   ],
                 ),
               ),
-            )
+            ),
+            const Spacer(),
+            Padding(
+              padding: EdgeInsets.symmetric(
+                horizontal: $constants.insets.sm,
+              ),
+              child: PrimaryButtonSquare(
+                  text: context.t.sync.sync_now,
+                  onPressed: () {
+                    SyncService.sync(context);
+                  }),
+            ),
+            SizedBox(
+              height: isDesktop(context)
+                  ? $constants.insets.xs
+                  : $constants.insets.lg,
+            ),
           ],
         );
       },
     );
   }
 
+  Widget _buildSyncItemRow(
+    BuildContext context, {
+    required String title,
+    required IconData icon,
+    required TasksState taskState,
+  }) {
+    return Padding(
+      padding: EdgeInsets.symmetric(
+        vertical: $constants.insets.xs,
+        horizontal: $constants.insets.xs,
+      ),
+      child: Row(
+        children: [
+          Icon(
+            icon,
+            size: 32,
+            color: getTheme(context).primary,
+          ),
+          SizedBox(
+            width: $constants.insets.xs,
+          ),
+          Expanded(
+            child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      title,
+                      style: getTextTheme(context).bodyLarge!.copyWith(
+                            fontWeight: FontWeight.bold,
+                          ),
+                    ),
+                    if (!_isTaskBlocLoading(taskState: taskState) &&
+                        !_taskHasConflictedItems(taskState: taskState))
+                      Text(
+                          context.t.sync.details.task_items(
+                            n: taskState.tasks?.length ?? 0,
+                          ),
+                          style: getTextTheme(context).bodyMedium!.copyWith()),
+                  ],
+                ),
+                SizedBox(
+                  width: $constants.insets.xs,
+                ),
+                _buildStatusContainer(
+                  context,
+                  color: _isTaskBlocLoading(taskState: taskState)
+                      ? Colors.amber
+                      : _taskHasConflictedItems(taskState: taskState)
+                          ? Colors.red
+                          : Colors.green,
+                  text: _isTaskBlocLoading(taskState: taskState)
+                      ? context.t.sync.loading
+                      : _taskHasConflictedItems(taskState: taskState)
+                          ? context.t.sync.conflicts
+                          : context.t.sync.up_to_date,
+                  textColor: Colors.white,
+                  textSize: 10,
+                  height: 14,
+                ),
+              ],
+            ),
+          )
+        ],
+      ),
+    );
+  }
+
+  Widget _buildStatusContainer(
+    BuildContext context, {
+    required Color color,
+    required String text,
+    double? height,
+    Color? textColor,
+    double? textSize,
+  }) {
+    return ElevatedContainer(
+      height: height ?? 20,
+      width: double.infinity,
+      color: color,
+      child: Center(
+        child: Text(
+          text,
+          style: TextStyle(
+              color: textColor ?? Colors.white, fontSize: textSize ?? 14),
+        ),
+      ),
+    );
+  }
+
   bool _isLoading({required TasksState taskState}) {
-    return taskState.runtimeType == TasksLoading ||
-        taskState.runtimeType == TaskSyncInProgress;
+    return _isTaskBlocLoading(taskState: taskState);
+  }
+
+  bool _isTaskBlocLoading({required TasksState taskState}) {
+    return taskState is TasksLoading || taskState is TaskSyncInProgress;
   }
 
   bool _hasConflictedItems({required TasksState taskState}) {
+    return _taskHasConflictedItems(taskState: taskState);
+  }
+
+  bool _taskHasConflictedItems({required TasksState taskState}) {
     return taskState.conflictedItems?.isNotEmpty ?? false;
   }
 }

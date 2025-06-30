@@ -867,6 +867,7 @@ class TranslationsSyncEn {
 	String get up_to_date => 'Up to date';
 	String get conflicts => 'Conflicts';
 	late final TranslationsSyncDetailsEn details = TranslationsSyncDetailsEn._(_root);
+	String get sync_now => 'Sync now';
 }
 
 // Path: auth.not_logged_in
@@ -1463,6 +1464,12 @@ class TranslationsSyncDetailsEn {
 
 	// Translations
 	String get title => 'Details';
+	String get tasks => 'Tasks';
+	String task_items({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n,
+		zero: 'No tasks',
+		one: '1 task',
+		other: '${n} tasks',
+	);
 }
 
 // Path: settings.app_settings.selfHostedUrl
@@ -2280,6 +2287,13 @@ extension on Translations {
 			case 'sync.up_to_date': return 'Up to date';
 			case 'sync.conflicts': return 'Conflicts';
 			case 'sync.details.title': return 'Details';
+			case 'sync.details.tasks': return 'Tasks';
+			case 'sync.details.task_items': return ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n,
+				zero: 'No tasks',
+				one: '1 task',
+				other: '${n} tasks',
+			);
+			case 'sync.sync_now': return 'Sync now';
 			default: return null;
 		}
 	}

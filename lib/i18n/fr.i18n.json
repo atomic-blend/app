@@ -878,7 +878,14 @@
     "up_to_date": "À jour",
     "conflicts": "Conflits",
     "details": {
-      "title": "Details"
-    }
+      "title": "Details",
+      "tasks": "Tâches",
+      "task_items": {
+        "zero": "Aucune tâche",
+        "one": "1 tâche",
+        "other": "${n} tâches"
+      }
+    },
+    "sync_now": "Synchroniser maintenant"
   }
 }
