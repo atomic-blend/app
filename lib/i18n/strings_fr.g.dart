@@ -856,7 +856,11 @@ class _TranslationsSyncFr implements TranslationsSyncEn {
 	// Translations
 	@override String get title => 'Synchronisation';
 	@override String get description => 'La synchronisation vous permet de garder vos données à jour sur tous vos appareils';
-	@override String get offline_first => 'Cette application est conçue pour fonctionner hors ligne en premier, ce qui signifie que vous pouvez l\'utiliser sans connexion Internet. Cependant, certaines fonctionnalités nécessitent une connexion Internet pour fonctionner correctement.';
+	@override String get status => 'État';
+	@override String get loading => 'Chargement...';
+	@override String get up_to_date => 'À jour';
+	@override String get conflicts => 'Conflits';
+	@override late final _TranslationsSyncDetailsFr details = _TranslationsSyncDetailsFr._(_root);
 }
 
 // Path: auth.not_logged_in
@@ -1443,6 +1447,16 @@ class _TranslationsPaywallPricingCloudMonthlyFr implements TranslationsPaywallPr
 	@override String get billed => '';
 	@override String get discount => '';
 	@override String get start_button => 'Démarrer l\'essai gratuit de 1 semaine';
+}
+
+// Path: sync.details
+class _TranslationsSyncDetailsFr implements TranslationsSyncDetailsEn {
+	_TranslationsSyncDetailsFr._(this._root);
+
+	final TranslationsFr _root; // ignore: unused_field
+
+	// Translations
+	@override String get title => 'Details';
 }
 
 // Path: settings.app_settings.selfHostedUrl
@@ -2252,7 +2266,11 @@ extension on TranslationsFr {
 			);
 			case 'sync.title': return 'Synchronisation';
 			case 'sync.description': return 'La synchronisation vous permet de garder vos données à jour sur tous vos appareils';
-			case 'sync.offline_first': return 'Cette application est conçue pour fonctionner hors ligne en premier, ce qui signifie que vous pouvez l\'utiliser sans connexion Internet. Cependant, certaines fonctionnalités nécessitent une connexion Internet pour fonctionner correctement.';
+			case 'sync.status': return 'État';
+			case 'sync.loading': return 'Chargement...';
+			case 'sync.up_to_date': return 'À jour';
+			case 'sync.conflicts': return 'Conflits';
+			case 'sync.details.title': return 'Details';
 			default: return null;
 		}
 	}

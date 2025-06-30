@@ -873,6 +873,12 @@
   "sync": {
     "title": "Synchronisation",
     "description": "La synchronisation vous permet de garder vos données à jour sur tous vos appareils",
-    "offline_first": "Cette application est conçue pour fonctionner hors ligne en premier, ce qui signifie que vous pouvez l'utiliser sans connexion Internet. Cependant, certaines fonctionnalités nécessitent une connexion Internet pour fonctionner correctement."
+    "status": "État",
+    "loading": "Chargement...",
+    "up_to_date": "À jour",
+    "conflicts": "Conflits",
+    "details": {
+      "title": "Details"
+    }
   }
 }

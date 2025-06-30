@@ -43,7 +43,10 @@ class _SyncStatusState extends State<SyncStatus> {
               } else {
                 showModalBottomSheet(
                     context: context,
-                    builder: (context) => _buildSyncModal(context));
+                    isScrollControlled: true,
+                    builder: (context) => SizedBox(
+                        height: getSize(context).height * 0.8,
+                        child: _buildSyncModal(context)));
               }
             },
             child: ElevatedContainer(
@@ -59,7 +62,7 @@ class _SyncStatusState extends State<SyncStatus> {
           Positioned(
             bottom: 10,
             right: 6,
-            child: !_hasConflictedItems(taskState: taskState)
+            child: _hasConflictedItems(taskState: taskState)
                 ? Container(
                     width: 12,
                     height: 12,
@@ -107,21 +110,89 @@ class _SyncStatusState extends State<SyncStatus> {
         final taskConflictedItems = taskState.conflictedItems;
         return Column(
           children: [
-            Text(
-              context.t.sync.title,
-              style: getTextTheme(context).headlineMedium!.copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
+            Padding(
+              padding: EdgeInsets.all($constants.insets.sm),
+              child: ElevatedContainer(
+                padding: EdgeInsets.symmetric(
+                    horizontal: $constants.insets.sm,
+                    vertical: $constants.insets.xs),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      context.t.sync.title,
+                      style: getTextTheme(context).headlineLarge!.copyWith(
+                            fontWeight: FontWeight.bold,
+                          ),
+                    ),
+                    Text(
+                      context.t.sync.description,
+                      style: getTextTheme(context).bodyMedium,
+                    ),
+                    SizedBox(
+                      height: $constants.insets.sm,
+                    ),
+                    Text(
+                      context.t.sync.status,
+                      style: getTextTheme(context).bodyLarge!.copyWith(
+                            fontWeight: FontWeight.bold,
+                          ),
+                    ),
+                    SizedBox(
+                      height: $constants.insets.xxs,
+                    ),
+                    ElevatedContainer(
+                      height: 20,
+                      width: double.infinity,
+                      color: _isLoading(taskState: taskState)
+                          ? Colors.amber
+                          : _hasConflictedItems(taskState: taskState)
+                              ? Colors.red
+                              : Colors.green,
+                      child: _isLoading(taskState: taskState)
+                          ? Center(
+                              child: Text(
+                              context.t.sync.loading,
+                            ))
+                          : _hasConflictedItems(taskState: taskState)
+                              ? Center(
+                                  child: Text(
+                                  context.t.sync.conflicts,
+                                  style: const TextStyle(color: Colors.white),
+                                ))
+                              : Center(
+                                  child: Text(
+                                  context.t.sync.up_to_date,
+                                  style: const TextStyle(color: Colors.white),
+                                )),
+                    ),
+                    SizedBox(
+                      height: $constants.insets.xs,
+                    ),
+                  ],
+                ),
+              ),
             ),
-            Text(
-              context.t.sync.description,
-              style: getTextTheme(context).bodyMedium,
-            ),
-            Text(
-              context.t.sync.offline_first,
-              style: getTextTheme(context).bodyMedium!.copyWith(
-                    color: CupertinoColors.systemGrey,
-                  ),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: $constants.insets.sm),
+              child: ElevatedContainer(
+                width: double.infinity,
+                padding: EdgeInsets.symmetric(
+                    horizontal: $constants.insets.sm,
+                    vertical: $constants.insets.xs),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(context.t.sync.details.title,
+                        style: getTextTheme(context).headlineMedium!.copyWith(
+                              fontWeight: FontWeight.bold,
+                            )),
+                    SizedBox(
+                      height: $constants.insets.xxs,
+                    ),
+                  ],
+                ),
+              ),
             )
           ],
         );
