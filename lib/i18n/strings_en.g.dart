@@ -1391,7 +1391,7 @@ class TranslationsPaywallPricing$rcAnnualEn {
 	// Translations
 	String get title => 'Yearly';
 	String get price => '\$39.99/year';
-	String get billed => '= \$3.33/month';
+	String get billed => '1 month free trial';
 	String get discount => '16% off';
 	String get start_button => 'Start the 1-month free trial';
 }
@@ -1405,7 +1405,7 @@ class TranslationsPaywallPricing$rcMonthlyEn {
 	// Translations
 	String get title => 'Monthly';
 	String get price => '\$3.99/mo';
-	String get billed => '';
+	String get billed => '1 week free trial';
 	String get discount => '';
 	String get start_button => 'Start the 1-week free trial';
 }
@@ -2209,12 +2209,12 @@ extension on Translations {
 			case 'paywall.advantages.community_backed.description': return '100% opensource : join a community of users who support the project.';
 			case 'paywall.pricing.\$rc_annual.title': return 'Yearly';
 			case 'paywall.pricing.\$rc_annual.price': return '\$39.99/year';
-			case 'paywall.pricing.\$rc_annual.billed': return '= \$3.33/month';
+			case 'paywall.pricing.\$rc_annual.billed': return '1 month free trial';
 			case 'paywall.pricing.\$rc_annual.discount': return '16% off';
 			case 'paywall.pricing.\$rc_annual.start_button': return 'Start the 1-month free trial';
 			case 'paywall.pricing.\$rc_monthly.title': return 'Monthly';
 			case 'paywall.pricing.\$rc_monthly.price': return '\$3.99/mo';
-			case 'paywall.pricing.\$rc_monthly.billed': return '';
+			case 'paywall.pricing.\$rc_monthly.billed': return '1 week free trial';
 			case 'paywall.pricing.\$rc_monthly.discount': return '';
 			case 'paywall.pricing.\$rc_monthly.start_button': return 'Start the 1-week free trial';
 			case 'paywall.pricing.cloud_yearly.title': return 'Yearly';
