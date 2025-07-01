@@ -20,9 +20,9 @@ ConflictedItem _$ConflictedItemFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$ConflictedItem {
-  String get type => throw _privateConstructorUsedError;
-  dynamic get oldItem => throw _privateConstructorUsedError;
-  dynamic get newItem => throw _privateConstructorUsedError;
+  ItemType get type => throw _privateConstructorUsedError;
+  dynamic get remoteItem => throw _privateConstructorUsedError;
+  dynamic get localItem => throw _privateConstructorUsedError;
 
   /// Serializes this ConflictedItem to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -40,7 +40,7 @@ abstract class $ConflictedItemCopyWith<$Res> {
           ConflictedItem value, $Res Function(ConflictedItem) then) =
       _$ConflictedItemCopyWithImpl<$Res, ConflictedItem>;
   @useResult
-  $Res call({String type, dynamic oldItem, dynamic newItem});
+  $Res call({ItemType type, dynamic remoteItem, dynamic localItem});
 }
 
 /// @nodoc
@@ -59,21 +59,21 @@ class _$ConflictedItemCopyWithImpl<$Res, $Val extends ConflictedItem>
   @override
   $Res call({
     Object? type = null,
-    Object? oldItem = freezed,
-    Object? newItem = freezed,
+    Object? remoteItem = freezed,
+    Object? localItem = freezed,
   }) {
     return _then(_value.copyWith(
       type: null == type
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
-              as String,
-      oldItem: freezed == oldItem
-          ? _value.oldItem
-          : oldItem // ignore: cast_nullable_to_non_nullable
+              as ItemType,
+      remoteItem: freezed == remoteItem
+          ? _value.remoteItem
+          : remoteItem // ignore: cast_nullable_to_non_nullable
               as dynamic,
-      newItem: freezed == newItem
-          ? _value.newItem
-          : newItem // ignore: cast_nullable_to_non_nullable
+      localItem: freezed == localItem
+          ? _value.localItem
+          : localItem // ignore: cast_nullable_to_non_nullable
               as dynamic,
     ) as $Val);
   }
@@ -87,7 +87,7 @@ abstract class _$$ConflictedItemImplCopyWith<$Res>
       __$$ConflictedItemImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String type, dynamic oldItem, dynamic newItem});
+  $Res call({ItemType type, dynamic remoteItem, dynamic localItem});
 }
 
 /// @nodoc
@@ -104,21 +104,21 @@ class __$$ConflictedItemImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? type = null,
-    Object? oldItem = freezed,
-    Object? newItem = freezed,
+    Object? remoteItem = freezed,
+    Object? localItem = freezed,
   }) {
     return _then(_$ConflictedItemImpl(
       type: null == type
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
-              as String,
-      oldItem: freezed == oldItem
-          ? _value.oldItem
-          : oldItem // ignore: cast_nullable_to_non_nullable
+              as ItemType,
+      remoteItem: freezed == remoteItem
+          ? _value.remoteItem
+          : remoteItem // ignore: cast_nullable_to_non_nullable
               as dynamic,
-      newItem: freezed == newItem
-          ? _value.newItem
-          : newItem // ignore: cast_nullable_to_non_nullable
+      localItem: freezed == localItem
+          ? _value.localItem
+          : localItem // ignore: cast_nullable_to_non_nullable
               as dynamic,
     ));
   }
@@ -127,21 +127,22 @@ class __$$ConflictedItemImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$ConflictedItemImpl implements _ConflictedItem {
-  const _$ConflictedItemImpl({required this.type, this.oldItem, this.newItem});
+  const _$ConflictedItemImpl(
+      {required this.type, this.remoteItem, this.localItem});
 
   factory _$ConflictedItemImpl.fromJson(Map<String, dynamic> json) =>
       _$$ConflictedItemImplFromJson(json);
 
   @override
-  final String type;
+  final ItemType type;
   @override
-  final dynamic oldItem;
+  final dynamic remoteItem;
   @override
-  final dynamic newItem;
+  final dynamic localItem;
 
   @override
   String toString() {
-    return 'ConflictedItem(type: $type, oldItem: $oldItem, newItem: $newItem)';
+    return 'ConflictedItem(type: $type, remoteItem: $remoteItem, localItem: $localItem)';
   }
 
   @override
@@ -150,8 +151,9 @@ class _$ConflictedItemImpl implements _ConflictedItem {
         (other.runtimeType == runtimeType &&
             other is _$ConflictedItemImpl &&
             (identical(other.type, type) || other.type == type) &&
-            const DeepCollectionEquality().equals(other.oldItem, oldItem) &&
-            const DeepCollectionEquality().equals(other.newItem, newItem));
+            const DeepCollectionEquality()
+                .equals(other.remoteItem, remoteItem) &&
+            const DeepCollectionEquality().equals(other.localItem, localItem));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -159,8 +161,8 @@ class _$ConflictedItemImpl implements _ConflictedItem {
   int get hashCode => Object.hash(
       runtimeType,
       type,
-      const DeepCollectionEquality().hash(oldItem),
-      const DeepCollectionEquality().hash(newItem));
+      const DeepCollectionEquality().hash(remoteItem),
+      const DeepCollectionEquality().hash(localItem));
 
   /// Create a copy of ConflictedItem
   /// with the given fields replaced by the non-null parameter values.
@@ -181,19 +183,19 @@ class _$ConflictedItemImpl implements _ConflictedItem {
 
 abstract class _ConflictedItem implements ConflictedItem {
   const factory _ConflictedItem(
-      {required final String type,
-      final dynamic oldItem,
-      final dynamic newItem}) = _$ConflictedItemImpl;
+      {required final ItemType type,
+      final dynamic remoteItem,
+      final dynamic localItem}) = _$ConflictedItemImpl;
 
   factory _ConflictedItem.fromJson(Map<String, dynamic> json) =
       _$ConflictedItemImpl.fromJson;
 
   @override
-  String get type;
+  ItemType get type;
   @override
-  dynamic get oldItem;
+  dynamic get remoteItem;
   @override
-  dynamic get newItem;
+  dynamic get localItem;
 
   /// Create a copy of ConflictedItem
   /// with the given fields replaced by the non-null parameter values.

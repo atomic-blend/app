@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:app/entities/conflicted_item/conflicted_item.dart';
+import 'package:app/entities/sync/conflicted_item/conflicted_item.dart';
 import 'package:app/entities/tasks/tasks.entity.dart';
 import 'package:app/entities/user/user.entity.dart';
 import 'package:app/services/tasks.service.dart';
@@ -78,6 +78,7 @@ class TasksBloc extends HydratedBloc<TasksEvent, TasksState> {
     emit(TasksLoading(prevState.tasks ?? [],
         conflictedItems: prevState.conflictedItems));
     try {
+      //TODO: replace with patch
       event.task.updatedAt = DateTime.now();
       // replace old task with event.task
       final updatedTasks = prevState.tasks?.map((task) {
@@ -121,6 +122,7 @@ class TasksBloc extends HydratedBloc<TasksEvent, TasksState> {
         add(const LoadTasks());
         return;
       }
+      //TODO: replace with patch
       final conflicts = await _tasksService.updateBulk(prevState.tasks!);
       emit(TaskSyncSuccess(prevState.tasks!, conflictedItems: conflicts));
       add(const LoadTasks());
