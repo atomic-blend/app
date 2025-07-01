@@ -10,7 +10,7 @@ part 'patch.g.dart';
 @unfreezed
 class Patch with _$Patch {
   const factory Patch({
-    String? id,
+    required String id,
     required PatchAction action,
     required DateTime patchDate,
     required ItemType type,

@@ -7,7 +7,7 @@ part of 'patch.dart';
 // **************************************************************************
 
 _$PatchImpl _$$PatchImplFromJson(Map<String, dynamic> json) => _$PatchImpl(
-      id: json['id'] as String?,
+      id: json['id'] as String,
       action: $enumDecode(_$PatchActionEnumMap, json['action']),
       patchDate: DateTime.parse(json['patchDate'] as String),
       type: $enumDecode(_$ItemTypeEnumMap, json['type']),
