@@ -200,8 +200,6 @@ class TasksBloc extends HydratedBloc<TasksEvent, TasksState> {
         add(const LoadTasks());
         return;
       }
-      //TODO: replace with patch
-      //TODO: delete from stagedPatches if patch is successful
       final syncResult = await _tasksService.patchTasks(
         prevState.stagedPatches ?? [],
       );
