@@ -6,7 +6,6 @@ import 'package:app/blocs/auth/auth.bloc.dart';
 import 'package:app/blocs/folder/folder.bloc.dart';
 import 'package:app/blocs/tasks/tasks.bloc.dart';
 import 'package:app/components/app/bottom_navigation.dart';
-import 'package:app/components/buttons/account_avatar_with_sync_status.dart';
 import 'package:app/components/responsive_stateful_widget.dart';
 import 'package:app/components/widgets/elevated_container.dart';
 import 'package:app/entities/tasks/tasks.entity.dart';

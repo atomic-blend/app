@@ -1,4 +1,4 @@
-import 'package:app/entities/conflicted_item/conflicted_item.dart';
+import 'package:app/entities/sync/conflicted_item/conflicted_item.dart';
 import 'package:app/entities/tasks/tasks.entity.dart';
 import 'package:app/entities/user/user.entity.dart';
 import 'package:app/main.dart';
