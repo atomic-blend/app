@@ -9,8 +9,9 @@ part of 'patch.dart';
 _$PatchImpl _$$PatchImplFromJson(Map<String, dynamic> json) => _$PatchImpl(
       id: json['id'] as String,
       action: $enumDecode(_$PatchActionEnumMap, json['action']),
-      patchDate: DateTime.parse(json['patchDate'] as String),
-      type: $enumDecode(_$ItemTypeEnumMap, json['type']),
+      patchDate: const Iso8601DateTimeConverter()
+          .fromJson(json['patchDate'] as String),
+      itemType: $enumDecode(_$ItemTypeEnumMap, json['itemType']),
       itemId: json['itemId'] as String,
       changes: (json['changes'] as List<dynamic>)
           .map((e) => PatchChange.fromJson(e as Map<String, dynamic>))
@@ -22,8 +23,8 @@ Map<String, dynamic> _$$PatchImplToJson(_$PatchImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'action': _$PatchActionEnumMap[instance.action]!,
-      'patchDate': instance.patchDate.toIso8601String(),
-      'type': _$ItemTypeEnumMap[instance.type]!,
+      'patchDate': const Iso8601DateTimeConverter().toJson(instance.patchDate),
+      'itemType': _$ItemTypeEnumMap[instance.itemType]!,
       'itemId': instance.itemId,
       'changes': instance.changes,
       'force': instance.force,

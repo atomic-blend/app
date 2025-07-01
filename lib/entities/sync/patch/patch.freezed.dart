@@ -24,10 +24,12 @@ mixin _$Patch {
   set id(String value) => throw _privateConstructorUsedError;
   PatchAction get action => throw _privateConstructorUsedError;
   set action(PatchAction value) => throw _privateConstructorUsedError;
+  @Iso8601DateTimeConverter()
   DateTime get patchDate => throw _privateConstructorUsedError;
+  @Iso8601DateTimeConverter()
   set patchDate(DateTime value) => throw _privateConstructorUsedError;
-  ItemType get type => throw _privateConstructorUsedError;
-  set type(ItemType value) => throw _privateConstructorUsedError;
+  ItemType get itemType => throw _privateConstructorUsedError;
+  set itemType(ItemType value) => throw _privateConstructorUsedError;
   String get itemId => throw _privateConstructorUsedError;
   set itemId(String value) => throw _privateConstructorUsedError;
   List<PatchChange> get changes => throw _privateConstructorUsedError;
@@ -52,8 +54,8 @@ abstract class $PatchCopyWith<$Res> {
   $Res call(
       {String id,
       PatchAction action,
-      DateTime patchDate,
-      ItemType type,
+      @Iso8601DateTimeConverter() DateTime patchDate,
+      ItemType itemType,
       String itemId,
       List<PatchChange> changes,
       bool? force});
@@ -77,7 +79,7 @@ class _$PatchCopyWithImpl<$Res, $Val extends Patch>
     Object? id = null,
     Object? action = null,
     Object? patchDate = null,
-    Object? type = null,
+    Object? itemType = null,
     Object? itemId = null,
     Object? changes = null,
     Object? force = freezed,
@@ -95,9 +97,9 @@ class _$PatchCopyWithImpl<$Res, $Val extends Patch>
           ? _value.patchDate
           : patchDate // ignore: cast_nullable_to_non_nullable
               as DateTime,
-      type: null == type
-          ? _value.type
-          : type // ignore: cast_nullable_to_non_nullable
+      itemType: null == itemType
+          ? _value.itemType
+          : itemType // ignore: cast_nullable_to_non_nullable
               as ItemType,
       itemId: null == itemId
           ? _value.itemId
@@ -125,8 +127,8 @@ abstract class _$$PatchImplCopyWith<$Res> implements $PatchCopyWith<$Res> {
   $Res call(
       {String id,
       PatchAction action,
-      DateTime patchDate,
-      ItemType type,
+      @Iso8601DateTimeConverter() DateTime patchDate,
+      ItemType itemType,
       String itemId,
       List<PatchChange> changes,
       bool? force});
@@ -148,7 +150,7 @@ class __$$PatchImplCopyWithImpl<$Res>
     Object? id = null,
     Object? action = null,
     Object? patchDate = null,
-    Object? type = null,
+    Object? itemType = null,
     Object? itemId = null,
     Object? changes = null,
     Object? force = freezed,
@@ -166,9 +168,9 @@ class __$$PatchImplCopyWithImpl<$Res>
           ? _value.patchDate
           : patchDate // ignore: cast_nullable_to_non_nullable
               as DateTime,
-      type: null == type
-          ? _value.type
-          : type // ignore: cast_nullable_to_non_nullable
+      itemType: null == itemType
+          ? _value.itemType
+          : itemType // ignore: cast_nullable_to_non_nullable
               as ItemType,
       itemId: null == itemId
           ? _value.itemId
@@ -189,11 +191,11 @@ class __$$PatchImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$PatchImpl implements _Patch {
-  const _$PatchImpl(
+  _$PatchImpl(
       {required this.id,
       required this.action,
-      required this.patchDate,
-      required this.type,
+      @Iso8601DateTimeConverter() required this.patchDate,
+      required this.itemType,
       required this.itemId,
       required this.changes,
       this.force});
@@ -206,9 +208,10 @@ class _$PatchImpl implements _Patch {
   @override
   PatchAction action;
   @override
+  @Iso8601DateTimeConverter()
   DateTime patchDate;
   @override
-  ItemType type;
+  ItemType itemType;
   @override
   String itemId;
   @override
@@ -218,7 +221,7 @@ class _$PatchImpl implements _Patch {
 
   @override
   String toString() {
-    return 'Patch(id: $id, action: $action, patchDate: $patchDate, type: $type, itemId: $itemId, changes: $changes, force: $force)';
+    return 'Patch(id: $id, action: $action, patchDate: $patchDate, itemType: $itemType, itemId: $itemId, changes: $changes, force: $force)';
   }
 
   /// Create a copy of Patch
@@ -238,11 +241,11 @@ class _$PatchImpl implements _Patch {
 }
 
 abstract class _Patch implements Patch {
-  const factory _Patch(
+  factory _Patch(
       {required String id,
       required PatchAction action,
-      required DateTime patchDate,
-      required ItemType type,
+      @Iso8601DateTimeConverter() required DateTime patchDate,
+      required ItemType itemType,
       required String itemId,
       required List<PatchChange> changes,
       bool? force}) = _$PatchImpl;
@@ -256,11 +259,13 @@ abstract class _Patch implements Patch {
   PatchAction get action;
   set action(PatchAction value);
   @override
+  @Iso8601DateTimeConverter()
   DateTime get patchDate;
+  @Iso8601DateTimeConverter()
   set patchDate(DateTime value);
   @override
-  ItemType get type;
-  set type(ItemType value);
+  ItemType get itemType;
+  set itemType(ItemType value);
   @override
   String get itemId;
   set itemId(String value);
