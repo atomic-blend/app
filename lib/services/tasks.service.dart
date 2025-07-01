@@ -1,6 +1,7 @@
 import 'package:app/entities/sync/conflicted_item/conflicted_item.dart';
 import 'package:app/entities/sync/item_type/item_type.dart';
 import 'package:app/entities/sync/patch/patch.dart';
+import 'package:app/entities/sync/patch_action/patch_action.dart';
 import 'package:app/entities/sync/patch_error/patch_error.dart';
 import 'package:app/entities/sync/sync_result/sync_result.dart';
 import 'package:app/entities/tasks/tasks.entity.dart';
@@ -88,12 +89,16 @@ class TasksService {
 
       try {
         for (var patch in batch) {
-          for (var change in patch.changes) {
-            // if key is not part of nonEncryptedFields, encrypt it
-            if (!TaskEntity.nonEncryptedFields.contains(change.key) &&
-                !TaskEntity.manualParseFields.contains(change.key) &&
-                change.value != null) {
-              change.value = await encryptionService!.encryptJson(change.value);
+          if (patch.action == PatchAction.create ||
+              patch.action == PatchAction.update) {
+            for (var change in patch.changes) {
+              // if key is not part of nonEncryptedFields, encrypt it
+              if (!TaskEntity.nonEncryptedFields.contains(change.key) &&
+                  !TaskEntity.manualParseFields.contains(change.key) &&
+                  change.value != null) {
+                change.value =
+                    await encryptionService!.encryptJson(change.value);
+              }
             }
           }
         }

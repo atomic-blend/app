@@ -163,16 +163,25 @@ class TasksBloc extends HydratedBloc<TasksEvent, TasksState> {
     ));
     try {
       //TODO: replace with patch
-      await _tasksService.deleteTask(event.task);
+      final existingPatches = prevState.stagedPatches ?? [];
+      final patch = Patch(
+        id: ObjectId().hexString,
+        action: PatchAction.delete,
+        patchDate: DateTime.now(),
+        itemType: ItemType.task,
+        itemId: event.task.id!,
+        changes: [],
+      );
+      existingPatches.add(patch);
       emit(
         TaskDeleted(
           prevState.tasks ?? [],
           conflicts: prevState.conflicts,
-          stagedPatches: prevState.stagedPatches,
+          stagedPatches: existingPatches,
           latestSync: prevState.latestSync,
         ),
       );
-      add(const LoadTasks());
+      add(const SyncTasks());
     } catch (e) {
       emit(TaskLoadingError(
         prevState.tasks ?? [],
