@@ -10,6 +10,7 @@ import 'package:app/entities/user/user.entity.dart';
 import 'package:app/services/tasks.service.dart';
 import 'package:equatable/equatable.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
+import 'package:objectid/objectid.dart';
 
 part 'tasks.event.dart';
 part 'tasks.state.dart';
@@ -61,6 +62,7 @@ class TasksBloc extends HydratedBloc<TasksEvent, TasksState> {
     final prevState = state;
     emit(TasksLoading(prevState.tasks ?? [], conflicts: prevState.conflicts));
     try {
+      //TODO: replace with patch
       await _tasksService.createTask(
         event.user,
         event.task,
@@ -80,6 +82,7 @@ class TasksBloc extends HydratedBloc<TasksEvent, TasksState> {
     try {
       final existingPatches = prevState.stagedPatches ?? [];
       final patch = Patch(
+        id: ObjectId().hexString,
         action: PatchAction.update,
         patchDate: DateTime.now(),
         type: ItemType.task,
@@ -101,6 +104,7 @@ class TasksBloc extends HydratedBloc<TasksEvent, TasksState> {
     final prevState = state;
     emit(TasksLoading(prevState.tasks ?? [], conflicts: prevState.conflicts));
     try {
+      //TODO: replace with patch
       await _tasksService.deleteTask(event.task);
       emit(TaskDeleted(prevState.tasks ?? [], conflicts: prevState.conflicts));
       add(const LoadTasks());
@@ -122,8 +126,6 @@ class TasksBloc extends HydratedBloc<TasksEvent, TasksState> {
       }
       //TODO: replace with patch
       //TODO: delete from stagedPatches if patch is successful
-      // final conflicts = await _tasksService.updateBulk(prevState.tasks!);
-      // emit(TaskSyncSuccess(prevState.tasks!, conflicts: conflicts));
       add(const LoadTasks());
     } catch (e) {
       emit(TaskLoadingError(prevState.tasks ?? [], e.toString(),

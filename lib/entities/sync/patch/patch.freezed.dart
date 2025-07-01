@@ -20,8 +20,8 @@ Patch _$PatchFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Patch {
-  String? get id => throw _privateConstructorUsedError;
-  set id(String? value) => throw _privateConstructorUsedError;
+  String get id => throw _privateConstructorUsedError;
+  set id(String value) => throw _privateConstructorUsedError;
   PatchAction get action => throw _privateConstructorUsedError;
   set action(PatchAction value) => throw _privateConstructorUsedError;
   DateTime get patchDate => throw _privateConstructorUsedError;
@@ -50,7 +50,7 @@ abstract class $PatchCopyWith<$Res> {
       _$PatchCopyWithImpl<$Res, Patch>;
   @useResult
   $Res call(
-      {String? id,
+      {String id,
       PatchAction action,
       DateTime patchDate,
       ItemType type,
@@ -74,7 +74,7 @@ class _$PatchCopyWithImpl<$Res, $Val extends Patch>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = freezed,
+    Object? id = null,
     Object? action = null,
     Object? patchDate = null,
     Object? type = null,
@@ -83,10 +83,10 @@ class _$PatchCopyWithImpl<$Res, $Val extends Patch>
     Object? force = freezed,
   }) {
     return _then(_value.copyWith(
-      id: freezed == id
+      id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
       action: null == action
           ? _value.action
           : action // ignore: cast_nullable_to_non_nullable
@@ -123,7 +123,7 @@ abstract class _$$PatchImplCopyWith<$Res> implements $PatchCopyWith<$Res> {
   @override
   @useResult
   $Res call(
-      {String? id,
+      {String id,
       PatchAction action,
       DateTime patchDate,
       ItemType type,
@@ -145,7 +145,7 @@ class __$$PatchImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = freezed,
+    Object? id = null,
     Object? action = null,
     Object? patchDate = null,
     Object? type = null,
@@ -154,10 +154,10 @@ class __$$PatchImplCopyWithImpl<$Res>
     Object? force = freezed,
   }) {
     return _then(_$PatchImpl(
-      id: freezed == id
+      id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
       action: null == action
           ? _value.action
           : action // ignore: cast_nullable_to_non_nullable
@@ -190,7 +190,7 @@ class __$$PatchImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$PatchImpl implements _Patch {
   const _$PatchImpl(
-      {this.id,
+      {required this.id,
       required this.action,
       required this.patchDate,
       required this.type,
@@ -202,7 +202,7 @@ class _$PatchImpl implements _Patch {
       _$$PatchImplFromJson(json);
 
   @override
-  String? id;
+  String id;
   @override
   PatchAction action;
   @override
@@ -239,7 +239,7 @@ class _$PatchImpl implements _Patch {
 
 abstract class _Patch implements Patch {
   const factory _Patch(
-      {String? id,
+      {required String id,
       required PatchAction action,
       required DateTime patchDate,
       required ItemType type,
@@ -250,8 +250,8 @@ abstract class _Patch implements Patch {
   factory _Patch.fromJson(Map<String, dynamic> json) = _$PatchImpl.fromJson;
 
   @override
-  String? get id;
-  set id(String? value);
+  String get id;
+  set id(String value);
   @override
   PatchAction get action;
   set action(PatchAction value);
