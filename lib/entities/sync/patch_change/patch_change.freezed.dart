@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'change.dart';
+part of 'patch_change.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -14,155 +14,159 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
-Change _$ChangeFromJson(Map<String, dynamic> json) {
-  return _Change.fromJson(json);
+PatchChange _$PatchChangeFromJson(Map<String, dynamic> json) {
+  return _PatchChange.fromJson(json);
 }
 
 /// @nodoc
-mixin _$Change {
+mixin _$PatchChange {
   String get key => throw _privateConstructorUsedError;
   set key(String value) => throw _privateConstructorUsedError;
-  String get value => throw _privateConstructorUsedError;
-  set value(String value) => throw _privateConstructorUsedError;
+  dynamic get value => throw _privateConstructorUsedError;
+  set value(dynamic value) => throw _privateConstructorUsedError;
 
-  /// Serializes this Change to a JSON map.
+  /// Serializes this PatchChange to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
 
-  /// Create a copy of Change
+  /// Create a copy of PatchChange
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $ChangeCopyWith<Change> get copyWith => throw _privateConstructorUsedError;
+  $PatchChangeCopyWith<PatchChange> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $ChangeCopyWith<$Res> {
-  factory $ChangeCopyWith(Change value, $Res Function(Change) then) =
-      _$ChangeCopyWithImpl<$Res, Change>;
+abstract class $PatchChangeCopyWith<$Res> {
+  factory $PatchChangeCopyWith(
+          PatchChange value, $Res Function(PatchChange) then) =
+      _$PatchChangeCopyWithImpl<$Res, PatchChange>;
   @useResult
-  $Res call({String key, String value});
+  $Res call({String key, dynamic value});
 }
 
 /// @nodoc
-class _$ChangeCopyWithImpl<$Res, $Val extends Change>
-    implements $ChangeCopyWith<$Res> {
-  _$ChangeCopyWithImpl(this._value, this._then);
+class _$PatchChangeCopyWithImpl<$Res, $Val extends PatchChange>
+    implements $PatchChangeCopyWith<$Res> {
+  _$PatchChangeCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of Change
+  /// Create a copy of PatchChange
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? key = null,
-    Object? value = null,
+    Object? value = freezed,
   }) {
     return _then(_value.copyWith(
       key: null == key
           ? _value.key
           : key // ignore: cast_nullable_to_non_nullable
               as String,
-      value: null == value
+      value: freezed == value
           ? _value.value
           : value // ignore: cast_nullable_to_non_nullable
-              as String,
+              as dynamic,
     ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$$ChangeImplCopyWith<$Res> implements $ChangeCopyWith<$Res> {
-  factory _$$ChangeImplCopyWith(
-          _$ChangeImpl value, $Res Function(_$ChangeImpl) then) =
-      __$$ChangeImplCopyWithImpl<$Res>;
+abstract class _$$PatchChangeImplCopyWith<$Res>
+    implements $PatchChangeCopyWith<$Res> {
+  factory _$$PatchChangeImplCopyWith(
+          _$PatchChangeImpl value, $Res Function(_$PatchChangeImpl) then) =
+      __$$PatchChangeImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String key, String value});
+  $Res call({String key, dynamic value});
 }
 
 /// @nodoc
-class __$$ChangeImplCopyWithImpl<$Res>
-    extends _$ChangeCopyWithImpl<$Res, _$ChangeImpl>
-    implements _$$ChangeImplCopyWith<$Res> {
-  __$$ChangeImplCopyWithImpl(
-      _$ChangeImpl _value, $Res Function(_$ChangeImpl) _then)
+class __$$PatchChangeImplCopyWithImpl<$Res>
+    extends _$PatchChangeCopyWithImpl<$Res, _$PatchChangeImpl>
+    implements _$$PatchChangeImplCopyWith<$Res> {
+  __$$PatchChangeImplCopyWithImpl(
+      _$PatchChangeImpl _value, $Res Function(_$PatchChangeImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of Change
+  /// Create a copy of PatchChange
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? key = null,
-    Object? value = null,
+    Object? value = freezed,
   }) {
-    return _then(_$ChangeImpl(
+    return _then(_$PatchChangeImpl(
       key: null == key
           ? _value.key
           : key // ignore: cast_nullable_to_non_nullable
               as String,
-      value: null == value
+      value: freezed == value
           ? _value.value
           : value // ignore: cast_nullable_to_non_nullable
-              as String,
+              as dynamic,
     ));
   }
 }
 
 /// @nodoc
 @JsonSerializable()
-class _$ChangeImpl implements _Change {
-  const _$ChangeImpl({required this.key, required this.value});
+class _$PatchChangeImpl implements _PatchChange {
+  const _$PatchChangeImpl({required this.key, required this.value});
 
-  factory _$ChangeImpl.fromJson(Map<String, dynamic> json) =>
-      _$$ChangeImplFromJson(json);
+  factory _$PatchChangeImpl.fromJson(Map<String, dynamic> json) =>
+      _$$PatchChangeImplFromJson(json);
 
   @override
   String key;
   @override
-  String value;
+  dynamic value;
 
   @override
   String toString() {
-    return 'Change(key: $key, value: $value)';
+    return 'PatchChange(key: $key, value: $value)';
   }
 
-  /// Create a copy of Change
+  /// Create a copy of PatchChange
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$ChangeImplCopyWith<_$ChangeImpl> get copyWith =>
-      __$$ChangeImplCopyWithImpl<_$ChangeImpl>(this, _$identity);
+  _$$PatchChangeImplCopyWith<_$PatchChangeImpl> get copyWith =>
+      __$$PatchChangeImplCopyWithImpl<_$PatchChangeImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$ChangeImplToJson(
+    return _$$PatchChangeImplToJson(
       this,
     );
   }
 }
 
-abstract class _Change implements Change {
-  const factory _Change({required String key, required String value}) =
-      _$ChangeImpl;
+abstract class _PatchChange implements PatchChange {
+  const factory _PatchChange({required String key, required dynamic value}) =
+      _$PatchChangeImpl;
 
-  factory _Change.fromJson(Map<String, dynamic> json) = _$ChangeImpl.fromJson;
+  factory _PatchChange.fromJson(Map<String, dynamic> json) =
+      _$PatchChangeImpl.fromJson;
 
   @override
   String get key;
   set key(String value);
   @override
-  String get value;
-  set value(String value);
+  dynamic get value;
+  set value(dynamic value);
 
-  /// Create a copy of Change
+  /// Create a copy of PatchChange
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$ChangeImplCopyWith<_$ChangeImpl> get copyWith =>
+  _$$PatchChangeImplCopyWith<_$PatchChangeImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

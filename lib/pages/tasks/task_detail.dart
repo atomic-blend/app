@@ -10,6 +10,7 @@ import 'package:app/components/forms/app_text_form_field.dart';
 import 'package:app/components/forms/task_date_picker_modal/task_date_picker_modal.dart';
 import 'package:app/components/widgets/elevated_container.dart';
 import 'package:app/entities/folder/folder.entity.dart';
+import 'package:app/entities/sync/patch_change/patch_change.dart';
 import 'package:app/entities/tag/tag.entity.dart';
 import 'package:app/entities/tasks/tasks.entity.dart';
 import 'package:app/i18n/strings.g.dart';
@@ -73,6 +74,22 @@ class _TaskDetailState extends State<TaskDetail> {
     } else {
       _controller = FleatherController();
     }
+    _controller!.addListener(() {
+      if (_controller!.document.toPlainText().isNotEmpty) {
+        widget.task.description = jsonEncode(_controller!.document.toJson());
+        context.read<TasksBloc>().add(EditTask(
+              widget.task.id!,
+              [
+                PatchChange(
+                  key: "description",
+                  value: widget.task.description,
+                ),
+              ],
+            ));
+      } else {
+        widget.task.description = null;
+      }
+    });
     super.initState();
   }
 
@@ -122,7 +139,15 @@ class _TaskDetailState extends State<TaskDetail> {
                       _folder = folder;
                     });
                   }
-                  context.read<TasksBloc>().add(EditTask(widget.task));
+                  context.read<TasksBloc>().add(EditTask(
+                        widget.task.id!,
+                        [
+                          PatchChange(
+                            key: "folderId",
+                            value: folder?.id,
+                          ),
+                        ],
+                      ));
                 },
               ),
             ),
@@ -179,7 +204,6 @@ class _TaskDetailState extends State<TaskDetail> {
               isDesktop(context) ? CupertinoIcons.xmark : CupertinoIcons.back,
             ),
             onPressed: () {
-              _updateTask(context);
               Navigator.of(context).pop();
             },
           ),
@@ -256,7 +280,27 @@ class _TaskDetailState extends State<TaskDetail> {
                           widget.task.startDate = _startDate;
                           widget.task.reminders = _reminders;
                           if (!context.mounted) return;
-                          context.read<TasksBloc>().add(EditTask(widget.task));
+                          context.read<TasksBloc>().add(EditTask(
+                                widget.task.id!,
+                                [
+                                  PatchChange(
+                                    key: "endDate",
+                                    value: _endDate?.toUtc().toIso8601String(),
+                                  ),
+                                  PatchChange(
+                                    key: "startDate",
+                                    value:
+                                        _startDate?.toUtc().toIso8601String(),
+                                  ),
+                                  PatchChange(
+                                    key: "reminders",
+                                    value: _reminders
+                                        ?.map(
+                                            (e) => e.toUtc().toIso8601String())
+                                        .toList(),
+                                  ),
+                                ],
+                              ));
                         },
                         child: Container(
                           child: _endDate != null && _startDate == null
@@ -312,9 +356,15 @@ class _TaskDetailState extends State<TaskDetail> {
                                 }
                                 widget.task.priority = _priority;
                                 if (!context.mounted) return;
-                                context
-                                    .read<TasksBloc>()
-                                    .add(EditTask(widget.task));
+                                context.read<TasksBloc>().add(EditTask(
+                                      widget.task.id!,
+                                      [
+                                        PatchChange(
+                                          key: "priority",
+                                          value: _priority,
+                                        ),
+                                      ],
+                                    ));
                               },
                             ),
                             child: SizedBox(
@@ -360,9 +410,15 @@ class _TaskDetailState extends State<TaskDetail> {
                           onSubmitted: () {
                             widget.task.title = _titleController.text;
                             if (!context.mounted) return;
-                            context
-                                .read<TasksBloc>()
-                                .add(EditTask(widget.task));
+                            context.read<TasksBloc>().add(EditTask(
+                                  widget.task.id!,
+                                  [
+                                    PatchChange(
+                                      key: "title",
+                                      value: _titleController.text,
+                                    ),
+                                  ],
+                                ));
                           },
                         ),
                         Padding(
@@ -384,9 +440,17 @@ class _TaskDetailState extends State<TaskDetail> {
                                           ));
                                   widget.task.tags = _tags;
                                   if (!context.mounted) return;
-                                  context
-                                      .read<TasksBloc>()
-                                      .add(EditTask(widget.task));
+                                  context.read<TasksBloc>().add(EditTask(
+                                        widget.task.id!,
+                                        [
+                                          PatchChange(
+                                            key: "tags",
+                                            value: _tags
+                                                .map((e) => e.toJson())
+                                                .toList(),
+                                          ),
+                                        ],
+                                      ));
                                 },
                                 child: IconTextPill(
                                   title: _tags.isEmpty
@@ -425,9 +489,17 @@ class _TaskDetailState extends State<TaskDetail> {
                                         });
                                         widget.task.tags = _tags;
                                         if (!context.mounted) return;
-                                        context
-                                            .read<TasksBloc>()
-                                            .add(EditTask(widget.task));
+                                        context.read<TasksBloc>().add(EditTask(
+                                              widget.task.id!,
+                                              [
+                                                PatchChange(
+                                                  key: "tags",
+                                                  value: _tags
+                                                      .map((e) => e.toJson())
+                                                      .toList(),
+                                                ),
+                                              ],
+                                            ));
                                       },
                                     ),
                                   )),
@@ -608,18 +680,6 @@ class _TaskDetailState extends State<TaskDetail> {
         ),
       ),
     );
-  }
-
-  _updateTask(BuildContext context) {
-    widget.task.title = _titleController.text;
-    widget.task.description = jsonEncode(_controller!.document.toJson());
-    widget.task.endDate = _endDate;
-    widget.task.startDate = _startDate;
-    widget.task.reminders = _reminders;
-    widget.task.tags = _tags;
-    widget.task.folderId = _folder?.id;
-    widget.task.priority = _priority;
-    context.read<TasksBloc>().add(EditTask(widget.task));
   }
 
   _showTimerModal(BuildContext context, TimerMode mode) {

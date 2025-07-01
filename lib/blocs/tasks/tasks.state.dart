@@ -2,11 +2,12 @@ part of 'tasks.bloc.dart';
 
 sealed class TasksState extends Equatable {
   final List<TaskEntity>? tasks;
-  final List<ConflictedItem>? conflictedItems;
-  const TasksState(this.tasks, { this.conflictedItems });
+  final List<Patch>? stagedPatches;
+  final List<ConflictedItem>? conflicts;
+  const TasksState(this.tasks, {this.conflicts, this.stagedPatches});
 
   @override
-  List<Object?> get props => [tasks, conflictedItems];
+  List<Object?> get props => [tasks, conflicts, stagedPatches];
 }
 
 class TasksInitial extends TasksState {
@@ -14,21 +15,19 @@ class TasksInitial extends TasksState {
 }
 
 class TasksLoading extends TasksState {
-  const TasksLoading(
-      List<TaskEntity> super.tasks, { super.conflictedItems });
+  const TasksLoading(List<TaskEntity> super.tasks, {super.conflicts, super.stagedPatches});
 }
 
 class TasksLoaded extends TasksState {
-  const TasksLoaded(
-      List<TaskEntity> super.tasks, { super.conflictedItems });
+  const TasksLoaded(List<TaskEntity> super.tasks, {super.conflicts, super.stagedPatches});
 
   @override
-  List<Object?> get props => [tasks, conflictedItems];
+  List<Object?> get props => [tasks, conflicts, stagedPatches];
 }
 
 class TaskLoadingError extends TasksState {
-  const TaskLoadingError(
-      List<TaskEntity> super.tasks, this.message,{ super.conflictedItems});
+  const TaskLoadingError(List<TaskEntity> super.tasks, this.message,
+      {super.conflicts, super.stagedPatches});
   final String message;
 
   @override
@@ -36,47 +35,41 @@ class TaskLoadingError extends TasksState {
 }
 
 class TaskAddLoading extends TasksState {
-  const TaskAddLoading(
-      List<TaskEntity> super.tasks, { super.conflictedItems });
+  const TaskAddLoading(List<TaskEntity> super.tasks, {super.conflicts, super.stagedPatches});
 }
 
 class TaskDeleteLoading extends TasksState {
-  const TaskDeleteLoading(
-      List<TaskEntity> super.tasks, { super.conflictedItems });
+  const TaskDeleteLoading(List<TaskEntity> super.tasks, {super.conflicts, super.stagedPatches});
 }
 
 class TaskEditLoading extends TasksState {
-  const TaskEditLoading(
-      List<TaskEntity> super.tasks, { super.conflictedItems });
+  const TaskEditLoading(List<TaskEntity> super.tasks, {super.conflicts, super.stagedPatches});
 }
 
 class TaskAdded extends TasksState {
-  const TaskAdded(
-      List<TaskEntity> super.tasks, { super.conflictedItems });
+  const TaskAdded(List<TaskEntity> super.tasks, {super.conflicts, super.stagedPatches});
 
   @override
-  List<Object?> get props => [tasks, conflictedItems];
+  List<Object?> get props => [tasks, conflicts, stagedPatches];
 }
 
 class TaskDeleted extends TasksState {
-  const TaskDeleted(
-      List<TaskEntity> super.tasks, { super.conflictedItems });
+  const TaskDeleted(List<TaskEntity> super.tasks, {super.conflicts, super.stagedPatches});
 
   @override
-  List<Object?> get props => [tasks, conflictedItems];
+  List<Object?> get props => [tasks, conflicts, stagedPatches];
 }
 
 class TaskEdited extends TasksState {
-  const TaskEdited(
-      List<TaskEntity> super.tasks, { super.conflictedItems });
+  const TaskEdited(List<TaskEntity> super.tasks, {super.conflicts, super.stagedPatches});
 
   @override
-  List<Object?> get props => [tasks, conflictedItems];
+  List<Object?> get props => [tasks, conflicts, stagedPatches];
 }
 
 class TaskError extends TasksState {
   const TaskError(List<TaskEntity> super.tasks,
-      { super.conflictedItems, required this.message });
+      {super.conflicts, super.stagedPatches, required this.message});
   final String message;
 
   @override
@@ -84,16 +77,15 @@ class TaskError extends TasksState {
 }
 
 class TaskSyncInProgress extends TasksState {
-  const TaskSyncInProgress(List<TaskEntity> super.tasks, { super.conflictedItems });
+  const TaskSyncInProgress(List<TaskEntity> super.tasks, {super.conflicts, super.stagedPatches});
 
   @override
-  List<Object?> get props => [tasks, conflictedItems];
+  List<Object?> get props => [tasks, conflicts, stagedPatches];
 }
 
 class TaskSyncSuccess extends TasksState {
-  const TaskSyncSuccess(
-      List<TaskEntity> super.tasks, { super.conflictedItems });
+  const TaskSyncSuccess(List<TaskEntity> super.tasks, {super.conflicts, super.stagedPatches});
 
   @override
-  List<Object?> get props => [tasks, conflictedItems];
+  List<Object?> get props => [tasks, conflicts, stagedPatches];
 }
