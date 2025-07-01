@@ -1,5 +1,6 @@
 import 'package:app/blocs/tasks/tasks.bloc.dart';
 import 'package:app/components/forms/ab_checkbox.dart';
+import 'package:app/entities/sync/patch_change/patch_change.dart';
 import 'package:app/entities/tasks/tasks.entity.dart';
 import 'package:app/pages/tasks/task_detail.dart';
 import 'package:app/utils/constants.dart';
@@ -110,7 +111,17 @@ class TaskItem extends StatelessWidget {
                           value: task.completed ?? false,
                           onChanged: (value) {
                             task.completed = value!;
-                            context.read<TasksBloc>().add(EditTask(task));
+                            context.read<TasksBloc>().add(
+                              EditTask(
+                                task.id!,
+                                [
+                                  PatchChange(
+                                    key: "completed",
+                                    value: value,
+                                  ),
+                                ],
+                              ),
+                            );
                           }),
                     SizedBox(
                       width: $constants.insets.xs,

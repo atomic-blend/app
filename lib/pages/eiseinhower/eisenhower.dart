@@ -1,6 +1,7 @@
 import 'package:app/blocs/tasks/tasks.bloc.dart';
 import 'package:app/components/buttons/task_item.dart';
 import 'package:app/components/widgets/elevated_container.dart';
+import 'package:app/entities/sync/patch_change/patch_change.dart';
 import 'package:app/entities/tasks/tasks.entity.dart';
 import 'package:app/i18n/strings.g.dart';
 import 'package:app/utils/constants.dart';
@@ -128,12 +129,21 @@ class EisenhowerMatrix extends StatelessWidget {
           final task = details.data;
           context.read<TasksBloc>().add(
                 EditTask(
-                  task.copyWith(
-                    priority: priority,
-                    startDate: null,
-                    endDate:
-                        _updateDateTimeWithPriority(priority, task.endDate),
-                  ),
+                  task.id!,
+                  [
+                    PatchChange(
+                      key: "priority",
+                      value: priority,
+                    ),
+                    const PatchChange(
+                      key: "startDate",
+                      value: null,
+                    ),
+                    PatchChange(
+                      key: "endDate",
+                      value: _updateDateTimeWithPriority(priority, null),
+                    ),
+                  ],
                 ),
               );
         },

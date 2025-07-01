@@ -20,8 +20,8 @@ Patch _$PatchFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Patch {
-  String get id => throw _privateConstructorUsedError;
-  set id(String value) => throw _privateConstructorUsedError;
+  String? get id => throw _privateConstructorUsedError;
+  set id(String? value) => throw _privateConstructorUsedError;
   PatchAction get action => throw _privateConstructorUsedError;
   set action(PatchAction value) => throw _privateConstructorUsedError;
   DateTime get patchDate => throw _privateConstructorUsedError;
@@ -30,6 +30,10 @@ mixin _$Patch {
   set type(ItemType value) => throw _privateConstructorUsedError;
   String get itemId => throw _privateConstructorUsedError;
   set itemId(String value) => throw _privateConstructorUsedError;
+  List<PatchChange> get changes => throw _privateConstructorUsedError;
+  set changes(List<PatchChange> value) => throw _privateConstructorUsedError;
+  bool? get force => throw _privateConstructorUsedError;
+  set force(bool? value) => throw _privateConstructorUsedError;
 
   /// Serializes this Patch to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -46,11 +50,13 @@ abstract class $PatchCopyWith<$Res> {
       _$PatchCopyWithImpl<$Res, Patch>;
   @useResult
   $Res call(
-      {String id,
+      {String? id,
       PatchAction action,
       DateTime patchDate,
       ItemType type,
-      String itemId});
+      String itemId,
+      List<PatchChange> changes,
+      bool? force});
 }
 
 /// @nodoc
@@ -68,17 +74,19 @@ class _$PatchCopyWithImpl<$Res, $Val extends Patch>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
+    Object? id = freezed,
     Object? action = null,
     Object? patchDate = null,
     Object? type = null,
     Object? itemId = null,
+    Object? changes = null,
+    Object? force = freezed,
   }) {
     return _then(_value.copyWith(
-      id: null == id
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       action: null == action
           ? _value.action
           : action // ignore: cast_nullable_to_non_nullable
@@ -95,6 +103,14 @@ class _$PatchCopyWithImpl<$Res, $Val extends Patch>
           ? _value.itemId
           : itemId // ignore: cast_nullable_to_non_nullable
               as String,
+      changes: null == changes
+          ? _value.changes
+          : changes // ignore: cast_nullable_to_non_nullable
+              as List<PatchChange>,
+      force: freezed == force
+          ? _value.force
+          : force // ignore: cast_nullable_to_non_nullable
+              as bool?,
     ) as $Val);
   }
 }
@@ -107,11 +123,13 @@ abstract class _$$PatchImplCopyWith<$Res> implements $PatchCopyWith<$Res> {
   @override
   @useResult
   $Res call(
-      {String id,
+      {String? id,
       PatchAction action,
       DateTime patchDate,
       ItemType type,
-      String itemId});
+      String itemId,
+      List<PatchChange> changes,
+      bool? force});
 }
 
 /// @nodoc
@@ -127,17 +145,19 @@ class __$$PatchImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
+    Object? id = freezed,
     Object? action = null,
     Object? patchDate = null,
     Object? type = null,
     Object? itemId = null,
+    Object? changes = null,
+    Object? force = freezed,
   }) {
     return _then(_$PatchImpl(
-      id: null == id
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       action: null == action
           ? _value.action
           : action // ignore: cast_nullable_to_non_nullable
@@ -154,6 +174,14 @@ class __$$PatchImplCopyWithImpl<$Res>
           ? _value.itemId
           : itemId // ignore: cast_nullable_to_non_nullable
               as String,
+      changes: null == changes
+          ? _value.changes
+          : changes // ignore: cast_nullable_to_non_nullable
+              as List<PatchChange>,
+      force: freezed == force
+          ? _value.force
+          : force // ignore: cast_nullable_to_non_nullable
+              as bool?,
     ));
   }
 }
@@ -162,17 +190,19 @@ class __$$PatchImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$PatchImpl implements _Patch {
   const _$PatchImpl(
-      {required this.id,
+      {this.id,
       required this.action,
       required this.patchDate,
       required this.type,
-      required this.itemId});
+      required this.itemId,
+      required this.changes,
+      this.force});
 
   factory _$PatchImpl.fromJson(Map<String, dynamic> json) =>
       _$$PatchImplFromJson(json);
 
   @override
-  String id;
+  String? id;
   @override
   PatchAction action;
   @override
@@ -181,10 +211,14 @@ class _$PatchImpl implements _Patch {
   ItemType type;
   @override
   String itemId;
+  @override
+  List<PatchChange> changes;
+  @override
+  bool? force;
 
   @override
   String toString() {
-    return 'Patch(id: $id, action: $action, patchDate: $patchDate, type: $type, itemId: $itemId)';
+    return 'Patch(id: $id, action: $action, patchDate: $patchDate, type: $type, itemId: $itemId, changes: $changes, force: $force)';
   }
 
   /// Create a copy of Patch
@@ -205,17 +239,19 @@ class _$PatchImpl implements _Patch {
 
 abstract class _Patch implements Patch {
   const factory _Patch(
-      {required String id,
+      {String? id,
       required PatchAction action,
       required DateTime patchDate,
       required ItemType type,
-      required String itemId}) = _$PatchImpl;
+      required String itemId,
+      required List<PatchChange> changes,
+      bool? force}) = _$PatchImpl;
 
   factory _Patch.fromJson(Map<String, dynamic> json) = _$PatchImpl.fromJson;
 
   @override
-  String get id;
-  set id(String value);
+  String? get id;
+  set id(String? value);
   @override
   PatchAction get action;
   set action(PatchAction value);
@@ -228,6 +264,12 @@ abstract class _Patch implements Patch {
   @override
   String get itemId;
   set itemId(String value);
+  @override
+  List<PatchChange> get changes;
+  set changes(List<PatchChange> value);
+  @override
+  bool? get force;
+  set force(bool? value);
 
   /// Create a copy of Patch
   /// with the given fields replaced by the non-null parameter values.

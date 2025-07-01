@@ -1,17 +1,18 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'change.dart';
+part of 'patch_change.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$ChangeImpl _$$ChangeImplFromJson(Map<String, dynamic> json) => _$ChangeImpl(
+_$PatchChangeImpl _$$PatchChangeImplFromJson(Map<String, dynamic> json) =>
+    _$PatchChangeImpl(
       key: json['key'] as String,
-      value: json['value'] as String,
+      value: json['value'],
     );
 
-Map<String, dynamic> _$$ChangeImplToJson(_$ChangeImpl instance) =>
+Map<String, dynamic> _$$PatchChangeImplToJson(_$PatchChangeImpl instance) =>
     <String, dynamic>{
       'key': instance.key,
       'value': instance.value,

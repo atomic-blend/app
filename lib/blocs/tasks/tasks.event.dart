@@ -15,8 +15,9 @@ final class AddTask extends TasksEvent {
 }
 
 final class EditTask extends TasksEvent {
-  const EditTask(this.task);
-  final TaskEntity task;
+  const EditTask(this.taskId, this.changes);
+  final String taskId;
+  final List<PatchChange> changes;
 }
 
 final class SyncTasks extends TasksEvent {

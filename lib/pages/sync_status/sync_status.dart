@@ -108,7 +108,7 @@ class _SyncStatusState extends State<SyncStatus> {
   Widget _buildSyncModal(BuildContext context) {
     return BlocBuilder<TasksBloc, TasksState>(
       builder: (context, taskState) {
-        final taskConflictedItems = taskState.conflictedItems;
+        final taskConflictedItems = taskState.conflicts;
         return Column(
           children: [
             Padding(
@@ -314,6 +314,6 @@ class _SyncStatusState extends State<SyncStatus> {
   }
 
   bool _taskHasConflictedItems({required TasksState taskState}) {
-    return taskState.conflictedItems?.isNotEmpty ?? false;
+    return taskState.conflicts?.isNotEmpty ?? false;
   }
 }
