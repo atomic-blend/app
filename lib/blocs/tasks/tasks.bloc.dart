@@ -5,6 +5,7 @@ import 'package:app/entities/sync/item_type/item_type.dart';
 import 'package:app/entities/sync/patch/patch.dart';
 import 'package:app/entities/sync/patch_action/patch_action.dart';
 import 'package:app/entities/sync/patch_change/patch_change.dart';
+import 'package:app/entities/sync/sync_result/sync_result.dart';
 import 'package:app/entities/tasks/tasks.entity.dart';
 import 'package:app/entities/user/user.entity.dart';
 import 'package:app/services/tasks.service.dart';
@@ -30,6 +31,15 @@ class TasksBloc extends HydratedBloc<TasksEvent, TasksState> {
     if (json["tasks"] != null) {
       return TasksLoaded(
         (json["tasks"] as List).map((e) => TaskEntity.fromJson(e)).toList(),
+        conflicts: (json["conflicts"] as List?)
+            ?.map((e) => ConflictedItem.fromJson(e))
+            .toList(),
+        stagedPatches: (json["stagedPatches"] as List?)
+            ?.map((e) => Patch.fromJson(e))
+            .toList(),
+        latestSync: json["latestSync"] != null
+            ? SyncResult.fromJson(json["latestSync"])
+            : null,
       );
     }
     return const TasksInitial();
@@ -37,88 +47,154 @@ class TasksBloc extends HydratedBloc<TasksEvent, TasksState> {
 
   @override
   Map<String, dynamic>? toJson(TasksState state) {
-    if (state is TasksLoaded && state.tasks != null) {
-      return {"tasks": state.tasks!.map((e) => e.toJson()).toList()};
-    }
-    return null;
+    return {
+      "tasks": state.tasks!.map((e) => e.toJson()).toList(),
+      "conflicts": state.conflicts?.map((e) => e.toJson()).toList(),
+      "stagedPatches": state.stagedPatches?.map((e) => e.toJson()).toList(),
+      "latestSync": state.latestSync?.toJson(),
+    };
   }
 
   void _onLoadTasks(LoadTasks event, Emitter<TasksState> emit) async {
     final prevState = state;
-    emit(TasksLoading(prevState.tasks ?? [], conflicts: prevState.conflicts));
+    emit(TasksLoading(
+      prevState.tasks ?? [],
+      conflicts: prevState.conflicts,
+      stagedPatches: prevState.stagedPatches,
+      latestSync: prevState.latestSync,
+    ));
     try {
       final tasks = await _tasksService.getAllTasks();
-      emit(TasksLoaded(tasks, conflicts: prevState.conflicts));
+      emit(TasksLoaded(
+        tasks,
+        conflicts: prevState.conflicts,
+        stagedPatches: prevState.stagedPatches,
+        latestSync: prevState.latestSync,
+      ));
     } catch (e) {
       emit(TaskLoadingError(
         prevState.tasks ?? [],
         e.toString(),
         conflicts: prevState.conflicts,
+        stagedPatches: prevState.stagedPatches,
+        latestSync: prevState.latestSync,
       ));
     }
   }
 
   void _onAddTask(AddTask event, Emitter<TasksState> emit) async {
     final prevState = state;
-    emit(TasksLoading(prevState.tasks ?? [], conflicts: prevState.conflicts));
+    emit(TasksLoading(
+      prevState.tasks ?? [],
+      conflicts: prevState.conflicts,
+      stagedPatches: prevState.stagedPatches,
+      latestSync: prevState.latestSync,
+    ));
     try {
       //TODO: replace with patch
       await _tasksService.createTask(
         event.user,
         event.task,
       );
-      emit(TaskAdded(prevState.tasks ?? [], conflicts: prevState.conflicts));
+      emit(TaskAdded(
+        prevState.tasks ?? [],
+        conflicts: prevState.conflicts,
+        stagedPatches: prevState.stagedPatches,
+        latestSync: prevState.latestSync,
+      ));
       add(const LoadTasks());
     } catch (e) {
-      emit(TaskLoadingError(prevState.tasks ?? [], e.toString(),
-          conflicts: prevState.conflicts));
+      emit(TaskLoadingError(
+        prevState.tasks ?? [],
+        e.toString(),
+        conflicts: prevState.conflicts,
+        stagedPatches: prevState.stagedPatches,
+        latestSync: prevState.latestSync,
+      ));
       add(const LoadTasks());
     }
   }
 
   void _onEditTask(EditTask event, Emitter<TasksState> emit) async {
     final prevState = state;
-    emit(TasksLoading(prevState.tasks ?? [], conflicts: prevState.conflicts));
+    emit(TasksLoading(
+      prevState.tasks ?? [],
+      conflicts: prevState.conflicts,
+      stagedPatches: prevState.stagedPatches,
+      latestSync: prevState.latestSync,
+    ));
     try {
       final existingPatches = prevState.stagedPatches ?? [];
       final patch = Patch(
         id: ObjectId().hexString,
         action: PatchAction.update,
         patchDate: DateTime.now(),
-        type: ItemType.task,
+        itemType: ItemType.task,
         itemId: event.taskId,
         changes: event.changes,
       );
       existingPatches.add(patch);
-      emit(TaskEdited(prevState.tasks ?? [],
-          conflicts: prevState.conflicts, stagedPatches: existingPatches));
+      emit(TaskEdited(
+        prevState.tasks ?? [],
+        conflicts: prevState.conflicts,
+        stagedPatches: existingPatches,
+        latestSync: prevState.latestSync,
+      ));
       add(const SyncTasks());
     } catch (e) {
-      emit(TaskLoadingError(prevState.tasks ?? [], e.toString(),
-          conflicts: prevState.conflicts));
+      emit(TaskLoadingError(
+        prevState.tasks ?? [],
+        e.toString(),
+        conflicts: prevState.conflicts,
+        stagedPatches: prevState.stagedPatches,
+        latestSync: prevState.latestSync,
+      ));
       add(const LoadTasks());
     }
   }
 
   void _onDeleteTask(DeleteTask event, Emitter<TasksState> emit) async {
     final prevState = state;
-    emit(TasksLoading(prevState.tasks ?? [], conflicts: prevState.conflicts));
+    emit(TasksLoading(
+      prevState.tasks ?? [],
+      conflicts: prevState.conflicts,
+      stagedPatches: prevState.stagedPatches,
+      latestSync: prevState.latestSync,
+    ));
     try {
       //TODO: replace with patch
       await _tasksService.deleteTask(event.task);
-      emit(TaskDeleted(prevState.tasks ?? [], conflicts: prevState.conflicts));
+      emit(
+        TaskDeleted(
+          prevState.tasks ?? [],
+          conflicts: prevState.conflicts,
+          stagedPatches: prevState.stagedPatches,
+          latestSync: prevState.latestSync,
+        ),
+      );
       add(const LoadTasks());
     } catch (e) {
-      emit(TaskLoadingError(prevState.tasks ?? [], e.toString(),
-          conflicts: prevState.conflicts));
+      emit(TaskLoadingError(
+        prevState.tasks ?? [],
+        e.toString(),
+        conflicts: prevState.conflicts,
+        stagedPatches: prevState.stagedPatches,
+        latestSync: prevState.latestSync,
+      ));
       add(const LoadTasks());
     }
   }
 
   FutureOr<void> _onSyncTasks(SyncTasks event, Emitter<TasksState> emit) async {
     final prevState = state;
-    emit(TaskSyncInProgress(prevState.tasks ?? [],
-        conflicts: prevState.conflicts));
+    emit(
+      TaskSyncInProgress(
+        prevState.tasks ?? [],
+        conflicts: prevState.conflicts,
+        stagedPatches: prevState.stagedPatches,
+        latestSync: prevState.latestSync,
+      ),
+    );
     try {
       if (prevState.tasks == null) {
         add(const LoadTasks());
@@ -126,10 +202,33 @@ class TasksBloc extends HydratedBloc<TasksEvent, TasksState> {
       }
       //TODO: replace with patch
       //TODO: delete from stagedPatches if patch is successful
+      final syncResult = await _tasksService.patchTasks(
+        prevState.stagedPatches ?? [],
+      );
+
+      final newConflictList =
+          List<ConflictedItem>.from(prevState.conflicts ?? []);
+      newConflictList.addAll(syncResult.conflicts);
+
+      final newPatchList = List<Patch>.from(prevState.stagedPatches ?? []);
+      newPatchList
+          .removeWhere((patch) => syncResult.success.contains(patch.id));
+
+      emit(TaskSyncSuccess(
+        prevState.tasks ?? [],
+        latestSync: syncResult,
+        conflicts: newConflictList,
+        stagedPatches: newPatchList,
+      ));
       add(const LoadTasks());
     } catch (e) {
-      emit(TaskLoadingError(prevState.tasks ?? [], e.toString(),
-          conflicts: prevState.conflicts));
+      emit(TaskLoadingError(
+        prevState.tasks ?? [],
+        e.toString(),
+        conflicts: prevState.conflicts,
+        stagedPatches: prevState.stagedPatches,
+        latestSync: prevState.latestSync,
+      ));
       add(const LoadTasks());
     }
   }

@@ -135,7 +135,7 @@ class EisenhowerMatrix extends StatelessWidget {
                       key: "priority",
                       value: priority,
                     ),
-                    const PatchChange(
+                    PatchChange(
                       key: "startDate",
                       value: null,
                     ),

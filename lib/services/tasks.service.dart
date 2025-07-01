@@ -1,7 +1,10 @@
 import 'package:app/entities/sync/conflicted_item/conflicted_item.dart';
+import 'package:app/entities/sync/item_type/item_type.dart';
+import 'package:app/entities/sync/patch/patch.dart';
+import 'package:app/entities/sync/patch_error/patch_error.dart';
+import 'package:app/entities/sync/sync_result/sync_result.dart';
 import 'package:app/entities/tasks/tasks.entity.dart';
 import 'package:app/entities/user/user.entity.dart';
-import 'package:app/main.dart';
 import 'package:app/services/user.service.dart';
 import 'package:app/utils/api_client.dart';
 
@@ -55,5 +58,64 @@ class TasksService {
     } else {
       throw Exception('task_delete_failed');
     }
+  }
+
+  Future<SyncResult> patchTasks(List<Patch> patches,
+      {int batchSize = 10}) async {
+    final eligiblePatches =
+        patches.where((patch) => patch.itemType == ItemType.task).toList();
+
+    if (eligiblePatches.isEmpty) {
+      return SyncResult(
+        success: [],
+        conflicts: [],
+        errors: [],
+        date: DateTime.now(),
+      );
+    }
+
+    final List<String> success = [];
+    final List<ConflictedItem> conflicts = [];
+    final List<PatchError> errors = [];
+
+    for (var i = 0; i < eligiblePatches.length; i += batchSize) {
+      final batch = eligiblePatches.sublist(
+        i,
+        (i + batchSize < eligiblePatches.length)
+            ? i + batchSize
+            : eligiblePatches.length,
+      );
+
+      try {
+        final result = await globalApiClient.post(
+          '/tasks/patch',
+          data: batch.map((e) => e.toJson()).toList(),
+        );
+
+        if (result.statusCode == 200) {
+          final responseData = result.data as Map<String, dynamic>;
+          final syncResult = SyncResult.fromJson(responseData);
+          success.addAll(syncResult.success);
+          conflicts.addAll(syncResult.conflicts);
+          errors.addAll(syncResult.errors);
+        } else {
+          throw Exception('patch_tasks_failed');
+        }
+      } catch (e) {
+        batch.map((patch) {
+          errors.add(PatchError(
+            patchId: patch.id,
+            errorCode: e.toString(),
+          ));
+        });
+      }
+    }
+
+    return SyncResult(
+      success: success,
+      conflicts: conflicts,
+      errors: errors,
+      date: DateTime.now(),
+    );
   }
 }

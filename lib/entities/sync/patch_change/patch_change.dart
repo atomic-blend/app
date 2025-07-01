@@ -5,7 +5,7 @@ part 'patch_change.g.dart';
 
 @unfreezed
 class PatchChange with _$PatchChange {
-  const factory PatchChange({
+  factory PatchChange({
     required String key,
     required dynamic value,
   }) = _PatchChange;

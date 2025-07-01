@@ -118,7 +118,7 @@ class __$$PatchChangeImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$PatchChangeImpl implements _PatchChange {
-  const _$PatchChangeImpl({required this.key, required this.value});
+  _$PatchChangeImpl({required this.key, required this.value});
 
   factory _$PatchChangeImpl.fromJson(Map<String, dynamic> json) =>
       _$$PatchChangeImplFromJson(json);
@@ -150,7 +150,7 @@ class _$PatchChangeImpl implements _PatchChange {
 }
 
 abstract class _PatchChange implements PatchChange {
-  const factory _PatchChange({required String key, required dynamic value}) =
+  factory _PatchChange({required String key, required dynamic value}) =
       _$PatchChangeImpl;
 
   factory _PatchChange.fromJson(Map<String, dynamic> json) =
