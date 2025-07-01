@@ -20,6 +20,7 @@ import 'package:app/pages/tasks/assign_tag_modal.dart';
 import 'package:app/pages/tasks/task_time_entry_log.dart' show TaskTimeEntryLog;
 import 'package:app/pages/timer/task_timer.dart';
 import 'package:app/pages/timer/timer_utils.dart';
+import 'package:app/services/user.service.dart';
 import 'package:app/utils/constants.dart';
 import 'package:app/utils/extensions/date_time_extension.dart';
 import 'package:app/utils/shortcuts.dart';
@@ -74,21 +75,21 @@ class _TaskDetailState extends State<TaskDetail> {
     } else {
       _controller = FleatherController();
     }
-    _controller!.addListener(() {
-      if (_controller!.document.toPlainText().isNotEmpty) {
+    _controller!.addListener(() async {
+      if (_controller!.document.toPlainText() != "\n") {
         widget.task.description = jsonEncode(_controller!.document.toJson());
-        context.read<TasksBloc>().add(EditTask(
-              widget.task.id!,
-              [
-                PatchChange(
-                  key: "description",
-                  value: widget.task.description,
-                ),
-              ],
-            ));
       } else {
         widget.task.description = null;
       }
+      context.read<TasksBloc>().add(EditTask(
+            widget.task.id!,
+            [
+              PatchChange(
+                key: "description",
+                value: widget.task.description,
+              ),
+            ],
+          ));
     });
     super.initState();
   }
@@ -407,7 +408,7 @@ class _TaskDetailState extends State<TaskDetail> {
                               getTextTheme(context).titleMedium!.copyWith(
                                     fontWeight: FontWeight.bold,
                                   ),
-                          onSubmitted: () {
+                          onSubmitted: () async {
                             widget.task.title = _titleController.text;
                             if (!context.mounted) return;
                             context.read<TasksBloc>().add(EditTask(
@@ -445,9 +446,15 @@ class _TaskDetailState extends State<TaskDetail> {
                                         [
                                           PatchChange(
                                             key: "tags",
-                                            value: _tags
-                                                .map((e) => e.toJson())
-                                                .toList(),
+                                            value: await Future.wait(
+                                              _tags.map(
+                                                (e) async {
+                                                  return await e.encrypt(
+                                                      encryptionService:
+                                                          encryptionService!);
+                                                },
+                                              ),
+                                            ),
                                           ),
                                         ],
                                       ));

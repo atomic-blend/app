@@ -87,6 +87,16 @@ class TasksService {
       );
 
       try {
+        for (var patch in batch) {
+          for (var change in patch.changes) {
+            // if key is not part of nonEncryptedFields, encrypt it
+            if (!TaskEntity.nonEncryptedFields.contains(change.key) &&
+                !TaskEntity.manualParseFields.contains(change.key) &&
+                change.value != null) {
+              change.value = await encryptionService!.encryptJson(change.value);
+            }
+          }
+        }
         final result = await globalApiClient.post(
           '/tasks/patch',
           data: batch.map((e) => e.toJson()).toList(),
