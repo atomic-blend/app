@@ -9,6 +9,7 @@ import 'package:app/entities/sync/sync_result/sync_result.dart';
 import 'package:app/entities/tasks/tasks.entity.dart';
 import 'package:app/entities/user/user.entity.dart';
 import 'package:app/services/tasks.service.dart';
+import 'package:app/services/user.service.dart';
 import 'package:equatable/equatable.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:objectid/objectid.dart';
@@ -84,7 +85,7 @@ class TasksBloc extends HydratedBloc<TasksEvent, TasksState> {
 
   void _onAddTask(AddTask event, Emitter<TasksState> emit) async {
     final prevState = state;
-    emit(TasksLoading(
+    emit(TaskCreateInProgress(
       prevState.tasks ?? [],
       conflicts: prevState.conflicts,
       stagedPatches: prevState.stagedPatches,
@@ -92,17 +93,29 @@ class TasksBloc extends HydratedBloc<TasksEvent, TasksState> {
     ));
     try {
       //TODO: replace with patch
-      await _tasksService.createTask(
-        event.user,
-        event.task,
+      final existingPatches = prevState.stagedPatches ?? [];
+      final patch = Patch(
+        id: ObjectId().hexString,
+        action: PatchAction.create,
+        patchDate: DateTime.now(),
+        itemType: ItemType.task,
+        itemId: "",
+        changes: [
+          PatchChange(
+            key: 'data',
+            value: event.task,
+          ),
+        ],
       );
+      existingPatches.add(patch);
+
       emit(TaskAdded(
         prevState.tasks ?? [],
         conflicts: prevState.conflicts,
-        stagedPatches: prevState.stagedPatches,
+        stagedPatches: existingPatches,
         latestSync: prevState.latestSync,
       ));
-      add(const LoadTasks());
+      add(const SyncTasks());
     } catch (e) {
       emit(TaskLoadingError(
         prevState.tasks ?? [],
