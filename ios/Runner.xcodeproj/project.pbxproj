@@ -336,7 +336,6 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = F04A6A092E0DB67800B424C2 /* Build configuration list for PBXNativeTarget "todayTaskWidgetExtension" */;
 			buildPhases = (
-				F0751B812E12E7D600001AC4 /* Build version */,
 				F04A69EA2E0DB67700B424C2 /* Sources */,
 				F04A69EB2E0DB67700B424C2 /* Frameworks */,
 				F04A69EC2E0DB67700B424C2 /* Resources */,
@@ -560,24 +559,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\n#!/bin/bash\nPATH=\"${PATH}:$FLUTTER_ROOT/bin:$HOME/.pub-cache/bin\"\nflutterfire bundle-service-file --plist-destination=\"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app\" --build-configuration=${CONFIGURATION} --platform=ios --apple-project-path=\"${SRCROOT}\"\n";
-		};
-		F0751B812E12E7D600001AC4 /* Build version */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 12;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			name = "Build version";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "generatedPath=\"$SRCROOT/Flutter/Generated.xcconfig\"\n\n# Read and trim versionNumber and buildNumber\nversionNumber=$(grep FLUTTER_BUILD_NAME \"$generatedPath\" | cut -d '=' -f2 | xargs)\nbuildNumber=$(grep FLUTTER_BUILD_NUMBER \"$generatedPath\" | cut -d '=' -f2 | xargs)\n\ninfoPlistPath=\"$SRCROOT/todayTaskWidgetExtension/Info.plist\"\n\n# Check and add CFBundleVersion if it does not exist\n/usr/libexec/PlistBuddy -c \"Print :CFBundleVersion\" \"$infoPlistPath\" 2>/dev/null\nif [ $? != 0 ]; then\n    /usr/libexec/PlistBuddy -c \"Add :CFBundleVersion string $buildNumber\" \"$infoPlistPath\"\nelse\n    /usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"$infoPlistPath\"\nfi\n\n# Check and add CFBundleShortVersionString if it does not exist\n/usr/libexec/PlistBuddy -c \"Print :CFBundleShortVersionString\" \"$infoPlistPath\" 2>/dev/null\nif [ $? != 0 ]; then\n    /usr/libexec/PlistBuddy -c \"Add :CFBundleShortVersionString string $versionNumber\" \"$infoPlistPath\"\nelse\n    /usr/libexec/PlistBuddy -c \"Set :CFBundleShortVersionString $versionNumber\" \"$infoPlistPath\"\nfi\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 

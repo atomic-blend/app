@@ -42,6 +42,8 @@ SharedPreferences? prefs;
 FcmService? fcmService;
 Map<String, dynamic>? userData;
 String? userKey;
+const String appGroupId = "group.atomicblend.tasks";
+
 
 FutureOr<void> main() async {
   await SentryFlutter.init((options) {
@@ -59,8 +61,8 @@ FutureOr<void> main() async {
     env = await EnvModel.create();
     prefs = await SharedPreferences.getInstance();
 
+    HomeWidget.setAppGroupId(appGroupId);
     HomeWidget.registerInteractivityCallback(backgroundCallback);
-
  
     tz.initializeTimeZones();
 
