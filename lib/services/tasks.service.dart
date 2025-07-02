@@ -89,8 +89,7 @@ class TasksService {
 
       try {
         for (var patch in batch) {
-          if (patch.action == PatchAction.create ||
-              patch.action == PatchAction.update) {
+          if (patch.action == PatchAction.update) {
             for (var change in patch.changes) {
               // if key is not part of nonEncryptedFields, encrypt it
               if (!TaskEntity.nonEncryptedFields.contains(change.key) &&
@@ -99,6 +98,14 @@ class TasksService {
                 change.value =
                     await encryptionService!.encryptJson(change.value);
               }
+            }
+          } else if (patch.action == PatchAction.create) {
+            final data = patch.changes.first.value;
+            if (data is! Map) {
+              final task = patch.changes.first.value as TaskEntity;
+              final encryptedTask =
+                  await task.encrypt(encryptionService: encryptionService!);
+              patch.changes.first.value = encryptedTask;
             }
           }
         }
