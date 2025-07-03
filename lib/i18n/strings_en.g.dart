@@ -861,7 +861,7 @@ class TranslationsSyncEn {
 
 	// Translations
 	String get title => 'Synchronization';
-	String get description => 'Synchronization allows you to keep your data up to date across all your devices';
+	String get description => 'Keep your data up to date across all your devices';
 	String get status => 'Status';
 	String get loading => 'Loading...';
 	String get up_to_date => 'Up to date';
@@ -2281,7 +2281,7 @@ extension on Translations {
 				other: '${n} results found',
 			);
 			case 'sync.title': return 'Synchronization';
-			case 'sync.description': return 'Synchronization allows you to keep your data up to date across all your devices';
+			case 'sync.description': return 'Keep your data up to date across all your devices';
 			case 'sync.status': return 'Status';
 			case 'sync.loading': return 'Loading...';
 			case 'sync.up_to_date': return 'Up to date';
