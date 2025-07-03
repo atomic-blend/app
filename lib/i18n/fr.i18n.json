@@ -872,7 +872,7 @@
   },
   "sync": {
     "title": "Synchronisation",
-    "description": "La synchronisation vous permet de garder vos données à jour sur tous vos appareils",
+    "description": "Gardez vos données à jour sur tous vos appareils",
     "status": "État",
     "loading": "Chargement...",
     "up_to_date": "À jour",

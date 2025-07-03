@@ -855,7 +855,7 @@ class _TranslationsSyncFr implements TranslationsSyncEn {
 
 	// Translations
 	@override String get title => 'Synchronisation';
-	@override String get description => 'La synchronisation vous permet de garder vos données à jour sur tous vos appareils';
+	@override String get description => 'Gardez vos données à jour sur tous vos appareils';
 	@override String get status => 'État';
 	@override String get loading => 'Chargement...';
 	@override String get up_to_date => 'À jour';
@@ -2272,7 +2272,7 @@ extension on TranslationsFr {
 				other: '${n} résultats trouvés',
 			);
 			case 'sync.title': return 'Synchronisation';
-			case 'sync.description': return 'La synchronisation vous permet de garder vos données à jour sur tous vos appareils';
+			case 'sync.description': return 'Gardez vos données à jour sur tous vos appareils';
 			case 'sync.status': return 'État';
 			case 'sync.loading': return 'Chargement...';
 			case 'sync.up_to_date': return 'À jour';

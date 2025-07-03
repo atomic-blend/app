@@ -875,7 +875,7 @@
   },
   "sync": {
     "title": "Synchronization",
-    "description": "Synchronization allows you to keep your data up to date across all your devices",
+    "description": "Keep your data up to date across all your devices",
     "status": "Status",
     "loading": "Loading...",
     "up_to_date": "Up to date",
