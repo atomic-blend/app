@@ -97,4 +97,38 @@ class TaskEntity with _$TaskEntity {
 
     return task;
   }
+
+  void updateField(String key, dynamic value) {
+    switch (key) {
+      case 'title':
+        title = value;
+        break;
+      case 'description':
+        description = value;
+        break;
+      case 'startDate':
+        startDate = value;
+        break;
+      case 'endDate':
+        endDate = value;
+        break;
+      case 'priority':
+        priority = value;
+        break;
+      case 'folderId':
+        folderId = value;
+        break;
+      case 'tags':
+        tags = value;
+        break;
+      case 'reminders':
+        reminders = value;
+        break;
+      case 'completed':
+        completed = value;
+        break;
+      default:
+        throw Exception('Unknown field: $key');
+    }
+  }
 }

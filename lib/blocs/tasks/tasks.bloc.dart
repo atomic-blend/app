@@ -109,8 +109,10 @@ class TasksBloc extends HydratedBloc<TasksEvent, TasksState> {
       );
       existingPatches.add(patch);
 
+      final updatedTasks = _applyPatchToState(state: prevState, patch: patch);
+
       emit(TaskAdded(
-        prevState.tasks ?? [],
+        updatedTasks,
         conflicts: prevState.conflicts,
         stagedPatches: existingPatches,
         latestSync: prevState.latestSync,
@@ -147,8 +149,9 @@ class TasksBloc extends HydratedBloc<TasksEvent, TasksState> {
         changes: event.changes,
       );
       existingPatches.add(patch);
+      final updatedTasks = _applyPatchToState(state: prevState, patch: patch);
       emit(TaskEdited(
-        prevState.tasks ?? [],
+        updatedTasks,
         conflicts: prevState.conflicts,
         stagedPatches: existingPatches,
         latestSync: prevState.latestSync,
@@ -186,9 +189,10 @@ class TasksBloc extends HydratedBloc<TasksEvent, TasksState> {
         changes: [],
       );
       existingPatches.add(patch);
+      final updatedTasks = _applyPatchToState(state: prevState, patch: patch);
       emit(
         TaskDeleted(
-          prevState.tasks ?? [],
+          updatedTasks,
           conflicts: prevState.conflicts,
           stagedPatches: existingPatches,
           latestSync: prevState.latestSync,
@@ -252,4 +256,32 @@ class TasksBloc extends HydratedBloc<TasksEvent, TasksState> {
       add(const LoadTasks());
     }
   }
+}
+
+List<TaskEntity> _applyPatchToState({required TasksState state, required Patch patch}) {
+  final tasks = List<TaskEntity>.from(state.tasks ?? []);
+  final taskIndex = tasks.indexWhere((task) => task.id == patch.itemId);
+
+  switch (patch.action) {
+    case PatchAction.create:
+      if (taskIndex == -1) {
+        final newTask = patch.changes.first.value as TaskEntity;
+        tasks.add(newTask);
+      }
+      break;
+    case PatchAction.update:
+      if (taskIndex != -1) {
+        final task = tasks[taskIndex];
+        for (var change in patch.changes) {
+          task.updateField(change.key, change.value);
+        }
+      }
+      break;
+    case PatchAction.delete:
+      if (taskIndex != -1) {
+        tasks.removeAt(taskIndex);
+      }
+      break;
+  }
+  return tasks;
 }
