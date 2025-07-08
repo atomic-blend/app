@@ -9,16 +9,16 @@ part of 'conflicted_item.dart';
 _$ConflictedItemImpl _$$ConflictedItemImplFromJson(Map<String, dynamic> json) =>
     _$ConflictedItemImpl(
       type: $enumDecode(_$ItemTypeEnumMap, json['type']),
-      remoteItem: json['remoteItem'],
-      localItem: json['localItem'],
+      patchId: json['patchId'] as String,
+      remoteObject: json['remoteObject'] as Map<String, dynamic>?,
     );
 
 Map<String, dynamic> _$$ConflictedItemImplToJson(
         _$ConflictedItemImpl instance) =>
     <String, dynamic>{
       'type': _$ItemTypeEnumMap[instance.type]!,
-      'remoteItem': instance.remoteItem,
-      'localItem': instance.localItem,
+      'patchId': instance.patchId,
+      'remoteObject': instance.remoteObject,
     };
 
 const _$ItemTypeEnumMap = {
