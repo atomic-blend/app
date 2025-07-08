@@ -896,7 +896,7 @@
     },
     "sync_now": "Sync now",
     "conflict_resolver": {
-      "title": "Conflict Resolver", 
+      "title": "Conflict Resolver",
       "patch_date": "Update date: ${date}",
       "item_type(map)": {
         "task": "Task",
@@ -908,22 +908,24 @@
       "upcoming": "Upcoming",
       "in_app_version": "In-app",
       "changes_to_apply": "Changes to apply",
-      "end_date": "End date",
-      "description": "Notes",
-      "start_date": "Start date",
-      "reminders_title": "Reminders",
-      "reminders": {
-        "zero": "No reminders",
-        "one": "1 reminder",
-        "other": "${n} reminders"
-      },
-      "undefined": "Undefined",
-      "priority": "Priority",
-      "folder": "Folder",
-      "tags": {
-        "zero": "No tags",
-        "one": "1 tag",
-        "other": "${n} tags"
+      "fields(map)": {
+        "end_date": "End date",
+        "description": "Notes",
+        "start_date": "Start date",
+        "reminders_title": "Reminders",
+        "reminders": {
+          "zero": "No reminders",
+          "one": "1 reminder",
+          "other": "${n} reminders"
+        },
+        "undefined": "Undefined",
+        "priority": "Priority",
+        "folder": "Folder",
+        "tags": {
+          "zero": "No tags",
+          "one": "1 tag",
+          "other": "${n} tags"
+        }
       },
       "progress": "Progress"
     }

@@ -65,7 +65,7 @@ class _TaskDetailCardState extends State<TaskDetailCard> {
             ),
           ],
         ),
-        Text("${context.t.sync.conflict_resolver.description} : "),
+        Text("${context.t.sync.conflict_resolver.fields["description"]!} : "),
         if (task.description != null)
           FleatherEditor(
             controller: FleatherController(
@@ -91,7 +91,8 @@ class _TaskDetailCardState extends State<TaskDetailCard> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          context.t.sync.conflict_resolver.start_date,
+                          context
+                              .t.sync.conflict_resolver.fields["start_date"]!,
                           style: getTextTheme(context).bodyMedium!.copyWith(
                                 fontWeight: FontWeight.bold,
                               ),
@@ -102,7 +103,8 @@ class _TaskDetailCardState extends State<TaskDetailCard> {
                           )
                         else
                           Text(
-                            context.t.sync.conflict_resolver.undefined,
+                            context
+                                .t.sync.conflict_resolver.fields["undefined"]!,
                             style: getTextTheme(context).bodyMedium!.copyWith(
                                   fontStyle: FontStyle.italic,
                                   color: Colors.grey,
@@ -125,7 +127,7 @@ class _TaskDetailCardState extends State<TaskDetailCard> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        context.t.sync.conflict_resolver.end_date,
+                        context.t.sync.conflict_resolver.fields["end_date"]!,
                         style: getTextTheme(context).bodyMedium!.copyWith(
                               fontWeight: FontWeight.bold,
                             ),
@@ -158,7 +160,7 @@ class _TaskDetailCardState extends State<TaskDetailCard> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          context.t.sync.conflict_resolver.priority,
+                          context.t.sync.conflict_resolver.fields["priority"]!,
                           style: getTextTheme(context).bodyMedium!.copyWith(
                                 fontWeight: FontWeight.bold,
                               ),
@@ -170,7 +172,8 @@ class _TaskDetailCardState extends State<TaskDetailCard> {
                           )
                         else
                           Text(
-                            context.t.sync.conflict_resolver.undefined,
+                            context
+                                .t.sync.conflict_resolver.fields["undefined"]!,
                             style: getTextTheme(context).bodyMedium!.copyWith(
                                   fontStyle: FontStyle.italic,
                                   color: Colors.grey,
@@ -191,20 +194,23 @@ class _TaskDetailCardState extends State<TaskDetailCard> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          context.t.sync.conflict_resolver.reminders_title,
+                          context.t.sync.conflict_resolver
+                              .fields["reminders_title"]!,
                           style: getTextTheme(context).bodyMedium!.copyWith(
                                 fontWeight: FontWeight.bold,
                               ),
                         ),
                         if (task.reminders != null)
                           Text(
-                            context.t.sync.conflict_resolver.reminders(
+                            context
+                                .t.sync.conflict_resolver.fields["reminders"]!(
                               n: task.reminders?.length ?? 0,
                             ),
                           )
                         else
                           Text(
-                            context.t.sync.conflict_resolver.undefined,
+                            context
+                                .t.sync.conflict_resolver.fields["undefined"]!,
                             style: getTextTheme(context).bodyMedium!.copyWith(
                                   fontStyle: FontStyle.italic,
                                   color: Colors.grey,
