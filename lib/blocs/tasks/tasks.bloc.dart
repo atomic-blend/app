@@ -25,6 +25,8 @@ class TasksBloc extends HydratedBloc<TasksEvent, TasksState> {
     on<EditTask>(_onEditTask);
     on<DeleteTask>(_onDeleteTask);
     on<SyncTasks>(_onSyncTasks);
+    on<ForceTaskPatch>(_onForceTaskPatch);
+    on<DiscardTaskPatch>(_onDiscardTaskPatch);
   }
 
   @override
@@ -226,6 +228,65 @@ class TasksBloc extends HydratedBloc<TasksEvent, TasksState> {
         stagedPatches: newPatchList,
       ));
       add(const LoadTasks());
+    } catch (e) {
+      emit(TaskLoadingError(
+        prevState.tasks ?? [],
+        e.toString(),
+        stagedPatches: prevState.stagedPatches,
+        latestSync: prevState.latestSync,
+      ));
+      add(const LoadTasks());
+    }
+  }
+
+  FutureOr<void> _onForceTaskPatch(ForceTaskPatch event, Emitter<TasksState> emit) async {
+    final prevState = state;
+    emit(TasksLoading(
+      prevState.tasks ?? [],
+      stagedPatches: prevState.stagedPatches,
+      latestSync: prevState.latestSync,
+    ));
+    try {
+      final existingPatches = prevState.stagedPatches ?? [];
+      final patchIndex = existingPatches.indexWhere((p) => p.id == event.patch.id);
+      if (patchIndex != -1) {
+        existingPatches[patchIndex].force = true;
+      } else {
+        event.patch.force = true;
+        existingPatches.add(event.patch);
+      }
+      emit(TaskEdited(
+        prevState.tasks ?? [],
+        stagedPatches: existingPatches,
+        latestSync: prevState.latestSync,
+      ));
+      add(const SyncTasks());
+    } catch (e) {
+      emit(TaskLoadingError(
+        prevState.tasks ?? [],
+        e.toString(),
+        stagedPatches: prevState.stagedPatches,
+        latestSync: prevState.latestSync,
+      ));
+      add(const LoadTasks());
+    }
+  }
+
+  FutureOr<void> _onDiscardTaskPatch(DiscardTaskPatch event, Emitter<TasksState> emit) async {
+    final prevState = state;
+    emit(TasksLoading(
+      prevState.tasks ?? [],
+      stagedPatches: prevState.stagedPatches,
+      latestSync: prevState.latestSync,
+    ));
+    try {
+      final existingPatches = prevState.stagedPatches ?? [];
+      existingPatches.removeWhere((p) => p.id == event.patch.id);
+      emit(TaskEdited(
+        prevState.tasks ?? [],
+        stagedPatches: existingPatches,
+        latestSync: prevState.latestSync,
+      ));
     } catch (e) {
       emit(TaskLoadingError(
         prevState.tasks ?? [],

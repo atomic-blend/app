@@ -1487,6 +1487,7 @@ class _TranslationsSyncConflictResolverFr implements TranslationsSyncConflictRes
 	};
 	@override String get refuse => 'Refuser';
 	@override String get accept => 'Accepter';
+	@override String get upcoming => 'À venir';
 }
 
 // Path: settings.app_settings.selfHostedUrl
@@ -2319,6 +2320,7 @@ extension on TranslationsFr {
 			case 'sync.conflict_resolver.item_type.note': return 'Note';
 			case 'sync.conflict_resolver.refuse': return 'Refuser';
 			case 'sync.conflict_resolver.accept': return 'Accepter';
+			case 'sync.conflict_resolver.upcoming': return 'À venir';
 			default: return null;
 		}
 	}
