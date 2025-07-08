@@ -1498,7 +1498,7 @@ class TranslationsSyncConflictResolverEn {
 	String get in_app_version => 'In-app';
 	String get changes_to_apply => 'Changes to apply';
 	String get end_date => 'End date';
-	String get notes => 'Notes';
+	String get description => 'Notes';
 	String get start_date => 'Start date';
 	String get reminders_title => 'Reminders';
 	String reminders({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n,
@@ -2355,7 +2355,7 @@ extension on Translations {
 			case 'sync.conflict_resolver.in_app_version': return 'In-app';
 			case 'sync.conflict_resolver.changes_to_apply': return 'Changes to apply';
 			case 'sync.conflict_resolver.end_date': return 'End date';
-			case 'sync.conflict_resolver.notes': return 'Notes';
+			case 'sync.conflict_resolver.description': return 'Notes';
 			case 'sync.conflict_resolver.start_date': return 'Start date';
 			case 'sync.conflict_resolver.reminders_title': return 'Reminders';
 			case 'sync.conflict_resolver.reminders': return ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n,

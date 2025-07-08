@@ -1492,7 +1492,7 @@ class _TranslationsSyncConflictResolverFr implements TranslationsSyncConflictRes
 	@override String get in_app_version => 'Dans l\'application';
 	@override String get changes_to_apply => 'Modifications à appliquer';
 	@override String get end_date => 'Date de fin';
-	@override String get notes => 'Notes';
+	@override String get description => 'Notes';
 	@override String get undefined => 'Non défini';
 	@override String get start_date => 'Date de début';
 	@override String get reminders_title => 'Rappels';
@@ -2346,7 +2346,7 @@ extension on TranslationsFr {
 			case 'sync.conflict_resolver.in_app_version': return 'Dans l\'application';
 			case 'sync.conflict_resolver.changes_to_apply': return 'Modifications à appliquer';
 			case 'sync.conflict_resolver.end_date': return 'Date de fin';
-			case 'sync.conflict_resolver.notes': return 'Notes';
+			case 'sync.conflict_resolver.description': return 'Notes';
 			case 'sync.conflict_resolver.undefined': return 'Non défini';
 			case 'sync.conflict_resolver.start_date': return 'Date de début';
 			case 'sync.conflict_resolver.reminders_title': return 'Rappels';

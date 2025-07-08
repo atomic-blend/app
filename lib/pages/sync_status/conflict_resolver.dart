@@ -6,7 +6,7 @@ import 'package:app/entities/sync/patch/patch.dart';
 import 'package:app/entities/sync/patch_change/patch_change.dart';
 import 'package:app/entities/tasks/tasks.entity.dart';
 import 'package:app/i18n/strings.g.dart';
-import 'package:app/pages/sync_status/items_ui/task_card.dart';
+import 'package:app/pages/sync_status/items_ui/task/task_detail_card.dart';
 import 'package:app/utils/constants.dart';
 import 'package:app/utils/shortcuts.dart';
 import 'package:collection/collection.dart';
@@ -287,7 +287,7 @@ class _ConflictResolverState extends State<ConflictResolver> {
         if (task == null) {
           return SizedBox.shrink(); // Placeholder for missing task
         }
-        return TaskCard(
+        return TaskDetailCard(
           taskEntity: task,
         );
       case ItemType.note:

@@ -906,7 +906,7 @@
       "in_app_version": "Dans l'application",
       "changes_to_apply": "Modifications à appliquer",
       "end_date": "Date de fin",
-      "notes": "Notes",
+      "description": "Notes",
       "undefined": "Non défini",
       "start_date": "Date de début",
       "reminders_title": "Rappels",
