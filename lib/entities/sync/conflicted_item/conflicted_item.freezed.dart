@@ -21,8 +21,8 @@ ConflictedItem _$ConflictedItemFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$ConflictedItem {
   ItemType get type => throw _privateConstructorUsedError;
-  dynamic get remoteItem => throw _privateConstructorUsedError;
-  dynamic get localItem => throw _privateConstructorUsedError;
+  String get patchId => throw _privateConstructorUsedError;
+  Map<String, dynamic>? get remoteObject => throw _privateConstructorUsedError;
 
   /// Serializes this ConflictedItem to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -40,7 +40,8 @@ abstract class $ConflictedItemCopyWith<$Res> {
           ConflictedItem value, $Res Function(ConflictedItem) then) =
       _$ConflictedItemCopyWithImpl<$Res, ConflictedItem>;
   @useResult
-  $Res call({ItemType type, dynamic remoteItem, dynamic localItem});
+  $Res call(
+      {ItemType type, String patchId, Map<String, dynamic>? remoteObject});
 }
 
 /// @nodoc
@@ -59,22 +60,22 @@ class _$ConflictedItemCopyWithImpl<$Res, $Val extends ConflictedItem>
   @override
   $Res call({
     Object? type = null,
-    Object? remoteItem = freezed,
-    Object? localItem = freezed,
+    Object? patchId = null,
+    Object? remoteObject = freezed,
   }) {
     return _then(_value.copyWith(
       type: null == type
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
               as ItemType,
-      remoteItem: freezed == remoteItem
-          ? _value.remoteItem
-          : remoteItem // ignore: cast_nullable_to_non_nullable
-              as dynamic,
-      localItem: freezed == localItem
-          ? _value.localItem
-          : localItem // ignore: cast_nullable_to_non_nullable
-              as dynamic,
+      patchId: null == patchId
+          ? _value.patchId
+          : patchId // ignore: cast_nullable_to_non_nullable
+              as String,
+      remoteObject: freezed == remoteObject
+          ? _value.remoteObject
+          : remoteObject // ignore: cast_nullable_to_non_nullable
+              as Map<String, dynamic>?,
     ) as $Val);
   }
 }
@@ -87,7 +88,8 @@ abstract class _$$ConflictedItemImplCopyWith<$Res>
       __$$ConflictedItemImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({ItemType type, dynamic remoteItem, dynamic localItem});
+  $Res call(
+      {ItemType type, String patchId, Map<String, dynamic>? remoteObject});
 }
 
 /// @nodoc
@@ -104,22 +106,22 @@ class __$$ConflictedItemImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? type = null,
-    Object? remoteItem = freezed,
-    Object? localItem = freezed,
+    Object? patchId = null,
+    Object? remoteObject = freezed,
   }) {
     return _then(_$ConflictedItemImpl(
       type: null == type
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
               as ItemType,
-      remoteItem: freezed == remoteItem
-          ? _value.remoteItem
-          : remoteItem // ignore: cast_nullable_to_non_nullable
-              as dynamic,
-      localItem: freezed == localItem
-          ? _value.localItem
-          : localItem // ignore: cast_nullable_to_non_nullable
-              as dynamic,
+      patchId: null == patchId
+          ? _value.patchId
+          : patchId // ignore: cast_nullable_to_non_nullable
+              as String,
+      remoteObject: freezed == remoteObject
+          ? _value._remoteObject
+          : remoteObject // ignore: cast_nullable_to_non_nullable
+              as Map<String, dynamic>?,
     ));
   }
 }
@@ -128,7 +130,10 @@ class __$$ConflictedItemImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$ConflictedItemImpl implements _ConflictedItem {
   const _$ConflictedItemImpl(
-      {required this.type, this.remoteItem, this.localItem});
+      {required this.type,
+      required this.patchId,
+      final Map<String, dynamic>? remoteObject})
+      : _remoteObject = remoteObject;
 
   factory _$ConflictedItemImpl.fromJson(Map<String, dynamic> json) =>
       _$$ConflictedItemImplFromJson(json);
@@ -136,13 +141,20 @@ class _$ConflictedItemImpl implements _ConflictedItem {
   @override
   final ItemType type;
   @override
-  final dynamic remoteItem;
+  final String patchId;
+  final Map<String, dynamic>? _remoteObject;
   @override
-  final dynamic localItem;
+  Map<String, dynamic>? get remoteObject {
+    final value = _remoteObject;
+    if (value == null) return null;
+    if (_remoteObject is EqualUnmodifiableMapView) return _remoteObject;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableMapView(value);
+  }
 
   @override
   String toString() {
-    return 'ConflictedItem(type: $type, remoteItem: $remoteItem, localItem: $localItem)';
+    return 'ConflictedItem(type: $type, patchId: $patchId, remoteObject: $remoteObject)';
   }
 
   @override
@@ -151,18 +163,15 @@ class _$ConflictedItemImpl implements _ConflictedItem {
         (other.runtimeType == runtimeType &&
             other is _$ConflictedItemImpl &&
             (identical(other.type, type) || other.type == type) &&
+            (identical(other.patchId, patchId) || other.patchId == patchId) &&
             const DeepCollectionEquality()
-                .equals(other.remoteItem, remoteItem) &&
-            const DeepCollectionEquality().equals(other.localItem, localItem));
+                .equals(other._remoteObject, _remoteObject));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      type,
-      const DeepCollectionEquality().hash(remoteItem),
-      const DeepCollectionEquality().hash(localItem));
+  int get hashCode => Object.hash(runtimeType, type, patchId,
+      const DeepCollectionEquality().hash(_remoteObject));
 
   /// Create a copy of ConflictedItem
   /// with the given fields replaced by the non-null parameter values.
@@ -184,8 +193,8 @@ class _$ConflictedItemImpl implements _ConflictedItem {
 abstract class _ConflictedItem implements ConflictedItem {
   const factory _ConflictedItem(
       {required final ItemType type,
-      final dynamic remoteItem,
-      final dynamic localItem}) = _$ConflictedItemImpl;
+      required final String patchId,
+      final Map<String, dynamic>? remoteObject}) = _$ConflictedItemImpl;
 
   factory _ConflictedItem.fromJson(Map<String, dynamic> json) =
       _$ConflictedItemImpl.fromJson;
@@ -193,9 +202,9 @@ abstract class _ConflictedItem implements ConflictedItem {
   @override
   ItemType get type;
   @override
-  dynamic get remoteItem;
+  String get patchId;
   @override
-  dynamic get localItem;
+  Map<String, dynamic>? get remoteObject;
 
   /// Create a copy of ConflictedItem
   /// with the given fields replaced by the non-null parameter values.

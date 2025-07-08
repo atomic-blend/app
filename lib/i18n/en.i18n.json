@@ -896,7 +896,14 @@
     },
     "sync_now": "Sync now",
     "conflict_resolver": {
-      "title": "Conflict Resolver"
+      "title": "Conflict Resolver", 
+      "patch_date": "Update date: ${date}",
+      "item_type(map)": {
+        "task": "Task",
+        "note": "Note"
+      },
+      "refuse": "Refuse",
+      "accept": "Accept"
     }
   }
 }
