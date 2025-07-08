@@ -1486,6 +1486,13 @@ class TranslationsSyncConflictResolverEn {
 
 	// Translations
 	String get title => 'Conflict Resolver';
+	String patch_date({required Object date}) => 'Update date: ${date}';
+	Map<String, String> get item_type => {
+		'task': 'Task',
+		'note': 'Note',
+	};
+	String get refuse => 'Refuse';
+	String get accept => 'Accept';
 }
 
 // Path: settings.app_settings.selfHostedUrl
@@ -2316,6 +2323,11 @@ extension on Translations {
 			);
 			case 'sync.sync_now': return 'Sync now';
 			case 'sync.conflict_resolver.title': return 'Conflict Resolver';
+			case 'sync.conflict_resolver.patch_date': return ({required Object date}) => 'Update date: ${date}';
+			case 'sync.conflict_resolver.item_type.task': return 'Task';
+			case 'sync.conflict_resolver.item_type.note': return 'Note';
+			case 'sync.conflict_resolver.refuse': return 'Refuse';
+			case 'sync.conflict_resolver.accept': return 'Accept';
 			default: return null;
 		}
 	}

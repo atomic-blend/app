@@ -893,7 +893,14 @@
     },
     "sync_now": "Synchroniser maintenant",
     "conflict_resolver": {
-      "title": "Résolveur de Conflits"
+      "title": "Résolveur de Conflits",
+      "patch_date": "Date de mise à jour : ${date}",
+      "item_type(map)": {
+        "task": "Tâche",
+        "note": "Note"
+      },
+      "refuse": "Refuser",
+      "accept": "Accepter"
     }
   }
 }

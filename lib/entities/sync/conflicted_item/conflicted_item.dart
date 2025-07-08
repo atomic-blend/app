@@ -8,8 +8,8 @@ part 'conflicted_item.g.dart';
 class ConflictedItem with _$ConflictedItem {
   const factory ConflictedItem({
     required ItemType type,
-    dynamic remoteItem,
-    dynamic localItem,
+    required String patchId,
+    Map<String, dynamic>? remoteObject,
   }) = _ConflictedItem;
 
   factory ConflictedItem.fromJson(Map<String, dynamic> json) =>

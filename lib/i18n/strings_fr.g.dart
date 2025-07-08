@@ -1480,6 +1480,13 @@ class _TranslationsSyncConflictResolverFr implements TranslationsSyncConflictRes
 
 	// Translations
 	@override String get title => 'Résolveur de Conflits';
+	@override String patch_date({required Object date}) => 'Date de mise à jour : ${date}';
+	@override Map<String, String> get item_type => {
+		'task': 'Tâche',
+		'note': 'Note',
+	};
+	@override String get refuse => 'Refuser';
+	@override String get accept => 'Accepter';
 }
 
 // Path: settings.app_settings.selfHostedUrl
@@ -2307,6 +2314,11 @@ extension on TranslationsFr {
 			);
 			case 'sync.sync_now': return 'Synchroniser maintenant';
 			case 'sync.conflict_resolver.title': return 'Résolveur de Conflits';
+			case 'sync.conflict_resolver.patch_date': return ({required Object date}) => 'Date de mise à jour : ${date}';
+			case 'sync.conflict_resolver.item_type.task': return 'Tâche';
+			case 'sync.conflict_resolver.item_type.note': return 'Note';
+			case 'sync.conflict_resolver.refuse': return 'Refuser';
+			case 'sync.conflict_resolver.accept': return 'Accepter';
 			default: return null;
 		}
 	}
