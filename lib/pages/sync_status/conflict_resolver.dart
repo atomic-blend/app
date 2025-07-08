@@ -4,9 +4,12 @@ import 'package:app/entities/sync/conflicted_item/conflicted_item.dart';
 import 'package:app/entities/sync/item_type/item_type.dart';
 import 'package:app/entities/sync/patch/patch.dart';
 import 'package:app/entities/sync/patch_change/patch_change.dart';
+import 'package:app/entities/tasks/tasks.entity.dart';
 import 'package:app/i18n/strings.g.dart';
+import 'package:app/pages/sync_status/items_ui/task_card.dart';
 import 'package:app/utils/constants.dart';
 import 'package:app/utils/shortcuts.dart';
+import 'package:collection/collection.dart';
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -21,6 +24,8 @@ class ConflictResolver extends StatefulWidget {
 }
 
 class _ConflictResolverState extends State<ConflictResolver> {
+  int _selectedIndex = 0;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,6 +46,8 @@ class _ConflictResolverState extends State<ConflictResolver> {
             conflicts.addAll(taskState.latestSync!.conflicts);
             patches.addAll(taskState.stagedPatches ?? []);
           }
+          final patch = patches.firstWhereOrNull(
+              (p) => p.id == conflicts[_selectedIndex].patchId);
           return Padding(
             padding: EdgeInsets.symmetric(
               horizontal: $constants.insets.sm,
@@ -49,37 +56,57 @@ class _ConflictResolverState extends State<ConflictResolver> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(
-                  height: getSize(context).height * 0.4,
-                  child: Row(
+                  height: getSize(context).height * 0.65,
+                  child: Column(
                     children: [
                       Expanded(
                         child: ElevatedContainer(
+                          width: double.infinity,
+                          padding: EdgeInsets.symmetric(
+                            horizontal: $constants.insets.sm,
+                          ),
                           child: Column(
                             children: [
+                              SizedBox(
+                                height: $constants.insets.sm,
+                              ),
                               Text(
-                                "Local Version",
+                                context.t.sync.conflict_resolver.in_app_version,
                                 style:
                                     getTextTheme(context).bodyMedium!.copyWith(
                                           fontWeight: FontWeight.bold,
                                         ),
                               ),
+                              SizedBox(
+                                height: $constants.insets.xs,
+                              ),
+                              _getItemUi(context, patch!.itemType, patch.itemId)
                             ],
                           ),
                         ),
                       ),
                       SizedBox(
-                        width: $constants.insets.sm,
+                        height: $constants.insets.sm,
                       ),
                       Expanded(
                         child: ElevatedContainer(
+                          width: double.infinity,
                           child: Column(
                             children: [
-                              Text("Cloud Version",
+                              SizedBox(
+                                height: $constants.insets.sm,
+                              ),
+                              Text(
+                                  context.t.sync.conflict_resolver
+                                      .changes_to_apply,
                                   style: getTextTheme(context)
                                       .bodyMedium!
                                       .copyWith(
                                         fontWeight: FontWeight.bold,
                                       )),
+                              SizedBox(
+                                height: $constants.insets.xs,
+                              ),
                             ],
                           ),
                         ),
@@ -87,41 +114,45 @@ class _ConflictResolverState extends State<ConflictResolver> {
                     ],
                   ),
                 ),
-                Text("choose between which version to keep",
-                    style: getTextTheme(context).bodyMedium!.copyWith(
-                          fontWeight: FontWeight.w500,
-                        )),
                 SizedBox(
-                  height: $constants.insets.sm,
+                  height: $constants.insets.xs,
                 ),
-                Expanded(
-                  child: ElevatedContainer(
-                    width: double.infinity,
-                    child: Column(
-                      children: [
-                        SizedBox(
-                          height: $constants.insets.sm,
-                        ),
-                        Text(
-                          "${context.t.sync.conflict_resolver.upcoming} ${conflicts.length - 1 > 0 ? "(${conflicts.length})" : ''}",
-                          style: getTextTheme(context).bodyLarge!.copyWith(
-                                fontWeight: FontWeight.bold,
-                              ),
-                        ),
-                        SizedBox(
-                          height: $constants.insets.sm,
-                        ),
-                        ...conflicts
-                            .map((conflict) => _buildConflictListCard(
-                                context, conflict, patches))
-                            .toList(),
-                      ],
-                    ),
-                  ),
+                Text(
+                  context.t.sync.conflict_resolver.choose_between,
+                  style: getTextTheme(context).bodyLarge!.copyWith(),
+                  textAlign: TextAlign.center,
                 ),
                 SizedBox(
-                  height: $constants.insets.sm,
+                  height: $constants.insets.xs,
                 ),
+                // Expanded(
+                //   child: ElevatedContainer(
+                //     width: double.infinity,
+                //     child: Column(
+                //       children: [
+                //         SizedBox(
+                //           height: $constants.insets.sm,
+                //         ),
+                //         Text(
+                //           "${context.t.sync.conflict_resolver.upcoming} ${conflicts.length - 1 > 0 ? "(${conflicts.length})" : ''}",
+                //           style: getTextTheme(context).bodyLarge!.copyWith(
+                //                 fontWeight: FontWeight.bold,
+                //               ),
+                //         ),
+                //         SizedBox(
+                //           height: $constants.insets.sm,
+                //         ),
+                //         ...conflicts
+                //             .map((conflict) => _buildConflictListCard(
+                //                 context, conflict, patches))
+                //             .toList(),
+                //       ],
+                //     ),
+                //   ),
+                // ),
+                // SizedBox(
+                //   height: $constants.insets.sm,
+                // ),
                 Expanded(
                     child: Row(
                   spacing: $constants.insets.sm,
@@ -257,6 +288,41 @@ class _ConflictResolverState extends State<ConflictResolver> {
       default:
         // Handle other item types if needed
         break;
+    }
+  }
+
+  _discardPatch(BuildContext context, Patch patch) {
+    switch (patch.itemType) {
+      case ItemType.task:
+        context.read<TasksBloc>().add(
+              DiscardTaskPatch(patch),
+            );
+        break;
+      case ItemType.note:
+        // Handle note patching if needed
+        break;
+      default:
+        // Handle other item types if needed
+        break;
+    }
+  }
+
+  _getItemUi(BuildContext context, ItemType type, String itemId) {
+    switch (type) {
+      case ItemType.task:
+        final taskState = context.watch<TasksBloc>().state;
+        final task = taskState.tasks?.firstWhereOrNull((t) => t.id == itemId);
+        if (task == null) {
+          return SizedBox.shrink(); // Placeholder for missing task
+        }
+        return TaskCard(
+          taskEntity: task,
+        );
+      case ItemType.note:
+        // Return NoteCard or similar widget for notes
+        return SizedBox.shrink(); // Placeholder for note UI
+      default:
+        return SizedBox.shrink(); // Placeholder for other item types
     }
   }
 }

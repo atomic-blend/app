@@ -17,6 +17,9 @@ class ConflictCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<TasksBloc, TasksState>(builder: (context, taskState) {
       final taskConflictedItems = taskState.latestSync?.conflicts ?? [];
+      if (taskConflictedItems.isEmpty) {
+        return const SizedBox.shrink();
+      }
       return Padding(
         padding: padding ?? EdgeInsets.zero,
         child: GestureDetector(
