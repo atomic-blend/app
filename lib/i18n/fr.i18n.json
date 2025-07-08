@@ -877,8 +877,13 @@
     "loading": "Chargement...",
     "up_to_date": "À jour",
     "conflicts": "Conflits",
+    "x_items_have_conflicts": {
+      "zero": "Aucun élément n'a de conflits",
+      "one": "1 élément a des conflits",
+      "other": "${n} éléments ont des conflits"
+    },
     "details": {
-      "title": "Details",
+      "title": "Détails",
       "tasks": "Tâches",
       "task_items": {
         "zero": "Aucune tâche",

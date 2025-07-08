@@ -880,6 +880,11 @@
     "loading": "Loading...",
     "up_to_date": "Up to date",
     "conflicts": "Conflicts",
+    "x_items_have_conflicts": {
+      "zero": "No items have conflicts",
+      "one": "1 item has conflicts",
+      "other": "${n} items have conflicts"
+    },
     "details": {
       "title": "Details",
       "tasks": "Tasks",
