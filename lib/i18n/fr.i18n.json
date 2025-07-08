@@ -907,7 +907,9 @@
       "changes_to_apply": "Modifications à appliquer",
       "end_date": "Date de fin",
       "notes": "Notes",
+      "undefined": "Non défini",
       "start_date": "Date de début",
+      "reminders_title": "Rappels",
       "reminders": {
         "zero": "Aucun rappel",
         "one": "1 rappel",
@@ -919,7 +921,8 @@
         "zero": "Aucun tag",
         "one": "1 tag",
         "other": "${n} tags"
-      }
+      },
+      "progress": "Progression"
     }
   }
 }
