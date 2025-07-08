@@ -6,10 +6,12 @@ import 'package:app/components/widgets/elevated_container.dart';
 import 'package:app/entities/tag/tag.entity.dart';
 import 'package:app/entities/tasks/tasks.entity.dart';
 import 'package:app/i18n/strings.g.dart';
+import 'package:app/pages/sync_status/conflict_card.dart';
 import 'package:app/pages/tags/my_tags.dart';
 import 'package:app/utils/constants.dart';
 import 'package:app/utils/shortcuts.dart';
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -49,6 +51,12 @@ class _TagsViewState extends State<TagsView> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                ConflictCard(
+                  color: getTheme(context).error.lighten(55),
+                  padding: EdgeInsets.only(
+                    bottom: $constants.insets.xs,
+                  ),
+                ),
                 ElevatedContainer(
                   padding: EdgeInsets.symmetric(
                     horizontal: $constants.insets.sm,
