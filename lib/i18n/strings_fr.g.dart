@@ -867,6 +867,7 @@ class _TranslationsSyncFr implements TranslationsSyncEn {
 	);
 	@override late final _TranslationsSyncDetailsFr details = _TranslationsSyncDetailsFr._(_root);
 	@override String get sync_now => 'Synchroniser maintenant';
+	@override late final _TranslationsSyncConflictResolverFr conflict_resolver = _TranslationsSyncConflictResolverFr._(_root);
 }
 
 // Path: auth.not_logged_in
@@ -1469,6 +1470,16 @@ class _TranslationsSyncDetailsFr implements TranslationsSyncDetailsEn {
 		one: '1 tâche',
 		other: '${n} tâches',
 	);
+}
+
+// Path: sync.conflict_resolver
+class _TranslationsSyncConflictResolverFr implements TranslationsSyncConflictResolverEn {
+	_TranslationsSyncConflictResolverFr._(this._root);
+
+	final TranslationsFr _root; // ignore: unused_field
+
+	// Translations
+	@override String get title => 'Résolveur de Conflits';
 }
 
 // Path: settings.app_settings.selfHostedUrl
@@ -2295,6 +2306,7 @@ extension on TranslationsFr {
 				other: '${n} tâches',
 			);
 			case 'sync.sync_now': return 'Synchroniser maintenant';
+			case 'sync.conflict_resolver.title': return 'Résolveur de Conflits';
 			default: return null;
 		}
 	}

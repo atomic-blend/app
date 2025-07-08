@@ -894,6 +894,9 @@
         "other": "${n} tasks"
       }
     },
-    "sync_now": "Sync now"
+    "sync_now": "Sync now",
+    "conflict_resolver": {
+      "title": "Conflict Resolver"
+    }
   }
 }
