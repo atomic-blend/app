@@ -103,7 +103,7 @@ class _ConflictResolverState extends State<ConflictResolver> {
                           height: $constants.insets.sm,
                         ),
                         Text(
-                          "Conflicting Changes",
+                          "${context.t.sync.conflict_resolver.upcoming} ${conflicts.length - 1 > 0 ? "(${conflicts.length})" : ''}",
                           style: getTextTheme(context).bodyLarge!.copyWith(
                                 fontWeight: FontWeight.bold,
                               ),
@@ -156,7 +156,7 @@ class _ConflictResolverState extends State<ConflictResolver> {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Icon(
+                            const Icon(
                               CupertinoIcons.check_mark,
                               size: 70,
                               color: Colors.white,
@@ -241,6 +241,22 @@ class _ConflictResolverState extends State<ConflictResolver> {
         return Icons.check_box;
       default:
         return Icons.help_outline;
+    }
+  }
+
+  _forcePatch(BuildContext context, Patch patch) {
+    switch (patch.itemType) {
+      case ItemType.task:
+        context.read<TasksBloc>().add(
+              ForceTaskPatch(patch),
+            );
+        break;
+      case ItemType.note:
+        // Handle note patching if needed
+        break;
+      default:
+        // Handle other item types if needed
+        break;
     }
   }
 }
