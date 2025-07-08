@@ -9,44 +9,48 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ConflictCard extends StatelessWidget {
   final Color? color;
-  const ConflictCard({super.key, this.color});
+  final EdgeInsets? padding;
+  const ConflictCard({super.key, this.color, this.padding});
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<TasksBloc, TasksState>(builder: (context, taskState) {
       final taskConflictedItems = taskState.latestSync?.conflicts ?? [];
-      return ElevatedContainer(
-        width: double.infinity,
-        color: color ?? getTheme(context).surface,
-        padding: EdgeInsets.all($constants.insets.xs),
-        child: Row(
-          children: [
-            Icon(
-              CupertinoIcons.exclamationmark_octagon_fill,
-              size: 32,
-              color: getTheme(context).error,
-            ),
-            SizedBox(
-              width: $constants.insets.sm,
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  context.t.sync.conflicts,
-                  style: getTextTheme(context).bodyMedium!.copyWith(
-                        fontWeight: FontWeight.bold,
-                      ),
-                ),
-                Text(
-                  context.t.sync.x_items_have_conflicts(
-                    n: taskConflictedItems.length,
+      return Padding(
+        padding: padding ?? EdgeInsets.zero,
+        child: ElevatedContainer(
+          width: double.infinity,
+          color: color ?? getTheme(context).surface,
+          padding: EdgeInsets.all($constants.insets.xs),
+          child: Row(
+            children: [
+              Icon(
+                CupertinoIcons.exclamationmark_octagon_fill,
+                size: 32,
+                color: getTheme(context).error,
+              ),
+              SizedBox(
+                width: $constants.insets.sm,
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    context.t.sync.conflicts,
+                    style: getTextTheme(context).bodyMedium!.copyWith(
+                          fontWeight: FontWeight.bold,
+                        ),
                   ),
-                  style: getTextTheme(context).bodyMedium!.copyWith(),
-                ),
-              ],
-            )
-          ],
+                  Text(
+                    context.t.sync.x_items_have_conflicts(
+                      n: taskConflictedItems.length,
+                    ),
+                    style: getTextTheme(context).bodyMedium!.copyWith(),
+                  ),
+                ],
+              )
+            ],
+          ),
         ),
       );
     });

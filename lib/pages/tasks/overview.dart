@@ -6,6 +6,7 @@ import 'package:app/components/forms/search_bar.dart';
 import 'package:app/components/widgets/elevated_container.dart';
 import 'package:app/entities/tasks/tasks.entity.dart';
 import 'package:app/i18n/strings.g.dart';
+import 'package:app/pages/sync_status/conflict_card.dart';
 import 'package:app/pages/tasks/add_task_modal.dart';
 import 'package:app/pages/timer/timer_info.dart';
 import 'package:app/pages/timer/timer_utils.dart';
@@ -77,6 +78,12 @@ class _OverviewTasksState extends State<OverviewTasks> {
                       _filteredTasks = [];
                       setState(() {});
                     },
+                  ),
+                ),
+                ConflictCard(
+                  color: getTheme(context).error.lighten(55),
+                  padding: EdgeInsets.only(
+                    top: $constants.insets.xs,
                   ),
                 ),
                 SizedBox(height: $constants.insets.xs),
