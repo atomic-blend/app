@@ -17,7 +17,7 @@ class _ConflictedItemWrapperState extends State<ConflictedItemWrapper> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<TasksBloc, TasksState>(builder: (context, taskState) {
-      final taskConflictedItems = taskState.conflicts;
+      final taskConflictedItems = taskState.latestSync?.conflicts ?? [];
       return Column(
         children: [
           if (widget.enableConflictedItemCard ?? false)

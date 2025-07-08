@@ -860,6 +860,11 @@ class _TranslationsSyncFr implements TranslationsSyncEn {
 	@override String get loading => 'Chargement...';
 	@override String get up_to_date => 'À jour';
 	@override String get conflicts => 'Conflits';
+	@override String x_items_have_conflicts({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('fr'))(n,
+		zero: 'Aucun élément n\'a de conflits',
+		one: '1 élément a des conflits',
+		other: '${n} éléments ont des conflits',
+	);
 	@override late final _TranslationsSyncDetailsFr details = _TranslationsSyncDetailsFr._(_root);
 	@override String get sync_now => 'Synchroniser maintenant';
 }
@@ -1457,7 +1462,7 @@ class _TranslationsSyncDetailsFr implements TranslationsSyncDetailsEn {
 	final TranslationsFr _root; // ignore: unused_field
 
 	// Translations
-	@override String get title => 'Details';
+	@override String get title => 'Détails';
 	@override String get tasks => 'Tâches';
 	@override String task_items({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('fr'))(n,
 		zero: 'Aucune tâche',
@@ -2277,7 +2282,12 @@ extension on TranslationsFr {
 			case 'sync.loading': return 'Chargement...';
 			case 'sync.up_to_date': return 'À jour';
 			case 'sync.conflicts': return 'Conflits';
-			case 'sync.details.title': return 'Details';
+			case 'sync.x_items_have_conflicts': return ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('fr'))(n,
+				zero: 'Aucun élément n\'a de conflits',
+				one: '1 élément a des conflits',
+				other: '${n} éléments ont des conflits',
+			);
+			case 'sync.details.title': return 'Détails';
 			case 'sync.details.tasks': return 'Tâches';
 			case 'sync.details.task_items': return ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('fr'))(n,
 				zero: 'Aucune tâche',
