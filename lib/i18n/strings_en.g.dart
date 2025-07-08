@@ -1500,11 +1500,13 @@ class TranslationsSyncConflictResolverEn {
 	String get end_date => 'End date';
 	String get notes => 'Notes';
 	String get start_date => 'Start date';
+	String get reminders_title => 'Reminders';
 	String reminders({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n,
 		zero: 'No reminders',
 		one: '1 reminder',
 		other: '${n} reminders',
 	);
+	String get undefined => 'Undefined';
 	String get priority => 'Priority';
 	String get folder => 'Folder';
 	String tags({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n,
@@ -1512,6 +1514,7 @@ class TranslationsSyncConflictResolverEn {
 		one: '1 tag',
 		other: '${n} tags',
 	);
+	String get progress => 'Progress';
 }
 
 // Path: settings.app_settings.selfHostedUrl
@@ -2354,11 +2357,13 @@ extension on Translations {
 			case 'sync.conflict_resolver.end_date': return 'End date';
 			case 'sync.conflict_resolver.notes': return 'Notes';
 			case 'sync.conflict_resolver.start_date': return 'Start date';
+			case 'sync.conflict_resolver.reminders_title': return 'Reminders';
 			case 'sync.conflict_resolver.reminders': return ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n,
 				zero: 'No reminders',
 				one: '1 reminder',
 				other: '${n} reminders',
 			);
+			case 'sync.conflict_resolver.undefined': return 'Undefined';
 			case 'sync.conflict_resolver.priority': return 'Priority';
 			case 'sync.conflict_resolver.folder': return 'Folder';
 			case 'sync.conflict_resolver.tags': return ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n,
@@ -2366,6 +2371,7 @@ extension on Translations {
 				one: '1 tag',
 				other: '${n} tags',
 			);
+			case 'sync.conflict_resolver.progress': return 'Progress';
 			default: return null;
 		}
 	}
