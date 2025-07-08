@@ -902,9 +902,27 @@
         "task": "Task",
         "note": "Note"
       },
+      "choose_between": "Choose between accepting or refusing the changes",
       "refuse": "Refuse",
       "accept": "Accept",
-      "upcoming": "Upcoming"
+      "upcoming": "Upcoming",
+      "in_app_version": "In-app",
+      "changes_to_apply": "Changes to apply",
+      "end_date": "End date",
+      "notes": "Notes",
+      "start_date": "Start date",
+      "reminders": {
+        "zero": "No reminders",
+        "one": "1 reminder",
+        "other": "${n} reminders"
+      },
+      "priority": "Priority",
+      "folder": "Folder",
+      "tags": {
+        "zero": "No tags",
+        "one": "1 tag",
+        "other": "${n} tags"
+      }
     }
   }
 }
