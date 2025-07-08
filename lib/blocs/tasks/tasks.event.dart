@@ -28,3 +28,14 @@ final class DeleteTask extends TasksEvent {
   const DeleteTask(this.task);
   final TaskEntity task;
 }
+
+final class ForceTaskPatch extends TasksEvent {
+  const ForceTaskPatch(this.patch);
+  final Patch patch;
+}
+  
+
+final class DiscardTaskPatch extends TasksEvent {
+  const DiscardTaskPatch(this.patch);
+  final Patch patch;
+}

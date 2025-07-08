@@ -1493,6 +1493,7 @@ class TranslationsSyncConflictResolverEn {
 	};
 	String get refuse => 'Refuse';
 	String get accept => 'Accept';
+	String get upcoming => 'Upcoming';
 }
 
 // Path: settings.app_settings.selfHostedUrl
@@ -2328,6 +2329,7 @@ extension on Translations {
 			case 'sync.conflict_resolver.item_type.note': return 'Note';
 			case 'sync.conflict_resolver.refuse': return 'Refuse';
 			case 'sync.conflict_resolver.accept': return 'Accept';
+			case 'sync.conflict_resolver.upcoming': return 'Upcoming';
 			default: return null;
 		}
 	}
