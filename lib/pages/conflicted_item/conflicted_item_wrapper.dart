@@ -21,7 +21,7 @@ class _ConflictedItemWrapperState extends State<ConflictedItemWrapper> {
       return Column(
         children: [
           if (widget.enableConflictedItemCard ?? false)
-            ConflictedItemInfoCard(),
+            const ConflictedItemInfoCard(),
           widget.child,
         ],
       );

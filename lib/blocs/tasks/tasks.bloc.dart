@@ -9,7 +9,6 @@ import 'package:app/entities/sync/sync_result/sync_result.dart';
 import 'package:app/entities/tasks/tasks.entity.dart';
 import 'package:app/entities/user/user.entity.dart';
 import 'package:app/services/tasks.service.dart';
-import 'package:app/services/user.service.dart';
 import 'package:equatable/equatable.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:objectid/objectid.dart';
@@ -86,7 +85,6 @@ class TasksBloc extends HydratedBloc<TasksEvent, TasksState> {
       latestSync: prevState.latestSync,
     ));
     try {
-      //TODO: replace with patch
       final existingPatches = prevState.stagedPatches ?? [];
       final patch = Patch(
         id: ObjectId().hexString,
@@ -166,7 +164,6 @@ class TasksBloc extends HydratedBloc<TasksEvent, TasksState> {
       latestSync: prevState.latestSync,
     ));
     try {
-      //TODO: replace with patch
       final existingPatches = prevState.stagedPatches ?? [];
       final patch = Patch(
         id: ObjectId().hexString,

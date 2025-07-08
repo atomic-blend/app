@@ -1497,23 +1497,25 @@ class TranslationsSyncConflictResolverEn {
 	String get upcoming => 'Upcoming';
 	String get in_app_version => 'In-app';
 	String get changes_to_apply => 'Changes to apply';
-	String get end_date => 'End date';
-	String get description => 'Notes';
-	String get start_date => 'Start date';
-	String get reminders_title => 'Reminders';
-	String reminders({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n,
-		zero: 'No reminders',
-		one: '1 reminder',
-		other: '${n} reminders',
-	);
-	String get undefined => 'Undefined';
-	String get priority => 'Priority';
-	String get folder => 'Folder';
-	String tags({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n,
-		zero: 'No tags',
-		one: '1 tag',
-		other: '${n} tags',
-	);
+	Map<String, dynamic> get fields => {
+		'end_date': 'End date',
+		'description': 'Notes',
+		'start_date': 'Start date',
+		'reminders_title': 'Reminders',
+		'reminders': ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n,
+			zero: 'No reminders',
+			one: '1 reminder',
+			other: '${n} reminders',
+		),
+		'undefined': 'Undefined',
+		'priority': 'Priority',
+		'folder': 'Folder',
+		'tags': ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n,
+			zero: 'No tags',
+			one: '1 tag',
+			other: '${n} tags',
+		),
+	};
 	String get progress => 'Progress';
 }
 
@@ -2354,19 +2356,19 @@ extension on Translations {
 			case 'sync.conflict_resolver.upcoming': return 'Upcoming';
 			case 'sync.conflict_resolver.in_app_version': return 'In-app';
 			case 'sync.conflict_resolver.changes_to_apply': return 'Changes to apply';
-			case 'sync.conflict_resolver.end_date': return 'End date';
-			case 'sync.conflict_resolver.description': return 'Notes';
-			case 'sync.conflict_resolver.start_date': return 'Start date';
-			case 'sync.conflict_resolver.reminders_title': return 'Reminders';
-			case 'sync.conflict_resolver.reminders': return ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n,
+			case 'sync.conflict_resolver.fields.end_date': return 'End date';
+			case 'sync.conflict_resolver.fields.description': return 'Notes';
+			case 'sync.conflict_resolver.fields.start_date': return 'Start date';
+			case 'sync.conflict_resolver.fields.reminders_title': return 'Reminders';
+			case 'sync.conflict_resolver.fields.reminders': return ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n,
 				zero: 'No reminders',
 				one: '1 reminder',
 				other: '${n} reminders',
 			);
-			case 'sync.conflict_resolver.undefined': return 'Undefined';
-			case 'sync.conflict_resolver.priority': return 'Priority';
-			case 'sync.conflict_resolver.folder': return 'Folder';
-			case 'sync.conflict_resolver.tags': return ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n,
+			case 'sync.conflict_resolver.fields.undefined': return 'Undefined';
+			case 'sync.conflict_resolver.fields.priority': return 'Priority';
+			case 'sync.conflict_resolver.fields.folder': return 'Folder';
+			case 'sync.conflict_resolver.fields.tags': return ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n,
 				zero: 'No tags',
 				one: '1 tag',
 				other: '${n} tags',
