@@ -11,16 +11,16 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:jiffy/jiffy.dart';
 
-class TaskCard extends StatefulWidget {
+class TaskDetailCard extends StatefulWidget {
   final Map<String, dynamic>? taskData;
   final TaskEntity? taskEntity;
-  const TaskCard({super.key, this.taskData, this.taskEntity});
+  const TaskDetailCard({super.key, this.taskData, this.taskEntity});
 
   @override
-  State<TaskCard> createState() => _TaskCardState();
+  State<TaskDetailCard> createState() => _TaskDetailCardState();
 }
 
-class _TaskCardState extends State<TaskCard> {
+class _TaskDetailCardState extends State<TaskDetailCard> {
   @override
   Widget build(BuildContext context) {
     if (widget.taskData == null && widget.taskEntity == null) {
@@ -65,7 +65,7 @@ class _TaskCardState extends State<TaskCard> {
             ),
           ],
         ),
-        Text("${context.t.sync.conflict_resolver.notes} : "),
+        Text("${context.t.sync.conflict_resolver.description} : "),
         if (task.description != null)
           FleatherEditor(
             controller: FleatherController(
