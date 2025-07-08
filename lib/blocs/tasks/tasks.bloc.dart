@@ -230,8 +230,7 @@ class TasksBloc extends HydratedBloc<TasksEvent, TasksState> {
         prevState.stagedPatches ?? [],
       );
 
-      final newConflictList =
-          List<ConflictedItem>.from(prevState.conflicts ?? []);
+      final newConflictList = <ConflictedItem>[];
       newConflictList.addAll(syncResult.conflicts);
 
       final newPatchList = List<Patch>.from(prevState.stagedPatches ?? []);

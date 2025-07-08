@@ -134,154 +134,199 @@ class _SyncStatusState extends State<SyncStatus> {
                     SizedBox(
                       height: $constants.insets.md,
                     ),
-                    ElevatedContainer(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Padding(
-                            padding: EdgeInsets.symmetric(
-                                horizontal: $constants.insets.md,
-                                vertical: $constants.insets.sm),
-                            child: Column(
-                              children: [
-                                Row(
-                                  children: [
-                                    Container(
-                                      width: 50,
-                                      height: 50,
-                                      decoration: BoxDecoration(
-                                        color: getTheme(context).primary,
-                                        borderRadius: BorderRadius.circular(50),
+                    Expanded(
+                      child: ElevatedContainer(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: $constants.insets.md,
+                                  vertical: $constants.insets.sm),
+                              child: Column(
+                                children: [
+                                  Row(
+                                    children: [
+                                      Container(
+                                        width: 50,
+                                        height: 50,
+                                        decoration: BoxDecoration(
+                                          color: getTheme(context).primary,
+                                          borderRadius:
+                                              BorderRadius.circular(50),
+                                        ),
+                                        child: Center(
+                                            child: AutoSizeText(
+                                          maxLines: 1,
+                                          "${authState.user?.firstname?[0] ?? "A"}${authState.user?.lastname?[0] ?? "B"}",
+                                          style: getTextTheme(context)
+                                              .labelLarge!
+                                              .copyWith(
+                                                color: Colors.white,
+                                                fontWeight: FontWeight.w700,
+                                              ),
+                                        )),
                                       ),
-                                      child: Center(
-                                          child: AutoSizeText(
-                                        maxLines: 1,
-                                        "${authState.user?.firstname?[0] ?? "A"}${authState.user?.lastname?[0] ?? "B"}",
+                                      SizedBox(
+                                        width: $constants.insets.sm,
+                                      ),
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            authState.user?.email ??
+                                                "Anonymous",
+                                            style: getTextTheme(context)
+                                                .bodyMedium!
+                                                .copyWith(
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                          ),
+                                          Text.rich(
+                                            textAlign: TextAlign.center,
+                                            TextSpan(
+                                                text: selfHostedUrl != null &&
+                                                        selfHostedUrl != ""
+                                                    ? Uri.parse(ApiClient
+                                                            .getSelfHostedRestApiUrl()!)
+                                                        .host
+                                                    : context.t.app_name_saas,
+                                                style: const TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                )),
+                                            style: getTextTheme(context)
+                                                .bodyMedium!
+                                                .copyWith(
+                                                  color: Colors.grey,
+                                                ),
+                                          )
+                                        ],
+                                      )
+                                    ],
+                                  )
+                                ],
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: $constants.insets.sm),
+                              child: const Divider(
+                                height: 4,
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: $constants.insets.sm,
+                                  vertical: $constants.insets.xs),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        context.t.sync.status,
                                         style: getTextTheme(context)
-                                            .labelLarge!
+                                            .bodyMedium!
                                             .copyWith(
-                                              color: Colors.white,
-                                              fontWeight: FontWeight.w700,
+                                              fontWeight: FontWeight.bold,
                                             ),
-                                      )),
-                                    ),
-                                    SizedBox(
-                                      width: $constants.insets.sm,
-                                    ),
-                                    Column(
+                                      ),
+                                      SizedBox(
+                                        height: $constants.insets.xxs,
+                                      ),
+                                      _buildStatusContainer(
+                                        context,
+                                        color: _isLoading(taskState: taskState)
+                                            ? Colors.amber
+                                            : _hasConflictedItems(
+                                                    taskState: taskState)
+                                                ? Colors.red
+                                                : Colors.green,
+                                        text: _isLoading(taskState: taskState)
+                                            ? context.t.sync.loading
+                                            : _hasConflictedItems(
+                                                    taskState: taskState)
+                                                ? context.t.sync.conflicts
+                                                : context.t.sync.up_to_date,
+                                      ),
+                                      SizedBox(
+                                        height: $constants.insets.xs,
+                                      ),
+                                    ],
+                                  ),
+                                  SizedBox(
+                                    height: $constants.insets.xs,
+                                  ),
+                                  Divider(),
+                                  SizedBox(
+                                    height: $constants.insets.xs,
+                                  ),
+                                  ElevatedContainer(
+                                    width: double.infinity,
+                                    color: getTheme(context).surface,
+                                    padding:
+                                        EdgeInsets.all($constants.insets.xs),
+                                    child: Column(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
                                         Text(
-                                          authState.user?.email ?? "Anonymous",
+                                          context.t.sync.conflicts,
                                           style: getTextTheme(context)
                                               .bodyMedium!
                                               .copyWith(
                                                 fontWeight: FontWeight.bold,
                                               ),
                                         ),
-                                        Text.rich(
-                                          textAlign: TextAlign.center,
-                                          TextSpan(
-                                              text: selfHostedUrl != null &&
-                                                      selfHostedUrl != ""
-                                                  ? Uri.parse(ApiClient
-                                                          .getSelfHostedRestApiUrl()!)
-                                                      .host
-                                                  : context.t.app_name_saas,
-                                              style: const TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                              )),
-                                          style: getTextTheme(context)
-                                              .bodyMedium!
-                                              .copyWith(
-                                                color: Colors.grey,
-                                              ),
-                                        )
+                                        SizedBox(
+                                          height: $constants.insets.xxs,
+                                        ),
+                                        if (taskConflictedItems != null &&
+                                            taskConflictedItems.isNotEmpty)
+                                          Text(taskConflictedItems.length
+                                              .toString())
                                       ],
-                                    )
-                                  ],
-                                )
-                              ],
-                            ),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.symmetric(
-                                horizontal: $constants.insets.sm),
-                            child: const Divider(
-                              height: 4,
-                            ),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.symmetric(
-                                horizontal: $constants.insets.sm,
-                                vertical: $constants.insets.xs),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  context.t.sync.status,
-                                  style: getTextTheme(context)
-                                      .bodyMedium!
-                                      .copyWith(
-                                        fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: $constants.insets.sm,
+                                  ),
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        context.t.sync.details.title,
+                                        style: getTextTheme(context)
+                                            .bodyMedium!
+                                            .copyWith(
+                                              fontWeight: FontWeight.bold,
+                                            ),
                                       ),
-                                ),
-                                SizedBox(
-                                  height: $constants.insets.xxs,
-                                ),
-                                _buildStatusContainer(
-                                  context,
-                                  color: _isLoading(taskState: taskState)
-                                      ? Colors.amber
-                                      : _hasConflictedItems(
-                                              taskState: taskState)
-                                          ? Colors.red
-                                          : Colors.green,
-                                  text: _isLoading(taskState: taskState)
-                                      ? context.t.sync.loading
-                                      : _hasConflictedItems(
-                                              taskState: taskState)
-                                          ? context.t.sync.conflicts
-                                          : context.t.sync.up_to_date,
-                                ),
-                                SizedBox(
-                                  height: $constants.insets.xs,
-                                ),
-                              ],
+                                      SizedBox(
+                                        height: $constants.insets.xxs,
+                                      ),
+                                      _buildSyncItemRow(
+                                        context,
+                                        title: context.t.sync.details.tasks,
+                                        icon: CupertinoIcons.checkmark_square,
+                                        taskState: taskState,
+                                      )
+                                    ],
+                                  ),
+                                ],
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                     SizedBox(
-                      height: $constants.insets.xs,
+                      height: $constants.insets.sm,
                     ),
-                    ElevatedContainer(
-                      width: double.infinity,
-                      padding: EdgeInsets.symmetric(
-                          horizontal: $constants.insets.md,
-                          vertical: $constants.insets.sm),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(context.t.sync.details.title,
-                              style: getTextTheme(context)
-                                  .headlineMedium!
-                                  .copyWith()),
-                          SizedBox(
-                            height: $constants.insets.xxs,
-                          ),
-                          _buildSyncItemRow(
-                            context,
-                            title: context.t.sync.details.tasks,
-                            icon: CupertinoIcons.checkmark_square,
-                            taskState: taskState,
-                          )
-                        ],
-                      ),
-                    ),
-                    const Spacer(),
                     Padding(
                       padding: EdgeInsets.symmetric(
                         horizontal: $constants.insets.sm,
