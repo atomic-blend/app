@@ -911,18 +911,21 @@
       "end_date": "End date",
       "notes": "Notes",
       "start_date": "Start date",
+      "reminders_title": "Reminders",
       "reminders": {
         "zero": "No reminders",
         "one": "1 reminder",
         "other": "${n} reminders"
       },
+      "undefined": "Undefined",
       "priority": "Priority",
       "folder": "Folder",
       "tags": {
         "zero": "No tags",
         "one": "1 tag",
         "other": "${n} tags"
-      }
+      },
+      "progress": "Progress"
     }
   }
 }

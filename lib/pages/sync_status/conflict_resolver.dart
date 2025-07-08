@@ -55,57 +55,57 @@ class _ConflictResolverState extends State<ConflictResolver> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                Text(
+                  context.t.sync.conflict_resolver.progress,
+                  style: getTextTheme(context).bodyLarge!.copyWith(
+                        fontWeight: FontWeight.bold,
+                      ),
+                ),
+                ElevatedContainer(
+                  height: 50,
+                ),
                 SizedBox(
-                  height: getSize(context).height * 0.65,
+                  height: $constants.insets.sm,
+                ),
+                Text(
+                  context.t.sync.conflict_resolver.in_app_version,
+                  style: getTextTheme(context).bodyLarge!.copyWith(
+                        fontWeight: FontWeight.bold,
+                      ),
+                ),
+                Expanded(
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Expanded(
-                        child: ElevatedContainer(
-                          width: double.infinity,
-                          padding: EdgeInsets.symmetric(
-                            horizontal: $constants.insets.sm,
-                          ),
-                          child: Column(
-                            children: [
-                              SizedBox(
-                                height: $constants.insets.sm,
-                              ),
-                              Text(
-                                context.t.sync.conflict_resolver.in_app_version,
-                                style:
-                                    getTextTheme(context).bodyMedium!.copyWith(
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                              ),
-                              SizedBox(
-                                height: $constants.insets.xs,
-                              ),
-                              _getItemUi(context, patch!.itemType, patch.itemId)
-                            ],
-                          ),
+                      ElevatedContainer(
+                        width: double.infinity,
+                        padding: EdgeInsets.symmetric(
+                          vertical: $constants.insets.sm,
+                          horizontal: $constants.insets.sm,
+                        ),
+                        child: Column(
+                          children: [
+                            _getItemUi(context, patch!.itemType, patch.itemId)
+                          ],
                         ),
                       ),
                       SizedBox(
                         height: $constants.insets.sm,
                       ),
-                      Expanded(
+                      Text(context.t.sync.conflict_resolver.changes_to_apply,
+                          style: getTextTheme(context).bodyLarge!.copyWith(
+                                fontWeight: FontWeight.bold,
+                              )),
+                      ConstrainedBox(
+                        constraints: BoxConstraints(
+                          minHeight: getSize(context).height * 0.12,
+                        ),
                         child: ElevatedContainer(
                           width: double.infinity,
                           child: Column(
                             children: [
                               SizedBox(
                                 height: $constants.insets.sm,
-                              ),
-                              Text(
-                                  context.t.sync.conflict_resolver
-                                      .changes_to_apply,
-                                  style: getTextTheme(context)
-                                      .bodyMedium!
-                                      .copyWith(
-                                        fontWeight: FontWeight.bold,
-                                      )),
-                              SizedBox(
-                                height: $constants.insets.xs,
                               ),
                             ],
                           ),
@@ -115,7 +115,7 @@ class _ConflictResolverState extends State<ConflictResolver> {
                   ),
                 ),
                 SizedBox(
-                  height: $constants.insets.xs,
+                  height: $constants.insets.sm,
                 ),
                 Text(
                   context.t.sync.conflict_resolver.choose_between,
@@ -125,45 +125,17 @@ class _ConflictResolverState extends State<ConflictResolver> {
                 SizedBox(
                   height: $constants.insets.xs,
                 ),
-                // Expanded(
-                //   child: ElevatedContainer(
-                //     width: double.infinity,
-                //     child: Column(
-                //       children: [
-                //         SizedBox(
-                //           height: $constants.insets.sm,
-                //         ),
-                //         Text(
-                //           "${context.t.sync.conflict_resolver.upcoming} ${conflicts.length - 1 > 0 ? "(${conflicts.length})" : ''}",
-                //           style: getTextTheme(context).bodyLarge!.copyWith(
-                //                 fontWeight: FontWeight.bold,
-                //               ),
-                //         ),
-                //         SizedBox(
-                //           height: $constants.insets.sm,
-                //         ),
-                //         ...conflicts
-                //             .map((conflict) => _buildConflictListCard(
-                //                 context, conflict, patches))
-                //             .toList(),
-                //       ],
-                //     ),
-                //   ),
-                // ),
-                // SizedBox(
-                //   height: $constants.insets.sm,
-                // ),
-                Expanded(
-                    child: Row(
+                Row(
                   spacing: $constants.insets.sm,
                   children: [
                     Expanded(
                       child: ElevatedContainer(
                         color: getTheme(context).error.withValues(alpha: 0.8),
                         child: Column(
+                          mainAxisSize: MainAxisSize.min,
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Icon(
+                            const Icon(
                               CupertinoIcons.xmark,
                               size: 70,
                               color: Colors.white,
@@ -206,7 +178,7 @@ class _ConflictResolverState extends State<ConflictResolver> {
                       ),
                     ),
                   ],
-                ))
+                )
               ],
             ),
           );
