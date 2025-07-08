@@ -866,6 +866,11 @@ class TranslationsSyncEn {
 	String get loading => 'Loading...';
 	String get up_to_date => 'Up to date';
 	String get conflicts => 'Conflicts';
+	String x_items_have_conflicts({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n,
+		zero: 'No items have conflicts',
+		one: '1 item has conflicts',
+		other: '${n} items have conflicts',
+	);
 	late final TranslationsSyncDetailsEn details = TranslationsSyncDetailsEn._(_root);
 	String get sync_now => 'Sync now';
 }
@@ -2286,6 +2291,11 @@ extension on Translations {
 			case 'sync.loading': return 'Loading...';
 			case 'sync.up_to_date': return 'Up to date';
 			case 'sync.conflicts': return 'Conflicts';
+			case 'sync.x_items_have_conflicts': return ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n,
+				zero: 'No items have conflicts',
+				one: '1 item has conflicts',
+				other: '${n} items have conflicts',
+			);
 			case 'sync.details.title': return 'Details';
 			case 'sync.details.tasks': return 'Tasks';
 			case 'sync.details.task_items': return ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n,

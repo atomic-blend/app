@@ -3,6 +3,7 @@ import 'package:app/blocs/tasks/tasks.bloc.dart';
 import 'package:app/components/buttons/primary_button_square.dart';
 import 'package:app/components/widgets/elevated_container.dart';
 import 'package:app/i18n/strings.g.dart';
+import 'package:app/pages/sync_status/conflict_card.dart';
 import 'package:app/services/sync.service.dart';
 import 'package:app/utils/api_client.dart';
 import 'package:app/utils/constants.dart';
@@ -113,7 +114,7 @@ class _SyncStatusState extends State<SyncStatus> {
     return BlocBuilder<AuthBloc, AuthState>(builder: (context, authState) {
       return BlocBuilder<TasksBloc, TasksState>(
         builder: (context, taskState) {
-          final taskConflictedItems = taskState.conflicts;
+          final taskConflictedItems = taskState.latestSync?.conflicts;
           return Stack(
             children: [
               Padding(
@@ -264,36 +265,13 @@ class _SyncStatusState extends State<SyncStatus> {
                                   SizedBox(
                                     height: $constants.insets.xs,
                                   ),
-                                  ElevatedContainer(
-                                    width: double.infinity,
-                                    color: getTheme(context).surface,
-                                    padding:
-                                        EdgeInsets.all($constants.insets.xs),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          context.t.sync.conflicts,
-                                          style: getTextTheme(context)
-                                              .bodyMedium!
-                                              .copyWith(
-                                                fontWeight: FontWeight.bold,
-                                              ),
-                                        ),
-                                        SizedBox(
-                                          height: $constants.insets.xxs,
-                                        ),
-                                        if (taskConflictedItems != null &&
-                                            taskConflictedItems.isNotEmpty)
-                                          Text(taskConflictedItems.length
-                                              .toString())
-                                      ],
+                                  if (taskConflictedItems != null &&
+                                      taskConflictedItems.isNotEmpty) ...[
+                                    const ConflictCard(),
+                                    SizedBox(
+                                      height: $constants.insets.sm,
                                     ),
-                                  ),
-                                  SizedBox(
-                                    height: $constants.insets.sm,
-                                  ),
+                                  ],
                                   Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
@@ -468,6 +446,6 @@ class _SyncStatusState extends State<SyncStatus> {
   }
 
   bool _taskHasConflictedItems({required TasksState taskState}) {
-    return taskState.conflicts?.isNotEmpty ?? false;
+    return taskState.latestSync?.conflicts.isNotEmpty ?? false;
   }
 }

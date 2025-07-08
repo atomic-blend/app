@@ -32,9 +32,6 @@ class TasksBloc extends HydratedBloc<TasksEvent, TasksState> {
     if (json["tasks"] != null) {
       return TasksLoaded(
         (json["tasks"] as List).map((e) => TaskEntity.fromJson(e)).toList(),
-        conflicts: (json["conflicts"] as List?)
-            ?.map((e) => ConflictedItem.fromJson(e))
-            .toList(),
         stagedPatches: (json["stagedPatches"] as List?)
             ?.map((e) => Patch.fromJson(e))
             .toList(),
@@ -50,7 +47,6 @@ class TasksBloc extends HydratedBloc<TasksEvent, TasksState> {
   Map<String, dynamic>? toJson(TasksState state) {
     return {
       "tasks": state.tasks!.map((e) => e.toJson()).toList(),
-      "conflicts": state.conflicts?.map((e) => e.toJson()).toList(),
       "stagedPatches": state.stagedPatches?.map((e) => e.toJson()).toList(),
       "latestSync": state.latestSync?.toJson(),
     };
@@ -60,7 +56,6 @@ class TasksBloc extends HydratedBloc<TasksEvent, TasksState> {
     final prevState = state;
     emit(TasksLoading(
       prevState.tasks ?? [],
-      conflicts: prevState.conflicts,
       stagedPatches: prevState.stagedPatches,
       latestSync: prevState.latestSync,
     ));
@@ -68,7 +63,6 @@ class TasksBloc extends HydratedBloc<TasksEvent, TasksState> {
       final tasks = await _tasksService.getAllTasks();
       emit(TasksLoaded(
         tasks,
-        conflicts: prevState.conflicts,
         stagedPatches: prevState.stagedPatches,
         latestSync: prevState.latestSync,
       ));
@@ -76,7 +70,6 @@ class TasksBloc extends HydratedBloc<TasksEvent, TasksState> {
       emit(TaskLoadingError(
         prevState.tasks ?? [],
         e.toString(),
-        conflicts: prevState.conflicts,
         stagedPatches: prevState.stagedPatches,
         latestSync: prevState.latestSync,
       ));
@@ -87,7 +80,6 @@ class TasksBloc extends HydratedBloc<TasksEvent, TasksState> {
     final prevState = state;
     emit(TaskCreateInProgress(
       prevState.tasks ?? [],
-      conflicts: prevState.conflicts,
       stagedPatches: prevState.stagedPatches,
       latestSync: prevState.latestSync,
     ));
@@ -113,7 +105,6 @@ class TasksBloc extends HydratedBloc<TasksEvent, TasksState> {
 
       emit(TaskAdded(
         updatedTasks,
-        conflicts: prevState.conflicts,
         stagedPatches: existingPatches,
         latestSync: prevState.latestSync,
       ));
@@ -122,7 +113,6 @@ class TasksBloc extends HydratedBloc<TasksEvent, TasksState> {
       emit(TaskLoadingError(
         prevState.tasks ?? [],
         e.toString(),
-        conflicts: prevState.conflicts,
         stagedPatches: prevState.stagedPatches,
         latestSync: prevState.latestSync,
       ));
@@ -134,7 +124,6 @@ class TasksBloc extends HydratedBloc<TasksEvent, TasksState> {
     final prevState = state;
     emit(TasksLoading(
       prevState.tasks ?? [],
-      conflicts: prevState.conflicts,
       stagedPatches: prevState.stagedPatches,
       latestSync: prevState.latestSync,
     ));
@@ -152,7 +141,6 @@ class TasksBloc extends HydratedBloc<TasksEvent, TasksState> {
       final updatedTasks = _applyPatchToState(state: prevState, patch: patch);
       emit(TaskEdited(
         updatedTasks,
-        conflicts: prevState.conflicts,
         stagedPatches: existingPatches,
         latestSync: prevState.latestSync,
       ));
@@ -161,7 +149,6 @@ class TasksBloc extends HydratedBloc<TasksEvent, TasksState> {
       emit(TaskLoadingError(
         prevState.tasks ?? [],
         e.toString(),
-        conflicts: prevState.conflicts,
         stagedPatches: prevState.stagedPatches,
         latestSync: prevState.latestSync,
       ));
@@ -173,7 +160,6 @@ class TasksBloc extends HydratedBloc<TasksEvent, TasksState> {
     final prevState = state;
     emit(TasksLoading(
       prevState.tasks ?? [],
-      conflicts: prevState.conflicts,
       stagedPatches: prevState.stagedPatches,
       latestSync: prevState.latestSync,
     ));
@@ -193,7 +179,6 @@ class TasksBloc extends HydratedBloc<TasksEvent, TasksState> {
       emit(
         TaskDeleted(
           updatedTasks,
-          conflicts: prevState.conflicts,
           stagedPatches: existingPatches,
           latestSync: prevState.latestSync,
         ),
@@ -203,7 +188,6 @@ class TasksBloc extends HydratedBloc<TasksEvent, TasksState> {
       emit(TaskLoadingError(
         prevState.tasks ?? [],
         e.toString(),
-        conflicts: prevState.conflicts,
         stagedPatches: prevState.stagedPatches,
         latestSync: prevState.latestSync,
       ));
@@ -216,7 +200,6 @@ class TasksBloc extends HydratedBloc<TasksEvent, TasksState> {
     emit(
       TaskSyncInProgress(
         prevState.tasks ?? [],
-        conflicts: prevState.conflicts,
         stagedPatches: prevState.stagedPatches,
         latestSync: prevState.latestSync,
       ),
@@ -240,7 +223,6 @@ class TasksBloc extends HydratedBloc<TasksEvent, TasksState> {
       emit(TaskSyncSuccess(
         prevState.tasks ?? [],
         latestSync: syncResult,
-        conflicts: newConflictList,
         stagedPatches: newPatchList,
       ));
       add(const LoadTasks());
@@ -248,7 +230,6 @@ class TasksBloc extends HydratedBloc<TasksEvent, TasksState> {
       emit(TaskLoadingError(
         prevState.tasks ?? [],
         e.toString(),
-        conflicts: prevState.conflicts,
         stagedPatches: prevState.stagedPatches,
         latestSync: prevState.latestSync,
       ));
@@ -257,7 +238,8 @@ class TasksBloc extends HydratedBloc<TasksEvent, TasksState> {
   }
 }
 
-List<TaskEntity> _applyPatchToState({required TasksState state, required Patch patch}) {
+List<TaskEntity> _applyPatchToState(
+    {required TasksState state, required Patch patch}) {
   final tasks = List<TaskEntity>.from(state.tasks ?? []);
   final taskIndex = tasks.indexWhere((task) => task.id == patch.itemId);
 
