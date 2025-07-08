@@ -1485,9 +1485,27 @@ class _TranslationsSyncConflictResolverFr implements TranslationsSyncConflictRes
 		'task': 'Tâche',
 		'note': 'Note',
 	};
+	@override String get choose_between => 'Choisissez entre accepter ou refuser les modifications';
 	@override String get refuse => 'Refuser';
 	@override String get accept => 'Accepter';
 	@override String get upcoming => 'À venir';
+	@override String get in_app_version => 'Dans l\'application';
+	@override String get changes_to_apply => 'Modifications à appliquer';
+	@override String get end_date => 'Date de fin';
+	@override String get notes => 'Notes';
+	@override String get start_date => 'Date de début';
+	@override String reminders({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('fr'))(n,
+		zero: 'Aucun rappel',
+		one: '1 rappel',
+		other: '${n} rappels',
+	);
+	@override String get priority => 'Priorité';
+	@override String get folder => 'Dossier';
+	@override String tags({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('fr'))(n,
+		zero: 'Aucun tag',
+		one: '1 tag',
+		other: '${n} tags',
+	);
 }
 
 // Path: settings.app_settings.selfHostedUrl
@@ -2318,9 +2336,27 @@ extension on TranslationsFr {
 			case 'sync.conflict_resolver.patch_date': return ({required Object date}) => 'Date de mise à jour : ${date}';
 			case 'sync.conflict_resolver.item_type.task': return 'Tâche';
 			case 'sync.conflict_resolver.item_type.note': return 'Note';
+			case 'sync.conflict_resolver.choose_between': return 'Choisissez entre accepter ou refuser les modifications';
 			case 'sync.conflict_resolver.refuse': return 'Refuser';
 			case 'sync.conflict_resolver.accept': return 'Accepter';
 			case 'sync.conflict_resolver.upcoming': return 'À venir';
+			case 'sync.conflict_resolver.in_app_version': return 'Dans l\'application';
+			case 'sync.conflict_resolver.changes_to_apply': return 'Modifications à appliquer';
+			case 'sync.conflict_resolver.end_date': return 'Date de fin';
+			case 'sync.conflict_resolver.notes': return 'Notes';
+			case 'sync.conflict_resolver.start_date': return 'Date de début';
+			case 'sync.conflict_resolver.reminders': return ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('fr'))(n,
+				zero: 'Aucun rappel',
+				one: '1 rappel',
+				other: '${n} rappels',
+			);
+			case 'sync.conflict_resolver.priority': return 'Priorité';
+			case 'sync.conflict_resolver.folder': return 'Dossier';
+			case 'sync.conflict_resolver.tags': return ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('fr'))(n,
+				zero: 'Aucun tag',
+				one: '1 tag',
+				other: '${n} tags',
+			);
 			default: return null;
 		}
 	}

@@ -899,9 +899,27 @@
         "task": "Tâche",
         "note": "Note"
       },
+      "choose_between": "Choisissez entre accepter ou refuser les modifications",
       "refuse": "Refuser",
       "accept": "Accepter",
-      "upcoming": "À venir"
+      "upcoming": "À venir",
+      "in_app_version": "Dans l'application",
+      "changes_to_apply": "Modifications à appliquer",
+      "end_date": "Date de fin",
+      "notes": "Notes",
+      "start_date": "Date de début",
+      "reminders": {
+        "zero": "Aucun rappel",
+        "one": "1 rappel",
+        "other": "${n} rappels"
+      },
+      "priority": "Priorité",
+      "folder": "Dossier",
+      "tags": {
+        "zero": "Aucun tag",
+        "one": "1 tag",
+        "other": "${n} tags"
+      }
     }
   }
 }

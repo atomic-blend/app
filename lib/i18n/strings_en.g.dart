@@ -1491,9 +1491,27 @@ class TranslationsSyncConflictResolverEn {
 		'task': 'Task',
 		'note': 'Note',
 	};
+	String get choose_between => 'Choose between accepting or refusing the changes';
 	String get refuse => 'Refuse';
 	String get accept => 'Accept';
 	String get upcoming => 'Upcoming';
+	String get in_app_version => 'In-app';
+	String get changes_to_apply => 'Changes to apply';
+	String get end_date => 'End date';
+	String get notes => 'Notes';
+	String get start_date => 'Start date';
+	String reminders({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n,
+		zero: 'No reminders',
+		one: '1 reminder',
+		other: '${n} reminders',
+	);
+	String get priority => 'Priority';
+	String get folder => 'Folder';
+	String tags({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n,
+		zero: 'No tags',
+		one: '1 tag',
+		other: '${n} tags',
+	);
 }
 
 // Path: settings.app_settings.selfHostedUrl
@@ -2327,9 +2345,27 @@ extension on Translations {
 			case 'sync.conflict_resolver.patch_date': return ({required Object date}) => 'Update date: ${date}';
 			case 'sync.conflict_resolver.item_type.task': return 'Task';
 			case 'sync.conflict_resolver.item_type.note': return 'Note';
+			case 'sync.conflict_resolver.choose_between': return 'Choose between accepting or refusing the changes';
 			case 'sync.conflict_resolver.refuse': return 'Refuse';
 			case 'sync.conflict_resolver.accept': return 'Accept';
 			case 'sync.conflict_resolver.upcoming': return 'Upcoming';
+			case 'sync.conflict_resolver.in_app_version': return 'In-app';
+			case 'sync.conflict_resolver.changes_to_apply': return 'Changes to apply';
+			case 'sync.conflict_resolver.end_date': return 'End date';
+			case 'sync.conflict_resolver.notes': return 'Notes';
+			case 'sync.conflict_resolver.start_date': return 'Start date';
+			case 'sync.conflict_resolver.reminders': return ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n,
+				zero: 'No reminders',
+				one: '1 reminder',
+				other: '${n} reminders',
+			);
+			case 'sync.conflict_resolver.priority': return 'Priority';
+			case 'sync.conflict_resolver.folder': return 'Folder';
+			case 'sync.conflict_resolver.tags': return ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n,
+				zero: 'No tags',
+				one: '1 tag',
+				other: '${n} tags',
+			);
 			default: return null;
 		}
 	}
