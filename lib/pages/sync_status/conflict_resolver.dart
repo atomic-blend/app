@@ -3,14 +3,11 @@ import 'package:app/components/widgets/elevated_container.dart';
 import 'package:app/entities/sync/conflicted_item/conflicted_item.dart';
 import 'package:app/entities/sync/item_type/item_type.dart';
 import 'package:app/entities/sync/patch/patch.dart';
-import 'package:app/entities/sync/patch_change/patch_change.dart';
-import 'package:app/entities/tasks/tasks.entity.dart';
 import 'package:app/i18n/strings.g.dart';
 import 'package:app/pages/sync_status/items_ui/task/task_detail_card.dart';
 import 'package:app/utils/constants.dart';
 import 'package:app/utils/shortcuts.dart';
 import 'package:collection/collection.dart';
-import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -61,8 +58,32 @@ class _ConflictResolverState extends State<ConflictResolver> {
                         fontWeight: FontWeight.bold,
                       ),
                 ),
-                ElevatedContainer(
-                  height: 50,
+                Stack(
+                  children: [
+                    ElevatedContainer(
+                      height: 50,
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(
+                          vertical: $constants.insets.sm,
+                          horizontal: $constants.insets.sm,
+                        ),
+                        child: LinearProgressIndicator(
+                          value: _selectedIndex / conflicts.length,
+                          borderRadius: BorderRadius.circular(10),
+                          backgroundColor: Colors.grey[300],
+                          color: Colors.blue,
+                        ),
+                      ),
+                    ),
+                    Positioned(
+                        top: 0,
+                        bottom: 0,
+                        left: 0,
+                        right: 0,
+                        child: Center(
+                            child: Text(
+                                "${_selectedIndex + 1} / ${conflicts.length}")))
+                  ],
                 ),
                 SizedBox(
                   height: $constants.insets.sm,
