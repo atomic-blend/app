@@ -891,6 +891,9 @@
         "other": "${n} tâches"
       }
     },
-    "sync_now": "Synchroniser maintenant"
+    "sync_now": "Synchroniser maintenant",
+    "conflict_resolver": {
+      "title": "Résolveur de Conflits"
+    }
   }
 }
