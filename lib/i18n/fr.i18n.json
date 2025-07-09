@@ -906,6 +906,7 @@
       "in_app_version": "Dans l'application",
       "changes_to_apply": "Modifications à appliquer",
       "fields(map)": {
+        "title": "Titre",
         "end_date": "Date de fin",
         "description": "Notes",
         "undefined": "Non défini",

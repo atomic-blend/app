@@ -1498,6 +1498,7 @@ class TranslationsSyncConflictResolverEn {
 	String get in_app_version => 'In-app';
 	String get changes_to_apply => 'Changes to apply';
 	Map<String, dynamic> get fields => {
+		'title': 'Title',
 		'end_date': 'End date',
 		'description': 'Notes',
 		'start_date': 'Start date',
@@ -2356,6 +2357,7 @@ extension on Translations {
 			case 'sync.conflict_resolver.upcoming': return 'Upcoming';
 			case 'sync.conflict_resolver.in_app_version': return 'In-app';
 			case 'sync.conflict_resolver.changes_to_apply': return 'Changes to apply';
+			case 'sync.conflict_resolver.fields.title': return 'Title';
 			case 'sync.conflict_resolver.fields.end_date': return 'End date';
 			case 'sync.conflict_resolver.fields.description': return 'Notes';
 			case 'sync.conflict_resolver.fields.start_date': return 'Start date';
