@@ -1490,6 +1490,7 @@ class _TranslationsSyncConflictResolverFr implements TranslationsSyncConflictRes
 	@override String get accept => 'Accepter';
 	@override String get upcoming => 'À venir';
 	@override String get in_app_version => 'Dans l\'application';
+	@override String get apply_to_all => 'Appliquer la décision à tous les conflits';
 	@override String get changes_to_apply => 'Modifications à appliquer';
 	@override Map<String, dynamic> get fields => {
 		'title': 'Titre',
@@ -2347,6 +2348,7 @@ extension on TranslationsFr {
 			case 'sync.conflict_resolver.accept': return 'Accepter';
 			case 'sync.conflict_resolver.upcoming': return 'À venir';
 			case 'sync.conflict_resolver.in_app_version': return 'Dans l\'application';
+			case 'sync.conflict_resolver.apply_to_all': return 'Appliquer la décision à tous les conflits';
 			case 'sync.conflict_resolver.changes_to_apply': return 'Modifications à appliquer';
 			case 'sync.conflict_resolver.fields.title': return 'Titre';
 			case 'sync.conflict_resolver.fields.end_date': return 'Date de fin';
