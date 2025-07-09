@@ -904,6 +904,7 @@
       "accept": "Accepter",
       "upcoming": "À venir",
       "in_app_version": "Dans l'application",
+      "apply_to_all": "Appliquer la décision à tous les conflits",
       "changes_to_apply": "Modifications à appliquer",
       "fields(map)": {
         "title": "Titre",

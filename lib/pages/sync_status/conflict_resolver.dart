@@ -1,4 +1,5 @@
 import 'package:app/blocs/tasks/tasks.bloc.dart';
+import 'package:app/components/forms/ab_checkbox.dart';
 import 'package:app/components/widgets/elevated_container.dart';
 import 'package:app/entities/sync/conflicted_item/conflicted_item.dart';
 import 'package:app/entities/sync/item_type/item_type.dart';
@@ -24,6 +25,7 @@ class ConflictResolver extends StatefulWidget {
 
 class _ConflictResolverState extends State<ConflictResolver> {
   int _selectedIndex = 0;
+  bool _applyToAll = false;
 
   @override
   Widget build(BuildContext context) {
@@ -149,6 +151,27 @@ class _ConflictResolverState extends State<ConflictResolver> {
                   style: getTextTheme(context).bodyLarge!.copyWith(),
                   textAlign: TextAlign.center,
                 ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    ABCheckbox(
+                      size: 23,
+                      value: _applyToAll,
+                      onChanged: (value) {
+                        setState(() {
+                          _applyToAll = value!;
+                        });
+                      },
+                    ),
+                    SizedBox(
+                      width: $constants.insets.xs,
+                    ),
+                    Text(context.t.sync.conflict_resolver.apply_to_all,
+                        style: getTextTheme(context).bodyMedium!.copyWith(
+                              fontWeight: FontWeight.bold,
+                            )),
+                  ],
+                ),
                 SizedBox(
                   height: $constants.insets.xs,
                 ),
@@ -157,6 +180,9 @@ class _ConflictResolverState extends State<ConflictResolver> {
                   children: [
                     Expanded(
                       child: ElevatedContainer(
+                        padding: EdgeInsets.symmetric(
+                          vertical: $constants.insets.sm,
+                        ),
                         color: getTheme(context).error.withValues(alpha: 0.8),
                         child: Column(
                           mainAxisSize: MainAxisSize.min,
@@ -182,6 +208,9 @@ class _ConflictResolverState extends State<ConflictResolver> {
                     ),
                     Expanded(
                       child: ElevatedContainer(
+                        padding: EdgeInsets.symmetric(
+                          vertical: $constants.insets.sm,
+                        ),
                         color: getTheme(context).primary.withValues(alpha: 0.8),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
