@@ -198,6 +198,7 @@ class TranslationsTasksEn {
 	String get time_spent => 'Time spent';
 	String get no_time_entries => 'No time entries for now';
 	late final TranslationsTasksAddTimeEntryEn add_time_entry = TranslationsTasksAddTimeEntryEn._(_root);
+	late final TranslationsTasksConflictDetectedModalEn conflict_detected_modal = TranslationsTasksConflictDetectedModalEn._(_root);
 }
 
 // Path: calendar
@@ -1159,6 +1160,20 @@ class TranslationsTasksAddTimeEntryEn {
 	String get date_required => 'Date is required';
 }
 
+// Path: tasks.conflict_detected_modal
+class TranslationsTasksConflictDetectedModalEn {
+	TranslationsTasksConflictDetectedModalEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	String get title => 'Conflict Detected';
+	String get description => 'Previous edits of this task made while offline conflicts with the current version of the task.';
+	String get warning => 'You can either resolve the conflicts now or come back later to resolve them.';
+	String get resolve_now => 'Resolve';
+	String get later => 'Later';
+}
+
 // Path: calendar.errors
 class TranslationsCalendarErrorsEn {
 	TranslationsCalendarErrorsEn._(this._root);
@@ -1832,6 +1847,11 @@ extension on Translations {
 			case 'tasks.add_time_entry.end_time': return 'End time';
 			case 'tasks.add_time_entry.not_defined': return 'Not defined';
 			case 'tasks.add_time_entry.date_required': return 'Date is required';
+			case 'tasks.conflict_detected_modal.title': return 'Conflict Detected';
+			case 'tasks.conflict_detected_modal.description': return 'Previous edits of this task made while offline conflicts with the current version of the task.';
+			case 'tasks.conflict_detected_modal.warning': return 'You can either resolve the conflicts now or come back later to resolve them.';
+			case 'tasks.conflict_detected_modal.resolve_now': return 'Resolve';
+			case 'tasks.conflict_detected_modal.later': return 'Later';
 			case 'calendar.title': return 'Calendar';
 			case 'calendar.month': return 'Month';
 			case 'calendar.day': return 'Day';

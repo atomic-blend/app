@@ -195,6 +195,7 @@ class _TranslationsTasksFr implements TranslationsTasksEn {
 	@override String get time_spent => 'Temps passé';
 	@override String get no_time_entries => 'Pas d\'entrées de temps';
 	@override late final _TranslationsTasksAddTimeEntryFr add_time_entry = _TranslationsTasksAddTimeEntryFr._(_root);
+	@override late final _TranslationsTasksConflictDetectedModalFr conflict_detected_modal = _TranslationsTasksConflictDetectedModalFr._(_root);
 }
 
 // Path: calendar
@@ -1153,6 +1154,20 @@ class _TranslationsTasksAddTimeEntryFr implements TranslationsTasksAddTimeEntryE
 	@override String get date_required => 'Date requise';
 }
 
+// Path: tasks.conflict_detected_modal
+class _TranslationsTasksConflictDetectedModalFr implements TranslationsTasksConflictDetectedModalEn {
+	_TranslationsTasksConflictDetectedModalFr._(this._root);
+
+	final TranslationsFr _root; // ignore: unused_field
+
+	// Translations
+	@override String get title => 'Conflit détecté';
+	@override String get description => 'Les modifications précédentes de cette tâche effectuées hors ligne entrent en conflit avec la version actuelle de la tâche.';
+	@override String get warning => 'Vous pouvez soit résoudre les conflits maintenant, soit revenir plus tard pour les résoudre.';
+	@override String get resolve_now => 'Résoudre';
+	@override String get later => 'Plus tard';
+}
+
 // Path: calendar.errors
 class _TranslationsCalendarErrorsFr implements TranslationsCalendarErrorsEn {
 	_TranslationsCalendarErrorsFr._(this._root);
@@ -1826,6 +1841,11 @@ extension on TranslationsFr {
 			case 'tasks.add_time_entry.end_time': return 'Heure de fin';
 			case 'tasks.add_time_entry.not_defined': return 'Non défini';
 			case 'tasks.add_time_entry.date_required': return 'Date requise';
+			case 'tasks.conflict_detected_modal.title': return 'Conflit détecté';
+			case 'tasks.conflict_detected_modal.description': return 'Les modifications précédentes de cette tâche effectuées hors ligne entrent en conflit avec la version actuelle de la tâche.';
+			case 'tasks.conflict_detected_modal.warning': return 'Vous pouvez soit résoudre les conflits maintenant, soit revenir plus tard pour les résoudre.';
+			case 'tasks.conflict_detected_modal.resolve_now': return 'Résoudre';
+			case 'tasks.conflict_detected_modal.later': return 'Plus tard';
 			case 'calendar.title': return 'Calendrier';
 			case 'calendar.month': return 'Mois';
 			case 'calendar.day': return 'Jour';
