@@ -86,7 +86,9 @@ class _TaskDetailCardState extends State<TaskDetailCard> {
                   CupertinoIcons.calendar_today,
                   context.t.sync.conflict_resolver.fields["start_date"]!,
                   task.startDate != null
-                      ? Jiffy.parseFromDateTime(task.startDate!).yMMMEdjm
+                      ? Jiffy.parseFromDateTime(task.startDate!)
+                          .toLocal()
+                          .yMMMEdjm
                       : null),
             ),
             Expanded(
@@ -95,7 +97,9 @@ class _TaskDetailCardState extends State<TaskDetailCard> {
                   CupertinoIcons.calendar_today,
                   context.t.sync.conflict_resolver.fields["end_date"]!,
                   task.endDate != null
-                      ? Jiffy.parseFromDateTime(task.endDate!).yMMMEdjm
+                      ? Jiffy.parseFromDateTime(task.endDate!)
+                          .toLocal()
+                          .yMMMEdjm
                       : null),
             )
           ],
