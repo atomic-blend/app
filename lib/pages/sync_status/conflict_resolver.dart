@@ -3,8 +3,10 @@ import 'package:app/components/widgets/elevated_container.dart';
 import 'package:app/entities/sync/conflicted_item/conflicted_item.dart';
 import 'package:app/entities/sync/item_type/item_type.dart';
 import 'package:app/entities/sync/patch/patch.dart';
+import 'package:app/entities/sync/patch_change/patch_change.dart';
 import 'package:app/i18n/strings.g.dart';
 import 'package:app/pages/sync_status/items_ui/task/task_detail_card.dart';
+import 'package:app/pages/sync_status/items_ui/task/task_patch_card.dart';
 import 'package:app/utils/constants.dart';
 import 'package:app/utils/shortcuts.dart';
 import 'package:collection/collection.dart';
@@ -125,6 +127,10 @@ class _ConflictResolverState extends State<ConflictResolver> {
                           width: double.infinity,
                           child: Column(
                             children: [
+                              SizedBox(
+                                height: $constants.insets.sm,
+                              ),
+                              _getPatchChanges(patch.itemType, patch.changes),
                               SizedBox(
                                 height: $constants.insets.sm,
                               ),
@@ -265,6 +271,21 @@ class _ConflictResolverState extends State<ConflictResolver> {
         return Icons.check_box;
       default:
         return Icons.help_outline;
+    }
+  }
+
+  _getPatchChanges(ItemType type, List<PatchChange> changes) {
+    switch (type) {
+      case ItemType.task:
+        return TaskPatchCard(
+          changes: changes,
+        );
+      case ItemType.note:
+        // Handle note patch changes if needed
+        return SizedBox.shrink();
+      default:
+        // Handle other item types if needed
+        return SizedBox.shrink();
     }
   }
 

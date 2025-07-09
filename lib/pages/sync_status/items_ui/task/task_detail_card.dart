@@ -81,65 +81,22 @@ class _TaskDetailCardState extends State<TaskDetailCard> {
         Row(
           children: [
             Expanded(
-              child: Row(
-                children: [
-                  const Icon(CupertinoIcons.calendar),
-                  SizedBox(
-                    width: $constants.insets.xs,
-                  ),
-                  Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          context
-                              .t.sync.conflict_resolver.fields["start_date"]!,
-                          style: getTextTheme(context).bodyMedium!.copyWith(
-                                fontWeight: FontWeight.bold,
-                              ),
-                        ),
-                        if (task.startDate != null)
-                          Text(
-                            Jiffy.parseFromDateTime(task.startDate!).yMMMEdjm,
-                          )
-                        else
-                          Text(
-                            context
-                                .t.sync.conflict_resolver.fields["undefined"]!,
-                            style: getTextTheme(context).bodyMedium!.copyWith(
-                                  fontStyle: FontStyle.italic,
-                                  color: Colors.grey,
-                                ),
-                          ),
-                      ]),
-                ],
-              ),
+              child: _buildTaskFieldItem(
+                  context,
+                  CupertinoIcons.calendar_today,
+                  context.t.sync.conflict_resolver.fields["start_date"]!,
+                  task.startDate != null
+                      ? Jiffy.parseFromDateTime(task.startDate!).yMMMEdjm
+                      : null),
             ),
             Expanded(
-              child: Row(
-                children: [
-                  const Icon(
-                    CupertinoIcons.calendar_today,
-                  ),
-                  SizedBox(
-                    width: $constants.insets.xs,
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        context.t.sync.conflict_resolver.fields["end_date"]!,
-                        style: getTextTheme(context).bodyMedium!.copyWith(
-                              fontWeight: FontWeight.bold,
-                            ),
-                      ),
-                      if (task.endDate != null)
-                        Text(
-                          Jiffy.parseFromDateTime(task.endDate!).yMMMEdjm,
-                        )
-                    ],
-                  )
-                ],
-              ),
+              child: _buildTaskFieldItem(
+                  context,
+                  CupertinoIcons.calendar_today,
+                  context.t.sync.conflict_resolver.fields["end_date"]!,
+                  task.endDate != null
+                      ? Jiffy.parseFromDateTime(task.endDate!).yMMMEdjm
+                      : null),
             )
           ],
         ),
@@ -150,79 +107,60 @@ class _TaskDetailCardState extends State<TaskDetailCard> {
         Row(
           children: [
             Expanded(
-              child: Row(
-                children: [
-                  const Icon(CupertinoIcons.flag),
-                  SizedBox(
-                    width: $constants.insets.xs,
-                  ),
-                  Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          context.t.sync.conflict_resolver.fields["priority"]!,
-                          style: getTextTheme(context).bodyMedium!.copyWith(
-                                fontWeight: FontWeight.bold,
-                              ),
-                        ),
-                        if (task.priority != null)
-                          Text(
-                            context.t.tasks.priorities.values
-                                .toList()[task.priority ?? 0],
-                          )
-                        else
-                          Text(
-                            context
-                                .t.sync.conflict_resolver.fields["undefined"]!,
-                            style: getTextTheme(context).bodyMedium!.copyWith(
-                                  fontStyle: FontStyle.italic,
-                                  color: Colors.grey,
-                                ),
-                          ),
-                      ]),
-                ],
-              ),
+              child: _buildTaskFieldItem(
+                  context,
+                  CupertinoIcons.flag,
+                  context.t.sync.conflict_resolver.fields["priority"]!,
+                  task.priority != null
+                      ? context.t.tasks.priorities.values
+                          .toList()[task.priority ?? 0]
+                      : null),
             ),
             Expanded(
-              child: Row(
-                children: [
-                  const Icon(CupertinoIcons.alarm),
-                  SizedBox(
-                    width: $constants.insets.xs,
-                  ),
-                  Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          context.t.sync.conflict_resolver
-                              .fields["reminders_title"]!,
-                          style: getTextTheme(context).bodyMedium!.copyWith(
-                                fontWeight: FontWeight.bold,
-                              ),
-                        ),
-                        if (task.reminders != null)
-                          Text(
-                            context
-                                .t.sync.conflict_resolver.fields["reminders"]!(
-                              n: task.reminders?.length ?? 0,
-                            ),
-                          )
-                        else
-                          Text(
-                            context
-                                .t.sync.conflict_resolver.fields["undefined"]!,
-                            style: getTextTheme(context).bodyMedium!.copyWith(
-                                  fontStyle: FontStyle.italic,
-                                  color: Colors.grey,
-                                ),
-                          ),
-                      ]),
-                ],
-              ),
+              child: _buildTaskFieldItem(
+                  context,
+                  CupertinoIcons.alarm,
+                  context.t.sync.conflict_resolver.fields["reminders_title"]!,
+                  task.reminders != null
+                      ? context.t.sync.conflict_resolver.fields["reminders"]!(
+                          n: task.reminders?.length ?? 0)
+                      : null),
             ),
           ],
         )
       ],
     );
   }
+}
+
+_buildTaskFieldItem(
+    BuildContext context, IconData icon, String fieldName, String? value) {
+  return Row(
+    children: [
+      Icon(icon),
+      SizedBox(
+        width: $constants.insets.xs,
+      ),
+      Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        Text(
+          fieldName,
+          style: getTextTheme(context).bodyMedium!.copyWith(
+                fontWeight: FontWeight.bold,
+              ),
+        ),
+        if (value != null)
+          Text(
+            value,
+          )
+        else
+          Text(
+            context.t.sync.conflict_resolver.fields["undefined"]!,
+            style: getTextTheme(context).bodyMedium!.copyWith(
+                  fontStyle: FontStyle.italic,
+                  color: Colors.grey,
+                ),
+          ),
+      ]),
+    ],
+  );
 }
