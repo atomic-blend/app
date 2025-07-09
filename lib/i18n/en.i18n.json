@@ -236,6 +236,13 @@
       "end_time": "End time",
       "not_defined": "Not defined",
       "date_required": "Date is required"
+    },
+    "conflict_detected_modal": {
+      "title": "Conflict Detected",
+      "description": "Previous edits of this task made while offline conflicts with the current version of the task.",
+      "warning": "You can either resolve the conflicts now or come back later to resolve them.",
+      "resolve_now": "Resolve",
+      "later": "Later"
     }
   },
   "calendar": {

@@ -1,6 +1,6 @@
 import 'package:app/blocs/folder/folder.bloc.dart';
 import 'package:app/components/buttons/icon_text_card.dart';
-import 'package:app/components/modals/delete_confirm_modal.dart';
+import 'package:app/components/modals/ab_modal.dart';
 import 'package:app/entities/folder/folder.entity.dart';
 import 'package:app/i18n/strings.g.dart';
 import 'package:app/pages/folder/add_folder_modal.dart';
@@ -80,13 +80,13 @@ class _MyFoldersState extends State<MyFolders> {
                               onPressed: (context) {
                                 showDialog(
                                     context: context,
-                                    builder: (context) => DeleteConfirmModal(
+                                    builder: (context) => ABModal(
                                           title: context.t.tags.delete.title,
                                           description:
                                               context.t.tags.delete.description,
                                           warning:
                                               context.t.tags.delete.warning,
-                                          onDelete: () {
+                                          onConfirm: () {
                                             context.read<FolderBloc>().add(
                                                   DeleteFolder(
                                                     folder,
