@@ -77,7 +77,7 @@ class _TaskDetailCardState extends State<TaskDetailCard> {
             expands: false,
             padding: EdgeInsets.zero,
           ),
-        Divider(),
+        const Divider(),
         Row(
           children: [
             Expanded(
