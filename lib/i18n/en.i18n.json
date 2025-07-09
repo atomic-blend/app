@@ -908,6 +908,7 @@
       "upcoming": "Upcoming",
       "in_app_version": "In-app",
       "changes_to_apply": "Changes to apply",
+      "apply_to_all": "Apply decision to all conflicts",
       "fields(map)": {
         "title": "Title",
         "end_date": "End date",
