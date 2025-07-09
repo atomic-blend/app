@@ -9,6 +9,7 @@ import 'package:app/utils/shortcuts.dart';
 import 'package:fleather/fleather.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:jiffy/jiffy.dart';
 
 class TaskDetailCard extends StatefulWidget {
@@ -78,60 +79,65 @@ class _TaskDetailCardState extends State<TaskDetailCard> {
             padding: EdgeInsets.zero,
           ),
         const Divider(),
-        Row(
-          children: [
-            Expanded(
-              child: _buildTaskFieldItem(
-                  context,
-                  CupertinoIcons.calendar_today,
-                  context.t.sync.conflict_resolver.fields["start_date"]!,
-                  task.startDate != null
-                      ? Jiffy.parseFromDateTime(task.startDate!)
-                          .toLocal()
-                          .yMMMEdjm
-                      : null),
-            ),
-            Expanded(
-              child: _buildTaskFieldItem(
-                  context,
-                  CupertinoIcons.calendar_today,
-                  context.t.sync.conflict_resolver.fields["end_date"]!,
-                  task.endDate != null
-                      ? Jiffy.parseFromDateTime(task.endDate!)
-                          .toLocal()
-                          .yMMMEdjm
-                      : null),
-            )
-          ],
-        ),
         SizedBox(
-          height: $constants.insets.xs,
+          child: StaggeredGrid.count(
+            crossAxisCount: 2,
+            mainAxisSpacing: $constants.insets.xs,
+            children: [
+              StaggeredGridTile.count(
+                crossAxisCellCount: 1,
+                mainAxisCellCount: 0.26,
+                child: _buildTaskFieldItem(
+                    context,
+                    CupertinoIcons.calendar_today,
+                    context.t.sync.conflict_resolver.fields["start_date"]!,
+                    task.startDate != null
+                        ? Jiffy.parseFromDateTime(task.startDate!)
+                            .toLocal()
+                            .yMMMEdjm
+                        : null),
+              ),
+              StaggeredGridTile.count(
+                crossAxisCellCount: 1,
+                mainAxisCellCount: 0.26,
+                child: _buildTaskFieldItem(
+                    context,
+                    CupertinoIcons.calendar_today,
+                    context.t.sync.conflict_resolver.fields["end_date"]!,
+                    task.endDate != null
+                        ? Jiffy.parseFromDateTime(task.endDate!)
+                            .toLocal()
+                            .yMMMEdjm
+                        : null),
+              ),
+              StaggeredGridTile.count(
+                crossAxisCellCount: 1,
+                mainAxisCellCount: 0.26,
+                child: _buildTaskFieldItem(
+                    context,
+                    CupertinoIcons.flag,
+                    context.t.sync.conflict_resolver.fields["priority"]!,
+                    task.priority != null
+                        ? context.t.tasks.priorities.values
+                            .toList()[task.priority ?? 0]
+                        : null),
+              ),
+              StaggeredGridTile.count(
+                crossAxisCellCount: 1,
+                mainAxisCellCount: 0.26,
+                child: _buildTaskFieldItem(
+                    context,
+                    CupertinoIcons.alarm,
+                    context.t.sync.conflict_resolver.fields["reminders_title"]!,
+                    task.reminders != null
+                        ? context.t.sync.conflict_resolver.fields["reminders"]!(
+                            n: task.reminders?.length ?? 0)
+                        : null),
+              ),
+            ],
+          ),
         ),
         // priotity
-        Row(
-          children: [
-            Expanded(
-              child: _buildTaskFieldItem(
-                  context,
-                  CupertinoIcons.flag,
-                  context.t.sync.conflict_resolver.fields["priority"]!,
-                  task.priority != null
-                      ? context.t.tasks.priorities.values
-                          .toList()[task.priority ?? 0]
-                      : null),
-            ),
-            Expanded(
-              child: _buildTaskFieldItem(
-                  context,
-                  CupertinoIcons.alarm,
-                  context.t.sync.conflict_resolver.fields["reminders_title"]!,
-                  task.reminders != null
-                      ? context.t.sync.conflict_resolver.fields["reminders"]!(
-                          n: task.reminders?.length ?? 0)
-                      : null),
-            ),
-          ],
-        )
       ],
     );
   }
