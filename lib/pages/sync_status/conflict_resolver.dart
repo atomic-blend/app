@@ -179,57 +179,84 @@ class _ConflictResolverState extends State<ConflictResolver> {
                   spacing: $constants.insets.sm,
                   children: [
                     Expanded(
-                      child: ElevatedContainer(
-                        padding: EdgeInsets.symmetric(
-                          vertical: $constants.insets.sm,
-                        ),
-                        color: getTheme(context).error.withValues(alpha: 0.8),
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            const Icon(
-                              CupertinoIcons.xmark,
-                              size: 70,
-                              color: Colors.white,
-                            ),
-                            SizedBox(
-                              height: $constants.insets.xs,
-                            ),
-                            Text(context.t.sync.conflict_resolver.refuse,
-                                style:
-                                    getTextTheme(context).bodyLarge!.copyWith(
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.white,
-                                        )),
-                          ],
+                      child: GestureDetector(
+                        onTap: () {
+                          //DISCARD PATCH
+                          if (_selectedIndex + 1 == conflicts.length) {
+                            Navigator.pop(context);
+                          }
+                          if (_applyToAll) {
+                            _discardPatchAll(context, patches);
+                          } else {
+                            _discardPatch(context, patch);
+                          }
+                        },
+                        child: ElevatedContainer(
+                          padding: EdgeInsets.symmetric(
+                            vertical: $constants.insets.sm,
+                          ),
+                          color: getTheme(context).error.withValues(alpha: 0.8),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const Icon(
+                                CupertinoIcons.xmark,
+                                size: 70,
+                                color: Colors.white,
+                              ),
+                              SizedBox(
+                                height: $constants.insets.xs,
+                              ),
+                              Text(context.t.sync.conflict_resolver.refuse,
+                                  style:
+                                      getTextTheme(context).bodyLarge!.copyWith(
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.white,
+                                          )),
+                            ],
+                          ),
                         ),
                       ),
                     ),
                     Expanded(
-                      child: ElevatedContainer(
-                        padding: EdgeInsets.symmetric(
-                          vertical: $constants.insets.sm,
-                        ),
-                        color: getTheme(context).primary.withValues(alpha: 0.8),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            const Icon(
-                              CupertinoIcons.check_mark,
-                              size: 70,
-                              color: Colors.white,
-                            ),
-                            SizedBox(
-                              height: $constants.insets.xs,
-                            ),
-                            Text(context.t.sync.conflict_resolver.accept,
-                                style:
-                                    getTextTheme(context).bodyLarge!.copyWith(
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.white,
-                                        )),
-                          ],
+                      child: GestureDetector(
+                        onTap: () {
+                          //FORCE PATCH
+                          if (_selectedIndex + 1 == conflicts.length) {
+                            Navigator.pop(context);
+                          }
+                          if (_applyToAll) {
+                            _forcePatchAll(context, patches);
+                          } else {
+                            _forcePatch(context, patch);
+                          }
+                        },
+                        child: ElevatedContainer(
+                          padding: EdgeInsets.symmetric(
+                            vertical: $constants.insets.sm,
+                          ),
+                          color:
+                              getTheme(context).primary.withValues(alpha: 0.8),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const Icon(
+                                CupertinoIcons.check_mark,
+                                size: 70,
+                                color: Colors.white,
+                              ),
+                              SizedBox(
+                                height: $constants.insets.xs,
+                              ),
+                              Text(context.t.sync.conflict_resolver.accept,
+                                  style:
+                                      getTextTheme(context).bodyLarge!.copyWith(
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.white,
+                                          )),
+                            ],
+                          ),
                         ),
                       ),
                     ),
@@ -334,6 +361,12 @@ class _ConflictResolverState extends State<ConflictResolver> {
     }
   }
 
+  _forcePatchAll(BuildContext context, List<Patch> patches) {
+    for (var patch in patches) {
+      _forcePatch(context, patch);
+    }
+  }
+
   _discardPatch(BuildContext context, Patch patch) {
     switch (patch.itemType) {
       case ItemType.task:
@@ -347,6 +380,12 @@ class _ConflictResolverState extends State<ConflictResolver> {
       default:
         // Handle other item types if needed
         break;
+    }
+  }
+
+  _discardPatchAll(BuildContext context, List<Patch> patches) {
+    for (var patch in patches) {
+      _discardPatch(context, patch);
     }
   }
 
