@@ -2,7 +2,7 @@ import 'package:app/blocs/tag/tag.bloc.dart';
 import 'package:app/components/buttons/primary_button_square.dart';
 import 'package:app/components/forms/ab_color_picker.dart';
 import 'package:app/components/forms/app_text_form_field.dart';
-import 'package:app/components/modals/delete_confirm_modal.dart';
+import 'package:app/components/modals/ab_modal.dart';
 import 'package:app/entities/tag/tag.entity.dart';
 import 'package:app/i18n/strings.g.dart';
 import 'package:app/utils/constants.dart';
@@ -126,12 +126,12 @@ class _AddTagModalState extends State<AddTagModal> {
                             onPressed: () async {
                               await showDialog(
                                   context: context,
-                                  builder: (context) => DeleteConfirmModal(
+                                  builder: (context) => ABModal(
                                         title: context.t.tags.delete.title,
                                         description:
                                             context.t.tags.delete.description,
                                         warning: context.t.tags.delete.warning,
-                                        onDelete: () {
+                                        onConfirm: () {
                                           context
                                               .read<TagBloc>()
                                               .add(DeleteTag(widget.tag!.id!));

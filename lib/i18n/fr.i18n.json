@@ -236,6 +236,14 @@
       "end_time": "Heure de fin",
       "not_defined": "Non défini",
       "date_required": "Date requise"
+    },
+
+    "conflict_detected_modal": {
+      "title": "Conflit détecté",
+      "description": "Les modifications précédentes de cette tâche effectuées hors ligne entrent en conflit avec la version actuelle de la tâche.",
+      "warning": "Vous pouvez soit résoudre les conflits maintenant, soit revenir plus tard pour les résoudre.",
+      "resolve_now": "Résoudre",
+      "later": "Plus tard"
     }
   },
   "calendar": {
