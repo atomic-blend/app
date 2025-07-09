@@ -14,7 +14,6 @@ import 'package:collection/collection.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:jiffy/jiffy.dart';
 
 class ConflictResolver extends StatefulWidget {
   const ConflictResolver({super.key});
@@ -110,7 +109,7 @@ class _ConflictResolverState extends State<ConflictResolver> {
                         ),
                         child: Column(
                           children: [
-                            _getItemUi(context, patch!.itemType, patch.itemId)
+                            _getItemUi(context, patch?.itemType, patch?.itemId)
                           ],
                         ),
                       ),
@@ -132,7 +131,7 @@ class _ConflictResolverState extends State<ConflictResolver> {
                               SizedBox(
                                 height: $constants.insets.sm,
                               ),
-                              _getPatchChanges(patch.itemType, patch.changes),
+                              _getPatchChanges(patch?.itemType, patch?.changes),
                               SizedBox(
                                 height: $constants.insets.sm,
                               ),
@@ -182,13 +181,18 @@ class _ConflictResolverState extends State<ConflictResolver> {
                       child: GestureDetector(
                         onTap: () {
                           //DISCARD PATCH
-                          if (_selectedIndex + 1 == conflicts.length) {
-                            Navigator.pop(context);
-                          }
+                          if (patch == null) return;
+
                           if (_applyToAll) {
                             _discardPatchAll(context, patches);
                           } else {
                             _discardPatch(context, patch);
+                            setState(() {
+                              _selectedIndex++;
+                            });
+                          }
+                          if (_selectedIndex == conflicts.length) {
+                            Navigator.pop(context);
                           }
                         },
                         child: ElevatedContainer(
@@ -223,13 +227,18 @@ class _ConflictResolverState extends State<ConflictResolver> {
                       child: GestureDetector(
                         onTap: () {
                           //FORCE PATCH
-                          if (_selectedIndex + 1 == conflicts.length) {
-                            Navigator.pop(context);
-                          }
+                          if (patch == null) return;
+
                           if (_applyToAll) {
                             _forcePatchAll(context, patches);
                           } else {
                             _forcePatch(context, patch);
+                            setState(() {
+                              _selectedIndex++;
+                            });
+                          }
+                          if (_selectedIndex == conflicts.length) {
+                            Navigator.pop(context);
                           }
                         },
                         child: ElevatedContainer(
@@ -270,67 +279,7 @@ class _ConflictResolverState extends State<ConflictResolver> {
     );
   }
 
-  _buildConflictListCard(
-      BuildContext context, ConflictedItem conflict, List<Patch> patches) {
-    final patch = patches.firstWhere(
-      (change) => change.id == conflict.patchId,
-    );
-    return Padding(
-      padding: EdgeInsets.symmetric(
-        horizontal: $constants.insets.sm,
-      ),
-      child: ElevatedContainer(
-        padding: EdgeInsets.symmetric(
-          horizontal: $constants.insets.sm,
-          vertical: $constants.insets.xs,
-        ),
-        color: getTheme(context).surface,
-        child: Row(
-          children: [
-            Icon(
-              _getConflictIcon(conflict.type),
-            ),
-            SizedBox(
-              width: $constants.insets.sm,
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  context.t.sync.conflict_resolver
-                          .item_type[conflict.type.name] ??
-                      conflict.type.name,
-                  style: getTextTheme(context).bodyMedium!.copyWith(
-                        fontWeight: FontWeight.bold,
-                      ),
-                ),
-                Text(
-                  context.t.sync.conflict_resolver.patch_date(
-                    date: Jiffy.parseFromDateTime(patch.patchDate)
-                        .toLocal()
-                        .yMMMEd,
-                  ),
-                )
-              ],
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  _getConflictIcon(ItemType type) {
-    switch (type) {
-      case ItemType.note:
-        return Icons.note;
-      case ItemType.task:
-        return Icons.check_box;
-      default:
-        return Icons.help_outline;
-    }
-  }
-
-  _getPatchChanges(ItemType type, List<PatchChange> changes) {
+  _getPatchChanges(ItemType? type, List<PatchChange>? changes) {
     switch (type) {
       case ItemType.task:
         return TaskPatchCard(
@@ -338,10 +287,10 @@ class _ConflictResolverState extends State<ConflictResolver> {
         );
       case ItemType.note:
         // Handle note patch changes if needed
-        return SizedBox.shrink();
+        return const SizedBox.shrink();
       default:
         // Handle other item types if needed
-        return SizedBox.shrink();
+        return const SizedBox.shrink();
     }
   }
 
@@ -354,9 +303,6 @@ class _ConflictResolverState extends State<ConflictResolver> {
         break;
       case ItemType.note:
         // Handle note patching if needed
-        break;
-      default:
-        // Handle other item types if needed
         break;
     }
   }
@@ -377,9 +323,6 @@ class _ConflictResolverState extends State<ConflictResolver> {
       case ItemType.note:
         // Handle note patching if needed
         break;
-      default:
-        // Handle other item types if needed
-        break;
     }
   }
 
@@ -389,22 +332,22 @@ class _ConflictResolverState extends State<ConflictResolver> {
     }
   }
 
-  _getItemUi(BuildContext context, ItemType type, String itemId) {
+  _getItemUi(BuildContext context, ItemType? type, String? itemId) {
     switch (type) {
       case ItemType.task:
         final taskState = context.watch<TasksBloc>().state;
         final task = taskState.tasks?.firstWhereOrNull((t) => t.id == itemId);
         if (task == null) {
-          return SizedBox.shrink(); // Placeholder for missing task
+          return const SizedBox.shrink(); // Placeholder for missing task
         }
         return TaskDetailCard(
           taskEntity: task,
         );
       case ItemType.note:
         // Return NoteCard or similar widget for notes
-        return SizedBox.shrink(); // Placeholder for note UI
+        return const SizedBox.shrink(); // Placeholder for note UI
       default:
-        return SizedBox.shrink(); // Placeholder for other item types
+        return const SizedBox.shrink(); // Placeholder for other item types
     }
   }
 }
