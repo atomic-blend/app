@@ -261,7 +261,7 @@ class _SyncStatusState extends State<SyncStatus> {
                                   SizedBox(
                                     height: $constants.insets.xs,
                                   ),
-                                  Divider(),
+                                  const Divider(),
                                   SizedBox(
                                     height: $constants.insets.xs,
                                   ),

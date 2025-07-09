@@ -187,9 +187,11 @@ class _ConflictResolverState extends State<ConflictResolver> {
                             _discardPatchAll(context, patches);
                           } else {
                             _discardPatch(context, patch);
-                            setState(() {
-                              _selectedIndex++;
-                            });
+                            if (_selectedIndex < conflicts.length - 1) {
+                              setState(() {
+                                _selectedIndex++;
+                              });
+                            }
                           }
                           if (_selectedIndex == conflicts.length) {
                             Navigator.pop(context);
@@ -233,9 +235,11 @@ class _ConflictResolverState extends State<ConflictResolver> {
                             _forcePatchAll(context, patches);
                           } else {
                             _forcePatch(context, patch);
-                            setState(() {
-                              _selectedIndex++;
-                            });
+                            if (_selectedIndex < conflicts.length - 1) {
+                              setState(() {
+                                _selectedIndex++;
+                              });
+                            }
                           }
                           if (_selectedIndex == conflicts.length) {
                             Navigator.pop(context);
