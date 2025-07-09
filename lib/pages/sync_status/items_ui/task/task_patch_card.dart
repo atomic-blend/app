@@ -55,7 +55,7 @@ class TaskPatchCard extends StatelessWidget {
             CupertinoIcons.calendar,
             context.t.sync.conflict_resolver.fields["start_date"]!,
             change.value != null
-                ? Jiffy.parseFromDateTime(change.value).yMMMMd
+                ? Jiffy.parseFromDateTime(change.value).yMMMMdjm
                 : null,
           ));
           break;
@@ -64,7 +64,7 @@ class TaskPatchCard extends StatelessWidget {
             context,
             CupertinoIcons.calendar,
             context.t.sync.conflict_resolver.fields["end_date"]!,
-            change.value != null ? Jiffy.parse(change.value).yMMMMd : null,
+            change.value != null ? Jiffy.parse(change.value).yMMMMdjm : null,
           ));
           break;
         case "reminders":
