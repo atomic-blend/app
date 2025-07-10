@@ -6,6 +6,7 @@ import 'package:app/blocs/tasks/tasks.bloc.dart';
 import 'package:app/components/widgets/elevated_container.dart';
 import 'package:app/entities/device_calendar/calendar/device_calendar.dart';
 import 'package:app/entities/habit/habit.entity.dart';
+import 'package:app/entities/sync/patch_change/patch_change.dart';
 import 'package:app/entities/tasks/tasks.entity.dart';
 import 'package:app/i18n/strings.g.dart';
 import 'package:app/pages/calendar/custom_appointment.dart';
@@ -15,7 +16,7 @@ import 'package:app/pages/paywall/paywall_utils.dart';
 import 'package:app/pages/tasks/add_task_modal.dart';
 import 'package:app/pages/tasks/task_detail.dart';
 import 'package:app/utils/constants.dart';
-import 'package:app/utils/exntensions/date_time_extension.dart';
+import 'package:app/utils/extensions/date_time_extension.dart';
 import 'package:app/utils/shortcuts.dart';
 import 'package:app/utils/toast_helper.dart';
 import 'package:auto_size_text/auto_size_text.dart';
@@ -176,7 +177,7 @@ class _CalendarState extends State<Calendar> {
                   onTap: (calendarTapDetails) {
                     if (widget.view == CalendarView.month &&
                         calendarTapDetails.targetElement ==
-                                CalendarElement.calendarCell) {
+                            CalendarElement.calendarCell) {
                       return;
                     }
                     if (calendarTapDetails.appointments?.first.itemType ==
@@ -550,13 +551,21 @@ class _CalendarState extends State<Calendar> {
               );
           if (task != null) {
             // Update task with new times
-            final updatedTask = task.copyWith(
-              startDate: details.droppingTime,
-              endDate: details.droppingTime?.add(customAppointment.endTime
-                  .difference(customAppointment.startTime)),
-            );
             // Dispatch update event to TasksBloc
-            context.read<TasksBloc>().add(EditTask(updatedTask));
+            context.read<TasksBloc>().add(EditTask(
+              task.id!,
+              [
+                PatchChange(
+                  key: "startDate",
+                  value: details.droppingTime?.toUtc().toIso8601String(),
+                ),
+                PatchChange(
+                  key: "endDate",
+                  value: details.droppingTime?.add(customAppointment.endTime
+                      .difference(customAppointment.startTime)).toUtc().toIso8601String(),
+                ),
+              ],
+            ));
           }
           break;
 
@@ -589,13 +598,20 @@ class _CalendarState extends State<Calendar> {
             (element) => element.id == appointment.itemId,
           );
       if (task != null) {
-        // Update task with new times
-        final updatedTask = task.copyWith(
-          startDate: details.startTime,
-          endDate: details.endTime,
-        );
         // Dispatch update event to TasksBloc
-        context.read<TasksBloc>().add(EditTask(updatedTask));
+        context.read<TasksBloc>().add(EditTask(
+              task.id!,
+              [
+                PatchChange(
+                  key: "startDate",
+                  value: details.startTime?.toUtc().toIso8601String(),
+                ),
+                PatchChange(
+                  key: "endDate",
+                  value: details.endTime?.toUtc().toIso8601String(),
+                ),
+              ],
+            ));
       }
     } else if (appointment.itemType == CustomAppointmentType.event) {
       ToastHelper.showError(

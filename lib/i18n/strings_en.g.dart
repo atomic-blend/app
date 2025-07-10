@@ -101,6 +101,7 @@ class Translations implements BaseTranslations<AppLocale, Translations> {
 	late final TranslationsTimerEn timer = TranslationsTimerEn._(_root);
 	late final TranslationsPaywallEn paywall = TranslationsPaywallEn._(_root);
 	late final TranslationsSearchEn search = TranslationsSearchEn._(_root);
+	late final TranslationsSyncEn sync = TranslationsSyncEn._(_root);
 }
 
 // Path: navigation
@@ -197,6 +198,7 @@ class TranslationsTasksEn {
 	String get time_spent => 'Time spent';
 	String get no_time_entries => 'No time entries for now';
 	late final TranslationsTasksAddTimeEntryEn add_time_entry = TranslationsTasksAddTimeEntryEn._(_root);
+	late final TranslationsTasksConflictDetectedModalEn conflict_detected_modal = TranslationsTasksConflictDetectedModalEn._(_root);
 }
 
 // Path: calendar
@@ -852,6 +854,29 @@ class TranslationsSearchEn {
 	);
 }
 
+// Path: sync
+class TranslationsSyncEn {
+	TranslationsSyncEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	String get title => 'Synchronization';
+	String get description => 'Keep your data up to date across all your devices';
+	String get status => 'Status';
+	String get loading => 'Loading...';
+	String get up_to_date => 'Up to date';
+	String get conflicts => 'Conflicts';
+	String x_items_have_conflicts({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n,
+		zero: 'No items have conflicts',
+		one: '1 item has conflicts',
+		other: '${n} items have conflicts',
+	);
+	late final TranslationsSyncDetailsEn details = TranslationsSyncDetailsEn._(_root);
+	String get sync_now => 'Sync now';
+	late final TranslationsSyncConflictResolverEn conflict_resolver = TranslationsSyncConflictResolverEn._(_root);
+}
+
 // Path: auth.not_logged_in
 class TranslationsAuthNotLoggedInEn {
 	TranslationsAuthNotLoggedInEn._(this._root);
@@ -1133,6 +1158,20 @@ class TranslationsTasksAddTimeEntryEn {
 	String get end_time => 'End time';
 	String get not_defined => 'Not defined';
 	String get date_required => 'Date is required';
+}
+
+// Path: tasks.conflict_detected_modal
+class TranslationsTasksConflictDetectedModalEn {
+	TranslationsTasksConflictDetectedModalEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	String get title => 'Conflict Detected';
+	String get description => 'Previous edits of this task made while offline conflicts with the current version of the task.';
+	String get warning => 'You can either resolve the conflicts now or come back later to resolve them.';
+	String get resolve_now => 'Resolve';
+	String get later => 'Later';
 }
 
 // Path: calendar.errors
@@ -1436,6 +1475,65 @@ class TranslationsPaywallPricingCloudMonthlyEn {
 	String get billed => '';
 	String get discount => '';
 	String get start_button => 'Start the 1-week free trial';
+}
+
+// Path: sync.details
+class TranslationsSyncDetailsEn {
+	TranslationsSyncDetailsEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	String get title => 'Details';
+	String get tasks => 'Tasks';
+	String task_items({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n,
+		zero: 'No tasks',
+		one: '1 task',
+		other: '${n} tasks',
+	);
+}
+
+// Path: sync.conflict_resolver
+class TranslationsSyncConflictResolverEn {
+	TranslationsSyncConflictResolverEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	String get title => 'Conflict Resolver';
+	String patch_date({required Object date}) => 'Update date: ${date}';
+	Map<String, String> get item_type => {
+		'task': 'Task',
+		'note': 'Note',
+	};
+	String get choose_between => 'Choose between accepting or refusing the changes';
+	String get refuse => 'Refuse';
+	String get accept => 'Accept';
+	String get upcoming => 'Upcoming';
+	String get in_app_version => 'In-app';
+	String get changes_to_apply => 'Changes to apply';
+	String get apply_to_all => 'Apply decision to all conflicts';
+	Map<String, dynamic> get fields => {
+		'title': 'Title',
+		'end_date': 'End date',
+		'description': 'Notes',
+		'start_date': 'Start date',
+		'reminders_title': 'Reminders',
+		'reminders': ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n,
+			zero: 'No reminders',
+			one: '1 reminder',
+			other: '${n} reminders',
+		),
+		'undefined': 'Undefined',
+		'priority': 'Priority',
+		'folder': 'Folder',
+		'tags': ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n,
+			zero: 'No tags',
+			one: '1 tag',
+			other: '${n} tags',
+		),
+	};
+	String get progress => 'Progress';
 }
 
 // Path: settings.app_settings.selfHostedUrl
@@ -1749,6 +1847,11 @@ extension on Translations {
 			case 'tasks.add_time_entry.end_time': return 'End time';
 			case 'tasks.add_time_entry.not_defined': return 'Not defined';
 			case 'tasks.add_time_entry.date_required': return 'Date is required';
+			case 'tasks.conflict_detected_modal.title': return 'Conflict Detected';
+			case 'tasks.conflict_detected_modal.description': return 'Previous edits of this task made while offline conflicts with the current version of the task.';
+			case 'tasks.conflict_detected_modal.warning': return 'You can either resolve the conflicts now or come back later to resolve them.';
+			case 'tasks.conflict_detected_modal.resolve_now': return 'Resolve';
+			case 'tasks.conflict_detected_modal.later': return 'Later';
 			case 'calendar.title': return 'Calendar';
 			case 'calendar.month': return 'Month';
 			case 'calendar.day': return 'Day';
@@ -2246,6 +2349,55 @@ extension on Translations {
 				one: '1 result found',
 				other: '${n} results found',
 			);
+			case 'sync.title': return 'Synchronization';
+			case 'sync.description': return 'Keep your data up to date across all your devices';
+			case 'sync.status': return 'Status';
+			case 'sync.loading': return 'Loading...';
+			case 'sync.up_to_date': return 'Up to date';
+			case 'sync.conflicts': return 'Conflicts';
+			case 'sync.x_items_have_conflicts': return ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n,
+				zero: 'No items have conflicts',
+				one: '1 item has conflicts',
+				other: '${n} items have conflicts',
+			);
+			case 'sync.details.title': return 'Details';
+			case 'sync.details.tasks': return 'Tasks';
+			case 'sync.details.task_items': return ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n,
+				zero: 'No tasks',
+				one: '1 task',
+				other: '${n} tasks',
+			);
+			case 'sync.sync_now': return 'Sync now';
+			case 'sync.conflict_resolver.title': return 'Conflict Resolver';
+			case 'sync.conflict_resolver.patch_date': return ({required Object date}) => 'Update date: ${date}';
+			case 'sync.conflict_resolver.item_type.task': return 'Task';
+			case 'sync.conflict_resolver.item_type.note': return 'Note';
+			case 'sync.conflict_resolver.choose_between': return 'Choose between accepting or refusing the changes';
+			case 'sync.conflict_resolver.refuse': return 'Refuse';
+			case 'sync.conflict_resolver.accept': return 'Accept';
+			case 'sync.conflict_resolver.upcoming': return 'Upcoming';
+			case 'sync.conflict_resolver.in_app_version': return 'In-app';
+			case 'sync.conflict_resolver.changes_to_apply': return 'Changes to apply';
+			case 'sync.conflict_resolver.apply_to_all': return 'Apply decision to all conflicts';
+			case 'sync.conflict_resolver.fields.title': return 'Title';
+			case 'sync.conflict_resolver.fields.end_date': return 'End date';
+			case 'sync.conflict_resolver.fields.description': return 'Notes';
+			case 'sync.conflict_resolver.fields.start_date': return 'Start date';
+			case 'sync.conflict_resolver.fields.reminders_title': return 'Reminders';
+			case 'sync.conflict_resolver.fields.reminders': return ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n,
+				zero: 'No reminders',
+				one: '1 reminder',
+				other: '${n} reminders',
+			);
+			case 'sync.conflict_resolver.fields.undefined': return 'Undefined';
+			case 'sync.conflict_resolver.fields.priority': return 'Priority';
+			case 'sync.conflict_resolver.fields.folder': return 'Folder';
+			case 'sync.conflict_resolver.fields.tags': return ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n,
+				zero: 'No tags',
+				one: '1 tag',
+				other: '${n} tags',
+			);
+			case 'sync.conflict_resolver.progress': return 'Progress';
 			default: return null;
 		}
 	}
