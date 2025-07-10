@@ -741,11 +741,10 @@ class _TaskDetailState extends State<TaskDetail> {
         ?.where((element) => element.itemId == widget.task.id)
         .toList();
     for (var patch in patches ?? []) {
-      final conflicts = taskState?.latestSync?.conflicts
-          ?.where((element) => element.patchId == patch.id)
+      final conflicts = taskState.latestSync?.conflicts
+          .where((element) => element.patchId == patch.id)
           .toList();
       if (conflicts != null && conflicts.isNotEmpty) {
-        print("conflict detected");
         final result = await showDialog(
             context: context,
             barrierDismissible: false,
