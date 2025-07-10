@@ -6,20 +6,22 @@ import 'package:app/blocs/auth/auth.bloc.dart';
 import 'package:app/blocs/folder/folder.bloc.dart';
 import 'package:app/blocs/tasks/tasks.bloc.dart';
 import 'package:app/components/app/bottom_navigation.dart';
-import 'package:app/components/buttons/account_avatar_with_sync_status.dart';
 import 'package:app/components/responsive_stateful_widget.dart';
 import 'package:app/components/widgets/elevated_container.dart';
 import 'package:app/entities/tasks/tasks.entity.dart';
 import 'package:app/main.dart';
 import 'package:app/pages/auth/login_or_register_modal.dart';
 import 'package:app/pages/paywall/paywall_utils.dart';
+import 'package:app/pages/sync_status/sync_status.dart';
 import 'package:app/pages/tasks/filtered_view.dart';
 import 'package:app/services/device_info.service.dart';
 import 'package:app/services/encryption.service.dart';
 import 'package:app/services/revenue_cat_service.dart';
+import 'package:app/services/sync.service.dart';
 import 'package:app/services/user.service.dart';
 import 'package:app/utils/constants.dart';
 import 'package:app/utils/shortcuts.dart';
+import 'package:cron/cron.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -41,14 +43,16 @@ class AppLayoutState extends ResponsiveState<AppLayout> {
   final SideMenuController _secondarySideMenuController = SideMenuController();
   final SideMenuController _primarySideMenuController = SideMenuController();
   final Logger logger = Logger();
-  final String appGroupId = "group.atomicblend.tasks";
 
   @override
   void initState() {
     context.read<AuthBloc>().add(const RefreshUser());
     PaywallUtils.resetPaywall();
 
-    HomeWidget.setAppGroupId(appGroupId);
+    final cron = Cron();
+    cron.schedule(Schedule.parse('*/5 * * * *'), () async {
+      SyncService.sync(context);
+    });
 
     if (context.read<AuthBloc>().state.user != null && !kIsWeb) {
       WidgetsBinding.instance.addPostFrameCallback((_) async {
@@ -86,7 +90,6 @@ class AppLayoutState extends ResponsiveState<AppLayout> {
     return BlocBuilder<AuthBloc, AuthState>(builder: (context, authState) {
       return BlocBuilder<TasksBloc, TasksState>(builder: (context, tasksState) {
         WidgetsBinding.instance.addPostFrameCallback((_) async {
-          logger.i('Updating widget data');
           bool isSubscribed = UserService.isSubscriptionActive(authState.user);
           if (env?.env == "dev") {
             isSubscribed = true;
@@ -97,9 +100,9 @@ class AppLayoutState extends ResponsiveState<AppLayout> {
           await HomeWidget.saveWidgetData<String>("tasks", tasksJson);
           await HomeWidget.updateWidget(
             iOSName: "today_task_widget",
-            qualifiedAndroidName: "com.example.app.glance.TodayTaskWidgetReceiver",
+            qualifiedAndroidName:
+                "com.example.app.glance.TodayTaskWidgetReceiver",
           );
-          logger.i("Widget data updated");
         });
         return child;
       });
@@ -185,7 +188,7 @@ class AppLayoutState extends ResponsiveState<AppLayout> {
                             return Padding(
                               padding:
                                   EdgeInsets.only(right: $constants.insets.sm),
-                              child: const AccountAvatarWithSyncStatus(),
+                              child: const SyncStatus(),
                             );
                           }
                           return Container();
@@ -513,7 +516,7 @@ class AppLayoutState extends ResponsiveState<AppLayout> {
                           Padding(
                             padding:
                                 EdgeInsets.only(right: $constants.insets.sm),
-                            child: const AccountAvatarWithSyncStatus(),
+                            child: const SyncStatus(),
                           ),
                       ],
                     ),

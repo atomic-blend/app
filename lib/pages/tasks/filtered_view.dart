@@ -4,6 +4,7 @@ import 'package:app/components/forms/search_bar.dart';
 import 'package:app/components/widgets/elevated_container.dart';
 import 'package:app/entities/tasks/tasks.entity.dart';
 import 'package:app/i18n/strings.g.dart';
+import 'package:app/pages/sync_status/conflict_card.dart';
 import 'package:app/services/sync.service.dart';
 import 'package:app/utils/constants.dart';
 import 'package:app/utils/shortcuts.dart';
@@ -64,6 +65,12 @@ class _FilteredTaskViewState extends State<FilteredTaskView> {
                       _filteredTasks = [];
                       setState(() {});
                     },
+                  ),
+                ),
+                ConflictCard(
+                  color: getTheme(context).error.lighten(55),
+                  padding: EdgeInsets.only(
+                    top: $constants.insets.xs,
                   ),
                 ),
                 SizedBox(height: $constants.insets.xs),

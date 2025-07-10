@@ -1,6 +1,6 @@
 import 'package:app/blocs/habit/habit.bloc.dart';
 import 'package:app/components/buttons/icon_text_card.dart';
-import 'package:app/components/modals/delete_confirm_modal.dart';
+import 'package:app/components/modals/ab_modal.dart';
 import 'package:app/entities/habit/habit.entity.dart';
 import 'package:app/i18n/strings.g.dart';
 import 'package:app/pages/habits/habit_heatmap.dart';
@@ -218,7 +218,7 @@ class _HabitDetailState extends State<HabitDetail> {
                                                   showDialog(
                                                     context: context,
                                                     builder: (context) =>
-                                                        DeleteConfirmModal(
+                                                        ABModal(
                                                       title: context
                                                           .t
                                                           .habits
@@ -234,7 +234,7 @@ class _HabitDetailState extends State<HabitDetail> {
                                                           .habits
                                                           .habit_detail
                                                           .delete_entry_warning,
-                                                      onDelete: () {
+                                                      onConfirm: () {
                                                         if (!context.mounted) {
                                                           return;
                                                         }
@@ -302,13 +302,13 @@ class _HabitDetailState extends State<HabitDetail> {
                       onPressed: () async {
                         final result = await showDialog(
                           context: context,
-                          builder: (context) => DeleteConfirmModal(
+                          builder: (context) => ABModal(
                             title: context.t.habits.habit_detail.delete_habit,
                             description: context
                                 .t.habits.habit_detail.delete_habit_description,
                             warning: context
                                 .t.habits.habit_detail.delete_habit_warning,
-                            onDelete: () async {
+                            onConfirm: () async {
                               if (!context.mounted) return;
                               context.read<HabitBloc>().add(
                                     DeleteHabit(

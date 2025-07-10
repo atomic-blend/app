@@ -8,6 +8,7 @@
 import WidgetKit
 import SwiftUI
 
+@available(iOSApplicationExtension 15.0, *)
 @main
 struct todayTaskWidgetBundle: WidgetBundle {
     var body: some Widget {

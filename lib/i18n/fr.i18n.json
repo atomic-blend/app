@@ -236,6 +236,14 @@
       "end_time": "Heure de fin",
       "not_defined": "Non défini",
       "date_required": "Date requise"
+    },
+
+    "conflict_detected_modal": {
+      "title": "Conflit détecté",
+      "description": "Les modifications précédentes de cette tâche effectuées hors ligne entrent en conflit avec la version actuelle de la tâche.",
+      "warning": "Vous pouvez soit résoudre les conflits maintenant, soit revenir plus tard pour les résoudre.",
+      "resolve_now": "Résoudre",
+      "later": "Plus tard"
     }
   },
   "calendar": {
@@ -868,6 +876,65 @@
       "zero": "Aucun résultat trouvé",
       "one": "1 résultat trouvé",
       "other": "${n} résultats trouvés"
+    }
+  },
+  "sync": {
+    "title": "Synchronisation",
+    "description": "Gardez vos données à jour sur tous vos appareils",
+    "status": "État",
+    "loading": "Chargement...",
+    "up_to_date": "À jour",
+    "conflicts": "Conflits",
+    "x_items_have_conflicts": {
+      "zero": "Aucun élément n'a de conflits",
+      "one": "1 élément a des conflits",
+      "other": "${n} éléments ont des conflits"
+    },
+    "details": {
+      "title": "Détails",
+      "tasks": "Tâches",
+      "task_items": {
+        "zero": "Aucune tâche",
+        "one": "1 tâche",
+        "other": "${n} tâches"
+      }
+    },
+    "sync_now": "Synchroniser maintenant",
+    "conflict_resolver": {
+      "title": "Résolveur de Conflits",
+      "patch_date": "Date de mise à jour : ${date}",
+      "item_type(map)": {
+        "task": "Tâche",
+        "note": "Note"
+      },
+      "choose_between": "Choisissez entre accepter ou refuser les modifications",
+      "refuse": "Refuser",
+      "accept": "Accepter",
+      "upcoming": "À venir",
+      "in_app_version": "Dans l'application",
+      "apply_to_all": "Appliquer la décision à tous les conflits",
+      "changes_to_apply": "Modifications à appliquer",
+      "fields(map)": {
+        "title": "Titre",
+        "end_date": "Date de fin",
+        "description": "Notes",
+        "undefined": "Non défini",
+        "start_date": "Date de début",
+        "reminders_title": "Rappels",
+        "reminders": {
+          "zero": "Aucun rappel",
+          "one": "1 rappel",
+          "other": "${n} rappels"
+        },
+        "priority": "Priorité",
+        "folder": "Dossier",
+        "tags": {
+          "zero": "Aucun tag",
+          "one": "1 tag",
+          "other": "${n} tags"
+        }
+      },
+      "progress": "Progression"
     }
   }
 }
