@@ -88,16 +88,35 @@ class TasksService {
       );
 
       try {
+        // Create encrypted patches without modifying the original patches
+        final List<Patch> encryptedPatches = [];
+
         for (var patch in batch) {
+          // Create a copy of the patch
+          final encryptedPatch = Patch(
+            id: patch.id,
+            itemId: patch.itemId,
+            itemType: patch.itemType,
+            action: patch.action,
+            changes: [],
+            patchDate: patch.patchDate,
+            force: patch.force,
+          );
+
           if (patch.action == PatchAction.update) {
             for (var change in patch.changes) {
+              // Create a copy of the change
+              final encryptedChange = change.copyWith();
+
               // if key is not part of nonEncryptedFields, encrypt it
               if (!TaskEntity.nonEncryptedFields.contains(change.key) &&
                   !TaskEntity.manualParseFields.contains(change.key) &&
                   change.value != null) {
-                change.value =
+                encryptedChange.value =
                     await encryptionService!.encryptJson(change.value);
               }
+
+              encryptedPatch.changes.add(encryptedChange);
             }
           } else if (patch.action == PatchAction.create) {
             final data = patch.changes.first.value;
@@ -105,13 +124,26 @@ class TasksService {
               final task = patch.changes.first.value as TaskEntity;
               final encryptedTask =
                   await task.encrypt(encryptionService: encryptionService!);
-              patch.changes.first.value = encryptedTask;
+              final encryptedChange =
+                  patch.changes.first.copyWith(value: encryptedTask);
+              encryptedPatch.changes.add(encryptedChange);
+            } else {
+              // If it's already a Map, just copy the change as is
+              encryptedPatch.changes
+                  .addAll(patch.changes.map((c) => c.copyWith()));
             }
+          } else {
+            // For other actions (delete, etc.), just copy the changes as is
+            encryptedPatch.changes
+                .addAll(patch.changes.map((c) => c.copyWith()));
           }
+
+          encryptedPatches.add(encryptedPatch);
         }
+
         final result = await globalApiClient.post(
           '/tasks/patch',
-          data: batch.map((e) => e.toJson()).toList(),
+          data: encryptedPatches.map((e) => e.toJson()).toList(),
         );
 
         if (result.statusCode == 200) {
