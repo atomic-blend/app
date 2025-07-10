@@ -60,10 +60,10 @@ FutureOr<void> main() async {
   }, appRunner: () async {
     env = await EnvModel.create();
     prefs = await SharedPreferences.getInstance();
-
+  
     HomeWidget.setAppGroupId(appGroupId);
     HomeWidget.registerInteractivityCallback(backgroundCallback);
- 
+
     tz.initializeTimeZones();
 
     if (!kIsWeb && Platform.isMacOS) {

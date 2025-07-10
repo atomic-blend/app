@@ -1,6 +1,6 @@
 import 'package:animated_toggle_switch/animated_toggle_switch.dart';
 import 'package:app/blocs/habit/habit.bloc.dart';
-import 'package:app/components/modals/delete_confirm_modal.dart';
+import 'package:app/components/modals/ab_modal.dart';
 import 'package:app/components/widgets/elevated_container.dart';
 import 'package:app/entities/habit/habit.entity.dart';
 import 'package:app/entities/habit/habit_entry/habit_entry.entity.dart';
@@ -212,12 +212,12 @@ class _HabitsState extends State<Habits> {
                   onTap: () {
                     showDialog(
                         context: context,
-                        builder: (context) => DeleteConfirmModal(
+                        builder: (context) => ABModal(
                             title: context.t.habits.delete_habit.title,
                             description:
                                 context.t.habits.delete_habit.description,
                             warning: context.t.habits.delete_habit.warning,
-                            onDelete: () {
+                            onConfirm: () {
                               context.read<HabitBloc>().add(
                                     DeleteHabit(habits[index]),
                                   );

@@ -1,5 +1,6 @@
 import 'package:app/utils/constants.dart';
 import 'package:app/utils/shortcuts.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 
 class PrimaryButtonSquare extends StatelessWidget {
@@ -65,8 +66,9 @@ class PrimaryButtonSquare extends StatelessWidget {
                 ),
               ],
               Center(
-                child: Text(
+                child: AutoSizeText(
                   text,
+                  maxLines: 1,
                   style: getTextTheme(context).bodyMedium!.copyWith(
                         color: outlined == true
                             ? backgroundColor ?? getTheme(context).primary

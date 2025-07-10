@@ -2,7 +2,7 @@ import 'package:app/blocs/folder/folder.bloc.dart';
 import 'package:app/components/buttons/primary_button_square.dart';
 import 'package:app/components/forms/ab_color_picker.dart';
 import 'package:app/components/forms/app_text_form_field.dart';
-import 'package:app/components/modals/delete_confirm_modal.dart';
+import 'package:app/components/modals/ab_modal.dart';
 import 'package:app/entities/folder/folder.entity.dart';
 import 'package:app/i18n/strings.g.dart';
 import 'package:app/utils/constants.dart';
@@ -209,14 +209,14 @@ class _AddFolderModalState extends State<AddFolderModal> {
                               onPressed: () async {
                                 await showDialog(
                                     context: context,
-                                    builder: (context) => DeleteConfirmModal(
+                                    builder: (context) => ABModal(
                                           title: context
                                               .t.tasks.folders.delete_folder,
                                           description: context.t.tasks.folders
                                               .delete_folder_description,
                                           warning: context.t.tasks.folders
                                               .delete_folder_warning,
-                                          onDelete: () {
+                                          onConfirm: () {
                                             if (!context.mounted) return;
                                             context
                                                 .read<FolderBloc>()

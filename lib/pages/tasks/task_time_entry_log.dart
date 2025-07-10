@@ -1,5 +1,5 @@
 import 'package:app/blocs/time_entries/time_entry.bloc.dart';
-import 'package:app/components/modals/delete_confirm_modal.dart';
+import 'package:app/components/modals/ab_modal.dart';
 import 'package:app/entities/tasks/tasks.entity.dart';
 import 'package:app/entities/time_entry/time_entry.entity.dart';
 import 'package:app/i18n/strings.g.dart';
@@ -149,13 +149,13 @@ class TaskTimeEntryLog extends StatelessWidget {
                     if (!context.mounted) return;
                     showDialog(
                       context: context,
-                      builder: (context) => DeleteConfirmModal(
+                      builder: (context) => ABModal(
                         title: context.t.habits.habit_detail.delete_entry,
                         description: context
                             .t.habits.habit_detail.delete_entry_description,
                         warning:
                             context.t.habits.habit_detail.delete_entry_warning,
-                        onDelete: () {
+                        onConfirm: () {
                           if (!context.mounted) {
                             return;
                           }

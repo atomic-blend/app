@@ -6,12 +6,13 @@ import 'package:app/components/forms/search_bar.dart';
 import 'package:app/components/widgets/elevated_container.dart';
 import 'package:app/entities/tasks/tasks.entity.dart';
 import 'package:app/i18n/strings.g.dart';
+import 'package:app/pages/sync_status/conflict_card.dart';
 import 'package:app/pages/tasks/add_task_modal.dart';
 import 'package:app/pages/timer/timer_info.dart';
 import 'package:app/pages/timer/timer_utils.dart';
 import 'package:app/services/sync.service.dart';
 import 'package:app/utils/constants.dart';
-import 'package:app/utils/exntensions/date_time_extension.dart';
+import 'package:app/utils/extensions/date_time_extension.dart';
 import 'package:app/utils/shortcuts.dart';
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/cupertino.dart';
@@ -28,12 +29,6 @@ class OverviewTasks extends StatefulWidget {
 class _OverviewTasksState extends State<OverviewTasks> {
   final TextEditingController _searchController = TextEditingController();
   List<TaskEntity> _filteredTasks = <TaskEntity>[];
-
-  @override
-  void initState() {
-    SyncService.sync(context);
-    super.initState();
-  }
 
   @override
   void dispose() {
@@ -83,6 +78,12 @@ class _OverviewTasksState extends State<OverviewTasks> {
                       _filteredTasks = [];
                       setState(() {});
                     },
+                  ),
+                ),
+                ConflictCard(
+                  color: getTheme(context).error.lighten(55),
+                  padding: EdgeInsets.only(
+                    top: $constants.insets.xs,
                   ),
                 ),
                 SizedBox(height: $constants.insets.xs),

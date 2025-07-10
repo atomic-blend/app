@@ -236,6 +236,13 @@
       "end_time": "End time",
       "not_defined": "Not defined",
       "date_required": "Date is required"
+    },
+    "conflict_detected_modal": {
+      "title": "Conflict Detected",
+      "description": "Previous edits of this task made while offline conflicts with the current version of the task.",
+      "warning": "You can either resolve the conflicts now or come back later to resolve them.",
+      "resolve_now": "Resolve",
+      "later": "Later"
     }
   },
   "calendar": {
@@ -871,6 +878,65 @@
       "zero": "No results found",
       "one": "1 result found",
       "other": "${n} results found"
+    }
+  },
+  "sync": {
+    "title": "Synchronization",
+    "description": "Keep your data up to date across all your devices",
+    "status": "Status",
+    "loading": "Loading...",
+    "up_to_date": "Up to date",
+    "conflicts": "Conflicts",
+    "x_items_have_conflicts": {
+      "zero": "No items have conflicts",
+      "one": "1 item has conflicts",
+      "other": "${n} items have conflicts"
+    },
+    "details": {
+      "title": "Details",
+      "tasks": "Tasks",
+      "task_items": {
+        "zero": "No tasks",
+        "one": "1 task",
+        "other": "${n} tasks"
+      }
+    },
+    "sync_now": "Sync now",
+    "conflict_resolver": {
+      "title": "Conflict Resolver",
+      "patch_date": "Update date: ${date}",
+      "item_type(map)": {
+        "task": "Task",
+        "note": "Note"
+      },
+      "choose_between": "Choose between accepting or refusing the changes",
+      "refuse": "Refuse",
+      "accept": "Accept",
+      "upcoming": "Upcoming",
+      "in_app_version": "In-app",
+      "changes_to_apply": "Changes to apply",
+      "apply_to_all": "Apply decision to all conflicts",
+      "fields(map)": {
+        "title": "Title",
+        "end_date": "End date",
+        "description": "Notes",
+        "start_date": "Start date",
+        "reminders_title": "Reminders",
+        "reminders": {
+          "zero": "No reminders",
+          "one": "1 reminder",
+          "other": "${n} reminders"
+        },
+        "undefined": "Undefined",
+        "priority": "Priority",
+        "folder": "Folder",
+        "tags": {
+          "zero": "No tags",
+          "one": "1 tag",
+          "other": "${n} tags"
+        }
+      },
+      "progress": "Progress"
     }
   }
 }

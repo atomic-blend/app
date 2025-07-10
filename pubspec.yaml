@@ -99,6 +99,8 @@ dependencies:
   qr_flutter: ^4.1.0
   logger: ^2.6.0
   home_widget: ^0.8.0
+  cron: ^0.6.2
+  objectid: ^4.0.1
 dependency_overrides:
   flutter_secure_storage: 9.2.4
   timezone: 0.10.0
