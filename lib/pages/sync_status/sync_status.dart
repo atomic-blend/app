@@ -326,12 +326,17 @@ class _SyncStatusState extends State<SyncStatus> {
               Positioned(
                 right: $constants.insets.sm,
                 top: $constants.insets.sm,
-                child: ElevatedContainer(
-                  borderRadius: $constants.corners.full,
-                  padding: EdgeInsets.all($constants.insets.xs),
-                  child: const Icon(
-                    CupertinoIcons.xmark,
-                    size: 18,
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
+                  child: ElevatedContainer(
+                    borderRadius: $constants.corners.full,
+                    padding: EdgeInsets.all($constants.insets.xs),
+                    child: const Icon(
+                      CupertinoIcons.xmark,
+                      size: 18,
+                    ),
                   ),
                 ),
               )
