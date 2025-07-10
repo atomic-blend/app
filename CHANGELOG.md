@@ -2,6 +2,60 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## 0.11.0 - 2025-07-10
+#### Bug Fixes
+- linter issues - (bf63b4c) - Brandon Guigo
+- exception when validating or discarding the last conflict - (2a7aef1) - Brandon Guigo
+- encrypt patch before sending in a separate list - (b165518) - Brandon Guigo
+- refactor with grid - (a42f4af) - Brandon Guigo
+- set state happening on the last patch to apply - (e5875e5) - Brandon Guigo
+- various fixes for linter - (7af407b) - Brandon Guigo
+- refactor translations + add progress bar - (7d1119f) - Brandon Guigo
+- a bit of refactoring - (1839954) - Brandon Guigo
+- global layout of the resolve conflict page - (0bd941a) - Brandon Guigo
+- remove the conflicts property since we store it in latestSync - (0ffdfd5) - Brandon Guigo
+- ui of sync page - (dfc273a) - Brandon Guigo
+- apply patch immediatly on state - (cc7de49) - Brandon Guigo
+- task creation with patch - (20e931c) - Brandon Guigo
+- make edit descr and title working - (f419706) - Brandon Guigo
+- remove old updateBulk that don't works well - (ef44757) - Brandon Guigo
+- required id for patch + generate objectid for patch - (91c0c3f) - Brandon Guigo
+- add missing components - (8f6d365) - Brandon Guigo
+- sync adjustment - (ab28619) - Brandon Guigo
+- remove unused methods in task service - (b3be7d0) - Brandon Guigo
+- availability version - (33550af) - Brandon Guigo
+- set app group id in main when app starts - (263cb16) - Brandon Guigo
+#### Features
+- refactor delete confirm into a generic one - (355e520) - Brandon Guigo
+- add apply / discard calls to bloc - (acb70f8) - Brandon Guigo
+- add apply all checkbox - (64e57ba) - Brandon Guigo
+- display the patch changes in the conflict resolver - (2ffe45c) - Brandon Guigo
+- add some ui - (86c2cc1) - Brandon Guigo
+- add force apply / discard patch - (c15dfd0) - Brandon Guigo
+- add list of changes + buttons - (c3d143a) - Brandon Guigo
+- conflict resolver start of ui - (b202355) - Brandon Guigo
+- setup conflict resolver - (7e6e77b) - Brandon Guigo
+- add conflict card to other pages - (61e9652) - Brandon Guigo
+- display conflict card on overview page - (59f9b12) - Brandon Guigo
+- start of conflict card - (78b8707) - Brandon Guigo
+- delete task with patch work - (bbd5b01) - Brandon Guigo
+- send update patch to backend ok - (bcfb3dd) - Brandon Guigo
+- replace all task edits by a list of changes - (86d2625) - Brandon Guigo
+- new patch model creation - (26a5c51) - Brandon Guigo
+- sync status page for tasks working - (38fd22c) - Brandon Guigo
+- next of sync status modal ui - (baae697) - Brandon Guigo
+- start syncStatus modal + conflicted wrapper etc... - (68d14bb) - Brandon Guigo
+- run sync on 5 min cron + fix issue with appGroupId don't set in main - (d5a9493) - Brandon Guigo
+- update task via sync mechanism - (25e9bcf) - Brandon Guigo
+- add sync Tasks with conflicts - (79a92bc) - Brandon Guigo
+- add optional batchSize parameter - (df15bf4) - Brandon Guigo
+- add update bulk method - (0771bb1) - Brandon Guigo
+#### Miscellaneous Chores
+- **(release)** 0.10.0 [skip ci] - (766260c) - GitHub Actions
+- fix fastfile + ios project for widget [skip ci] - (bc91497) - Brandon Guigo
+
+- - -
+
 ## 0.10.0 - 2025-06-30
 #### Bug Fixes
 - add free tier text - (6f71c5e) - Brandon Guigo
