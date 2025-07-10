@@ -5,24 +5,36 @@ import 'package:flutter/material.dart';
 import '../../utils/constants.dart';
 import '../../utils/shortcuts.dart';
 
-class DeleteConfirmModal extends StatefulWidget {
+class ABModal extends StatefulWidget {
   final String title;
   final String? description;
   final String? warning;
+  final String? confirmText;
+  final String? cancelText;
+  final Color? confirmColor;
+  final Color? confirmTextColor;
+  final Color? cancelColor;
 
-  final VoidCallback? onDelete;
-  const DeleteConfirmModal(
+  final VoidCallback? onConfirm;
+  final VoidCallback? onCancel;
+  const ABModal(
       {super.key,
       required this.title,
       this.description,
       this.warning,
-      this.onDelete});
+      this.onConfirm,
+      this.confirmText,
+      this.cancelText,
+      this.confirmColor,
+      this.confirmTextColor,
+      this.cancelColor,
+      this.onCancel});
 
   @override
-  State<DeleteConfirmModal> createState() => _DeleteConfirmModalState();
+  State<ABModal> createState() => _ABModalState();
 }
 
-class _DeleteConfirmModalState extends State<DeleteConfirmModal> {
+class _ABModalState extends State<ABModal> {
   @override
   Widget build(BuildContext context) {
     return Dialog(
@@ -72,11 +84,14 @@ class _DeleteConfirmModalState extends State<DeleteConfirmModal> {
                 Expanded(
                   child: PrimaryButtonSquare(
                     onPressed: () async {
-                      Navigator.pop(context);
+                      widget.onCancel?.call();
+                      if (widget.onCancel == null) {
+                        Navigator.pop(context, false);
+                      }
                     },
-                    text: context.t.actions.cancel,
+                    text: widget.cancelText ?? context.t.actions.cancel,
                     textColor: Colors.black,
-                    backgroundColor: Colors.white,
+                    backgroundColor: widget.cancelColor ?? Colors.white,
                   ),
                 ),
                 SizedBox(
@@ -85,11 +100,15 @@ class _DeleteConfirmModalState extends State<DeleteConfirmModal> {
                 Expanded(
                   child: PrimaryButtonSquare(
                     onPressed: () async {
-                      widget.onDelete?.call();
-                      Navigator.pop(context, true);
+                      widget.onConfirm?.call();
+                      if (widget.onConfirm == null) {
+                        Navigator.pop(context, true);
+                      }
                     },
-                    text: context.t.actions.delete,
-                    backgroundColor: getTheme(context).error,
+                    text: widget.confirmText ?? context.t.actions.delete,
+                    backgroundColor:
+                        widget.confirmColor ?? getTheme(context).error,
+                    textColor: widget.confirmTextColor ?? Colors.white,
                   ),
                 ),
               ],
