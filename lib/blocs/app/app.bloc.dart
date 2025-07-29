@@ -8,9 +8,7 @@ part 'app.state.dart';
 
 @lazySingleton
 class AppCubit extends HydratedCubit<AppState> {
-  AppCubit() : super(AppState.initial()) {
-    hydrate();
-  }
+  AppCubit() : super(AppState.initial());
 
   void changeMobileSyncDisabled({required bool value}) => emit(
         state.copyWith(
