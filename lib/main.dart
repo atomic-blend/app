@@ -22,6 +22,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_age/flutter_age.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:home_widget/home_widget.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
@@ -60,9 +61,13 @@ FutureOr<void> main() async {
   }, appRunner: () async {
     env = await EnvModel.create();
     prefs = await SharedPreferences.getInstance();
+
+    // await FlutterAge.init();
   
-    HomeWidget.setAppGroupId(appGroupId);
-    HomeWidget.registerInteractivityCallback(backgroundCallback);
+    if (!kIsWeb && !kIsWasm) {
+      HomeWidget.setAppGroupId(appGroupId);
+      HomeWidget.registerInteractivityCallback(backgroundCallback);
+    }
 
     tz.initializeTimeZones();
 
@@ -97,9 +102,9 @@ FutureOr<void> main() async {
     }
 
     HydratedBloc.storage = await HydratedStorage.build(
-      storageDirectory: kIsWeb
-          ? HydratedStorage.webStorageDirectory
-          : await getApplicationDocumentsDirectory(),
+      storageDirectory: kIsWeb || kIsWasm
+          ? HydratedStorageDirectory.web
+          : HydratedStorageDirectory((await getTemporaryDirectory()).path),
     );
 
     await LocaleSettings.useDeviceLocale();
