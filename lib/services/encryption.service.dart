@@ -165,7 +165,7 @@ class EncryptionService {
     final iv = generateRandomBytes(12);
     final cipher = GCMBlockCipher(AESEngine())
       ..init(true, ParametersWithIV(KeyParameter(uKey), iv));
-    final cipheResult = cipher.process(Uint8List.fromList(dataKey.privateKey.codeUnits));
+    final cipheResult = cipher.process(Uint8List.fromList(utf8.encode(dataKey.privateKey)));
     final tag = cipher.mac;
 
     // concat: encrypted data + tag + iv
@@ -195,7 +195,7 @@ class EncryptionService {
       ..init(true, ParametersWithIV(KeyParameter(mnemonicKey), mnemonicIv));
 
     // encrypt data key with mnemonic key
-    final mnemonicCipherResult = mnemonicCipher.process(Uint8List.fromList(dataKey.privateKey.codeUnits));
+    final mnemonicCipherResult = mnemonicCipher.process(Uint8List.fromList(utf8.encode(dataKey.privateKey)));
     final mnemonicTag = mnemonicCipher.mac;
 
     // concat: encrypted data + tag + iv

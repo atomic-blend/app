@@ -21,6 +21,8 @@ class EncryptionKeyEntity with _$EncryptionKeyEntity {
     String? type,
     // ignore: invalid_annotation_target
     @JsonKey(includeToJson: false) String? backupPhrase,
+    DateTime? createdAt,
+    DateTime? updatedAt,
   }) = _EncryptionKeyEntity;
 
   @override
