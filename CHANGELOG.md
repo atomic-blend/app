@@ -2,6 +2,20 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## 0.12.0 - 2025-07-30
+#### Bug Fixes
+- flutter version and readme file for pkg - (c37b209) - Brandon Guigo
+- bug with login and key restoration - (1b20a22) - Brandon Guigo
+- use utf8 encode for private key encryption - (e9b3d8f) - Brandon Guigo
+#### Features
+- convert the data key form aes to age - (f1c9d1d) - Brandon Guigo
+- add public key to model + make json encryption easier - (ea42a8a) - Brandon Guigo
+- support wasm - (0f8cc88) - Brandon Guigo
+#### Miscellaneous Chores
+- **(release)** 0.11.0 [skip ci] - (40887e4) - GitHub Actions
+
+- - -
+
 ## 0.11.0 - 2025-07-10
 #### Bug Fixes
 - linter issues - (bf63b4c) - Brandon Guigo
