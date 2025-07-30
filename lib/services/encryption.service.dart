@@ -51,7 +51,7 @@ class EncryptionService {
     final cipher = GCMBlockCipher(AESEngine())
       ..init(false, ParametersWithIV(KeyParameter(uKey), iv));
 
-    final decrypted = cipher.process(cipherText);
+    final dataKey = cipher.process(cipherText);
 
     // Verify the authentication tag
     if (tag.length != cipher.mac.length) {
@@ -64,8 +64,8 @@ class EncryptionService {
     }
 
     // Store the data key in the storage
-    userKey = base64.encode(decrypted);
-    prefs?.setString("key", base64.encode(decrypted));
+    userKey = base64.encode(dataKey);
+    prefs?.setString("key", base64.encode(dataKey));
   }
 
   static Future<EncryptionKeyEntity?> generateKeySetFromBackupKey({
@@ -150,6 +150,7 @@ class EncryptionService {
     argon2.deriveKey(passwordBytes, passwordBytes.length, uKey, 0);
 
     // generate random data key or use existing one
+    //TODO: create a new age key for the data key
     Uint8List dataKey;
     if (existingDataKey != null) {
       dataKey = existingDataKey;
@@ -203,6 +204,7 @@ class EncryptionService {
         mnemonicCipherResult.length + mnemonicTag.length, mnemonicIv);
 
     // store the keys and mnemonic
+    //TODO: add public key to the keySet + type to age_v1
     final EncryptionKeyEntity encryptionKey = EncryptionKeyEntity(
       userKey: base64.encode(encryptedDataKey),
       backupKey: base64.encode(encryptedMnemonicDataKey),
@@ -348,6 +350,8 @@ class EncryptionService {
     if (key == null) {
       throw Exception("Key not found");
     }
+
+    //TODO: encrypt with age key
     final iv = generateRandomBytes(12);
     final cipher = GCMBlockCipher(AESEngine())
       ..init(true, ParametersWithIV(KeyParameter(key), iv));
@@ -373,6 +377,7 @@ class EncryptionService {
       throw Exception("Key not found");
     }
 
+    //TODO: decrypt with age key
     final allBytes = base64.decode(data);
     final iv = allBytes.sublist(allBytes.length - 12);
     final tag = allBytes.sublist(allBytes.length - 28, allBytes.length - 12);
@@ -399,12 +404,122 @@ class EncryptionService {
   Future<dynamic> _processJsonValue(dynamic value, bool encrypt) async {
     if (value == null) return null;
 
-    if (value is Map<String, dynamic>) {
+    // Handle different Map types
+    if (value is Map) {
       return await (encrypt ? encryptJson(value) : decryptJson(value));
-    } else if (value is List) {
+    } 
+    // Handle different List types
+    else if (value is List) {
       return await Future.wait(
           value.map((item) => _processJsonValue(item, encrypt)));
-    } else {
+    } 
+    // Handle Set types
+    else if (value is Set) {
+      List<dynamic> listValue = value.toList();
+      List<dynamic> processedList = await Future.wait(
+          listValue.map((item) => _processJsonValue(item, encrypt)));
+      return Set.from(processedList);
+    }
+    // Handle DateTime objects
+    else if (value is DateTime) {
+      if (encrypt) {
+        String dateString = value.toIso8601String();
+        return await encryptString(data: dateString);
+      } else {
+        String decryptedValue = await decryptString(data: value.toString());
+        try {
+          return DateTime.parse(decryptedValue);
+        } catch (e) {
+          return decryptedValue;
+        }
+      }
+    }
+    // Handle Duration objects
+    else if (value is Duration) {
+      if (encrypt) {
+        String durationString = value.inMicroseconds.toString();
+        return await encryptString(data: durationString);
+      } else {
+        String decryptedValue = await decryptString(data: value.toString());
+        try {
+          int microseconds = int.parse(decryptedValue);
+          return Duration(microseconds: microseconds);
+        } catch (e) {
+          return decryptedValue;
+        }
+      }
+    }
+    // Handle Uri objects
+    else if (value is Uri) {
+      if (encrypt) {
+        String uriString = value.toString();
+        return await encryptString(data: uriString);
+      } else {
+        String decryptedValue = await decryptString(data: value.toString());
+        try {
+          return Uri.parse(decryptedValue);
+        } catch (e) {
+          return decryptedValue;
+        }
+      }
+    }
+    // Handle RegExp objects
+    else if (value is RegExp) {
+      if (encrypt) {
+        Map<String, dynamic> regexData = {
+          'pattern': value.pattern,
+          'isMultiLine': value.isMultiLine,
+          'isCaseSensitive': value.isCaseSensitive,
+          'isDotAll': value.isDotAll,
+          'isUnicode': value.isUnicode,
+        };
+        return await encryptString(data: json.encode(regexData));
+      } else {
+        String decryptedValue = await decryptString(data: value.toString());
+        try {
+          Map<String, dynamic> regexData = json.decode(decryptedValue);
+          return RegExp(
+            regexData['pattern'],
+            multiLine: regexData['isMultiLine'] ?? false,
+            caseSensitive: regexData['isCaseSensitive'] ?? true,
+            dotAll: regexData['isDotAll'] ?? false,
+            unicode: regexData['isUnicode'] ?? false,
+          );
+        } catch (e) {
+          return decryptedValue;
+        }
+      }
+    }
+    // Handle BigInt objects
+    else if (value is BigInt) {
+      if (encrypt) {
+        String bigIntString = value.toString();
+        return await encryptString(data: bigIntString);
+      } else {
+        String decryptedValue = await decryptString(data: value.toString());
+        try {
+          return BigInt.parse(decryptedValue);
+        } catch (e) {
+          return decryptedValue;
+        }
+      }
+    }
+    // Handle Uint8List and other typed lists
+    else if (value is Uint8List) {
+      if (encrypt) {
+        String bytesString = base64.encode(value);
+        return await encryptString(data: bytesString);
+      } else {
+        String decryptedValue = await decryptString(data: value.toString());
+        try {
+          return base64.decode(decryptedValue);
+        } catch (e) {
+          return decryptedValue;
+        }
+      }
+    }
+    // Handle other primitive types (String, int, double, bool)
+    else if (value is String || value is int || value is double || value is bool) {
       if (encrypt) {
         String jsonValue = json.encode(value);
         return await encryptString(data: jsonValue);
@@ -414,6 +529,21 @@ class EncryptionService {
           return json.decode(decryptedValue);
         } catch (e) {
           // If cannot decode as JSON, return as is (might be a date string or other primitive)
+          return decryptedValue;
+        }
+      }
+    }
+    // Handle any other type by converting to JSON
+    else {
+      if (encrypt) {
+        String jsonValue = json.encode(value);
+        return await encryptString(data: jsonValue);
+      } else {
+        String decryptedValue = await decryptString(data: value.toString());
+        try {
+          return json.decode(decryptedValue);
+        } catch (e) {
+          // If cannot decode as JSON, return as is
           return decryptedValue;
         }
       }
