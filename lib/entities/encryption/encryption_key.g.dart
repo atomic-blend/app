@@ -16,6 +16,12 @@ _$EncryptionKeyEntityImpl _$$EncryptionKeyEntityImplFromJson(
       publicKey: json['publicKey'] as String?,
       type: json['type'] as String?,
       backupPhrase: json['backupPhrase'] as String?,
+      createdAt: json['createdAt'] == null
+          ? null
+          : DateTime.parse(json['createdAt'] as String),
+      updatedAt: json['updatedAt'] == null
+          ? null
+          : DateTime.parse(json['updatedAt'] as String),
     );
 
 Map<String, dynamic> _$$EncryptionKeyEntityImplToJson(
@@ -27,4 +33,6 @@ Map<String, dynamic> _$$EncryptionKeyEntityImplToJson(
       'mnemonicSalt': instance.mnemonicSalt,
       'publicKey': instance.publicKey,
       'type': instance.type,
+      'createdAt': instance.createdAt?.toIso8601String(),
+      'updatedAt': instance.updatedAt?.toIso8601String(),
     };
