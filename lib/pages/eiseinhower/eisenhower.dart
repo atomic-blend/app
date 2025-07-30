@@ -86,7 +86,6 @@ class EisenhowerMatrix extends StatelessWidget {
                           priority: 1,
                           title: "Urgent & Unimportant",
                           filter: (task) {
-                            //TODO: add filter for overdue tasks
                             return task.where((element) =>
                                 element.priority == 1 &&
                                 element.completed != true);
