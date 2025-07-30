@@ -923,7 +923,6 @@ class AppLayoutState extends ResponsiveState<AppLayout> {
     if (authState is LoggedIn) {
       encryptionService ??=
           EncryptionService(userSalt: authState.user!.keySet.salt);
-      encryptionService!.hydrateKey();
       if (isPaymentSupported()) RevenueCatService.logIn(authState.user!.id!);
     }
 

@@ -32,6 +32,11 @@ dependencies:
     sdk: flutter
   flutter_localizations:
     sdk: flutter
+  
+  flutter_age:
+    git:
+      url: https://github.com/atomic-blend/flutter_age.git
+      ref: v0.0.3
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -42,8 +47,8 @@ dependencies:
   json_serializable: ^6.9.0
   json_annotation: ^4.9.0
   dio: ^5.7.0
-  flutter_bloc: ^8.1.6
-  hydrated_bloc: ^9.1.5
+  flutter_bloc: ^9.1.1
+  hydrated_bloc: ^10.1.1
   equatable: ^2.0.7
   pretty_dio_logger: ^1.4.0
   json_store: ^2.0.0
@@ -91,7 +96,6 @@ dependencies:
   sizer: ^3.0.0
   flutter_staggered_grid_view: ^0.7.0
   fleather: ^1.22.0
-  flutter_keyboard_visibility: ^6.0.0
   flutter_side_menu: ^0.5.41
   timezone: ^0.10.0
   purchases_flutter: ^8.7.3
@@ -101,8 +105,10 @@ dependencies:
   home_widget: ^0.8.0
   cron: ^0.6.2
   objectid: ^4.0.1
+  keyboard_service: ^2.0.3
 dependency_overrides:
-  flutter_secure_storage: 9.2.4
+  flutter_secure_storage_web: ^2.0.0
+  flutter_secure_storage_platform_interface: ^2.0.1
   timezone: 0.10.0
 
 dev_dependencies:
@@ -138,6 +144,7 @@ flutter:
     - assets/configs/
     - assets/images/
     - assets/animations/
+    - pkg/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

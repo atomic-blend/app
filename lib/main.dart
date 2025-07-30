@@ -22,6 +22,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_age/flutter_age.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:home_widget/home_widget.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
@@ -42,6 +43,7 @@ SharedPreferences? prefs;
 FcmService? fcmService;
 Map<String, dynamic>? userData;
 String? userKey;
+String? agePublicKey;
 const String appGroupId = "group.atomicblend.tasks";
 
 
@@ -60,9 +62,13 @@ FutureOr<void> main() async {
   }, appRunner: () async {
     env = await EnvModel.create();
     prefs = await SharedPreferences.getInstance();
-  
-    HomeWidget.setAppGroupId(appGroupId);
-    HomeWidget.registerInteractivityCallback(backgroundCallback);
+
+    await FlutterAge.init();
+
+    if (!kIsWeb && !kIsWasm) {
+      HomeWidget.setAppGroupId(appGroupId);
+      HomeWidget.registerInteractivityCallback(backgroundCallback);
+    }
 
     tz.initializeTimeZones();
 
@@ -79,7 +85,8 @@ FutureOr<void> main() async {
     final rawUserData = prefs?.getString("user");
     userData = rawUserData != null ? json.decode(rawUserData) : null;
     userKey = prefs?.getString("key");
-
+    agePublicKey = prefs?.getString("age_public_key");
+    
     if (kIsWeb || !Platform.isLinux) {
       await Firebase.initializeApp(
         options: DefaultFirebaseOptions.currentPlatform,
@@ -97,9 +104,9 @@ FutureOr<void> main() async {
     }
 
     HydratedBloc.storage = await HydratedStorage.build(
-      storageDirectory: kIsWeb
-          ? HydratedStorage.webStorageDirectory
-          : await getApplicationDocumentsDirectory(),
+      storageDirectory: kIsWeb || kIsWasm
+          ? HydratedStorageDirectory.web
+          : HydratedStorageDirectory((await getTemporaryDirectory()).path),
     );
 
     await LocaleSettings.useDeviceLocale();

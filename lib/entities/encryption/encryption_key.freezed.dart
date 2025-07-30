@@ -36,12 +36,23 @@ mixin _$EncryptionKeyEntity {
   String get mnemonicSalt =>
       throw _privateConstructorUsedError; // the salt used to derive the mnemonic
   set mnemonicSalt(String value) =>
+      throw _privateConstructorUsedError; // public key
+  String? get publicKey => throw _privateConstructorUsedError; // public key
+  set publicKey(String? value) =>
+      throw _privateConstructorUsedError; // type of encryption key
+  String? get type =>
+      throw _privateConstructorUsedError; // type of encryption key
+  set type(String? value) =>
       throw _privateConstructorUsedError; // ignore: invalid_annotation_target
   @JsonKey(includeToJson: false)
   String? get backupPhrase =>
       throw _privateConstructorUsedError; // ignore: invalid_annotation_target
   @JsonKey(includeToJson: false)
   set backupPhrase(String? value) => throw _privateConstructorUsedError;
+  DateTime? get createdAt => throw _privateConstructorUsedError;
+  set createdAt(DateTime? value) => throw _privateConstructorUsedError;
+  DateTime? get updatedAt => throw _privateConstructorUsedError;
+  set updatedAt(DateTime? value) => throw _privateConstructorUsedError;
 
   /// Serializes this EncryptionKeyEntity to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -64,7 +75,11 @@ abstract class $EncryptionKeyEntityCopyWith<$Res> {
       String backupKey,
       String salt,
       String mnemonicSalt,
-      @JsonKey(includeToJson: false) String? backupPhrase});
+      String? publicKey,
+      String? type,
+      @JsonKey(includeToJson: false) String? backupPhrase,
+      DateTime? createdAt,
+      DateTime? updatedAt});
 }
 
 /// @nodoc
@@ -86,7 +101,11 @@ class _$EncryptionKeyEntityCopyWithImpl<$Res, $Val extends EncryptionKeyEntity>
     Object? backupKey = null,
     Object? salt = null,
     Object? mnemonicSalt = null,
+    Object? publicKey = freezed,
+    Object? type = freezed,
     Object? backupPhrase = freezed,
+    Object? createdAt = freezed,
+    Object? updatedAt = freezed,
   }) {
     return _then(_value.copyWith(
       userKey: null == userKey
@@ -105,10 +124,26 @@ class _$EncryptionKeyEntityCopyWithImpl<$Res, $Val extends EncryptionKeyEntity>
           ? _value.mnemonicSalt
           : mnemonicSalt // ignore: cast_nullable_to_non_nullable
               as String,
+      publicKey: freezed == publicKey
+          ? _value.publicKey
+          : publicKey // ignore: cast_nullable_to_non_nullable
+              as String?,
+      type: freezed == type
+          ? _value.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as String?,
       backupPhrase: freezed == backupPhrase
           ? _value.backupPhrase
           : backupPhrase // ignore: cast_nullable_to_non_nullable
               as String?,
+      createdAt: freezed == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      updatedAt: freezed == updatedAt
+          ? _value.updatedAt
+          : updatedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
     ) as $Val);
   }
 }
@@ -126,7 +161,11 @@ abstract class _$$EncryptionKeyEntityImplCopyWith<$Res>
       String backupKey,
       String salt,
       String mnemonicSalt,
-      @JsonKey(includeToJson: false) String? backupPhrase});
+      String? publicKey,
+      String? type,
+      @JsonKey(includeToJson: false) String? backupPhrase,
+      DateTime? createdAt,
+      DateTime? updatedAt});
 }
 
 /// @nodoc
@@ -146,7 +185,11 @@ class __$$EncryptionKeyEntityImplCopyWithImpl<$Res>
     Object? backupKey = null,
     Object? salt = null,
     Object? mnemonicSalt = null,
+    Object? publicKey = freezed,
+    Object? type = freezed,
     Object? backupPhrase = freezed,
+    Object? createdAt = freezed,
+    Object? updatedAt = freezed,
   }) {
     return _then(_$EncryptionKeyEntityImpl(
       userKey: null == userKey
@@ -165,10 +208,26 @@ class __$$EncryptionKeyEntityImplCopyWithImpl<$Res>
           ? _value.mnemonicSalt
           : mnemonicSalt // ignore: cast_nullable_to_non_nullable
               as String,
+      publicKey: freezed == publicKey
+          ? _value.publicKey
+          : publicKey // ignore: cast_nullable_to_non_nullable
+              as String?,
+      type: freezed == type
+          ? _value.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as String?,
       backupPhrase: freezed == backupPhrase
           ? _value.backupPhrase
           : backupPhrase // ignore: cast_nullable_to_non_nullable
               as String?,
+      createdAt: freezed == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      updatedAt: freezed == updatedAt
+          ? _value.updatedAt
+          : updatedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
     ));
   }
 }
@@ -181,7 +240,11 @@ class _$EncryptionKeyEntityImpl extends _EncryptionKeyEntity {
       required this.backupKey,
       required this.salt,
       required this.mnemonicSalt,
-      @JsonKey(includeToJson: false) this.backupPhrase})
+      this.publicKey,
+      this.type,
+      @JsonKey(includeToJson: false) this.backupPhrase,
+      this.createdAt,
+      this.updatedAt})
       : super._();
 
   factory _$EncryptionKeyEntityImpl.fromJson(Map<String, dynamic> json) =>
@@ -199,10 +262,20 @@ class _$EncryptionKeyEntityImpl extends _EncryptionKeyEntity {
 // the salt used to derive the mnemonic
   @override
   String mnemonicSalt;
+// public key
+  @override
+  String? publicKey;
+// type of encryption key
+  @override
+  String? type;
 // ignore: invalid_annotation_target
   @override
   @JsonKey(includeToJson: false)
   String? backupPhrase;
+  @override
+  DateTime? createdAt;
+  @override
+  DateTime? updatedAt;
 
   /// Create a copy of EncryptionKeyEntity
   /// with the given fields replaced by the non-null parameter values.
@@ -223,12 +296,15 @@ class _$EncryptionKeyEntityImpl extends _EncryptionKeyEntity {
 
 abstract class _EncryptionKeyEntity extends EncryptionKeyEntity {
   factory _EncryptionKeyEntity(
-          {required String userKey,
-          required String backupKey,
-          required String salt,
-          required String mnemonicSalt,
-          @JsonKey(includeToJson: false) String? backupPhrase}) =
-      _$EncryptionKeyEntityImpl;
+      {required String userKey,
+      required String backupKey,
+      required String salt,
+      required String mnemonicSalt,
+      String? publicKey,
+      String? type,
+      @JsonKey(includeToJson: false) String? backupPhrase,
+      DateTime? createdAt,
+      DateTime? updatedAt}) = _$EncryptionKeyEntityImpl;
   _EncryptionKeyEntity._() : super._();
 
   factory _EncryptionKeyEntity.fromJson(Map<String, dynamic> json) =
@@ -246,12 +322,24 @@ abstract class _EncryptionKeyEntity extends EncryptionKeyEntity {
   set salt(String value); // the salt used to derive the mnemonic
   @override
   String get mnemonicSalt; // the salt used to derive the mnemonic
-  set mnemonicSalt(String value); // ignore: invalid_annotation_target
+  set mnemonicSalt(String value); // public key
+  @override
+  String? get publicKey; // public key
+  set publicKey(String? value); // type of encryption key
+  @override
+  String? get type; // type of encryption key
+  set type(String? value); // ignore: invalid_annotation_target
   @override
   @JsonKey(includeToJson: false)
   String? get backupPhrase; // ignore: invalid_annotation_target
   @JsonKey(includeToJson: false)
   set backupPhrase(String? value);
+  @override
+  DateTime? get createdAt;
+  set createdAt(DateTime? value);
+  @override
+  DateTime? get updatedAt;
+  set updatedAt(DateTime? value);
 
   /// Create a copy of EncryptionKeyEntity
   /// with the given fields replaced by the non-null parameter values.

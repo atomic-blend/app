@@ -32,11 +32,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:flutter_popup/flutter_popup.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:jiffy/jiffy.dart';
 import 'package:macos_window_utils/macos_window_utils.dart';
+import 'package:keyboard_service/keyboard_service.dart';
 
 import '../../components/forms/ab_checkbox.dart';
 
@@ -543,16 +543,13 @@ class _TaskDetailState extends State<TaskDetail> {
                                 if (isDesktop(context))
                                   FleatherToolbar.basic(
                                       controller: _controller!),
-                                KeyboardVisibilityBuilder(
-                                    builder: (context, isKeyboardVisible) {
-                                  return FleatherEditor(
-                                    controller: _controller!,
-                                  );
-                                }),
+                                FleatherEditor(
+                                  controller: _controller!,
+                                ),
                                 if (!isDesktop(context))
-                                  KeyboardVisibilityBuilder(
-                                      builder: (context, isKeyboardVisible) {
-                                    if (isKeyboardVisible) {
+                                  Builder(
+                                      builder: (context) {
+                                    if (KeyboardService.isVisible(context)) {
                                       return FleatherToolbar.basic(
                                           controller: _controller!);
                                     }

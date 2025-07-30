@@ -15,8 +15,14 @@ class EncryptionKeyEntity with _$EncryptionKeyEntity {
     required String salt,
     // the salt used to derive the mnemonic
     required String mnemonicSalt,
+    // public key
+    String? publicKey,
+    // type of encryption key
+    String? type,
     // ignore: invalid_annotation_target
     @JsonKey(includeToJson: false) String? backupPhrase,
+    DateTime? createdAt,
+    DateTime? updatedAt,
   }) = _EncryptionKeyEntity;
 
   @override
