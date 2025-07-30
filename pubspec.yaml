@@ -36,7 +36,7 @@ dependencies:
   flutter_age:
     git:
       url: https://github.com/atomic-blend/flutter_age.git
-      ref: 4bad417999c9a7b9b2165ef0c789d71b10b29143
+      ref: v0.0.3
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -144,6 +144,7 @@ flutter:
     - assets/configs/
     - assets/images/
     - assets/animations/
+    - pkg/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

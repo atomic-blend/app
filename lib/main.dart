@@ -62,8 +62,8 @@ FutureOr<void> main() async {
     env = await EnvModel.create();
     prefs = await SharedPreferences.getInstance();
 
-    // await FlutterAge.init();
-  
+    await FlutterAge.init();
+
     if (!kIsWeb && !kIsWasm) {
       HomeWidget.setAppGroupId(appGroupId);
       HomeWidget.registerInteractivityCallback(backgroundCallback);
