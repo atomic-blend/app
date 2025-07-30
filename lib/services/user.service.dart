@@ -208,7 +208,7 @@ class UserService {
       'salt': newUserSalt,
     });
     if (result.statusCode == 200) {
-      await EncryptionService.persistNewUserKey(base64.decode(newUserKey));
+      await EncryptionService.persistNewUserKey(newUserKey);
       return true;
     } else {
       throw Exception('password_change_failed');
