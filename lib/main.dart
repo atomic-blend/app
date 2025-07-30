@@ -43,6 +43,7 @@ SharedPreferences? prefs;
 FcmService? fcmService;
 Map<String, dynamic>? userData;
 String? userKey;
+String? agePublicKey;
 const String appGroupId = "group.atomicblend.tasks";
 
 
@@ -84,7 +85,8 @@ FutureOr<void> main() async {
     final rawUserData = prefs?.getString("user");
     userData = rawUserData != null ? json.decode(rawUserData) : null;
     userKey = prefs?.getString("key");
-
+    agePublicKey = prefs?.getString("age_public_key");
+    
     if (kIsWeb || !Platform.isLinux) {
       await Firebase.initializeApp(
         options: DefaultFirebaseOptions.currentPlatform,
