@@ -267,6 +267,7 @@ class _ResetPasswordRecapState extends State<ResetPasswordRecap>
                               backupSalt: _mnemonicSalt!,
                               mnemonic: widget.mnemonicKey!,
                               newPassword: widget.newPassword,
+                              agePublicKey: authState.user?.keySet.publicKey,
                             );
                           } else {
                             // generate a new keySet from the new password

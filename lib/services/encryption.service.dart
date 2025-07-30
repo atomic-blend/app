@@ -5,6 +5,7 @@ import 'dart:typed_data';
 import 'package:app/entities/encryption/encryption_key.dart';
 import 'package:app/main.dart';
 import 'package:bip39/bip39.dart' as bip39;
+import 'package:flutter_age/flutter_age.dart';
 import 'package:pointycastle/block/aes.dart';
 import 'package:pointycastle/block/modes/gcm.dart';
 import 'package:pointycastle/key_derivators/argon2.dart';
@@ -73,6 +74,7 @@ class EncryptionService {
     required String backupSalt,
     required String mnemonic,
     required String newPassword,
+    required String? agePublicKey,
   }) async {
     //check mnemonic validity with bip39
 
@@ -117,7 +119,8 @@ class EncryptionService {
     // Generate a new user key from the new password
     final newKeySet = await generateKeySet(
       newPassword,
-      existingDataKey: decryptedDataKey,
+      existingAgePrivateKey: utf8.decode(decryptedDataKey),
+      existingAgePublicKey: agePublicKey,
     );
 
     return newKeySet;
@@ -125,7 +128,8 @@ class EncryptionService {
 
   static Future<EncryptionKeyEntity?> generateKeySet(
     String password, {
-    Uint8List? existingDataKey,
+    String? existingAgePrivateKey,
+    String? existingAgePublicKey,
   }) async {
     //generate user salt
     final userSalt = generateRandomBytes(32);
@@ -150,19 +154,18 @@ class EncryptionService {
     argon2.deriveKey(passwordBytes, passwordBytes.length, uKey, 0);
 
     // generate random data key or use existing one
-    //TODO: create a new age key for the data key
-    Uint8List dataKey;
-    if (existingDataKey != null) {
-      dataKey = existingDataKey;
+    AgeKey? dataKey;
+    if (existingAgePrivateKey != null && existingAgePublicKey != null) {
+      dataKey = AgeKey(privateKey: existingAgePrivateKey, publicKey: existingAgePublicKey);
     } else {
-      dataKey = generateRandomBytes(32);
+      dataKey = createKey();
     }
 
     // encrypt data key with user key
     final iv = generateRandomBytes(12);
     final cipher = GCMBlockCipher(AESEngine())
       ..init(true, ParametersWithIV(KeyParameter(uKey), iv));
-    final cipheResult = cipher.process(dataKey);
+    final cipheResult = cipher.process(Uint8List.fromList(dataKey.privateKey.codeUnits));
     final tag = cipher.mac;
 
     // concat: encrypted data + tag + iv
@@ -192,7 +195,7 @@ class EncryptionService {
       ..init(true, ParametersWithIV(KeyParameter(mnemonicKey), mnemonicIv));
 
     // encrypt data key with mnemonic key
-    final mnemonicCipherResult = mnemonicCipher.process(dataKey);
+    final mnemonicCipherResult = mnemonicCipher.process(Uint8List.fromList(dataKey.privateKey.codeUnits));
     final mnemonicTag = mnemonicCipher.mac;
 
     // concat: encrypted data + tag + iv
@@ -204,13 +207,15 @@ class EncryptionService {
         mnemonicCipherResult.length + mnemonicTag.length, mnemonicIv);
 
     // store the keys and mnemonic
-    //TODO: add public key to the keySet + type to age_v1
+    //TODO: [DONE] add public key to the keySet + type to age_v1
     final EncryptionKeyEntity encryptionKey = EncryptionKeyEntity(
       userKey: base64.encode(encryptedDataKey),
       backupKey: base64.encode(encryptedMnemonicDataKey),
       salt: base64.encode(userSalt),
       backupPhrase: mnemonic.toString(),
       mnemonicSalt: base64.encode(mnemonicSalt), // Store the mnemonic salt
+      publicKey: dataKey.publicKey,
+      type: "age_v1",
     );
 
     // store the data key in the secure storage
@@ -220,9 +225,9 @@ class EncryptionService {
     return encryptionKey;
   }
 
-  Future<Uint8List?> hydrateKey() async {
+  Future<String?> hydrateKey() async {
     if (userKey != null) {
-      return base64.decode(userKey!);
+      return userKey!;
     }
     return null;
   }
@@ -351,22 +356,10 @@ class EncryptionService {
       throw Exception("Key not found");
     }
 
-    //TODO: encrypt with age key
-    final iv = generateRandomBytes(12);
-    final cipher = GCMBlockCipher(AESEngine())
-      ..init(true, ParametersWithIV(KeyParameter(key), iv));
+    // encrypt with age key
+    final encrypted = encryptData(data: Uint8List.fromList(utf8.encode(data)), publicKey: key);
 
-    final dataBytes = Uint8List.fromList(utf8.encode(data));
-    final cipherText = cipher.process(dataBytes);
-    final tag = cipher.mac;
-
-    // Concaténer dans l'ordre : données chiffrées + tag + iv
-    final result = Uint8List(cipherText.length + tag.length + iv.length);
-    result.setAll(0, cipherText);
-    result.setAll(cipherText.length, tag);
-    result.setAll(cipherText.length + tag.length, iv);
-
-    return base64.encode(result);
+    return encrypted;
   }
 
   Future<String> decryptString({
@@ -377,26 +370,8 @@ class EncryptionService {
       throw Exception("Key not found");
     }
 
-    //TODO: decrypt with age key
-    final allBytes = base64.decode(data);
-    final iv = allBytes.sublist(allBytes.length - 12);
-    final tag = allBytes.sublist(allBytes.length - 28, allBytes.length - 12);
-    final cipherText = allBytes.sublist(0, allBytes.length - 28);
-
-    final cipher = GCMBlockCipher(AESEngine())
-      ..init(false, ParametersWithIV(KeyParameter(key), iv));
-
-    final decrypted = cipher.process(cipherText);
-
-    // Vérification manuelle du tag
-    if (tag.length != cipher.mac.length) {
-      throw Exception("Authentication failed");
-    }
-    for (var i = 0; i < tag.length; i++) {
-      if (tag[i] != cipher.mac[i]) {
-        throw Exception("Authentication failed");
-      }
-    }
+    // decrypt with age key
+    final decrypted = decryptData(encryptedDataBase64: data, privateKey: key);
 
     return utf8.decode(decrypted);
   }
