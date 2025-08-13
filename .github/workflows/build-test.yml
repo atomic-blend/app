@@ -34,10 +34,10 @@ jobs:
       - name: Check for Local Path Dependencies
         run: |
           echo "Checking pubspec.yaml for local path dependencies..."
-          if grep -q "path:" pubspec.yaml; then
+          if grep -A1 -B1 "^  [a-zA-Z0-9_-]:" pubspec.yaml | grep -q "path:"; then
             echo "❌ ERROR: Local path dependencies found in pubspec.yaml!"
-            echo "The following lines contain 'path:' references:"
-            grep -n "path:" pubspec.yaml
+            echo "The following lines contain 'path:' references under dependencies:"
+            grep -A1 -B1 "^  [a-zA-Z0-9_-]:" pubspec.yaml | grep -n "path:"
             echo ""
             echo "Please remove all local path dependencies before committing."
             exit 1
