@@ -31,6 +31,20 @@ jobs:
       - name: Install Dependencies
         run: flutter pub get
 
+      - name: Check for Local Path Dependencies
+        run: |
+          echo "Checking pubspec.yaml for local path dependencies..."
+          if grep -q "path:" pubspec.yaml; then
+            echo "❌ ERROR: Local path dependencies found in pubspec.yaml!"
+            echo "The following lines contain 'path:' references:"
+            grep -n "path:" pubspec.yaml
+            echo ""
+            echo "Please remove all local path dependencies before committing."
+            exit 1
+          else
+            echo "✅ No local path dependencies found in pubspec.yaml"
+          fi
+
       - name: Lint
         run: dart analyze --fatal-infos
 
