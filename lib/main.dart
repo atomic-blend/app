@@ -88,13 +88,16 @@ FutureOr<void> main() async {
     userKey = prefs?.getString("key");
     agePublicKey = prefs?.getString("age_public_key");
 
-    encryptionService = EncryptionService(
-      userSalt: userData!['keySet']['salt'],
-      prefs: prefs!,
-      userKey: userKey,
-      agePublicKey: agePublicKey,
-    );
-    
+    // Only create encryption service if user data exists
+    if (userData != null && userData!['keySet'] != null) {
+      encryptionService = EncryptionService(
+        userSalt: userData?['keySet']['salt'],
+        prefs: prefs!,
+        userKey: userKey,
+        agePublicKey: agePublicKey,
+      );
+    }   
+      
     if (kIsWeb || !Platform.isLinux) {
       await Firebase.initializeApp(
         options: DefaultFirebaseOptions.currentPlatform,

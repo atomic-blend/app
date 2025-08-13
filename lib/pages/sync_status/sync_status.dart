@@ -40,8 +40,12 @@ class _SyncStatusState extends State<SyncStatus> {
                   context: context,
                   builder: (context) => Dialog(
                     child: SizedBox(
-                        height: getSize(context).height * 0.4,
-                        width: getSize(context).width * 0.4,
+                        height: isDesktop(context)
+                            ? getSize(context).height * 0.5
+                            : getSize(context).height * 0.4,
+                        width: isDesktop(context)
+                            ? getSize(context).width * 0.4
+                            : getSize(context).width * 0.4,
                         child: _buildSyncModal(context)),
                   ),
                 );

@@ -333,7 +333,7 @@ class Navigation {
             ),
             actions: [
               BlocBuilder<AuthBloc, AuthState>(builder: (context, authState) {
-                if (authState is LoggedIn && !isDesktop(context)) {
+                if (authState is LoggedIn) {
                   return Padding(
                     padding: EdgeInsets.only(right: $constants.insets.sm),
                     child: const SyncStatus(),
