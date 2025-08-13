@@ -14,7 +14,7 @@ import 'package:app/pages/auth/login_or_register_modal.dart';
 import 'package:app/pages/paywall/paywall_utils.dart';
 import 'package:app/pages/sync_status/sync_status.dart';
 import 'package:app/pages/tasks/filtered_view.dart';
-import 'package:app/services/device_info.service.dart';
+import 'package:ab_shared/services/device_info.service.dart';
 import 'package:ab_shared/services/encryption.service.dart';
 import 'package:app/services/revenue_cat_service.dart';
 import 'package:app/services/sync.service.dart';

@@ -2,10 +2,10 @@ import 'dart:convert';
 
 import 'package:app/entities/user/user.entity.dart';
 import 'package:app/entities/userRole/userRole.entity.dart';
-import 'package:app/entities/user_device/user_device.dart';
+import 'package:ab_shared/entities/user_device/user_device.dart';
 import 'package:app/entities/purchase/purchase.dart';
 import 'package:app/main.dart';
-import 'package:app/services/device_info.service.dart';
+import 'package:ab_shared/services/device_info.service.dart';
 import 'package:ab_shared/services/encryption.service.dart';
 import 'package:app/utils/api_client.dart';
 import 'package:dio/dio.dart';

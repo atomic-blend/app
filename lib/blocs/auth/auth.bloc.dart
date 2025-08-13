@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:app/entities/user/user.entity.dart';
-import 'package:app/entities/user_device/user_device.dart';
+import 'package:ab_shared/entities/user_device/user_device.dart';
 import 'package:app/services/user.service.dart';
 import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
