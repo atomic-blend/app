@@ -1,6 +1,6 @@
 import 'package:app/blocs/folder/folder.bloc.dart';
 import 'package:app/components/buttons/icon_text_card.dart';
-import 'package:app/components/modals/ab_modal.dart';
+import 'package:ab_shared/components/modals/ab_modal.dart';
 import 'package:app/entities/folder/folder.entity.dart';
 import 'package:app/i18n/strings.g.dart';
 import 'package:app/pages/folder/add_folder_modal.dart';

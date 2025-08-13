@@ -9,7 +9,7 @@ import 'package:app/components/buttons/icon_text_pill.dart';
 import 'package:app/components/dialogs/priority_picker.dart';
 import 'package:ab_shared/components/forms/app_text_form_field.dart';
 import 'package:app/components/forms/task_date_picker_modal/task_date_picker_modal.dart';
-import 'package:app/components/modals/ab_modal.dart';
+import 'package:ab_shared/components/modals/ab_modal.dart';
 import 'package:ab_shared/components/widgets/elevated_container.dart';
 import 'package:app/entities/folder/folder.entity.dart';
 import 'package:app/entities/sync/patch_change/patch_change.dart';

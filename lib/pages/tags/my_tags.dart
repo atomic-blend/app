@@ -1,7 +1,7 @@
 import 'package:ab_shared/blocs/auth/auth.bloc.dart';
 import 'package:app/blocs/tag/tag.bloc.dart';
 import 'package:app/components/buttons/icon_text_card.dart';
-import 'package:app/components/modals/ab_modal.dart';
+import 'package:ab_shared/components/modals/ab_modal.dart';
 import 'package:app/i18n/strings.g.dart';
 import 'package:ab_shared/pages/paywall/paywall_utils.dart';
 import 'package:app/main.dart';

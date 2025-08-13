@@ -1,5 +1,5 @@
 import 'package:app/blocs/time_entries/time_entry.bloc.dart';
-import 'package:app/components/modals/ab_modal.dart';
+import 'package:ab_shared/components/modals/ab_modal.dart';
 import 'package:app/entities/tasks/tasks.entity.dart';
 import 'package:app/entities/time_entry/time_entry.entity.dart';
 import 'package:app/i18n/strings.g.dart';

@@ -1,6 +1,6 @@
 import 'package:animated_toggle_switch/animated_toggle_switch.dart';
 import 'package:app/blocs/habit/habit.bloc.dart';
-import 'package:app/components/modals/ab_modal.dart';
+import 'package:ab_shared/components/modals/ab_modal.dart';
 import 'package:ab_shared/components/widgets/elevated_container.dart';
 import 'package:app/entities/habit/habit.entity.dart';
 import 'package:app/entities/habit/habit_entry/habit_entry.entity.dart';
