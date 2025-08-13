@@ -5,7 +5,7 @@ import 'package:app/blocs/app/app.bloc.dart';
 import 'package:ab_shared/blocs/auth/auth.bloc.dart';
 import 'package:app/blocs/folder/folder.bloc.dart';
 import 'package:app/blocs/tasks/tasks.bloc.dart';
-import 'package:app/components/app/bottom_navigation.dart';
+import 'package:ab_shared/components/app/bottom_navigation.dart';
 import 'package:app/components/responsive_stateful_widget.dart';
 import 'package:ab_shared/components/widgets/elevated_container.dart';
 import 'package:app/entities/tasks/tasks.entity.dart';
@@ -419,6 +419,12 @@ class AppLayoutState extends ResponsiveState<AppLayout> {
                     ),
                     body: body,
                     bottomNavigationBar: BottomNavigation(
+                      onPrimaryMenuSelected: (key) {
+                        context.read<AppCubit>().changePrimaryMenuSelectedKey(key: key);
+                      },
+                      onSecondaryMenuSelected: (key) {
+                        context.read<AppCubit>().changeSecondaryMenuSelectedKey(key: key);
+                      },
                       destinations: $navConstants
                           .primaryMenuItems(context)
                           .take(5)

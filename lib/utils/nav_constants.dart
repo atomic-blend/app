@@ -2,7 +2,7 @@ import 'package:ab_shared/utils/constants.dart';
 import 'package:app/blocs/app/app.bloc.dart';
 import 'package:ab_shared/blocs/auth/auth.bloc.dart';
 import 'package:app/blocs/habit/habit.bloc.dart';
-import 'package:app/components/app/bottom_navigation.dart';
+import 'package:ab_shared/components/app/bottom_navigation.dart';
 import 'package:app/entities/tasks/tasks.entity.dart';
 import 'package:app/i18n/strings.g.dart';
 import 'package:app/main.dart';
