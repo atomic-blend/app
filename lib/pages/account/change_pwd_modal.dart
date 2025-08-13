@@ -2,7 +2,7 @@ import 'package:app/blocs/auth/auth.bloc.dart';
 import 'package:app/components/buttons/primary_button_square.dart';
 import 'package:app/components/forms/app_text_form_field.dart';
 import 'package:app/i18n/strings.g.dart';
-import 'package:app/services/encryption.service.dart';
+import 'package:app/main.dart';
 import 'package:app/utils/constants.dart';
 import 'package:app/utils/shortcuts.dart';
 import 'package:auto_size_text/auto_size_text.dart';
@@ -130,7 +130,7 @@ class _ChangePwdModalState extends State<ChangePwdModal> {
 
                         try {
                           final refreshedKey =
-                              await EncryptionService.refreshUserDataKey(
+                              await encryptionService!.refreshUserDataKey(
                             authState.user!.keySet,
                             _oldPasswordController.text,
                             _newPasswordController.text,

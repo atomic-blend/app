@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:ab_shared/services/encryption.service.dart';
 import 'package:app/blocs/app/app.bloc.dart';
 import 'package:app/blocs/auth/auth.bloc.dart';
 import 'package:app/blocs/device_calendar/device_calendar.bloc.dart';
@@ -45,7 +46,7 @@ Map<String, dynamic>? userData;
 String? userKey;
 String? agePublicKey;
 const String appGroupId = "group.atomicblend.tasks";
-
+EncryptionService? encryptionService;
 
 FutureOr<void> main() async {
   await SentryFlutter.init((options) {
@@ -86,6 +87,13 @@ FutureOr<void> main() async {
     userData = rawUserData != null ? json.decode(rawUserData) : null;
     userKey = prefs?.getString("key");
     agePublicKey = prefs?.getString("age_public_key");
+
+    encryptionService = EncryptionService(
+      userSalt: userData!['keySet']['salt'],
+      prefs: prefs!,
+      userKey: userKey,
+      agePublicKey: agePublicKey,
+    );
     
     if (kIsWeb || !Platform.isLinux) {
       await Firebase.initializeApp(

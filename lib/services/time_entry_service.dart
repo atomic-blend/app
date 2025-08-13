@@ -1,5 +1,5 @@
 import 'package:app/entities/time_entry/time_entry.entity.dart';
-import 'package:app/services/user.service.dart';
+import 'package:app/main.dart';
 import 'package:app/utils/api_client.dart';
 
 class TimeEntryService {

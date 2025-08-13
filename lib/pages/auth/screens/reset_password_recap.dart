@@ -1,8 +1,8 @@
 import 'package:app/blocs/auth/auth.bloc.dart';
 import 'package:app/components/buttons/primary_button_square.dart';
-import 'package:app/entities/encryption/encryption_key.dart';
+import 'package:ab_shared/entities/encryption/encryption_key.dart';
 import 'package:app/i18n/strings.g.dart';
-import 'package:app/services/encryption.service.dart';
+import 'package:app/main.dart';
 import 'package:app/utils/constants.dart';
 import 'package:app/utils/shortcuts.dart';
 import 'package:flutter/material.dart';
@@ -261,8 +261,8 @@ class _ResetPasswordRecapState extends State<ResetPasswordRecap>
 
                           if (widget.restoreData) {
                             // if restoreData is true, use mnemonicKey to decrypt the existing backup key, then generate a new keySet from an existing data key
-                            _newKeySet = await EncryptionService
-                                .generateKeySetFromBackupKey(
+                            _newKeySet = await encryptionService
+                                !.generateKeySetFromBackupKey(
                               backupKey: _backupKey!,
                               backupSalt: _mnemonicSalt!,
                               mnemonic: widget.mnemonicKey!,
@@ -271,7 +271,7 @@ class _ResetPasswordRecapState extends State<ResetPasswordRecap>
                             );
                           } else {
                             // generate a new keySet from the new password
-                            _newKeySet = await EncryptionService.generateKeySet(
+                            _newKeySet = await encryptionService!.generateKeySet(
                               widget.newPassword,
                             );
                           }

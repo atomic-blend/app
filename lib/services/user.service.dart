@@ -6,12 +6,11 @@ import 'package:app/entities/user_device/user_device.dart';
 import 'package:app/entities/purchase/purchase.dart';
 import 'package:app/main.dart';
 import 'package:app/services/device_info.service.dart';
-import 'package:app/services/encryption.service.dart';
+import 'package:ab_shared/services/encryption.service.dart';
 import 'package:app/utils/api_client.dart';
 import 'package:dio/dio.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 
-EncryptionService? encryptionService;
 DeviceInfoService? deviceInfoService;
 
 class UserService {
@@ -113,7 +112,7 @@ class UserService {
       globalApiClient.setIdToken(result.data["accessToken"]);
 
       // restore data key from password
-      encryptionService ??= EncryptionService(userSalt: user.keySet.salt);
+      encryptionService ??= EncryptionService(userSalt: user.keySet.salt, prefs: prefs!, userKey: userKey, agePublicKey: agePublicKey);
       await encryptionService?.restoreDataKey(password, user.keySet);
 
       Sentry.configureScope(
@@ -130,7 +129,7 @@ class UserService {
 
   Future<UserEntity?> register(String email, String password) async {
     // derive and persist key from password
-    final keySet = await EncryptionService.generateKeySet(password);
+    final keySet = await encryptionService!.generateKeySet(password);
 
     final result = await globalApiClient.post('/auth/register', data: {
       'email': email,
@@ -208,7 +207,7 @@ class UserService {
       'salt': newUserSalt,
     });
     if (result.statusCode == 200) {
-      await EncryptionService.persistNewUserKey(newUserKey);
+      await encryptionService!.persistNewUserKey(newUserKey);
       return true;
     } else {
       throw Exception('password_change_failed');

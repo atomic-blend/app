@@ -1,5 +1,5 @@
 import 'package:app/blocs/auth/auth.bloc.dart';
-import 'package:app/entities/encryption/encryption_key.dart';
+import 'package:ab_shared/entities/encryption/encryption_key.dart';
 import 'package:app/i18n/strings.g.dart';
 import 'package:app/pages/auth/screens/mnemonic_key.dart';
 import 'package:app/pages/auth/screens/reset_password_code.dart';

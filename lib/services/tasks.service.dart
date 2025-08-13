@@ -6,6 +6,7 @@ import 'package:app/entities/sync/patch_error/patch_error.dart';
 import 'package:app/entities/sync/sync_result/sync_result.dart';
 import 'package:app/entities/tasks/tasks.entity.dart';
 import 'package:app/entities/user/user.entity.dart';
+import 'package:app/main.dart';
 import 'package:app/services/user.service.dart';
 import 'package:app/utils/api_client.dart';
 

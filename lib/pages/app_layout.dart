@@ -15,7 +15,7 @@ import 'package:app/pages/paywall/paywall_utils.dart';
 import 'package:app/pages/sync_status/sync_status.dart';
 import 'package:app/pages/tasks/filtered_view.dart';
 import 'package:app/services/device_info.service.dart';
-import 'package:app/services/encryption.service.dart';
+import 'package:ab_shared/services/encryption.service.dart';
 import 'package:app/services/revenue_cat_service.dart';
 import 'package:app/services/sync.service.dart';
 import 'package:app/services/user.service.dart';
@@ -921,8 +921,12 @@ class AppLayoutState extends ResponsiveState<AppLayout> {
     required AuthState authState,
   }) {
     if (authState is LoggedIn) {
-      encryptionService ??=
-          EncryptionService(userSalt: authState.user!.keySet.salt);
+      encryptionService ??= EncryptionService(
+        userSalt: authState.user!.keySet.salt,
+        prefs: prefs!,
+        userKey: userKey!,
+        agePublicKey: agePublicKey!,
+      );
       if (isPaymentSupported()) RevenueCatService.logIn(authState.user!.id!);
     }
 
