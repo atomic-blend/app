@@ -3,7 +3,7 @@ import 'package:app/i18n/strings.g.dart';
 import 'package:ab_shared/utils/constants.dart';
 import 'package:app/utils/meeting_link_parser.dart';
 import 'package:ab_shared/utils/shortcuts.dart';
-import 'package:app/utils/url_launcher.dart';
+import 'package:ab_shared/utils/url_launcher.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:collection/collection.dart';
 import 'package:device_calendar/device_calendar.dart';

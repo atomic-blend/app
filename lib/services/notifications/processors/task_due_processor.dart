@@ -1,7 +1,7 @@
 import 'package:app/i18n/strings.g.dart';
 import 'package:app/main.dart';
 import 'package:ab_shared/services/encryption.service.dart';
-import 'package:app/utils/local_notifications.dart';
+import 'package:ab_shared/utils/local_notifications.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 

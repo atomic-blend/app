@@ -3,7 +3,7 @@ import 'package:app/entities/tasks/tasks.entity.dart';
 import 'package:app/entities/time_entry/time_entry.entity.dart';
 import 'package:app/services/time_entry_service.dart';
 import 'package:app/main.dart';
-import 'package:app/utils/local_notifications.dart';
+import 'package:ab_shared/utils/local_notifications.dart';
 
 enum TimerMode { pomodoro, stopwatch }
 
