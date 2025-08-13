@@ -5,6 +5,7 @@ import 'dart:io';
 import 'package:ab_shared/services/encryption.service.dart';
 import 'package:ab_shared/utils/api_client.dart';
 import 'package:app/blocs/app/app.bloc.dart';
+import 'package:ab_shared/i18n/strings.g.dart' as abShared;
 import 'package:ab_shared/blocs/auth/auth.bloc.dart';
 import 'package:app/blocs/device_calendar/device_calendar.bloc.dart';
 import 'package:app/blocs/folder/folder.bloc.dart';
@@ -169,8 +170,10 @@ FutureOr<void> main() async {
               BlocProvider(create: (context) => FolderBloc()),
               BlocProvider(create: (context) => TimeEntryBloc()),
             ],
-            child: TranslationProvider(
-                child: const ToastificationWrapper(child: App()))),
+            child: abShared.TranslationProvider(
+              child: TranslationProvider(
+                  child: const ToastificationWrapper(child: App())),
+            )),
       );
     }));
   });

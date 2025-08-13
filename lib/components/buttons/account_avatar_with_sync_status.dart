@@ -1,6 +1,7 @@
 import 'package:ab_shared/blocs/auth/auth.bloc.dart';
 import 'package:app/blocs/tasks/tasks.bloc.dart';
-import 'package:app/pages/account/account.dart';
+import 'package:ab_shared/pages/account/account.dart';
+import 'package:app/main.dart';
 import 'package:app/services/sync.service.dart';
 import 'package:ab_shared/utils/constants.dart';
 import 'package:ab_shared/utils/shortcuts.dart';
@@ -22,7 +23,12 @@ class AccountAvatarWithSyncStatus extends StatelessWidget {
             showModalBottomSheet(
               context: context,
               isScrollControlled: true,
-              builder: (context) => const Account(),
+              builder: (context) => Account(
+                globalApiClient: globalApiClient!,
+                encryptionService: encryptionService!,
+                revenueCatService: revenueCatService!,
+                prefs: prefs!,
+              ),
             );
           },
           onDoubleTap: () {

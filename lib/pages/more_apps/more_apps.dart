@@ -1,7 +1,8 @@
 import 'package:app/components/buttons/icon_text_button.dart';
 import 'package:ab_shared/components/widgets/elevated_container.dart';
 import 'package:app/i18n/strings.g.dart';
-import 'package:app/pages/account/account.dart';
+import 'package:ab_shared/pages/account/account.dart';
+import 'package:app/main.dart';
 import 'package:app/pages/settings/settings.dart';
 import 'package:ab_shared/utils/constants.dart';
 import 'package:ab_shared/utils/shortcuts.dart';
@@ -109,7 +110,12 @@ class _MoreAppsState extends State<MoreApps> {
                           showModalBottomSheet(
                             context: context,
                             isScrollControlled: true,
-                            builder: (context) => const Account(),
+                            builder: (context) => Account(
+                              globalApiClient: globalApiClient!,
+                              encryptionService: encryptionService!,
+                              revenueCatService: revenueCatService!,
+                              prefs: prefs!,
+                            ),
                           );
                         },
                       ),

@@ -5,12 +5,13 @@ import 'package:app/blocs/habit/habit.bloc.dart';
 import 'package:app/components/app/bottom_navigation.dart';
 import 'package:app/entities/tasks/tasks.entity.dart';
 import 'package:app/i18n/strings.g.dart';
+import 'package:app/main.dart';
 import 'package:app/pages/calendar/calendar.dart';
 import 'package:app/pages/calendar/calendar_settings.dart';
 import 'package:app/pages/habits/add_habits_modal.dart';
 import 'package:app/pages/habits/habits.dart';
 import 'package:app/pages/more_apps/more_apps.dart';
-import 'package:app/pages/paywall/paywall_utils.dart';
+import 'package:ab_shared/pages/paywall/paywall_utils.dart';
 import 'package:app/pages/sync_status/sync_status.dart';
 import 'package:app/pages/tasks/add_task_modal.dart';
 import 'package:app/pages/tasks/filtered_view.dart';
@@ -392,7 +393,13 @@ class NavigationConstants {
                   return BlocBuilder<HabitBloc, HabitState>(
                       builder: (context, habitState) {
                     if ((habitState.habits?.length ?? 0) >= 5) {
-                      PaywallUtils.showPaywall(context, user: authState.user);
+                      PaywallUtils.showPaywall(
+                        context,
+                        user: authState.user,
+                        globalApiClient: globalApiClient!,
+                        prefs: prefs!,
+                        revenueCatService: revenueCatService!,
+                      );
                     }
                     return IconButton(
                       icon: const Icon(CupertinoIcons.add),

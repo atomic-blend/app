@@ -9,10 +9,11 @@ import 'package:app/entities/habit/habit.entity.dart';
 import 'package:app/entities/sync/patch_change/patch_change.dart';
 import 'package:app/entities/tasks/tasks.entity.dart';
 import 'package:app/i18n/strings.g.dart';
+import 'package:app/main.dart';
 import 'package:app/pages/calendar/custom_appointment.dart';
 import 'package:app/pages/calendar/custom_calendar_data_source.dart';
 import 'package:app/pages/calendar/device_event_detail.dart';
-import 'package:app/pages/paywall/paywall_utils.dart';
+import 'package:ab_shared/pages/paywall/paywall_utils.dart';
 import 'package:app/pages/tasks/add_task_modal.dart';
 import 'package:app/pages/tasks/task_detail.dart';
 import 'package:ab_shared/utils/constants.dart';
@@ -69,7 +70,13 @@ class _CalendarState extends State<Calendar> {
               builder: (context, taskState) {
             WidgetsBinding.instance.addPostFrameCallback((_) {
               if (widget.view != CalendarView.month) {
-                PaywallUtils.showPaywall(context, user: authState.user);
+                PaywallUtils.showPaywall(
+                  context,
+                  user: authState.user,
+                  globalApiClient: globalApiClient!,
+                  prefs: prefs!,
+                  revenueCatService: revenueCatService!,
+                );
               }
             });
             return Padding(

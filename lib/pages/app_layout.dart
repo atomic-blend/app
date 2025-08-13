@@ -11,7 +11,7 @@ import 'package:ab_shared/components/widgets/elevated_container.dart';
 import 'package:app/entities/tasks/tasks.entity.dart';
 import 'package:app/main.dart';
 import 'package:ab_shared/pages/auth/login_or_register_modal.dart';
-import 'package:app/pages/paywall/paywall_utils.dart';
+import 'package:ab_shared/pages/paywall/paywall_utils.dart';
 import 'package:app/pages/sync_status/sync_status.dart';
 import 'package:app/pages/tasks/filtered_view.dart';
 import 'package:ab_shared/services/device_info.service.dart';
@@ -47,7 +47,9 @@ class AppLayoutState extends ResponsiveState<AppLayout> {
   @override
   void initState() {
     context.read<AuthBloc>().add(const RefreshUser());
-    PaywallUtils.resetPaywall();
+    PaywallUtils.resetPaywall(
+      prefs: prefs!,
+    );
 
     final cron = Cron();
     cron.schedule(Schedule.parse('*/5 * * * *'), () async {
