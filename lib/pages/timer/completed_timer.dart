@@ -1,5 +1,5 @@
 import 'package:ab_shared/components/buttons/primary_button_square.dart';
-import 'package:app/components/responsive_stateless_widget.dart';
+import 'package:ab_shared/components/responsive_stateless_widget.dart';
 import 'package:ab_shared/components/widgets/elevated_container.dart';
 import 'package:app/entities/tasks/tasks.entity.dart';
 import 'package:app/i18n/strings.g.dart';

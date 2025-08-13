@@ -1,5 +1,5 @@
 import 'package:app/blocs/tasks/tasks.bloc.dart';
-import 'package:app/components/forms/ab_checkbox.dart';
+import 'package:ab_shared/components/forms/ab_checkbox.dart';
 import 'package:app/entities/sync/patch_change/patch_change.dart';
 import 'package:app/entities/tasks/tasks.entity.dart';
 import 'package:app/pages/tasks/task_detail.dart';

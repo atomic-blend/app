@@ -6,7 +6,7 @@ import 'package:ab_shared/blocs/auth/auth.bloc.dart';
 import 'package:app/blocs/folder/folder.bloc.dart';
 import 'package:app/blocs/tasks/tasks.bloc.dart';
 import 'package:ab_shared/components/app/bottom_navigation.dart';
-import 'package:app/components/responsive_stateful_widget.dart';
+import 'package:ab_shared/components/responsive_stateful_widget.dart';
 import 'package:ab_shared/components/widgets/elevated_container.dart';
 import 'package:app/entities/tasks/tasks.entity.dart';
 import 'package:app/main.dart';

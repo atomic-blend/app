@@ -1,6 +1,6 @@
 import 'package:app/blocs/tag/tag.bloc.dart';
 import 'package:app/components/buttons/icon_text_pill.dart';
-import 'package:app/components/forms/search_bar.dart';
+import 'package:ab_shared/components/forms/search_bar.dart';
 import 'package:app/entities/tag/tag.entity.dart';
 import 'package:app/i18n/strings.g.dart';
 import 'package:ab_shared/utils/constants.dart';

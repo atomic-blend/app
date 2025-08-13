@@ -1,5 +1,5 @@
 import 'package:app/components/forms/task_date_picker_modal/reminder_picker.dart';
-import 'package:app/components/responsive_stateful_widget.dart';
+import 'package:ab_shared/components/responsive_stateful_widget.dart';
 import 'package:ab_shared/components/widgets/elevated_container.dart';
 import 'package:app/i18n/strings.g.dart';
 import 'package:ab_shared/utils/constants.dart';

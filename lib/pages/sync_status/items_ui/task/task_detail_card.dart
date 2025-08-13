@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:app/components/forms/ab_checkbox.dart';
+import 'package:ab_shared/components/forms/ab_checkbox.dart';
 import 'package:app/entities/tasks/tasks.entity.dart';
 import 'package:app/i18n/strings.g.dart';
 import 'package:app/main.dart';

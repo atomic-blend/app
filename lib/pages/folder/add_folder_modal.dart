@@ -1,6 +1,6 @@
 import 'package:app/blocs/folder/folder.bloc.dart';
 import 'package:ab_shared/components/buttons/primary_button_square.dart';
-import 'package:app/components/forms/ab_color_picker.dart';
+import 'package:ab_shared/components/forms/ab_color_picker.dart';
 import 'package:ab_shared/components/forms/app_text_form_field.dart';
 import 'package:app/components/modals/ab_modal.dart';
 import 'package:app/entities/folder/folder.entity.dart';

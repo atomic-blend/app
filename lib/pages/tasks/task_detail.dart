@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:ab_shared/components/forms/ab_checkbox.dart';
 import 'package:app/blocs/folder/folder.bloc.dart';
 import 'package:app/blocs/tag/tag.bloc.dart';
 import 'package:app/blocs/tasks/tasks.bloc.dart';
@@ -38,7 +39,6 @@ import 'package:jiffy/jiffy.dart';
 import 'package:macos_window_utils/macos_window_utils.dart';
 import 'package:keyboard_service/keyboard_service.dart';
 
-import '../../components/forms/ab_checkbox.dart';
 
 class TaskDetail extends StatefulWidget {
   final TaskEntity task;
