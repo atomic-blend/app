@@ -1,10 +1,10 @@
+import 'package:ab_shared/utils/constants.dart';
 import 'package:app/blocs/app/app.bloc.dart';
 import 'package:ab_shared/blocs/auth/auth.bloc.dart';
 import 'package:app/blocs/habit/habit.bloc.dart';
 import 'package:app/components/app/bottom_navigation.dart';
 import 'package:app/entities/tasks/tasks.entity.dart';
 import 'package:app/i18n/strings.g.dart';
-import 'package:app/main.dart';
 import 'package:app/pages/calendar/calendar.dart';
 import 'package:app/pages/calendar/calendar_settings.dart';
 import 'package:app/pages/habits/add_habits_modal.dart';
@@ -19,7 +19,7 @@ import 'package:app/pages/tasks/overview.dart';
 import 'package:app/pages/tasks/tags.dart';
 import 'package:app/pages/timer/task_timer.dart';
 import 'package:app/utils/extensions/date_time_extension.dart';
-import 'package:app/utils/shortcuts.dart';
+import 'package:ab_shared/utils/shortcuts.dart';
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -29,84 +29,10 @@ import 'package:syncfusion_flutter_calendar/calendar.dart';
 
 import '../pages/eiseinhower/eisenhower.dart';
 
-final $constants = Constants();
+final $navConstants = NavigationConstants();
 
 @immutable
-class Constants {
-  late final Corners corners = Corners();
-  late final Insets insets = Insets();
-  late final Palette palette = Palette();
-  late final Navigation navigation = Navigation();
-  late final ScreenSize screenSize = ScreenSize();
-  late final Ads ads = Ads();
-}
-
-@immutable
-class Corners {
-  late final double none = 0;
-  late final double xxs = 2;
-  late final double xs = 4;
-  late final double sm = 8;
-  late final double md = 12;
-  late final double lg = 16;
-  late final double xl = 28;
-  late final double xxl = 36;
-  late final double full = 1000;
-}
-
-@immutable
-class Insets {
-  late final double xxs = 4;
-  late final double xs = 8;
-  late final double sm = 16;
-  late final double md = 24;
-  late final double lg = 32;
-  late final double xl = 48;
-  late final double xxl = 56;
-  late final double offset = 80;
-}
-
-@immutable
-class ScreenSize {
-  final double sm = 600;
-  final double md = 900;
-  final double lg = 1200;
-  final double xl = 1536;
-}
-
-@immutable
-class Palette {
-  final white = const Color(0xFFFFFFFF);
-  final black = const Color(0xFF000000);
-  final grey = const Color(0xFF9E9E9E);
-  final red = const Color(0xFFFF0000);
-  final orange = const Color(0xFFFF8000);
-  final yellow = const Color(0xFFFCCC1A);
-  final green = const Color(0xFF66B032);
-  final cyan = const Color(0xFF00FFFF);
-  final blue = const Color(0xFF0000FF);
-  final purple = const Color(0xFF0080FF);
-  final magenta = const Color(0xFFFF00FF);
-}
-
-@immutable
-class Ads {
-  final _ads = {};
-
-  getAd(String adName, String? platform) {
-    if (!['ios', 'android'].contains(platform)) {
-      throw Exception('invalid_ad_platform');
-    }
-    if (env?.env == "prod") {
-      return _ads[adName]?[platform];
-    } else {
-      return "ca-app-pub-3940256099942544/5224354917";
-    }
-  }
-}
-
-@immutable
-class Navigation {
+class NavigationConstants {
   List<NavigationSection> secondaryMenuSections(BuildContext context) => [
         NavigationSection(
           key: const Key("tasks"),

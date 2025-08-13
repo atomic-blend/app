@@ -1,11 +1,12 @@
 import 'package:ab_shared/blocs/auth/auth.bloc.dart';
-import 'package:app/components/buttons/primary_button_square.dart';
+import 'package:ab_shared/components/buttons/primary_button_square.dart';
+import 'package:ab_shared/utils/constants.dart';
+import 'package:ab_shared/utils/shortcuts.dart';
 import 'package:app/i18n/strings.g.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../utils/constants.dart';
-import '../../utils/shortcuts.dart';
+
 
 class DeleteAccountModal extends StatefulWidget {
   const DeleteAccountModal({super.key});

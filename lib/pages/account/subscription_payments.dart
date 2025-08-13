@@ -1,12 +1,12 @@
 import 'package:ab_shared/blocs/auth/auth.bloc.dart';
-import 'package:app/components/widgets/elevated_container.dart';
+import 'package:ab_shared/components/widgets/elevated_container.dart';
 import 'package:ab_shared/entities/purchase/purchase.dart';
 import 'package:app/i18n/strings.g.dart';
 import 'package:app/main.dart';
 import 'package:ab_shared/services/user.service.dart';
-import 'package:app/utils/constants.dart';
-import 'package:app/utils/shortcuts.dart';
-import 'package:app/utils/toast_helper.dart';
+import 'package:ab_shared/utils/constants.dart';
+import 'package:ab_shared/utils/shortcuts.dart';
+import 'package:ab_shared/utils/toast_helper.dart';
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

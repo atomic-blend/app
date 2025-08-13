@@ -1,13 +1,13 @@
 import 'package:app/blocs/tasks/tasks.bloc.dart';
 import 'package:app/components/buttons/task_item.dart';
 import 'package:app/components/forms/search_bar.dart';
-import 'package:app/components/widgets/elevated_container.dart';
+import 'package:ab_shared/components/widgets/elevated_container.dart';
 import 'package:app/entities/tasks/tasks.entity.dart';
 import 'package:app/i18n/strings.g.dart';
 import 'package:app/pages/sync_status/conflict_card.dart';
 import 'package:app/services/sync.service.dart';
-import 'package:app/utils/constants.dart';
-import 'package:app/utils/shortcuts.dart';
+import 'package:ab_shared/utils/constants.dart';
+import 'package:ab_shared/utils/shortcuts.dart';
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

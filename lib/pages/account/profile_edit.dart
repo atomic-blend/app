@@ -1,8 +1,8 @@
 import 'package:ab_shared/blocs/auth/auth.bloc.dart';
-import 'package:app/components/buttons/primary_button_round.dart';
-import 'package:app/components/forms/app_text_form_field.dart';
+import 'package:ab_shared/components/buttons/primary_button_round.dart';
+import 'package:ab_shared/components/forms/app_text_form_field.dart';
 import 'package:app/i18n/strings.g.dart';
-import 'package:app/utils/constants.dart';
+import 'package:ab_shared/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

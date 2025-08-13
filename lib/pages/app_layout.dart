@@ -7,10 +7,10 @@ import 'package:app/blocs/folder/folder.bloc.dart';
 import 'package:app/blocs/tasks/tasks.bloc.dart';
 import 'package:app/components/app/bottom_navigation.dart';
 import 'package:app/components/responsive_stateful_widget.dart';
-import 'package:app/components/widgets/elevated_container.dart';
+import 'package:ab_shared/components/widgets/elevated_container.dart';
 import 'package:app/entities/tasks/tasks.entity.dart';
 import 'package:app/main.dart';
-import 'package:app/pages/auth/login_or_register_modal.dart';
+import 'package:ab_shared/pages/auth/login_or_register_modal.dart';
 import 'package:app/pages/paywall/paywall_utils.dart';
 import 'package:app/pages/sync_status/sync_status.dart';
 import 'package:app/pages/tasks/filtered_view.dart';
@@ -18,8 +18,9 @@ import 'package:ab_shared/services/device_info.service.dart';
 import 'package:ab_shared/services/encryption.service.dart';
 import 'package:app/services/sync.service.dart';
 import 'package:ab_shared/services/user.service.dart';
-import 'package:app/utils/constants.dart';
-import 'package:app/utils/shortcuts.dart';
+import 'package:ab_shared/utils/constants.dart';
+import 'package:ab_shared/utils/shortcuts.dart';
+import 'package:app/utils/nav_constants.dart';
 import 'package:cron/cron.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
@@ -119,7 +120,7 @@ class AppLayoutState extends ResponsiveState<AppLayout> {
                 context: context, appState: appState, authState: authState);
 
             // get the secondary section based on the selected primary menu
-            final secondarySection = $constants.navigation
+            final secondarySection = $navConstants
                 .secondaryMenuSections(context)
                 .where(
                   (section) =>
@@ -128,7 +129,7 @@ class AppLayoutState extends ResponsiveState<AppLayout> {
                 )
                 .firstOrNull;
 
-            var primaryMenuItem = $constants.navigation
+            var primaryMenuItem = $navConstants
                 .primaryMenuItems(context)
                 .where((item) =>
                     (item.key as ValueKey).value ==
@@ -416,7 +417,7 @@ class AppLayoutState extends ResponsiveState<AppLayout> {
                     ),
                     body: body,
                     bottomNavigationBar: BottomNavigation(
-                      destinations: $constants.navigation
+                      destinations: $navConstants
                           .primaryMenuItems(context)
                           .take(5)
                           .toList(),
@@ -444,7 +445,7 @@ class AppLayoutState extends ResponsiveState<AppLayout> {
                 context: context, appState: appState, authState: authState);
 
             // get the secondary section based on the selected primary menu
-            final secondarySection = $constants.navigation
+            final secondarySection = $navConstants
                 .secondaryMenuSections(context)
                 .where(
                   (section) =>
@@ -454,14 +455,14 @@ class AppLayoutState extends ResponsiveState<AppLayout> {
                 .firstOrNull;
 
             // by default, the primary menu is selected
-            Widget? body = $constants.navigation
+            Widget? body = $navConstants
                 .primaryMenuItems(context)
                 .where((item) =>
                     (item.key as ValueKey).value ==
                     appState.primaryMenuSelectedKey)
                 .firstOrNull
                 ?.body;
-            AppBar? appBar = $constants.navigation
+            AppBar? appBar = $navConstants
                 .primaryMenuItems(context)
                 .where((item) =>
                     (item.key as ValueKey).value ==
@@ -527,7 +528,7 @@ class AppLayoutState extends ResponsiveState<AppLayout> {
 
             // on desktop, move the 4th primary menu item to the end of the list
             final primaryMenuItems =
-                $constants.navigation.primaryMenuItems(context).toList();
+                $navConstants.primaryMenuItems(context).toList();
             if (primaryMenuItems.length > 4) {
               final itemToMove = primaryMenuItems.removeAt(4);
               primaryMenuItems.add(itemToMove);
@@ -946,6 +947,10 @@ class AppLayoutState extends ResponsiveState<AppLayout> {
                 child: SizedBox(
                   width: getSize(context).width * 0.5,
                   child: LoginOrRegisterModal(
+                    encryptionService: encryptionService,
+                    globalApiClient: globalApiClient,
+                    prefs: prefs,
+                    env: env,
                     onAuthSuccess: () => setState(() {
                       _isLoginModalVisible = false;
                     }),
@@ -961,6 +966,10 @@ class AppLayoutState extends ResponsiveState<AppLayout> {
         builder: (context) => SizedBox(
           height: getSize(context).height * 0.88,
           child: LoginOrRegisterModal(
+            encryptionService: encryptionService,
+            globalApiClient: globalApiClient,
+            prefs: prefs,
+            env: env,
             onAuthSuccess: () => setState(() {
               _isLoginModalVisible = false;
             }),

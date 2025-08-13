@@ -1,10 +1,11 @@
 import 'package:app/components/buttons/icon_text_button.dart';
-import 'package:app/components/widgets/elevated_container.dart';
+import 'package:ab_shared/components/widgets/elevated_container.dart';
 import 'package:app/i18n/strings.g.dart';
 import 'package:app/pages/account/account.dart';
 import 'package:app/pages/settings/settings.dart';
-import 'package:app/utils/constants.dart';
-import 'package:app/utils/shortcuts.dart';
+import 'package:ab_shared/utils/constants.dart';
+import 'package:ab_shared/utils/shortcuts.dart';
+import 'package:app/utils/nav_constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
@@ -20,7 +21,7 @@ class _MoreAppsState extends State<MoreApps> {
   @override
   Widget build(BuildContext context) {
     final restOfNavigation =
-        $constants.navigation.primaryMenuItems(context).sublist(5);
+        $navConstants.primaryMenuItems(context).sublist(5);
     return SafeArea(
       child: Padding(
         padding: isDesktop(context)

@@ -1,9 +1,9 @@
-import 'package:app/components/buttons/primary_button_square.dart';
+import 'package:ab_shared/components/buttons/primary_button_square.dart';
+import 'package:ab_shared/utils/constants.dart';
+import 'package:ab_shared/utils/shortcuts.dart';
 import 'package:app/i18n/strings.g.dart';
 import 'package:flutter/material.dart';
 
-import '../../utils/constants.dart';
-import '../../utils/shortcuts.dart';
 
 class ABModal extends StatefulWidget {
   final String title;

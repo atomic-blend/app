@@ -2,7 +2,7 @@ import 'package:ab_shared/entities/user/user.entity.dart';
 import 'package:app/main.dart';
 import 'package:app/pages/paywall/paywall.dart';
 import 'package:ab_shared/services/user.service.dart';
-import 'package:app/utils/shortcuts.dart';
+import 'package:ab_shared/utils/shortcuts.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 

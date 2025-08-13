@@ -19,7 +19,7 @@ import 'package:app/services/notifications/processors/processors.dart';
 import 'package:ab_shared/services/revenue_cat_service.dart';
 import 'package:app/services/widget_service/background_processor.dart';
 import 'package:ab_shared/utils/env/env.dart';
-import 'package:app/utils/shortcuts.dart';
+import 'package:ab_shared/utils/shortcuts.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
@@ -139,7 +139,7 @@ FutureOr<void> main() async {
     await LocaleSettings.useDeviceLocale();
     Jiffy.setLocale(LocaleSettings.currentLocale.languageCode);
 
-    runApp(ResponsiveSizer(builder: (context, orientation, screenType) {
+    runApp(Sizer(builder: (context, orientation, screenType) {
       return SentryWidget(
         child: MultiBlocProvider(
             providers: [
