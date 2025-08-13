@@ -1,10 +1,10 @@
 import 'package:app/blocs/tasks/tasks.bloc.dart';
 import 'package:ab_shared/components/forms/ab_checkbox.dart';
 import 'package:ab_shared/components/widgets/elevated_container.dart';
-import 'package:app/entities/sync/conflicted_item/conflicted_item.dart';
-import 'package:app/entities/sync/item_type/item_type.dart';
-import 'package:app/entities/sync/patch/patch.dart';
-import 'package:app/entities/sync/patch_change/patch_change.dart';
+import 'package:ab_shared/entities/sync/conflicted_item/conflicted_item.dart';
+import 'package:ab_shared/entities/sync/item_type/item_type.dart';
+import 'package:ab_shared/entities/sync/patch/patch.dart';
+import 'package:ab_shared/entities/sync/patch_change/patch_change.dart';
 import 'package:app/i18n/strings.g.dart';
 import 'package:app/pages/sync_status/items_ui/task/task_detail_card.dart';
 import 'package:app/pages/sync_status/items_ui/task/task_patch_card.dart';

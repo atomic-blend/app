@@ -1,7 +1,7 @@
 import 'package:app/blocs/tasks/tasks.bloc.dart';
 import 'package:app/components/buttons/task_item.dart';
 import 'package:ab_shared/components/widgets/elevated_container.dart';
-import 'package:app/entities/sync/patch_change/patch_change.dart';
+import 'package:ab_shared/entities/sync/patch_change/patch_change.dart';
 import 'package:app/entities/tasks/tasks.entity.dart';
 import 'package:app/i18n/strings.g.dart';
 import 'package:ab_shared/utils/constants.dart';

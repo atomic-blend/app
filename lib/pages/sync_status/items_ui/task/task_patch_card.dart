@@ -1,4 +1,4 @@
-import 'package:app/entities/sync/patch_change/patch_change.dart';
+import 'package:ab_shared/entities/sync/patch_change/patch_change.dart';
 import 'package:app/i18n/strings.g.dart';
 import 'package:ab_shared/utils/constants.dart';
 import 'package:ab_shared/utils/shortcuts.dart';

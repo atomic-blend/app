@@ -6,7 +6,7 @@ import 'package:app/blocs/tasks/tasks.bloc.dart';
 import 'package:ab_shared/components/widgets/elevated_container.dart';
 import 'package:app/entities/device_calendar/calendar/device_calendar.dart';
 import 'package:app/entities/habit/habit.entity.dart';
-import 'package:app/entities/sync/patch_change/patch_change.dart';
+import 'package:ab_shared/entities/sync/patch_change/patch_change.dart';
 import 'package:app/entities/tasks/tasks.entity.dart';
 import 'package:app/i18n/strings.g.dart';
 import 'package:app/main.dart';

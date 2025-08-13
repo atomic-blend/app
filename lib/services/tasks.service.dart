@@ -1,9 +1,9 @@
-import 'package:app/entities/sync/conflicted_item/conflicted_item.dart';
-import 'package:app/entities/sync/item_type/item_type.dart';
-import 'package:app/entities/sync/patch/patch.dart';
-import 'package:app/entities/sync/patch_action/patch_action.dart';
-import 'package:app/entities/sync/patch_error/patch_error.dart';
-import 'package:app/entities/sync/sync_result/sync_result.dart';
+import 'package:ab_shared/entities/sync/conflicted_item/conflicted_item.dart';
+import 'package:ab_shared/entities/sync/item_type/item_type.dart';
+import 'package:ab_shared/entities/sync/patch/patch.dart';
+import 'package:ab_shared/entities/sync/patch_action/patch_action.dart';
+import 'package:ab_shared/entities/sync/patch_error/patch_error.dart';
+import 'package:ab_shared/entities/sync/sync_result/sync_result.dart';
 import 'package:app/entities/tasks/tasks.entity.dart';
 import 'package:ab_shared/entities/user/user.entity.dart';
 import 'package:app/main.dart';

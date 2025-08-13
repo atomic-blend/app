@@ -12,7 +12,7 @@ import 'package:app/components/forms/task_date_picker_modal/task_date_picker_mod
 import 'package:ab_shared/components/modals/ab_modal.dart';
 import 'package:ab_shared/components/widgets/elevated_container.dart';
 import 'package:app/entities/folder/folder.entity.dart';
-import 'package:app/entities/sync/patch_change/patch_change.dart';
+import 'package:ab_shared/entities/sync/patch_change/patch_change.dart';
 import 'package:app/entities/tag/tag.entity.dart';
 import 'package:app/entities/tasks/tasks.entity.dart';
 import 'package:app/i18n/strings.g.dart';
