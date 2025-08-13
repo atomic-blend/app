@@ -103,7 +103,7 @@ class _MoreAppsState extends State<MoreApps> {
                         vertical: $constants.insets.sm,
                       ),
                       child: IconTextButton(
-                        text: context.t.account.sections.account,
+                        text: context.t.account.title,
                         icon: CupertinoIcons.person,
                         iconSize: 25,
                         onTap: () {
