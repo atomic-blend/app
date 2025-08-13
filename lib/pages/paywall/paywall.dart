@@ -6,7 +6,7 @@ import 'package:app/blocs/auth/auth.bloc.dart';
 import 'package:app/components/buttons/primary_button_square.dart';
 import 'package:app/components/widgets/elevated_container.dart';
 import 'package:app/i18n/strings.g.dart';
-import 'package:app/services/revenue_cat_service.dart';
+import 'package:app/main.dart';
 import 'package:app/services/user.service.dart';
 import 'package:app/utils/constants.dart';
 import 'package:app/utils/shortcuts.dart';
@@ -18,7 +18,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
-import 'package:purchases_flutter/object_wrappers.dart';
+import 'package:purchases_flutter/purchases_flutter.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:url_launcher/url_launcher_string.dart';
@@ -51,7 +51,7 @@ class _PaywallState extends State<Paywall> {
         if (kDebugMode) {
           print('Paywall: Starting to fetch offerings...');
         }
-        final offerings = await RevenueCatService.getOfferings();
+        final offerings = await revenueCatService?.getOfferings();
 
         if (kDebugMode) {
           print(
@@ -538,7 +538,7 @@ class _PaywallState extends State<Paywall> {
         _isMakingPurchase = true;
       });
       final customerInfo =
-          await RevenueCatService.makePurchase(package: package);
+          await revenueCatService?.makePurchase(package: package);
       if (!mounted) return null;
       _startCheckingForPurchase(context);
       return customerInfo;

@@ -2,7 +2,7 @@ import 'package:app/blocs/auth/auth.bloc.dart';
 import 'package:app/components/widgets/elevated_container.dart';
 import 'package:app/entities/purchase/purchase.dart';
 import 'package:app/i18n/strings.g.dart';
-import 'package:app/services/revenue_cat_service.dart';
+import 'package:app/main.dart';
 import 'package:app/services/user.service.dart';
 import 'package:app/utils/constants.dart';
 import 'package:app/utils/shortcuts.dart';
@@ -242,7 +242,7 @@ class _SubscriptionPaymentsState extends State<SubscriptionPayments> {
                       GestureDetector(
                         onTap: () async {
                           final managementUrl =
-                              await RevenueCatService.getManagementUrl();
+                              await revenueCatService?.getManagementUrl();
                           if (managementUrl != null) {
                             await launchUrl(Uri.parse(managementUrl));
                           } else {

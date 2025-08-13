@@ -15,7 +15,7 @@ import 'package:app/i18n/strings.g.dart';
 import 'package:app/services/notifications/background_notification_processor.dart';
 import 'package:ab_shared/services/fcm_service.dart';
 import 'package:app/services/notifications/processors/processors.dart';
-import 'package:app/services/revenue_cat_service.dart';
+import 'package:ab_shared/services/revenue_cat_service.dart';
 import 'package:app/services/widget_service/background_processor.dart';
 import 'package:app/utils/env/env.dart';
 import 'package:app/utils/shortcuts.dart';
@@ -47,6 +47,7 @@ String? userKey;
 String? agePublicKey;
 const String appGroupId = "group.atomicblend.tasks";
 EncryptionService? encryptionService;
+RevenueCatService? revenueCatService;
 
 FutureOr<void> main() async {
   await SentryFlutter.init((options) {
@@ -80,7 +81,11 @@ FutureOr<void> main() async {
     }
 
     if (isPaymentSupported()) {
-      await RevenueCatService.initPlatformState();
+      revenueCatService = RevenueCatService(
+        googleRevenueCatApiKey: env!.googleRevenueCatApiKey,
+        appleRevenueCatApiKey: env!.appleRevenueCatApiKey,
+      );
+      await revenueCatService!.initPlatformState();
     }
 
     final rawUserData = prefs?.getString("user");

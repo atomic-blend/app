@@ -16,7 +16,6 @@ import 'package:app/pages/sync_status/sync_status.dart';
 import 'package:app/pages/tasks/filtered_view.dart';
 import 'package:ab_shared/services/device_info.service.dart';
 import 'package:ab_shared/services/encryption.service.dart';
-import 'package:app/services/revenue_cat_service.dart';
 import 'package:app/services/sync.service.dart';
 import 'package:app/services/user.service.dart';
 import 'package:app/utils/constants.dart';
@@ -927,13 +926,13 @@ class AppLayoutState extends ResponsiveState<AppLayout> {
         userKey: userKey!,
         agePublicKey: agePublicKey!,
       );
-      if (isPaymentSupported()) RevenueCatService.logIn(authState.user!.id!);
+      if (isPaymentSupported()) revenueCatService?.logIn(authState.user!.id!);
     }
 
     // if the user is logged out, show the login modal
     if (authState is LoggedOut && !_isLoginModalVisible) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        if (isPaymentSupported()) RevenueCatService.logOut();
+        if (isPaymentSupported()) revenueCatService?.logOut();
         _showLoginModal(context);
       });
     }
