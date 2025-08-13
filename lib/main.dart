@@ -3,8 +3,9 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:ab_shared/services/encryption.service.dart';
+import 'package:ab_shared/utils/api_client.dart';
 import 'package:app/blocs/app/app.bloc.dart';
-import 'package:app/blocs/auth/auth.bloc.dart';
+import 'package:ab_shared/blocs/auth/auth.bloc.dart';
 import 'package:app/blocs/device_calendar/device_calendar.bloc.dart';
 import 'package:app/blocs/folder/folder.bloc.dart';
 import 'package:app/blocs/habit/habit.bloc.dart';
@@ -17,7 +18,7 @@ import 'package:ab_shared/services/fcm_service.dart';
 import 'package:app/services/notifications/processors/processors.dart';
 import 'package:ab_shared/services/revenue_cat_service.dart';
 import 'package:app/services/widget_service/background_processor.dart';
-import 'package:app/utils/env/env.dart';
+import 'package:ab_shared/utils/env/env.dart';
 import 'package:app/utils/shortcuts.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -48,6 +49,7 @@ String? agePublicKey;
 const String appGroupId = "group.atomicblend.tasks";
 EncryptionService? encryptionService;
 RevenueCatService? revenueCatService;
+ApiClient? globalApiClient;
 
 FutureOr<void> main() async {
   await SentryFlutter.init((options) {
@@ -66,6 +68,11 @@ FutureOr<void> main() async {
     prefs = await SharedPreferences.getInstance();
 
     await FlutterAge.init();
+
+    globalApiClient = ApiClient(
+      env: env!,
+      prefs: prefs!,
+    ).init();
 
     if (!kIsWeb && !kIsWasm) {
       HomeWidget.setAppGroupId(appGroupId);
@@ -137,7 +144,24 @@ FutureOr<void> main() async {
         child: MultiBlocProvider(
             providers: [
               BlocProvider(create: (context) => AppCubit()),
-              BlocProvider(create: (context) => AuthBloc()),
+              BlocProvider(create: (context) => AuthBloc(
+                prefs: prefs!,
+                onLogout: () {
+                  userKey = null;
+                  userData = null;
+                  prefs?.clear();
+                  globalApiClient?.setIdToken(null);
+                  Sentry.configureScope(
+                    (scope) => scope.setUser(SentryUser(id: null)),
+                  );
+                  encryptionService = null;
+                },
+                onLogin: (e) {
+                  encryptionService = e;
+                },
+                globalApiClient: globalApiClient!,
+                encryptionService: encryptionService, 
+              )),
               BlocProvider(create: (context) => TasksBloc()),
               BlocProvider(create: (context) => DeviceCalendarBloc()),
               BlocProvider(create: (context) => HabitBloc()),

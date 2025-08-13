@@ -1,12 +1,11 @@
 import 'package:app/entities/folder/folder.entity.dart';
 import 'package:app/main.dart';
-import 'package:app/utils/api_client.dart';
 
 class FolderService {
   FolderService();
 
   Future<List<Folder>> getAllFolders() async {
-    final result = await globalApiClient.get('/folders');
+    final result = await globalApiClient?.get('/folders');
     if (result.statusCode == 200) {
       final List<Folder> folders = [];
 
@@ -27,7 +26,7 @@ class FolderService {
     final encryptedFolder =
         await folder.encrypt(encryptionService: encryptionService!);
     final result =
-        await globalApiClient.post('/folders', data: encryptedFolder);
+        await globalApiClient?.post('/folders', data: encryptedFolder);
     if (result.statusCode == 201) {
       return true;
     } else {
@@ -39,7 +38,7 @@ class FolderService {
     final encryptedFolder =
         await folder.encrypt(encryptionService: encryptionService!);
 
-    final result = await globalApiClient.put('/folders/${folder.id}',
+    final result = await globalApiClient?.put('/folders/${folder.id}',
         data: encryptedFolder);
     if (result.statusCode == 200) {
       return true;
@@ -49,7 +48,7 @@ class FolderService {
   }
 
   Future<bool> deleteFolder(Folder folder) async {
-    final result = await globalApiClient.delete('/folders/${folder.id}');
+    final result = await globalApiClient?.delete('/folders/${folder.id}');
     if (result.statusCode == 204) {
       return true;
     } else {

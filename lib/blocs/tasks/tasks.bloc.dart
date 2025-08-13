@@ -7,7 +7,7 @@ import 'package:app/entities/sync/patch_action/patch_action.dart';
 import 'package:app/entities/sync/patch_change/patch_change.dart';
 import 'package:app/entities/sync/sync_result/sync_result.dart';
 import 'package:app/entities/tasks/tasks.entity.dart';
-import 'package:app/entities/user/user.entity.dart';
+import 'package:ab_shared/entities/user/user.entity.dart';
 import 'package:app/services/tasks.service.dart';
 import 'package:equatable/equatable.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';

@@ -1,4 +1,4 @@
-import 'package:app/blocs/auth/auth.bloc.dart';
+import 'package:ab_shared/blocs/auth/auth.bloc.dart';
 import 'package:app/blocs/tasks/tasks.bloc.dart';
 import 'package:app/components/dialogs/priority_picker.dart';
 import 'package:app/components/forms/app_text_form_field.dart';

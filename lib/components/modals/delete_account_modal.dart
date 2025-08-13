@@ -1,4 +1,4 @@
-import 'package:app/blocs/auth/auth.bloc.dart';
+import 'package:ab_shared/blocs/auth/auth.bloc.dart';
 import 'package:app/components/buttons/primary_button_square.dart';
 import 'package:app/i18n/strings.g.dart';
 import 'package:flutter/material.dart';

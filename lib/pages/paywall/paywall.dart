@@ -2,12 +2,12 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:animated_toggle_switch/animated_toggle_switch.dart';
-import 'package:app/blocs/auth/auth.bloc.dart';
+import 'package:ab_shared/blocs/auth/auth.bloc.dart';
 import 'package:app/components/buttons/primary_button_square.dart';
 import 'package:app/components/widgets/elevated_container.dart';
 import 'package:app/i18n/strings.g.dart';
 import 'package:app/main.dart';
-import 'package:app/services/user.service.dart';
+import 'package:ab_shared/services/user.service.dart';
 import 'package:app/utils/constants.dart';
 import 'package:app/utils/shortcuts.dart';
 import 'package:app/utils/toast_helper.dart';
@@ -563,7 +563,7 @@ class _PaywallState extends State<Paywall> {
         loopCount++;
         final authState = context.read<AuthBloc>().state;
         final isUserHaveActiveSubscription =
-            UserService.isSubscriptionActive(authState.user);
+            UserService.isSubscriptionActive(globalApiClient!, authState.user);
         if (isUserHaveActiveSubscription) {
           setState(() {
             _purchaseSuccess = true;

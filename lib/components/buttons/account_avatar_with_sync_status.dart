@@ -1,4 +1,4 @@
-import 'package:app/blocs/auth/auth.bloc.dart';
+import 'package:ab_shared/blocs/auth/auth.bloc.dart';
 import 'package:app/blocs/tasks/tasks.bloc.dart';
 import 'package:app/pages/account/account.dart';
 import 'package:app/services/sync.service.dart';

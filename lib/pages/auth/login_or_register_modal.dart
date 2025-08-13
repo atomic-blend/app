@@ -1,4 +1,4 @@
-import 'package:app/blocs/auth/auth.bloc.dart';
+import 'package:ab_shared/blocs/auth/auth.bloc.dart';
 import 'package:app/components/widgets/loading_city.dart';
 import 'package:app/i18n/strings.g.dart';
 import 'package:app/pages/auth/screens/login.dart';

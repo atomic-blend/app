@@ -8,7 +8,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
-import 'flavors.dart';
+import 'package:ab_shared/flavors.dart';
 
 class App extends StatelessWidget {
   const App({super.key});

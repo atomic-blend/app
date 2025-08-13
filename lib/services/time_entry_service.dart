@@ -1,11 +1,10 @@
 import 'package:app/entities/time_entry/time_entry.entity.dart';
 import 'package:app/main.dart';
-import 'package:app/utils/api_client.dart';
 
 class TimeEntryService {
 
   Future<List<TimeEntry>> getAllTimeEntries() async {
-    final result = await globalApiClient.get('/time-entries');
+    final result = await globalApiClient?.get('/time-entries');
     if (result.statusCode != 200) {
       throw Exception('time_entry_fetch_failed');
     }
@@ -22,7 +21,7 @@ class TimeEntryService {
         await timeEntry.encrypt(encryptionService: encryptionService!);
 
     final result =
-        await globalApiClient.post('/time-entries', data: encryptedTimeEntry);
+        await globalApiClient?.post('/time-entries', data: encryptedTimeEntry);
     if (result.statusCode != 201) {
       throw Exception('time_entry_create_failed');
     }
@@ -38,7 +37,7 @@ class TimeEntryService {
     final encryptedTimeEntry =
         await timeEntry.encrypt(encryptionService: encryptionService!);
 
-    final result = await globalApiClient.put(
+    final result = await globalApiClient?.put(
       '/time-entries/${timeEntry.id}',
       data: encryptedTimeEntry,
     );
@@ -53,7 +52,7 @@ class TimeEntryService {
 
   Future<void> deleteTimeEntry({required TimeEntry timeEntry}) async {
     final result =
-        await globalApiClient.delete('/time-entries/${timeEntry.id}');
+        await globalApiClient?.delete('/time-entries/${timeEntry.id}');
     if (result.statusCode != 204) {
       throw Exception('time_entry_delete_failed');
     }

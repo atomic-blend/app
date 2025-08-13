@@ -1,7 +1,6 @@
 import 'package:app/components/buttons/primary_button_round.dart';
 import 'package:app/i18n/strings.g.dart';
 import 'package:app/main.dart';
-import 'package:app/utils/api_client.dart';
 import 'package:app/utils/constants.dart';
 import 'package:app/utils/shortcuts.dart';
 import 'package:auto_size_text/auto_size_text.dart';
@@ -54,7 +53,7 @@ class _LoginOrRegisterState extends State<LoginOrRegister>
 
   @override
   Widget build(BuildContext context) {
-    var selfHostedUrl = ApiClient.getSelfHostedRestApiUrl();
+    var selfHostedUrl = globalApiClient?.getSelfHostedRestApiUrl();
     return Stack(
       children: [
         Column(
@@ -164,6 +163,8 @@ class _LoginOrRegisterState extends State<LoginOrRegister>
                         builder: (context) => EditSelfHostedUrlModal(
                               selfHostedUrl: selfHostedUrl,
                             ));
+                    selfHostedUrl = globalApiClient?.getSelfHostedRestApiUrl();
+                    setState(() {});
                   },
                   child: Text.rich(
                     textAlign: TextAlign.center,
@@ -172,9 +173,7 @@ class _LoginOrRegisterState extends State<LoginOrRegister>
                         children: [
                           TextSpan(
                               text: selfHostedUrl != null && selfHostedUrl != ""
-                                  ? Uri.parse(
-                                          ApiClient.getSelfHostedRestApiUrl()!)
-                                      .host
+                                  ? Uri.parse(selfHostedUrl).host
                                   : context.t.app_name_saas,
                               style: const TextStyle(
                                 fontWeight: FontWeight.bold,

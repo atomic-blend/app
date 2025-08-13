@@ -1,5 +1,5 @@
 import 'package:app/blocs/app/app.bloc.dart';
-import 'package:app/blocs/auth/auth.bloc.dart';
+import 'package:ab_shared/blocs/auth/auth.bloc.dart';
 import 'package:app/blocs/device_calendar/device_calendar.bloc.dart';
 import 'package:app/blocs/habit/habit.bloc.dart';
 import 'package:app/blocs/tasks/tasks.bloc.dart';

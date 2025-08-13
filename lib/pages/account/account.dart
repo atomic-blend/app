@@ -1,14 +1,14 @@
-import 'package:app/blocs/auth/auth.bloc.dart';
+import 'package:ab_shared/blocs/auth/auth.bloc.dart';
 import 'package:app/components/buttons/icon_text_button.dart';
 import 'package:app/components/buttons/primary_button_round.dart';
 import 'package:app/components/modals/delete_account_modal.dart';
 import 'package:app/i18n/strings.g.dart';
+import 'package:app/main.dart';
 import 'package:app/pages/account/profile.dart';
 import 'package:app/pages/account/security.dart';
 import 'package:app/pages/account/subscription_payments.dart';
 import 'package:app/pages/paywall/paywall_utils.dart';
-import 'package:app/services/user.service.dart';
-import 'package:app/utils/api_client.dart';
+import 'package:ab_shared/services/user.service.dart';
 import 'package:app/utils/constants.dart';
 import 'package:app/utils/name_generator.dart';
 import 'package:app/utils/shortcuts.dart';
@@ -114,7 +114,7 @@ class _AccountState extends State<Account> {
               SizedBox(
                 height: $constants.insets.xs,
               ),
-              if (ApiClient.getSelfHostedRestApiUrl() == null) ...[
+              if (globalApiClient?.getSelfHostedRestApiUrl() == null) ...[
                 IconTextButton(
                   icon: CupertinoIcons.star_fill,
                   iconContainer: true,
@@ -122,7 +122,7 @@ class _AccountState extends State<Account> {
                   iconColor: Colors.grey[700],
                   text: context.t.account.subscription_payments.title,
                   onTap: () {
-                    if (UserService.isSubscriptionActive(authstate.user)) {
+                    if (UserService.isSubscriptionActive(globalApiClient!, authstate.user)) {
                       Navigator.of(context).push(
                         MaterialPageRoute(
                           builder: (context) => const SubscriptionPayments(),

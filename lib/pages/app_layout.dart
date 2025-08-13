@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:app/blocs/app/app.bloc.dart';
-import 'package:app/blocs/auth/auth.bloc.dart';
+import 'package:ab_shared/blocs/auth/auth.bloc.dart';
 import 'package:app/blocs/folder/folder.bloc.dart';
 import 'package:app/blocs/tasks/tasks.bloc.dart';
 import 'package:app/components/app/bottom_navigation.dart';
@@ -17,7 +17,7 @@ import 'package:app/pages/tasks/filtered_view.dart';
 import 'package:ab_shared/services/device_info.service.dart';
 import 'package:ab_shared/services/encryption.service.dart';
 import 'package:app/services/sync.service.dart';
-import 'package:app/services/user.service.dart';
+import 'package:ab_shared/services/user.service.dart';
 import 'package:app/utils/constants.dart';
 import 'package:app/utils/shortcuts.dart';
 import 'package:cron/cron.dart';
@@ -58,9 +58,8 @@ class AppLayoutState extends ResponsiveState<AppLayout> {
         if (context.read<AuthBloc>().state.user?.devices == null) {
           context.read<AuthBloc>().state.user?.devices = [];
         }
-        deviceInfoService ??= DeviceInfoService();
-
-        final userDeviceInfo = await deviceInfoService!.getDeviceInfo();
+        final deviceInfoService = DeviceInfoService();
+        final userDeviceInfo = await deviceInfoService.getDeviceInfo();
 
         if (!context.mounted) return;
         // ignore: use_build_context_synchronously
@@ -89,7 +88,7 @@ class AppLayoutState extends ResponsiveState<AppLayout> {
     return BlocBuilder<AuthBloc, AuthState>(builder: (context, authState) {
       return BlocBuilder<TasksBloc, TasksState>(builder: (context, tasksState) {
         WidgetsBinding.instance.addPostFrameCallback((_) async {
-          bool isSubscribed = UserService.isSubscriptionActive(authState.user);
+          bool isSubscribed = UserService.isSubscriptionActive(globalApiClient!, authState.user);
           if (env?.env == "dev") {
             isSubscribed = true;
           }
@@ -923,8 +922,8 @@ class AppLayoutState extends ResponsiveState<AppLayout> {
       encryptionService ??= EncryptionService(
         userSalt: authState.user!.keySet.salt,
         prefs: prefs!,
-        userKey: userKey!,
-        agePublicKey: agePublicKey!,
+        userKey: userKey,
+        agePublicKey: agePublicKey,
       );
       if (isPaymentSupported()) revenueCatService?.logIn(authState.user!.id!);
     }

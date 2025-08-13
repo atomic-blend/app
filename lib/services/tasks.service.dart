@@ -5,16 +5,15 @@ import 'package:app/entities/sync/patch_action/patch_action.dart';
 import 'package:app/entities/sync/patch_error/patch_error.dart';
 import 'package:app/entities/sync/sync_result/sync_result.dart';
 import 'package:app/entities/tasks/tasks.entity.dart';
-import 'package:app/entities/user/user.entity.dart';
+import 'package:ab_shared/entities/user/user.entity.dart';
 import 'package:app/main.dart';
-import 'package:app/services/user.service.dart';
-import 'package:app/utils/api_client.dart';
+import 'package:ab_shared/services/user.service.dart';
 
 class TasksService {
   TasksService();
 
   Future<List<TaskEntity>> getAllTasks() async {
-    final result = await globalApiClient.get('/tasks');
+    final result = await globalApiClient?.get('/tasks');
     if (result.statusCode == 200) {
       final List<TaskEntity> tasks = [];
       for (var i = 0; i < (result.data as List).length; i++) {
@@ -28,11 +27,11 @@ class TasksService {
 
   Future<bool> createTask(UserEntity user, TaskEntity task) async {
     if (encryptionService == null) {
-      await UserService.refreshToken(user);
+      await UserService.refreshToken(env!, globalApiClient!, prefs!, user);
     }
     final encryptedTask =
         await task.encrypt(encryptionService: encryptionService!);
-    final result = await globalApiClient.post('/tasks', data: encryptedTask);
+    final result = await globalApiClient?.post('/tasks', data: encryptedTask);
     if (result.statusCode == 201) {
       return true;
     } else {
@@ -45,7 +44,7 @@ class TasksService {
         await task.encrypt(encryptionService: encryptionService!);
 
     final result =
-        await globalApiClient.put('/tasks/${task.id}', data: encryptedTask);
+        await globalApiClient?.put('/tasks/${task.id}', data: encryptedTask);
     if (result.statusCode == 200) {
       return true;
     } else {
@@ -54,7 +53,7 @@ class TasksService {
   }
 
   Future<bool> deleteTask(TaskEntity task) async {
-    final result = await globalApiClient.delete('/tasks/${task.id}');
+    final result = await globalApiClient?.delete('/tasks/${task.id}');
     if (result.statusCode == 204) {
       return true;
     } else {
@@ -142,7 +141,7 @@ class TasksService {
           encryptedPatches.add(encryptedPatch);
         }
 
-        final result = await globalApiClient.post(
+        final result = await globalApiClient?.post(
           '/tasks/patch',
           data: encryptedPatches.map((e) => e.toJson()).toList(),
         );

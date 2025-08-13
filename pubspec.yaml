@@ -93,7 +93,7 @@ dependencies:
   syncfusion_flutter_datepicker: ^29.1.37
   percent_indicator: ^4.2.5
   flex_color_picker: ^3.7.0
-  sentry_flutter: ^8.14.2
+  sentry_flutter: ^9.6.0
   macos_window_utils: ^1.7.1
   sizer: ^3.0.0
   flutter_staggered_grid_view: ^0.7.0
@@ -107,6 +107,7 @@ dependencies:
   cron: ^0.6.2
   objectid: ^4.0.1
   keyboard_service: ^2.0.3
+  purchases_flutter: ^9.2.0
 dependency_overrides:
   flutter_secure_storage_web: ^2.0.0
   flutter_secure_storage_platform_interface: ^2.0.1

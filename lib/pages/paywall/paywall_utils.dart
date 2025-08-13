@@ -1,8 +1,7 @@
-import 'package:app/entities/user/user.entity.dart';
+import 'package:ab_shared/entities/user/user.entity.dart';
 import 'package:app/main.dart';
 import 'package:app/pages/paywall/paywall.dart';
-import 'package:app/services/user.service.dart';
-import 'package:app/utils/api_client.dart';
+import 'package:ab_shared/services/user.service.dart';
 import 'package:app/utils/shortcuts.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -13,7 +12,7 @@ class PaywallUtils {
   }
 
   static showPaywall(BuildContext context, {UserEntity? user}) async {
-    if (ApiClient.getSelfHostedRestApiUrl() != null) {
+    if (globalApiClient?.getSelfHostedRestApiUrl() != null) {
       return;
     }
     final paywallDisplayed = prefs?.getBool("paywall_displayed") ?? false;
@@ -27,7 +26,7 @@ class PaywallUtils {
     await prefs?.setBool("paywall_displayed", true);
 
     if (user != null) {
-      if (UserService.isSubscriptionActive(user)) {
+      if (UserService.isSubscriptionActive(globalApiClient!, user)) {
         return;
       }
     }

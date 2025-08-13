@@ -1,4 +1,4 @@
-import 'package:app/blocs/auth/auth.bloc.dart';
+import 'package:ab_shared/blocs/auth/auth.bloc.dart';
 import 'package:app/blocs/tag/tag.bloc.dart';
 import 'package:app/components/buttons/icon_text_card.dart';
 import 'package:app/components/modals/ab_modal.dart';

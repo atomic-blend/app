@@ -1,7 +1,7 @@
 import 'package:app/components/buttons/primary_button_round.dart';
 import 'package:app/components/forms/app_text_form_field.dart';
 import 'package:app/i18n/strings.g.dart';
-import 'package:app/utils/api_client.dart';
+import 'package:app/main.dart';
 import 'package:app/utils/constants.dart';
 import 'package:app/utils/shortcuts.dart';
 import 'package:flutter/material.dart';
@@ -81,10 +81,10 @@ class _EditSelfHostedUrlModalState extends State<EditSelfHostedUrlModal> {
                             if (!_formKey.currentState!.validate()) {
                               return;
                             }
-                            bool result =
-                                await ApiClient.setSelfHostedRestApiUrl(
+                            bool? result =
+                                await globalApiClient?.setSelfHostedRestApiUrl(
                                     _selfHostedUrlController.text);
-                            if (result) {
+                            if (result == true) {
                               if (!context.mounted) return;
                               Navigator.pop(context);
                             }
