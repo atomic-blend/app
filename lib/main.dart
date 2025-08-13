@@ -13,7 +13,7 @@ import 'package:app/blocs/tasks/tasks.bloc.dart';
 import 'package:app/blocs/time_entries/time_entry.bloc.dart';
 import 'package:app/i18n/strings.g.dart';
 import 'package:app/services/notifications/background_notification_processor.dart';
-import 'package:app/services/notifications/fcm_service.dart';
+import 'package:ab_shared/services/fcm_service.dart';
 import 'package:app/services/notifications/processors/processors.dart';
 import 'package:app/services/revenue_cat_service.dart';
 import 'package:app/services/widget_service/background_processor.dart';
@@ -103,7 +103,11 @@ FutureOr<void> main() async {
         options: DefaultFirebaseOptions.currentPlatform,
       );
       fcmService = FcmService();
-      fcmService!.initFCM();
+      fcmService!.initFCM(
+        "Atomic Task",
+        "AtomicBlend.Task",
+        "7d39570f-4bf8-428f-95e5-d37ada5d96ba",
+      );
 
       // Register background handler
       FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
