@@ -1,8 +1,8 @@
+import 'package:ab_shared/components/app/ab_navbar.dart';
 import 'package:ab_shared/utils/constants.dart';
 import 'package:app/blocs/app/app.bloc.dart';
 import 'package:ab_shared/blocs/auth/auth.bloc.dart';
 import 'package:app/blocs/habit/habit.bloc.dart';
-import 'package:ab_shared/components/app/bottom_navigation.dart';
 import 'package:app/entities/tasks/tasks.entity.dart';
 import 'package:app/i18n/strings.g.dart';
 import 'package:app/main.dart';
@@ -40,15 +40,15 @@ class NavigationConstants {
           items: [
             NavigationItem(
               key: const Key("overview"),
-              icon: const Icon(Icons.check_box),
-              cupertinoIcon: const Icon(CupertinoIcons.checkmark_square),
+              icon: Icons.check_box,
+              cupertinoIcon: CupertinoIcons.checkmark_square,
               label: context.t.tasks.overview,
               body: const OverviewTasks(),
             ),
             NavigationItem(
               key: const Key("inbox"),
-              icon: const Icon(Icons.inbox),
-              cupertinoIcon: const Icon(CupertinoIcons.tray_arrow_down),
+              icon: Icons.inbox,
+              cupertinoIcon: CupertinoIcons.tray_arrow_down,
               color: Colors.cyan.darken(12),
               label: context.t.tasks.inbox,
               body: FilteredTaskView(
@@ -65,8 +65,8 @@ class NavigationConstants {
             ),
             NavigationItem(
               key: const Key("today"),
-              icon: const Icon(Icons.calendar_today),
-              cupertinoIcon: const Icon(CupertinoIcons.calendar_today),
+              icon: Icons.calendar_today,
+              cupertinoIcon: CupertinoIcons.calendar_today,
               label: context.t.tasks.today,
               color: getTheme(context).primary,
               body: FilteredTaskView(
@@ -85,16 +85,16 @@ class NavigationConstants {
             ),
             NavigationItem(
               key: const Key("tags"),
-              icon: const Icon(Icons.tag),
-              cupertinoIcon: const Icon(CupertinoIcons.tag),
+              icon: Icons.tag,
+              cupertinoIcon: CupertinoIcons.tag,
               label: context.t.tasks.tags,
               color: getTheme(context).secondary,
               body: const TagsView(),
             ),
             NavigationItem(
               key: const Key("folders"),
-              icon: const Icon(Icons.folder),
-              cupertinoIcon: const Icon(CupertinoIcons.folder),
+              icon: Icons.folder,
+              cupertinoIcon: CupertinoIcons.folder,
               label: context.t.tasks.folders.title,
               separatorBefore: true,
               color: getTheme(context).tertiary,
@@ -103,9 +103,8 @@ class NavigationConstants {
             NavigationItem(
               key: const Key("all_tasks"),
               separatorBefore: true,
-              icon: const Icon(Icons.list),
-              cupertinoIcon:
-                  const Icon(CupertinoIcons.square_stack_3d_down_right),
+              icon: Icons.list,
+              cupertinoIcon: CupertinoIcons.square_stack_3d_down_right,
               label: context.t.tasks.all_tasks,
               body: FilteredTaskView(
                 filter: (tasks) {
@@ -115,8 +114,8 @@ class NavigationConstants {
             ),
             NavigationItem(
               key: const Key("completed_tasks"),
-              icon: const Icon(Icons.check_circle),
-              cupertinoIcon: const Icon(CupertinoIcons.checkmark_circle),
+              icon: Icons.check_circle,
+              cupertinoIcon: CupertinoIcons.checkmark_circle,
               label: context.t.tasks.completed_tasks,
               body: FilteredTaskView(
                 filter: (tasks) {
@@ -132,8 +131,8 @@ class NavigationConstants {
             if (isDesktop(context))
               NavigationItem(
                 key: const Key("week"),
-                icon: const Icon(Icons.calendar_view_week),
-                cupertinoIcon: const Icon(CupertinoIcons.calendar),
+                icon: Icons.calendar_view_week,
+                cupertinoIcon: CupertinoIcons.calendar,
                 label: context.t.calendar.week,
                 initialsOnly: true,
                 body: Calendar(
@@ -144,8 +143,8 @@ class NavigationConstants {
               ),
             NavigationItem(
               key: const Key("schedule"),
-              icon: const Icon(Icons.schedule),
-              cupertinoIcon: const Icon(CupertinoIcons.clock),
+              icon: Icons.schedule,
+              cupertinoIcon: CupertinoIcons.clock,
               label: context.t.calendar.schedule,
               initialsOnly: true,
               body: Calendar(
@@ -156,8 +155,8 @@ class NavigationConstants {
             ),
             NavigationItem(
               key: const Key("three_days"),
-              icon: const Icon(Icons.calendar_today),
-              cupertinoIcon: const Icon(CupertinoIcons.calendar_badge_plus),
+              icon: Icons.calendar_today,
+              cupertinoIcon: CupertinoIcons.calendar_badge_plus,
               label: context.t.calendar.threeDays,
               initialsOnly: true,
               body: Calendar(
@@ -168,8 +167,8 @@ class NavigationConstants {
             ),
             NavigationItem(
               key: const Key("month"),
-              icon: const Icon(Icons.calendar_month),
-              cupertinoIcon: const Icon(CupertinoIcons.calendar),
+              icon: Icons.calendar_month,
+              cupertinoIcon: CupertinoIcons.calendar,
               label: context.t.calendar.month,
               initialsOnly: true,
               body: Calendar(
@@ -179,8 +178,8 @@ class NavigationConstants {
             ),
             NavigationItem(
               key: const Key("day"),
-              icon: const Icon(Icons.calendar_today),
-              cupertinoIcon: const Icon(CupertinoIcons.calendar_today),
+              icon: Icons.calendar_today,
+              cupertinoIcon: CupertinoIcons.calendar_today,
               label: context.t.calendar.day,
               initialsOnly: true,
               body: Calendar(
@@ -218,14 +217,11 @@ class NavigationConstants {
   List<NavigationItem> primaryMenuItems(BuildContext context) => [
         NavigationItem(
           key: const Key("tasks"),
-          icon: const Icon(
+          icon: 
             LineAwesome.home_solid,
-            size: 25,
-          ),
-          cupertinoIcon: const Icon(
+          cupertinoIcon: 
             CupertinoIcons.checkmark_square,
-            size: 25,
-          ),
+          
           label: context.t.tasks.title,
           body: const OverviewTasks(),
           mainSecondaryKey: "overview",
@@ -273,14 +269,10 @@ class NavigationConstants {
         ),
         NavigationItem(
           key: const Key("calendar"),
-          icon: const Icon(
+          icon: 
             LineAwesome.calendar,
-            size: 25,
-          ),
-          cupertinoIcon: const Icon(
+          cupertinoIcon: 
             CupertinoIcons.calendar,
-            size: 25,
-          ),
           label: context.t.calendar.title,
           body: const Calendar(
             view: CalendarView.month,
@@ -341,14 +333,10 @@ class NavigationConstants {
         ),
         NavigationItem(
           key: const Key("add_task"),
-          icon: Icon(
+          icon: 
             LineAwesome.plus_solid,
-            color: getTheme(context).tertiary,
-          ),
-          cupertinoIcon: Icon(
+          cupertinoIcon: 
             CupertinoIcons.plus_circle_fill,
-            color: getTheme(context).secondary,
-          ),
           label: context.t.actions.add,
           color: getTheme(context).secondary,
           onTap: (index) {
@@ -366,14 +354,10 @@ class NavigationConstants {
         ),
         NavigationItem(
           key: const Key("habits"),
-          icon: const Icon(
+          icon: 
             LineAwesome.bolt_solid,
-            size: 25,
-          ),
-          cupertinoIcon: const Icon(
+          cupertinoIcon: 
             CupertinoIcons.bolt_fill,
-            size: 25,
-          ),
           label: context.t.habits.title,
           body: const Habits(),
           appBar: AppBar(
@@ -436,14 +420,10 @@ class NavigationConstants {
         ),
         NavigationItem(
           key: const Key("more"),
-          icon: const Icon(
+          icon: 
             CupertinoIcons.ellipsis_circle_fill,
-            size: 25,
-          ),
-          cupertinoIcon: const Icon(
+          cupertinoIcon: 
             CupertinoIcons.ellipsis_circle_fill,
-            size: 25,
-          ),
           label: context.t.more.title,
           body: const MoreApps(),
           appBar: AppBar(
@@ -477,14 +457,8 @@ class NavigationConstants {
         ),
         NavigationItem(
           key: const Key("eisenhower"),
-          icon: Icon(
-            CupertinoIcons.square_grid_2x2,
-            size: isDesktop(context) ? 25 : 35,
-          ),
-          cupertinoIcon: Icon(
-            CupertinoIcons.square_grid_2x2,
-            size: isDesktop(context) ? 25 : 35,
-          ),
+          icon: CupertinoIcons.square_grid_2x2,
+          cupertinoIcon: CupertinoIcons.square_grid_2x2,
           label: context.t.eisenhower.small_title,
           body: const EisenhowerMatrix(),
           appBar: AppBar(
@@ -500,14 +474,8 @@ class NavigationConstants {
         ),
         NavigationItem(
           key: const Key("timer"),
-          icon: Icon(
-            CupertinoIcons.stopwatch,
-            size: isDesktop(context) ? 25 : 35,
-          ),
-          cupertinoIcon: Icon(
-            CupertinoIcons.stopwatch,
-            size: isDesktop(context) ? 25 : 35,
-          ),
+          icon: CupertinoIcons.stopwatch,
+          cupertinoIcon: CupertinoIcons.stopwatch,
           label: context.t.timer.title,
           onTap: (index) {
             if (isDesktop(context)) {

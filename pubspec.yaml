@@ -40,7 +40,7 @@ dependencies:
   ab_shared:
     git:
       url: https://github.com/atomic-blend/app-shared.git
-      ref: v0.1.0
+      ref: v0.2.1
     # path: ../app-shared
 
   # The following adds the Cupertino Icons font to your application.
@@ -85,14 +85,14 @@ dependencies:
   device_info_plus: ^11.3.3
   flutter_local_notifications: ^19.3.0
   flutter_timezone: ^4.1.0
-  syncfusion_flutter_calendar: ^29.1.33
+  syncfusion_flutter_calendar: ^30.2.5
   device_calendar: ^4.3.3
   url_launcher: ^6.3.1
   input_quantity: ^2.5.1
   flutter_multi_select_items: ^0.4.3
   emoji_picker_flutter: ^4.3.0
   flutter_heatmap_calendar: ^1.0.5
-  syncfusion_flutter_datepicker: ^29.1.37
+  syncfusion_flutter_datepicker: ^30.2.5
   percent_indicator: ^4.2.5
   flex_color_picker: ^3.7.0
   sentry_flutter: ^9.6.0
