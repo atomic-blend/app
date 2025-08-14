@@ -1,20 +1,22 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:ab_shared/components/forms/ab_checkbox.dart';
 import 'package:app/blocs/folder/folder.bloc.dart';
 import 'package:app/blocs/tag/tag.bloc.dart';
 import 'package:app/blocs/tasks/tasks.bloc.dart';
 import 'package:app/components/buttons/icon_text_pill.dart';
 import 'package:app/components/dialogs/priority_picker.dart';
-import 'package:app/components/forms/app_text_form_field.dart';
+import 'package:ab_shared/components/forms/app_text_form_field.dart';
 import 'package:app/components/forms/task_date_picker_modal/task_date_picker_modal.dart';
-import 'package:app/components/modals/ab_modal.dart';
-import 'package:app/components/widgets/elevated_container.dart';
+import 'package:ab_shared/components/modals/ab_modal.dart';
+import 'package:ab_shared/components/widgets/elevated_container.dart';
 import 'package:app/entities/folder/folder.entity.dart';
-import 'package:app/entities/sync/patch_change/patch_change.dart';
+import 'package:ab_shared/entities/sync/patch_change/patch_change.dart';
 import 'package:app/entities/tag/tag.entity.dart';
 import 'package:app/entities/tasks/tasks.entity.dart';
 import 'package:app/i18n/strings.g.dart';
+import 'package:app/main.dart';
 import 'package:app/pages/sync_status/conflict_resolver.dart';
 import 'package:app/pages/tasks/add_time_entry.dart';
 import 'package:app/pages/tasks/assign_folder.dart';
@@ -22,10 +24,9 @@ import 'package:app/pages/tasks/assign_tag_modal.dart';
 import 'package:app/pages/tasks/task_time_entry_log.dart' show TaskTimeEntryLog;
 import 'package:app/pages/timer/task_timer.dart';
 import 'package:app/pages/timer/timer_utils.dart';
-import 'package:app/services/user.service.dart';
-import 'package:app/utils/constants.dart';
+import 'package:ab_shared/utils/constants.dart';
 import 'package:app/utils/extensions/date_time_extension.dart';
-import 'package:app/utils/shortcuts.dart';
+import 'package:ab_shared/utils/shortcuts.dart';
 import 'package:collection/collection.dart';
 import 'package:fleather/fleather.dart';
 import 'package:flutter/cupertino.dart';
@@ -38,7 +39,6 @@ import 'package:jiffy/jiffy.dart';
 import 'package:macos_window_utils/macos_window_utils.dart';
 import 'package:keyboard_service/keyboard_service.dart';
 
-import '../../components/forms/ab_checkbox.dart';
 
 class TaskDetail extends StatefulWidget {
   final TaskEntity task;

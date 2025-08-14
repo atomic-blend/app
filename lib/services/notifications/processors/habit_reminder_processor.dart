@@ -1,8 +1,7 @@
 import 'package:app/i18n/strings.g.dart';
 import 'package:app/main.dart';
-import 'package:app/services/encryption.service.dart';
-import 'package:app/services/user.service.dart';
-import 'package:app/utils/local_notifications.dart';
+import 'package:ab_shared/services/encryption.service.dart';
+import 'package:ab_shared/utils/local_notifications.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
@@ -20,7 +19,7 @@ class HabitReminderProcessor {
 
     //initialize the encryption engine
     encryptionService =
-        EncryptionService(userSalt: userData!['keySet']['salt']);
+        EncryptionService(userSalt: userData!['keySet']['salt'], prefs: prefs!, userKey: userKey!, agePublicKey: agePublicKey!);
 
     // prepare notification body
     String? title = await encryptionService?.decryptString(data: encryptedTitle);

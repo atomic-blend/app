@@ -1,9 +1,9 @@
+import 'package:ab_shared/components/modals/edit_self_hosted_url_modal.dart';
 import 'package:app/components/buttons/icon_text_button.dart';
 import 'package:app/i18n/strings.g.dart';
 import 'package:app/main.dart';
-import 'package:app/pages/settings/modals/edit_self_hosted_url_modal.dart';
-import 'package:app/utils/constants.dart';
-import 'package:app/utils/shortcuts.dart';
+import 'package:ab_shared/utils/constants.dart';
+import 'package:ab_shared/utils/shortcuts.dart';
 import 'package:flutter/material.dart';
 import 'package:icons_plus/icons_plus.dart';
 
@@ -61,6 +61,7 @@ class _AppSettingsState extends State<AppSettings> {
                 await showDialog(
                     context: context,
                     builder: (context) => EditSelfHostedUrlModal(
+                          globalApiClient: globalApiClient,
                           selfHostedUrl:
                               prefs?.getString("self_hosted_rest_api_url"),
                         ));

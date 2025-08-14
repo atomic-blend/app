@@ -2,8 +2,11 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:ab_shared/services/encryption.service.dart';
+import 'package:ab_shared/utils/api_client.dart';
 import 'package:app/blocs/app/app.bloc.dart';
-import 'package:app/blocs/auth/auth.bloc.dart';
+import 'package:ab_shared/i18n/strings.g.dart' as ab_shared_translations;
+import 'package:ab_shared/blocs/auth/auth.bloc.dart';
 import 'package:app/blocs/device_calendar/device_calendar.bloc.dart';
 import 'package:app/blocs/folder/folder.bloc.dart';
 import 'package:app/blocs/habit/habit.bloc.dart';
@@ -12,12 +15,12 @@ import 'package:app/blocs/tasks/tasks.bloc.dart';
 import 'package:app/blocs/time_entries/time_entry.bloc.dart';
 import 'package:app/i18n/strings.g.dart';
 import 'package:app/services/notifications/background_notification_processor.dart';
-import 'package:app/services/notifications/fcm_service.dart';
+import 'package:ab_shared/services/fcm_service.dart';
 import 'package:app/services/notifications/processors/processors.dart';
-import 'package:app/services/revenue_cat_service.dart';
+import 'package:ab_shared/services/revenue_cat_service.dart';
 import 'package:app/services/widget_service/background_processor.dart';
-import 'package:app/utils/env/env.dart';
-import 'package:app/utils/shortcuts.dart';
+import 'package:ab_shared/utils/env/env.dart';
+import 'package:ab_shared/utils/shortcuts.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
@@ -45,7 +48,9 @@ Map<String, dynamic>? userData;
 String? userKey;
 String? agePublicKey;
 const String appGroupId = "group.atomicblend.tasks";
-
+EncryptionService? encryptionService;
+RevenueCatService? revenueCatService;
+ApiClient? globalApiClient;
 
 FutureOr<void> main() async {
   await SentryFlutter.init((options) {
@@ -65,6 +70,11 @@ FutureOr<void> main() async {
 
     await FlutterAge.init();
 
+    globalApiClient = ApiClient(
+      env: env!,
+      prefs: prefs!,
+    ).init();
+
     if (!kIsWeb && !kIsWasm) {
       HomeWidget.setAppGroupId(appGroupId);
       HomeWidget.registerInteractivityCallback(backgroundCallback);
@@ -79,20 +89,38 @@ FutureOr<void> main() async {
     }
 
     if (isPaymentSupported()) {
-      await RevenueCatService.initPlatformState();
+      revenueCatService = RevenueCatService(
+        googleRevenueCatApiKey: env!.googleRevenueCatApiKey,
+        appleRevenueCatApiKey: env!.appleRevenueCatApiKey,
+      );
+      await revenueCatService!.initPlatformState();
     }
 
     final rawUserData = prefs?.getString("user");
     userData = rawUserData != null ? json.decode(rawUserData) : null;
     userKey = prefs?.getString("key");
     agePublicKey = prefs?.getString("age_public_key");
-    
+
+    // Only create encryption service if user data exists
+    if (userData != null && userData!['keySet'] != null) {
+      encryptionService = EncryptionService(
+        userSalt: userData?['keySet']['salt'],
+        prefs: prefs!,
+        userKey: userKey,
+        agePublicKey: agePublicKey,
+      );
+    }   
+      
     if (kIsWeb || !Platform.isLinux) {
       await Firebase.initializeApp(
         options: DefaultFirebaseOptions.currentPlatform,
       );
       fcmService = FcmService();
-      fcmService!.initFCM();
+      fcmService!.initFCM(
+        "Atomic Task",
+        "AtomicBlend.Task",
+        "7d39570f-4bf8-428f-95e5-d37ada5d96ba",
+      );
 
       // Register background handler
       FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
@@ -112,12 +140,29 @@ FutureOr<void> main() async {
     await LocaleSettings.useDeviceLocale();
     Jiffy.setLocale(LocaleSettings.currentLocale.languageCode);
 
-    runApp(ResponsiveSizer(builder: (context, orientation, screenType) {
+    runApp(Sizer(builder: (context, orientation, screenType) {
       return SentryWidget(
         child: MultiBlocProvider(
             providers: [
               BlocProvider(create: (context) => AppCubit()),
-              BlocProvider(create: (context) => AuthBloc()),
+              BlocProvider(create: (context) => AuthBloc(
+                prefs: prefs!,
+                onLogout: () {
+                  userKey = null;
+                  userData = null;
+                  prefs?.clear();
+                  globalApiClient?.setIdToken(null);
+                  Sentry.configureScope(
+                    (scope) => scope.setUser(SentryUser(id: null)),
+                  );
+                  encryptionService = null;
+                },
+                onLogin: (e) {
+                  encryptionService = e;
+                },
+                globalApiClient: globalApiClient!,
+                encryptionService: encryptionService, 
+              )),
               BlocProvider(create: (context) => TasksBloc()),
               BlocProvider(create: (context) => DeviceCalendarBloc()),
               BlocProvider(create: (context) => HabitBloc()),
@@ -125,8 +170,10 @@ FutureOr<void> main() async {
               BlocProvider(create: (context) => FolderBloc()),
               BlocProvider(create: (context) => TimeEntryBloc()),
             ],
-            child: TranslationProvider(
-                child: const ToastificationWrapper(child: App()))),
+            child: ab_shared_translations.TranslationProvider(
+              child: TranslationProvider(
+                  child: const ToastificationWrapper(child: App())),
+            )),
       );
     }));
   });

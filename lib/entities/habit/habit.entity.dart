@@ -1,6 +1,6 @@
 import 'package:app/entities/habit/habit_entry/habit_entry.entity.dart';
 import 'package:app/i18n/strings.g.dart';
-import 'package:app/services/encryption.service.dart';
+import 'package:ab_shared/services/encryption.service.dart';
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
