@@ -41,9 +41,23 @@ jobs:
 
       - name: Write Firebase Options
         run: |
-          echo '${{ secrets.FIREBASE_OPTIONS_PROD }}' > lib/firebase_options_prod.dart
+          cat << 'EOF' > lib/firebase_options_prod.dart
+          ${{ secrets.FIREBASE_OPTIONS_PROD }}
+          EOF
+          cat << 'EOF' > lib/firebase_options_dev.dart
+          ${{ secrets.FIREBASE_OPTIONS_DEV }}
+          EOF
+          cat << 'EOF' > assets/configs/prod.json
+          ${{ secrets.APP_CONFIG_PROD }}
+          EOF
+          cat << 'EOF' > assets/configs/dev.json
+          ${{ secrets.APP_CONFIG_DEV }}
+          EOF
         env:
           FIREBASE_OPTIONS_PROD: ${{ secrets.FIREBASE_OPTIONS_PROD }}
+          FIREBASE_OPTIONS_DEV: ${{ secrets.FIREBASE_OPTIONS_DEV }}
+          APP_CONFIG_PROD: ${{ secrets.APP_CONFIG_PROD }}
+          APP_CONFIG_DEV: ${{ secrets.APP_CONFIG_DEV }}
 
       - name: Install Dependencies
         run: flutter pub get
@@ -143,10 +157,18 @@ jobs:
 
       - name: Write Firebase Options
         run: |
-          echo '${{ secrets.FIREBASE_OPTIONS_PROD }}' > lib/firebase_options_prod.dart
-          echo '${{ secrets.FIREBASE_OPTIONS_DEV }}' > lib/firebase_options_dev.dart
-          echo '${{ secrets.APP_CONFIG_PROD }}' > assets/configs/prod.json
-          echo '${{ secrets.APP_CONFIG_DEV }}' > assets/configs/dev.json
+          cat << 'EOF' > lib/firebase_options_prod.dart
+          ${{ secrets.FIREBASE_OPTIONS_PROD }}
+          EOF
+          cat << 'EOF' > lib/firebase_options_dev.dart
+          ${{ secrets.FIREBASE_OPTIONS_DEV }}
+          EOF
+          cat << 'EOF' > assets/configs/prod.json
+          ${{ secrets.APP_CONFIG_PROD }}
+          EOF
+          cat << 'EOF' > assets/configs/dev.json
+          ${{ secrets.APP_CONFIG_DEV }}
+          EOF
         env:
           FIREBASE_OPTIONS_PROD: ${{ secrets.FIREBASE_OPTIONS_PROD }}
           FIREBASE_OPTIONS_DEV: ${{ secrets.FIREBASE_OPTIONS_DEV }}
