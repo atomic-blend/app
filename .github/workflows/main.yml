@@ -39,6 +39,12 @@ jobs:
             echo "✅ No local path dependencies found in pubspec.yaml"
           fi
 
+      - name: Write Firebase Options
+        run: |
+          echo '${{ secrets.FIREBASE_OPTIONS_PROD }}' > lib/firebase_options_prod.dart
+        env:
+          FIREBASE_OPTIONS_PROD: ${{ secrets.FIREBASE_OPTIONS_PROD }}
+
       - name: Install Dependencies
         run: flutter pub get
 
@@ -135,6 +141,18 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Write Firebase Options
+        run: |
+          echo '${{ secrets.FIREBASE_OPTIONS_PROD }}' > lib/firebase_options_prod.dart
+          echo '${{ secrets.FIREBASE_OPTIONS_DEV }}' > lib/firebase_options_dev.dart
+          echo '${{ secrets.APP_CONFIG_PROD }}' > assets/configs/prod.json
+          echo '${{ secrets.APP_CONFIG_DEV }}' > assets/configs/dev.json
+        env:
+          FIREBASE_OPTIONS_PROD: ${{ secrets.FIREBASE_OPTIONS_PROD }}
+          FIREBASE_OPTIONS_DEV: ${{ secrets.FIREBASE_OPTIONS_DEV }}
+          APP_CONFIG_PROD: ${{ secrets.APP_CONFIG_PROD }}
+          APP_CONFIG_DEV: ${{ secrets.APP_CONFIG_DEV }}
+
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v2
         with:
@@ -165,7 +183,7 @@ jobs:
 
 
   create-github-release:
-    needs: bump-version
+    needs: build-docker-images
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
