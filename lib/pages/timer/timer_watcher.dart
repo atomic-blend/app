@@ -4,7 +4,7 @@ import 'package:app/blocs/tasks/tasks.bloc.dart';
 import 'package:app/entities/tasks/tasks.entity.dart';
 import 'package:app/pages/timer/completed_timer.dart';
 import 'package:app/pages/timer/timer_utils.dart';
-import 'package:app/utils/shortcuts.dart';
+import 'package:ab_shared/utils/shortcuts.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

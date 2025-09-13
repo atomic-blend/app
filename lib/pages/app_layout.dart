@@ -1,26 +1,26 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:ab_shared/components/app/ab_navbar.dart';
 import 'package:app/blocs/app/app.bloc.dart';
-import 'package:app/blocs/auth/auth.bloc.dart';
+import 'package:ab_shared/blocs/auth/auth.bloc.dart';
 import 'package:app/blocs/folder/folder.bloc.dart';
 import 'package:app/blocs/tasks/tasks.bloc.dart';
-import 'package:app/components/app/bottom_navigation.dart';
-import 'package:app/components/responsive_stateful_widget.dart';
-import 'package:app/components/widgets/elevated_container.dart';
+import 'package:ab_shared/components/responsive_stateful_widget.dart';
+import 'package:ab_shared/components/widgets/elevated_container.dart';
 import 'package:app/entities/tasks/tasks.entity.dart';
 import 'package:app/main.dart';
-import 'package:app/pages/auth/login_or_register_modal.dart';
-import 'package:app/pages/paywall/paywall_utils.dart';
+import 'package:ab_shared/pages/auth/login_or_register_modal.dart';
+import 'package:ab_shared/pages/paywall/paywall_utils.dart';
 import 'package:app/pages/sync_status/sync_status.dart';
 import 'package:app/pages/tasks/filtered_view.dart';
-import 'package:app/services/device_info.service.dart';
-import 'package:app/services/encryption.service.dart';
-import 'package:app/services/revenue_cat_service.dart';
+import 'package:ab_shared/services/device_info.service.dart';
+import 'package:ab_shared/services/encryption.service.dart';
 import 'package:app/services/sync.service.dart';
-import 'package:app/services/user.service.dart';
-import 'package:app/utils/constants.dart';
-import 'package:app/utils/shortcuts.dart';
+import 'package:ab_shared/services/user.service.dart';
+import 'package:ab_shared/utils/constants.dart';
+import 'package:ab_shared/utils/shortcuts.dart';
+import 'package:app/utils/nav_constants.dart';
 import 'package:cron/cron.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
@@ -47,7 +47,9 @@ class AppLayoutState extends ResponsiveState<AppLayout> {
   @override
   void initState() {
     context.read<AuthBloc>().add(const RefreshUser());
-    PaywallUtils.resetPaywall();
+    PaywallUtils.resetPaywall(
+      prefs: prefs!,
+    );
 
     final cron = Cron();
     cron.schedule(Schedule.parse('*/5 * * * *'), () async {
@@ -59,9 +61,8 @@ class AppLayoutState extends ResponsiveState<AppLayout> {
         if (context.read<AuthBloc>().state.user?.devices == null) {
           context.read<AuthBloc>().state.user?.devices = [];
         }
-        deviceInfoService ??= DeviceInfoService();
-
-        final userDeviceInfo = await deviceInfoService!.getDeviceInfo();
+        final deviceInfoService = DeviceInfoService();
+        final userDeviceInfo = await deviceInfoService.getDeviceInfo();
 
         if (!context.mounted) return;
         // ignore: use_build_context_synchronously
@@ -90,7 +91,7 @@ class AppLayoutState extends ResponsiveState<AppLayout> {
     return BlocBuilder<AuthBloc, AuthState>(builder: (context, authState) {
       return BlocBuilder<TasksBloc, TasksState>(builder: (context, tasksState) {
         WidgetsBinding.instance.addPostFrameCallback((_) async {
-          bool isSubscribed = UserService.isSubscriptionActive(authState.user);
+          bool isSubscribed = UserService.isSubscriptionActive(globalApiClient!, authState.user);
           if (env?.env == "dev") {
             isSubscribed = true;
           }
@@ -121,7 +122,7 @@ class AppLayoutState extends ResponsiveState<AppLayout> {
                 context: context, appState: appState, authState: authState);
 
             // get the secondary section based on the selected primary menu
-            final secondarySection = $constants.navigation
+            final secondarySection = $navConstants
                 .secondaryMenuSections(context)
                 .where(
                   (section) =>
@@ -130,7 +131,7 @@ class AppLayoutState extends ResponsiveState<AppLayout> {
                 )
                 .firstOrNull;
 
-            var primaryMenuItem = $constants.navigation
+            var primaryMenuItem = $navConstants
                 .primaryMenuItems(context)
                 .where((item) =>
                     (item.key as ValueKey).value ==
@@ -150,15 +151,12 @@ class AppLayoutState extends ResponsiveState<AppLayout> {
                 folderItems.add(
                   NavigationItem(
                     key: ValueKey(folder.name),
-                    icon: folder.emoji != null
-                        ? SizedBox(
-                            height: 25, width: 25, child: Text(folder.emoji!))
-                        : const Icon(Icons.collections),
-                    cupertinoIcon: folder.emoji != null
-                        ? Center(
-                            child: Text(folder.emoji!,
-                                style: const TextStyle(fontSize: 25)))
-                        : const Icon(CupertinoIcons.collections),
+                    // icon: folder.emoji != null
+                    //     ? SizedBox(
+                    //         height: 25, width: 25, child: Text(folder.emoji!))
+                    //     : Icons.collections,
+                    icon: Icons.collections,
+                    cupertinoIcon: CupertinoIcons.collections,
                     label: folder.name,
                     color: getTheme(context).tertiary,
                     body: FilteredTaskView(
@@ -230,200 +228,223 @@ class AppLayoutState extends ResponsiveState<AppLayout> {
               direction: Axis.horizontal,
               children: [
                 Expanded(
-                  child: Scaffold(
-                    // if there's secondary, show the secondary item appBar
-                    // else show the primary appBar
-                    appBar: appBar,
-                    backgroundColor: getTheme(context).surface,
-                    drawer: TapRegion(
-                      onTapOutside: (_) {
-                        Navigator.of(context).pop();
-                      },
-                      child: ClipRRect(
-                        borderRadius:
-                            BorderRadius.circular($constants.corners.xxl),
-                        child: SideMenu(
-                          controller: _secondarySideMenuController,
-                          mode: SideMenuMode.open,
-                          hasResizer: false,
-                          hasResizerToggle: false,
-                          minWidth: getSize(context).width * 0.18,
-                          backgroundColor: getTheme(context).surfaceContainer,
-                          builder: (data) {
-                            return SideMenuData(
-                              header: SafeArea(
-                                top: true,
-                                bottom: false,
-                                left: false,
-                                right: false,
-                                child: ElevatedContainer(
-                                  width: 50,
-                                  height: 50,
-                                  child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(
-                                        $constants.corners.md,
-                                      ),
-                                      child: Image.asset(
-                                          "assets/images/appicon.png")),
-                                ),
-                              ),
-                              customChild: SingleChildScrollView(
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    SizedBox(
-                                      height: $constants.insets.xs,
+                  child: Stack(
+                    children: [
+                      Scaffold(
+                        // if there's secondary, show the secondary item appBar
+                        // else show the primary appBar
+                        appBar: appBar,
+                        backgroundColor: getTheme(context).surface,
+                        drawer: TapRegion(
+                          onTapOutside: (_) {
+                            Navigator.of(context).pop();
+                          },
+                          child: ClipRRect(
+                            borderRadius:
+                                BorderRadius.circular($constants.corners.xxl),
+                            child: SideMenu(
+                              controller: _secondarySideMenuController,
+                              mode: SideMenuMode.open,
+                              hasResizer: false,
+                              hasResizerToggle: false,
+                              minWidth: getSize(context).width * 0.18,
+                              backgroundColor: getTheme(context).surfaceContainer,
+                              builder: (data) {
+                                return SideMenuData(
+                                  header: SafeArea(
+                                    top: true,
+                                    bottom: false,
+                                    left: false,
+                                    right: false,
+                                    child: ElevatedContainer(
+                                      width: 50,
+                                      height: 50,
+                                      child: ClipRRect(
+                                          borderRadius: BorderRadius.circular(
+                                            $constants.corners.md,
+                                          ),
+                                          child: Image.asset(
+                                              "assets/images/appicon.png")),
                                     ),
-                                    ...?secondarySection?.items
-                                        .map((item) => Column(
-                                              mainAxisSize: MainAxisSize.min,
-                                              children: [
-                                                if (item.separatorBefore !=
-                                                    true)
-                                                  SizedBox(
-                                                    height:
-                                                        $constants.insets.xxs,
-                                                  ),
-                                                if (item.separatorBefore ==
-                                                    true)
-                                                  Padding(
-                                                    padding:
-                                                        EdgeInsets.symmetric(
-                                                      horizontal:
-                                                          $constants.insets.sm,
-                                                    ),
-                                                    child: Divider(
-                                                      color:
-                                                          Colors.grey.shade300,
-                                                      thickness: 2,
-                                                    ),
-                                                  ),
-                                                GestureDetector(
-                                                  onTap: () {
-                                                    if (item.onTap != null) {
-                                                      item.onTap!(0);
-                                                    } else {
-                                                      context
-                                                          .read<AppCubit>()
-                                                          .changeSecondaryMenuSelectedKey(
-                                                            key: (item.key
-                                                                    as ValueKey)
-                                                                .value,
-                                                          );
-                                                    }
-                                                    Navigator.of(context).pop();
-                                                  },
-                                                  child: Padding(
-                                                    padding:
-                                                        EdgeInsets.symmetric(
-                                                            horizontal:
-                                                                $constants
-                                                                    .insets.sm),
-                                                    child: Row(
-                                                      children: [
-                                                        Column(
-                                                          mainAxisSize:
-                                                              MainAxisSize.min,
+                                  ),
+                                  customChild: SingleChildScrollView(
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        SizedBox(
+                                          height: $constants.insets.xs,
+                                        ),
+                                        ...?secondarySection?.items
+                                            .map((item) => Column(
+                                                  mainAxisSize: MainAxisSize.min,
+                                                  children: [
+                                                    if (item.separatorBefore !=
+                                                        true)
+                                                      SizedBox(
+                                                        height:
+                                                            $constants.insets.xxs,
+                                                      ),
+                                                    if (item.separatorBefore ==
+                                                        true)
+                                                      Padding(
+                                                        padding:
+                                                            EdgeInsets.symmetric(
+                                                          horizontal:
+                                                              $constants.insets.sm,
+                                                        ),
+                                                        child: Divider(
+                                                          color:
+                                                              Colors.grey.shade300,
+                                                          thickness: 2,
+                                                        ),
+                                                      ),
+                                                    GestureDetector(
+                                                      onTap: () {
+                                                        if (item.onTap != null) {
+                                                          item.onTap!(0);
+                                                        } else {
+                                                          context
+                                                              .read<AppCubit>()
+                                                              .changeSecondaryMenuSelectedKey(
+                                                                key: (item.key
+                                                                        as ValueKey)
+                                                                    .value,
+                                                              );
+                                                        }
+                                                        Navigator.of(context).pop();
+                                                      },
+                                                      child: Padding(
+                                                        padding:
+                                                            EdgeInsets.symmetric(
+                                                                horizontal:
+                                                                    $constants
+                                                                        .insets.sm),
+                                                        child: Row(
                                                           children: [
-                                                            Container(
-                                                              width: 50,
-                                                              height: 50,
-                                                              decoration:
-                                                                  BoxDecoration(
-                                                                border: appState
-                                                                            .secondaryMenuSelectedKey ==
-                                                                        (item.key
-                                                                                as ValueKey)
-                                                                            .value
-                                                                    ? Border
-                                                                        .all(
-                                                                        color: Colors
+                                                            Column(
+                                                              mainAxisSize:
+                                                                  MainAxisSize.min,
+                                                              children: [
+                                                                Container(
+                                                                  width: 50,
+                                                                  height: 50,
+                                                                  decoration:
+                                                                      BoxDecoration(
+                                                                    border: appState
+                                                                                .secondaryMenuSelectedKey ==
+                                                                            (item.key
+                                                                                    as ValueKey)
+                                                                                .value
+                                                                        ? Border
+                                                                            .all(
+                                                                            color: Colors
+                                                                                .grey
+                                                                                .shade500,
+                                                                            width:
+                                                                                1,
+                                                                          )
+                                                                        : null,
+                                                                    color: item
+                                                                                .color !=
+                                                                            null
+                                                                        ? item.color!.withValues(
+                                                                            alpha: getTheme(context).brightness == Brightness.dark
+                                                                                ? 0.4
+                                                                                : 0.2)
+                                                                        : Colors
                                                                             .grey
-                                                                            .shade500,
-                                                                        width:
-                                                                            1,
-                                                                      )
-                                                                    : null,
-                                                                color: item
-                                                                            .color !=
-                                                                        null
-                                                                    ? item.color!.withValues(
-                                                                        alpha: getTheme(context).brightness == Brightness.dark
-                                                                            ? 0.4
-                                                                            : 0.2)
-                                                                    : Colors
-                                                                        .grey
-                                                                        .shade400
-                                                                        .withValues(
-                                                                            alpha:
-                                                                                0.2),
-                                                                borderRadius:
-                                                                    BorderRadius.circular(
-                                                                        $constants
-                                                                            .corners
-                                                                            .lg),
-                                                              ),
-                                                              child: item.initialsOnly ==
-                                                                      true
-                                                                  ? Center(
-                                                                      child:
-                                                                          Text(
-                                                                        _getInitials(
-                                                                            item.label),
-                                                                        style: getTextTheme(context)
-                                                                            .bodyLarge!
-                                                                            .copyWith(
-                                                                              fontWeight: FontWeight.bold,
-                                                                              color: item.color != null ? item.color! : Colors.grey.shade800,
-                                                                            ),
-                                                                      ),
-                                                                    )
-                                                                  : IconTheme(
-                                                                      data:
-                                                                          IconThemeData(
-                                                                        color: getTheme(context).brightness ==
-                                                                                Brightness.light
-                                                                            ? item.color != null
-                                                                                ? item.color!
-                                                                                : Colors.grey.shade800
-                                                                            : Colors.white,
-                                                                      ),
-                                                                      child: isApple(
-                                                                              context)
-                                                                          ? item
-                                                                              .cupertinoIcon
-                                                                          : item
-                                                                              .icon),
+                                                                            .shade400
+                                                                            .withValues(
+                                                                                alpha:
+                                                                                    0.2),
+                                                                    borderRadius:
+                                                                        BorderRadius.circular(
+                                                                            $constants
+                                                                                .corners
+                                                                                .lg),
+                                                                  ),
+                                                                  child: item.initialsOnly ==
+                                                                          true
+                                                                      ? Center(
+                                                                          child:
+                                                                              Text(
+                                                                            _getInitials(
+                                                                                item.label),
+                                                                            style: getTextTheme(context)
+                                                                                .bodyLarge!
+                                                                                .copyWith(
+                                                                                  fontWeight: FontWeight.bold,
+                                                                                  color: item.color != null ? item.color! : Colors.grey.shade800,
+                                                                                ),
+                                                                          ),
+                                                                        )
+                                                                      : IconTheme(
+                                                                          data:
+                                                                              IconThemeData(
+                                                                            color: getTheme(context).brightness ==
+                                                                                    Brightness.light
+                                                                                ? item.color != null
+                                                                                    ? item.color!
+                                                                                    : Colors.grey.shade800
+                                                                                : Colors.white,
+                                                                          ),
+                                                                          child: isApple(
+                                                                                  context)
+                                                                              ? Icon(item
+                                                                                  .cupertinoIcon)
+                                                                              : Icon(item
+                                                                                  .icon)),
+                                                                ),
+                                                              ],
                                                             ),
+                                                            SizedBox(
+                                                              width: $constants
+                                                                  .insets.sm,
+                                                            ),
+                                                            Text(item.label)
                                                           ],
                                                         ),
-                                                        SizedBox(
-                                                          width: $constants
-                                                              .insets.sm,
-                                                        ),
-                                                        Text(item.label)
-                                                      ],
+                                                      ),
                                                     ),
-                                                  ),
-                                                ),
-                                              ],
-                                            ))
-                                  ],
-                                ),
-                              ),
-                            );
-                          },
+                                                  ],
+                                                ))
+                                      ],
+                                    ),
+                                  ),
+                                );
+                              },
+                            ),
+                          ),
                         ),
+                        body: body,
                       ),
-                    ),
-                    body: body,
-                    bottomNavigationBar: BottomNavigation(
-                      destinations: $constants.navigation
-                          .primaryMenuItems(context)
-                          .take(5)
-                          .toList(),
-                      primaryMenuKey: appState.primaryMenuSelectedKey,
-                    ),
+                      Positioned(
+                      bottom: $constants.insets.lg,
+                      left: 0,
+                      right: 0,
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(horizontal: $constants.insets.md),
+                        child: ABNavbar(
+                          backgroundColor: getTheme(context).surfaceContainer,
+                        onPrimaryMenuSelected: (key) {
+                          context.read<AppCubit>().changePrimaryMenuSelectedKey(
+                                key: key,
+                              );
+                        },
+                        onSecondaryMenuSelected: (key) {
+                          context.read<AppCubit>().changeSecondaryMenuSelectedKey(
+                                key: key,
+                              );
+                        },
+                        destinations: $navConstants
+                            .primaryMenuItems(context)
+                            .take(5)
+                            .toList(),
+                        primaryMenuKey: appState.primaryMenuSelectedKey,
+                                          ), 
+                      ),
+                    ),  
+                    ],
                   ),
                 )
               ],
@@ -446,7 +467,7 @@ class AppLayoutState extends ResponsiveState<AppLayout> {
                 context: context, appState: appState, authState: authState);
 
             // get the secondary section based on the selected primary menu
-            final secondarySection = $constants.navigation
+            final secondarySection = $navConstants
                 .secondaryMenuSections(context)
                 .where(
                   (section) =>
@@ -456,14 +477,14 @@ class AppLayoutState extends ResponsiveState<AppLayout> {
                 .firstOrNull;
 
             // by default, the primary menu is selected
-            Widget? body = $constants.navigation
+            Widget? body = $navConstants
                 .primaryMenuItems(context)
                 .where((item) =>
                     (item.key as ValueKey).value ==
                     appState.primaryMenuSelectedKey)
                 .firstOrNull
                 ?.body;
-            AppBar? appBar = $constants.navigation
+            AppBar? appBar = $navConstants
                 .primaryMenuItems(context)
                 .where((item) =>
                     (item.key as ValueKey).value ==
@@ -481,15 +502,12 @@ class AppLayoutState extends ResponsiveState<AppLayout> {
                 folderItems.add(
                   NavigationItem(
                     key: Key(folder.name),
-                    icon: folder.emoji != null
-                        ? SizedBox(
-                            height: 25, width: 25, child: Text(folder.emoji!))
-                        : const Icon(Icons.collections),
-                    cupertinoIcon: folder.emoji != null
-                        ? Center(
-                            child: Text(folder.emoji!,
-                                style: const TextStyle(fontSize: 25)))
-                        : const Icon(CupertinoIcons.collections),
+                    // icon: folder.emoji != null
+                    //     ? SizedBox(
+                    //         height: 25, width: 25, child: Text(folder.emoji!))
+                    //     : const Icon(Icons.collections),
+                    icon: Icons.collections,
+                    cupertinoIcon: CupertinoIcons.collections,
                     label: folder.name,
                     color: getTheme(context).tertiary,
                     body: FilteredTaskView(
@@ -529,7 +547,7 @@ class AppLayoutState extends ResponsiveState<AppLayout> {
 
             // on desktop, move the 4th primary menu item to the end of the list
             final primaryMenuItems =
-                $constants.navigation.primaryMenuItems(context).toList();
+                $navConstants.primaryMenuItems(context).toList();
             if (primaryMenuItems.length > 4) {
               final itemToMove = primaryMenuItems.removeAt(4);
               primaryMenuItems.add(itemToMove);
@@ -716,10 +734,10 @@ class AppLayoutState extends ResponsiveState<AppLayout> {
                                                                 ),
                                                                 child: isApple(
                                                                         context)
-                                                                    ? item
-                                                                        .cupertinoIcon
-                                                                    : item
-                                                                        .icon),
+                                                                    ? Icon(item
+                                                                        .cupertinoIcon)
+                                                                    : Icon(item
+                                                                        .icon)),
                                                       ),
                                                     ],
                                                   ),
@@ -873,9 +891,10 @@ class AppLayoutState extends ResponsiveState<AppLayout> {
                                                               ),
                                                               child: isApple(
                                                                       context)
-                                                                  ? item
-                                                                      .cupertinoIcon
-                                                                  : item.icon),
+                                                                  ? Icon(item
+                                                                      .cupertinoIcon)
+                                                                  : Icon(item
+                                                                      .icon)),
                                                     ),
                                                   ],
                                                 ),
@@ -921,15 +940,19 @@ class AppLayoutState extends ResponsiveState<AppLayout> {
     required AuthState authState,
   }) {
     if (authState is LoggedIn) {
-      encryptionService ??=
-          EncryptionService(userSalt: authState.user!.keySet.salt);
-      if (isPaymentSupported()) RevenueCatService.logIn(authState.user!.id!);
+      encryptionService ??= EncryptionService(
+        userSalt: authState.user!.keySet.salt,
+        prefs: prefs!,
+        userKey: userKey,
+        agePublicKey: agePublicKey,
+      );
+      if (isPaymentSupported()) revenueCatService?.logIn(authState.user!.id!);
     }
 
     // if the user is logged out, show the login modal
     if (authState is LoggedOut && !_isLoginModalVisible) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        if (isPaymentSupported()) RevenueCatService.logOut();
+        if (isPaymentSupported()) revenueCatService?.logOut();
         _showLoginModal(context);
       });
     }
@@ -944,6 +967,10 @@ class AppLayoutState extends ResponsiveState<AppLayout> {
                 child: SizedBox(
                   width: getSize(context).width * 0.5,
                   child: LoginOrRegisterModal(
+                    encryptionService: encryptionService,
+                    globalApiClient: globalApiClient,
+                    prefs: prefs,
+                    env: env,
                     onAuthSuccess: () => setState(() {
                       _isLoginModalVisible = false;
                     }),
@@ -959,6 +986,10 @@ class AppLayoutState extends ResponsiveState<AppLayout> {
         builder: (context) => SizedBox(
           height: getSize(context).height * 0.88,
           child: LoginOrRegisterModal(
+            encryptionService: encryptionService,
+            globalApiClient: globalApiClient,
+            prefs: prefs,
+            env: env,
             onAuthSuccess: () => setState(() {
               _isLoginModalVisible = false;
             }),

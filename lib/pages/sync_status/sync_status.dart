@@ -1,13 +1,13 @@
-import 'package:app/blocs/auth/auth.bloc.dart';
+import 'package:ab_shared/blocs/auth/auth.bloc.dart';
 import 'package:app/blocs/tasks/tasks.bloc.dart';
-import 'package:app/components/buttons/primary_button_square.dart';
-import 'package:app/components/widgets/elevated_container.dart';
+import 'package:ab_shared/components/buttons/primary_button_square.dart';
+import 'package:ab_shared/components/widgets/elevated_container.dart';
 import 'package:app/i18n/strings.g.dart';
+import 'package:app/main.dart';
 import 'package:app/pages/sync_status/conflict_card.dart';
 import 'package:app/services/sync.service.dart';
-import 'package:app/utils/api_client.dart';
-import 'package:app/utils/constants.dart';
-import 'package:app/utils/shortcuts.dart';
+import 'package:ab_shared/utils/constants.dart';
+import 'package:ab_shared/utils/shortcuts.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -40,8 +40,12 @@ class _SyncStatusState extends State<SyncStatus> {
                   context: context,
                   builder: (context) => Dialog(
                     child: SizedBox(
-                        height: getSize(context).height * 0.4,
-                        width: getSize(context).width * 0.4,
+                        height: isDesktop(context)
+                            ? getSize(context).height * 0.5
+                            : getSize(context).height * 0.4,
+                        width: isDesktop(context)
+                            ? getSize(context).width * 0.4
+                            : getSize(context).width * 0.4,
                         child: _buildSyncModal(context)),
                   ),
                 );
@@ -110,7 +114,7 @@ class _SyncStatusState extends State<SyncStatus> {
   }
 
   Widget _buildSyncModal(BuildContext context) {
-    var selfHostedUrl = ApiClient.getSelfHostedRestApiUrl();
+    var selfHostedUrl = globalApiClient?.getSelfHostedRestApiUrl();
     return BlocBuilder<AuthBloc, AuthState>(builder: (context, authState) {
       return BlocBuilder<TasksBloc, TasksState>(
         builder: (context, taskState) {
@@ -189,8 +193,7 @@ class _SyncStatusState extends State<SyncStatus> {
                                             TextSpan(
                                                 text: selfHostedUrl != null &&
                                                         selfHostedUrl != ""
-                                                    ? Uri.parse(ApiClient
-                                                            .getSelfHostedRestApiUrl()!)
+                                                    ? Uri.parse(selfHostedUrl)
                                                         .host
                                                     : context.t.app_name_saas,
                                                 style: const TextStyle(

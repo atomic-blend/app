@@ -1,5 +1,5 @@
 import 'package:app/entities/tag/tag.entity.dart';
-import 'package:app/services/encryption.service.dart';
+import 'package:ab_shared/services/encryption.service.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'tasks.entity.freezed.dart';

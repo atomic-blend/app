@@ -1,12 +1,11 @@
 import 'package:app/entities/tag/tag.entity.dart';
-import 'package:app/services/user.service.dart';
-import 'package:app/utils/api_client.dart';
+import 'package:app/main.dart';
 
 class TagService {
   TagService();
 
   Future<List<TagEntity>> getAllTags() async {
-    final result = await globalApiClient.get('/tags');
+    final result = await globalApiClient?.get('/tags');
     if (result.statusCode == 200) {
       final List<TagEntity> tags = [];
       for (var i = 0; i < (result.data as List).length; i++) {
@@ -19,7 +18,7 @@ class TagService {
   }
 
   Future<bool> createTag(TagEntity tag) async {
-    final result = await globalApiClient.post('/tags',
+    final result = await globalApiClient?.post('/tags',
         data: await tag.encrypt(encryptionService: encryptionService!));
     if (result.statusCode == 201) {
       return true;
@@ -29,7 +28,7 @@ class TagService {
   }
 
   Future<bool> deleteTag(String tagId) async {
-    final result = await globalApiClient.delete('/tags/$tagId');
+    final result = await globalApiClient?.delete('/tags/$tagId');
     if (result.statusCode == 200) {
       return true;
     } else {
@@ -38,7 +37,7 @@ class TagService {
   }
 
   Future<bool> editTag(TagEntity tag) async {
-    final result = await globalApiClient.put('/tags/${tag.id}',
+    final result = await globalApiClient?.put('/tags/${tag.id}',
         data: await tag.encrypt(encryptionService: encryptionService!));
     if (result.statusCode == 200) {
       return true;

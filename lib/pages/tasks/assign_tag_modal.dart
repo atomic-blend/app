@@ -1,10 +1,10 @@
 import 'package:app/blocs/tag/tag.bloc.dart';
 import 'package:app/components/buttons/icon_text_pill.dart';
-import 'package:app/components/forms/search_bar.dart';
+import 'package:ab_shared/components/forms/search_bar.dart';
 import 'package:app/entities/tag/tag.entity.dart';
 import 'package:app/i18n/strings.g.dart';
-import 'package:app/utils/constants.dart';
-import 'package:app/utils/shortcuts.dart';
+import 'package:ab_shared/utils/constants.dart';
+import 'package:ab_shared/utils/shortcuts.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
