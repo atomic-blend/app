@@ -2,6 +2,36 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## 0.12.1 - 2025-09-13
+#### Bug Fixes
+- update to the new navbar - (75eabdf) - Brandon Guigo
+- test script for path dependency with correct yaml indentation matching - (7db2f18) - Brandon Guigo
+- get dependencies before pub get in pipeline - (504ac59) - Brandon Guigo
+- cicd local path check script - (ba99f36) - Brandon Guigo
+- update shared to the latest version - (fa85a32) - Brandon Guigo
+- use shared sync entities - (ae639db) - Brandon Guigo
+- update flutter_age - (ff6e0a7) - Brandon Guigo
+- clean translation files - (25c30eb) - Brandon Guigo
+- replace ab_modal by shared version - (df19be2) - Brandon Guigo
+- use shared components more - (3a0a433) - Brandon Guigo
+- replace navbar with shared component - (f370f64) - Brandon Guigo
+- replace last utils with shared - (f440d25) - Brandon Guigo
+- replace the account pages with shared - (0dd85c7) - Brandon Guigo
+- replace the auth screens with the shared ones - (f15070e) - Brandon Guigo
+- migrate auth bloc to shared package - (f857afb) - Brandon Guigo
+- replace revenue cat service by shared - (5cab78a) - Brandon Guigo
+- use shared device info service - (91c7c46) - Brandon Guigo
+- use shared fcm service - (517d87c) - Brandon Guigo
+- add actions test to check that there's no local dependencies for the app - (52cf1bc) - Brandon Guigo
+- crash on web because of encryption service init even when user's not logged in - (4f1082c) - Brandon Guigo
+- replace the encryption service and model with the shared one - (d2d4fb6) - Brandon Guigo
+#### Miscellaneous Chores
+- **(release)** 0.12.0 [skip ci] - (03ca2b3) - GitHub Actions
+- update the gh actions main to build and push image via dockerx - (3d92100) - Brandon Guigo
+- update the dockerfile for web wasm - (0ac11fe) - Brandon Guigo
+
+- - -
+
 ## 0.12.0 - 2025-07-30
 #### Bug Fixes
 - flutter version and readme file for pkg - (c37b209) - Brandon Guigo
