@@ -2,6 +2,15 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## 0.12.2 - 2025-09-13
+#### Bug Fixes
+- update script that copy the options - (cf34f34) - Brandon Guigo
+- update the cicd script to create the necessary config at build time - (feb8143) - Brandon Guigo
+#### Miscellaneous Chores
+- **(release)** 0.12.1 [skip ci] - (42d62c7) - GitHub Actions
+
+- - -
+
 ## 0.12.1 - 2025-09-13
 #### Bug Fixes
 - update to the new navbar - (75eabdf) - Brandon Guigo
