@@ -2,6 +2,14 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## 0.12.6 - 2025-09-15
+#### Bug Fixes
+- build flutter web before creating the docker images - (66c4708) - Brandon Guigo
+#### Miscellaneous Chores
+- **(release)** 0.12.5 [skip ci] - (85cbcfc) - GitHub Actions
+
+- - -
+
 ## 0.12.5 - 2025-09-15
 #### Bug Fixes
 - restrict docker build to high memory runners - (6764a5b) - Brandon Guigo
