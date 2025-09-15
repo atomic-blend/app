@@ -132,19 +132,14 @@ jobs:
         with:
           name: changelog
           path: CHANGELOG.md
-
-  build-docker-images:
+  build-web-app-for-web:
     needs: bump-version
     runs-on: [self-hosted, Linux, docker-builder]
-    strategy:
-      matrix:
-        platform: [linux/amd64, linux/arm64]
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
-
       - name: Write Firebase Options
         run: |
           echo '${{ secrets.FIREBASE_OPTIONS_PROD }}' > lib/firebase_options_prod.dart
@@ -156,6 +151,46 @@ jobs:
           FIREBASE_OPTIONS_DEV: ${{ secrets.FIREBASE_OPTIONS_DEV }}
           APP_CONFIG_PROD: ${{ secrets.APP_CONFIG_PROD }}
           APP_CONFIG_DEV: ${{ secrets.APP_CONFIG_DEV }}
+      - name: Build Web App
+        run: |
+          flutter clean
+          flutter pub get
+          flutter pub run build_runner build --delete-conflicting-outputs
+          flutter build web --release -t lib/main_prod.dart --dart-define APP_ENV=prod --wasm
+      - name: Upload Web App
+        uses: actions/upload-artifact@v4
+        with:
+          name: web-app
+          path: ./build/web
+
+  build-docker-images:
+    needs: build-web-app-for-web
+    runs-on: [self-hosted, Linux, docker-builder]
+    strategy:
+      matrix:
+        platform: [linux/amd64, linux/arm64]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Download Web App Artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: web-app
+          path: ./build/web
+
+      # - name: Write Firebase Options
+      #   run: |
+      #     echo '${{ secrets.FIREBASE_OPTIONS_PROD }}' > lib/firebase_options_prod.dart
+      #     echo '${{ secrets.FIREBASE_OPTIONS_DEV }}' > lib/firebase_options_dev.dart
+      #     echo '${{ secrets.APP_CONFIG_PROD }}' > assets/configs/prod.json
+      #     echo '${{ secrets.APP_CONFIG_DEV }}' > assets/configs/dev.json
+      #   env:
+      #     FIREBASE_OPTIONS_PROD: ${{ secrets.FIREBASE_OPTIONS_PROD }}
+      #     FIREBASE_OPTIONS_DEV: ${{ secrets.FIREBASE_OPTIONS_DEV }}
+      #     APP_CONFIG_PROD: ${{ secrets.APP_CONFIG_PROD }}
+      #     APP_CONFIG_DEV: ${{ secrets.APP_CONFIG_DEV }}
 
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v2
