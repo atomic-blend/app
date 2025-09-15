@@ -136,6 +136,9 @@ jobs:
   build-docker-images:
     needs: bump-version
     runs-on: [self-hosted, Linux]
+    strategy:
+      matrix:
+        platform: [linux/amd64, linux/arm64]
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -177,7 +180,7 @@ jobs:
         with:
           context: .
           file: Dockerfile-prod
-          platforms: linux/amd64,linux/arm64
+          platforms: ${{ matrix.platform }}
           push: true
           tags: |
             ghcr.io/atomic-blend/task-app:${{ steps.get-tag.outputs.tag }}
