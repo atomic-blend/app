@@ -9,10 +9,11 @@ on:
 env:
   FLUTTER_VERSION: "3.32.5"
   COCOGITTO_VERSION: "6.2.0"
+  OS: "debian12"
 
 jobs:
   test-coverage:
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, Linux]
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
@@ -80,7 +81,7 @@ jobs:
 
   bump-version:
     needs: test-coverage
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, Linux]
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
@@ -107,7 +108,7 @@ jobs:
             ~/.cargo/registry
             ~/.cargo/bin/cargo-install-update
             ~/.cargo/bin/cargo-update
-          key: cocogitto-${{ env.COCOGITTO_VERSION }}
+          key: cocogitto-${{ env.OS }}-${{ env.COCOGITTO_VERSION }}
 
       - name: Install Cocogitto
         run: |
@@ -148,7 +149,7 @@ jobs:
 
   build-docker-images:
     needs: bump-version
-    runs-on: ubuntu-22.04
+    runs-on: [self-hosted, Linux]
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -206,7 +207,7 @@ jobs:
 
   create-github-release:
     needs: build-docker-images
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, Linux]
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
