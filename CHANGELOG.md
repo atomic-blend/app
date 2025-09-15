@@ -2,6 +2,15 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## 0.12.4 - 2025-09-15
+#### Bug Fixes
+- update shared package to latest - (373d343) - Brandon Guigo
+#### Miscellaneous Chores
+- **(release)** 0.12.3 [skip ci] - (80aaedd) - GitHub Actions
+- use a matric to build docker images so one runner builds one image - (847d2f3) - Brandon Guigo
+
+- - -
+
 ## 0.12.3 - 2025-09-15
 #### Bug Fixes
 - update cicd to use new self hosted runners - (39edd07) - Brandon Guigo
