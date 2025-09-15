@@ -2,6 +2,14 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## 0.12.5 - 2025-09-15
+#### Bug Fixes
+- restrict docker build to high memory runners - (6764a5b) - Brandon Guigo
+#### Miscellaneous Chores
+- **(release)** 0.12.4 [skip ci] - (5aad96e) - GitHub Actions
+
+- - -
+
 ## 0.12.4 - 2025-09-15
 #### Bug Fixes
 - update shared package to latest - (373d343) - Brandon Guigo
