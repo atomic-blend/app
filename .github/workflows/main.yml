@@ -149,7 +149,7 @@ jobs:
 
   build-docker-images:
     needs: bump-version
-    runs-on: [self-hosted, Linux]
+    runs-on: [self-hosted, Linux, docker-builder]
     strategy:
       matrix:
         platform: [linux/amd64, linux/arm64]
