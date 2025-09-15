@@ -2,6 +2,14 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## 0.12.3 - 2025-09-15
+#### Bug Fixes
+- update cicd to use new self hosted runners - (39edd07) - Brandon Guigo
+#### Miscellaneous Chores
+- **(release)** 0.12.2 [skip ci] - (0c6fc0d) - GitHub Actions
+
+- - -
+
 ## 0.12.2 - 2025-09-13
 #### Bug Fixes
 - update script that copy the options - (cf34f34) - Brandon Guigo
