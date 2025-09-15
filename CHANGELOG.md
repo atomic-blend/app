@@ -2,6 +2,14 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## 0.12.7 - 2025-09-15
+#### Bug Fixes
+- add missing setup-flutter step in build web - (bfbfa06) - Brandon Guigo
+#### Miscellaneous Chores
+- **(release)** 0.12.6 [skip ci] - (d337eab) - GitHub Actions
+
+- - -
+
 ## 0.12.6 - 2025-09-15
 #### Bug Fixes
 - build flutter web before creating the docker images - (66c4708) - Brandon Guigo
