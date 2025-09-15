@@ -42,9 +42,9 @@ jobs:
 
       - name: Write Firebase Options
         run: |
-          echo '${{ secrets.FIREBASE_OPTIONS_PROD }}' > lib/firebase_options_prod.dart
-        env:
-          FIREBASE_OPTIONS_PROD: ${{ secrets.FIREBASE_OPTIONS_PROD }}
+          cat > lib/firebase_options_prod.dart << 'EOF'
+          ${{ secrets.FIREBASE_OPTIONS_PROD }}
+          EOF
 
       - name: Install Dependencies
         run: flutter pub get
@@ -148,15 +148,21 @@ jobs:
           cache: true
       - name: Write Firebase Options
         run: |
-          echo '${{ secrets.FIREBASE_OPTIONS_PROD }}' > lib/firebase_options_prod.dart
-          echo '${{ secrets.FIREBASE_OPTIONS_DEV }}' > lib/firebase_options_dev.dart
-          echo '${{ secrets.APP_CONFIG_PROD }}' > assets/configs/prod.json
-          echo '${{ secrets.APP_CONFIG_DEV }}' > assets/configs/dev.json
-        env:
-          FIREBASE_OPTIONS_PROD: ${{ secrets.FIREBASE_OPTIONS_PROD }}
-          FIREBASE_OPTIONS_DEV: ${{ secrets.FIREBASE_OPTIONS_DEV }}
-          APP_CONFIG_PROD: ${{ secrets.APP_CONFIG_PROD }}
-          APP_CONFIG_DEV: ${{ secrets.APP_CONFIG_DEV }}
+          cat > lib/firebase_options_prod.dart << 'EOF'
+          ${{ secrets.FIREBASE_OPTIONS_PROD }}
+          EOF
+          
+          cat > lib/firebase_options_dev.dart << 'EOF'
+          ${{ secrets.FIREBASE_OPTIONS_DEV }}
+          EOF
+          
+          cat > assets/configs/prod.json << 'EOF'
+          ${{ secrets.APP_CONFIG_PROD }}
+          EOF
+          
+          cat > assets/configs/dev.json << 'EOF'
+          ${{ secrets.APP_CONFIG_DEV }}
+          EOF
       - name: Build Web App
         run: |
           flutter clean
@@ -186,17 +192,6 @@ jobs:
           name: web-app
           path: ./build/web
 
-      # - name: Write Firebase Options
-      #   run: |
-      #     echo '${{ secrets.FIREBASE_OPTIONS_PROD }}' > lib/firebase_options_prod.dart
-      #     echo '${{ secrets.FIREBASE_OPTIONS_DEV }}' > lib/firebase_options_dev.dart
-      #     echo '${{ secrets.APP_CONFIG_PROD }}' > assets/configs/prod.json
-      #     echo '${{ secrets.APP_CONFIG_DEV }}' > assets/configs/dev.json
-      #   env:
-      #     FIREBASE_OPTIONS_PROD: ${{ secrets.FIREBASE_OPTIONS_PROD }}
-      #     FIREBASE_OPTIONS_DEV: ${{ secrets.FIREBASE_OPTIONS_DEV }}
-      #     APP_CONFIG_PROD: ${{ secrets.APP_CONFIG_PROD }}
-      #     APP_CONFIG_DEV: ${{ secrets.APP_CONFIG_DEV }}
 
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v2
