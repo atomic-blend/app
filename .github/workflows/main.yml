@@ -701,7 +701,7 @@ jobs:
           platforms: ${{ matrix.platform }}
           push: true
           tags: |
-            ghcr.io/atomic-blend/mail-app:${{ steps.get-tag.outputs.tag }}
+            ghcr.io/atomic-blend/task-app:${{ steps.get-tag.outputs.tag }}
 
 
   create-github-release:
