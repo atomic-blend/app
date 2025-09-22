@@ -39,6 +39,8 @@ platform :ios do
      distribute_external: true,
      notify_external_testers: true,
      submit_beta_review: true,
+     skip_waiting_for_build_processing: true,
+     changelog: "This release from the Atomic Blend team includes a wide array of updates, minor enhancements, dependency adjustments, and behind-the-scenes improvements, all designed to enhance stability, performance, and overall reliability while continuing to refine and optimize the user experience across the platform.",
      groups: ['beta']
        )
   end
@@ -64,7 +66,8 @@ platform :android do
 
     lane :build_beta do
         Dir.chdir("..") do
-            sh('fvm flutter build appbundle --flavor prod --release -t lib/main_prod.dart --dart-define APP_ENV=prod')
+            sh('flutter build appbundle --flavor prod --release -t lib/main_prod.dart --dart-define APP_ENV=prod')
+            sh('flutter build apk --flavor prod --release -t lib/main_prod.dart --dart-define APP_ENV=prod')
             # Dir.chdir("..") do
             #   sh('zip -r build/app/outputs/bundle/prodRelease/native-debug-symbols.zip build/app/intermediates/merged_native_libs/prodRelease/out/lib/*')
             # end

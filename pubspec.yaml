@@ -32,7 +32,7 @@ dependencies:
     sdk: flutter
   flutter_localizations:
     sdk: flutter
-  
+
   flutter_age:
     git:
       url: https://github.com/atomic-blend/flutter_age.git
@@ -62,7 +62,7 @@ dependencies:
   slang_flutter: ^4.4.0
   path_provider: ^2.1.5
   shared_preferences: ^2.3.5
-  flex_color_scheme: ^8.1.0
+  flex_color_scheme: ^8.3.0
   flutter_svg: ^2.0.16
   auto_size_text: ^3.0.0
   pointycastle: ^3.9.1
