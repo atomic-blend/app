@@ -2,6 +2,14 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## 0.12.10 - 2025-09-22
+#### Bug Fixes
+- update wrong path of keyfile - (5cd0da1) - Brandon Guigo
+#### Miscellaneous Chores
+- **(release)** 0.12.9 [skip ci] - (8e35b0e) - GitHub Actions
+
+- - -
+
 ## 0.12.9 - 2025-09-22
 #### Bug Fixes
 - android kotlin compose missing a pluggin for new kotlin update - (dd9cd96) - Brandon Guigo
