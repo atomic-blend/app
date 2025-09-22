@@ -2,6 +2,14 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## 0.12.13 - 2025-09-22
+#### Bug Fixes
+- maek the ios and android app built and push with the correct version - (0cb8de0) - Brandon Guigo
+#### Miscellaneous Chores
+- **(release)** 0.12.12 [skip ci] - (7811a4f) - GitHub Actions
+
+- - -
+
 ## 0.12.12 - 2025-09-22
 #### Bug Fixes
 - remove the fastlane fvm plugin - (bf276e8) - Brandon Guigo
