@@ -2,6 +2,19 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## 0.12.8 - 2025-09-22
+#### Bug Fixes
+- bad docker image name - (aa6a0b0) - Brandon Guigo
+- add new main cicd script that builds all platforms - (27ec235) - Brandon Guigo
+- bump flutter version in build test - (636008b) - Brandon Guigo
+- update fastfile - (8c19bb1) - Brandon Guigo
+- make it run for macos - (db2bfc7) - Brandon Guigo
+#### Miscellaneous Chores
+- **(release)** 0.12.7 [skip ci] - (53a076c) - GitHub Actions
+- fix the creation of the dart files from secret in GH for config [skip ci] - (6f6180b) - Brandon Guigo
+
+- - -
+
 ## 0.12.7 - 2025-09-15
 #### Bug Fixes
 - add missing setup-flutter step in build web - (bfbfa06) - Brandon Guigo
