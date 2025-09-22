@@ -2,6 +2,14 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## 0.12.12 - 2025-09-22
+#### Bug Fixes
+- remove the fastlane fvm plugin - (bf276e8) - Brandon Guigo
+#### Miscellaneous Chores
+- **(release)** 0.12.11 [skip ci] - (06491bb) - GitHub Actions
+
+- - -
+
 ## 0.12.11 - 2025-09-22
 #### Bug Fixes
 - update flutter_dependencies - (c0efcee) - Brandon Guigo
