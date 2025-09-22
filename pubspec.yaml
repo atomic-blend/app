@@ -36,11 +36,11 @@ dependencies:
   flutter_age:
     git:
       url: https://github.com/atomic-blend/flutter_age.git
-      ref: v0.0.5
+      ref: v0.0.6
   ab_shared:
     git:
       url: https://github.com/atomic-blend/app-shared.git
-      ref: v0.3.0
+      ref: v0.5.1
     # path: ../app-shared
 
   # The following adds the Cupertino Icons font to your application.
