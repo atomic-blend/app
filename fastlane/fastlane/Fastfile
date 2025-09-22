@@ -78,7 +78,7 @@ platform :android do
         upload_to_play_store(
             package_name: "fr.atomicblend.app",
             track: "alpha",
-            json_key: "/Users/brandonguigo/playstore_key.json",
+            json_key: "../playstore_key.json",
             aab: "../build/app/outputs/bundle/prodRelease/app-prod-release.aab",
             # mapping_paths: ["../build/app/outputs/bundle/prodRelease/native-debug-symbols.zip"]
             )
