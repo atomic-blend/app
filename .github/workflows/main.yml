@@ -681,6 +681,7 @@ jobs:
 
   publish-docker-images:
     needs: 
+      - bump-version
       - build-app-for-linux
       - build-app-for-android
       - build-app-for-web
