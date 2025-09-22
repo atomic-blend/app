@@ -2,6 +2,14 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## 0.12.9 - 2025-09-22
+#### Bug Fixes
+- android kotlin compose missing a pluggin for new kotlin update - (dd9cd96) - Brandon Guigo
+#### Miscellaneous Chores
+- **(release)** 0.12.8 [skip ci] - (2d904ca) - GitHub Actions
+
+- - -
+
 ## 0.12.8 - 2025-09-22
 #### Bug Fixes
 - bad docker image name - (aa6a0b0) - Brandon Guigo
