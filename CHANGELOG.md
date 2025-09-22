@@ -2,6 +2,14 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## 0.12.14 - 2025-09-22
+#### Bug Fixes
+- add missing needs - (b372d48) - Brandon Guigo
+#### Miscellaneous Chores
+- **(release)** 0.12.13 [skip ci] - (29f47d7) - GitHub Actions
+
+- - -
+
 ## 0.12.13 - 2025-09-22
 #### Bug Fixes
 - maek the ios and android app built and push with the correct version - (0cb8de0) - Brandon Guigo
