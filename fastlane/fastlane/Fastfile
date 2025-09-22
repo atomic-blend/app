@@ -66,7 +66,8 @@ platform :android do
 
     lane :build_beta do
         Dir.chdir("..") do
-            sh('fvm flutter build appbundle --flavor prod --release -t lib/main_prod.dart --dart-define APP_ENV=prod')
+            sh('flutter build appbundle --flavor prod --release -t lib/main_prod.dart --dart-define APP_ENV=prod')
+            sh('flutter build apk --flavor prod --release -t lib/main_prod.dart --dart-define APP_ENV=prod')
             # Dir.chdir("..") do
             #   sh('zip -r build/app/outputs/bundle/prodRelease/native-debug-symbols.zip build/app/intermediates/merged_native_libs/prodRelease/out/lib/*')
             # end
