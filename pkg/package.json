@@ -1,0 +1,9 @@
+{
+  "name": "flutter_age",
+  "version": "0.1.0",
+  "files": [
+    "flutter_age_bg.wasm",
+    "flutter_age.js"
+  ],
+  "browser": "flutter_age.js"
+}
