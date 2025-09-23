@@ -2,6 +2,14 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## 0.12.15 - 2025-09-23
+#### Bug Fixes
+- add nginx conf to the docker container - (cbb2a81) - Brandon Guigo
+#### Miscellaneous Chores
+- **(release)** 0.12.14 [skip ci] - (6752785) - GitHub Actions
+
+- - -
+
 ## 0.12.14 - 2025-09-22
 #### Bug Fixes
 - add missing needs - (b372d48) - Brandon Guigo
