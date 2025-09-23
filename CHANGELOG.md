@@ -2,6 +2,14 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## 0.12.18 - 2025-09-23
+#### Bug Fixes
+- add pkg directory that contains flutter_age web generated code to git for now - (9e84ccd) - Brandon Guigo
+#### Miscellaneous Chores
+- **(release)** 0.12.17 [skip ci] - (9aec0c4) - GitHub Actions
+
+- - -
+
 ## 0.12.17 - 2025-09-23
 #### Bug Fixes
 - try to add specific override for mjs - (0f21384) - Brandon Guigo
