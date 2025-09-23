@@ -2,6 +2,15 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## 0.12.19 - 2025-09-23
+#### Bug Fixes
+- linter issues - (db24d57) - Brandon Guigo
+- move pkg at his place inside the web directory - (ca401a9) - Brandon Guigo
+#### Miscellaneous Chores
+- **(release)** 0.12.18 [skip ci] - (ad9fcfd) - GitHub Actions
+
+- - -
+
 ## 0.12.18 - 2025-09-23
 #### Bug Fixes
 - add pkg directory that contains flutter_age web generated code to git for now - (9e84ccd) - Brandon Guigo
