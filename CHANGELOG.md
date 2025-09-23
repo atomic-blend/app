@@ -2,6 +2,14 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## 0.12.20 - 2025-09-23
+#### Bug Fixes
+- try triggering rebuild - (7a4070f) - Brandon Guigo
+#### Miscellaneous Chores
+- **(release)** 0.12.19 [skip ci] - (3d886e5) - GitHub Actions
+
+- - -
+
 ## 0.12.19 - 2025-09-23
 #### Bug Fixes
 - linter issues - (db24d57) - Brandon Guigo
