@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:ab_shared/components/app/ab_navbar.dart';
+import 'package:ab_shared/pages/auth/sso_module.dart';
 import 'package:app/blocs/app/app.bloc.dart';
 import 'package:ab_shared/blocs/auth/auth.bloc.dart';
 import 'package:app/blocs/folder/folder.bloc.dart';
@@ -10,7 +11,6 @@ import 'package:ab_shared/components/responsive_stateful_widget.dart';
 import 'package:ab_shared/components/widgets/elevated_container.dart';
 import 'package:app/entities/tasks/tasks.entity.dart';
 import 'package:app/main.dart';
-import 'package:ab_shared/pages/auth/login_or_register_modal.dart';
 import 'package:ab_shared/pages/paywall/paywall_utils.dart';
 import 'package:app/pages/sync_status/sync_status.dart';
 import 'package:app/pages/tasks/filtered_view.dart';
@@ -39,7 +39,6 @@ class AppLayout extends ResponsiveStatefulWidget {
 }
 
 class AppLayoutState extends ResponsiveState<AppLayout> {
-  bool _isLoginModalVisible = false;
   final SideMenuController _secondarySideMenuController = SideMenuController();
   final SideMenuController _primarySideMenuController = SideMenuController();
   final Logger logger = Logger();
@@ -91,7 +90,8 @@ class AppLayoutState extends ResponsiveState<AppLayout> {
     return BlocBuilder<AuthBloc, AuthState>(builder: (context, authState) {
       return BlocBuilder<TasksBloc, TasksState>(builder: (context, tasksState) {
         WidgetsBinding.instance.addPostFrameCallback((_) async {
-          bool isSubscribed = UserService.isSubscriptionActive(globalApiClient!, authState.user);
+          bool isSubscribed = UserService.isSubscriptionActive(
+              globalApiClient!, authState.user);
           if (env?.env == "dev") {
             isSubscribed = true;
           }
@@ -105,6 +105,16 @@ class AppLayoutState extends ResponsiveState<AppLayout> {
                 "com.example.app.glance.TodayTaskWidgetReceiver",
           );
         });
+        if (authState is! LoggedIn) {
+          return Scaffold(
+            body: SSOModule(
+              encryptionService: encryptionService,
+              globalApiClient: globalApiClient,
+              prefs: prefs,
+              env: env,
+            ),
+          );
+        }
         return child;
       });
     });
@@ -248,7 +258,8 @@ class AppLayoutState extends ResponsiveState<AppLayout> {
                               hasResizer: false,
                               hasResizerToggle: false,
                               minWidth: getSize(context).width * 0.18,
-                              backgroundColor: getTheme(context).surfaceContainer,
+                              backgroundColor:
+                                  getTheme(context).surfaceContainer,
                               builder: (data) {
                                 return SideMenuData(
                                   header: SafeArea(
@@ -276,31 +287,33 @@ class AppLayoutState extends ResponsiveState<AppLayout> {
                                         ),
                                         ...?secondarySection?.items
                                             .map((item) => Column(
-                                                  mainAxisSize: MainAxisSize.min,
+                                                  mainAxisSize:
+                                                      MainAxisSize.min,
                                                   children: [
                                                     if (item.separatorBefore !=
                                                         true)
                                                       SizedBox(
-                                                        height:
-                                                            $constants.insets.xxs,
+                                                        height: $constants
+                                                            .insets.xxs,
                                                       ),
                                                     if (item.separatorBefore ==
                                                         true)
                                                       Padding(
-                                                        padding:
-                                                            EdgeInsets.symmetric(
-                                                          horizontal:
-                                                              $constants.insets.sm,
+                                                        padding: EdgeInsets
+                                                            .symmetric(
+                                                          horizontal: $constants
+                                                              .insets.sm,
                                                         ),
                                                         child: Divider(
-                                                          color:
-                                                              Colors.grey.shade300,
+                                                          color: Colors
+                                                              .grey.shade300,
                                                           thickness: 2,
                                                         ),
                                                       ),
                                                     GestureDetector(
                                                       onTap: () {
-                                                        if (item.onTap != null) {
+                                                        if (item.onTap !=
+                                                            null) {
                                                           item.onTap!(0);
                                                         } else {
                                                           context
@@ -311,41 +324,40 @@ class AppLayoutState extends ResponsiveState<AppLayout> {
                                                                     .value,
                                                               );
                                                         }
-                                                        Navigator.of(context).pop();
+                                                        Navigator.of(context)
+                                                            .pop();
                                                       },
                                                       child: Padding(
-                                                        padding:
-                                                            EdgeInsets.symmetric(
+                                                        padding: EdgeInsets
+                                                            .symmetric(
                                                                 horizontal:
                                                                     $constants
-                                                                        .insets.sm),
+                                                                        .insets
+                                                                        .sm),
                                                         child: Row(
                                                           children: [
                                                             Column(
                                                               mainAxisSize:
-                                                                  MainAxisSize.min,
+                                                                  MainAxisSize
+                                                                      .min,
                                                               children: [
                                                                 Container(
                                                                   width: 50,
                                                                   height: 50,
                                                                   decoration:
                                                                       BoxDecoration(
-                                                                    border: appState
-                                                                                .secondaryMenuSelectedKey ==
-                                                                            (item.key
-                                                                                    as ValueKey)
+                                                                    border: appState.secondaryMenuSelectedKey ==
+                                                                            (item.key as ValueKey)
                                                                                 .value
                                                                         ? Border
                                                                             .all(
-                                                                            color: Colors
-                                                                                .grey
-                                                                                .shade500,
+                                                                            color:
+                                                                                Colors.grey.shade500,
                                                                             width:
                                                                                 1,
                                                                           )
                                                                         : null,
-                                                                    color: item
-                                                                                .color !=
+                                                                    color: item.color !=
                                                                             null
                                                                         ? item.color!.withValues(
                                                                             alpha: getTheme(context).brightness == Brightness.dark
@@ -354,25 +366,19 @@ class AppLayoutState extends ResponsiveState<AppLayout> {
                                                                         : Colors
                                                                             .grey
                                                                             .shade400
-                                                                            .withValues(
-                                                                                alpha:
-                                                                                    0.2),
+                                                                            .withValues(alpha: 0.2),
                                                                     borderRadius:
-                                                                        BorderRadius.circular(
-                                                                            $constants
-                                                                                .corners
-                                                                                .lg),
+                                                                        BorderRadius.circular($constants
+                                                                            .corners
+                                                                            .lg),
                                                                   ),
                                                                   child: item.initialsOnly ==
                                                                           true
                                                                       ? Center(
                                                                           child:
                                                                               Text(
-                                                                            _getInitials(
-                                                                                item.label),
-                                                                            style: getTextTheme(context)
-                                                                                .bodyLarge!
-                                                                                .copyWith(
+                                                                            _getInitials(item.label),
+                                                                            style: getTextTheme(context).bodyLarge!.copyWith(
                                                                                   fontWeight: FontWeight.bold,
                                                                                   color: item.color != null ? item.color! : Colors.grey.shade800,
                                                                                 ),
@@ -381,19 +387,15 @@ class AppLayoutState extends ResponsiveState<AppLayout> {
                                                                       : IconTheme(
                                                                           data:
                                                                               IconThemeData(
-                                                                            color: getTheme(context).brightness ==
-                                                                                    Brightness.light
+                                                                            color: getTheme(context).brightness == Brightness.light
                                                                                 ? item.color != null
                                                                                     ? item.color!
                                                                                     : Colors.grey.shade800
                                                                                 : Colors.white,
                                                                           ),
-                                                                          child: isApple(
-                                                                                  context)
-                                                                              ? Icon(item
-                                                                                  .cupertinoIcon)
-                                                                              : Icon(item
-                                                                                  .icon)),
+                                                                          child: isApple(context)
+                                                                              ? Icon(item.cupertinoIcon)
+                                                                              : Icon(item.icon)),
                                                                 ),
                                                               ],
                                                             ),
@@ -419,31 +421,36 @@ class AppLayoutState extends ResponsiveState<AppLayout> {
                         body: body,
                       ),
                       Positioned(
-                      bottom: $constants.insets.lg,
-                      left: 0,
-                      right: 0,
-                      child: Padding(
-                        padding: EdgeInsets.symmetric(horizontal: $constants.insets.md),
-                        child: ABNavbar(
-                          backgroundColor: getTheme(context).surfaceContainer,
-                        onPrimaryMenuSelected: (key) {
-                          context.read<AppCubit>().changePrimaryMenuSelectedKey(
-                                key: key,
-                              );
-                        },
-                        onSecondaryMenuSelected: (key) {
-                          context.read<AppCubit>().changeSecondaryMenuSelectedKey(
-                                key: key,
-                              );
-                        },
-                        destinations: $navConstants
-                            .primaryMenuItems(context)
-                            .take(5)
-                            .toList(),
-                        primaryMenuKey: appState.primaryMenuSelectedKey,
-                                          ), 
+                        bottom: $constants.insets.lg,
+                        left: 0,
+                        right: 0,
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: $constants.insets.md),
+                          child: ABNavbar(
+                            backgroundColor: getTheme(context).surfaceContainer,
+                            onPrimaryMenuSelected: (key) {
+                              context
+                                  .read<AppCubit>()
+                                  .changePrimaryMenuSelectedKey(
+                                    key: key,
+                                  );
+                            },
+                            onSecondaryMenuSelected: (key) {
+                              context
+                                  .read<AppCubit>()
+                                  .changeSecondaryMenuSelectedKey(
+                                    key: key,
+                                  );
+                            },
+                            destinations: $navConstants
+                                .primaryMenuItems(context)
+                                .take(5)
+                                .toList(),
+                            primaryMenuKey: appState.primaryMenuSelectedKey,
+                          ),
+                        ),
                       ),
-                    ),  
                     ],
                   ),
                 )
@@ -948,58 +955,6 @@ class AppLayoutState extends ResponsiveState<AppLayout> {
       );
       if (isPaymentSupported()) revenueCatService?.logIn(authState.user!.id!);
     }
-
-    // if the user is logged out, show the login modal
-    if (authState is LoggedOut && !_isLoginModalVisible) {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        if (isPaymentSupported()) revenueCatService?.logOut();
-        _showLoginModal(context);
-      });
-    }
-  }
-
-  void _showLoginModal(BuildContext context) {
-    if (kIsWeb || Platform.isMacOS || Platform.isWindows || Platform.isLinux) {
-      showDialog(
-          context: context,
-          barrierDismissible: false,
-          builder: (context) => Dialog(
-                child: SizedBox(
-                  width: getSize(context).width * 0.5,
-                  child: LoginOrRegisterModal(
-                    encryptionService: encryptionService,
-                    globalApiClient: globalApiClient,
-                    prefs: prefs,
-                    env: env,
-                    onAuthSuccess: () => setState(() {
-                      _isLoginModalVisible = false;
-                    }),
-                  ),
-                ),
-              ));
-    } else {
-      showModalBottomSheet(
-        isDismissible: false,
-        isScrollControlled: true,
-        enableDrag: false,
-        context: context,
-        builder: (context) => SizedBox(
-          height: getSize(context).height * 0.88,
-          child: LoginOrRegisterModal(
-            encryptionService: encryptionService,
-            globalApiClient: globalApiClient,
-            prefs: prefs,
-            env: env,
-            onAuthSuccess: () => setState(() {
-              _isLoginModalVisible = false;
-            }),
-          ),
-        ),
-      );
-    }
-    setState(() {
-      _isLoginModalVisible = true;
-    });
   }
 
   String _getInitials(String name) {
