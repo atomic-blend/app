@@ -39,7 +39,6 @@ class AppLayout extends ResponsiveStatefulWidget {
 }
 
 class AppLayoutState extends ResponsiveState<AppLayout> {
-  bool _isLoginModalVisible = false;
   final SideMenuController _secondarySideMenuController = SideMenuController();
   final SideMenuController _primarySideMenuController = SideMenuController();
   final Logger logger = Logger();
