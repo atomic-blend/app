@@ -11,7 +11,6 @@ import 'package:app/pages/calendar/calendar.dart';
 import 'package:app/pages/calendar/calendar_settings.dart';
 import 'package:app/pages/habits/add_habits_modal.dart';
 import 'package:app/pages/habits/habits.dart';
-import 'package:app/pages/more_apps/more_apps.dart';
 import 'package:ab_shared/pages/paywall/paywall_utils.dart';
 import 'package:app/pages/settings/settings.dart';
 import 'package:app/pages/sync_status/sync_status.dart';
