@@ -1,4 +1,5 @@
 import 'package:ab_shared/components/app/ab_navbar.dart';
+import 'package:ab_shared/pages/account/account.dart';
 import 'package:ab_shared/utils/constants.dart';
 import 'package:app/blocs/app/app.bloc.dart';
 import 'package:ab_shared/blocs/auth/auth.bloc.dart';
@@ -10,10 +11,9 @@ import 'package:app/pages/calendar/calendar.dart';
 import 'package:app/pages/calendar/calendar_settings.dart';
 import 'package:app/pages/habits/add_habits_modal.dart';
 import 'package:app/pages/habits/habits.dart';
-import 'package:app/pages/more_apps/more_apps.dart';
 import 'package:ab_shared/pages/paywall/paywall_utils.dart';
+import 'package:app/pages/settings/settings.dart';
 import 'package:app/pages/sync_status/sync_status.dart';
-import 'package:app/pages/tasks/add_task_modal.dart';
 import 'package:app/pages/tasks/filtered_view.dart';
 import 'package:app/pages/tasks/folders.dart';
 import 'package:app/pages/tasks/overview.dart';
@@ -34,10 +34,62 @@ final $navConstants = NavigationConstants();
 
 @immutable
 class NavigationConstants {
-  List<NavigationSection> secondaryMenuSections(BuildContext context) => [
-        NavigationSection(
+  // list of fixed items, limited to 5 on mobile
+  // on mobile: the rest is added as a grid on the more apps page (last item to the right)
+  // on desktop: the more apps page is moved at the end of the menu
+  List<NavigationItem> primaryMenuItems(BuildContext context) => [
+        NavigationItem(
           key: const Key("tasks"),
-          items: [
+          icon: LineAwesome.home_solid,
+          cupertinoIcon: CupertinoIcons.checkmark_square,
+          label: context.t.tasks.title,
+          body: const OverviewTasks(),
+          mainSecondaryKey: "overview",
+          appBar: AppBar(
+            key: const Key("tasks"),
+            backgroundColor: getTheme(context).surface,
+            title: Center(
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  BlocBuilder<AppCubit, AppState>(builder: (context, appState) {
+                    var selectedSecondarySection = primaryMenuItems(context)
+                        .where((element) => element.subItems != null)
+                        .firstOrNull
+                        ?.subItems
+                        ?.where((element) =>
+                            (element.key as ValueKey).value ==
+                            appState.primaryMenuSelectedKey)
+                        .firstOrNull;
+                    var selectedSecondaryItem = selectedSecondarySection
+                        ?.subItems
+                        ?.where((element) =>
+                            (element.key as ValueKey).value ==
+                            appState.secondaryMenuSelectedKey)
+                        .firstOrNull;
+                    return Text(
+                      selectedSecondaryItem?.label ?? "",
+                      style: getTextTheme(context).headlineSmall!.copyWith(
+                            fontWeight: FontWeight.bold,
+                          ),
+                    );
+                  })
+                ],
+              ),
+            ),
+            actions: [
+              BlocBuilder<AuthBloc, AuthState>(builder: (context, authState) {
+                if (authState is LoggedIn) {
+                  return Padding(
+                    padding: EdgeInsets.only(right: $constants.insets.sm),
+                    child: const SyncStatus(),
+                  );
+                }
+                return Container();
+              }),
+            ],
+          ),
+          subItems: [
             NavigationItem(
               key: const Key("overview"),
               icon: Icons.check_box,
@@ -125,9 +177,68 @@ class NavigationConstants {
             ),
           ],
         ),
-        NavigationSection(
+        NavigationItem(
           key: const Key("calendar"),
-          items: [
+          icon: LineAwesome.calendar,
+          cupertinoIcon: CupertinoIcons.calendar,
+          label: context.t.calendar.title,
+          body: const Calendar(
+            view: CalendarView.month,
+          ),
+          mainSecondaryKey: "month",
+          appBar: AppBar(
+              key: const Key("calendar"),
+              backgroundColor: getTheme(context).surface,
+              surfaceTintColor: getTheme(context).surface,
+              title: Center(
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      context.t.calendar.title,
+                      style: getTextTheme(context).headlineSmall!.copyWith(
+                            fontWeight: FontWeight.bold,
+                          ),
+                    )
+                  ],
+                ),
+              ),
+              actions: [
+                GestureDetector(
+                    onTap: () {
+                      if (isDesktop(context)) {
+                        showDialog(
+                          context: context,
+                          builder: (context) => Dialog(
+                            child: SizedBox(
+                              width: getSize(context).width * 0.5,
+                              height: getSize(context).height * 0.5,
+                              child: const CalendarSettings(),
+                            ),
+                          ),
+                        );
+                      } else {
+                        showModalBottomSheet(
+                            isScrollControlled: true,
+                            context: context,
+                            builder: (context) => const CalendarSettings());
+                      }
+                    },
+                    child: const Icon(CupertinoIcons.settings)),
+                SizedBox(
+                  width: $constants.insets.sm,
+                ),
+                BlocBuilder<AuthBloc, AuthState>(builder: (context, authState) {
+                  if (authState is LoggedIn && !isDesktop(context)) {
+                    return Padding(
+                      padding: EdgeInsets.only(right: $constants.insets.sm),
+                      child: const SyncStatus(),
+                    );
+                  }
+                  return Container();
+                })
+              ]),
+          subItems: [
             if (isDesktop(context))
               NavigationItem(
                 key: const Key("week"),
@@ -189,175 +300,10 @@ class NavigationConstants {
             ),
           ],
         ),
-        const NavigationSection(
-          key: Key("add_task"),
-          items: [],
-        ),
-        const NavigationSection(
-          key: Key("habits"),
-          items: [],
-        ),
-        const NavigationSection(
-          key: Key("more"),
-          items: [],
-        ),
-        const NavigationSection(
-          key: Key("eisenhower"),
-          items: [],
-        ),
-        const NavigationSection(
-          key: Key("timer"),
-          items: [],
-        ),
-      ];
-
-  // list of fixed items, limited to 5 on mobile
-  // on mobile: the rest is added as a grid on the more apps page (last item to the right)
-  // on desktop: the more apps page is moved at the end of the menu
-  List<NavigationItem> primaryMenuItems(BuildContext context) => [
-        NavigationItem(
-          key: const Key("tasks"),
-          icon: 
-            LineAwesome.home_solid,
-          cupertinoIcon: 
-            CupertinoIcons.checkmark_square,
-          
-          label: context.t.tasks.title,
-          body: const OverviewTasks(),
-          mainSecondaryKey: "overview",
-          appBar: AppBar(
-            key: const Key("tasks"),
-            backgroundColor: getTheme(context).surface,
-            title: Center(
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  BlocBuilder<AppCubit, AppState>(builder: (context, appState) {
-                    var selectedSecondarySection =
-                        secondaryMenuSections(context)
-                            .where((element) =>
-                                (element.key as ValueKey).value ==
-                                appState.primaryMenuSelectedKey)
-                            .firstOrNull;
-                    var selectedSecondaryItem = selectedSecondarySection?.items
-                        .where((element) =>
-                            (element.key as ValueKey).value ==
-                            appState.secondaryMenuSelectedKey)
-                        .firstOrNull;
-                    return Text(
-                      selectedSecondaryItem?.label ?? "",
-                      style: getTextTheme(context).headlineSmall!.copyWith(
-                            fontWeight: FontWeight.bold,
-                          ),
-                    );
-                  })
-                ],
-              ),
-            ),
-            actions: [
-              BlocBuilder<AuthBloc, AuthState>(builder: (context, authState) {
-                if (authState is LoggedIn) {
-                  return Padding(
-                    padding: EdgeInsets.only(right: $constants.insets.sm),
-                    child: const SyncStatus(),
-                  );
-                }
-                return Container();
-              }),
-            ],
-          ),
-        ),
-        NavigationItem(
-          key: const Key("calendar"),
-          icon: 
-            LineAwesome.calendar,
-          cupertinoIcon: 
-            CupertinoIcons.calendar,
-          label: context.t.calendar.title,
-          body: const Calendar(
-            view: CalendarView.month,
-          ),
-          mainSecondaryKey: "month",
-          appBar: AppBar(
-              key: const Key("calendar"),
-              backgroundColor: getTheme(context).surface,
-              surfaceTintColor: getTheme(context).surface,
-              title: Center(
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text(
-                      context.t.calendar.title,
-                      style: getTextTheme(context).headlineSmall!.copyWith(
-                            fontWeight: FontWeight.bold,
-                          ),
-                    )
-                  ],
-                ),
-              ),
-              actions: [
-                GestureDetector(
-                    onTap: () {
-                      if (isDesktop(context)) {
-                        showDialog(
-                          context: context,
-                          builder: (context) => Dialog(
-                            child: SizedBox(
-                              width: getSize(context).width * 0.5,
-                              height: getSize(context).height * 0.5,
-                              child: const CalendarSettings(),
-                            ),
-                          ),
-                        );
-                      } else {
-                        showModalBottomSheet(
-                            isScrollControlled: true,
-                            context: context,
-                            builder: (context) => const CalendarSettings());
-                      }
-                    },
-                    child: const Icon(CupertinoIcons.settings)),
-                SizedBox(
-                  width: $constants.insets.sm,
-                ),
-                BlocBuilder<AuthBloc, AuthState>(builder: (context, authState) {
-                  if (authState is LoggedIn && !isDesktop(context)) {
-                    return Padding(
-                      padding: EdgeInsets.only(right: $constants.insets.sm),
-                      child: const SyncStatus(),
-                    );
-                  }
-                  return Container();
-                })
-              ]),
-        ),
-        NavigationItem(
-          key: const Key("add_task"),
-          icon: 
-            LineAwesome.plus_solid,
-          cupertinoIcon: 
-            CupertinoIcons.plus_circle_fill,
-          label: context.t.actions.add,
-          color: getTheme(context).secondary,
-          onTap: (index) {
-            if (isDesktop(context)) {
-              showDialog(
-                  context: context,
-                  builder: (context) => const Dialog(child: AddTaskModal()));
-            } else {
-              showModalBottomSheet(
-                  isScrollControlled: true,
-                  context: context,
-                  builder: (context) => const AddTaskModal());
-            }
-          },
-        ),
         NavigationItem(
           key: const Key("habits"),
-          icon: 
-            LineAwesome.bolt_solid,
-          cupertinoIcon: 
-            CupertinoIcons.bolt_fill,
+          icon: LineAwesome.bolt_solid,
+          cupertinoIcon: CupertinoIcons.bolt_fill,
           label: context.t.habits.title,
           body: const Habits(),
           appBar: AppBar(
@@ -407,43 +353,6 @@ class NavigationConstants {
                     );
                   });
                 }),
-                BlocBuilder<AuthBloc, AuthState>(builder: (context, authState) {
-                  if (authState is LoggedIn && !isDesktop(context)) {
-                    return Padding(
-                      padding: EdgeInsets.only(right: $constants.insets.sm),
-                      child: const SyncStatus(),
-                    );
-                  }
-                  return Container();
-                })
-              ]),
-        ),
-        NavigationItem(
-          key: const Key("more"),
-          icon: 
-            CupertinoIcons.ellipsis_circle_fill,
-          cupertinoIcon: 
-            CupertinoIcons.ellipsis_circle_fill,
-          label: context.t.more.title,
-          body: const MoreApps(),
-          appBar: AppBar(
-              key: const Key("more"),
-              backgroundColor: getTheme(context).surface,
-              leading: Container(),
-              title: Center(
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text(
-                      context.t.more.title,
-                      style: getTextTheme(context).headlineSmall!.copyWith(
-                            fontWeight: FontWeight.bold,
-                          ),
-                    )
-                  ],
-                ),
-              ),
-              actions: [
                 BlocBuilder<AuthBloc, AuthState>(builder: (context, authState) {
                   if (authState is LoggedIn && !isDesktop(context)) {
                     return Padding(
@@ -519,6 +428,56 @@ class NavigationConstants {
                   ),
             ),
           ),
+        ),
+        NavigationItem(
+          key: const Key("account"),
+          icon: LineAwesome.user_solid,
+          cupertinoIcon: CupertinoIcons.person,
+          label: "Account",
+          body: Account(
+            globalApiClient: globalApiClient,
+            encryptionService: encryptionService,
+            prefs: prefs,
+          ),
+          subItems: [],
+          appBar: AppBar(
+              key: const Key("account"),
+              backgroundColor: getTheme(context).surfaceContainer,
+              leading: Container(),
+              title: Text(
+                "Account",
+                style: getTextTheme(context).headlineSmall!.copyWith(
+                      fontWeight: FontWeight.bold,
+                    ),
+              ),
+              actions: [
+                BlocBuilder<AuthBloc, AuthState>(builder: (context, authState) {
+                  return Container();
+                })
+              ]),
+        ),
+        NavigationItem(
+          key: const Key("settings"),
+          icon: LineAwesome.cog_solid,
+          cupertinoIcon: CupertinoIcons.gear,
+          label: "Settings",
+          body: Settings(),
+          subItems: [],
+          appBar: AppBar(
+              key: const Key("settings"),
+              backgroundColor: getTheme(context).surfaceContainer,
+              leading: Container(),
+              title: Text(
+                "Settings",
+                style: getTextTheme(context).headlineSmall!.copyWith(
+                      fontWeight: FontWeight.bold,
+                    ),
+              ),
+              actions: [
+                BlocBuilder<AuthBloc, AuthState>(builder: (context, authState) {
+                  return Container();
+                })
+              ]),
         ),
       ];
 }
