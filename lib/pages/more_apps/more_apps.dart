@@ -3,7 +3,7 @@ import 'package:ab_shared/components/widgets/elevated_container.dart';
 import 'package:app/i18n/strings.g.dart';
 import 'package:ab_shared/pages/account/account.dart';
 import 'package:app/main.dart';
-import 'package:app/pages/settings/settings.dart';
+import 'package:ab_shared/pages/settings/settings.dart';
 import 'package:ab_shared/utils/constants.dart';
 import 'package:ab_shared/utils/shortcuts.dart';
 import 'package:app/utils/nav_constants.dart';
