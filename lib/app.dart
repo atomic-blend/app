@@ -1,14 +1,27 @@
+import 'package:ab_shared/blocs/auth/auth.bloc.dart';
+import 'package:ab_shared/components/ab_toast.dart';
+import 'package:ab_shared/utils/shortcuts.dart';
+import 'package:app/blocs/app/app.bloc.dart';
 import 'package:app/i18n/strings.g.dart';
 import 'package:app/main.dart';
-import 'package:app/pages/app_layout.dart';
+import 'package:ab_shared/components/app/app_layout.dart';
+import 'package:app/pages/tasks/add_task_modal.dart';
 import 'package:app/pages/timer/timer_watcher.dart';
 import 'package:ab_shared/utils/app_theme.dart';
+import 'package:app/services/sync.service.dart';
+import 'package:app/utils/nav_constants.dart';
 import 'package:fleather/l10n/fleather_localizations.g.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'package:ab_shared/flavors.dart';
+import 'package:flutter_side_menu/flutter_side_menu.dart';
+import 'package:icons_plus/icons_plus.dart';
+
+final sideMenuController = SideMenuController();
+final abToastController = ABToastController();
 
 class App extends StatelessWidget {
   const App({super.key});
@@ -30,7 +43,52 @@ class App extends StatelessWidget {
       debugShowCheckedModeBanner: env!.debugShowCheckedModeBanner,
       title: F.title,
       home: _flavorBanner(
-        child: const Scaffold(body: TimerWatcher(child: AppLayout())),
+        child: BlocBuilder<AuthBloc, AuthState>(builder: (context, authState) {
+          return BlocBuilder<AppCubit, AppState>(builder: (context, appState) {
+            return TimerWatcher(
+              child: AppLayout(
+                primaryMenuItems: $navConstants.primaryMenuItems(context),
+                authBloc: context.read<AuthBloc>(),
+                appCubit: context.read<AppCubit>(),
+                sideMenuController: sideMenuController,
+                abToastController: abToastController,
+                encryptionService: encryptionService,
+                globalApiClient: globalApiClient,
+                prefs: prefs,
+                env: env,
+                userKey: userKey,
+                agePublicKey: agePublicKey,
+                revenueCatService: revenueCatService,
+                centerActionCallback: () {
+                  if (isDesktop(context)) {
+                    showDialog(
+                      context: context,
+                      builder: (context) => Dialog(
+                        child: AddTaskModal(),
+                      ),
+                    );
+                  } else {
+                    showModalBottomSheet(
+                      context: context,
+                      isScrollControlled: true,
+                      isDismissible: true,
+                      enableDrag: false,
+                      backgroundColor: Colors.transparent,
+                      builder: (context) => SizedBox(
+                        height: MediaQuery.of(context).viewInsets.bottom +
+                            getSize(context).height * 0.125,
+                        child: AddTaskModal(),
+                      ),
+                    );
+                  }
+                  SyncService.sync(context);
+                },
+                centerActionIcon: LineAwesome.plus_solid,
+                centerActionEnabled: true,
+              ),
+            );
+          });
+        }),
         show: kDebugMode && env!.debugShowCheckedModeBanner,
       ),
     );
