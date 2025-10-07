@@ -59,32 +59,6 @@ class App extends StatelessWidget {
                 userKey: userKey,
                 agePublicKey: agePublicKey,
                 revenueCatService: revenueCatService,
-                centerActionCallback: () {
-                  if (isDesktop(context)) {
-                    showDialog(
-                      context: context,
-                      builder: (context) => Dialog(
-                        child: AddTaskModal(),
-                      ),
-                    );
-                  } else {
-                    showModalBottomSheet(
-                      context: context,
-                      isScrollControlled: true,
-                      isDismissible: true,
-                      enableDrag: false,
-                      backgroundColor: Colors.transparent,
-                      builder: (context) => SizedBox(
-                        height: MediaQuery.of(context).viewInsets.bottom +
-                            getSize(context).height * 0.125,
-                        child: AddTaskModal(),
-                      ),
-                    );
-                  }
-                  SyncService.sync(context);
-                },
-                centerActionIcon: LineAwesome.plus_solid,
-                centerActionEnabled: true,
               ),
             );
           });
