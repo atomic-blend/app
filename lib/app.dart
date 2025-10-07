@@ -1,14 +1,11 @@
 import 'package:ab_shared/blocs/auth/auth.bloc.dart';
 import 'package:ab_shared/components/ab_toast.dart';
-import 'package:ab_shared/utils/shortcuts.dart';
 import 'package:app/blocs/app/app.bloc.dart';
 import 'package:app/i18n/strings.g.dart';
 import 'package:app/main.dart';
 import 'package:ab_shared/components/app/app_layout.dart';
-import 'package:app/pages/tasks/add_task_modal.dart';
 import 'package:app/pages/timer/timer_watcher.dart';
 import 'package:ab_shared/utils/app_theme.dart';
-import 'package:app/services/sync.service.dart';
 import 'package:app/utils/nav_constants.dart';
 import 'package:fleather/l10n/fleather_localizations.g.dart';
 import 'package:flutter/foundation.dart';
@@ -18,7 +15,6 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'package:ab_shared/flavors.dart';
 import 'package:flutter_side_menu/flutter_side_menu.dart';
-import 'package:icons_plus/icons_plus.dart';
 
 final sideMenuController = SideMenuController();
 final abToastController = ABToastController();
