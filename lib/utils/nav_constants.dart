@@ -12,8 +12,9 @@ import 'package:app/pages/calendar/calendar_settings.dart';
 import 'package:app/pages/habits/add_habits_modal.dart';
 import 'package:app/pages/habits/habits.dart';
 import 'package:ab_shared/pages/paywall/paywall_utils.dart';
-import 'package:app/pages/settings/settings.dart';
+import 'package:ab_shared/pages/settings/settings.dart';
 import 'package:app/pages/sync_status/sync_status.dart';
+import 'package:app/pages/tasks/add_task_modal.dart';
 import 'package:app/pages/tasks/filtered_view.dart';
 import 'package:app/pages/tasks/folders.dart';
 import 'package:app/pages/tasks/overview.dart';
@@ -88,6 +89,20 @@ class NavigationConstants {
                 return Container();
               }),
             ],
+          ),
+          action: NavigationAction(
+            icon: LineAwesome.plus_solid,
+            label: "Add Task",
+            onTap: () {
+              if (isDesktop(context)) {
+                showDialog(
+                    context: context,
+                    builder: (context) => Dialog(child: AddTaskModal()));
+              } else {
+                showModalBottomSheet(
+                    context: context, builder: (context) => AddTaskModal());
+              }
+            },
           ),
           subItems: [
             NavigationItem(
@@ -238,6 +253,20 @@ class NavigationConstants {
                   return Container();
                 })
               ]),
+          action: NavigationAction(
+            icon: LineAwesome.plus_solid,
+            label: "Add Task",
+            onTap: () {
+              if (isDesktop(context)) {
+                showDialog(
+                    context: context,
+                    builder: (context) => Dialog(child: AddTaskModal()));
+              } else {
+                showModalBottomSheet(
+                    context: context, builder: (context) => AddTaskModal());
+              }
+            },
+          ),
           subItems: [
             if (isDesktop(context))
               NavigationItem(
@@ -380,6 +409,20 @@ class NavigationConstants {
                   ),
             ),
           ),
+          action: NavigationAction(
+            icon: LineAwesome.plus_solid,
+            label: "Add Task",
+            onTap: () {
+              if (isDesktop(context)) {
+                showDialog(
+                    context: context,
+                    builder: (context) => Dialog(child: AddTaskModal()));
+              } else {
+                showModalBottomSheet(
+                    context: context, builder: (context) => AddTaskModal());
+              }
+            },
+          ),
         ),
         NavigationItem(
           key: const Key("timer"),
@@ -442,13 +485,18 @@ class NavigationConstants {
           subItems: [],
           appBar: AppBar(
               key: const Key("account"),
-              backgroundColor: getTheme(context).surfaceContainer,
-              leading: Container(),
-              title: Text(
-                "Account",
-                style: getTextTheme(context).headlineSmall!.copyWith(
-                      fontWeight: FontWeight.bold,
-                    ),
+              backgroundColor: getTheme(context).surface,
+              title: Row(
+                children: [
+                  const Icon(CupertinoIcons.person),
+                  SizedBox(width: $constants.insets.sm),
+                  Text(
+                    "Account",
+                    style: getTextTheme(context).headlineSmall!.copyWith(
+                          fontWeight: FontWeight.bold,
+                        ),
+                  ),
+                ],
               ),
               actions: [
                 BlocBuilder<AuthBloc, AuthState>(builder: (context, authState) {
@@ -465,13 +513,18 @@ class NavigationConstants {
           subItems: [],
           appBar: AppBar(
               key: const Key("settings"),
-              backgroundColor: getTheme(context).surfaceContainer,
-              leading: Container(),
-              title: Text(
-                "Settings",
-                style: getTextTheme(context).headlineSmall!.copyWith(
-                      fontWeight: FontWeight.bold,
-                    ),
+              backgroundColor: getTheme(context).surface,
+              title: Row(
+                children: [
+                  const Icon(CupertinoIcons.gear),
+                  SizedBox(width: $constants.insets.sm),
+                  Text(
+                    "Settings",
+                    style: getTextTheme(context).headlineSmall!.copyWith(
+                          fontWeight: FontWeight.bold,
+                        ),
+                  ),
+                ],
               ),
               actions: [
                 BlocBuilder<AuthBloc, AuthState>(builder: (context, authState) {
