@@ -16,8 +16,19 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:go_router/go_router.dart';
 import 'package:lottie/lottie.dart';
 import 'package:percent_indicator/percent_indicator.dart';
+
+part 'habits.g.dart';
+
+@TypedGoRoute<HabitsRoute>(path: '/habits', name: "habits")
+class HabitsRoute extends GoRouteData with _$HabitsRoute {
+  @override
+  Widget build(BuildContext context, GoRouterState state) {
+    return Habits();
+  }
+}
 
 class Habits extends StatefulWidget {
   const Habits({super.key});

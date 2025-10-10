@@ -5,6 +5,8 @@ import 'package:app/pages/calendar/views/calendar_month.dart';
 import 'package:app/pages/calendar/views/calendar_schedule.dart';
 import 'package:app/pages/calendar/views/calendar_three_days.dart';
 import 'package:app/pages/calendar/views/calendar_week.dart';
+import 'package:app/pages/eiseinhower/eisenhower.dart';
+import 'package:app/pages/habits/habits.dart';
 import 'package:app/pages/tasks/folders.dart';
 import 'package:app/pages/tasks/overview.dart';
 import 'package:app/pages/tasks/tags.dart';
@@ -43,6 +45,8 @@ final GlobalKey<NavigatorState> appLayoutNavigatorKey =
     TypedGoRoute<CalendarMonthRoute>(
         path: '/calendar/month', name: "calendar_month"),
     TypedGoRoute<CalendarDayRoute>(path: '/calendar/day', name: "calendar_day"),
+    TypedGoRoute<HabitsRoute>(path: '/habits', name: "habits"),
+    TypedGoRoute<EisenhowerRoute>(path: '/task/eisenhower', name: "eisenhower"),
     TypedGoRoute<AccountRoute>(path: '/account', name: "account"),
     TypedGoRoute<SettingsRoute>(path: '/settings', name: "settings"),
   ],

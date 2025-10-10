@@ -80,6 +80,16 @@ RouteBase get $appRouter => ShellRouteData.$route(
           factory: _$CalendarDayRoute._fromState,
         ),
         GoRouteData.$route(
+          path: '/habits',
+          name: 'habits',
+          factory: _$HabitsRoute._fromState,
+        ),
+        GoRouteData.$route(
+          path: '/task/eisenhower',
+          name: 'eisenhower',
+          factory: _$EisenhowerRoute._fromState,
+        ),
+        GoRouteData.$route(
           path: '/account',
           name: 'account',
           factory: _$AccountRoute._fromState,
@@ -370,6 +380,50 @@ mixin _$CalendarDayRoute on GoRouteData {
   @override
   String get location => GoRouteData.$location(
         '/calendar/day',
+      );
+
+  @override
+  void go(BuildContext context) => context.go(location);
+
+  @override
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  @override
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  @override
+  void replace(BuildContext context) => context.replace(location);
+}
+
+mixin _$HabitsRoute on GoRouteData {
+  static HabitsRoute _fromState(GoRouterState state) => HabitsRoute();
+
+  @override
+  String get location => GoRouteData.$location(
+        '/habits',
+      );
+
+  @override
+  void go(BuildContext context) => context.go(location);
+
+  @override
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  @override
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  @override
+  void replace(BuildContext context) => context.replace(location);
+}
+
+mixin _$EisenhowerRoute on GoRouteData {
+  static EisenhowerRoute _fromState(GoRouterState state) => EisenhowerRoute();
+
+  @override
+  String get location => GoRouteData.$location(
+        '/task/eisenhower',
       );
 
   @override

@@ -155,12 +155,14 @@ class NavigationConstants {
           icon: LineAwesome.bolt_solid,
           cupertinoIcon: CupertinoIcons.bolt_fill,
           label: context.t.habits.title,
+          location: "/habits",
         ),
         NavigationItem(
           key: const Key("eisenhower"),
           icon: CupertinoIcons.square_grid_2x2,
           cupertinoIcon: CupertinoIcons.square_grid_2x2,
           label: context.t.eisenhower.small_title,
+          location: "/task/eisenhower",
         ),
         NavigationItem(
           key: const Key("timer"),
@@ -205,6 +207,7 @@ class NavigationConstants {
           cupertinoIcon: CupertinoIcons.person,
           label: "Account",
           subItems: [],
+          location: "/account",
         ),
         NavigationItem(
           key: const Key("settings"),
@@ -212,6 +215,7 @@ class NavigationConstants {
           cupertinoIcon: CupertinoIcons.gear,
           label: "Settings",
           subItems: [],
+          location: "/settings",
         ),
       ];
 }
