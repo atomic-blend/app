@@ -1,13 +1,14 @@
 import 'package:ab_shared/blocs/auth/auth.bloc.dart';
+import 'package:ab_shared/utils/api_client.dart';
 import 'package:app/blocs/tasks/tasks.bloc.dart';
 import 'package:ab_shared/components/buttons/primary_button_square.dart';
 import 'package:ab_shared/components/widgets/elevated_container.dart';
 import 'package:app/i18n/strings.g.dart';
-import 'package:app/main.dart';
 import 'package:app/pages/sync_status/conflict_card.dart';
 import 'package:app/services/sync.service.dart';
 import 'package:ab_shared/utils/constants.dart';
 import 'package:ab_shared/utils/shortcuts.dart';
+import 'package:app/utils/get_it.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -22,6 +23,12 @@ class SyncStatus extends StatefulWidget {
 }
 
 class _SyncStatusState extends State<SyncStatus> {
+  late final ApiClient globalApiClient;
+  @override
+  void initState() {
+    super.initState();
+    globalApiClient = getIt<ApiClient>();
+  }
   @override
   Widget build(BuildContext context) {
     if (widget.customButton != null) {
@@ -114,7 +121,7 @@ class _SyncStatusState extends State<SyncStatus> {
   }
 
   Widget _buildSyncModal(BuildContext context) {
-    var selfHostedUrl = globalApiClient?.getSelfHostedRestApiUrl();
+    var selfHostedUrl = globalApiClient.getSelfHostedRestApiUrl();
     return BlocBuilder<AuthBloc, AuthState>(builder: (context, authState) {
       return BlocBuilder<TasksBloc, TasksState>(
         builder: (context, taskState) {

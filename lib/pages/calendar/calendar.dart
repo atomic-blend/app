@@ -9,7 +9,6 @@ import 'package:app/entities/habit/habit.entity.dart';
 import 'package:ab_shared/entities/sync/patch_change/patch_change.dart';
 import 'package:app/entities/tasks/tasks.entity.dart';
 import 'package:app/i18n/strings.g.dart';
-import 'package:app/main.dart';
 import 'package:app/pages/calendar/custom_appointment.dart';
 import 'package:app/pages/calendar/custom_calendar_data_source.dart';
 import 'package:app/pages/calendar/device_event_detail.dart';
@@ -73,9 +72,6 @@ class _CalendarState extends State<Calendar> {
                 PaywallUtils.showPaywall(
                   context,
                   user: authState.user,
-                  globalApiClient: globalApiClient!,
-                  prefs: prefs!,
-                  revenueCatService: revenueCatService!,
                 );
               }
             });

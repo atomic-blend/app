@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:ab_shared/components/forms/ab_checkbox.dart';
+import 'package:ab_shared/services/encryption.service.dart';
 import 'package:app/blocs/folder/folder.bloc.dart';
 import 'package:app/blocs/tag/tag.bloc.dart';
 import 'package:app/blocs/tasks/tasks.bloc.dart';
@@ -16,7 +17,6 @@ import 'package:ab_shared/entities/sync/patch_change/patch_change.dart';
 import 'package:app/entities/tag/tag.entity.dart';
 import 'package:app/entities/tasks/tasks.entity.dart';
 import 'package:app/i18n/strings.g.dart';
-import 'package:app/main.dart';
 import 'package:app/pages/sync_status/conflict_resolver.dart';
 import 'package:app/pages/tasks/add_time_entry.dart';
 import 'package:app/pages/tasks/assign_folder.dart';
@@ -27,6 +27,7 @@ import 'package:app/pages/timer/timer_utils.dart';
 import 'package:ab_shared/utils/constants.dart';
 import 'package:app/utils/extensions/date_time_extension.dart';
 import 'package:ab_shared/utils/shortcuts.dart';
+import 'package:app/utils/get_it.dart';
 import 'package:collection/collection.dart';
 import 'package:fleather/fleather.dart';
 import 'package:flutter/cupertino.dart';
@@ -51,6 +52,7 @@ class TaskDetail extends StatefulWidget {
 }
 
 class _TaskDetailState extends State<TaskDetail> {
+  late final EncryptionService encryptionService;
   final TextEditingController _titleController = TextEditingController();
   DateTime? _endDate;
   DateTime? _startDate;
@@ -63,6 +65,7 @@ class _TaskDetailState extends State<TaskDetail> {
 
   @override
   void initState() {
+    encryptionService = getIt<EncryptionService>();
     _titleController.text = widget.task.title;
     _endDate = widget.task.endDate;
     _startDate = widget.task.startDate;
@@ -458,7 +461,7 @@ class _TaskDetailState extends State<TaskDetail> {
                                                   (e) async {
                                                     return await e.encrypt(
                                                         encryptionService:
-                                                            encryptionService!);
+                                                            encryptionService);
                                                   },
                                                 ),
                                               ),

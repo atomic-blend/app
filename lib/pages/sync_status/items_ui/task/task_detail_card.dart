@@ -1,9 +1,9 @@
 import 'dart:convert';
 
 import 'package:ab_shared/components/forms/ab_checkbox.dart';
+import 'package:ab_shared/services/encryption.service.dart';
 import 'package:app/entities/tasks/tasks.entity.dart';
 import 'package:app/i18n/strings.g.dart';
-import 'package:app/main.dart';
 import 'package:ab_shared/utils/constants.dart';
 import 'package:ab_shared/utils/shortcuts.dart';
 import 'package:fleather/fleather.dart';
@@ -22,6 +22,7 @@ class TaskDetailCard extends StatefulWidget {
 }
 
 class _TaskDetailCardState extends State<TaskDetailCard> {
+  EncryptionService? encryptionService;
   @override
   Widget build(BuildContext context) {
     if (widget.taskData == null && widget.taskEntity == null) {
