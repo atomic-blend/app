@@ -14,8 +14,19 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../services/sync.service.dart';
+
+part 'folders.g.dart';
+
+@TypedGoRoute<FoldersRoute>(path: '/folders', name: "folders")
+class FoldersRoute extends GoRouteData with _$FoldersRoute {
+  @override
+  Widget build(BuildContext context, GoRouterState state) {
+    return FoldersView();
+  }
+}
 
 class FoldersView extends StatefulWidget {
   const FoldersView({super.key});

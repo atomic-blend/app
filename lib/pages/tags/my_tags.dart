@@ -4,7 +4,6 @@ import 'package:app/components/buttons/icon_text_card.dart';
 import 'package:ab_shared/components/modals/ab_modal.dart';
 import 'package:app/i18n/strings.g.dart';
 import 'package:ab_shared/pages/paywall/paywall_utils.dart';
-import 'package:app/main.dart';
 import 'package:app/pages/tags/add_tag_modal.dart';
 import 'package:ab_shared/utils/constants.dart';
 import 'package:ab_shared/utils/shortcuts.dart';
@@ -42,9 +41,6 @@ class _MyTagsState extends State<MyTags> {
                       PaywallUtils.showPaywall(
                         context,
                         user: authState.user,
-                        globalApiClient: globalApiClient!,
-                        prefs: prefs!,
-                        revenueCatService: revenueCatService!,
                       );
                     }
                     showModalBottomSheet(

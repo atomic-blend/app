@@ -14,8 +14,19 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../services/sync.service.dart';
+
+part 'tags.g.dart';
+
+@TypedGoRoute<TagsRoute>(path: '/tags', name: "tags")
+class TagsRoute extends GoRouteData with _$TagsRoute {
+  @override
+  Widget build(BuildContext context, GoRouterState state) {
+    return TagsView();
+  }
+}
 
 class TagsView extends StatefulWidget {
   const TagsView({super.key});
