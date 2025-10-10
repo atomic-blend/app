@@ -58,6 +58,7 @@ class NavigationConstants {
               cupertinoIcon: CupertinoIcons.calendar_today,
               label: context.t.tasks.today,
               color: getTheme(context).primary,
+              location: "/today",
             ),
             NavigationItem(
               key: const Key("tags"),
@@ -65,6 +66,7 @@ class NavigationConstants {
               cupertinoIcon: CupertinoIcons.tag,
               label: context.t.tasks.tags,
               color: getTheme(context).secondary,
+              location: "/tags",
             ),
             NavigationItem(
               key: const Key("folders"),
@@ -72,18 +74,21 @@ class NavigationConstants {
               cupertinoIcon: CupertinoIcons.folder,
               label: context.t.tasks.folders.title,
               color: getTheme(context).tertiary,
+              location: "/folders",
             ),
             NavigationItem(
               key: const Key("all_tasks"),
               icon: Icons.list,
               cupertinoIcon: CupertinoIcons.square_stack_3d_down_right,
               label: context.t.tasks.all_tasks,
+              location: "/all-tasks",
             ),
             NavigationItem(
               key: const Key("completed_tasks"),
               icon: Icons.check_circle,
               cupertinoIcon: CupertinoIcons.checkmark_circle,
               label: context.t.tasks.completed_tasks,
+              location: "/completed",
             ),
           ],
         ),

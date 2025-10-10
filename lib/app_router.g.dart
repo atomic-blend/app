@@ -30,6 +30,31 @@ RouteBase get $appRouter => ShellRouteData.$route(
           factory: _$InboxRoute._fromState,
         ),
         GoRouteData.$route(
+          path: '/today',
+          name: 'today',
+          factory: _$TodayRoute._fromState,
+        ),
+        GoRouteData.$route(
+          path: '/tags',
+          name: 'tags',
+          factory: _$TagsRoute._fromState,
+        ),
+        GoRouteData.$route(
+          path: '/folders',
+          name: 'folders',
+          factory: _$FoldersRoute._fromState,
+        ),
+        GoRouteData.$route(
+          path: '/completed',
+          name: 'completed',
+          factory: _$CompletedRoute._fromState,
+        ),
+        GoRouteData.$route(
+          path: '/all-tasks',
+          name: 'all_tasks',
+          factory: _$AllTasksRoute._fromState,
+        ),
+        GoRouteData.$route(
           path: '/account',
           name: 'account',
           factory: _$AccountRoute._fromState,
@@ -96,6 +121,116 @@ mixin _$InboxRoute on GoRouteData {
   @override
   String get location => GoRouteData.$location(
         '/inbox',
+      );
+
+  @override
+  void go(BuildContext context) => context.go(location);
+
+  @override
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  @override
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  @override
+  void replace(BuildContext context) => context.replace(location);
+}
+
+mixin _$TodayRoute on GoRouteData {
+  static TodayRoute _fromState(GoRouterState state) => TodayRoute();
+
+  @override
+  String get location => GoRouteData.$location(
+        '/today',
+      );
+
+  @override
+  void go(BuildContext context) => context.go(location);
+
+  @override
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  @override
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  @override
+  void replace(BuildContext context) => context.replace(location);
+}
+
+mixin _$TagsRoute on GoRouteData {
+  static TagsRoute _fromState(GoRouterState state) => TagsRoute();
+
+  @override
+  String get location => GoRouteData.$location(
+        '/tags',
+      );
+
+  @override
+  void go(BuildContext context) => context.go(location);
+
+  @override
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  @override
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  @override
+  void replace(BuildContext context) => context.replace(location);
+}
+
+mixin _$FoldersRoute on GoRouteData {
+  static FoldersRoute _fromState(GoRouterState state) => FoldersRoute();
+
+  @override
+  String get location => GoRouteData.$location(
+        '/folders',
+      );
+
+  @override
+  void go(BuildContext context) => context.go(location);
+
+  @override
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  @override
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  @override
+  void replace(BuildContext context) => context.replace(location);
+}
+
+mixin _$CompletedRoute on GoRouteData {
+  static CompletedRoute _fromState(GoRouterState state) => CompletedRoute();
+
+  @override
+  String get location => GoRouteData.$location(
+        '/completed',
+      );
+
+  @override
+  void go(BuildContext context) => context.go(location);
+
+  @override
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  @override
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  @override
+  void replace(BuildContext context) => context.replace(location);
+}
+
+mixin _$AllTasksRoute on GoRouteData {
+  static AllTasksRoute _fromState(GoRouterState state) => AllTasksRoute();
+
+  @override
+  String get location => GoRouteData.$location(
+        '/all-tasks',
       );
 
   @override
