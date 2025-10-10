@@ -6,7 +6,7 @@ import 'package:go_router/go_router.dart';
 
 part 'today.g.dart';
 
-@TypedGoRoute<TodayRoute>(path: '/today', name: "today")
+@TypedGoRoute<TodayRoute>(path: '/task/today', name: "today")
 class TodayRoute extends GoRouteData with _$TodayRoute {
   @override
   Widget build(BuildContext context, GoRouterState state) {

@@ -11,7 +11,7 @@ List<RouteBase> get $appRoutes => [
     ];
 
 RouteBase get $allTasksRoute => GoRouteData.$route(
-      path: '/all-tasks',
+      path: '/task/all-tasks',
       name: 'all_tasks',
       factory: _$AllTasksRoute._fromState,
     );
@@ -21,7 +21,7 @@ mixin _$AllTasksRoute on GoRouteData {
 
   @override
   String get location => GoRouteData.$location(
-        '/all-tasks',
+        '/task/all-tasks',
       );
 
   @override

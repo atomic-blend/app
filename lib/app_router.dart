@@ -1,5 +1,10 @@
 import 'package:ab_shared/pages/account/account.dart';
 import 'package:ab_shared/pages/settings/settings.dart';
+import 'package:app/pages/calendar/views/calendar_day.dart';
+import 'package:app/pages/calendar/views/calendar_month.dart';
+import 'package:app/pages/calendar/views/calendar_schedule.dart';
+import 'package:app/pages/calendar/views/calendar_three_days.dart';
+import 'package:app/pages/calendar/views/calendar_week.dart';
 import 'package:app/pages/tasks/folders.dart';
 import 'package:app/pages/tasks/overview.dart';
 import 'package:app/pages/tasks/tags.dart';
@@ -22,13 +27,22 @@ final GlobalKey<NavigatorState> appLayoutNavigatorKey =
 @TypedShellRoute<AppRouter>(
   routes: <TypedRoute<RouteData>>[
     TypedGoRoute<HomeRoute>(path: '/', name: "home"),
-    TypedGoRoute<OverviewRoute>(path: '/overview', name: "overview"),
-    TypedGoRoute<InboxRoute>(path: '/inbox', name: "inbox"),
-    TypedGoRoute<TodayRoute>(path: '/today', name: "today"),
+    TypedGoRoute<OverviewRoute>(path: '/task/overview', name: "overview"),
+    TypedGoRoute<InboxRoute>(path: '/task/inbox', name: "inbox"),
+    TypedGoRoute<TodayRoute>(path: '/task/today', name: "today"),
+    TypedGoRoute<CompletedRoute>(path: '/task/completed', name: "completed"),
+    TypedGoRoute<AllTasksRoute>(path: '/task/all-tasks', name: "all_tasks"),
     TypedGoRoute<TagsRoute>(path: '/tags', name: "tags"),
     TypedGoRoute<FoldersRoute>(path: '/folders', name: "folders"),
-    TypedGoRoute<CompletedRoute>(path: '/completed', name: "completed"),
-    TypedGoRoute<AllTasksRoute>(path: '/all-tasks', name: "all_tasks"),
+    TypedGoRoute<CalendarWeekRoute>(
+        path: '/calendar/week', name: "calendar_week"),
+    TypedGoRoute<CalendarScheduleRoute>(
+        path: '/calendar/schedule', name: "calendar_schedule"),
+    TypedGoRoute<CalendarThreeDaysRoute>(
+        path: '/calendar/three-days', name: "calendar_three_days"),
+    TypedGoRoute<CalendarMonthRoute>(
+        path: '/calendar/month', name: "calendar_month"),
+    TypedGoRoute<CalendarDayRoute>(path: '/calendar/day', name: "calendar_day"),
     TypedGoRoute<AccountRoute>(path: '/account', name: "account"),
     TypedGoRoute<SettingsRoute>(path: '/settings', name: "settings"),
   ],

@@ -11,7 +11,7 @@ List<RouteBase> get $appRoutes => [
     ];
 
 RouteBase get $completedRoute => GoRouteData.$route(
-      path: '/completed',
+      path: '/task/completed',
       name: 'completed',
       factory: _$CompletedRoute._fromState,
     );
@@ -21,7 +21,7 @@ mixin _$CompletedRoute on GoRouteData {
 
   @override
   String get location => GoRouteData.$location(
-        '/completed',
+        '/task/completed',
       );
 
   @override

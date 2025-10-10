@@ -4,7 +4,7 @@ import 'package:go_router/go_router.dart';
 
 part 'completed.g.dart';
 
-@TypedGoRoute<CompletedRoute>(path: '/completed', name: "completed")
+@TypedGoRoute<CompletedRoute>(path: '/task/completed', name: "completed")
 class CompletedRoute extends GoRouteData with _$CompletedRoute {
   @override
   Widget build(BuildContext context, GoRouterState state) {

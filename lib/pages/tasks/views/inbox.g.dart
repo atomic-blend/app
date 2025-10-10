@@ -11,7 +11,7 @@ List<RouteBase> get $appRoutes => [
     ];
 
 RouteBase get $inboxRoute => GoRouteData.$route(
-      path: '/inbox',
+      path: '/task/inbox',
       name: 'inbox',
       factory: _$InboxRoute._fromState,
     );
@@ -21,7 +21,7 @@ mixin _$InboxRoute on GoRouteData {
 
   @override
   String get location => GoRouteData.$location(
-        '/inbox',
+        '/task/inbox',
       );
 
   @override

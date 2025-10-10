@@ -5,7 +5,7 @@ import 'package:go_router/go_router.dart';
 
 part 'inbox.g.dart';
 
-@TypedGoRoute<InboxRoute>(path: '/inbox', name: "inbox")
+@TypedGoRoute<InboxRoute>(path: '/task/inbox', name: "inbox")
 class InboxRoute extends GoRouteData with _$InboxRoute {
   @override
   Widget build(BuildContext context, GoRouterState state) {

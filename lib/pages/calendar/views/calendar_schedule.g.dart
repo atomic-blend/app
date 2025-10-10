@@ -1,27 +1,28 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'today.dart';
+part of 'calendar_schedule.dart';
 
 // **************************************************************************
 // GoRouterGenerator
 // **************************************************************************
 
 List<RouteBase> get $appRoutes => [
-      $todayRoute,
+      $calendarScheduleRoute,
     ];
 
-RouteBase get $todayRoute => GoRouteData.$route(
-      path: '/task/today',
-      name: 'today',
-      factory: _$TodayRoute._fromState,
+RouteBase get $calendarScheduleRoute => GoRouteData.$route(
+      path: '/calendar/schedule',
+      name: 'calendar_schedule',
+      factory: _$CalendarScheduleRoute._fromState,
     );
 
-mixin _$TodayRoute on GoRouteData {
-  static TodayRoute _fromState(GoRouterState state) => TodayRoute();
+mixin _$CalendarScheduleRoute on GoRouteData {
+  static CalendarScheduleRoute _fromState(GoRouterState state) =>
+      CalendarScheduleRoute();
 
   @override
   String get location => GoRouteData.$location(
-        '/task/today',
+        '/calendar/schedule',
       );
 
   @override

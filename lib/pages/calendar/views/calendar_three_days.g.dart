@@ -1,27 +1,28 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'today.dart';
+part of 'calendar_three_days.dart';
 
 // **************************************************************************
 // GoRouterGenerator
 // **************************************************************************
 
 List<RouteBase> get $appRoutes => [
-      $todayRoute,
+      $calendarThreeDaysRoute,
     ];
 
-RouteBase get $todayRoute => GoRouteData.$route(
-      path: '/task/today',
-      name: 'today',
-      factory: _$TodayRoute._fromState,
+RouteBase get $calendarThreeDaysRoute => GoRouteData.$route(
+      path: '/calendar/three-days',
+      name: 'calendar_three_days',
+      factory: _$CalendarThreeDaysRoute._fromState,
     );
 
-mixin _$TodayRoute on GoRouteData {
-  static TodayRoute _fromState(GoRouterState state) => TodayRoute();
+mixin _$CalendarThreeDaysRoute on GoRouteData {
+  static CalendarThreeDaysRoute _fromState(GoRouterState state) =>
+      CalendarThreeDaysRoute();
 
   @override
   String get location => GoRouteData.$location(
-        '/task/today',
+        '/calendar/three-days',
       );
 
   @override

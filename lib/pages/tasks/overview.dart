@@ -22,7 +22,7 @@ import 'package:go_router/go_router.dart';
 
 part 'overview.g.dart'; 
 
-@TypedGoRoute<OverviewRoute>(path: '/overview', name: "overview")
+@TypedGoRoute<OverviewRoute>(path: '/task/overview', name: "overview")
 class OverviewRoute extends GoRouteData with _$OverviewRoute {
   @override
   Widget build(BuildContext context, GoRouterState state) {
