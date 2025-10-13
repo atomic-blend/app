@@ -107,13 +107,7 @@ class _OverviewTasksState extends State<OverviewTasks> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: _filteredTasks
                             .map(
-                              (task) => ElevatedContainer(
-                                padding: EdgeInsets.symmetric(
-                                  horizontal: $constants.insets.sm,
-                                  vertical: $constants.insets.xs,
-                                ),
-                                child: TaskItem(task: task),
-                              ),
+                              (task) => TaskItem(task: task),
                             )
                             .toList(),
                       ),
@@ -123,6 +117,7 @@ class _OverviewTasksState extends State<OverviewTasks> {
                 if (_filteredTasks.isEmpty) ...[
                   Expanded(
                     child: ElevatedContainer(
+                      disableShadow: true,
                       width: double.infinity,
                       child: SingleChildScrollView(
                         child: Column(
@@ -200,6 +195,7 @@ class _OverviewTasksState extends State<OverviewTasks> {
                   SizedBox(height: $constants.insets.xs),
                   Expanded(
                     child: ElevatedContainer(
+                      disableShadow: true,
                       width: double.infinity,
                       child: SingleChildScrollView(
                         child: Column(
@@ -279,6 +275,7 @@ class _OverviewTasksState extends State<OverviewTasks> {
                   SizedBox(height: $constants.insets.xs),
                   Expanded(
                     child: ElevatedContainer(
+                      disableShadow: true,
                       width: double.infinity,
                       child: SingleChildScrollView(
                         child: Column(

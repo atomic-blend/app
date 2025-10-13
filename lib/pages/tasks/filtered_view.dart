@@ -89,6 +89,7 @@ class _FilteredTaskViewState extends State<FilteredTaskView> {
                               children: _filteredTasks
                                   .map(
                                     (task) => ElevatedContainer(
+                                      disableShadow: true,
                                       padding: EdgeInsets.symmetric(
                                         horizontal: $constants.insets.sm,
                                         vertical: $constants.insets.xs,
@@ -119,29 +120,23 @@ class _FilteredTaskViewState extends State<FilteredTaskView> {
                                         padding: EdgeInsets.only(
                                           bottom: $constants.insets.xs,
                                         ),
-                                        child: ElevatedContainer(
-                                          padding: EdgeInsets.symmetric(
-                                            horizontal: $constants.insets.sm,
-                                            vertical: $constants.insets.xs,
-                                          ),
-                                          child: TaskItem(
-                                            task: task,
-                                            onTap: () {
-                                              if (isDesktop(context)) {
-                                                setState(() {
-                                                  _selectedTask = task;
-                                                });
-                                              } else {
-                                                Navigator.push(
-                                                    context,
-                                                    MaterialPageRoute(
-                                                        builder: (context) =>
-                                                            TaskDetail(
-                                                              task: task,
-                                                            )));
-                                              }
-                                            },
-                                          ),
+                                        child: TaskItem(
+                                          task: task,
+                                          onTap: () {
+                                            if (isDesktop(context)) {
+                                              setState(() {
+                                                _selectedTask = task;
+                                              });
+                                            } else {
+                                              Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          TaskDetail(
+                                                            task: task,
+                                                          )));
+                                            }
+                                          },
                                         ),
                                       ),
                                     ),
@@ -182,16 +177,5 @@ class _FilteredTaskViewState extends State<FilteredTaskView> {
         );
       }),
     );
-  }
-
-  void _searchTasks(String query) {
-    final tasks = context.read<TasksBloc>().state.tasks ?? [];
-    _filteredTasks = tasks
-        .where((task) =>
-            task.title.toLowerCase().contains(query.toLowerCase()) ||
-            (task.description?.toLowerCase().contains(query.toLowerCase()) ??
-                false))
-        .toList();
-    setState(() {});
   }
 }
