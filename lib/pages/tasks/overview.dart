@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:app/blocs/tasks/tasks.bloc.dart';
 import 'package:app/components/buttons/task_item.dart';
-import 'package:ab_shared/components/forms/search_bar.dart';
 import 'package:ab_shared/components/widgets/elevated_container.dart';
 import 'package:app/entities/tasks/tasks.entity.dart';
 import 'package:app/i18n/strings.g.dart';
@@ -38,7 +37,7 @@ class OverviewTasks extends StatefulWidget {
 }
 
 class _OverviewTasksState extends State<OverviewTasks> {
-  List<TaskEntity> _filteredTasks = <TaskEntity>[];
+  final List<TaskEntity> _filteredTasks = <TaskEntity>[];
 
   @override
   void initState() {
@@ -398,16 +397,5 @@ class _OverviewTasksState extends State<OverviewTasks> {
       }
     }
     return widgets;
-  }
-
-  void _searchTasks(String query) {
-    final tasks = context.read<TasksBloc>().state.tasks ?? [];
-    _filteredTasks = tasks
-        .where((task) =>
-            task.title.toLowerCase().contains(query.toLowerCase()) ||
-            (task.description?.toLowerCase().contains(query.toLowerCase()) ??
-                false))
-        .toList();
-    setState(() {});
   }
 }

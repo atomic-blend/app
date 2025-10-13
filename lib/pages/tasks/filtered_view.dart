@@ -1,6 +1,5 @@
 import 'package:app/blocs/tasks/tasks.bloc.dart';
 import 'package:app/components/buttons/task_item.dart';
-import 'package:ab_shared/components/forms/search_bar.dart';
 import 'package:ab_shared/components/widgets/elevated_container.dart';
 import 'package:app/entities/tasks/tasks.entity.dart';
 import 'package:app/i18n/strings.g.dart';
@@ -23,8 +22,7 @@ class FilteredTaskView extends StatefulWidget {
 }
 
 class _FilteredTaskViewState extends State<FilteredTaskView> {
-  final TextEditingController _searchController = TextEditingController();
-  List<TaskEntity> _filteredTasks = <TaskEntity>[];
+  final List<TaskEntity> _filteredTasks = <TaskEntity>[];
   TaskEntity? _selectedTask;
 
   @override
