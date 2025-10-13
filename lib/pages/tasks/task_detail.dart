@@ -40,12 +40,13 @@ import 'package:jiffy/jiffy.dart';
 import 'package:macos_window_utils/macos_window_utils.dart';
 import 'package:keyboard_service/keyboard_service.dart';
 
-
 class TaskDetail extends StatefulWidget {
   final TaskEntity task;
   final bool? smallNotes;
+  final VoidCallback? onCancel;
 
-  const TaskDetail({super.key, required this.task, this.smallNotes});
+  const TaskDetail(
+      {super.key, required this.task, this.smallNotes, this.onCancel});
 
   @override
   State<TaskDetail> createState() => _TaskDetailState();
@@ -65,6 +66,11 @@ class _TaskDetailState extends State<TaskDetail> {
 
   @override
   void initState() {
+    _setup();
+    super.initState();
+  }
+
+  void _setup() {
     encryptionService = getIt<EncryptionService>();
     _titleController.text = widget.task.title;
     _endDate = widget.task.endDate;
@@ -96,7 +102,6 @@ class _TaskDetailState extends State<TaskDetail> {
             ],
           ));
     });
-    super.initState();
   }
 
   @override
@@ -210,7 +215,11 @@ class _TaskDetailState extends State<TaskDetail> {
               isDesktop(context) ? CupertinoIcons.xmark : CupertinoIcons.back,
             ),
             onPressed: () {
-              Navigator.of(context).pop();
+              if (widget.onCancel != null) {
+                widget.onCancel!();
+              } else {
+                Navigator.of(context).pop();
+              }
             },
           ),
         ),
@@ -550,8 +559,7 @@ class _TaskDetailState extends State<TaskDetail> {
                                   controller: _controller!,
                                 ),
                                 if (!isDesktop(context))
-                                  Builder(
-                                      builder: (context) {
+                                  Builder(builder: (context) {
                                     if (KeyboardService.isVisible(context)) {
                                       return FleatherToolbar.basic(
                                           controller: _controller!);

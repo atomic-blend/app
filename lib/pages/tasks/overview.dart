@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:app/blocs/tasks/tasks.bloc.dart';
 import 'package:app/components/buttons/task_item.dart';
-import 'package:ab_shared/components/forms/search_bar.dart';
 import 'package:ab_shared/components/widgets/elevated_container.dart';
 import 'package:app/entities/tasks/tasks.entity.dart';
 import 'package:app/i18n/strings.g.dart';
@@ -20,7 +19,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
-part 'overview.g.dart'; 
+part 'overview.g.dart';
 
 @TypedGoRoute<OverviewRoute>(path: '/task/overview', name: "overview")
 class OverviewRoute extends GoRouteData with _$OverviewRoute {
@@ -38,8 +37,13 @@ class OverviewTasks extends StatefulWidget {
 }
 
 class _OverviewTasksState extends State<OverviewTasks> {
-  final TextEditingController _searchController = TextEditingController();
-  List<TaskEntity> _filteredTasks = <TaskEntity>[];
+  final List<TaskEntity> _filteredTasks = <TaskEntity>[];
+
+  @override
+  void initState() {
+    super.initState();
+    SyncService.sync(context);
+  }
 
   @override
   void dispose() {
@@ -78,19 +82,6 @@ class _OverviewTasksState extends State<OverviewTasks> {
                   const TimerInfo(),
                   SizedBox(height: $constants.insets.xs),
                 ],
-                ElevatedContainer(
-                  child: ABSearchBar(
-                    controller: _searchController,
-                    onChanged: (value) {
-                      _searchTasks(value);
-                    },
-                    onClear: () {
-                      _searchController.clear();
-                      _filteredTasks = [];
-                      setState(() {});
-                    },
-                  ),
-                ),
                 ConflictCard(
                   color: getTheme(context).error.lighten(55),
                   padding: EdgeInsets.only(
@@ -115,13 +106,7 @@ class _OverviewTasksState extends State<OverviewTasks> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: _filteredTasks
                             .map(
-                              (task) => ElevatedContainer(
-                                padding: EdgeInsets.symmetric(
-                                  horizontal: $constants.insets.sm,
-                                  vertical: $constants.insets.xs,
-                                ),
-                                child: TaskItem(task: task),
-                              ),
+                              (task) => TaskItem(task: task),
                             )
                             .toList(),
                       ),
@@ -131,6 +116,7 @@ class _OverviewTasksState extends State<OverviewTasks> {
                 if (_filteredTasks.isEmpty) ...[
                   Expanded(
                     child: ElevatedContainer(
+                      disableShadow: true,
                       width: double.infinity,
                       child: SingleChildScrollView(
                         child: Column(
@@ -208,6 +194,7 @@ class _OverviewTasksState extends State<OverviewTasks> {
                   SizedBox(height: $constants.insets.xs),
                   Expanded(
                     child: ElevatedContainer(
+                      disableShadow: true,
                       width: double.infinity,
                       child: SingleChildScrollView(
                         child: Column(
@@ -287,6 +274,7 @@ class _OverviewTasksState extends State<OverviewTasks> {
                   SizedBox(height: $constants.insets.xs),
                   Expanded(
                     child: ElevatedContainer(
+                      disableShadow: true,
                       width: double.infinity,
                       child: SingleChildScrollView(
                         child: Column(
@@ -409,16 +397,5 @@ class _OverviewTasksState extends State<OverviewTasks> {
       }
     }
     return widgets;
-  }
-
-  void _searchTasks(String query) {
-    final tasks = context.read<TasksBloc>().state.tasks ?? [];
-    _filteredTasks = tasks
-        .where((task) =>
-            task.title.toLowerCase().contains(query.toLowerCase()) ||
-            (task.description?.toLowerCase().contains(query.toLowerCase()) ??
-                false))
-        .toList();
-    setState(() {});
   }
 }

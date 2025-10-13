@@ -160,6 +160,7 @@ class EisenhowerMatrix extends StatelessWidget {
         builder: (BuildContext context, List<TaskEntity?> candidateData,
             List<dynamic> rejectedData) {
           return ElevatedContainer(
+            disableShadow: true,
             padding: EdgeInsets.symmetric(
                 vertical: $constants.insets.xs,
                 horizontal: $constants.insets.xs),

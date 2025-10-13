@@ -88,6 +88,7 @@ class _CalendarState extends State<Calendar> {
                       bottom: $constants.insets.sm,
                     ),
               child: ElevatedContainer(
+                disableShadow: true,
                 padding: EdgeInsets.symmetric(
                   horizontal: $constants.insets.sm,
                   vertical: $constants.insets.xs,
