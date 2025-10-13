@@ -327,6 +327,7 @@ class _TranslationsSearchFr implements TranslationsSearchEn {
 	final TranslationsFr _root; // ignore: unused_field
 
 	// Translations
+	@override String get title => 'Recherche';
 	@override String results({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('fr'))(n,
 		zero: 'Aucun résultat trouvé',
 		one: '1 résultat trouvé',
@@ -980,6 +981,7 @@ extension on TranslationsFr {
 			case 'timer.pomodoro_completed_message': return 'Votre session pomodoro est terminée ! C\'est l\'heure de faire une pause.';
 			case 'timer.stopwatch_completed_message': return 'Votre session de chronomètre a été terminée.';
 			case 'timer.task_label': return 'Tâche';
+			case 'search.title': return 'Recherche';
 			case 'search.results': return ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('fr'))(n,
 				zero: 'Aucun résultat trouvé',
 				one: '1 résultat trouvé',

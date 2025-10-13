@@ -334,6 +334,7 @@
     "task_label": "Tâche"
   },
   "search": {
+    "title": "Recherche",
     "results": {
       "zero": "Aucun résultat trouvé",
       "one": "1 résultat trouvé",

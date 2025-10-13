@@ -20,7 +20,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
-part 'overview.g.dart'; 
+part 'overview.g.dart';
 
 @TypedGoRoute<OverviewRoute>(path: '/task/overview', name: "overview")
 class OverviewRoute extends GoRouteData with _$OverviewRoute {
@@ -38,8 +38,13 @@ class OverviewTasks extends StatefulWidget {
 }
 
 class _OverviewTasksState extends State<OverviewTasks> {
-  final TextEditingController _searchController = TextEditingController();
   List<TaskEntity> _filteredTasks = <TaskEntity>[];
+
+  @override
+  void initState() {
+    super.initState();
+    SyncService.sync(context);
+  }
 
   @override
   void dispose() {
@@ -78,19 +83,6 @@ class _OverviewTasksState extends State<OverviewTasks> {
                   const TimerInfo(),
                   SizedBox(height: $constants.insets.xs),
                 ],
-                ElevatedContainer(
-                  child: ABSearchBar(
-                    controller: _searchController,
-                    onChanged: (value) {
-                      _searchTasks(value);
-                    },
-                    onClear: () {
-                      _searchController.clear();
-                      _filteredTasks = [];
-                      setState(() {});
-                    },
-                  ),
-                ),
                 ConflictCard(
                   color: getTheme(context).error.lighten(55),
                   padding: EdgeInsets.only(

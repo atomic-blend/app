@@ -505,6 +505,9 @@ class TranslationsSearchEn {
 
 	// Translations
 
+	/// en: 'Search'
+	String get title => 'Search';
+
 	/// en: '(zero) {No results found} (one) {1 result found} (other) {${n} results found}'
 	String results({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n,
 		zero: 'No results found',
@@ -1458,6 +1461,7 @@ extension on Translations {
 			case 'timer.pomodoro_completed_message': return 'Your pomodoro session has completed! Time for a break.';
 			case 'timer.stopwatch_completed_message': return 'Your stopwatch session has been completed.';
 			case 'timer.task_label': return 'Task';
+			case 'search.title': return 'Search';
 			case 'search.results': return ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n,
 				zero: 'No results found',
 				one: '1 result found',

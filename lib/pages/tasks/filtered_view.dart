@@ -54,19 +54,6 @@ class _FilteredTaskViewState extends State<FilteredTaskView> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                ElevatedContainer(
-                  child: ABSearchBar(
-                    controller: _searchController,
-                    onChanged: (value) {
-                      _searchTasks(value);
-                    },
-                    onClear: () {
-                      _searchController.clear();
-                      _filteredTasks = [];
-                      setState(() {});
-                    },
-                  ),
-                ),
                 ConflictCard(
                   color: getTheme(context).error.lighten(55),
                   padding: EdgeInsets.only(
