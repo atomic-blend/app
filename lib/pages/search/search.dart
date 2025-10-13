@@ -1,6 +1,8 @@
+import 'package:ab_shared/utils/shortcuts.dart';
 import 'package:app/blocs/tasks/tasks.bloc.dart';
 import 'package:app/components/buttons/task_item.dart';
 import 'package:app/entities/tasks/tasks.entity.dart';
+import 'package:app/pages/tasks/task_detail.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -32,6 +34,7 @@ class Search extends StatefulWidget {
 
 class _SearchState extends State<Search> {
   final TextEditingController _searchController = TextEditingController();
+  TaskEntity? _selectedTask;
   List<TaskEntity> _searchResults = [];
 
   @override
@@ -77,9 +80,14 @@ class _SearchState extends State<Search> {
     return BlocBuilder<TasksBloc, TasksState>(builder: (context, taskState) {
       return Padding(
         padding: EdgeInsets.symmetric(horizontal: $constants.insets.sm),
-        child: Column(
+        child: Row(
           children: [
-            Expanded(
+            SizedBox(
+              width: isDesktop(context)
+                  ? getSize(context).width > $constants.screenSize.md
+                      ? 350
+                      : getSize(context).width * 0.66
+                  : getSize(context).width,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -92,15 +100,52 @@ class _SearchState extends State<Search> {
                       padding: EdgeInsets.only(
                         bottom: $constants.insets.xs,
                       ),
-                      child: TaskItem(task: note),
+                      child: TaskItem(
+                          task: note,
+                          onTap: () {
+                            if (isDesktop(context)) {
+                              setState(() {
+                                _selectedTask = note;
+                              });
+                            } else {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        TaskDetail(task: note)),
+                              );
+                            }
+                          }),
                     );
                   }),
                 ],
               ),
             ),
-            SizedBox(
-              height: $constants.insets.sm,
-            )
+            if (isDesktop(context) &&
+                getSize(context).width > $constants.screenSize.md &&
+                _selectedTask != null) ...[
+              SizedBox(width: $constants.insets.xs),
+              Expanded(
+                child: Container(
+                  padding: EdgeInsets.only(
+                    right: $constants.insets.xs,
+                    bottom: $constants.insets.xs,
+                  ),
+                  child: TaskDetail(
+                      key: ValueKey(_selectedTask!.id),
+                      task: _selectedTask!,
+                      onCancel: () {
+                        if (isDesktop(context)) {
+                          setState(() {
+                            _selectedTask = null;
+                          });
+                        } else {
+                          Navigator.pop(context);
+                        }
+                      }),
+                ),
+              ),
+            ]
           ],
         ),
       );
