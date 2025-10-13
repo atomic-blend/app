@@ -101,29 +101,22 @@ class _SearchState extends State<Search> {
                       padding: EdgeInsets.only(
                         bottom: $constants.insets.xs,
                       ),
-                      child: ElevatedContainer(
-                        disableShadow: true,
-                        padding: EdgeInsets.symmetric(
-                          horizontal: $constants.insets.sm,
-                          vertical: $constants.insets.xs,
-                        ),
-                        child: TaskItem(
-                            task: note,
-                            onTap: () {
-                              if (isDesktop(context)) {
-                                setState(() {
-                                  _selectedTask = note;
-                                });
-                              } else {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          TaskDetail(task: note)),
-                                );
-                              }
-                            }),
-                      ),
+                      child: TaskItem(
+                          task: note,
+                          onTap: () {
+                            if (isDesktop(context)) {
+                              setState(() {
+                                _selectedTask = note;
+                              });
+                            } else {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        TaskDetail(task: note)),
+                              );
+                            }
+                          }),
                     );
                   }),
                 ],
