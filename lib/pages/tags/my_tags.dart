@@ -3,7 +3,6 @@ import 'package:app/blocs/tag/tag.bloc.dart';
 import 'package:app/components/buttons/icon_text_card.dart';
 import 'package:ab_shared/components/modals/ab_modal.dart';
 import 'package:app/i18n/strings.g.dart';
-import 'package:ab_shared/pages/paywall/paywall_utils.dart';
 import 'package:app/pages/tags/add_tag_modal.dart';
 import 'package:ab_shared/utils/constants.dart';
 import 'package:ab_shared/utils/shortcuts.dart';
@@ -37,12 +36,6 @@ class _MyTagsState extends State<MyTags> {
             BlocBuilder<TagBloc, TagState>(builder: (context, tagState) {
               return IconButton(
                   onPressed: () {
-                    if ((tagState.tags?.length ?? 0) >= 5) {
-                      PaywallUtils.showPaywall(
-                        context,
-                        user: authState.user,
-                      );
-                    }
                     showModalBottomSheet(
                         context: context,
                         isScrollControlled: true,

@@ -12,7 +12,6 @@ import 'package:app/i18n/strings.g.dart';
 import 'package:app/pages/calendar/custom_appointment.dart';
 import 'package:app/pages/calendar/custom_calendar_data_source.dart';
 import 'package:app/pages/calendar/device_event_detail.dart';
-import 'package:ab_shared/pages/paywall/paywall_utils.dart';
 import 'package:app/pages/tasks/add_task_modal.dart';
 import 'package:app/pages/tasks/task_detail.dart';
 import 'package:ab_shared/utils/constants.dart';
@@ -67,14 +66,6 @@ class _CalendarState extends State<Calendar> {
             builder: (context, deviceCalendarState) {
           return BlocBuilder<TasksBloc, TasksState>(
               builder: (context, taskState) {
-            WidgetsBinding.instance.addPostFrameCallback((_) {
-              if (widget.view != CalendarView.month) {
-                PaywallUtils.showPaywall(
-                  context,
-                  user: authState.user,
-                );
-              }
-            });
             return Padding(
               padding: isDesktop(context)
                   ? EdgeInsets.only(
