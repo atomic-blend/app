@@ -31,6 +31,63 @@ class TasksService {
     }
   }
 
+  Future<Map<String, dynamic>> getAllTasksWithPagination(
+      {int page = 1, int size = 10}) async {
+    final result = await globalApiClient.get('/tasks/?page=$page&size=$size');
+    if (result != null && result.statusCode == 200) {
+      final List<TaskEntity> decryptedTasks = [];
+      final tasks = result.data["tasks"];
+
+      for (var task in (tasks ?? [])) {
+        final decryptedTask = await TaskEntity.decrypt(
+            task as Map<String, dynamic>, encryptionService);
+        decryptedTasks.add(decryptedTask);
+      }
+
+      return {
+        'tasks': decryptedTasks,
+        'total_count': result.data['total_count'],
+        'page': result.data['page'],
+        'size': result.data['size'],
+        'total_pages': result.data['total_pages'],
+      };
+    } else {
+      throw Exception('Failed to load tasks');
+    }
+  }
+
+  Future<Map<String, dynamic>> getTasksSince({
+    required DateTime since,
+    int page = 1,
+    int size = 10,
+  }) async {
+    final sinceFormatted =
+        since.toUtc().toIso8601String().replaceAll('.000Z', 'Z');
+    final result = await globalApiClient
+        .get('/tasks/since?since=$sinceFormatted&page=$page&size=$size');
+
+    if (result != null && result.statusCode == 200) {
+      final List<TaskEntity> decryptedTasks = [];
+      final tasks = result.data["tasks"];
+
+      for (var task in (tasks ?? [])) {
+        final decryptedTask = await TaskEntity.decrypt(
+            task as Map<String, dynamic>, encryptionService);
+        decryptedTasks.add(decryptedTask);
+      }
+
+      return {
+        'tasks': decryptedTasks,
+        'total_count': result.data['total_count'],
+        'page': result.data['page'],
+        'size': result.data['size'],
+        'total_pages': result.data['total_pages'],
+      };
+    } else {
+      throw Exception('Failed to load tasks since $sinceFormatted');
+    }
+  }
+
   Future<bool> createTask(UserEntity user, TaskEntity task) async {
     final encryptedTask =
         await task.encrypt(encryptionService: encryptionService);
