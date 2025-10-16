@@ -3,10 +3,8 @@ import 'dart:io';
 
 import 'package:ab_shared/services/encryption.service.dart';
 import 'package:ab_shared/services/fcm_service.dart';
-import 'package:ab_shared/services/revenue_cat_service.dart';
 import 'package:ab_shared/utils/api_client.dart';
 import 'package:ab_shared/utils/env/env.dart';
-import 'package:ab_shared/utils/shortcuts.dart';
 import 'package:app/blocs/device_calendar/device_calendar.bloc.dart';
 import 'package:app/blocs/folder/folder.bloc.dart';
 import 'package:app/blocs/habit/habit.bloc.dart';
@@ -67,10 +65,6 @@ FutureOr<void> main() async {
       WindowManipulator.enableFullSizeContentView();
     }
 
-    if (isPaymentSupported()) {
-      await getIt<RevenueCatService>().initPlatformState();
-    }
-
     if (kIsWeb || !Platform.isLinux) {
       await Firebase.initializeApp(
         options: DefaultFirebaseOptions.currentPlatform,
@@ -118,11 +112,11 @@ FutureOr<void> main() async {
                       },
                     )),
             BlocProvider(create: (context) => TasksBloc()),
-              BlocProvider(create: (context) => DeviceCalendarBloc()),
-              BlocProvider(create: (context) => HabitBloc()),
-              BlocProvider(create: (context) => TagBloc()),
-              BlocProvider(create: (context) => FolderBloc()),
-              BlocProvider(create: (context) => TimeEntryBloc()),
+            BlocProvider(create: (context) => DeviceCalendarBloc()),
+            BlocProvider(create: (context) => HabitBloc()),
+            BlocProvider(create: (context) => TagBloc()),
+            BlocProvider(create: (context) => FolderBloc()),
+            BlocProvider(create: (context) => TimeEntryBloc()),
           ],
           child: ab_shared_translations.TranslationProvider(
             child:

@@ -40,7 +40,7 @@ dependencies:
   ab_shared:
     git:
       url: https://github.com/atomic-blend/app-shared.git
-      ref: v0.8.3
+      ref: v0.8.4
     # path: ../ab_shared
 
   # The following adds the Cupertino Icons font to your application.
