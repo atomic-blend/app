@@ -45,7 +45,7 @@ class AccountAvatarWithSyncStatus extends StatelessWidget {
                   child: Center(
                       child: AutoSizeText(
                     maxLines: 1,
-                    "${authState.user?.firstname?[0] ?? "A"}${authState.user?.lastname?[0] ?? "B"}",
+                    "${authState.user?.firstName?[0] ?? "A"}${authState.user?.lastName?[0] ?? "B"}",
                     style: getTextTheme(context).labelLarge!.copyWith(
                           color: Colors.white,
                           fontWeight: FontWeight.w700,

@@ -4,8 +4,12 @@ sealed class TasksEvent {
   const TasksEvent();
 }
 
-final class LoadTasks extends TasksEvent {
-  const LoadTasks();
+final class SyncAllTasks extends TasksEvent {
+  const SyncAllTasks();
+}
+
+final class SyncTasksSince extends TasksEvent {
+  const SyncTasksSince();
 }
 
 final class AddTask extends TasksEvent {
@@ -33,7 +37,6 @@ final class ForceTaskPatch extends TasksEvent {
   const ForceTaskPatch(this.patch);
   final Patch patch;
 }
-  
 
 final class DiscardTaskPatch extends TasksEvent {
   const DiscardTaskPatch(this.patch);
