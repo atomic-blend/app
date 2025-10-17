@@ -6,6 +6,7 @@ import 'package:app/entities/tasks/tasks.entity.dart';
 import 'package:app/i18n/strings.g.dart';
 import 'package:ab_shared/utils/constants.dart';
 import 'package:ab_shared/utils/shortcuts.dart';
+import 'package:app/services/sync.service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -23,9 +24,20 @@ class EisenhowerRoute extends GoRouteData with _$EisenhowerRoute {
   }
 }
 
-class EisenhowerMatrix extends StatelessWidget {
+class EisenhowerMatrix extends StatefulWidget {
   const EisenhowerMatrix({super.key});
 
+  @override
+  State<EisenhowerMatrix> createState() => _EisenhowerMatrixState();
+}
+
+class _EisenhowerMatrixState extends State<EisenhowerMatrix> {
+
+  @override
+  void initState() {
+    super.initState();
+    SyncService.sync(context);
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(

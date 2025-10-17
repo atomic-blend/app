@@ -27,6 +27,7 @@ class _FilteredTaskViewState extends State<FilteredTaskView> {
 
   @override
   void initState() {
+    SyncService.sync(context);
     super.initState();
   }
 
@@ -57,7 +58,7 @@ class _FilteredTaskViewState extends State<FilteredTaskView> {
                   width: isDesktop(context)
                       ? getSize(context).width > $constants.screenSize.md
                           ? 350
-                          : getSize(context).width * 0.66
+                          : getSize(context).width * 0.62
                       : getSize(context).width,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,

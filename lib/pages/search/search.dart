@@ -3,6 +3,7 @@ import 'package:app/blocs/tasks/tasks.bloc.dart';
 import 'package:app/components/buttons/task_item.dart';
 import 'package:app/entities/tasks/tasks.entity.dart';
 import 'package:app/pages/tasks/task_detail.dart';
+import 'package:app/services/sync.service.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -40,6 +41,7 @@ class _SearchState extends State<Search> {
   @override
   void initState() {
     super.initState();
+    SyncService.sync(context);
     _searchController.text = widget.query ?? "";
     _searchNotes(context.read<TasksBloc>().state.tasks ?? [], widget.query);
   }

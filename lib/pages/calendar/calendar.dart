@@ -15,6 +15,7 @@ import 'package:app/pages/calendar/device_event_detail.dart';
 import 'package:app/pages/tasks/add_task_modal.dart';
 import 'package:app/pages/tasks/task_detail.dart';
 import 'package:ab_shared/utils/constants.dart';
+import 'package:app/services/sync.service.dart';
 import 'package:app/utils/extensions/date_time_extension.dart';
 import 'package:ab_shared/utils/shortcuts.dart';
 import 'package:ab_shared/utils/toast_helper.dart';
@@ -46,6 +47,7 @@ class _CalendarState extends State<Calendar> {
       if (!context.mounted) return;
       _refreshCalendarEvents();
     });
+    SyncService.sync(context);
     super.initState();
   }
 
@@ -548,19 +550,22 @@ class _CalendarState extends State<Calendar> {
             // Update task with new times
             // Dispatch update event to TasksBloc
             context.read<TasksBloc>().add(EditTask(
-              task.id!,
-              [
-                PatchChange(
-                  key: "startDate",
-                  value: details.droppingTime?.toUtc().toIso8601String(),
-                ),
-                PatchChange(
-                  key: "endDate",
-                  value: details.droppingTime?.add(customAppointment.endTime
-                      .difference(customAppointment.startTime)).toUtc().toIso8601String(),
-                ),
-              ],
-            ));
+                  task.id!,
+                  [
+                    PatchChange(
+                      key: "startDate",
+                      value: details.droppingTime?.toUtc().toIso8601String(),
+                    ),
+                    PatchChange(
+                      key: "endDate",
+                      value: details.droppingTime
+                          ?.add(customAppointment.endTime
+                              .difference(customAppointment.startTime))
+                          .toUtc()
+                          .toIso8601String(),
+                    ),
+                  ],
+                ));
           }
           break;
 

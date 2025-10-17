@@ -25,6 +25,7 @@ import 'package:app/pages/tasks/task_time_entry_log.dart' show TaskTimeEntryLog;
 import 'package:app/pages/timer/task_timer.dart';
 import 'package:app/pages/timer/timer_utils.dart';
 import 'package:ab_shared/utils/constants.dart';
+import 'package:app/services/sync.service.dart';
 import 'package:app/utils/extensions/date_time_extension.dart';
 import 'package:ab_shared/utils/shortcuts.dart';
 import 'package:app/utils/get_it.dart';
@@ -67,6 +68,7 @@ class _TaskDetailState extends State<TaskDetail> {
   @override
   void initState() {
     _setup();
+    SyncService.sync(context);
     super.initState();
   }
 
