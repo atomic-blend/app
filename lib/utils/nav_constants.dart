@@ -1,13 +1,21 @@
+import 'package:ab_shared/blocs/auth/auth.bloc.dart';
 import 'package:ab_shared/components/app/ab_header.dart';
 import 'package:ab_shared/components/app/ab_navbar.dart';
 import 'package:ab_shared/utils/constants.dart';
+import 'package:app/blocs/folder/folder.bloc.dart';
+import 'package:app/blocs/habit/habit.bloc.dart';
+import 'package:app/blocs/tag/tag.bloc.dart';
+import 'package:app/blocs/tasks/tasks.bloc.dart';
+import 'package:app/blocs/time_entries/time_entry.bloc.dart';
 import 'package:app/i18n/strings.g.dart';
 import 'package:app/pages/tasks/add_task_modal.dart';
 import 'package:app/pages/timer/task_timer.dart';
 import 'package:ab_shared/utils/shortcuts.dart';
+import 'package:app/services/sync.service.dart';
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:icons_plus/icons_plus.dart';
 
 final $navConstants = NavigationConstants();
@@ -44,9 +52,7 @@ class NavigationConstants {
               cupertinoIcon: CupertinoIcons.checkmark_square,
               label: context.t.tasks.overview,
               location: "/task/overview",
-              header: ABHeader(
-                title: context.t.tasks.overview,
-              ),
+              header: _buildHeader(context, context.t.tasks.overview),
             ),
             NavigationItem(
               key: const Key("inbox"),
@@ -55,9 +61,7 @@ class NavigationConstants {
               color: Colors.cyan.darken(12),
               label: context.t.tasks.inbox,
               location: "/task/inbox",
-              header: ABHeader(
-                title: context.t.tasks.inbox,
-              ),
+              header: _buildHeader(context, context.t.tasks.inbox),
             ),
             NavigationItem(
               key: const Key("today"),
@@ -66,9 +70,7 @@ class NavigationConstants {
               label: context.t.tasks.today,
               color: getTheme(context).primary,
               location: "/task/today",
-              header: ABHeader(
-                title: context.t.tasks.today,
-              ),
+              header: _buildHeader(context, context.t.tasks.today),
             ),
             NavigationItem(
               key: const Key("all_tasks"),
@@ -76,9 +78,7 @@ class NavigationConstants {
               cupertinoIcon: CupertinoIcons.square_stack_3d_down_right,
               label: context.t.tasks.all_tasks,
               location: "/task/all-tasks",
-              header: ABHeader(
-                title: context.t.tasks.all_tasks,
-              ),
+              header: _buildHeader(context, context.t.tasks.all_tasks),
             ),
             NavigationItem(
               key: const Key("completed_tasks"),
@@ -86,9 +86,7 @@ class NavigationConstants {
               cupertinoIcon: CupertinoIcons.checkmark_circle,
               label: context.t.tasks.completed_tasks,
               location: "/task/completed",
-              header: ABHeader(
-                title: context.t.tasks.completed_tasks,
-              ),
+              header: _buildHeader(context, context.t.tasks.completed_tasks),
             ),
             NavigationItem(
               key: const Key("tags"),
@@ -97,9 +95,7 @@ class NavigationConstants {
               label: context.t.tasks.tags,
               color: getTheme(context).secondary,
               location: "/tags",
-              header: ABHeader(
-                title: context.t.tasks.tags,
-              ),
+              header: _buildHeader(context, context.t.tasks.tags),
             ),
             NavigationItem(
               key: const Key("folders"),
@@ -108,9 +104,7 @@ class NavigationConstants {
               label: context.t.tasks.folders.title,
               color: getTheme(context).tertiary,
               location: "/folders",
-              header: ABHeader(
-                title: context.t.tasks.folders.title,
-              ),
+              header: _buildHeader(context, context.t.tasks.folders.title),
             ),
           ],
         ),
@@ -141,9 +135,7 @@ class NavigationConstants {
                 cupertinoIcon: CupertinoIcons.calendar,
                 label: context.t.calendar.week,
                 location: "/calendar/week",
-                header: ABHeader(
-                  title: context.t.calendar.week,
-                ),
+                header: _buildHeader(context, context.t.calendar.week),
               ),
             NavigationItem(
               key: const Key("schedule"),
@@ -151,9 +143,7 @@ class NavigationConstants {
               cupertinoIcon: CupertinoIcons.clock,
               label: context.t.calendar.schedule,
               location: "/calendar/schedule",
-              header: ABHeader(
-                title: context.t.calendar.schedule,
-              ),
+              header: _buildHeader(context, context.t.calendar.schedule),
             ),
             NavigationItem(
               key: const Key("three_days"),
@@ -161,9 +151,7 @@ class NavigationConstants {
               cupertinoIcon: CupertinoIcons.calendar_badge_plus,
               label: context.t.calendar.threeDays,
               location: "/calendar/three-days",
-              header: ABHeader(
-                title: context.t.calendar.threeDays,
-              ),
+              header: _buildHeader(context, context.t.calendar.threeDays),
             ),
             NavigationItem(
               key: const Key("month"),
@@ -171,9 +159,7 @@ class NavigationConstants {
               cupertinoIcon: CupertinoIcons.calendar,
               label: context.t.calendar.month,
               location: "/calendar/month",
-              header: ABHeader(
-                title: context.t.calendar.month,
-              ),
+              header: _buildHeader(context, context.t.calendar.month),
             ),
             NavigationItem(
               key: const Key("day"),
@@ -181,9 +167,7 @@ class NavigationConstants {
               cupertinoIcon: CupertinoIcons.calendar_today,
               label: context.t.calendar.day,
               location: "/calendar/day",
-              header: ABHeader(
-                title: context.t.calendar.day,
-              ),
+              header: _buildHeader(context, context.t.calendar.day),
             ),
           ],
         ),
@@ -193,9 +177,7 @@ class NavigationConstants {
           cupertinoIcon: CupertinoIcons.bolt_fill,
           label: context.t.habits.title,
           location: "/habits",
-          header: ABHeader(
-            title: context.t.habits.title,
-          ),
+          header: _buildHeader(context, context.t.habits.title),
         ),
         NavigationItem(
           key: const Key("search"),
@@ -203,9 +185,7 @@ class NavigationConstants {
           cupertinoIcon: CupertinoIcons.search,
           label: context.t.search.title,
           location: "/search",
-          header: ABHeader(
-            title: context.t.search.title,
-          ),
+          header: _buildHeader(context, context.t.search.title),
         ),
         NavigationItem(
           key: const Key("eisenhower"),
@@ -213,9 +193,7 @@ class NavigationConstants {
           cupertinoIcon: CupertinoIcons.square_grid_2x2,
           label: context.t.eisenhower.small_title,
           location: "/task/eisenhower",
-          header: ABHeader(
-            title: context.t.eisenhower.small_title,
-          ),
+          header: _buildHeader(context, context.t.eisenhower.small_title),
         ),
         NavigationItem(
           key: const Key("timer"),
@@ -253,9 +231,7 @@ class NavigationConstants {
               );
             }
           },
-          header: ABHeader(
-            title: context.t.timer.title,
-          ),
+          header: _buildHeader(context, context.t.timer.title),
         ),
         NavigationItem(
           key: const Key("account"),
@@ -264,9 +240,7 @@ class NavigationConstants {
           label: "Account",
           subItems: [],
           location: "/account",
-          header: ABHeader(
-            title: "Account",
-          ),
+          header: _buildHeader(context, "Account"),
         ),
         NavigationItem(
           key: const Key("settings"),
@@ -275,9 +249,49 @@ class NavigationConstants {
           label: "Settings",
           subItems: [],
           location: "/settings",
-          header: ABHeader(
-            title: "Settings",
-          ),
+          header: _buildHeader(context, "Settings"),
         ),
       ];
+}
+
+Widget _buildHeader(BuildContext context, String title) {
+  return BlocBuilder<TagBloc, TagState>(builder: (context, tagState) {
+    return BlocBuilder<FolderBloc, FolderState>(
+        builder: (context, folderState) {
+      return BlocBuilder<AuthBloc, AuthState>(
+        builder: (context, authState) {
+          return BlocBuilder<TasksBloc, TasksState>(
+            builder: (context, tasksState) {
+              return BlocBuilder<HabitBloc, HabitState>(
+                builder: (context, habitState) {
+                  return BlocBuilder<TimeEntryBloc, TimeEntryState>(
+                      builder: (context, timeEntryState) {
+                    return ABHeader(
+                      title: title,
+                      syncedElements: SyncService.getSyncedElements(
+                        tasksState: tasksState,
+                        folderState: folderState,
+                        tagState: tagState,
+                        habitState: habitState,
+                        timeEntryState: timeEntryState,
+                        authState: authState,
+                      ),
+                      isSyncing: SyncService.isSyncing(
+                        tasksState: tasksState,
+                        folderState: folderState,
+                        tagState: tagState,
+                        habitState: habitState,
+                        authState: authState,
+                        timeEntryState: timeEntryState,
+                      ),
+                    );
+                  });
+                },
+              );
+            },
+          );
+        },
+      );
+    });
+  });
 }
