@@ -6,7 +6,6 @@ import 'package:app/blocs/tag/tag.bloc.dart';
 import 'package:app/blocs/tasks/tasks.bloc.dart';
 import 'package:app/blocs/time_entries/time_entry.bloc.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class SyncService {
