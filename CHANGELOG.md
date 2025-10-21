@@ -2,6 +2,49 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## 0.13.0 - 2025-10-21
+#### Bug Fixes
+- waiting list support + fix logout bug - (100a3cf) - Brandon Guigo
+- add sync at various part of the app - (d40195b) - Brandon Guigo
+- adapt to new sync header item - (3baeb51) - Brandon Guigo
+- convert task to new getallPaginated and getSince concept - (7dcd95a) - Brandon Guigo
+- remove revenuecat init in main.dart - (2e064b0) - Brandon Guigo
+- remove android billing config - (a8f0233) - Brandon Guigo
+- remove revenuecat paywall - (cdef9e7) - Brandon Guigo
+- update shared package - (4dd3694) - Brandon Guigo
+- linter - (11ab8fd) - Brandon Guigo
+- cards ui part 2 - (68f45a2) - Brandon Guigo
+- cards ui - (337fef1) - Brandon Guigo
+- add preview to task search - (dbdba04) - Brandon Guigo
+- updaet to new header - (868d2cf) - Brandon Guigo
+- add the last pages to the router - (b31196a) - Brandon Guigo
+- add back all the calendar routes - (7277cdb) - Brandon Guigo
+- add all task routes back - (f21599a) - Brandon Guigo
+- convert main part of the code to go_router - (280527a) - Brandon Guigo
+- update flutter_age and ab_shared to be 16kb safe - (ee463b1) - Brandon Guigo
+- add action in side menu - (7e78951) - Brandon Guigo
+- remove unused settings page - (04b3cc7) - Brandon Guigo
+- use shared app layout - (59b90ef) - Brandon Guigo
+- use the shared settings page between the apps - (f48715c) - Brandon Guigo
+- linter - (79b5bcb) - Brandon Guigo
+- linter - (e590a43) - Brandon Guigo
+- update ab_shared to newly released SSO - (3364f9e) - Brandon Guigo
+- update the app_layout to work with new sso UI - (d5735e7) - Brandon Guigo
+#### Features
+- update the app to use new side menu - (0028cbd) - Brandon Guigo
+#### Miscellaneous Chores
+- **(release)** 0.12.20 [skip ci] - (de81d8a) - GitHub Actions
+- build all the flutter images at the same time so pushes doesn't override each other - (a9ae781) - Brandon Guigo
+- update shared to latest version - (59cd98e) - Brandon Guigo
+- update shared package - (eb544fc) - Brandon Guigo
+- update to latest shared - (c9524cf) - Brandon Guigo
+- update shared to latest version - (dedf4be) - Brandon Guigo
+- fix beta release issue - (12f0670) - Brandon Guigo
+- update version of shared + linter - (b1018c2) - Brandon Guigo
+- update dependency to latest shared package - (2f721c5) - Brandon Guigo
+
+- - -
+
 ## 0.12.20 - 2025-09-23
 #### Bug Fixes
 - try triggering rebuild - (7a4070f) - Brandon Guigo
