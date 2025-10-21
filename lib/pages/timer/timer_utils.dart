@@ -2,8 +2,9 @@ import 'dart:convert';
 import 'package:app/entities/tasks/tasks.entity.dart';
 import 'package:app/entities/time_entry/time_entry.entity.dart';
 import 'package:app/services/time_entry_service.dart';
-import 'package:app/main.dart';
 import 'package:ab_shared/utils/local_notifications.dart';
+import 'package:app/utils/get_it.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 enum TimerMode { pomodoro, stopwatch }
 
@@ -37,7 +38,7 @@ class TimerUtils {
   // Helper methods for pause periods
   static List<PausePeriod> _getPausePeriods(TimerMode mode) {
     final key = '${mode.name}_pause_periods';
-    final pauseDataString = prefs?.getString(key);
+    final pauseDataString = getIt<SharedPreferences>().getString(key);
     if (pauseDataString == null) return [];
 
     try {
@@ -52,7 +53,7 @@ class TimerUtils {
       TimerMode mode, List<PausePeriod> periods) async {
     final key = '${mode.name}_pause_periods';
     final pauseData = periods.map((period) => period.toJson()).toList();
-    await prefs?.setString(key, jsonEncode(pauseData));
+    await getIt<SharedPreferences>().setString(key, jsonEncode(pauseData));
   }
 
   static Duration _getTotalPausedDuration(List<PausePeriod> pausePeriods) {
@@ -64,8 +65,9 @@ class TimerUtils {
   }
 
   static TimerMode getMode() {
-    final pomodoroStartTime = prefs?.getString('pomodoro_start_time');
-    final stopwatchStartTime = prefs?.getString('stopwatch_start_time');
+    final prefs = getIt<SharedPreferences>();
+    final pomodoroStartTime = prefs.getString('pomodoro_start_time');
+    final stopwatchStartTime = prefs.getString('stopwatch_start_time');
     if (pomodoroStartTime != null) {
       return TimerMode.pomodoro;
     } else if (stopwatchStartTime != null) {
@@ -91,28 +93,29 @@ class TimerUtils {
   static Future<void> startTimer(TimerMode mode,
       {int? durationInMinutes, TaskEntity? task, bool? pomoBreak}) async {
     final startDate = DateTime.now();
+    final prefs = getIt<SharedPreferences>();
 
-    await prefs?.setString(
+    await prefs.setString(
       '${mode.name}_start_time',
       startDate.toIso8601String(),
     );
-    await prefs?.remove('${mode.name}_pause_periods');
+    await prefs.remove('${mode.name}_pause_periods');
 
     if (task != null) {
-      await prefs?.setString(
+      await prefs.setString(
         '${mode.name}_task_id',
         task.id!,
       );
     }
 
     if (mode == TimerMode.pomodoro && durationInMinutes != null) {
-      await prefs?.setInt(
+      await prefs.setInt(
         'pomodoro_duration',
         durationInMinutes,
       );
 
       if (pomoBreak != null) {
-        await prefs?.setBool("pomodoro_break", pomoBreak);
+        await prefs.setBool("pomodoro_break", pomoBreak);
       }
 
       LocalNotificationUtil.schedulePomodoroNotification(
@@ -125,15 +128,15 @@ class TimerUtils {
   }
 
   static String? getTaskId(TimerMode mode) {
-    return prefs?.getString('${mode.name}_task_id');
+    return getIt<SharedPreferences>().getString('${mode.name}_task_id');
   }
 
   static int getPomodoroDuration() {
-    return prefs?.getInt('pomodoro_duration') ?? 20;
+    return getIt<SharedPreferences>().getInt('pomodoro_duration') ?? 20;
   }
 
   static DateTime? getStartDate() {
-    final startTimeString = prefs?.getString('pomodoro_start_time');
+    final startTimeString = getIt<SharedPreferences>().getString('pomodoro_start_time');
     if (startTimeString != null) {
       return DateTime.parse(startTimeString);
     }
@@ -141,7 +144,8 @@ class TimerUtils {
   }
 
   static Duration getTimerDuration(TimerMode mode) {
-    final startTimeString = prefs?.getString('${mode.name}_start_time');
+    final prefs = getIt<SharedPreferences>();
+    final startTimeString = prefs.getString('${mode.name}_start_time');
 
     if (startTimeString == null) {
       return Duration.zero;
@@ -150,12 +154,12 @@ class TimerUtils {
     final startTime = DateTime.parse(startTimeString);
 
     // Check if timer is completed
-    final endTimeString = prefs?.getString('${mode.name}_end_time');
+    final endTimeString = prefs.getString('${mode.name}_end_time');
     if (endTimeString != null) {
       // Timer is completed
       if (mode == TimerMode.pomodoro) {
         // For completed pomodoro, always return the configured duration
-        final durationInMinutes = prefs?.getInt('pomodoro_duration') ?? 20;
+        final durationInMinutes = prefs.getInt('pomodoro_duration') ?? 20;
         return Duration(minutes: durationInMinutes);
       } else {
         // For completed stopwatch, return actual elapsed time
@@ -188,7 +192,7 @@ class TimerUtils {
     final effectiveElapsed = elapsed - totalPausedDuration;
 
     if (mode == TimerMode.pomodoro) {
-      final durationInMinutes = prefs?.getInt('pomodoro_duration') ?? 20;
+      final durationInMinutes = prefs.getInt('pomodoro_duration') ?? 20;
       final totalDuration = Duration(minutes: durationInMinutes);
       return totalDuration - effectiveElapsed;
     } else {
@@ -248,23 +252,24 @@ class TimerUtils {
 
   static Future<void> resetTimer(TimerMode mode,
       {bool? completed = false}) async {
+    final prefs = getIt<SharedPreferences>();
     // If completing, save the end time before clearing
     if (completed == true) {
-      await prefs?.setString(
+      await prefs.setString(
         '${mode.name}_end_time',
         DateTime.now().toIso8601String(),
       );
     } else {
       // If not completing (resetting), remove the end time
-      await prefs?.remove('${mode.name}_end_time');
+      await prefs.remove('${mode.name}_end_time');
     }
 
-    await prefs?.remove('${mode.name}_start_time');
-    await prefs?.remove('${mode.name}_task_id');
-    await prefs?.remove('${mode.name}_pause_periods');
+    await prefs.remove('${mode.name}_start_time');
+    await prefs.remove('${mode.name}_task_id');
+    await prefs.remove('${mode.name}_pause_periods');
 
     if (mode == TimerMode.pomodoro) {
-      await prefs?.remove('pomodoro_duration');
+      await prefs.remove('pomodoro_duration');
       if (completed == false) {
         await LocalNotificationUtil.cancelNotification(0);
       }
@@ -272,14 +277,14 @@ class TimerUtils {
   }
 
   static Future<void> markTimerCompleted(TimerMode mode) async {
-    await prefs?.setString(
+    await getIt<SharedPreferences>().setString(
       '${mode.name}_end_time',
       DateTime.now().toIso8601String(),
     );
   }
 
   static bool isTimerRunning(TimerMode mode) {
-    final startTimeString = prefs?.getString('${mode.name}_start_time');
+    final startTimeString = getIt<SharedPreferences>().getString('${mode.name}_start_time');
     return startTimeString != null;
   }
 
@@ -304,7 +309,7 @@ class TimerUtils {
   }
 
   static bool? isPomodoroBreak() {
-    return prefs?.getBool("pomodoro_break") ?? false;
+    return getIt<SharedPreferences>().getBool("pomodoro_break") ?? false;
   }
 
   static Future<Duration> getPomodoroRemainingTime() async {
@@ -374,7 +379,7 @@ class TimerUtils {
   // Method to create time entry
   static Future<bool> createTimeEntry(TimerMode mode,
       {TaskEntity? task}) async {
-    final startTimeString = prefs?.getString('${mode.name}_start_time');
+    final startTimeString = getIt<SharedPreferences>().getString('${mode.name}_start_time');
 
     if (startTimeString == null) {
       // If start date is null, we can't create a time entry

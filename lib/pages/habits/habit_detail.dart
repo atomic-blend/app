@@ -6,6 +6,7 @@ import 'package:app/i18n/strings.g.dart';
 import 'package:app/pages/habits/habit_heatmap.dart';
 import 'package:ab_shared/utils/constants.dart';
 import 'package:ab_shared/utils/shortcuts.dart';
+import 'package:app/services/sync.service.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -23,6 +24,12 @@ class HabitDetail extends StatefulWidget {
 }
 
 class _HabitDetailState extends State<HabitDetail> {
+
+  @override
+  void initState() {
+    SyncService.sync(context);
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return BlocListener<HabitBloc, HabitState>(

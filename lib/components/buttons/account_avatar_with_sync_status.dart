@@ -1,7 +1,6 @@
 import 'package:ab_shared/blocs/auth/auth.bloc.dart';
 import 'package:app/blocs/tasks/tasks.bloc.dart';
 import 'package:ab_shared/pages/account/account.dart';
-import 'package:app/main.dart';
 import 'package:app/services/sync.service.dart';
 import 'package:ab_shared/utils/constants.dart';
 import 'package:ab_shared/utils/shortcuts.dart';
@@ -24,10 +23,6 @@ class AccountAvatarWithSyncStatus extends StatelessWidget {
               context: context,
               isScrollControlled: true,
               builder: (context) => Account(
-                globalApiClient: globalApiClient!,
-                encryptionService: encryptionService!,
-                revenueCatService: revenueCatService!,
-                prefs: prefs!,
               ),
             );
           },
@@ -50,7 +45,7 @@ class AccountAvatarWithSyncStatus extends StatelessWidget {
                   child: Center(
                       child: AutoSizeText(
                     maxLines: 1,
-                    "${authState.user?.firstname?[0] ?? "A"}${authState.user?.lastname?[0] ?? "B"}",
+                    "${authState.user?.firstName?[0] ?? "A"}${authState.user?.lastName?[0] ?? "B"}",
                     style: getTextTheme(context).labelLarge!.copyWith(
                           color: Colors.white,
                           fontWeight: FontWeight.w700,

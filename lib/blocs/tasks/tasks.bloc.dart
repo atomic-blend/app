@@ -19,13 +19,15 @@ part 'tasks.state.dart';
 class TasksBloc extends HydratedBloc<TasksEvent, TasksState> {
   final TasksService _tasksService = TasksService();
   TasksBloc() : super(const TasksInitial()) {
-    on<LoadTasks>(_onLoadTasks);
+    on<SyncAllTasks>(_onSyncAllTasks);
+    on<SyncTasksSince>(_onSyncTasksSince);
     on<AddTask>(_onAddTask);
     on<EditTask>(_onEditTask);
     on<DeleteTask>(_onDeleteTask);
     on<SyncTasks>(_onSyncTasks);
     on<ForceTaskPatch>(_onForceTaskPatch);
     on<DiscardTaskPatch>(_onDiscardTaskPatch);
+    on<ClearTasks>(_onClearTasks);
   }
 
   @override
@@ -47,13 +49,13 @@ class TasksBloc extends HydratedBloc<TasksEvent, TasksState> {
   @override
   Map<String, dynamic>? toJson(TasksState state) {
     return {
-      "tasks": state.tasks!.map((e) => e.toJson()).toList(),
+      "tasks": state.tasks?.map((e) => e.toJson()).toList(),
       "stagedPatches": state.stagedPatches?.map((e) => e.toJson()).toList(),
       "latestSync": state.latestSync?.toJson(),
     };
   }
 
-  void _onLoadTasks(LoadTasks event, Emitter<TasksState> emit) async {
+  void _onSyncAllTasks(SyncAllTasks event, Emitter<TasksState> emit) async {
     final prevState = state;
     emit(TasksLoading(
       prevState.tasks ?? [],
@@ -61,10 +63,103 @@ class TasksBloc extends HydratedBloc<TasksEvent, TasksState> {
       latestSync: prevState.latestSync,
     ));
     try {
-      final tasks = await _tasksService.getAllTasks();
+      // Load all pages of tasks
+      List<TaskEntity> allTasks = [];
+      int currentPage = 1;
+      int totalPages = 1;
+      bool hasMorePages = true;
+
+      while (hasMorePages && currentPage <= totalPages) {
+        final paginationResult = await _tasksService.getAllTasksWithPagination(
+            page: currentPage, size: 10);
+
+        final List<TaskEntity> pageTasks =
+            paginationResult['tasks'] as List<TaskEntity>;
+        totalPages = paginationResult['total_pages'] as int;
+
+        // Add all tasks from this page to our collection
+        allTasks.addAll(pageTasks);
+
+        // Check if we have more pages to load
+        hasMorePages = currentPage < totalPages;
+        currentPage++;
+
+        // Emit intermediate state to show progress
+        if (hasMorePages) {
+          emit(TasksLoaded(
+            allTasks,
+            stagedPatches: prevState.stagedPatches ?? [],
+            latestSync: prevState.latestSync,
+          ));
+        }
+      }
+
+      // Emit final state with all tasks
       emit(TasksLoaded(
-        tasks,
+        allTasks,
+        stagedPatches: prevState.stagedPatches ?? [],
+        latestSync: prevState.latestSync,
+      ));
+    } catch (e) {
+      emit(TaskLoadingError(
+        prevState.tasks ?? [],
+        e.toString(),
         stagedPatches: prevState.stagedPatches,
+        latestSync: prevState.latestSync,
+      ));
+    }
+  }
+
+  void _onSyncTasksSince(SyncTasksSince event, Emitter<TasksState> emit) async {
+    final prevState = state;
+    emit(TasksLoading(
+      prevState.tasks ?? [],
+      stagedPatches: prevState.stagedPatches,
+      latestSync: prevState.latestSync,
+    ));
+
+    try {
+      // Load tasks since the given date
+      List<TaskEntity> newTasks = [];
+      int currentPage = 1;
+      int totalPages = 1;
+      bool hasMorePages = true;
+
+      while (hasMorePages && currentPage <= totalPages) {
+        final paginationResult = await _tasksService.getTasksSince(
+            since: prevState.latestSync?.date ?? DateTime.now(),
+            page: currentPage,
+            size: 10);
+
+        final List<TaskEntity> pageTasks =
+            paginationResult['tasks'] as List<TaskEntity>;
+        totalPages = paginationResult['total_pages'] as int;
+
+        // Add all tasks from this page to our collection
+        newTasks.addAll(pageTasks);
+
+        // Check if we have more pages to load
+        hasMorePages = currentPage < totalPages;
+        currentPage++;
+
+        // Emit intermediate state to show progress
+        if (hasMorePages) {
+          final mergedTasks = _mergeTasks(prevState.tasks ?? [], newTasks);
+          emit(TasksLoaded(
+            mergedTasks,
+            stagedPatches: prevState.stagedPatches ?? [],
+            latestSync: prevState.latestSync,
+          ));
+        }
+      }
+
+      // Merge with existing state
+      final mergedTasks = _mergeTasks(prevState.tasks ?? [], newTasks);
+
+      // Emit final state with merged tasks
+      emit(TasksLoaded(
+        mergedTasks,
+        stagedPatches: prevState.stagedPatches ?? [],
         latestSync: prevState.latestSync,
       ));
     } catch (e) {
@@ -116,7 +211,7 @@ class TasksBloc extends HydratedBloc<TasksEvent, TasksState> {
         stagedPatches: prevState.stagedPatches,
         latestSync: prevState.latestSync,
       ));
-      add(const LoadTasks());
+      add(const SyncAllTasks());
     }
   }
 
@@ -152,7 +247,7 @@ class TasksBloc extends HydratedBloc<TasksEvent, TasksState> {
         stagedPatches: prevState.stagedPatches,
         latestSync: prevState.latestSync,
       ));
-      add(const LoadTasks());
+      add(const SyncAllTasks());
     }
   }
 
@@ -190,7 +285,7 @@ class TasksBloc extends HydratedBloc<TasksEvent, TasksState> {
         stagedPatches: prevState.stagedPatches,
         latestSync: prevState.latestSync,
       ));
-      add(const LoadTasks());
+      add(const SyncAllTasks());
     }
   }
 
@@ -205,7 +300,7 @@ class TasksBloc extends HydratedBloc<TasksEvent, TasksState> {
     );
     try {
       if (prevState.tasks == null) {
-        add(const LoadTasks());
+        add(const SyncAllTasks());
         return;
       }
       final syncResult = await _tasksService.patchTasks(
@@ -224,7 +319,7 @@ class TasksBloc extends HydratedBloc<TasksEvent, TasksState> {
         latestSync: syncResult,
         stagedPatches: newPatchList,
       ));
-      add(const LoadTasks());
+      add(const SyncAllTasks());
     } catch (e) {
       emit(TaskLoadingError(
         prevState.tasks ?? [],
@@ -232,11 +327,12 @@ class TasksBloc extends HydratedBloc<TasksEvent, TasksState> {
         stagedPatches: prevState.stagedPatches,
         latestSync: prevState.latestSync,
       ));
-      add(const LoadTasks());
+      add(const SyncAllTasks());
     }
   }
 
-  FutureOr<void> _onForceTaskPatch(ForceTaskPatch event, Emitter<TasksState> emit) async {
+  FutureOr<void> _onForceTaskPatch(
+      ForceTaskPatch event, Emitter<TasksState> emit) async {
     final prevState = state;
     emit(TasksLoading(
       prevState.tasks ?? [],
@@ -245,7 +341,8 @@ class TasksBloc extends HydratedBloc<TasksEvent, TasksState> {
     ));
     try {
       final existingPatches = prevState.stagedPatches ?? [];
-      final patchIndex = existingPatches.indexWhere((p) => p.id == event.patch.id);
+      final patchIndex =
+          existingPatches.indexWhere((p) => p.id == event.patch.id);
       if (patchIndex != -1) {
         existingPatches[patchIndex].force = true;
       } else {
@@ -265,11 +362,12 @@ class TasksBloc extends HydratedBloc<TasksEvent, TasksState> {
         stagedPatches: prevState.stagedPatches,
         latestSync: prevState.latestSync,
       ));
-      add(const LoadTasks());
+      add(const SyncAllTasks());
     }
   }
 
-  FutureOr<void> _onDiscardTaskPatch(DiscardTaskPatch event, Emitter<TasksState> emit) async {
+  FutureOr<void> _onDiscardTaskPatch(
+      DiscardTaskPatch event, Emitter<TasksState> emit) async {
     final prevState = state;
     emit(TasksLoading(
       prevState.tasks ?? [],
@@ -291,8 +389,12 @@ class TasksBloc extends HydratedBloc<TasksEvent, TasksState> {
         stagedPatches: prevState.stagedPatches,
         latestSync: prevState.latestSync,
       ));
-      add(const LoadTasks());
+      add(const SyncAllTasks());
     }
+  }
+
+  FutureOr<void> _onClearTasks(ClearTasks event, Emitter<TasksState> emit) {
+    emit(const TasksInitial());
   }
 }
 
@@ -323,4 +425,25 @@ List<TaskEntity> _applyPatchToState(
       break;
   }
   return tasks;
+}
+
+List<TaskEntity> _mergeTasks(
+    List<TaskEntity> existingTasks, List<TaskEntity> newTasks) {
+  final Map<String, TaskEntity> taskMap = {};
+
+  // Add existing tasks to map
+  for (var task in existingTasks) {
+    if (task.id != null) {
+      taskMap[task.id!] = task;
+    }
+  }
+
+  // Add or update with new tasks
+  for (var task in newTasks) {
+    if (task.id != null) {
+      taskMap[task.id!] = task;
+    }
+  }
+
+  return taskMap.values.toList();
 }

@@ -1,7 +1,7 @@
 import 'package:app/i18n/strings.g.dart';
-import 'package:app/main.dart';
 import 'package:ab_shared/services/encryption.service.dart';
 import 'package:ab_shared/utils/local_notifications.dart';
+import 'package:app/utils/get_it.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
@@ -12,16 +12,12 @@ class TaskDueProcessor {
 
     //get data from local storage or remote message
     final encryptedTitle = data['title'];
-    if (userData == null) {
-      return;
-    }
 
     //initialize the encryption engine
-    encryptionService =
-        EncryptionService(userSalt: userData!['keySet']['salt'], prefs: prefs!, userKey: userKey!, agePublicKey: agePublicKey!);
-
+    final encryptionService = getIt<EncryptionService>();
+    
     // prepare notification body
-    final title = await encryptionService?.decryptString(data: encryptedTitle);
+    final title = await encryptionService.decryptString(data: encryptedTitle);
     final body = locale.translations.notifications.task_due_now;
 
     // setup notification client

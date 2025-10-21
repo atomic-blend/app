@@ -6,15 +6,38 @@ import 'package:app/entities/tasks/tasks.entity.dart';
 import 'package:app/i18n/strings.g.dart';
 import 'package:ab_shared/utils/constants.dart';
 import 'package:ab_shared/utils/shortcuts.dart';
+import 'package:app/services/sync.service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 import '../tasks/add_task_modal.dart';
 
-class EisenhowerMatrix extends StatelessWidget {
+part 'eisenhower.g.dart';
+
+@TypedGoRoute<EisenhowerRoute>(path: '/eisenhower', name: "eisenhower")
+class EisenhowerRoute extends GoRouteData with _$EisenhowerRoute {
+  @override
+  Widget build(BuildContext context, GoRouterState state) {
+    return EisenhowerMatrix();
+  }
+}
+
+class EisenhowerMatrix extends StatefulWidget {
   const EisenhowerMatrix({super.key});
 
+  @override
+  State<EisenhowerMatrix> createState() => _EisenhowerMatrixState();
+}
+
+class _EisenhowerMatrixState extends State<EisenhowerMatrix> {
+
+  @override
+  void initState() {
+    super.initState();
+    SyncService.sync(context);
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -149,6 +172,7 @@ class EisenhowerMatrix extends StatelessWidget {
         builder: (BuildContext context, List<TaskEntity?> candidateData,
             List<dynamic> rejectedData) {
           return ElevatedContainer(
+            disableShadow: true,
             padding: EdgeInsets.symmetric(
                 vertical: $constants.insets.xs,
                 horizontal: $constants.insets.xs),

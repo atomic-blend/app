@@ -14,6 +14,7 @@ class TimeEntryBloc extends HydratedBloc<TimeEntryEvent, TimeEntryState> {
         on<CreateTimeEntry>(_onAddTimeEntry);
         on<EditTimeEntry>(_onEditTimeEntry);
         on<DeleteTimeEntry>(_onDeleteTimeEntry);
+        on<ClearTimeEntries>(_onClearTimeEntries);
     }
 
     @override
@@ -90,5 +91,9 @@ class TimeEntryBloc extends HydratedBloc<TimeEntryEvent, TimeEntryState> {
         emit(TimeEntryLoadingError(prevState.timeEntries ?? [], e.toString()));
         add(const LoadTimeEntries());
         }
+    }
+
+    void _onClearTimeEntries(ClearTimeEntries event, Emitter<TimeEntryState> emit) {
+        emit(const TimeEntryInitial());
     }
 }

@@ -25,3 +25,7 @@ final class EditTag extends TagEvent {
 
   const EditTag(this.tag);
 }
+
+final class ClearTags extends TagEvent {
+  const ClearTags();
+}
