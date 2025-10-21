@@ -14,6 +14,7 @@ class FolderBloc extends HydratedBloc<FolderEvent, FolderState> {
     on<AddFolder>(_onAddFolder);
     on<EditFolder>(_onEditFolder);
     on<DeleteFolder>(_onDeleteFolder);
+    on<ClearFolders>(_onClearFolders);
   }
 
   @override
@@ -82,5 +83,9 @@ class FolderBloc extends HydratedBloc<FolderEvent, FolderState> {
       emit(FolderLoadingError(prevState.folders ?? [], e.toString()));
       add(const LoadFolders());
     }
+  }
+
+  void _onClearFolders(ClearFolders event, Emitter<FolderState> emit) {
+    emit(const FolderInitial());
   }
 }

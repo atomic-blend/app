@@ -20,6 +20,7 @@ class HabitBloc extends HydratedBloc<HabitEvent, HabitState> {
     on<CreateHabit>(_onCreateHabit);
     on<UpdateHabit>(_onUpdateHabit);
     on<DeleteHabit>(_onDeleteHabit);
+    on<ClearHabits>(_onClearHabits);
   }
 
   @override
@@ -128,5 +129,9 @@ class HabitBloc extends HydratedBloc<HabitEvent, HabitState> {
     } catch (e) {
       emit(HabitLoadingError(prevState.habits ?? [], e.toString()));
     }
+  }
+
+  FutureOr<void> _onClearHabits(ClearHabits event, Emitter<HabitState> emit) {
+    emit(const HabitInitial());
   }
 }

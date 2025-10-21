@@ -42,3 +42,7 @@ final class DiscardTaskPatch extends TasksEvent {
   const DiscardTaskPatch(this.patch);
   final Patch patch;
 }
+
+final class ClearTasks extends TasksEvent {
+  const ClearTasks();
+}

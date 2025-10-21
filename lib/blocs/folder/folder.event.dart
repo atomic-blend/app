@@ -22,3 +22,7 @@ final class DeleteFolder extends FolderEvent {
   const DeleteFolder(this.folder);
   final Folder folder;
 }
+
+final class ClearFolders extends FolderEvent {
+  const ClearFolders();
+}

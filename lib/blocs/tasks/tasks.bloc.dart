@@ -27,6 +27,7 @@ class TasksBloc extends HydratedBloc<TasksEvent, TasksState> {
     on<SyncTasks>(_onSyncTasks);
     on<ForceTaskPatch>(_onForceTaskPatch);
     on<DiscardTaskPatch>(_onDiscardTaskPatch);
+    on<ClearTasks>(_onClearTasks);
   }
 
   @override
@@ -48,7 +49,7 @@ class TasksBloc extends HydratedBloc<TasksEvent, TasksState> {
   @override
   Map<String, dynamic>? toJson(TasksState state) {
     return {
-      "tasks": state.tasks!.map((e) => e.toJson()).toList(),
+      "tasks": state.tasks?.map((e) => e.toJson()).toList(),
       "stagedPatches": state.stagedPatches?.map((e) => e.toJson()).toList(),
       "latestSync": state.latestSync?.toJson(),
     };
@@ -390,6 +391,10 @@ class TasksBloc extends HydratedBloc<TasksEvent, TasksState> {
       ));
       add(const SyncAllTasks());
     }
+  }
+
+  FutureOr<void> _onClearTasks(ClearTasks event, Emitter<TasksState> emit) {
+    emit(const TasksInitial());
   }
 }
 

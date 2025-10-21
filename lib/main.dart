@@ -11,6 +11,7 @@ import 'package:app/blocs/habit/habit.bloc.dart';
 import 'package:app/blocs/tag/tag.bloc.dart';
 import 'package:app/blocs/tasks/tasks.bloc.dart';
 import 'package:app/blocs/time_entries/time_entry.bloc.dart';
+import 'package:app/services/sync.service.dart';
 import 'package:flutter_age/flutter_age.dart';
 import 'package:app/blocs/app/app.bloc.dart';
 import 'package:ab_shared/blocs/auth/auth.bloc.dart';
@@ -97,6 +98,12 @@ FutureOr<void> main() async {
       child: MultiBlocProvider(
           providers: [
             BlocProvider(create: (context) => AppCubit()),
+            BlocProvider(create: (context) => TasksBloc()),
+            BlocProvider(create: (context) => DeviceCalendarBloc()),
+            BlocProvider(create: (context) => HabitBloc()),
+            BlocProvider(create: (context) => TagBloc()),
+            BlocProvider(create: (context) => FolderBloc()),
+            BlocProvider(create: (context) => TimeEntryBloc()),
             BlocProvider(
                 create: (context) => AuthBloc(
                       onLogout: () {
@@ -106,17 +113,12 @@ FutureOr<void> main() async {
                           (scope) => scope.setUser(SentryUser(id: null)),
                         );
                         getIt.unregister<EncryptionService>();
+                        SyncService.logout(context);
                       },
                       onLogin: (e) {
                         getIt.registerSingleton<EncryptionService>(e);
                       },
                     )),
-            BlocProvider(create: (context) => TasksBloc()),
-            BlocProvider(create: (context) => DeviceCalendarBloc()),
-            BlocProvider(create: (context) => HabitBloc()),
-            BlocProvider(create: (context) => TagBloc()),
-            BlocProvider(create: (context) => FolderBloc()),
-            BlocProvider(create: (context) => TimeEntryBloc()),
           ],
           child: ab_shared_translations.TranslationProvider(
             child:
