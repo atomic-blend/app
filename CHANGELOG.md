@@ -2,6 +2,14 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## 0.13.1 - 2025-10-21
+#### Bug Fixes
+- update to latest shared that package the fix - (83e1947) - Brandon Guigo
+#### Miscellaneous Chores
+- **(release)** 0.13.0 [skip ci] - (e2fd81f) - GitHub Actions
+
+- - -
+
 ## 0.13.0 - 2025-10-21
 #### Bug Fixes
 - waiting list support + fix logout bug - (100a3cf) - Brandon Guigo
