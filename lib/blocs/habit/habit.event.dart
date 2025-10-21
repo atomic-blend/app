@@ -37,3 +37,7 @@ final class DeleteHabit extends HabitEvent {
   const DeleteHabit(this.habit);
   final Habit habit;
 }
+
+final class ClearHabits extends HabitEvent {
+  const ClearHabits();
+}

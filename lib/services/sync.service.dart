@@ -89,4 +89,12 @@ class SyncService {
         tagState is TagEditLoading ||
         tagState is TagDeleteLoading;
   }
+
+  static void logout(BuildContext context) {
+    context.read<TasksBloc>().add(const ClearTasks());
+    context.read<HabitBloc>().add(const ClearHabits());
+    context.read<TagBloc>().add(const ClearTags());
+    context.read<FolderBloc>().add(const ClearFolders());
+    context.read<TimeEntryBloc>().add(const ClearTimeEntries());
+  }
 }

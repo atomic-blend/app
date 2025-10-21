@@ -22,3 +22,7 @@ final class DeleteTimeEntry extends TimeEntryEvent {
   const DeleteTimeEntry(this.timeEntry);
   final TimeEntry timeEntry;
 }
+
+final class ClearTimeEntries extends TimeEntryEvent {
+  const ClearTimeEntries();
+}
