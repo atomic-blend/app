@@ -38,10 +38,10 @@ dependencies:
       url: https://github.com/atomic-blend/flutter_age.git
       ref: v0.0.7
   ab_shared:
-    git:
-      url: https://github.com/atomic-blend/app-shared.git
-      ref: v0.9.1
-    # path: ../ab_shared
+    # git:
+    #   url: https://github.com/atomic-blend/app-shared.git
+    #   ref: v0.9.1
+    path: ../ab_shared
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -149,9 +149,9 @@ flutter:
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
   assets:
-    - assets/configs/
-    - assets/images/
-    - assets/animations/
+  - assets/configs/
+  - assets/images/
+  - assets/animations/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
@@ -179,57 +179,57 @@ flutter:
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
   fonts:
-    - family: Nunito
-      fonts:
-        - asset: fonts/nunito/Nunito-Regular.ttf
-        - asset: fonts/nunito/Nunito-Italic.ttf
-          style: italic
-        - asset: fonts/nunito/Nunito-Light.ttf
-          weight: 300
-        - asset: fonts/nunito/Nunito-LightItalic.ttf
-          weight: 300
-          style: italic
-        - asset: fonts/nunito/Nunito-Medium.ttf
-          weight: 500
-        - asset: fonts/nunito/Nunito-MediumItalic.ttf
-          weight: 500
-          style: italic
-        - asset: fonts/nunito/Nunito-SemiBold.ttf
-          weight: 600
-        - asset: fonts/nunito/Nunito-SemiBoldItalic.ttf
-          weight: 600
-          style: italic
-        - asset: fonts/nunito/Nunito-Bold.ttf
-          weight: 700
-        - asset: fonts/nunito/Nunito-BoldItalic.ttf
-          weight: 700
-          style: italic
-        - asset: fonts/nunito/Nunito-ExtraBold.ttf
-          weight: 800
-        - asset: fonts/nunito/Nunito-ExtraBoldItalic.ttf
-          weight: 800
-          style: italic
-        - asset: fonts/nunito/Nunito-Black.ttf
-          weight: 900
-        - asset: fonts/nunito/Nunito-BlackItalic.ttf
-          weight: 900
-          style: italic
-        - asset: fonts/nunito/Nunito-ExtraLight.ttf
-          weight: 200
-        - asset: fonts/nunito/Nunito-ExtraLightItalic.ttf
-          weight: 200
-          style: italic
-    - family: SpaceGrotesk
-      fonts:
-        - asset: fonts/space-grotesk/SpaceGrotesk-Light.ttf
-        - asset: fonts/space-grotesk/SpaceGrotesk-Regular.ttf
-          weight: 300
-        - asset: fonts/space-grotesk/SpaceGrotesk-Medium.ttf
-          weight: 500
-        - asset: fonts/space-grotesk/SpaceGrotesk-SemiBold.ttf
-          weight: 600
-        - asset: fonts/space-grotesk/SpaceGrotesk-Bold.ttf
-          weight: 700
+  - family: Nunito
+    fonts:
+    - asset: fonts/nunito/Nunito-Regular.ttf
+    - asset: fonts/nunito/Nunito-Italic.ttf
+      style: italic
+    - asset: fonts/nunito/Nunito-Light.ttf
+      weight: 300
+    - asset: fonts/nunito/Nunito-LightItalic.ttf
+      weight: 300
+      style: italic
+    - asset: fonts/nunito/Nunito-Medium.ttf
+      weight: 500
+    - asset: fonts/nunito/Nunito-MediumItalic.ttf
+      weight: 500
+      style: italic
+    - asset: fonts/nunito/Nunito-SemiBold.ttf
+      weight: 600
+    - asset: fonts/nunito/Nunito-SemiBoldItalic.ttf
+      weight: 600
+      style: italic
+    - asset: fonts/nunito/Nunito-Bold.ttf
+      weight: 700
+    - asset: fonts/nunito/Nunito-BoldItalic.ttf
+      weight: 700
+      style: italic
+    - asset: fonts/nunito/Nunito-ExtraBold.ttf
+      weight: 800
+    - asset: fonts/nunito/Nunito-ExtraBoldItalic.ttf
+      weight: 800
+      style: italic
+    - asset: fonts/nunito/Nunito-Black.ttf
+      weight: 900
+    - asset: fonts/nunito/Nunito-BlackItalic.ttf
+      weight: 900
+      style: italic
+    - asset: fonts/nunito/Nunito-ExtraLight.ttf
+      weight: 200
+    - asset: fonts/nunito/Nunito-ExtraLightItalic.ttf
+      weight: 200
+      style: italic
+  - family: SpaceGrotesk
+    fonts:
+    - asset: fonts/space-grotesk/SpaceGrotesk-Light.ttf
+    - asset: fonts/space-grotesk/SpaceGrotesk-Regular.ttf
+      weight: 300
+    - asset: fonts/space-grotesk/SpaceGrotesk-Medium.ttf
+      weight: 500
+    - asset: fonts/space-grotesk/SpaceGrotesk-SemiBold.ttf
+      weight: 600
+    - asset: fonts/space-grotesk/SpaceGrotesk-Bold.ttf
+      weight: 700
 
 flutter_launcher_icons:
   android: true
@@ -315,7 +315,6 @@ flutter_native_splash:
 
     # Splash screen background color.
     color: "#F8F8F8"
-
     # App icon background color.
     #icon_background_color: "#111111"
 
@@ -329,75 +328,75 @@ flutter_native_splash:
     #color_dark: "#042a49"
     #icon_background_color_dark: "#eeeeee"
 
-  # The android, ios and web parameters can be used to disable generating a splash screen on a given
-  # platform.
-  #android: false
-  #ios: false
-  #web: false
+    # The android, ios and web parameters can be used to disable generating a splash screen on a given
+    # platform.
+    #android: false
+    #ios: false
+    #web: false
 
-  # Platform specific images can be specified with the following parameters, which will override
-  # the respective parameter.  You may specify all, selected, or none of these parameters:
-  #color_android: "#42a5f5"
-  #color_dark_android: "#042a49"
-  #color_ios: "#42a5f5"
-  #color_dark_ios: "#042a49"
-  #color_web: "#42a5f5"
-  #color_dark_web: "#042a49"
-  #image_android: assets/splash-android.png
-  #image_dark_android: assets/splash-invert-android.png
-  #image_ios: assets/splash-ios.png
-  #image_dark_ios: assets/splash-invert-ios.png
-  #image_web: assets/splash-web.gif
-  #image_dark_web: assets/splash-invert-web.gif
-  #background_image_android: "assets/background-android.png"
-  #background_image_dark_android: "assets/dark-background-android.png"
-  #background_image_ios: "assets/background-ios.png"
-  #background_image_dark_ios: "assets/dark-background-ios.png"
-  #background_image_web: "assets/background-web.png"
-  #background_image_dark_web: "assets/dark-background-web.png"
-  #branding_android: assets/brand-android.png
-  #branding_bottom_padding_android: 24
-  #branding_dark_android: assets/dart_dark-android.png
-  #branding_ios: assets/brand-ios.png
-  #branding_bottom_padding_ios: 24
-  #branding_dark_ios: assets/dart_dark-ios.png
-  #branding_web: assets/brand-web.gif
-  #branding_dark_web: assets/dart_dark-web.gif
+    # Platform specific images can be specified with the following parameters, which will override
+    # the respective parameter.  You may specify all, selected, or none of these parameters:
+    #color_android: "#42a5f5"
+    #color_dark_android: "#042a49"
+    #color_ios: "#42a5f5"
+    #color_dark_ios: "#042a49"
+    #color_web: "#42a5f5"
+    #color_dark_web: "#042a49"
+    #image_android: assets/splash-android.png
+    #image_dark_android: assets/splash-invert-android.png
+    #image_ios: assets/splash-ios.png
+    #image_dark_ios: assets/splash-invert-ios.png
+    #image_web: assets/splash-web.gif
+    #image_dark_web: assets/splash-invert-web.gif
+    #background_image_android: "assets/background-android.png"
+    #background_image_dark_android: "assets/dark-background-android.png"
+    #background_image_ios: "assets/background-ios.png"
+    #background_image_dark_ios: "assets/dark-background-ios.png"
+    #background_image_web: "assets/background-web.png"
+    #background_image_dark_web: "assets/dark-background-web.png"
+    #branding_android: assets/brand-android.png
+    #branding_bottom_padding_android: 24
+    #branding_dark_android: assets/dart_dark-android.png
+    #branding_ios: assets/brand-ios.png
+    #branding_bottom_padding_ios: 24
+    #branding_dark_ios: assets/dart_dark-ios.png
+    #branding_web: assets/brand-web.gif
+    #branding_dark_web: assets/dart_dark-web.gif
 
-  # The position of the splash image can be set with android_gravity, ios_content_mode, and
-  # web_image_mode parameters.  All default to center.
-  #
-  # android_gravity can be one of the following Android Gravity (see
-  # https://developer.android.com/reference/android/view/Gravity): bottom, center,
-  # center_horizontal, center_vertical, clip_horizontal, clip_vertical, end, fill, fill_horizontal,
-  # fill_vertical, left, right, start, or top.
-  #android_gravity: center
-  #
-  # ios_content_mode can be one of the following iOS UIView.ContentMode (see
-  # https://developer.apple.com/documentation/uikit/uiview/contentmode): scaleToFill,
-  # scaleAspectFit, scaleAspectFill, center, top, bottom, left, right, topLeft, topRight,
-  # bottomLeft, or bottomRight.
-  #ios_content_mode: center
-  #
-  # web_image_mode can be one of the following modes: center, contain, stretch, and cover.
-  #web_image_mode: center
+    # The position of the splash image can be set with android_gravity, ios_content_mode, and
+    # web_image_mode parameters.  All default to center.
+    #
+    # android_gravity can be one of the following Android Gravity (see
+    # https://developer.android.com/reference/android/view/Gravity): bottom, center,
+    # center_horizontal, center_vertical, clip_horizontal, clip_vertical, end, fill, fill_horizontal,
+    # fill_vertical, left, right, start, or top.
+    #android_gravity: center
+    #
+    # ios_content_mode can be one of the following iOS UIView.ContentMode (see
+    # https://developer.apple.com/documentation/uikit/uiview/contentmode): scaleToFill,
+    # scaleAspectFit, scaleAspectFill, center, top, bottom, left, right, topLeft, topRight,
+    # bottomLeft, or bottomRight.
+    #ios_content_mode: center
+    #
+    # web_image_mode can be one of the following modes: center, contain, stretch, and cover.
+    #web_image_mode: center
 
-  # The screen orientation can be set in Android with the android_screen_orientation parameter.
-  # Valid parameters can be found here:
-  # https://developer.android.com/guide/topics/manifest/activity-element#screen
-  #android_screen_orientation: sensorLandscape
+    # The screen orientation can be set in Android with the android_screen_orientation parameter.
+    # Valid parameters can be found here:
+    # https://developer.android.com/guide/topics/manifest/activity-element#screen
+    #android_screen_orientation: sensorLandscape
 
-  # To hide the notification bar, use the fullscreen parameter.  Has no effect in web since web
-  # has no notification bar.  Defaults to false.
-  # NOTE: Unlike Android, iOS will not automatically show the notification bar when the app loads.
-  #       To show the notification bar, add the following code to your Flutter app:
-  #       WidgetsFlutterBinding.ensureInitialized();
-  #       SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: [SystemUiOverlay.bottom, SystemUiOverlay.top], );
-  #fullscreen: true
+    # To hide the notification bar, use the fullscreen parameter.  Has no effect in web since web
+    # has no notification bar.  Defaults to false.
+    # NOTE: Unlike Android, iOS will not automatically show the notification bar when the app loads.
+    #       To show the notification bar, add the following code to your Flutter app:
+    #       WidgetsFlutterBinding.ensureInitialized();
+    #       SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: [SystemUiOverlay.bottom, SystemUiOverlay.top], );
+    #fullscreen: true
 
-  # If you have changed the name(s) of your info.plist file(s), you can specify the filename(s)
-  # with the info_plist_files parameter.  Remove only the # characters in the three lines below,
-  # do not remove any spaces:
-  #info_plist_files:
-  #  - 'ios/Runner/Info-Debug.plist'
-  #  - 'ios/Runner/Info-Release.plist'
+    # If you have changed the name(s) of your info.plist file(s), you can specify the filename(s)
+    # with the info_plist_files parameter.  Remove only the # characters in the three lines below,
+    # do not remove any spaces:
+    #info_plist_files:
+    #  - 'ios/Runner/Info-Debug.plist'
+    #  - 'ios/Runner/Info-Release.plist'
