@@ -1,12 +1,8 @@
 name: Build and Test
 
 on:
-  push:
-    branches:
-      - dev
   pull_request:
     branches:
-      - main
       - dev
   workflow_dispatch:
 
@@ -27,7 +23,6 @@ jobs:
           flutter-version: ${{ env.FLUTTER_VERSION }}
           channel: "stable"
           cache: true
-
 
       - name: Check for Local Path Dependencies
         run: |
