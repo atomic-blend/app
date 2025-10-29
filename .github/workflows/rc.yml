@@ -141,16 +141,16 @@ jobs:
         id: push-changes
         run: |
           TAG=${{ steps.bump-versions.outputs.tag_to_push }}
-          # Check if there are changes to commit
-          if git diff --quiet HEAD; then
-            echo "No changes to commit"
-          else
-            ./cog_bump.sh $TAG
-            git add pubspec.yaml
-            git add CHANGELOG.md
-            git commit -m "chore(release): $TAG [skip ci]"
-          fi
-          git push https://${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git dev
+          # # Check if there are changes to commit
+          # if git diff --quiet HEAD; then
+          #   echo "No changes to commit"
+          # else
+          #   ./cog_bump.sh $TAG
+          #   git add pubspec.yaml
+          #   git add CHANGELOG.md
+          #   git commit -m "chore(release): $TAG [skip ci]"
+          # fi
+          # git push https://${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git dev
           git push https://${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git tag $TAG
       - name: Upload Changelog
         uses: actions/upload-artifact@v4
