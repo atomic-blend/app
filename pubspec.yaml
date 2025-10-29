@@ -38,13 +38,13 @@ dependencies:
       url: https://github.com/atomic-blend/flutter_age.git
       ref: v0.0.7
   ab_shared:
-    # git:
-    #   url: https://github.com/atomic-blend/app-shared.git
-    #   ref: v0.9.1
-    path: ../ab_shared
+    git:
+      url: https://github.com/atomic-blend/app-shared.git
+      ref: v0.10.0
+    # path: ../ab_shared
 
-  # The following adds the Cupertino Icons font to your application.
-  # Use with the CupertinoIcons class for iOS style icons.
+    # The following adds the Cupertino Icons font to your application.
+    # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.6
   freezed_annotation: ^2.4.4
   freezed: ^2.5.7
@@ -152,7 +152,6 @@ flutter:
   - assets/configs/
   - assets/images/
   - assets/animations/
-
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
 
