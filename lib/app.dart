@@ -1,5 +1,6 @@
 import 'package:ab_shared/flavors.dart';
 import 'package:ab_shared/pages/auth/screens/auth_routes.dart' as auth_routes;
+import 'package:ab_shared/pages/paywall/paywall.dart' as paywall;
 import 'package:ab_shared/utils/env/env.dart';
 import 'package:app/pages/timer/timer_watcher.dart';
 import 'package:go_router/go_router.dart';
@@ -33,7 +34,8 @@ class App extends StatelessWidget {
           GlobalWidgetsLocalizations.delegate,
           GlobalCupertinoLocalizations.delegate,
         ],
-        debugShowCheckedModeBanner: getIt<EnvModel>().debugShowCheckedModeBanner,
+        debugShowCheckedModeBanner:
+            getIt<EnvModel>().debugShowCheckedModeBanner,
         title: F.title,
         routerConfig: _router,
       ),
@@ -44,6 +46,7 @@ class App extends StatelessWidget {
     routes: [
       ...$appRoutes,
       ...auth_routes.$appRoutes,
+      ...paywall.$appRoutes,
     ],
     initialLocation: '/',
     navigatorKey: getIt<GlobalKey<NavigatorState>>(
