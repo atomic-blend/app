@@ -99,11 +99,6 @@ RouteBase get $appRouter => ShellRouteData.$route(
           name: 'account',
           factory: _$AccountRoute._fromState,
         ),
-        GoRouteData.$route(
-          path: '/settings',
-          name: 'settings',
-          factory: _$SettingsRoute._fromState,
-        ),
       ],
     );
 
@@ -494,32 +489,4 @@ mixin _$AccountRoute on GoRouteData {
 
   @override
   void replace(BuildContext context) => context.replace(location);
-}
-
-mixin _$SettingsRoute on GoRouteData {
-  static SettingsRoute _fromState(GoRouterState state) => SettingsRoute(
-        state.extra as SettingsParams?,
-      );
-
-  SettingsRoute get _self => this as SettingsRoute;
-
-  @override
-  String get location => GoRouteData.$location(
-        '/settings',
-      );
-
-  @override
-  void go(BuildContext context) => context.go(location, extra: _self.$extra);
-
-  @override
-  Future<T?> push<T>(BuildContext context) =>
-      context.push<T>(location, extra: _self.$extra);
-
-  @override
-  void pushReplacement(BuildContext context) =>
-      context.pushReplacement(location, extra: _self.$extra);
-
-  @override
-  void replace(BuildContext context) =>
-      context.replace(location, extra: _self.$extra);
 }
