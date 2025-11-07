@@ -1,0 +1,323 @@
+name: Pre-release dev
+
+on:
+  push:
+    branches:
+      - dev
+
+env:
+  OS: "debian12"
+  COCOGITTO_VERSION: "6.3.0" # Specify the version of Cocogitto to use
+  FLUTTER_VERSION: "3.35.4"
+
+permissions:
+  contents: write
+  packages: write
+  actions: write
+
+jobs:
+  test-coverage:
+    runs-on: [self-hosted, Linux]
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          channel: "stable"
+          cache: true
+
+      - name: Check for Local Path Dependencies
+        run: |
+          echo "Checking pubspec.yaml for local path dependencies..."
+          if grep -A1 -B1 "^[[:space:]]*[a-zA-Z0-9_-]*:" pubspec.yaml | grep -q "^[[:space:]]*path:"; then
+            echo "❌ ERROR: Local path dependencies found in pubspec.yaml!"
+            echo "The following lines contain 'path:' references:"
+            grep -n "^[[:space:]]*path:" pubspec.yaml
+            echo ""
+            echo "Please remove all local path dependencies before committing."
+            exit 1
+          else
+            echo "✅ No local path dependencies found in pubspec.yaml"
+          fi
+
+      - name: Install Dependencies
+        run: flutter pub get
+
+      - name: Lint
+        run: dart analyze --fatal-infos
+
+      # - name: Run Tests with Coverage
+      #   run: |
+      #     dart test --coverage=coverage
+      #     dart pub global activate coverage
+      #     dart pub global run coverage:format_coverage --lcov --in=coverage --out=coverage.lcov --report-on=lib
+
+      # - name: Upload Coverage Reports
+      #   uses: codecov/codecov-action@v3
+      #   with:
+      #     files: ./coverage.lcov
+      #     fail_ci_if_error: true
+      #     verbose: true
+
+      # - name: Archive Coverage Report
+      #   uses: actions/upload-artifact@v3
+      #   with:
+      #     name: coverage-report
+      #     path: coverage.lcov
+  release-rc:
+    needs:
+      - test-coverage
+    runs-on: [self-hosted, Linux]
+    outputs:
+      tag: ${{ steps.bump-versions.outputs.tag_to_push }}
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+      - name: Configure git
+        run: |
+          git config user.email "pro@brandonguigo.com"
+          git config user.name "GitHub Actions"
+
+      - name: Cache cocogitto
+        id: cache-cocogitto
+        uses: actions/cache@v3
+        with:
+          path: ~/.cargo/bin/cog
+          key: cocogitto-${{ env.OS }}-v${{ env.COCOGITTO_VERSION }}
+
+      - name: Install Rust
+        if: steps.cache-cocogitto.outputs.cache-hit != 'true'
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: nightly
+          override: true
+
+      - name: Install Cocogitto
+        if: steps.cache-cocogitto.outputs.cache-hit != 'true'
+        run: |
+          # Skip install if `cog` is already present on the runner
+          if command -v cog >/dev/null 2>&1; then
+            echo "cog already installed at $(command -v cog) - skipping cargo install"
+            cog --version || true
+          else
+            cargo install cocogitto --version ${{ env.COCOGITTO_VERSION }}
+          fi
+        env:
+          RUSTFLAGS: --cfg procmacro2_semver_exempt
+
+      - name: Run cog bump
+        id: bump-versions
+        run: |
+          set -euo pipefail
+
+          echo "Running bump script for single-repo..."
+
+          # Run the bump script and capture output
+          output=$(./.github/scripts/bump_rc_single.sh 2>&1) || true
+          echo "$output"
+
+          # Extract NEW_TAG from script output (if present) using the simpler/canonical pattern
+          # Matches lines starting with NEW_TAG: then cuts the value after the first ':' and trims whitespace.
+          NEW_TAG=$(echo "$output" | grep "^NEW_TAG:" | cut -d: -f2 | tr -d '[:space:]') || true
+          echo "DEBUG: Extracted NEW_TAG: '$NEW_TAG'"
+
+          if [ -n "$NEW_TAG" ]; then
+            TAG_TO_PUSH="$NEW_TAG"
+            SUCCESSFUL_DIRS='.'
+          else
+            echo "No NEW_TAG found in bump script output."
+            exit 1
+          fi
+
+          echo "DEBUG: Final TAG_TO_PUSH = '$TAG_TO_PUSH'"
+          echo "tag_to_push=$TAG_TO_PUSH" >> $GITHUB_OUTPUT
+      - name: Commit and Push Changes
+        id: push-changes
+        run: |
+          TAG=${{ steps.bump-versions.outputs.tag_to_push }}
+          # # Check if there are changes to commit
+          # if git diff --quiet HEAD; then
+          #   echo "No changes to commit"
+          # else
+          #   ./cog_bump.sh $TAG
+          #   git add pubspec.yaml
+          #   git add CHANGELOG.md
+          #   git commit -m "chore(release): $TAG [skip ci]"
+          # fi
+          # git push https://${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git dev
+          git push https://${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git tag $TAG
+      - name: Upload Changelog
+        uses: actions/upload-artifact@v4
+        with:
+          name: changelog
+          path: CHANGELOG.md
+
+      - name: Upload Pubspec
+        uses: actions/upload-artifact@v4
+        with:
+          name: pubspec
+          path: pubspec.yaml
+  build-app-for-web:
+    needs: release-rc
+    runs-on: [self-hosted, Linux, docker-builder]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Download Pubspec
+        uses: actions/download-artifact@v4
+        with:
+          name: pubspec
+          path: ./
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          channel: "stable"
+          cache: true
+      - name: Write Firebase Options
+        run: |
+          cat > lib/firebase_options_prod.dart << 'EOF'
+          ${{ secrets.FIREBASE_OPTIONS_PROD }}
+          EOF
+
+          cat > lib/firebase_options_dev.dart << 'EOF'
+          ${{ secrets.FIREBASE_OPTIONS_DEV }}
+          EOF
+
+          cat > assets/configs/prod.json << 'EOF'
+          ${{ secrets.APP_CONFIG_PROD }}
+          EOF
+
+          cat > assets/configs/dev.json << 'EOF'
+          ${{ secrets.APP_CONFIG_DEV }}
+          EOF
+      - name: Build Web App
+        run: |
+          flutter clean
+          flutter pub get
+          flutter pub run build_runner build --delete-conflicting-outputs
+          flutter build web --release -t lib/main_prod.dart --dart-define APP_ENV=prod --wasm
+      - name: Upload Web App
+        uses: actions/upload-artifact@v4
+        with:
+          name: web-app
+          path: ./build/web
+  build-and-push-docker:
+    needs:
+      - release-rc
+      - build-app-for-web
+    runs-on: [self-hosted, Linux, docker-builder]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Download Pubspec
+        uses: actions/download-artifact@v4
+        with:
+          name: pubspec
+          path: ./
+
+      - name: Download Web App Artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: web-app
+          path: ./build/web
+
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: Dockerfile-prod
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: |
+            ghcr.io/atomic-blend/task-app:${{ needs.release-rc.outputs.tag }}
+  create-github-release:
+    needs:
+      - release-rc
+      - build-app-for-web
+      - build-and-push-docker
+    runs-on: [self-hosted, Linux]
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Download Changelog
+        uses: actions/download-artifact@v4
+        with:
+          name: changelog
+          path: ./
+
+      - name: Setup Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: "stable"
+      - name: Install ghr
+        run: |
+          go install github.com/tcnksm/ghr@latest
+
+      - name: Create GitHub Release
+        run: |
+          echo "Creating GitHub release"
+          TAG="${{ needs.release-rc.outputs.tag }}"
+          echo "Release tag: $TAG"
+
+          # Extract changelog for the current version - improved approach
+          # Handle tags with or without 'v' prefix
+          CLEAN_TAG=$(echo "$TAG" | sed 's/^v//')
+          echo "Clean tag for changelog matching: $CLEAN_TAG"
+
+          CHANGELOG=""
+          if [ -f "CHANGELOG.md" ]; then
+            # First try exact match with the tag format in the file
+            CHANGELOG=$(sed -n "/^## $TAG - /,/^## /p" CHANGELOG.md | sed '1d;$d')
+
+            # If nothing found, try without the 'v' prefix
+            if [ -z "$CHANGELOG" ]; then
+              CHANGELOG=$(sed -n "/^## $CLEAN_TAG - /,/^## /p" CHANGELOG.md | sed '1d;$d')
+            fi
+
+            # If still nothing, look for formats like [x.y.z]
+            if [ -z "$CHANGELOG" ]; then
+              CHANGELOG=$(sed -n "/^## \[$CLEAN_TAG\] - /,/^## /p" CHANGELOG.md | sed '1d;$d')
+            fi
+          fi
+
+          echo "CHANGELOG content:"
+          echo "$CHANGELOG"
+
+          echo "$CHANGELOG" >> release_notes.md
+
+          echo "Release notes: $(cat release_notes.md)"
+
+          # Use GitHub's built-in release creation
+          gh release create $TAG \
+            --title "v$TAG" \
+            --notes "$(cat release_notes.md)" \
+            --target "${{ github.sha }}" \
+            --prerelease
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

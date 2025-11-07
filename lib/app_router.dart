@@ -1,5 +1,4 @@
 import 'package:ab_shared/pages/account/account.dart';
-import 'package:ab_shared/pages/settings/settings.dart';
 import 'package:app/pages/calendar/views/calendar_day.dart';
 import 'package:app/pages/calendar/views/calendar_month.dart';
 import 'package:app/pages/calendar/views/calendar_schedule.dart';
@@ -50,7 +49,6 @@ final GlobalKey<NavigatorState> appLayoutNavigatorKey =
     TypedGoRoute<HabitsRoute>(path: '/habits', name: "habits"),
     TypedGoRoute<EisenhowerRoute>(path: '/task/eisenhower', name: "eisenhower"),
     TypedGoRoute<AccountRoute>(path: '/account', name: "account"),
-    TypedGoRoute<SettingsRoute>(path: '/settings', name: "settings"),
   ],
 )
 class AppRouter extends ShellRouteData {

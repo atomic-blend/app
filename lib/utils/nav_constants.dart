@@ -235,21 +235,12 @@ class NavigationConstants {
         ),
         NavigationItem(
           key: const Key("account"),
-          icon: LineAwesome.user_solid,
-          cupertinoIcon: CupertinoIcons.person,
-          label: "Account",
-          subItems: [],
-          location: "/account",
-          header: _buildHeader(context, "Account"),
-        ),
-        NavigationItem(
-          key: const Key("settings"),
           icon: LineAwesome.cog_solid,
-          cupertinoIcon: CupertinoIcons.gear,
-          label: "Settings",
-          subItems: [],
-          location: "/settings",
-          header: _buildHeader(context, "Settings"),
+          cupertinoIcon: CupertinoIcons.settings,
+          label: "Account & Settings",
+          location: "/account",
+          subItems: const [],
+          header: _buildHeader(context, "Account & Settings"),
         ),
       ];
 }
