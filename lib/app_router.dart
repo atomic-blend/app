@@ -50,7 +50,6 @@ final GlobalKey<NavigatorState> appLayoutNavigatorKey =
     TypedGoRoute<HabitsRoute>(path: '/habits', name: "habits"),
     TypedGoRoute<EisenhowerRoute>(path: '/task/eisenhower', name: "eisenhower"),
     TypedGoRoute<AccountRoute>(path: '/account', name: "account"),
-    TypedGoRoute<SettingsRoute>(path: '/settings', name: "settings"),
   ],
 )
 class AppRouter extends ShellRouteData {
