@@ -1,5 +1,4 @@
 import 'package:ab_shared/pages/account/account.dart';
-import 'package:ab_shared/pages/settings/settings.dart';
 import 'package:app/pages/calendar/views/calendar_day.dart';
 import 'package:app/pages/calendar/views/calendar_month.dart';
 import 'package:app/pages/calendar/views/calendar_schedule.dart';
