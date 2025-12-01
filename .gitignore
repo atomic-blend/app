@@ -169,3 +169,4 @@ app.*.symbols
 /fastlane/fastlane/report.xml
 /macos/DerivedData
 google-services.json
+firebase.json
