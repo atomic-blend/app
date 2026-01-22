@@ -2,6 +2,19 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## 0.14.0-rc-a24350d - 2025-10-29
+#### Bug Fixes
+- add cicd and update shared package - (66c0f72) - Brandon Guigo
+#### Features
+- support stripe - (3419124) - Brandon Guigo
+#### Miscellaneous Chores
+- **(release)** 0.14.0-rc-1e41b62 [skip ci] - (bec5057) - GitHub Actions
+- **(release)** 0.13.1 [skip ci] - (8d4310d) - GitHub Actions
+- trigger cicd when pr on main - (a24350d) - Brandon Guigo
+- update trigger condition for test cicd [skip ci] - (6b4bcc3) - Brandon Guigo
+
+- - -
+
 ## 0.13.1 - 2025-10-21
 #### Bug Fixes
 - update to latest shared that package the fix - (83e1947) - Brandon Guigo
