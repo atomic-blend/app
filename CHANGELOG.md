@@ -2,6 +2,58 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## 0.14.0 - 2026-01-22
+
+- - -
+
+## 0.14.0-rc-0eb9602 - 2026-01-22
+#### Bug Fixes
+- **(cicd)** update shared + disable cicd for ios and mac os - (0eb9602) - Brandon Guigo
+
+- - -
+
+## 0.14.0-rc-058c3a4 - 2026-01-22
+#### Bug Fixes
+- merge account and settings into a single page - (bb3df7b) - Brandon Guigo
+#### Miscellaneous Chores
+- update shared to latest - (167fc95) - Brandon Guigo
+- rebuild router - (1de1981) - Brandon Guigo
+
+- - -
+
+## 0.14.0-rc-dd7f181 - 2026-01-22
+#### Bug Fixes
+- ability to manage subscription via stripe customer portal - (dd7f181) - Brandon Guigo
+
+- - -
+
+## 0.14.0-rc-d5ffc4b - 2026-01-22
+#### Bug Fixes
+- update shared package to logout user when app cannot refresh token - (d5ffc4b) - Brandon Guigo
+
+- - -
+
+## 0.14.0-rc-24c2186 - 2026-01-22
+#### Bug Fixes
+- remove push commit - (24c2186) - Brandon Guigo
+#### Miscellaneous Chores
+- **(release)** 0.14.0-rc-a24350d [skip ci] - (f1f3260) - GitHub Actions
+
+- - -
+
+## 0.14.0-rc-a24350d - 2026-01-22
+#### Bug Fixes
+- add cicd and update shared package - (66c0f72) - Brandon Guigo
+#### Features
+- support stripe - (3419124) - Brandon Guigo
+#### Miscellaneous Chores
+- **(release)** 0.14.0-rc-1e41b62 [skip ci] - (bec5057) - GitHub Actions
+- **(release)** 0.13.1 [skip ci] - (8d4310d) - GitHub Actions
+- trigger cicd when pr on main - (a24350d) - Brandon Guigo
+- update trigger condition for test cicd [skip ci] - (6b4bcc3) - Brandon Guigo
+
+- - -
+
 ## 0.14.0-rc-a24350d - 2025-10-29
 #### Bug Fixes
 - add cicd and update shared package - (66c0f72) - Brandon Guigo
