@@ -3,12 +3,13 @@
 ///
 // coverage:ignore-file
 // ignore_for_file: type=lint, unused_import
+// dart format off
 
 part of 'strings.g.dart';
 
 // Path: <root>
 typedef TranslationsEn = Translations; // ignore: unused_element
-class Translations implements BaseTranslations<AppLocale, Translations> {
+class Translations with BaseTranslations<AppLocale, Translations> {
 	/// Returns the current translations of the given [context].
 	///
 	/// Usage:
@@ -1199,320 +1200,278 @@ class TranslationsSettingsAppSettingsSelfHostedUrlEn {
 	String get not_set => 'Not set';
 }
 
-/// Flat map(s) containing all translations.
+/// The flat map containing all translations for locale <en>.
 /// Only for edge cases! For simple maps, use the map function of this library.
+///
+/// The Dart AOT compiler has issues with very large switch statements,
+/// so the map is split into smaller functions (512 entries each).
 extension on Translations {
 	dynamic _flatMapFunction(String path) {
-		switch (path) {
-			case 'app_name': return 'Atomic Blend';
-			case 'app_name_saas': return 'Atomic Blend Cloud';
-			case 'settings.title': return 'Settings';
-			case 'settings.app_settings.title': return 'App Settings';
-			case 'settings.app_settings.selfHostedUrl.title': return 'Self-Hosted URL';
-			case 'settings.app_settings.selfHostedUrl.not_set': return 'Not set';
-			case 'settings.logout': return 'Logout';
-			case 'tags.title': return 'Tags';
-			case 'tags.assign_tags': return 'Assign tags';
-			case 'tags.add_modal.title': return 'Add a new tag';
-			case 'tags.add_modal.edit_title': return 'Edit tag';
-			case 'tags.add_modal.name': return 'Name of the tag';
-			case 'tags.add_modal.name_hint': return 'Work';
-			case 'tags.add_modal.name_description': return 'Define a name for your tag, this will help you remember what it is about and be shown in notifications.';
-			case 'tags.add_modal.name_required': return 'Name is required';
-			case 'tags.add_modal.color': return 'Color';
-			case 'tags.add_modal.color_description': return 'Choose a color for your tag, this will help you remember what it is about and be shown in notifications.';
-			case 'tags.delete.title': return 'Delete tag';
-			case 'tags.delete.description': return 'Are you sure you want to delete this tag?';
-			case 'tags.delete.warning': return 'This action cannot be undone and the tag will be removed from all tags associated.';
-			case 'tasks.title': return 'Tasks';
-			case 'tasks.today': return 'Today';
-			case 'tasks.overview': return 'Overview';
-			case 'tasks.inbox': return 'Inbox';
-			case 'tasks.tags': return 'Tags';
-			case 'tasks.all_tasks': return 'All tasks';
-			case 'tasks.completed_tasks': return 'Completed tasks';
-			case 'tasks.my_tags': return 'My tags';
-			case 'tasks.no_tags_for_now': return 'No tags for now';
-			case 'tasks.my_folders': return 'My folders';
-			case 'tasks.folders.title': return 'Folders';
-			case 'tasks.folders.no_folders': return 'No folders for now';
-			case 'tasks.folders.add_folder': return 'Add a folder';
-			case 'tasks.folders.edit_folder': return 'Edit folder';
-			case 'tasks.folders.delete_folder': return 'Delete folder';
-			case 'tasks.folders.delete_folder_description': return 'Are you sure you want to delete this folder?';
-			case 'tasks.folders.delete_folder_warning': return 'This action cannot be undone and all the tasks will be unlinked';
-			case 'tasks.folders.name': return 'Name of the folder';
-			case 'tasks.folders.name_hint': return 'Work';
-			case 'tasks.folders.name_description': return 'Define a name for your folder, this will help you remember what it is about and be shown in notifications.';
-			case 'tasks.folders.name_required': return 'Name is required';
-			case 'tasks.folders.color': return 'Color';
-			case 'tasks.folders.color_description': return 'Choose a color for your folder, this will help you remember what it is about and be shown in notifications.';
-			case 'tasks.folders.select_a_folder': return 'Select a folder';
-			case 'tasks.nothing_to_do': return 'Nothing to do for now, enjoy your day!';
-			case 'tasks.day_off': return 'You have nothing planned for tomorrow, enjoy your day!';
-			case 'tasks.no_tasks_for_now': return 'No tasks for now';
-			case 'tasks.time_log': return 'Time Log';
-			case 'tasks.log_session': return 'Log session';
-			case 'tasks.timer': return 'Timer';
-			case 'tasks.pomodoro': return 'Pomodoro';
-			case 'tasks.manual': return 'Manual';
-			case 'tasks.from': return 'From';
-			case 'tasks.to': return 'To';
-			case 'tasks.priority': return 'Priority';
-			case 'tasks.priorities.none': return 'None';
-			case 'tasks.priorities.low': return 'Low';
-			case 'tasks.priorities.medium': return 'Medium';
-			case 'tasks.priorities.high': return 'High';
-			case 'tasks.due_dates.today': return 'Today';
-			case 'tasks.due_dates.tomorrow': return 'Tomorrow';
-			case 'tasks.due_dates.no_due_date': return 'No due date';
-			case 'tasks.add_task_modal.task_title': return 'What do you need to do?';
-			case 'tasks.add_task_modal.description': return 'Description';
-			case 'tasks.add_task_modal.dates': return 'Dates';
-			case 'tasks.add_task_modal.notes': return 'Notes';
-			case 'tasks.add_task_modal.start_date': return 'Start Date';
-			case 'tasks.add_task_modal.end_date': return 'End Date';
-			case 'tasks.add_task_modal.cancel': return 'Cancel';
-			case 'tasks.add_task_modal.save': return 'Save';
-			case 'tasks.add_task_modal.erase': return 'Erase';
-			case 'tasks.add_task_modal.task_added': return 'Task added';
-			case 'tasks.add_task_modal.task_added_description': return 'Your task has been added successfully.';
-			case 'tasks.add_task_modal.task_error': return 'Task error';
-			case 'tasks.add_task_modal.title_required': return 'Title required';
-			case 'tasks.add_task_modal.title_required_description': return 'Please enter a title for your task';
-			case 'tasks.add_task_modal.reminders': return ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n,
-				zero: 'Reminder',
-				one: 'Reminder',
-				other: 'Reminders',
-			);
-			case 'tasks.add_task_modal.time_planned': return 'Expected time';
-			case 'tasks.add_task_modal.none': return 'None';
-			case 'tasks.add_task_modal.no_reminders': return 'No reminders';
-			case 'tasks.add_task_modal.when_would_you_like_to_be_reminded': return 'When would you like to be reminded?';
-			case 'tasks.add_task_modal.when_would_you_like_the_task_to_start': return 'When would you like the task to start?';
-			case 'tasks.add_task_modal.when_would_you_like_the_task_to_end': return 'When would you like the task to end?';
-			case 'tasks.time_spent': return 'Time spent';
-			case 'tasks.no_time_entries': return 'No time entries for now';
-			case 'tasks.add_time_entry.title': return 'Add a time entry';
-			case 'tasks.add_time_entry.description': return 'Manually add a time entry for this task.';
-			case 'tasks.add_time_entry.start_time': return 'Start time';
-			case 'tasks.add_time_entry.end_time': return 'End time';
-			case 'tasks.add_time_entry.not_defined': return 'Not defined';
-			case 'tasks.conflict_detected_modal.title': return 'Conflict Detected';
-			case 'tasks.conflict_detected_modal.description': return 'Previous edits of this task made while offline conflicts with the current version of the task.';
-			case 'tasks.conflict_detected_modal.warning': return 'You can either resolve the conflicts now or come back later to resolve them.';
-			case 'tasks.conflict_detected_modal.resolve_now': return 'Resolve';
-			case 'tasks.conflict_detected_modal.later': return 'Later';
-			case 'calendar.title': return 'Calendar';
-			case 'calendar.month': return 'Month';
-			case 'calendar.day': return 'Day';
-			case 'calendar.threeDays': return '3 Days';
-			case 'calendar.week': return 'Week';
-			case 'calendar.schedule': return 'Schedule';
-			case 'calendar.errors.cannot_move_device_calendar_event': return 'You cannot move a device calendar event';
-			case 'calendar.errors.cannot_move_habit_event': return 'You cannot move a habit event';
-			case 'calendar.errors.cannot_resize_device_calendar_event': return 'You cannot resize a device calendar event';
-			case 'calendar.errors.cannot_resize_habit_event': return 'You cannot resize a habit event';
-			case 'calendar.event_detail.date': return 'Date';
-			case 'calendar.event_detail.time': return 'Time';
-			case 'calendar.event_detail.organizer': return 'Organizer';
-			case 'calendar.event_detail.reminders': return 'Reminder';
-			case 'calendar.event_detail.details': return 'Details';
-			case 'calendar.event_detail.join_meeting': return 'Join meeting';
-			case 'calendar.event_detail.google_meet_call': return 'Google Meet Call';
-			case 'calendar.event_detail.zoom_meet_call': return 'Zoom Call';
-			case 'calendar.event_detail.ms_teams_call': return 'MS Teams Call';
-			case 'calendar.event_detail.join_now': return 'Join now';
-			case 'calendar.event_detail.attendee': return ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n,
-				zero: 'Attendee',
-				one: 'Attendee',
-				other: 'Attendees',
-			);
-			case 'calendar.settings.title': return 'Calendar Settings';
-			case 'calendar.settings.display_habits': return 'Display habits';
-			case 'habits.title': return 'Habits';
-			case 'habits.no_habits': return 'No habits for now';
-			case 'habits.get_started_now': return 'Add your first habit to get started!';
-			case 'habits.delete_habit.title': return 'Delete habit';
-			case 'habits.delete_habit.description': return 'Are you sure you want to delete this habit?';
-			case 'habits.delete_habit.warning': return 'This action cannot be undone and all the related entries will also be deleted.';
-			case 'habits.add.title': return 'What do you want to achieve?';
-			case 'habits.add.name': return 'Habit name*';
-			case 'habits.add.name_hint': return 'Drink water';
-			case 'habits.add.name_description': return 'Define a name for your habit, this will help you remember what it is about and be shown in notifications.';
-			case 'habits.add.name_required': return 'Name is required';
-			case 'habits.add.citation': return 'Citation';
-			case 'habits.add.citation_description': return 'Add a citation to your habit, this will help you remember why you are doing it and motivate you.';
-			case 'habits.add.citation_hint': return '“Water is the only drink for a wise man.” — Henry David Thoreau';
-			case 'habits.add.start_date': return 'Start date';
-			case 'habits.add.end_date': return 'End date';
-			case 'habits.add.when_would_you_like_the_habit_to_start': return 'When would you like the habit to start?';
-			case 'habits.add.when_would_you_like_the_habit_to_end': return 'When would you like the habit to end?';
-			case 'habits.add.no_date_selected': return 'No date selected';
-			case 'habits.add.frequency_label': return 'Frequency';
-			case 'habits.add.frequency.daily': return 'Daily';
-			case 'habits.add.frequency.weekly': return 'Weekly';
-			case 'habits.add.frequency.monthly': return 'Monthly';
-			case 'habits.add.frequency.repeatition': return 'Repeatition';
-			case 'habits.add.number_of_times_label': return 'Number of times';
-			case 'habits.add.number_of_times_description': return 'How many times do you want to do this habit?\nEach time the frequency is reached, it will be reseted (for example, if you set it to 3 times and a daily frequency, you will have to do it 3 times a day).';
-			case 'habits.add.days_of_week_label': return 'Days of the week';
-			case 'habits.add.days_of_week_description': return 'On which days of the week do you want to do this habit?';
-			case 'habits.add.search_emoji_hint': return 'Search for an emoji';
-			case 'habits.add.reminders_label': return 'Reminders';
-			case 'habits.add.reminders_description': return 'Set a time for your reminders. You will be notified when the time is reached.';
-			case 'habits.add.reminders_add': return 'Add a reminder';
-			case 'habits.add.duration_label': return 'Duration';
-			case 'habits.add.duration_description': return 'How long do you want to do this habit?';
-			case 'habits.add.duration_hint': return '5 minutes';
-			case 'habits.add.days_of_week_mismatch': return 'You must select the same number of days as the number of times';
-			case 'habits.add.every_number_day_title': return 'Repeatition in days';
-			case 'habits.add.every_number_day_description': return 'How many days do you want to wait before repeating this habit?';
-			case 'habits.add.days_of_month_title': return 'Days of the month';
-			case 'habits.add.days_of_month_description': return 'On which days of the month do you want to do this habit?';
-			case 'habits.add.select_days': return 'Select days';
-			case 'habits.list': return 'Habits';
-			case 'habits.overview': return 'Overview';
-			case 'habits.times_a_day': return ({required Object nb}) => '${nb} times a day';
-			case 'habits.times_a_week': return ({required Object nb}) => '${nb} times a week';
-			case 'habits.times_a_month': return ({required Object nb}) => '${nb} times a month';
-			case 'habits.habit_detail.no_citation': return 'No citation';
-			case 'habits.habit_detail.no_end_date': return 'No end date';
-			case 'habits.habit_detail.delete_habit': return 'Delete habit';
-			case 'habits.habit_detail.delete_habit_description': return 'Are you sure you want to delete this habit?';
-			case 'habits.habit_detail.delete_habit_warning': return 'This action cannot be undone and all the related entries will also be deleted.';
-			case 'habits.habit_detail.entries': return 'Entries';
-			case 'habits.habit_detail.no_entries': return 'No entries for now';
-			case 'habits.habit_detail.delete_entry': return 'Delete entry';
-			case 'habits.habit_detail.delete_entry_description': return 'Are you sure you want to delete this entry?';
-			case 'habits.habit_detail.delete_entry_warning': return 'This action cannot be undone.';
-			case 'under_construction.title': return 'We\'re working on it!';
-			case 'under_construction.description': return 'This feature is not yet available, but we\'re working hard to bring it to you soon.\n\nStay tuned!';
-			case 'more.title': return 'More';
-			case 'date_modes.date': return 'Date';
-			case 'date_modes.duration': return 'Duration';
-			case 'times.today': return 'Today';
-			case 'times.tomorrow': return 'Tomorrow';
-			case 'times.this_week': return 'This week';
-			case 'times.minutes': return ({required num n, required Object nb}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n,
-				zero: '${nb} minutes',
-				one: '${nb} minute',
-				other: '${nb} minutes',
-			);
-			case 'days_of_week.monday': return 'Monday';
-			case 'days_of_week.tuesday': return 'Tuesday';
-			case 'days_of_week.wednesday': return 'Wednesday';
-			case 'days_of_week.thursday': return 'Thursday';
-			case 'days_of_week.friday': return 'Friday';
-			case 'days_of_week.saturday': return 'Saturday';
-			case 'days_of_week.sunday': return 'Sunday';
-			case 'actions.save': return 'Save';
-			case 'actions.cancel': return 'Cancel';
-			case 'actions.delete': return 'Delete';
-			case 'actions.add': return 'Add';
-			case 'actions.edit': return 'Edit';
-			case 'actions.clear': return 'Clear';
-			case 'actions.close': return 'Close';
-			case 'errors.wrong_email_password': return 'Email or password incorrect';
-			case 'errors.email_malformed': return 'Email malformed';
-			case 'errors.unknown_error': return 'Unknown error';
-			case 'account.title': return 'Account';
-			case 'notifications.task_due_now': return 'The task is due';
-			case 'notifications.task_starting': return 'The task is starting';
-			case 'notifications.task_starting_in': return ({required Object time}) => 'The task is starting in ${time}';
-			case 'notifications.habit_due_now': return 'Perform the habit now, one less thing to do!';
-			case 'time_units.short.day': return 'd';
-			case 'time_units.short.hour': return 'h';
-			case 'time_units.short.minute': return 'm';
-			case 'time_units.long.day': return ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n,
-				zero: 'days',
-				one: 'day',
-				other: 'days',
-			);
-			case 'time_units.long.hour': return ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n,
-				zero: 'hours',
-				one: 'hour',
-				other: 'hours',
-			);
-			case 'time_units.long.minute': return ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n,
-				zero: 'minutes',
-				one: 'minute',
-				other: 'minutes',
-			);
-			case 'eisenhower.small_title': return 'Eisenhower';
-			case 'eisenhower.title': return 'Eisenhower Matrix';
-			case 'inbox.title': return 'Inbox';
-			case 'timer.title': return 'Timer';
-			case 'timer.start': return 'Start';
-			case 'timer.stop': return 'Stop';
-			case 'timer.pause': return 'Pause';
-			case 'timer.duration': return 'Duration';
-			case 'timer.start_pomodoro': return 'Start pomodoro';
-			case 'timer.start_stopwatch': return 'Start stopwatch';
-			case 'timer.pomo_running': return 'Pomodoro running';
-			case 'timer.timer_running': return 'Timer running';
-			case 'timer.time_left': return ({required Object timeLeft}) => 'Time left: ${timeLeft}';
-			case 'timer.start_break': return 'Start break';
-			case 'timer.elapsed_time': return 'Elapsed time';
-			case 'timer.modes.pomodoro': return 'Pomodoro';
-			case 'timer.modes.stopwatch': return 'Stopwatch';
-			case 'timer.select_task': return 'Select a task';
-			case 'timer.completed': return 'Completed!';
-			case 'timer.pomodoro_completed_message': return 'Your pomodoro session has completed! Time for a break.';
-			case 'timer.stopwatch_completed_message': return 'Your stopwatch session has been completed.';
-			case 'timer.task_label': return 'Task';
-			case 'search.title': return 'Search';
-			case 'search.results': return ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n,
-				zero: 'No results found',
-				one: '1 result found',
-				other: '${n} results found',
-			);
-			case 'sync.title': return 'Synchronization';
-			case 'sync.status': return 'Status';
-			case 'sync.loading': return 'Loading...';
-			case 'sync.up_to_date': return 'Up to date';
-			case 'sync.conflicts': return 'Conflicts';
-			case 'sync.x_items_have_conflicts': return ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n,
-				zero: 'No items have conflicts',
-				one: '1 item has conflicts',
-				other: '${n} items have conflicts',
-			);
-			case 'sync.details.title': return 'Details';
-			case 'sync.details.tasks': return 'Tasks';
-			case 'sync.details.task_items': return ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n,
-				zero: 'No tasks',
-				one: '1 task',
-				other: '${n} tasks',
-			);
-			case 'sync.sync_now': return 'Sync now';
-			case 'sync.conflict_resolver.title': return 'Conflict Resolver';
-			case 'sync.conflict_resolver.choose_between': return 'Choose between accepting or refusing the changes';
-			case 'sync.conflict_resolver.refuse': return 'Refuse';
-			case 'sync.conflict_resolver.accept': return 'Accept';
-			case 'sync.conflict_resolver.in_app_version': return 'In-app';
-			case 'sync.conflict_resolver.changes_to_apply': return 'Changes to apply';
-			case 'sync.conflict_resolver.apply_to_all': return 'Apply decision to all conflicts';
-			case 'sync.conflict_resolver.fields.title': return 'Title';
-			case 'sync.conflict_resolver.fields.end_date': return 'End date';
-			case 'sync.conflict_resolver.fields.description': return 'Notes';
-			case 'sync.conflict_resolver.fields.start_date': return 'Start date';
-			case 'sync.conflict_resolver.fields.reminders_title': return 'Reminders';
-			case 'sync.conflict_resolver.fields.reminders': return ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n,
-				zero: 'No reminders',
-				one: '1 reminder',
-				other: '${n} reminders',
-			);
-			case 'sync.conflict_resolver.fields.undefined': return 'Undefined';
-			case 'sync.conflict_resolver.fields.priority': return 'Priority';
-			case 'sync.conflict_resolver.fields.folder': return 'Folder';
-			case 'sync.conflict_resolver.fields.tags': return ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n,
-				zero: 'No tags',
-				one: '1 tag',
-				other: '${n} tags',
-			);
-			case 'sync.conflict_resolver.progress': return 'Progress';
-			default: return null;
-		}
+		return switch (path) {
+			'app_name' => 'Atomic Blend',
+			'app_name_saas' => 'Atomic Blend Cloud',
+			'settings.title' => 'Settings',
+			'settings.app_settings.title' => 'App Settings',
+			'settings.app_settings.selfHostedUrl.title' => 'Self-Hosted URL',
+			'settings.app_settings.selfHostedUrl.not_set' => 'Not set',
+			'settings.logout' => 'Logout',
+			'tags.title' => 'Tags',
+			'tags.assign_tags' => 'Assign tags',
+			'tags.add_modal.title' => 'Add a new tag',
+			'tags.add_modal.edit_title' => 'Edit tag',
+			'tags.add_modal.name' => 'Name of the tag',
+			'tags.add_modal.name_hint' => 'Work',
+			'tags.add_modal.name_description' => 'Define a name for your tag, this will help you remember what it is about and be shown in notifications.',
+			'tags.add_modal.name_required' => 'Name is required',
+			'tags.add_modal.color' => 'Color',
+			'tags.add_modal.color_description' => 'Choose a color for your tag, this will help you remember what it is about and be shown in notifications.',
+			'tags.delete.title' => 'Delete tag',
+			'tags.delete.description' => 'Are you sure you want to delete this tag?',
+			'tags.delete.warning' => 'This action cannot be undone and the tag will be removed from all tags associated.',
+			'tasks.title' => 'Tasks',
+			'tasks.today' => 'Today',
+			'tasks.overview' => 'Overview',
+			'tasks.inbox' => 'Inbox',
+			'tasks.tags' => 'Tags',
+			'tasks.all_tasks' => 'All tasks',
+			'tasks.completed_tasks' => 'Completed tasks',
+			'tasks.my_tags' => 'My tags',
+			'tasks.no_tags_for_now' => 'No tags for now',
+			'tasks.my_folders' => 'My folders',
+			'tasks.folders.title' => 'Folders',
+			'tasks.folders.no_folders' => 'No folders for now',
+			'tasks.folders.add_folder' => 'Add a folder',
+			'tasks.folders.edit_folder' => 'Edit folder',
+			'tasks.folders.delete_folder' => 'Delete folder',
+			'tasks.folders.delete_folder_description' => 'Are you sure you want to delete this folder?',
+			'tasks.folders.delete_folder_warning' => 'This action cannot be undone and all the tasks will be unlinked',
+			'tasks.folders.name' => 'Name of the folder',
+			'tasks.folders.name_hint' => 'Work',
+			'tasks.folders.name_description' => 'Define a name for your folder, this will help you remember what it is about and be shown in notifications.',
+			'tasks.folders.name_required' => 'Name is required',
+			'tasks.folders.color' => 'Color',
+			'tasks.folders.color_description' => 'Choose a color for your folder, this will help you remember what it is about and be shown in notifications.',
+			'tasks.folders.select_a_folder' => 'Select a folder',
+			'tasks.nothing_to_do' => 'Nothing to do for now, enjoy your day!',
+			'tasks.day_off' => 'You have nothing planned for tomorrow, enjoy your day!',
+			'tasks.no_tasks_for_now' => 'No tasks for now',
+			'tasks.time_log' => 'Time Log',
+			'tasks.log_session' => 'Log session',
+			'tasks.timer' => 'Timer',
+			'tasks.pomodoro' => 'Pomodoro',
+			'tasks.manual' => 'Manual',
+			'tasks.from' => 'From',
+			'tasks.to' => 'To',
+			'tasks.priority' => 'Priority',
+			'tasks.priorities.none' => 'None',
+			'tasks.priorities.low' => 'Low',
+			'tasks.priorities.medium' => 'Medium',
+			'tasks.priorities.high' => 'High',
+			'tasks.due_dates.today' => 'Today',
+			'tasks.due_dates.tomorrow' => 'Tomorrow',
+			'tasks.due_dates.no_due_date' => 'No due date',
+			'tasks.add_task_modal.task_title' => 'What do you need to do?',
+			'tasks.add_task_modal.description' => 'Description',
+			'tasks.add_task_modal.dates' => 'Dates',
+			'tasks.add_task_modal.notes' => 'Notes',
+			'tasks.add_task_modal.start_date' => 'Start Date',
+			'tasks.add_task_modal.end_date' => 'End Date',
+			'tasks.add_task_modal.cancel' => 'Cancel',
+			'tasks.add_task_modal.save' => 'Save',
+			'tasks.add_task_modal.erase' => 'Erase',
+			'tasks.add_task_modal.task_added' => 'Task added',
+			'tasks.add_task_modal.task_added_description' => 'Your task has been added successfully.',
+			'tasks.add_task_modal.task_error' => 'Task error',
+			'tasks.add_task_modal.title_required' => 'Title required',
+			'tasks.add_task_modal.title_required_description' => 'Please enter a title for your task',
+			'tasks.add_task_modal.reminders' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n, zero: 'Reminder', one: 'Reminder', other: 'Reminders', ), 
+			'tasks.add_task_modal.time_planned' => 'Expected time',
+			'tasks.add_task_modal.none' => 'None',
+			'tasks.add_task_modal.no_reminders' => 'No reminders',
+			'tasks.add_task_modal.when_would_you_like_to_be_reminded' => 'When would you like to be reminded?',
+			'tasks.add_task_modal.when_would_you_like_the_task_to_start' => 'When would you like the task to start?',
+			'tasks.add_task_modal.when_would_you_like_the_task_to_end' => 'When would you like the task to end?',
+			'tasks.time_spent' => 'Time spent',
+			'tasks.no_time_entries' => 'No time entries for now',
+			'tasks.add_time_entry.title' => 'Add a time entry',
+			'tasks.add_time_entry.description' => 'Manually add a time entry for this task.',
+			'tasks.add_time_entry.start_time' => 'Start time',
+			'tasks.add_time_entry.end_time' => 'End time',
+			'tasks.add_time_entry.not_defined' => 'Not defined',
+			'tasks.conflict_detected_modal.title' => 'Conflict Detected',
+			'tasks.conflict_detected_modal.description' => 'Previous edits of this task made while offline conflicts with the current version of the task.',
+			'tasks.conflict_detected_modal.warning' => 'You can either resolve the conflicts now or come back later to resolve them.',
+			'tasks.conflict_detected_modal.resolve_now' => 'Resolve',
+			'tasks.conflict_detected_modal.later' => 'Later',
+			'calendar.title' => 'Calendar',
+			'calendar.month' => 'Month',
+			'calendar.day' => 'Day',
+			'calendar.threeDays' => '3 Days',
+			'calendar.week' => 'Week',
+			'calendar.schedule' => 'Schedule',
+			'calendar.errors.cannot_move_device_calendar_event' => 'You cannot move a device calendar event',
+			'calendar.errors.cannot_move_habit_event' => 'You cannot move a habit event',
+			'calendar.errors.cannot_resize_device_calendar_event' => 'You cannot resize a device calendar event',
+			'calendar.errors.cannot_resize_habit_event' => 'You cannot resize a habit event',
+			'calendar.event_detail.date' => 'Date',
+			'calendar.event_detail.time' => 'Time',
+			'calendar.event_detail.organizer' => 'Organizer',
+			'calendar.event_detail.reminders' => 'Reminder',
+			'calendar.event_detail.details' => 'Details',
+			'calendar.event_detail.join_meeting' => 'Join meeting',
+			'calendar.event_detail.google_meet_call' => 'Google Meet Call',
+			'calendar.event_detail.zoom_meet_call' => 'Zoom Call',
+			'calendar.event_detail.ms_teams_call' => 'MS Teams Call',
+			'calendar.event_detail.join_now' => 'Join now',
+			'calendar.event_detail.attendee' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n, zero: 'Attendee', one: 'Attendee', other: 'Attendees', ), 
+			'calendar.settings.title' => 'Calendar Settings',
+			'calendar.settings.display_habits' => 'Display habits',
+			'habits.title' => 'Habits',
+			'habits.no_habits' => 'No habits for now',
+			'habits.get_started_now' => 'Add your first habit to get started!',
+			'habits.delete_habit.title' => 'Delete habit',
+			'habits.delete_habit.description' => 'Are you sure you want to delete this habit?',
+			'habits.delete_habit.warning' => 'This action cannot be undone and all the related entries will also be deleted.',
+			'habits.add.title' => 'What do you want to achieve?',
+			'habits.add.name' => 'Habit name*',
+			'habits.add.name_hint' => 'Drink water',
+			'habits.add.name_description' => 'Define a name for your habit, this will help you remember what it is about and be shown in notifications.',
+			'habits.add.name_required' => 'Name is required',
+			'habits.add.citation' => 'Citation',
+			'habits.add.citation_description' => 'Add a citation to your habit, this will help you remember why you are doing it and motivate you.',
+			'habits.add.citation_hint' => '“Water is the only drink for a wise man.” — Henry David Thoreau',
+			'habits.add.start_date' => 'Start date',
+			'habits.add.end_date' => 'End date',
+			'habits.add.when_would_you_like_the_habit_to_start' => 'When would you like the habit to start?',
+			'habits.add.when_would_you_like_the_habit_to_end' => 'When would you like the habit to end?',
+			'habits.add.no_date_selected' => 'No date selected',
+			'habits.add.frequency_label' => 'Frequency',
+			'habits.add.frequency.daily' => 'Daily',
+			'habits.add.frequency.weekly' => 'Weekly',
+			'habits.add.frequency.monthly' => 'Monthly',
+			'habits.add.frequency.repeatition' => 'Repeatition',
+			'habits.add.number_of_times_label' => 'Number of times',
+			'habits.add.number_of_times_description' => 'How many times do you want to do this habit?\nEach time the frequency is reached, it will be reseted (for example, if you set it to 3 times and a daily frequency, you will have to do it 3 times a day).',
+			'habits.add.days_of_week_label' => 'Days of the week',
+			'habits.add.days_of_week_description' => 'On which days of the week do you want to do this habit?',
+			'habits.add.search_emoji_hint' => 'Search for an emoji',
+			'habits.add.reminders_label' => 'Reminders',
+			'habits.add.reminders_description' => 'Set a time for your reminders. You will be notified when the time is reached.',
+			'habits.add.reminders_add' => 'Add a reminder',
+			'habits.add.duration_label' => 'Duration',
+			'habits.add.duration_description' => 'How long do you want to do this habit?',
+			'habits.add.duration_hint' => '5 minutes',
+			'habits.add.days_of_week_mismatch' => 'You must select the same number of days as the number of times',
+			'habits.add.every_number_day_title' => 'Repeatition in days',
+			'habits.add.every_number_day_description' => 'How many days do you want to wait before repeating this habit?',
+			'habits.add.days_of_month_title' => 'Days of the month',
+			'habits.add.days_of_month_description' => 'On which days of the month do you want to do this habit?',
+			'habits.add.select_days' => 'Select days',
+			'habits.list' => 'Habits',
+			'habits.overview' => 'Overview',
+			'habits.times_a_day' => ({required Object nb}) => '${nb} times a day',
+			'habits.times_a_week' => ({required Object nb}) => '${nb} times a week',
+			'habits.times_a_month' => ({required Object nb}) => '${nb} times a month',
+			'habits.habit_detail.no_citation' => 'No citation',
+			'habits.habit_detail.no_end_date' => 'No end date',
+			'habits.habit_detail.delete_habit' => 'Delete habit',
+			'habits.habit_detail.delete_habit_description' => 'Are you sure you want to delete this habit?',
+			'habits.habit_detail.delete_habit_warning' => 'This action cannot be undone and all the related entries will also be deleted.',
+			'habits.habit_detail.entries' => 'Entries',
+			'habits.habit_detail.no_entries' => 'No entries for now',
+			'habits.habit_detail.delete_entry' => 'Delete entry',
+			'habits.habit_detail.delete_entry_description' => 'Are you sure you want to delete this entry?',
+			'habits.habit_detail.delete_entry_warning' => 'This action cannot be undone.',
+			'under_construction.title' => 'We\'re working on it!',
+			'under_construction.description' => 'This feature is not yet available, but we\'re working hard to bring it to you soon.\n\nStay tuned!',
+			'more.title' => 'More',
+			'date_modes.date' => 'Date',
+			'date_modes.duration' => 'Duration',
+			'times.today' => 'Today',
+			'times.tomorrow' => 'Tomorrow',
+			'times.this_week' => 'This week',
+			'times.minutes' => ({required num n, required Object nb}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n, zero: '${nb} minutes', one: '${nb} minute', other: '${nb} minutes', ), 
+			'days_of_week.monday' => 'Monday',
+			'days_of_week.tuesday' => 'Tuesday',
+			'days_of_week.wednesday' => 'Wednesday',
+			'days_of_week.thursday' => 'Thursday',
+			'days_of_week.friday' => 'Friday',
+			'days_of_week.saturday' => 'Saturday',
+			'days_of_week.sunday' => 'Sunday',
+			'actions.save' => 'Save',
+			'actions.cancel' => 'Cancel',
+			'actions.delete' => 'Delete',
+			'actions.add' => 'Add',
+			'actions.edit' => 'Edit',
+			'actions.clear' => 'Clear',
+			'actions.close' => 'Close',
+			'errors.wrong_email_password' => 'Email or password incorrect',
+			'errors.email_malformed' => 'Email malformed',
+			'errors.unknown_error' => 'Unknown error',
+			'account.title' => 'Account',
+			'notifications.task_due_now' => 'The task is due',
+			'notifications.task_starting' => 'The task is starting',
+			'notifications.task_starting_in' => ({required Object time}) => 'The task is starting in ${time}',
+			'notifications.habit_due_now' => 'Perform the habit now, one less thing to do!',
+			'time_units.short.day' => 'd',
+			'time_units.short.hour' => 'h',
+			'time_units.short.minute' => 'm',
+			'time_units.long.day' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n, zero: 'days', one: 'day', other: 'days', ), 
+			'time_units.long.hour' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n, zero: 'hours', one: 'hour', other: 'hours', ), 
+			'time_units.long.minute' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n, zero: 'minutes', one: 'minute', other: 'minutes', ), 
+			'eisenhower.small_title' => 'Eisenhower',
+			'eisenhower.title' => 'Eisenhower Matrix',
+			'inbox.title' => 'Inbox',
+			'timer.title' => 'Timer',
+			'timer.start' => 'Start',
+			'timer.stop' => 'Stop',
+			'timer.pause' => 'Pause',
+			'timer.duration' => 'Duration',
+			'timer.start_pomodoro' => 'Start pomodoro',
+			'timer.start_stopwatch' => 'Start stopwatch',
+			'timer.pomo_running' => 'Pomodoro running',
+			'timer.timer_running' => 'Timer running',
+			'timer.time_left' => ({required Object timeLeft}) => 'Time left: ${timeLeft}',
+			'timer.start_break' => 'Start break',
+			'timer.elapsed_time' => 'Elapsed time',
+			'timer.modes.pomodoro' => 'Pomodoro',
+			'timer.modes.stopwatch' => 'Stopwatch',
+			'timer.select_task' => 'Select a task',
+			'timer.completed' => 'Completed!',
+			'timer.pomodoro_completed_message' => 'Your pomodoro session has completed! Time for a break.',
+			'timer.stopwatch_completed_message' => 'Your stopwatch session has been completed.',
+			'timer.task_label' => 'Task',
+			'search.title' => 'Search',
+			'search.results' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n, zero: 'No results found', one: '1 result found', other: '${n} results found', ), 
+			'sync.title' => 'Synchronization',
+			'sync.status' => 'Status',
+			'sync.loading' => 'Loading...',
+			'sync.up_to_date' => 'Up to date',
+			'sync.conflicts' => 'Conflicts',
+			'sync.x_items_have_conflicts' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n, zero: 'No items have conflicts', one: '1 item has conflicts', other: '${n} items have conflicts', ), 
+			'sync.details.title' => 'Details',
+			'sync.details.tasks' => 'Tasks',
+			'sync.details.task_items' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n, zero: 'No tasks', one: '1 task', other: '${n} tasks', ), 
+			'sync.sync_now' => 'Sync now',
+			'sync.conflict_resolver.title' => 'Conflict Resolver',
+			'sync.conflict_resolver.choose_between' => 'Choose between accepting or refusing the changes',
+			'sync.conflict_resolver.refuse' => 'Refuse',
+			'sync.conflict_resolver.accept' => 'Accept',
+			'sync.conflict_resolver.in_app_version' => 'In-app',
+			'sync.conflict_resolver.changes_to_apply' => 'Changes to apply',
+			'sync.conflict_resolver.apply_to_all' => 'Apply decision to all conflicts',
+			'sync.conflict_resolver.fields.title' => 'Title',
+			'sync.conflict_resolver.fields.end_date' => 'End date',
+			'sync.conflict_resolver.fields.description' => 'Notes',
+			'sync.conflict_resolver.fields.start_date' => 'Start date',
+			'sync.conflict_resolver.fields.reminders_title' => 'Reminders',
+			'sync.conflict_resolver.fields.reminders' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n, zero: 'No reminders', one: '1 reminder', other: '${n} reminders', ), 
+			'sync.conflict_resolver.fields.undefined' => 'Undefined',
+			'sync.conflict_resolver.fields.priority' => 'Priority',
+			'sync.conflict_resolver.fields.folder' => 'Folder',
+			'sync.conflict_resolver.fields.tags' => ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n, zero: 'No tags', one: '1 tag', other: '${n} tags', ), 
+			'sync.conflict_resolver.progress' => 'Progress',
+			_ => null,
+		};
 	}
 }
-

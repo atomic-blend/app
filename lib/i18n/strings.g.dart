@@ -6,10 +6,11 @@
 /// Locales: 2
 /// Strings: 570 (285 per locale)
 ///
-/// Built on 2025-11-07 at 11:09 UTC
+/// Built on 2026-01-22 at 12:56 UTC
 
 // coverage:ignore-file
 // ignore_for_file: type=lint, unused_import
+// dart format off
 
 import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';

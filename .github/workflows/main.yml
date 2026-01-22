@@ -387,160 +387,160 @@ jobs:
         with:
           name: android-aab
           path: build/app/outputs/bundle/prodRelease/app-prod-release.aab
-  build-app-for-macos:
-    needs: bump-version
-    runs-on: [self-hosted, MacOS]
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
+  # build-app-for-macos:
+  #   needs: bump-version
+  #   runs-on: [self-hosted, MacOS]
+  #   steps:
+  #     - name: Checkout code
+  #       uses: actions/checkout@v3
+  #       with:
+  #         fetch-depth: 0
 
-      - name: Download Pubspec
-        uses: actions/download-artifact@v4
-        with:
-          name: pubspec
-          path: ./
+  #     - name: Download Pubspec
+  #       uses: actions/download-artifact@v4
+  #       with:
+  #         name: pubspec
+  #         path: ./
 
-      - name: Write Firebase Options
-        run: |
-          cat > lib/firebase_options_prod.dart << 'EOF'
-          ${{ secrets.FIREBASE_OPTIONS_PROD }}
-          EOF
+  #     - name: Write Firebase Options
+  #       run: |
+  #         cat > lib/firebase_options_prod.dart << 'EOF'
+  #         ${{ secrets.FIREBASE_OPTIONS_PROD }}
+  #         EOF
 
-          cat > lib/firebase_options_dev.dart << 'EOF'
-          ${{ secrets.FIREBASE_OPTIONS_DEV }}
-          EOF
+  #         cat > lib/firebase_options_dev.dart << 'EOF'
+  #         ${{ secrets.FIREBASE_OPTIONS_DEV }}
+  #         EOF
 
-          cat > assets/configs/prod.json << 'EOF'
-          ${{ secrets.APP_CONFIG_PROD }}
-          EOF
+  #         cat > assets/configs/prod.json << 'EOF'
+  #         ${{ secrets.APP_CONFIG_PROD }}
+  #         EOF
 
-          cat > assets/configs/dev.json << 'EOF'
-          ${{ secrets.APP_CONFIG_DEV }}
-          EOF
+  #         cat > assets/configs/dev.json << 'EOF'
+  #         ${{ secrets.APP_CONFIG_DEV }}
+  #         EOF
 
-          cat > android/key.properties << 'EOF'
-          ${{ secrets.KEY_PROPERTIES }}
-          EOF
+  #         cat > android/key.properties << 'EOF'
+  #         ${{ secrets.KEY_PROPERTIES }}
+  #         EOF
 
-          mkdir -p macos/config/prod
-          cat > macos/config/prod/GoogleService-Info.plist << 'EOF'
-          ${{ secrets.GOOGLE_SERVICE_INFO_PLIST_PROD }}
-          EOF
-          cat > macos/Runner/GoogleService-Info.plist << 'EOF'
-          ${{ secrets.GOOGLE_SERVICE_INFO_PLIST_PROD }}
-          EOF
+  #         mkdir -p macos/config/prod
+  #         cat > macos/config/prod/GoogleService-Info.plist << 'EOF'
+  #         ${{ secrets.GOOGLE_SERVICE_INFO_PLIST_PROD }}
+  #         EOF
+  #         cat > macos/Runner/GoogleService-Info.plist << 'EOF'
+  #         ${{ secrets.GOOGLE_SERVICE_INFO_PLIST_PROD }}
+  #         EOF
 
-      - name: Clean and prepare build
-        run: |
-          # Ruby + CocoaPods environment
-          export PATH="/opt/homebrew/bin:/opt/homebrew/opt/ruby/bin:$PATH"
-          export GEM_HOME="/opt/homebrew/lib/ruby/gems/3.4.0"
-          export GEM_PATH="/opt/homebrew/lib/ruby/gems/3.4.0"
+  #     - name: Clean and prepare build
+  #       run: |
+  #         # Ruby + CocoaPods environment
+  #         export PATH="/opt/homebrew/bin:/opt/homebrew/opt/ruby/bin:$PATH"
+  #         export GEM_HOME="/opt/homebrew/lib/ruby/gems/3.4.0"
+  #         export GEM_PATH="/opt/homebrew/lib/ruby/gems/3.4.0"
 
-          # FVM Flutter
-          export PATH="/Users/brandonguigo/fvm/versions/stable/bin:$PATH"
+  #         # FVM Flutter
+  #         export PATH="/Users/brandonguigo/fvm/versions/stable/bin:$PATH"
 
-          flutter clean
-          flutter pub get
-          flutter pub run build_runner build --delete-conflicting-outputs
+  #         flutter clean
+  #         flutter pub get
+  #         flutter pub run build_runner build --delete-conflicting-outputs
 
-      - name: Build MacOS App
-        run: |
-          # Set Ruby and CocoaPods environment variables - use Homebrew Ruby exclusively
-          export PATH="/opt/homebrew/bin:/opt/homebrew/opt/ruby/bin:/opt/homebrew/lib/ruby/gems/3.4.0/bin:$PATH"
-          export GEM_HOME="/opt/homebrew/lib/ruby/gems/3.4.0"
-          export GEM_PATH="/opt/homebrew/lib/ruby/gems/3.4.0"
+  #     - name: Build MacOS App
+  #       run: |
+  #         # Set Ruby and CocoaPods environment variables - use Homebrew Ruby exclusively
+  #         export PATH="/opt/homebrew/bin:/opt/homebrew/opt/ruby/bin:/opt/homebrew/lib/ruby/gems/3.4.0/bin:$PATH"
+  #         export GEM_HOME="/opt/homebrew/lib/ruby/gems/3.4.0"
+  #         export GEM_PATH="/opt/homebrew/lib/ruby/gems/3.4.0"
 
-          # Ensure FVM Flutter is in the PATH
-          export PATH="/Users/brandonguigo/fvm/versions/stable/bin:$PATH"
+  #         # Ensure FVM Flutter is in the PATH
+  #         export PATH="/Users/brandonguigo/fvm/versions/stable/bin:$PATH"
 
-          flutter build macos --release -t lib/main_prod.dart --dart-define APP_ENV=prod --flavor prod
+  #         flutter build macos --release -t lib/main_prod.dart --dart-define APP_ENV=prod --flavor prod
 
-      - name: Package MacOS App
-        run: |
-          npm install -g appdmg
-          appdmg macos_dmg/config.json macos_dmg/AtomicTask.dmg
-          mv macos_dmg/AtomicTask.dmg macos_dmg/atomic-task-${{ needs.bump-version.outputs.tag }}-macos.dmg
+  #     - name: Package MacOS App
+  #       run: |
+  #         npm install -g appdmg
+  #         appdmg macos_dmg/config.json macos_dmg/AtomicTask.dmg
+  #         mv macos_dmg/AtomicTask.dmg macos_dmg/atomic-task-${{ needs.bump-version.outputs.tag }}-macos.dmg
 
-      - name: Upload MacOS App
-        uses: actions/upload-artifact@v4
-        with:
-          name: macos-app
-          path: macos_dmg/atomic-task-${{ needs.bump-version.outputs.tag }}-macos.dmg
-  build-app-for-ios:
-    needs: bump-version
-    runs-on: [self-hosted, MacOS]
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
+  #     - name: Upload MacOS App
+  #       uses: actions/upload-artifact@v4
+  #       with:
+  #         name: macos-app
+  #         path: macos_dmg/atomic-task-${{ needs.bump-version.outputs.tag }}-macos.dmg
+  # build-app-for-ios:
+  #   needs: bump-version
+  #   runs-on: [self-hosted, MacOS]
+  #   steps:
+  #     - name: Checkout code
+  #       uses: actions/checkout@v3
+  #       with:
+  #         fetch-depth: 0
 
-      - name: Download Pubspec
-        uses: actions/download-artifact@v4
-        with:
-          name: pubspec
-          path: ./
+  #     - name: Download Pubspec
+  #       uses: actions/download-artifact@v4
+  #       with:
+  #         name: pubspec
+  #         path: ./
 
-      - name: Write Firebase Options
-        run: |
-          cat > lib/firebase_options_prod.dart << 'EOF'
-          ${{ secrets.FIREBASE_OPTIONS_PROD }}
-          EOF
+  #     - name: Write Firebase Options
+  #       run: |
+  #         cat > lib/firebase_options_prod.dart << 'EOF'
+  #         ${{ secrets.FIREBASE_OPTIONS_PROD }}
+  #         EOF
 
-          cat > lib/firebase_options_dev.dart << 'EOF'
-          ${{ secrets.FIREBASE_OPTIONS_DEV }}
-          EOF
+  #         cat > lib/firebase_options_dev.dart << 'EOF'
+  #         ${{ secrets.FIREBASE_OPTIONS_DEV }}
+  #         EOF
 
-          cat > assets/configs/prod.json << 'EOF'
-          ${{ secrets.APP_CONFIG_PROD }}
-          EOF
+  #         cat > assets/configs/prod.json << 'EOF'
+  #         ${{ secrets.APP_CONFIG_PROD }}
+  #         EOF
 
-          cat > assets/configs/dev.json << 'EOF'
-          ${{ secrets.APP_CONFIG_DEV }}
-          EOF
+  #         cat > assets/configs/dev.json << 'EOF'
+  #         ${{ secrets.APP_CONFIG_DEV }}
+  #         EOF
 
-          mkdir -p ios/config/prod
-          cat > ios/config/prod/GoogleService-Info.plist << 'EOF'
-          ${{ secrets.GOOGLE_SERVICE_INFO_PLIST_PROD }}
-          EOF
-          cat > ios/Runner/GoogleService-Info.plist << 'EOF'
-          ${{ secrets.GOOGLE_SERVICE_INFO_PLIST_PROD }}
-          EOF
+  #         mkdir -p ios/config/prod
+  #         cat > ios/config/prod/GoogleService-Info.plist << 'EOF'
+  #         ${{ secrets.GOOGLE_SERVICE_INFO_PLIST_PROD }}
+  #         EOF
+  #         cat > ios/Runner/GoogleService-Info.plist << 'EOF'
+  #         ${{ secrets.GOOGLE_SERVICE_INFO_PLIST_PROD }}
+  #         EOF
 
-      - name: Clean and prepare build
-        run: |
-          # Ruby + CocoaPods environment
-          export PATH="/opt/homebrew/bin:/opt/homebrew/opt/ruby/bin:$PATH"
-          export GEM_HOME="/opt/homebrew/lib/ruby/gems/3.4.0"
-          export GEM_PATH="/opt/homebrew/lib/ruby/gems/3.4.0"
+  #     - name: Clean and prepare build
+  #       run: |
+  #         # Ruby + CocoaPods environment
+  #         export PATH="/opt/homebrew/bin:/opt/homebrew/opt/ruby/bin:$PATH"
+  #         export GEM_HOME="/opt/homebrew/lib/ruby/gems/3.4.0"
+  #         export GEM_PATH="/opt/homebrew/lib/ruby/gems/3.4.0"
 
-          # FVM Flutter
-          export PATH="/Users/brandonguigo/fvm/versions/stable/bin:$PATH"
+  #         # FVM Flutter
+  #         export PATH="/Users/brandonguigo/fvm/versions/stable/bin:$PATH"
 
-          flutter clean
-          flutter pub get
-          flutter pub run build_runner build --delete-conflicting-outputs
+  #         flutter clean
+  #         flutter pub get
+  #         flutter pub run build_runner build --delete-conflicting-outputs
 
-      - name: Build iOS App
-        run: |
-          # Set Ruby and CocoaPods environment variables - use Homebrew Ruby exclusively
-          export PATH="/opt/homebrew/bin:/opt/homebrew/opt/ruby/bin:/opt/homebrew/lib/ruby/gems/3.4.0/bin:$PATH"
-          export GEM_HOME="/opt/homebrew/lib/ruby/gems/3.4.0"
-          export GEM_PATH="/opt/homebrew/lib/ruby/gems/3.4.0"
+  #     - name: Build iOS App
+  #       run: |
+  #         # Set Ruby and CocoaPods environment variables - use Homebrew Ruby exclusively
+  #         export PATH="/opt/homebrew/bin:/opt/homebrew/opt/ruby/bin:/opt/homebrew/lib/ruby/gems/3.4.0/bin:$PATH"
+  #         export GEM_HOME="/opt/homebrew/lib/ruby/gems/3.4.0"
+  #         export GEM_PATH="/opt/homebrew/lib/ruby/gems/3.4.0"
 
-          # Ensure FVM Flutter is in the PATH
-          export PATH="/Users/brandonguigo/fvm/versions/stable/bin:$PATH"
+  #         # Ensure FVM Flutter is in the PATH
+  #         export PATH="/Users/brandonguigo/fvm/versions/stable/bin:$PATH"
 
-          flutter build ipa --release -t lib/main_prod.dart --dart-define APP_ENV=prod --flavor prod
+  #         flutter build ipa --release -t lib/main_prod.dart --dart-define APP_ENV=prod --flavor prod
 
-      - name: Upload iOS App
-        uses: actions/upload-artifact@v4
-        with:
-          name: ios-app
-          path: "build/ios/ipa/Atomic Task.ipa"
+  #     - name: Upload iOS App
+  #       uses: actions/upload-artifact@v4
+  #       with:
+  #         name: ios-app
+  #         path: "build/ios/ipa/Atomic Task.ipa"
 
   build-app-for-windows:
     needs: bump-version
@@ -610,8 +610,8 @@ jobs:
       - build-app-for-web
       - build-app-for-windows
       - build-app-for-android
-      - build-app-for-macos
-      - build-app-for-ios
+      # - build-app-for-macos
+      # - build-app-for-ios
     runs-on: [self-hosted, Linux]
     steps:
       - name: Checkout code
@@ -641,39 +641,39 @@ jobs:
         run: |
           cd fastlane
           fastlane android upload_beta
-  publish-ios-app:
-    needs:
-      - build-app-for-linux
-      - build-app-for-web
-      - build-app-for-windows
-      - build-app-for-android
-      - build-app-for-macos
-      - build-app-for-ios
-    runs-on: [self-hosted, MacOS]
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
+  # publish-ios-app:
+  #   needs:
+  #     - build-app-for-linux
+  #     - build-app-for-web
+  #     - build-app-for-windows
+  #     - build-app-for-android
+  #     - build-app-for-macos
+  #     - build-app-for-ios
+  #   runs-on: [self-hosted, MacOS]
+  #   steps:
+  #     - name: Checkout code
+  #       uses: actions/checkout@v3
+  #       with:
+  #         fetch-depth: 0
 
-      - name: Download Pubspec
-        uses: actions/download-artifact@v4
-        with:
-          name: pubspec
-          path: ./
+  #     - name: Download Pubspec
+  #       uses: actions/download-artifact@v4
+  #       with:
+  #         name: pubspec
+  #         path: ./
 
-      - name: Download iOS App Artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: ios-app
-          path: build/ios/ipa
+  #     - name: Download iOS App Artifact
+  #       uses: actions/download-artifact@v4
+  #       with:
+  #         name: ios-app
+  #         path: build/ios/ipa
 
-      - name: Publish iOS App to TestFlight
-        continue-on-error: true
-        run: |
-          cd fastlane
-          export PATH="$PATH:/opt/homebrew/bin"
-          fastlane ios upload_beta
+  #     - name: Publish iOS App to TestFlight
+  #       continue-on-error: true
+  #       run: |
+  #         cd fastlane
+  #         export PATH="$PATH:/opt/homebrew/bin"
+  #         fastlane ios upload_beta
 
   publish-docker-images:
     needs:
@@ -682,8 +682,8 @@ jobs:
       - build-app-for-android
       - build-app-for-web
       - build-app-for-windows
-      - build-app-for-macos
-      - build-app-for-ios
+      # - build-app-for-macos
+      # - build-app-for-ios
     runs-on: [self-hosted, Linux]
     steps:
       - name: Checkout code
@@ -731,7 +731,7 @@ jobs:
       - bump-version
       - publish-docker-images
       - publish-android-app
-      - publish-ios-app
+      # - publish-ios-app
     runs-on: [self-hosted, Linux]
     steps:
       - name: Checkout Repository
@@ -775,11 +775,11 @@ jobs:
         run: |
           mv build/app/outputs/flutter-apk/app-prod-release.apk build/app/outputs/flutter-apk/atomic-task-${{ needs.bump-version.outputs.tag }}.apk
 
-      - name: Download MacOS App Artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: macos-app
-          path: ./macos_dmg/
+      # - name: Download MacOS App Artifact
+      #   uses: actions/download-artifact@v4
+      #   with:
+      #     name: macos-app
+      #     path: ./macos_dmg/
 
       - name: Install ghr
         run: |
@@ -835,6 +835,6 @@ jobs:
           gh release upload $TAG "output/atomic-task-${TAG}-windows-installer.exe"
 
           # Upload macos app
-          gh release upload $TAG "macos_dmg/atomic-task-${TAG}-macos.dmg"
+          # gh release upload $TAG "macos_dmg/atomic-task-${TAG}-macos.dmg"
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
